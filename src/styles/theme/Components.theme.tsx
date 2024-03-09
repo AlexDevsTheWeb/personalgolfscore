@@ -1312,6 +1312,21 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
     },
   },
+
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        background: palette.grey6.main,
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: '5px',
+        boxShadow: 'none',
+      }
+    }
+  }
 };
 
 export default components;

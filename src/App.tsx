@@ -15,8 +15,9 @@ import { theme } from './styles/theme/ThemeStyle.theme';
 import Spinner from "./components/spinner/Spinner.component";
 import LoginForm from "./components/LoginForm/LoginForm.component";
 import SignupForm from "./components/LoginForm/SignupForm.component";
-import Player from "./components/Player/Player.component";
 import { store } from "./store/store";
+import PlayerPage from "./pages/Player.page";
+import ClubsPage from "./pages/Clubs.page";
 
 const App: React.FC = () => {
   return (
@@ -27,7 +28,8 @@ const App: React.FC = () => {
             <MuiCssBaseline />
             <StyledComponentsThemeProvider theme={theme}>
               <Routes>
-                <Route path="/" element={<Player />} />
+                <Route path="/" element={<PlayerPage />} />
+                <Route path="/clubs" element={<ClubsPage />} />
                 <Route path="/signup" element={<SignupForm />} />
                 <Route path="/signin" element={<LoginForm />} />
                 {/* <Route path="/" element={<Navigation />}>
