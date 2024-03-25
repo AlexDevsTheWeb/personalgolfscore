@@ -27,7 +27,7 @@ export const themeSystem = createTheme({
               borderRadius: 6,
               height: 8,
               width: 8,
-              backgroundColor: '#031434',
+              backgroundColor: '#222',
             },
           },
         },

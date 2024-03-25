@@ -22,11 +22,11 @@ export const theme = createTheme({
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
-    xs: false;
+    xs: true;
     sm: true;
     md: true;
     lg: true;
-    xl: false;
+    xl: true;
   }
 }
 

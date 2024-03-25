@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Stack, Typography } from "../index";
+import { Card, Stack, Typography } from "../index";
 // import InputAdornment from "style/input/InputAdornment";
 // import OutlinedInput from "style/input/OutLinedInput";
 // import { useDispatch, useSelector } from "react-redux";
@@ -81,17 +81,18 @@ const RowCard: React.FC<RowCardProps> = (props) => {
       alignItems={"center"}
       justifyContent={"space-between"}
     >
-      {props.label && (
-        <Typography variant="body">
-          {props.label}:
-        </Typography>
-      )}
-      {props.value && (
-        <Typography variant="body">
-          {!!props.format && props.value ? props.format : props.value}
-        </Typography>
-      )}
-
+      <Card>
+        {props.label && (
+          <Typography variant="headline6">
+            {props.label}:
+          </Typography>
+        )}
+        {props.value && (
+          <Typography variant="body">
+            {!!props.format && props.value ? props.format : props.value}
+          </Typography>
+        )}
+      </Card>
     </Stack>
   );
 };
