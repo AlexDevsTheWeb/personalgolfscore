@@ -2,6 +2,7 @@ export interface IClub {
   degree: number;
   name: string;
   playerID: string;
+  imageURL: string;
   type: IClubType;
 }
 
@@ -23,5 +24,6 @@ export type ClubResponse = {
   degree: number;
   name: string;
   playerID: string;
+  imageURL: string;
   type: IClubType;
 }

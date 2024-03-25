@@ -443,6 +443,22 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
     },
   },
+  MuiAccordion: {
+    styleOverrides: {
+      root: {
+        backgroundColor: "#ff9900"
+      }
+    }
+  },
+  MuiAccordionSummary: {
+    styleOverrides: {
+      root: {
+        paddingTop: 20,
+        backgroundColor: "#ff0099",
+        border: "3px solid #000"
+      }
+    }
+  },
   MuiList: {
     styleOverrides: {
       root: {

@@ -18,6 +18,7 @@ import SignupForm from "./components/LoginForm/SignupForm.component";
 import { store } from "./store/store";
 import PlayerPage from "./pages/Player.page";
 import ClubsPage from "./pages/Clubs.page";
+import SharedLayout from "./pages/SharedLayout.page";
 
 const App: React.FC = () => {
   return (
@@ -28,17 +29,19 @@ const App: React.FC = () => {
             <MuiCssBaseline />
             <StyledComponentsThemeProvider theme={theme}>
               <Routes>
-                <Route path="/" element={<PlayerPage />} />
-                <Route path="/clubs" element={<ClubsPage />} />
-                <Route path="/signup" element={<SignupForm />} />
-                <Route path="/signin" element={<LoginForm />} />
-                {/* <Route path="/" element={<Navigation />}>
+                <Route element={<SharedLayout />}>
+                  <Route path="/" element={<PlayerPage />} />
+                  <Route path="/clubs" element={<ClubsPage />} />
+                  <Route path="/signup" element={<SignupForm />} />
+                  <Route path="/signin" element={<LoginForm />} />
+                  {/* <Route path="/" element={<Navigation />}>
                     <Route index element={<Home />} />
                     <Route path="shop/*" element={<Shop />} />
                     <Route path="auth" element={<Authentication />} />
                     <Route path="checkout" element={<Checkout />} />
                   </Route> 
               */}
+                </Route>
               </Routes>
             </StyledComponentsThemeProvider>
           </MuiThemeProvider>

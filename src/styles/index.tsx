@@ -1,3 +1,5 @@
+import Accordion from "./accordion/Accordion.styles";
+import AccordionSummary from "./accordion/AccordionSummary.styles";
 import BoxOverflow from "./box/BoxOverflow.styles";
 import BoxPlayer from "./box/BoxPlayer.styles";
 import Card from "./card/Card.style";
@@ -12,6 +14,8 @@ import Stack from "./stack/Stack.styles";
 import Typography from "./typography/Typography.styles";
 
 export {
+  Accordion,
+  AccordionSummary,
   BoxOverflow,
   BoxPlayer,
   Card,

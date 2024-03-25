@@ -17,6 +17,7 @@ declare module '@mui/material/styles' {
     headline3: React.CSSProperties;
     subheadline1: React.CSSProperties;
     subheadline2: React.CSSProperties;
+    mainAppTitle: React.CSSProperties;
     title1: React.CSSProperties;
     title2: React.CSSProperties;
     title3: React.CSSProperties;
@@ -72,6 +73,7 @@ declare module '@mui/material/Typography' {
     headline6: true;
     subheadline1: true;
     subheadline2: true;
+    mainAppTitle: true;
     title1: true;
     title2: true;
     title3: true;
@@ -202,6 +204,17 @@ export const typography = {
     letterSpacing: '0.2px',
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
       fontSize: '16px',
+    },
+  },
+  mainAppTitle: {
+    ...allVariantsCss,
+    fontSize: '32px',
+    lineHeight: '140%',
+    fontFamily: fonts.regular,
+    fontWeight: 700,
+    color: colors.grey4,
+    [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+      fontSize: '24px',
     },
   },
   title1: {
