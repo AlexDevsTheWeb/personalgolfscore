@@ -1,122 +1,113 @@
 {
-	"clubs": [
+	"playerID": "playerID",
+	"types": [
 		{
-			"degree": 9.5,
-			"name": "Ping G20",
-			"playerID": "playerID",
-			"type": {
-				"cat": "driver",
-				"number": "1"
-			}
+			"typeName": "driver",
+			"details": [
+				{
+					"name": "Ping G20",
+					"loft": 9.5,
+					"imageURL": "",
+					"number": 1
+				}
+			]
 		},
 		{
-			"degree": 16.5,
-			"name": "Ping G20",
-			"playerID": "playerID",
-			"type": {
-				"cat": "fairway wood",
-				"number": "4"
-			}
+			"typeName": "fairway wood",
+			"details": [
+				{
+					"name": "Ping G20",
+					"loft": 16.5,
+					"imageURL": "",
+					"number": 4
+				}
+			]
 		},
 		{
-			"degree": 20,
-			"name": "Ping G20",
-			"playerID": "playerID",
-			"type": {
-				"cat": "hybrid",
-				"number": "3"
-			}
+			"typeName": "hybrid",
+			"details": [
+				{
+					"name": "Ping G20",
+					"loft": 20,
+					"imageURL": "",
+					"number": 3
+				}
+			]
 		},
 		{
-			"degree": 10.5,
-			"name": "Wilson Staff Di9",
-			"playerID": "playerID",
-			"type": {
-				"cat": "iron",
-				"number": "4"
-			}
+			"typeName": "iron",
+			"details": [
+				{
+					"name": "Wilson Staff Di9",
+					"loft": 5,
+					"imageURL": "",
+					"number": 4
+				},
+				{
+					"name": "Wilson Staff Di9",
+					"loft": 5,
+					"imageURL": "",
+					"number": 5
+				},
+				{
+					"name": "Wilson Staff Di9",
+					"loft": 5,
+					"imageURL": "",
+					"number": 6
+				},
+				{
+					"name": "Wilson Staff Di9",
+					"loft": 5,
+					"imageURL": "",
+					"number": 7
+				},
+				{
+					"name": "Wilson Staff Di9",
+					"loft": 5,
+					"imageURL": "",
+					"number": 8
+				},
+				{
+					"name": "Wilson Staff Di9",
+					"loft": 5,
+					"imageURL": "",
+					"number": 9
+				}
+			]
 		},
 		{
-			"degree": 10.5,
-			"name": "Wilson Staff Di9",
-			"playerID": "playerID",
-			"type": {
-				"cat": "iron",
-				"number": "5"
-			}
+			"typeName": "wedge",
+			"details": [
+				{
+					"name": "Wilson Staff Di9",
+					"loft": 5,
+					"imageURL": "",
+					"number": "pitch"
+				},
+				{
+					"name": "Wilson Staff Tw9",
+					"loft": 5,
+					"imageURL": "",
+					"number": "gap"
+				},
+				{
+					"name": "Wilson Staff Tw9",
+					"loft": 5,
+					"imageURL": "",
+					"number": "sand"
+				}
+			]
 		},
 		{
-			"degree": 10.5,
-			"name": "Wilson Staff Di9",
-			"playerID": "playerID",
-			"type": {
-				"cat": "iron",
-				"number": "6"
-			}
-		},
-		{
-			"degree": 10.5,
-			"name": "Wilson Staff Di9",
-			"playerID": "playerID",
-			"imageURL": "https://www.golfalot.com/ReviewImages/irons/wilson/staffdi9L.jpg",
-			"type": {
-				"cat": "iron",
-				"number": "7"
-			}
-		},
-		{
-			"degree": 10.5,
-			"name": "Wilson Staff Di9",
-			"playerID": "playerID",
-			"type": {
-				"cat": "iron",
-				"number": "8"
-			}
-		},
-		{
-			"degree": 10.5,
-			"name": "Wilson Staff Di9",
-			"playerID": "playerID",
-			"type": {
-				"cat": "iron",
-				"number": "9"
-			}
-		},
-		{
-			"degree": 10.5,
-			"name": "Wilson Staff Di9",
-			"playerID": "playerID",
-			"type": {
-				"cat": "wedge",
-				"number": "pitch"
-			}
-		},
-		{
-			"degree": 52,
-			"name": "Wilson Staff Tw9",
-			"playerID": "playerID",
-			"type": {
-				"cat": "wedge",
-				"number": "gap"
-			}
-		},
-		{
-			"degree": 56,
-			"name": "Wilson Staff Tw9",
-			"playerID": "playerID",
-			"type": {
-				"cat": "wedge",
-				"number": "sand"
-			}
-		},
-		{
-			"degree": 0,
-			"name": "Mati Putter",
-			"playerID": "playerID",
-			"type": {
-				"cat": "putt",
-				"number": "1"
-			}
+			"typeName": "putt",
+			"details": [
+				{
+					"name": "Mati Putter",
+					"loft": 0,
+					"imageURL": "",
+					"number": 0
+				}
+			]
 		}
 	]
 }

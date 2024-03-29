@@ -53,6 +53,17 @@ declare module '@mui/material/Paper' {
   }
 }
 
+declare module '@mui/material/Grid' {
+  interface GridPropsVariantOverrides {
+    club: true;
+  }
+}
+declare module '@mui/material/Box' {
+  interface BoxPropsVariantOverrides {
+    test: true;
+  }
+}
+
 declare module '@mui/material/styles' {
   interface Theme {
     datepicker: string;

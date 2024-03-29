@@ -4,8 +4,8 @@ import authFetch, { checkForUnauthorizedResponse } from "../../utils/axios/axiox
 export const getClubsThunk = async (thunkAPI: any) => {
   let playerURL = `/data/clubs.json`;
   try {
-    const resp = await authFetch.get(playerURL);
-    return resp.data.clubs;
+    const response = await authFetch.get(playerURL);
+    return response.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }

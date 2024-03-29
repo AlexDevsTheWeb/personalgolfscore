@@ -1,29 +1,24 @@
 export interface IClub {
-  degree: number;
-  name: string;
-  playerID: string;
-  imageURL: string;
-  type: IClubType;
+  playerID: string,
+  types: IClubType,
 }
 
 export interface IClubType {
-  cat: string;
-  number: string;
+  typeName: string,
+  details: IClubDetails[]
+}
+export interface IClubDetails {
+  name: string,
+  loft: number,
+  imageURL: string,
+  number: number | string
 }
 
 export type InitialStateClubs = {
   isLoading: boolean;
-  clubs: IClub[];
+  clubs: IClub;
 }
 
 export type ClubPayload = {
-  payload: ClubResponse[];
-}
-
-export type ClubResponse = {
-  degree: number;
-  name: string;
-  playerID: string;
-  imageURL: string;
-  type: IClubType;
+  payload: IClub;
 }

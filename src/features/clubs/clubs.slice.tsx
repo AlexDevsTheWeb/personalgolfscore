@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getClubsThunk } from "./clubs.thunk";
-import { InitialStateClubs, ClubPayload } from "../../types/clubs.types";
+import { InitialStateClubs, ClubPayload, IClub } from "../../types/clubs.types";
 // import { editCarrierThunk, getCarrierDetailsThunk } from "./carrierThunk";
 // import {
 //   CarrierPayload,
@@ -10,7 +10,22 @@ import { InitialStateClubs, ClubPayload } from "../../types/clubs.types";
 
 const initialState: InitialStateClubs = {
   isLoading: false,
-  clubs: [],
+  clubs: {
+    playerID: "",
+    types: [] as never
+    // types: [
+    //   {
+    //   typeName: "",
+    //   details: [
+    //     {
+    //       name: "",
+    //       loft: 0,
+    //       imageURL: "",
+    //       number: 0
+    //     }
+    //   ]
+    // }]
+  }
 };
 
 export const getClubsDetails = createAsyncThunk(
