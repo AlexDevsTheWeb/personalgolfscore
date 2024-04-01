@@ -42,7 +42,8 @@ const components: Components<Omit<Theme, 'components'>> = {
           textTransform: 'none',
           webkitTextDecoration: 'none',
           textDecoration: 'none',
-          padding: 0,
+          padding: 5,
+          margin: 5,
           backgroundColor: 'transparent',
 
           '@media(hover: hover)': {
@@ -569,6 +570,44 @@ const components: Components<Omit<Theme, 'components'>> = {
             },
           },
         },
+      },
+      {
+        props: { variant: 'clubsLoft' },
+        style: {
+          backgroundColor: 'transparent',
+          display: 'flex',
+          flexDirection: 'row',
+          alignContent: 'center',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }
+      },
+      {
+        props: { variant: 'clubs' },
+        style: {
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          alignContent: 'flex-start',
+          padding: 0,
+          backgroundColor: 'transparent',
+          border: 'none'
+        }
+      },
+      {
+        props: { variant: 'clubsHeader' },
+        style: {
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          alignContent: 'flex-start',
+          backgroundColor: 'transparent',
+          border: 'none',
+          marginTop: 10,
+          marginBottom: 10,
+        }
       },
       {
         props: { variant: 'confirm' },
@@ -1332,17 +1371,93 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiCard: {
     styleOverrides: {
       root: {
+        maxWidth: '100%',
         background: palette.grey6.main,
         border: '1px solid #ccc',
-        borderRadius: '5px',
+        borderRadius: 5,
         width: '100%',
         display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: '5px',
-        boxShadow: 'none',
+        padding: 5,
+        // boxShadow: 'none',
+      }
+    },
+    variants: [
+      {
+        props: { variant: 'clubs' },
+        style: {
+          width: '48%',
+          [`@media (max-width:${breakpoints.values.lg}px)`]: {
+            maxWidth: '100%',
+            width: 500,
+          },
+          [`@media (max-width:${breakpoints.values.sm}px)`]: {
+            maxWidth: '100%',
+            width: 363,
+          },
+        }
+      },
+      {
+        props: { variant: 'disabled' },
+        style: {
+          width: '48%',
+          backgroundColor: 'transparent',
+          flexDirection: 'row',
+          border: '2px solid red',
+          [`@media (max-width:${breakpoints.values.lg}px)`]: {
+            maxWidth: '100%',
+            width: 500,
+          },
+          [`@media (max-width:${breakpoints.values.sm}px)`]: {
+            maxWidth: '100%',
+            width: 363,
+          },
+        }
+      }
+    ],
+  },
+  MuiTypography: {
+    styleOverrides: {
+      root: {
+
       }
     }
-  }
+  },
+  MuiCardMedia: {
+    styleOverrides: {
+      root: {
+        width: '50%',
+        height: '200px',
+        border: '2px solid #ff9900'
+      }
+    }
+  },
+  MuiCardContent: {
+    styleOverrides: {
+      root: {
+        width: '50%',
+        padding: '4px 8px',
+        display: 'flex',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        alignContent: 'stretch',
+        justifyContent: 'space-between',
+        alignItems: 'stretch',
+      }
+    }
+  },
+  MuiCardActions: {
+    styleOverrides: {
+      root: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        padding: 4,
+        justifyContent: 'space-between'
+      }
+    }
+  },
 };
 
 export default components;

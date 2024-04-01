@@ -77,6 +77,12 @@ export const themeSystem = createTheme({
             },
           },
         },
+        {
+          props: { variant: 'clubs' },
+          style: {
+            overflow: 'auto'
+          }
+        }
       ],
     },
     MuiSelectItem: {

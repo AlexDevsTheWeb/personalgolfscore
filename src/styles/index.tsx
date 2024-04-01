@@ -12,6 +12,7 @@ import Paper from "./paper/Paper.styles";
 
 import Stack from "./stack/Stack.styles";
 import Typography from "./typography/Typography.styles";
+import ClubTypography from "./typography/ClubTypography.styles";
 
 export {
   Accordion,
@@ -26,4 +27,5 @@ export {
   RowCard,
   Stack,
   Typography,
+  ClubTypography
 }

@@ -43,6 +43,10 @@ declare module '@mui/material/Button' {
 
 declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
+    clubs: true;
+    clubsHeader: true;
+    clubsLoft: true;
+    disabled: true;
     light: true;
     dialog: true;
     uploadFileDialog: true;
@@ -61,6 +65,7 @@ declare module '@mui/material/Grid' {
 declare module '@mui/material/Box' {
   interface BoxPropsVariantOverrides {
     test: true;
+    clubsContainer: true;
   }
 }
 

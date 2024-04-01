@@ -1,6 +1,6 @@
 export interface IClub {
   playerID: string,
-  types: IClubType,
+  types: IClubType[],
 }
 
 export interface IClubType {
@@ -11,11 +11,13 @@ export interface IClubDetails {
   name: string,
   loft: number,
   imageURL: string,
-  number: number | string
+  clubNumber: number | string,
+  selected: boolean
 }
 
 export type InitialStateClubs = {
   isLoading: boolean;
+  totalClubs: number;
   clubs: IClub;
 }
 

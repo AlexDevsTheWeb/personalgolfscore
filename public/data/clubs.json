@@ -8,7 +8,8 @@
 					"name": "Ping G20",
 					"loft": 9.5,
 					"imageURL": "",
-					"number": 1
+					"clubNumber": 1,
+					"selected": true
 				}
 			]
 		},
@@ -19,7 +20,8 @@
 					"name": "Ping G20",
 					"loft": 16.5,
 					"imageURL": "",
-					"number": 4
+					"clubNumber": 4,
+					"selected": true
 				}
 			]
 		},
@@ -30,7 +32,8 @@
 					"name": "Ping G20",
 					"loft": 20,
 					"imageURL": "",
-					"number": 3
+					"clubNumber": 3,
+					"selected": true
 				}
 			]
 		},
@@ -41,37 +44,43 @@
 					"name": "Wilson Staff Di9",
 					"loft": 5,
 					"imageURL": "",
-					"number": 4
+					"clubNumber": 4,
+					"selected": true
 				},
 				{
 					"name": "Wilson Staff Di9",
 					"loft": 5,
 					"imageURL": "",
-					"number": 5
+					"clubNumber": 5,
+					"selected": true
 				},
 				{
 					"name": "Wilson Staff Di9",
 					"loft": 5,
 					"imageURL": "",
-					"number": 6
+					"clubNumber": 6,
+					"selected": true
 				},
 				{
 					"name": "Wilson Staff Di9",
 					"loft": 5,
 					"imageURL": "",
-					"number": 7
+					"clubNumber": 7,
+					"selected": true
 				},
 				{
 					"name": "Wilson Staff Di9",
 					"loft": 5,
 					"imageURL": "",
-					"number": 8
+					"clubNumber": 8,
+					"selected": true
 				},
 				{
 					"name": "Wilson Staff Di9",
 					"loft": 5,
 					"imageURL": "",
-					"number": 9
+					"clubNumber": 9,
+					"selected": true
 				}
 			]
 		},
@@ -82,19 +91,22 @@
 					"name": "Wilson Staff Di9",
 					"loft": 5,
 					"imageURL": "",
-					"number": "pitch"
+					"clubNumber": "pitch",
+					"selected": true
 				},
 				{
 					"name": "Wilson Staff Tw9",
 					"loft": 5,
 					"imageURL": "",
-					"number": "gap"
+					"clubNumber": "gap",
+					"selected": false
 				},
 				{
 					"name": "Wilson Staff Tw9",
 					"loft": 5,
 					"imageURL": "",
-					"number": "sand"
+					"clubNumber": "sand",
+					"selected": false
 				}
 			]
 		},
@@ -105,7 +117,8 @@
 					"name": "Mati Putter",
 					"loft": 0,
 					"imageURL": "",
-					"number": 0
+					"clubNumber": 0,
+					"selected": true
 				}
 			]
 		}
