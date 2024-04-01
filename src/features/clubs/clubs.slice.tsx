@@ -10,7 +10,11 @@ import { InitialStateClubs, ClubPayload } from "../../types/clubs.types";
 
 const initialState: InitialStateClubs = {
   isLoading: false,
-  clubs: [],
+  totalClubs: 0,
+  clubs: {
+    playerID: "",
+    types: [] as never
+  }
 };
 
 export const getClubsDetails = createAsyncThunk(
@@ -28,6 +32,12 @@ const clubsSlice = createSlice({
     // setCarrierLogo: (state, { payload }) => {
     //   state.carrierLogo = payload;
     // },
+    setClubInserted: (state, { payload }) => {
+
+    },
+    setTotalClubs: (state, { payload }) => {
+      state.totalClubs = state.totalClubs + payload;
+    },
     resetClubs: () => initialState,
   },
   extraReducers: (builder) => {
@@ -41,9 +51,10 @@ const clubsSlice = createSlice({
       })
       .addCase(getClubsDetails.rejected, (state, { payload }: any) => {
         state.isLoading = false;
+        state.clubs = [] as never;
       });
   },
 });
 
-export const { resetClubs } = clubsSlice.actions;
+export const { setTotalClubs, resetClubs } = clubsSlice.actions;
 export default clubsSlice.reducer;

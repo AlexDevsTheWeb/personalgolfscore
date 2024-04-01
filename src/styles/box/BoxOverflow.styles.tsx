@@ -3,7 +3,7 @@ import * as React from 'react';
 
 interface BoxProps {
   direction: 'horizontal' | 'vertical'
-  variant: 'list' | 'table' | 'section' | 'edit' | 'page';
+  variant: 'list' | 'table' | 'section' | 'edit' | 'page' | 'clubs';
   loading?: boolean;
   children: React.ReactNode;
   sx?: any;

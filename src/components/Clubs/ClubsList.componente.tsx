@@ -1,66 +1,60 @@
-import React from 'react'
-import { IClub } from '../../types/clubs.types'
-import { RowCard, Typography } from '../../styles';
-// import Accordion from '@mui/material/Accordion';
-import { Accordion, AccordionSummary } from '../../styles';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import { Box, Typography, capitalize } from '@mui/material';
+import ClubBox from './ClubBox.component';
+import BoxClubs from '../../styles/box/BoxClubs.styles';
+import { setTotalClubs } from '../../features/clubs/clubs.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { RootState } from '../../store/store';
+import { IClubType } from '../../types/clubs.types';
 
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { capitalize } from '../../utils/strings/strings.utils';
-import { Box } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+const ClubsList = (club: any) => {
+  const { totalClubs, clubs: { types } } = useSelector((store: RootState) => store.clubs);
+  const dispatch = useDispatch<any>();
+  const { props } = club;
+  const { details } = props;
+
+  function update(types: IClubType[], name: string, clubNumber: number, selected: boolean, updatedData: Partial<IClubType>): IClubType[] {
+    return types.map((item: any) => ((item.name === name && item.clubNumber === clubNumber && item.selected === selected) ? { ...item, ...updatedData } : item))
+  }
 
 
-interface Props {
-  index: number
-  props: IClub;
-}
+  // TODO: find a way to update 'selected' for a single club
+  const handleAddRemoveClubs = (n: string, c: number, s: boolean) => {
 
-const ClubsList = (props: Props) => {
-  const { name, degree, type, imageURL } = props.props;
+    const filteredClubs = types.map((type: any, index: number) => {
+      return type.details.filter((t: any) => {
+        return t.name === n && t.clubNumber === c;
+      }).filter((f: any) => {
+        return f
+      });
+    })
+
+    // const filteredClubs2 = update(types, n, c, s, filteredClubs.filter((f: any)=> {return f.length > 0}))
+    console.log("FILTERED --> ", filteredClubs)
+  };
+  useEffect(() => {
+    let total = 0;
+    details.map((det: any, index: number) => {
+      if (!!details[index].selected) {
+        total = totalClubs + 1;
+      }
+      dispatch(setTotalClubs(total));
+      return true;
+    });
+    // eslint-disable-next-line
+  }, [details, dispatch]);
+
   return (
-    <>
-      {/* <Grid2 container>
-        <Grid2 md={10} sx={{ border: "2px solid #ccc", padding: "10px" }}>
-          <Typography>{capitalize(type.cat)} - {type.number}</Typography>
-        </Grid2>
-        <Grid2 md={6} sx={{ border: "2px solid #ccc", padding: "10px" }}>ZZZ</Grid2>
-        <Grid2 md={2} sx={{ border: "2px solid #ccc", padding: "10px" }}>ZZZ</Grid2>
-        <Grid2 md={2} sx={{ border: "2px solid #ccc", padding: "10px" }}>ZZZ</Grid2>
-        <Grid2 md={2} sx={{ border: "2px solid #ccc", padding: "10px" }}>ZZZ</Grid2>
-        <Grid2 md={2} sx={{ border: "2px solid #ccc", padding: "10px" }}>ZZZ</Grid2>
-      </Grid2> */}
-      <Accordion sx={{ width: "auto", minWidth: "150px" }}>
-        <AccordionSummary
-          expandIcon={<ArrowDownwardIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          <RowCard name="" label="" value={`${capitalize(type.cat)} ${type.number}`} />
-        </AccordionSummary>
-        <AccordionDetails>
-          <RowCard name={"Name"} label={"Name"} value={capitalize(name)} />
-          <Typography>{`Name: ${capitalize(name)}`}</Typography>
-          <Typography>{`Loft: ${degree}`}</Typography>
-          {
-            imageURL &&
-            <Box
-              component="img"
-              sx={{
-                height: "auto",
-                width: 350,
-                maxWidth: { xs: 350, md: 250 },
-              }}
-              alt={`${capitalize(type.cat)} ${type.number} - ${capitalize(name)}`}
-              src={imageURL}
-            />
-          }
-
-        </AccordionDetails>
-      </Accordion>
-    </>
-
+    <Box>
+      <Typography variant='clubsTypeName'>
+        {capitalize(props.typeName)}
+      </Typography>
+      <BoxClubs>
+        {details.map((clubs: any, index: number) => {
+          return (<ClubBox key={index} details={details[index]} typename={props.typeName} handleAddRemoveClubs={handleAddRemoveClubs} />)
+        })}
+      </BoxClubs>
+    </Box>
   )
 }
 

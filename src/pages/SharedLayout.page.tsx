@@ -106,14 +106,14 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
-  if (device.isMobile || device.isTabletPortrait) {
-    return (<Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <BottomBar>
-        <Outlet />
-      </BottomBar>
-    </Box>)
-  }
+  // if (device.isMobile || device.isTabletPortrait) {
+  //   return (<Box sx={{ display: 'flex' }}>
+  //     <CssBaseline />
+  //     <BottomBar>
+  //       <Outlet />
+  //     </BottomBar>
+  //   </Box>)
+  // }
 
   return (
     <Box sx={{ display: 'flex' }}>
