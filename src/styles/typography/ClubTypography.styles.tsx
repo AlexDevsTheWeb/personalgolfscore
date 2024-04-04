@@ -1,20 +1,20 @@
 import * as React from "react";
 import { Paper, Typography as TypographyMui, TypographyProps as TypographyPropsMui } from "@mui/material";
 import styled from "styled-components";
-import { IClubDetails } from "../../types/clubs.types";
 import { capitalize } from "../../utils/strings/strings.utils";
 
 interface TypographyProps extends TypographyPropsMui {
-  details: IClubDetails,
-  typename: string,
+  details: any,
+  typeName: string,
 }
 
 const StyledTypography = styled(TypographyMui)({})
 
 const ClubTypography: React.FC<TypographyProps> = props => {
 
-  const { name, loft, clubNumber, selected } = props.details;
-  const { typename } = props;
+  const { typeName, details: { name, loft, clubNumber, selected } } = props;
+  // const { name, loft, clubNumber, selected } = details;
+
 
   return (
     <>
@@ -26,8 +26,8 @@ const ClubTypography: React.FC<TypographyProps> = props => {
           (clubNumber !== 1 && clubNumber !== 0)
             ? <StyledTypography {...props} variant='subheadline2'>
               {`${typeof clubNumber === 'string'
-                ? `${capitalize(clubNumber)} ${capitalize(typename)}`
-                : `${capitalize(typename)} ${clubNumber}`
+                ? `${capitalize(clubNumber)} ${capitalize(typeName)}`
+                : `${capitalize(typeName)} ${clubNumber}`
                 }`}
             </StyledTypography>
             : null

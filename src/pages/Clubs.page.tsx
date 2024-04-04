@@ -1,19 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import ClubsMain from "../components/Clubs/ClubsMain.component"
 import { useEffect } from "react";
-import { getClubsDetails } from "../features/clubs/clubs.slice";
+import { getClubsDetails } from "../features/golfBag/golfBag.slice";
 import { RootState } from "../store/store";
 import Typography from "../styles/typography/Typography.styles";
 
 const ClubsPage = () => {
   const dispatch = useDispatch<any>();
-  const { isLoading, error: { errorMessage } } = useSelector((store: RootState) => store.clubs);
-
-  // Assuming you have a user ID stored somewhere (e.g., Redux or Auth context)
-  // const userId = /* Get user ID here */
+  const { isLoading, error: { errorMessage } } = useSelector((store: RootState) => store.golfBag);
 
   useEffect(() => {
-    dispatch(getClubsDetails('')); // Pass actual user ID
+    dispatch(getClubsDetails(''));
   }, [dispatch]);
 
   if (isLoading) {
@@ -21,7 +18,6 @@ const ClubsPage = () => {
   }
 
   if (errorMessage) {
-    // Handle error gracefully, e.g., display error message
     return <Typography variant="headline3">{errorMessage}</Typography>;
   }
 

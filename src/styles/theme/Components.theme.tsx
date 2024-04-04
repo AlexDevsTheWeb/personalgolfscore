@@ -447,7 +447,6 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiAccordion: {
     styleOverrides: {
       root: {
-        backgroundColor: "#ff9900"
       }
     }
   },
@@ -1429,9 +1428,9 @@ const components: Components<Omit<Theme, 'components'>> = {
       root: {
         width: '50%',
         height: '200px',
-        border: '2px solid #ff9900'
       }
-    }
+    },
+
   },
   MuiCardContent: {
     styleOverrides: {

@@ -5,13 +5,11 @@ import ClubsList from "./ClubsList.componente";
 import ClubsHeaderTypography from "../../styles/typography/ClubsHeaderTypography.styles";
 
 const ClubsMain = () => {
-  const { isLoading, clubs, totalClubs } = useSelector((store: RootState) => store.clubs);
+  const { isLoading, clubs } = useSelector((store: RootState) => store.golfBag);
 
   return (
     <BoxPlayer>
-      <ClubsHeaderTypography
-        playerID={clubs.playerID}
-        totalClubs={totalClubs} />
+      <ClubsHeaderTypography />
       <Grid
         container
         spacing={{ xs: 1, md: 1 }}
@@ -31,7 +29,8 @@ const ClubsMain = () => {
                   sx={{ minWidth: "100%" }}
                 >
                   <ClubsList
-                    club={club}
+                    typeName={club.typeName}
+                    details={club.details}
                   />
                 </Grid>
               )

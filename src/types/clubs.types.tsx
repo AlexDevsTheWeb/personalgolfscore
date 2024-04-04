@@ -1,13 +1,13 @@
-export interface IClub {
+export interface IGolfBag {
   playerID: string,
-  types: IClubType[],
+  types: IClubs[],
 }
 
-export interface IClubType {
+export interface IClubs {
   typeName: string,
-  details: IClubDetails[]
+  details: IClub[]
 }
-export interface IClubDetails {
+export interface IClub {
   name: string,
   loft: number,
   imageURL: string,
@@ -19,7 +19,8 @@ export type InitialStateClubs = {
   error: IErrorType;
   isLoading: boolean;
   totalClubs: number;
-  clubs: IClub;
+  selectedClubs: number;
+  clubs: IGolfBag;
 }
 export interface IErrorType {
   errorMessage: string;
@@ -27,5 +28,5 @@ export interface IErrorType {
 }
 
 export type ClubPayload = {
-  payload: IClub;
+  payload: IGolfBag;
 }

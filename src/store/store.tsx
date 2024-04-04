@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import clubReducer from '../features/clubs/clubs.slice'
+import golfBagReducer from '../features/golfBag/golfBag.slice'
 import playerReducer from '../features/player/player.slice';
 
 const rootReducer = {
-  clubs: clubReducer,
+  golfBag: golfBagReducer,
   player: playerReducer,
   // hooks: combineReducers({
   //   dialog: dialogReducer,
