@@ -16,9 +16,14 @@ export interface IClubDetails {
 }
 
 export type InitialStateClubs = {
+  error: IErrorType;
   isLoading: boolean;
   totalClubs: number;
   clubs: IClub;
+}
+export interface IErrorType {
+  errorMessage: string;
+  errorCode: number;
 }
 
 export type ClubPayload = {
