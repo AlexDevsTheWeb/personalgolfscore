@@ -1,4 +1,4 @@
-import { Box, Typography, capitalize } from "@mui/material";
+import { Box, Input, TextField, Typography, capitalize } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -11,14 +11,22 @@ import SportsGolfTwoToneIcon from '@mui/icons-material/SportsGolfTwoTone';
 import { Button } from '@mui/material';
 import { IClub } from "../../types/clubs.types";
 import { useDispatch } from "react-redux";
-import { updateClubSelection } from "../../features/golfBag/golfBag.slice";
+import { updateClub, updateClubSelection } from "../../features/golfBag/golfBag.slice";
+import { useState } from "react";
 
 const ClubsList = (props: any) => {
   const { typeName, details } = props;
   const dispatch = useDispatch<any>();
 
+  const [isEditing, setIsEditing] = useState(false);
+
   const handleSelectClub = (clubDetail: IClub) => {
     dispatch(updateClubSelection({ ...clubDetail, selected: !clubDetail.selected, typeName: typeName }));
+  };
+
+  const handleEditToggle = () => setIsEditing(!isEditing);
+  const handleClubChange = (clubName: string, propertyName: string, newValue: string) => {
+    dispatch(updateClub({ clubName, propertyName, newValue, typeName }));
   };
 
   return (
@@ -36,7 +44,15 @@ const ClubsList = (props: any) => {
                 className={selected ? '' : 'disabled'}
               />
               <CardContent>
-                <ClubTypography typeName={typeName} details={clubDetail} />
+                {isEditing
+                  ? <TextField
+                    label="Name"
+                    variant="outlined"
+                    value={clubDetail.name} // Assuming name is stored in clubDetail
+                    onChange={(event) => handleClubChange(clubDetail.name, "name", event.target.value)} // Update handler function
+                  />
+                  : <ClubTypography typeName={typeName} details={clubDetail} />}
+
                 <CardActions>
                   {selected ? (
                     <>
@@ -63,12 +79,18 @@ const ClubsList = (props: any) => {
                       </Button>
                     </>
                   )}
+                  <Button variant="link" size="small" onClick={handleEditToggle}>
+                    {isEditing ? "Save" : "Edit"}
+                  </Button>
                 </CardActions>
               </CardContent>
             </Card>
           )
         })}
       </BoxClubs>
+      <Button variant="contained" onClick={handleEditToggle}>
+        {isEditing ? "Save Changes" : "Edit All Clubs"}
+      </Button>
     </Box>
   );
 };

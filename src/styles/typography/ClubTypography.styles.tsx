@@ -13,8 +13,6 @@ const StyledTypography = styled(TypographyMui)({})
 const ClubTypography: React.FC<TypographyProps> = props => {
 
   const { typeName, details: { name, loft, clubNumber, selected } } = props;
-  // const { name, loft, clubNumber, selected } = details;
-
 
   return (
     <>

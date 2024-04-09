@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getClubsThunk } from "./golfBag.thunk";
-import { InitialStateClubs, ClubPayload, IClub } from "../../types/clubs.types";
+import { InitialStateClubs, ClubPayload } from "../../types/clubs.types";
 
 const initialState: InitialStateClubs = {
   isLoading: false,
@@ -25,6 +25,22 @@ const golfBagSlice = createSlice({
   name: "golfBag",
   initialState,
   reducers: {
+    updateClub: (state, action) => {
+      const { clubName, propertyName, newValue, typeName } = action.payload;
+
+      const typeIndex = state.clubs.types.findIndex((type) => type.typeName === typeName);
+
+      if (typeIndex !== -1) {
+        const clubIndex = state.clubs.types.findIndex((type) =>
+          type.details.some((detail) => detail.name === clubName)
+        );
+
+        // if (clubIndex !== -1) {
+        //   state.clubs.types[typeIndex].details[clubIndex][propertyName] = newValue; // Update property value
+        // }
+      }
+
+    },
     updateClubSelection: (state, { payload }) => {
       const { name, clubNumber, loft, selected, typeName } = payload;
 
@@ -77,5 +93,5 @@ const golfBagSlice = createSlice({
   },
 });
 
-export const { resetClubs, updateClubSelection } = golfBagSlice.actions;
+export const { resetClubs, updateClubSelection, updateClub } = golfBagSlice.actions;
 export default golfBagSlice.reducer;
