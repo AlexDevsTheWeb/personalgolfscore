@@ -36,14 +36,14 @@ const Player: React.FC = () => {
             />
             <RowCard
               label={"HCP"}
-              value={`${player.HCP}`}
+              value={`${player.hcp}`}
               name="hcp"
             />
-            {/* <RowCard
+            <RowCard
               label={"Date of birth"}
-              value={`${player.DOB.seconds}`}
+              value={`${player.dob}`}
               name="dob"
-            /> */}
+            />
           </BoxPlayer>
         </Grid>
       </Grid>

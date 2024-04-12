@@ -196,7 +196,12 @@ const components: Components<Omit<Theme, 'components'>> = {
           },
         },
       },
-
+      {
+        props: { variant: 'roundDetails' },
+        style: {
+          color: '#000'
+        }
+      },
       {
         props: { variant: 'underline' },
         style: {
@@ -730,6 +735,7 @@ const components: Components<Omit<Theme, 'components'>> = {
         marginRight: 0,
       },
     },
+
     defaultProps: {
       disableFocusRipple: true,
     },

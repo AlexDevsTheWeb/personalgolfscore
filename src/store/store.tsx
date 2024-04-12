@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import golfBagReducer from '../features/golfBag/golfBag.slice'
 import playerReducer from '../features/player/player.slice';
+import roundsReducer from '../features/rounds/rounds.slice';
 
 const rootReducer = {
   golfBag: golfBagReducer,
   player: playerReducer,
+  rounds: roundsReducer,
   // hooks: combineReducers({
   //   dialog: dialogReducer,
   //   location: locationHookSlice,

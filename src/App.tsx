@@ -16,9 +16,9 @@ import Spinner from "./components/spinner/Spinner.component";
 import LoginForm from "./components/LoginForm/LoginForm.component";
 import SignupForm from "./components/LoginForm/SignupForm.component";
 import { store } from "./store/store";
-import PlayerPage from "./pages/Player.page";
 import ClubsPage from "./pages/Clubs.page";
 import SharedLayout from "./pages/SharedLayout.page";
+import Dashboard from "./pages/Dashboard.page";
 
 const App: React.FC = () => {
   return (
@@ -30,10 +30,11 @@ const App: React.FC = () => {
             <StyledComponentsThemeProvider theme={theme}>
               <Routes>
                 <Route element={<SharedLayout />}>
-                  <Route path="/" element={<PlayerPage />} />
+                  <Route path="/" element={<Dashboard />} />
                   <Route path="/clubs" element={<ClubsPage />} />
                   <Route path="/signup" element={<SignupForm />} />
                   <Route path="/signin" element={<LoginForm />} />
+                  <Route path="/round/:roundID" element={<LoginForm />} />
                   {/* <Route path="/" element={<Navigation />}>
                     <Route index element={<Home />} />
                     <Route path="shop/*" element={<Shop />} />
