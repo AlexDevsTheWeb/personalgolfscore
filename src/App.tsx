@@ -1,24 +1,24 @@
-import React, { Suspense } from "react";
-import { Provider } from "react-redux";
-import { Routes, Route } from "react-router-dom";
-import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 import {
   ThemeProvider as MuiThemeProvider,
   StyledEngineProvider,
 } from '@mui/material/styles';
-// import { Provider } from 'react-redux';
+import React, { Suspense } from "react";
+import { Provider } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 import { CssBaseline as MuiCssBaseline } from '@mui/material';
 import { deepmerge } from '@mui/utils';
 
-import { themeSystem } from './styles/theme/ThemeSystem.theme';
-import { theme } from './styles/theme/ThemeStyle.theme';
-import Spinner from "./components/spinner/Spinner.component";
 import LoginForm from "./components/LoginForm/LoginForm.component";
 import SignupForm from "./components/LoginForm/SignupForm.component";
-import { store } from "./store/store";
-import PlayerPage from "./pages/Player.page";
+import Spinner from "./components/spinner/Spinner.component";
 import ClubsPage from "./pages/Clubs.page";
+import Dashboard from "./pages/Dashboard.page";
 import SharedLayout from "./pages/SharedLayout.page";
+import { store } from "./store/store";
+import { theme } from './styles/theme/ThemeStyle.theme';
+import { themeSystem } from './styles/theme/ThemeSystem.theme';
+import RoundsData from './pages/RoundsData.page';
 
 const App: React.FC = () => {
   return (
@@ -30,10 +30,11 @@ const App: React.FC = () => {
             <StyledComponentsThemeProvider theme={theme}>
               <Routes>
                 <Route element={<SharedLayout />}>
-                  <Route path="/" element={<PlayerPage />} />
+                  <Route path="/" element={<Dashboard />} />
                   <Route path="/clubs" element={<ClubsPage />} />
                   <Route path="/signup" element={<SignupForm />} />
                   <Route path="/signin" element={<LoginForm />} />
+                  <Route path="/round/:roundID" element={<RoundsData />} />
                   {/* <Route path="/" element={<Navigation />}>
                     <Route index element={<Home />} />
                     <Route path="shop/*" element={<Shop />} />

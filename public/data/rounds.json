@@ -1,0 +1,35 @@
+{
+	"playerID": "playerID",
+	"rounds": [
+		{
+			"roundID": "1",
+			"roundDate": "11/04/2024",
+			"roundCourse": "Antico Borgo di Camuzzago",
+			"roundHoles": 9,
+			"roundTee": "Yellow",
+			"roundPar": 32,
+			"roundPlayingHCP": 12,
+			"roundShots": 47
+		},
+		{
+			"roundID": "2",
+			"roundDate": "12/04/2024",
+			"roundCourse": "Carimate Golf Club",
+			"roundHoles": 18,
+			"roundTee": "Yellow",
+			"roundPar": 72,
+			"roundPlayingHCP": 24,
+			"roundShots": 100
+		},
+		{
+			"roundID": "3",
+			"roundDate": "13/04/2024",
+			"roundCourse": "Barlassina Contry Club",
+			"roundHoles": 18,
+			"roundTee": "Yellow",
+			"roundPar": 72,
+			"roundPlayingHCP": 25,
+			"roundShots": 99
+		}
+	]
+}

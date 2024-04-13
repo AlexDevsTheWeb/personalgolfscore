@@ -37,12 +37,20 @@ declare module '@mui/material/Button' {
     home: true;
     outlinedDark: true;
     underline: true;
-    upload: true
+    upload: true;
+    roundDetails: true;
+  }
+}
+
+declare module '@mui/material/IconButton' {
+  interface IconButtonVariantOverrides {
+    roundDetail: true;
   }
 }
 
 declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
+    player: true;
     clubs: true;
     clubsHeader: true;
     clubsLoft: true;

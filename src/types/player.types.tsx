@@ -1,14 +1,10 @@
 export interface IPlayer {
-  DOB: {
-    seconds: number;
-    nanoseconds: number;
-  };
-  HCP: number;
-  email: string;
-  firstName: string;
-  id: string;
-  lastName: string;
-  userID: string;
+  playerID: string,
+  firstName: string,
+  lastName: string,
+  dob: string,
+  hcp: number,
+  email: string
 }
 
 export type InitialStatePlayer = {
@@ -21,14 +17,10 @@ export type PlayerPayload = {
 };
 
 export type PlayerResponse = {
-  DOB: {
-    seconds: number;
-    nanoseconds: number;
-  };
-  HCP: number;
-  email: string;
-  firstName: string;
-  id: string;
-  lastName: string;
-  userID: string;
+  playerID: string,
+  firstName: string,
+  lastName: string,
+  dob: string,
+  hcp: number,
+  email: string
 }

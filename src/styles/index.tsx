@@ -14,6 +14,11 @@ import Stack from "./stack/Stack.styles";
 import Typography from "./typography/Typography.styles";
 import ClubTypography from "./typography/ClubTypography.styles";
 
+import TableCell from "./table/TableCell.styles";
+import TableRow from "./table/TableRow.styles";
+
+import Tooltip from "./tooltip/Tooltip.styles";
+
 export {
   Accordion,
   AccordionSummary,
@@ -27,5 +32,8 @@ export {
   RowCard,
   Stack,
   Typography,
-  ClubTypography
+  ClubTypography,
+  TableRow,
+  TableCell,
+  Tooltip
 }

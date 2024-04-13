@@ -1,0 +1,20 @@
+{
+	"playerID": "playerID",
+	"totals": [
+		{
+			"roundID": "1",
+			"holeNumber": 9,
+			"distance": 2136,
+			"hcp": 0,
+			"par": 32,
+			"shots": 47,
+			"teeClub": "",
+			"fir": 40,
+			"gir": 11,
+			"putts": 17,
+			"sand": 1,
+			"water": 2,
+			"out": 1
+		}
+	]
+}
