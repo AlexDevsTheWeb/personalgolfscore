@@ -31,7 +31,6 @@ const roundsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getAllRounds.fulfilled, (state, { payload }: RoundPayload) => {
-        console.log("Slice payload: ", typeof payload.rounds)
         state.isLoading = false;
         state.playerID = payload.playerID;
         state.rounds = payload.rounds;

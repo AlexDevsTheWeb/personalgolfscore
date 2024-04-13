@@ -1,39 +1,16 @@
+import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../store/store';
-import { Link, useNavigate } from 'react-router-dom';
-import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
-import Button from '@mui/material/Button';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
+import { TableCell, TableRow } from '../../styles';
 
 const RoundsTable = () => {
-
   const navigate = useNavigate();
   const { rounds } = useSelector((store: RootState) => store.rounds);
 
@@ -45,41 +22,41 @@ const RoundsTable = () => {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Date</StyledTableCell>
-            <StyledTableCell>Course</StyledTableCell>
-            <StyledTableCell>Tee</StyledTableCell>
-            <StyledTableCell>Holes</StyledTableCell>
-            <StyledTableCell>Par</StyledTableCell>
-            <StyledTableCell>Playing HCP</StyledTableCell>
-            <StyledTableCell>Player shots</StyledTableCell>
-            <StyledTableCell>&nbsp;</StyledTableCell>
+            <TableCell align='center'>Date</TableCell>
+            <TableCell align='left'>Course</TableCell>
+            <TableCell align='left'>Tee</TableCell>
+            <TableCell align='center'>Holes</TableCell>
+            <TableCell align='center'>Par</TableCell>
+            <TableCell align='center'>Playing HCP</TableCell>
+            <TableCell align='center'>Player shots</TableCell>
+            <TableCell align='right'>&nbsp;</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rounds.map((round) => {
             const { roundID, roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundShots } = round;
             return (
-              <StyledTableRow key={roundID}>
-                <StyledTableCell component="th" scope="row">
+              <TableRow key={roundID}>
+                <TableCell component="th" scope="row" align='center'>
                   {roundDate}
-                </StyledTableCell>
-                <StyledTableCell>{roundCourse}</StyledTableCell>
-                <StyledTableCell>{roundTee}</StyledTableCell>
-                <StyledTableCell>{roundHoles}</StyledTableCell>
-                <StyledTableCell>{roundPar}</StyledTableCell>
-                <StyledTableCell>{roundPlayingHCP}</StyledTableCell>
-                <StyledTableCell>{roundShots}</StyledTableCell>
-                <StyledTableCell align={'right'}>
+                </TableCell>
+                <TableCell align='left'>{roundCourse}</TableCell>
+                <TableCell align='left'>{roundTee}</TableCell>
+                <TableCell align='center'>{roundHoles}</TableCell>
+                <TableCell align='center'>{roundPar}</TableCell>
+                <TableCell align='center'>{roundPlayingHCP}</TableCell>
+                <TableCell align='center'>{roundShots}</TableCell>
+                <TableCell align={'right'}>
                   <Button onClick={() => handleClick(roundID)} >
                     <ArrowCircleRightRoundedIcon />
                   </Button>
-                </StyledTableCell>
-              </StyledTableRow>
+                </TableCell>
+              </TableRow>
             )
           })}
         </TableBody>
       </Table>
-    </TableContainer >
+    </TableContainer>
   );
 }
 

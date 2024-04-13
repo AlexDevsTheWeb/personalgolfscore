@@ -50,6 +50,7 @@ declare module '@mui/material/IconButton' {
 
 declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
+    player: true;
     clubs: true;
     clubsHeader: true;
     clubsLoft: true;

@@ -1338,8 +1338,13 @@ const components: Components<Omit<Theme, 'components'>> = {
         marginTop: 0,
       },
       item: {
-        paddingTop: 0,
-        marginBottom: 0,
+        display: 'flex',
+        flexDirection: 'row',
+        rowGap: 2,
+        columnGap: 20,
+        flexWrap: 'wrap',
+        alignContent: 'space-between',
+        justifyContent: 'space-between',
       },
       root: {
         paddingTop: 0,
@@ -1389,6 +1394,23 @@ const components: Components<Omit<Theme, 'components'>> = {
       }
     },
     variants: [
+      {
+        props: { variant: 'player' },
+        style: {
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignContent: 'center',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: 'none',
+          borderBottom: '1px solid #ddd',
+          backgroundColor: '#f5f5f5',
+          borderRadius: 0,
+          padding: 10,
+          width: '48%'
+        },
+      },
       {
         props: { variant: 'clubs' },
         style: {

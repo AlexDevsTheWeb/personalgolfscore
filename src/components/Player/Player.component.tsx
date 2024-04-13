@@ -21,30 +21,29 @@ const Player: React.FC = () => {
 
   return (
     <BoxPlayer>
-      <Grid container spacing={1}>
-        <Grid item md={5}>
-          <BoxPlayer>
-            <RowCard
-              label={"Name"}
-              value={`${player.firstName} ${player.lastName}`}
-              name="name"
-            />
-            <RowCard
-              label={"E-mail"}
-              value={`${player.email}`}
-              name="email"
-            />
-            <RowCard
-              label={"HCP"}
-              value={`${player.hcp}`}
-              name="hcp"
-            />
-            <RowCard
-              label={"Date of birth"}
-              value={`${player.dob}`}
-              name="dob"
-            />
-          </BoxPlayer>
+      <Grid container spacing={10}>
+        <Grid item md={10}>
+          <RowCard
+            label={"Name"}
+            value={`${player.firstName} ${player.lastName}`}
+            name="name"
+          />
+          <RowCard
+            label={"E-mail"}
+            value={`${player.email}`}
+            name="email"
+          />
+          <RowCard
+            label={"HCP"}
+            value={`${player.hcp}`}
+            name="hcp"
+          />
+          <RowCard
+            label={"Date of birth"}
+            value={`${player.dob}`}
+            name="dob"
+          />
+
         </Grid>
       </Grid>
     </BoxPlayer>
