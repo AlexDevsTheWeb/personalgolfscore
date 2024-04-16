@@ -2,7 +2,6 @@ import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import RoundsDataShotTable from './RoundsDataShotTable.component';
-import RoundsDataShotsTotals from './RoundsDataShotsTotals.component';
 import RoundsHeadDetails from './RoundsHeadDetails.component';
 
 const RoundsDataMain = () => {
@@ -15,8 +14,6 @@ const RoundsDataMain = () => {
   return (
     <Box>
       <RoundsHeadDetails />
-      <RoundsDataShotsTotals />
-
       <RoundsDataShotTable />
     </Box>
   )

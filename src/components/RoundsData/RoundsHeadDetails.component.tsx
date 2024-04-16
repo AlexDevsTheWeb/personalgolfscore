@@ -14,7 +14,7 @@ const RoundsHeadDetails = () => {
     <Box>
       {
         round.map((r: IRounds) => {
-          const { roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundShots } = r;
+          const { roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundStrokes } = r;
           return (
             <>
               <RowCard label='Course' value={roundCourse} name='Course' />
@@ -23,7 +23,7 @@ const RoundsHeadDetails = () => {
               <RowCard label='Holes' value={roundHoles.toString()} name='Holes' />
               <RowCard label='Par' value={roundPar.toString()} name='Par' />
               <RowCard label='Player HCP' value={roundPlayingHCP.toString()} name='Player HCP' />
-              <RowCard label='Shots' value={roundShots.toString()} name='Shots' />
+              <RowCard label='Strokes' value={roundStrokes.toString()} name='Strokes' />
             </>
           )
         })

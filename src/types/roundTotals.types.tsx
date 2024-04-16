@@ -10,7 +10,7 @@ export interface IShotsTotals {
   distance: number;
   hcp: number;
   par: number;
-  shots: number;
+  strokes: number;
   teeClub: string;
   fir: number;
   gir: boolean;

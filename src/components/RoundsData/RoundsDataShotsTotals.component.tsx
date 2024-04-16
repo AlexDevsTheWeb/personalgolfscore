@@ -12,7 +12,7 @@ const RoundsDataShotsTotals = () => {
   return (
     <TableBody sx={{ border: 'none' }}>
       {actualTotals.map((total) => {
-        const { holeNumber, distance, hcp, par, shots, teeClub, fir, gir, putts, sand, water, out } = total;
+        const { holeNumber, distance, hcp, par, strokes, teeClub, fir, gir, putts, sand, water, out } = total;
         return (
           <TableRow key={holeNumber} sx={{ padding: 0, border: 'none' }}>
             <TableCell component="th" scope="row" align='center' width={'5%'} sx={{ border: 'none' }}>
@@ -21,7 +21,7 @@ const RoundsDataShotsTotals = () => {
             <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{`${distance} mt.`}</TableCell>
             <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{hcp !== 0 ? hcp : '-'}</TableCell>
             <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{par}</TableCell>
-            <TableCell align='center' width={'5%'} sx={{ border: 'none' }}>{shots}</TableCell>
+            <TableCell align='center' width={'5%'} sx={{ border: 'none' }}>{strokes}</TableCell>
             <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{teeClub ? teeClub : '-'}</TableCell>
             <TableCell align='center' width={'20%'} sx={{ border: 'none' }}>{`${fir}%`}</TableCell>
             <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{`${gir}%`}</TableCell>

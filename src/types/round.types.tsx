@@ -11,7 +11,7 @@ export interface IRounds {
   roundTee: string,
   roundPar: number,
   roundPlayingHCP: number,
-  roundShots: number
+  roundStrokes: number
 }
 
 export type InitialStateRounds = {

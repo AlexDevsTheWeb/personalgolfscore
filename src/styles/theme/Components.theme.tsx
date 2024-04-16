@@ -1256,19 +1256,26 @@ const components: Components<Omit<Theme, 'components'>> = {
       root: {
         paddingTop: 10,
         paddingRight: 20,
-        paddingBottom: 0,
+        paddingBottom: 10,
         paddingLeft: 20,
 
-        fontSize: 13,
+        fontSize: 14,
         border: 0,
+
         [`&.MuiTableCell-head`]: {
-          paddingTop: 20,
+          textTransform: 'uppercase',
+          paddingTop: 10,
           paddingRight: 0,
           paddingBottom: 10,
           paddingLeft: 0,
         },
       },
     },
+    variants: [
+      { props: { variant: 'red' }, style: { backgroundColor: 'red', color: 'white', fontWeight: 700 } },
+      { props: { variant: 'yellow' }, style: { backgroundColor: 'yellow', color: 'black', fontWeight: 700 } },
+      { props: { variant: 'green' }, style: { backgroundColor: 'green', color: 'white', fontWeight: 700 } }
+    ]
   },
   MuiTableFooter: {
     styleOverrides: {

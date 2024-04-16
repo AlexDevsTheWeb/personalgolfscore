@@ -96,3 +96,11 @@ declare module '@mui/material/TextField' {
     eye: string;
   }
 }
+
+declare module '@mui/material/TableCell' {
+  interface TableCellPropsVariantOverrides {
+    red: true;
+    yellow: true;
+    green: true;
+  }
+}

@@ -34,7 +34,7 @@ const RoundsTable = () => {
         </TableHead>
         <TableBody>
           {rounds.map((round) => {
-            const { roundID, roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundShots } = round;
+            const { roundID, roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundStrokes } = round;
             return (
               <TableRow key={roundID}>
                 <TableCell component="th" scope="row" align='center'>
@@ -45,7 +45,7 @@ const RoundsTable = () => {
                 <TableCell align='center'>{roundHoles}</TableCell>
                 <TableCell align='center'>{roundPar}</TableCell>
                 <TableCell align='center'>{roundPlayingHCP}</TableCell>
-                <TableCell align='center'>{roundShots}</TableCell>
+                <TableCell align='center'>{roundStrokes}</TableCell>
                 <TableCell align={'right'}>
                   <Button onClick={() => handleClick(roundID)} >
                     <ArrowCircleRightRoundedIcon />
