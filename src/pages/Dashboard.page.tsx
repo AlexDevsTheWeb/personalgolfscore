@@ -13,7 +13,8 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getAllRoundsData(""))
     dispatch(getAllRoundsTotals(""))
-  }, [dispatch]);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>

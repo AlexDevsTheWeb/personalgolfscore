@@ -11,6 +11,7 @@ export interface IShotsTotals {
   hcp: number;
   par: number;
   strokes: number;
+  points: number;
   teeClub: string;
   fir: number;
   gir: boolean;

@@ -16,7 +16,7 @@ const RoundsHeadDetails = () => {
         round.map((r: IRounds) => {
           const { roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundStrokes } = r;
           return (
-            <>
+            <Box key={r.roundID}>
               <RowCard label='Course' value={roundCourse} name='Course' />
               <RowCard label='Date' value={roundDate} name='Date' />
               <RowCard label='Tee' value={roundTee} name='Tee' />
@@ -24,7 +24,7 @@ const RoundsHeadDetails = () => {
               <RowCard label='Par' value={roundPar.toString()} name='Par' />
               <RowCard label='Player HCP' value={roundPlayingHCP.toString()} name='Player HCP' />
               <RowCard label='Strokes' value={roundStrokes.toString()} name='Strokes' />
-            </>
+            </Box>
           )
         })
       }

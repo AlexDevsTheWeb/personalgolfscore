@@ -5,9 +5,10 @@ import RoundsDataShotTable from './RoundsDataShotTable.component';
 import RoundsHeadDetails from './RoundsHeadDetails.component';
 
 const RoundsDataMain = () => {
+
   const { isLoading } = useSelector((store: RootState) => store.roundsNumber.roundsData);
 
-  if (!!isLoading) {
+  if (isLoading) {
     return <Typography>Loading...</Typography>
   }
 

@@ -1,29 +1,11 @@
-interface IProps {
-  hcp: number;
-  par: number;
-  strokes: number;
-  totalHoles: number;
-  finalPlayerHCP: number
-}
-enum STABLEFORDPOINTS {
-  ALBATROSS = 5,
-  EAGLE = 4,
-  BIRDIE = 3,
-  PAR = 2,
-  BOGEY = 1,
-  DOUBLEBOGEY = 0,
-}
-enum STABLEFORDSTARS {
-  ZERO = '',
-  ONE = '*',
-  TWO = '**',
-  THREE = '***',
-}
+import { STABLEFORDPOINTS, STABLEFORDSTARS } from "../../enum/shots.enum";
+import { IStablefordPointsProps } from "../../types/point.types";
 
-export const calculateStablefordPoints = (props: IProps) => {
+export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, finalPlayerHCP, totalHoles } = props;
   let newPar = par;
   const diff = finalPlayerHCP - totalHoles;
+  console.log(finalPlayerHCP, "- ", totalHoles)
   if (diff === 0) {
     newPar = newPar + 1
   }
@@ -38,11 +20,12 @@ export const calculateStablefordPoints = (props: IProps) => {
       newPar = newPar + 1;
     }
   }
+  console.log(diff, ",", newPar)
   return calculatePoints(newPar, strokes);
 }
 
-export const calculateStablefordStars = (props: IProps) => {
-  const { hcp, par, strokes, finalPlayerHCP, totalHoles } = props;
+export const calculateStablefordStars = (props: IStablefordPointsProps) => {
+  const { hcp, par, finalPlayerHCP, totalHoles } = props;
   let newPar = par;
   const diff = finalPlayerHCP - totalHoles;
   if (diff === 0) {

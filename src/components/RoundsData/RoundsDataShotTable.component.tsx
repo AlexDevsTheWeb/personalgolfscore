@@ -4,19 +4,21 @@ import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { RootState } from '../../store/store';
 import { TableCell, TableRow } from '../../styles';
-import { ShotPosition } from '../common/shotPositions/ShotPosition.component';
 import { calculateStablefordPoints, calculateStablefordStars } from '../../utils/shots/shots.utils';
-import { useParams } from 'react-router-dom';
+import { ShotPosition } from '../common/shotPositions/ShotPosition.component';
 
 const RoundsDataShotTable = () => {
   const params = useParams();
   const { shots } = useSelector((store: RootState) => store.roundsNumber.roundsData);
   const { rounds } = useSelector((store: RootState) => store.rounds);
-  const playerHCP = rounds.filter(round => round.roundID === params.roundID);
-  const finalPlayerHCP = playerHCP[0].roundPlayingHCP;
+
   const totalHoles = shots.length;
+  const playerHCP = rounds.filter((r: any) => r.roundID === params.roundID);
+  const finalPlayerHCP = playerHCP[0].roundPlayingHCP;
+
 
   return (
     <TableContainer component={Paper}>
@@ -42,10 +44,10 @@ const RoundsDataShotTable = () => {
         </TableHead>
         <TableBody>
           {shots.map((shot) => {
-            const { holeNumber, distance, hcp, par, strokes, teeClub, fir, gir, putts, sand, water, out } = shot;
+            const { holeNumber, distance, hcp, par, strokes, points, teeClub, fir, gir, putts, sand, water, out } = shot;
 
-            const points = calculateStablefordPoints({ hcp, par, strokes, totalHoles, finalPlayerHCP });
-            const hcpStars = calculateStablefordStars({ hcp, par, strokes, totalHoles, finalPlayerHCP });
+            // const points = calculateStablefordPoints({ hcp, par, strokes, finalPlayerHCP, totalHoles });
+            const hcpStars = calculateStablefordStars({ hcp, par, strokes, finalPlayerHCP, totalHoles });
             return (
               <TableRow key={holeNumber}>
                 <TableCell component="th" scope="row" align='center' width={'5%'}>

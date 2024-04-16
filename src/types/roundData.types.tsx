@@ -10,6 +10,7 @@ export interface IShots {
   hcp: number;
   par: number;
   strokes: number;
+  points: number;
   teeClub: string;
   fir: number;
   gir: boolean;
