@@ -13,12 +13,11 @@ const RoundsData = () => {
 
   const { rounds } = useSelector((store: RootState) => store.rounds);
 
-
   useEffect(() => {
-    dispatch(getAllRoundsData(params.roundID));
-    dispatch(getAllRoundsTotals(""));
     if (rounds.length === 0) {
       dispatch(getAllRounds(""));
+      dispatch(getAllRoundsData(params.roundID));
+      dispatch(getAllRoundsTotals(""));
     }
   }, [params.roundID, rounds.length, dispatch]);
 

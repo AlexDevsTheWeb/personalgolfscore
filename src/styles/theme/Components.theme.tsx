@@ -1419,6 +1419,23 @@ const components: Components<Omit<Theme, 'components'>> = {
         },
       },
       {
+        props: { variant: 'roundHead' },
+        style: {
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignContent: 'center',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: 'none',
+          borderBottom: 'none',
+          backgroundColor: '#f5f5f5',
+          borderRadius: 0,
+          padding: 10,
+          width: '31%'
+        },
+      },
+      {
         props: { variant: 'clubs' },
         style: {
           width: '48%',

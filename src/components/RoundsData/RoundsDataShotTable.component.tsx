@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { RootState } from '../../store/store';
 import { TableCell, TableRow } from '../../styles';
-import { calculateStablefordPoints, calculateStablefordStars } from '../../utils/shots/shots.utils';
+import { calculateStablefordStars } from '../../utils/shots/shots.utils';
 import { ShotPosition } from '../common/shotPositions/ShotPosition.component';
 
 const RoundsDataShotTable = () => {
@@ -16,9 +16,8 @@ const RoundsDataShotTable = () => {
   const { rounds } = useSelector((store: RootState) => store.rounds);
 
   const totalHoles = shots.length;
-  const playerHCP = rounds.filter((r: any) => r.roundID === params.roundID);
-  const finalPlayerHCP = playerHCP[0].roundPlayingHCP;
-
+  const playerHCP = rounds?.filter((r: any) => r.roundID === params.roundID);
+  const finalPlayerHCP = playerHCP[0]?.roundPlayingHCP;
 
   return (
     <TableContainer component={Paper}>

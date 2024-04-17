@@ -14,6 +14,8 @@ export interface IShotsTotals {
   points: number;
   teeClub: string;
   fir: number;
+  left: number;
+  right: number;
   gir: boolean;
   putts: number;
   sand: number;

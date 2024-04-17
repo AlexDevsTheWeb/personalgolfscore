@@ -5,8 +5,8 @@ import { capitalize } from "../../utils/strings/strings.utils";
 type RowCardProps = {
   label: string;
   name: string;
-  value: string;
-  editable?: boolean;
+  value: string | number;
+  head?: boolean;
   component?: React.ReactNode;
   format?: string;
   multiline?: boolean;
@@ -36,7 +36,7 @@ const RowCard: React.FC<RowCardProps> = (props) => {
   }, [props])
 
   return (
-    <Card variant='player'>
+    <Card variant={props.head ? 'roundHead' : 'player'}>
       <Typography variant='headline6'>
         {labelName}
       </Typography>
