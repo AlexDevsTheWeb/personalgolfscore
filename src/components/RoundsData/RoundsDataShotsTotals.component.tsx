@@ -31,7 +31,7 @@ const RoundsDataShotsTotals = () => {
               }}>
                 <Grid item md={2} sx={{}}>
                   <Typography>POINTS</Typography>
-                  <Gauge width={100} height={100} value={points} valueMin={1} valueMax={holeNumber * 2}
+                  <Gauge width={100} height={100} value={points} valueMin={1} valueMax={100}
                     title='POINTS'
                     sx={(theme) => ({
                       [`& .${gaugeClasses.valueText}`]: {
