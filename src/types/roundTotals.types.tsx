@@ -16,7 +16,7 @@ export interface IShotsTotals {
   fir: number;
   left: number;
   right: number;
-  gir: boolean;
+  gir: number;
   putts: number;
   sand: number;
   water: number;

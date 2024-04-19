@@ -8,10 +8,10 @@ type BoxProps = BoxPropsMui;
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-content: start;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   gap: 10px;
 `;
 

@@ -1272,9 +1272,9 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
     },
     variants: [
-      { props: { variant: 'red' }, style: { backgroundColor: 'red', color: 'white', fontWeight: 700 } },
-      { props: { variant: 'yellow' }, style: { backgroundColor: 'yellow', color: 'black', fontWeight: 700 } },
-      { props: { variant: 'green' }, style: { backgroundColor: 'green', color: 'white', fontWeight: 700 } }
+      { props: { variant: 'red' }, style: { backgroundColor: '#cf8484', color: 'black', fontWeight: 700, fontSize: 20 } },
+      { props: { variant: 'yellow' }, style: { backgroundColor: '#faf099', color: 'black', fontWeight: 700, fontSize: 20 } },
+      { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 700, fontSize: 20 } }
     ]
   },
   MuiTableFooter: {
@@ -1432,7 +1432,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           backgroundColor: '#f5f5f5',
           borderRadius: 0,
           padding: 10,
-          width: '31%'
+          width: '48%'
         },
       },
       {

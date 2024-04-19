@@ -1,9 +1,11 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { RootState } from '../../store/store';
-import { BoxPlayer, Grid, RowCard } from '../../styles';
+import { BoxPlayer, Grid } from '../../styles';
 
-import { PieChart } from '@mui/x-charts/PieChart';
+import { Box, Typography } from '@mui/material';
+import { Gauge, gaugeClasses } from '@mui/x-charts';
+import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 
 const RoundsDataShotsTotals = () => {
   const params = useParams();
@@ -16,69 +18,117 @@ const RoundsDataShotsTotals = () => {
       <Grid container spacing={0}>
         {
           actualTotals.map((total) => {
-            const { distance, par, strokes, points, fir, left, right, gir, putts, sand, water, out } = total;
-            const data = [
-              { id: 0, value: fir, label: 'F.I.R.' },
-              { id: 1, value: left, label: 'Left' },
-              { id: 2, value: right, label: 'Right' }
-            ]
-            return (
-              <Grid item md={10} key={total.roundID} sx={{ flexGrow: 1, flexBasis: '100% !important', width: '100% !important', maxWidth: '100% !important' }}>
-                <PieChart
-                  series={[
-                    {
-                      data,
-                      highlightScope: { faded: 'global', highlighted: 'item' },
-                      faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+            const { points, fir, left, right, gir, putts, sand, water, out, holeNumber } = total;
 
-                    },
-                  ]}
-                  height={200}
-                />
-                <RowCard label='Total meters' value={distance} name='Total meters' head={true} />
-                <RowCard label='Course Par' value={par} name='Course Par' head={true} />
-                <RowCard label='Player Strokes' value={strokes} name='Player Strokes' head={true} />
-                <RowCard label='Points' value={points} name='Points' head={true} />
-                <RowCard label='FIR' value={`${fir}%`} name='FIR' head={true} />
-                <RowCard label='Left' value={`${left}%`} name='Left' head={true} />
-                <RowCard label='Right' value={`${right}%`} name='Right' head={true} />
-                <RowCard label='GIR' value={`${gir}%`} name='GIR' head={true} />
-                <RowCard label='Putts' value={putts} name='Putts' head={true} />
-                <RowCard label='Sands' value={sand !== 0 ? sand : '-'} name='Sands' head={true} />
-                <RowCard label='Waters' value={water !== 0 ? water : '-'} name='Waters' head={true} />
-                <RowCard label='Penalties' value={out !== 0 ? out : '-'} name='Penalties' head={true} />
-              </Grid>
+            return (
+              <Box key={total.roundID} sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                alignContent: 'space-between',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start'
+              }}>
+                <Grid item md={2} sx={{}}>
+                  <Typography>POINTS</Typography>
+                  <Gauge width={100} height={100} value={points} valueMin={1} valueMax={holeNumber * 2}
+                    title='POINTS'
+                    sx={(theme) => ({
+                      [`& .${gaugeClasses.valueText}`]: {
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        fill: points >= (holeNumber * 2) ? '#52b202 !important' : 'rgb(244 0 0 / 87%)',
+                        color: points >= (holeNumber * 2) ? '#52b202' : '#f25448',
+                        transform: 'translate(0px, 0px)',
+                      },
+                      [`& .${gaugeClasses.valueArc}`]: {
+                        fill: points >= (holeNumber * 2) ? '#52b202' : '#f25448',
+                      },
+                      [`& .${gaugeClasses.referenceArc}`]: {
+                        fill: theme.palette.divider,
+                      },
+                    })}
+                    text={
+                      ({ value }) => `${value}`
+
+                    } />
+                  <Typography>Putts</Typography>
+                  <Gauge width={100} height={100} value={gir} valueMin={1} valueMax={100}
+
+                    sx={(theme) => ({
+                      [`& .${gaugeClasses.valueText}`]: {
+                        fontSize: 18,
+                        transform: 'translate(0px, 0px)',
+                      },
+                      [`& .${gaugeClasses.valueArc}`]: {
+                        fill: gir >= 50 ? '#52b202' : '#f25448',
+                      },
+                      [`& .${gaugeClasses.referenceArc}`]: {
+                        fill: theme.palette.divider,
+                        border: '1px solid #ff9900'
+                      },
+                    })}
+                    text={
+                      ({ value }) => `${value}%`
+                    } />
+                  <Typography>GIR</Typography>
+                  <Gauge width={100} height={100} value={putts} valueMin={1} valueMax={holeNumber * 2} />
+                </Grid>
+                <Grid item md={4}>
+                  <Typography>Fairway in regulation</Typography>
+                  <PieChart
+                    series={[
+                      {
+                        arcLabel: (item) => `${item.label}`,
+                        arcLabelMinAngle: 45,
+                        data: [
+                          { id: 0, value: fir, label: 'F.I.R. (%)', color: '#5f8d65' },
+                          { id: 1, value: left, label: 'Left (%)', color: '#d29c70' },
+                          { id: 2, value: right, label: 'Right (%)', color: '#fcb173' }
+                        ],
+                      },
+                    ]}
+                    sx={{
+                      [`& .${pieArcLabelClasses.root}`]: {
+                        fill: 'white',
+                        fontWeight: 'bold',
+                      },
+                    }}
+                    height={250}
+                  />
+                </Grid>
+                <Grid item md={3}>
+                  <Typography>Penalties</Typography>
+                  <PieChart
+                    series={[
+                      {
+                        arcLabel: (item) => `${item.label}`,
+                        arcLabelMinAngle: 30,
+                        data: [
+                          { id: 3, value: sand, label: 'Sands', color: '#bb8c00' },
+                          { id: 4, value: water, label: 'Waters', color: '#70b0d2' },
+                          { id: 5, value: out, label: 'Outs', color: '#878787' }
+                        ],
+                      },
+                    ]}
+                    sx={{
+                      [`& .${pieArcLabelClasses.root}`]: {
+                        fill: 'white',
+                        fontWeight: 'bold',
+                      },
+                    }}
+                    height={250}
+                  />
+
+                </Grid>
+
+              </Box>
             )
           })
         }
 
-      </Grid>
-    </BoxPlayer>
-
-
-    // <TableBody sx={{ border: 'none' }}>
-    //   {actualTotals.map((total) => {
-    //     const { holeNumber, distance, hcp, par, strokes, teeClub, fir, gir, putts, sand, water, out } = total;
-    //     return (
-    //       <TableRow key={holeNumber} sx={{ padding: 0, border: 'none' }}>
-    //         <TableCell component="th" scope="row" align='center' width={'5%'} sx={{ border: 'none' }}>
-    //           {holeNumber}
-    //         </TableCell>
-    //         <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{`${distance} mt.`}</TableCell>
-    //         <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{hcp !== 0 ? hcp : '-'}</TableCell>
-    //         <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{}</TableCell>
-    //         <TableCell align='center' width={'5%'} sx={{ border: 'none' }}>{strokes}</TableCell>
-    //         <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{teeClub ? teeClub : '-'}</TableCell>
-    //         <TableCell align='center' width={'20%'} sx={{ border: 'none' }}>{`${fir}%`}</TableCell>
-    //         <TableCell align='center' width={'10%'} sx={{ border: 'none' }}>{`${gir}%`}</TableCell>
-    //         <TableCell align='center' width={'5%'} sx={{ border: 'none' }}>{putts}</TableCell>
-    //         <TableCell align='center' width={'5%'} sx={{ border: 'none' }}>{sand !== 0 ? sand : '-'}</TableCell>
-    //         <TableCell align='center' width={'5%'} sx={{ border: 'none' }}>{water !== 0 ? water : '-'}</TableCell>
-    //         <TableCell align='center' width={'5%'} sx={{ border: 'none' }}>{out !== 0 ? out : '-'}</TableCell>
-    //       </TableRow>
-    //     )
-    //   })}
-    // </TableBody>
+      </Grid >
+    </BoxPlayer >
   )
 }
 
