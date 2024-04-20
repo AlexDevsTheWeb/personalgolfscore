@@ -18,6 +18,24 @@
 			"sand": 1,
 			"water": 2,
 			"out": 1
+		},
+		{
+			"roundID": "2",
+			"holeNumber": 9,
+			"distance": 2136,
+			"hcp": 0,
+			"par": 32,
+			"strokes": 44,
+			"points": 17,
+			"teeClub": "",
+			"fir": 44,
+			"left": 44,
+			"right": 11,
+			"gir": 25,
+			"putts": 19,
+			"sand": 1,
+			"water": 1,
+			"out": 0
 		}
 	]
 }

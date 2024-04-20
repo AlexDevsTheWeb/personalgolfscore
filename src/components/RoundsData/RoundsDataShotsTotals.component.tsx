@@ -19,7 +19,6 @@ const RoundsDataShotsTotals = () => {
         {
           actualTotals.map((total) => {
             const { points, fir, left, right, gir, putts, sand, water, out, holeNumber } = total;
-
             return (
               <Box key={total.roundID} sx={{
                 display: 'flex',
@@ -52,7 +51,7 @@ const RoundsDataShotsTotals = () => {
                       ({ value }) => `${value}`
 
                     } />
-                  <Typography>Putts</Typography>
+                  <Typography>GIR</Typography>
                   <Gauge width={100} height={100} value={gir} valueMin={1} valueMax={100}
 
                     sx={(theme) => ({
@@ -71,7 +70,7 @@ const RoundsDataShotsTotals = () => {
                     text={
                       ({ value }) => `${value}%`
                     } />
-                  <Typography>GIR</Typography>
+                  <Typography>Putts</Typography>
                   <Gauge width={100} height={100} value={putts} valueMin={1} valueMax={holeNumber * 2} />
                 </Grid>
                 <Grid item md={4}>

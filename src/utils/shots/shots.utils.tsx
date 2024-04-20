@@ -1,5 +1,6 @@
 import { STABLEFORDPOINTS, STABLEFORDSTARS } from "../../enum/shots.enum";
 import { IStablefordPointsProps } from "../../types/point.types";
+import { IShotsTotals } from "../../types/roundTotals.types";
 
 export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, finalPlayerHCP, totalHoles } = props;
@@ -82,4 +83,52 @@ export const calculateStars = (par: number, strokes: number) => {
       return STABLEFORDSTARS.ZERO;
   }
 
+}
+
+export function calculateTotals(totalsData: IShotsTotals[], holes?: number): IShotsTotals {
+  let searchableData;
+
+  if (holes === 9 || holes === 18) {
+    searchableData = totalsData.filter((data) => data.holeNumber === holes);
+  }
+  else {
+    searchableData = totalsData;
+  }
+  return searchableData.reduce((acc: IShotsTotals, total: IShotsTotals) => {
+    acc.roundID += total.roundID || "";
+    acc.holeNumber += total.holeNumber || 0;
+    acc.distance += total.distance || 0;
+    acc.hcp += total.hcp || 0;
+    acc.par += total.par || 0;
+    acc.strokes += total.strokes || 0;
+    acc.points += total.points || 0;
+    acc.teeClub += total.teeClub || '';
+    acc.fir += total.fir || 0;
+    acc.left += total.left || 0;
+    acc.right += total.right || 0;
+    acc.gir += total.gir || 0;
+    acc.putts += total.putts || 0;
+    acc.sand += total.sand || 0;
+    acc.water += total.water || 0;
+    acc.out += total.out || 0;
+
+    return acc;
+  }, {
+    roundID: "",
+    holeNumber: 0,
+    distance: 0,
+    hcp: 0,
+    par: 0,
+    strokes: 0,
+    points: 0,
+    teeClub: '',
+    fir: 0,
+    left: 0,
+    right: 0,
+    gir: 0,
+    putts: 0,
+    sand: 0,
+    water: 0,
+    out: 0
+  });
 }

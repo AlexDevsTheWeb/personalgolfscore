@@ -6,6 +6,7 @@ import { getAllRoundsTotals } from '../features/rounds/roundsTotals.slice';
 
 import Player from '../components/Player/Player.component'
 import Rounds from '../components/Rounds/Rounds.component'
+import Statistics from '../components/Statistics/Statistics.component';
 
 const Dashboard = () => {
   const dispatch = useDispatch<any>();
@@ -19,6 +20,7 @@ const Dashboard = () => {
   return (
     <>
       <Player />
+      <Statistics />
       <Rounds />
     </>
   )
