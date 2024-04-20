@@ -82,6 +82,14 @@ export const themeSystem = createTheme({
           style: {
             overflow: 'auto'
           }
+        },
+        {
+          props: { variant: 'section' },
+          style: {
+            overflow: 'auto',
+            padding: '10px 0px',
+
+          }
         }
       ],
     },

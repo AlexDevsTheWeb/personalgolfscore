@@ -19,6 +19,7 @@ import { store } from "./store/store";
 import { theme } from './styles/theme/ThemeStyle.theme';
 import { themeSystem } from './styles/theme/ThemeSystem.theme';
 import RoundsData from './pages/RoundsData.page';
+import AddNewRound from './pages/AddNewRound.page';
 
 const App: React.FC = () => {
   return (
@@ -35,6 +36,7 @@ const App: React.FC = () => {
                   <Route path="/signup" element={<SignupForm />} />
                   <Route path="/signin" element={<LoginForm />} />
                   <Route path="/round/:roundID" element={<RoundsData />} />
+                  <Route path='/addNewRound' element={<AddNewRound />} />
                   {/* <Route path="/" element={<Navigation />}>
                     <Route index element={<Home />} />
                     <Route path="shop/*" element={<Shop />} />

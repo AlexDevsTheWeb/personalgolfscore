@@ -1,8 +1,7 @@
-import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { calculateTotals } from '../../utils/shots/shots.utils';
-import { BoxPlayer } from '../../styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StatisticsNumbers from './StatisticsNumbers.component';
 
@@ -13,9 +12,11 @@ const Statistics = () => {
   const totals18 = calculateTotals(totals, 18);
 
   return (
-    <BoxPlayer>
+    <Box sx={{
+      display: 'flex', flexDirection: 'column', rowGap: 1.175
+    }}>
       <StatisticsNumbers totals={allTotals} holes={totals.length} />
-      <Accordion>
+      <Accordion disabled={totals18.roundID === ''}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -27,7 +28,7 @@ const Statistics = () => {
           <StatisticsNumbers totals={totals18} holes={totals.length} />
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion disabled={totals9.roundID === ''}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2-content"
@@ -39,7 +40,7 @@ const Statistics = () => {
           <StatisticsNumbers totals={totals9} holes={totals.length} />
         </AccordionDetails>
       </Accordion>
-    </BoxPlayer>
+    </Box>
   )
 }
 

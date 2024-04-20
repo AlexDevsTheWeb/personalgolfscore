@@ -22,14 +22,14 @@ const RoundsTable = () => {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <TableCell align='center'>Date</TableCell>
-            <TableCell align='left'>Course</TableCell>
+            <TableCell align='center' width={2}>Date</TableCell>
+            <TableCell align='left' width={3}>Course</TableCell>
             <TableCell align='left'>Tee</TableCell>
             <TableCell align='center'>Holes</TableCell>
             <TableCell align='center'>Par</TableCell>
             <TableCell align='center'>Playing HCP</TableCell>
             <TableCell align='center'>Player shots</TableCell>
-            <TableCell align='right'>&nbsp;</TableCell>
+            <TableCell align='right' width={1}>&nbsp;</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,7 +46,7 @@ const RoundsTable = () => {
                 <TableCell align='center'>{roundPar}</TableCell>
                 <TableCell align='center'>{roundPlayingHCP}</TableCell>
                 <TableCell align='center'>{roundStrokes}</TableCell>
-                <TableCell align={'right'}>
+                <TableCell align={'right'} width={1}>
                   <Button onClick={() => handleClick(roundID)} >
                     <ArrowCircleRightRoundedIcon />
                   </Button>

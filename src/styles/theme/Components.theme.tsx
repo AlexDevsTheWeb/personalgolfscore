@@ -452,15 +452,15 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiAccordion: {
     styleOverrides: {
       root: {
+        boxShadow: 'none',
+        border: '1px solid #ddd',
       }
     }
   },
   MuiAccordionSummary: {
     styleOverrides: {
       root: {
-        paddingTop: 20,
-        backgroundColor: "#ff0099",
-        border: "3px solid #000"
+        backgroundColor: '#f5f5f5'
       }
     }
   },

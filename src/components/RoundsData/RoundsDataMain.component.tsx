@@ -14,7 +14,9 @@ const RoundsDataMain = () => {
   }
 
   return (
-    <Box>
+    <Box sx={{
+      display: 'flex', flexDirection: 'column', rowGap: 1.175
+    }}>
       <RoundsHeadDetails />
       <RoundsDataShotsTotals />
       <RoundsDataShotTable />

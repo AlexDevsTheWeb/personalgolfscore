@@ -1,17 +1,21 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { getAllRounds } from '../../features/rounds/rounds.slice';
 import { RootState } from '../../store/store';
-import { BoxPlayer } from '../../styles';
 import RoundsTable from './RoundsTable.component';
+import { useNavigate } from 'react-router-dom';
 
 const Rounds = () => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch<any>();
   const { isLoading } = useSelector((store: RootState) => store.rounds);
 
+  const handleAddNewRound = () => {
+    navigate('/addNewRound')
+  }
   useEffect(() => {
     dispatch(getAllRounds(""))
   }, [dispatch]);
@@ -21,9 +25,12 @@ const Rounds = () => {
   }
 
   return (
-    <BoxPlayer>
+    <Box sx={{
+      display: 'flex', flexDirection: 'column', rowGap: 1.175
+    }}>
       <RoundsTable />
-    </BoxPlayer>
+      <Button variant='contained' sx={{ width: '22%' }} onClick={handleAddNewRound}>Add new round</Button>
+    </Box>
   )
 }
 
