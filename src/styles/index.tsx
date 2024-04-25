@@ -17,6 +17,7 @@ import ClubTypography from "./typography/ClubTypography.styles";
 import TableCell from "./table/TableCell.styles";
 import TableRow from "./table/TableRow.styles";
 
+import TextField from "./textfield/TextField.style";
 import Tooltip from "./tooltip/Tooltip.styles";
 
 export {
@@ -35,5 +36,6 @@ export {
   ClubTypography,
   TableRow,
   TableCell,
+  TextField,
   Tooltip
 }

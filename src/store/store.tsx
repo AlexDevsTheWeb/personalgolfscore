@@ -4,6 +4,9 @@ import playerReducer from '../features/player/player.slice';
 import roundsReducer from '../features/rounds/rounds.slice';
 import roundsDataReducer from '../features/rounds/roundsData.slice';
 import roundsTotalsReducer from '../features/rounds/roundsTotals.slice';
+import newRoundMainReducer from '../features/newRound/newRoundMain.slice';
+import newRoundHolesReducer from '../features/newRound/newRoundHoles.slice';
+import newRoundTotalsReducer from '../features/newRound/newRoundTotals.slice';
 
 const rootReducer = {
   golfBag: golfBagReducer,
@@ -12,6 +15,11 @@ const rootReducer = {
   roundsNumber: combineReducers({
     roundsData: roundsDataReducer,
     roundsTotals: roundsTotalsReducer
+  }),
+  newRound: combineReducers({
+    newRoundMain: newRoundMainReducer,
+    newRoundHoles: newRoundHolesReducer,
+    newRoundTotals: newRoundTotalsReducer
   }),
 };
 
