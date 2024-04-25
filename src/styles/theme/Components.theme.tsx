@@ -874,7 +874,7 @@ const components: Components<Omit<Theme, 'components'>> = {
             maxHeight: 22.17,
             minHeight: 22.17,
             [`@media (min-width:${breakpoints.values.lg - 1}px)`]: {
-              width: 336,
+              width: 'auto',
             },
           }
           : {

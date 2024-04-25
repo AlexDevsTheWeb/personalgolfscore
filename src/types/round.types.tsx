@@ -40,6 +40,7 @@ export interface INewRound {
 }
 export type InitialStateNewRound = {
   isLoading: boolean;
+  isSaved: boolean;
   playerID: string;
   round: INewRound;
 }

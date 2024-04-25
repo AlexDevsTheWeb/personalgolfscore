@@ -4,6 +4,8 @@ import BoxOverflow from "./box/BoxOverflow.styles";
 import BoxPlayer from "./box/BoxPlayer.styles";
 import Card from "./card/Card.style";
 
+import DatePicker from "./datepicker/DatePicker.styles";
+
 import RowCard from "./card/RowCard.styles";
 import Grid from "./grid/Grid.styles";
 import Grid2 from "./grid/Grid2.styles";
@@ -26,6 +28,7 @@ export {
   BoxOverflow,
   BoxPlayer,
   Card,
+  DatePicker,
   Grid,
   Grid2,
   GridLabel,
