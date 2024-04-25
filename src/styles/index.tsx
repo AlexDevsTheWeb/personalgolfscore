@@ -1,5 +1,6 @@
 import Accordion from "./accordion/Accordion.styles";
 import AccordionSummary from "./accordion/AccordionSummary.styles";
+import BoxNewRound from "./box/BoxTotals.styles";
 import BoxOverflow from "./box/BoxOverflow.styles";
 import BoxPlayer from "./box/BoxPlayer.styles";
 import Card from "./card/Card.style";
@@ -25,6 +26,7 @@ import Tooltip from "./tooltip/Tooltip.styles";
 export {
   Accordion,
   AccordionSummary,
+  BoxNewRound,
   BoxOverflow,
   BoxPlayer,
   Card,
