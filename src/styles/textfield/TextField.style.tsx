@@ -13,10 +13,8 @@ const StyledTextField = styled(TextFieldMui)(({ theme }) => ({
 
 
 const TextField: React.FC<TextFieldProps> = (props) => {
-  console.log(props)
-
   return (
-    <StyledTextField {...props} sx={{ borderd: !!props.error ? '2px solid red' : 'none' }}>
+    <StyledTextField {...props} >
       {props.children}
     </StyledTextField>
   );

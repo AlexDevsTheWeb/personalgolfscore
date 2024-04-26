@@ -5,6 +5,7 @@ import AddNewRoundMain from './AddNewRoundMain.component';
 import AddNewRoundTotals from './AddNewRoundTotals.component';
 
 const NewRoundMain = () => {
+
   return (
     <Stack sx={{ rowGap: 1 }}>
       <AddNewRoundMain />

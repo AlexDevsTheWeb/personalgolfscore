@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
@@ -48,36 +48,36 @@ const AddNewRoundMain = () => {
 
         <Stack sx={{ flexWrap: 'wrap', flexDirection: 'row', rowGap: 1, columnGap: 1, justifyContent: 'space-between' }}>
 
-          <DatePicker
-            name='roundDate'
-            label='Date of round'
-            onChange={value => setDate(value)}
-          />
+
           <TextField
             id="roundCourse"
             name='roundCourse'
             label="Course"
             variant="filled"
-            sx={{ width: '100%', minWidth: '68%' }}
+            sx={{ width: '100%' }}
             error={error}
             onChange={e => setField(e)}
+
           />
         </Stack>
 
         <Stack sx={{ flexWrap: 'noWrap', flexDirection: 'row', rowGap: 10, columnGap: 1 }}>
-          <TextField id="roundHoles" name='roundHoles' label="Holes" variant="filled" type='number' sx={{ maxWidth: 50 }} onChange={e => setField(e)} error={error}
+          <DatePicker
+            name='roundDate'
+            label='Date of round'
+            onChange={value => setDate(value)}
+          />
+          <TextField id="roundTee" name='roundTee' label="Starting Tee" variant="filled" onChange={e => setField(e)} error={error}
+          />
+          <TextField id="roundHoles" name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => setField(e)} error={error}
+          />
+          <TextField id="roundPar" name='roundPar' label="Course Par" variant="filled" type='number' onChange={e => setField(e)} error={error}
           />
 
-          <TextField id="roundTee" name='roundTee' label="Starting Tee" variant="filled" sx={{ maxWidth: 50 }} onChange={e => setField(e)} error={error}
+          <TextField id="roundPlayingHCP" name='roundPlayingHCP' label="Player HCP" variant="filled" type='number' onChange={e => setField(e)} error={error}
           />
 
-          <TextField id="roundPar" name='roundPar' label="Course Par" variant="filled" type='number' sx={{ maxWidth: 50 }} onChange={e => setField(e)} error={error}
-          />
-
-          <TextField id="roundPlayingHCP" name='roundPlayingHCP' label="Player HCP" variant="filled" type='number' sx={{ maxWidth: 50 }} onChange={e => setField(e)} error={error}
-          />
-
-          <TextField id="roundStrokes" name='roundStrokes' label="Strokes" variant="filled" type='number' sx={{ maxWidth: 50 }} onChange={e => setField(e)} error={error}
+          <TextField id="roundStrokes" name='roundStrokes' label="Strokes" variant="filled" type='number' onChange={e => setField(e)} error={error}
           />
         </Stack>
 

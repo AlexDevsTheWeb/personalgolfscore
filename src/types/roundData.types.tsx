@@ -27,6 +27,14 @@ export type InitialStateRoundsData = {
   shots: IShots[];
 }
 
+export type InitialStateNewRoundsData = {
+  isLoading: boolean;
+  playerID: string;
+  roundID: string;
+  holesCompleted: number;
+  shots: IShots[];
+}
+
 export type RoundsDataPayload = {
   payload: IState;
 }

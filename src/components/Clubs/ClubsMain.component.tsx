@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { BoxPlayer, Grid, Typography } from "../../styles";
-import ClubsList from "./ClubsList.componente";
+import ClubsList from "./ClubsList.component";
 import ClubsHeaderTypography from "../../styles/typography/ClubsHeaderTypography.styles";
 
 const ClubsMain = () => {
