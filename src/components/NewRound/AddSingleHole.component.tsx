@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material'
 import { TextField } from '../../styles'
 import { IShots } from '../../types/roundData.types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { checkSingleHoleValid } from '../../utils/round/round.utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { setHolesCompleted, setNewHole } from '../../features/newRound/newRoundHoles.slice';
@@ -11,12 +11,11 @@ const AddSingleHole = () => {
   const { roundHoles } = useSelector((store: RootState) => store.newRound.newRoundMain.round);
   const { shots, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
 
+  const [holeFinished, setHoleFinished] = useState(0);
+
   const dispatch = useDispatch<any>();
   const [error, setError] = useState<boolean>(false);
 
-  console.log("holes completed----> ", holesCompleted);
-  console.log("rounds length ----> ", shots.length);
-  console.log("round holes ----> ", roundHoles)
   const [hole, setHole] = useState<IShots>({
     holeNumber: holesCompleted + 1,
     distance: 0,
@@ -38,18 +37,21 @@ const AddSingleHole = () => {
   }
   const saveHole = () => {
     if (!!checkSingleHoleValid(hole)) {
-      setError(false)
-      setHole(state => ({ ...state, holeNumber: holesCompleted + 1 }));
-      dispatch(setNewHole({ hole }));
       dispatch(setHolesCompleted())
+      setError(false)
+      setHole(state => ({ ...state, holeNumber: holeFinished + 1 }));
+      dispatch(setNewHole({ hole }));
     } else {
       setError(true);
     }
   };
+  useEffect(() => {
+    setHoleFinished(holesCompleted + 1);
+  }, [holesCompleted]);
 
   return (
     <Box>
-      <Typography>{holesCompleted + 1}</Typography>
+      <Typography>{`Hole number: ${holeFinished}`}</Typography>
       <TextField id="distance" name='distance' label="Distance" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
       <TextField id="hcp" name='hcp' label="HCP" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
       <TextField id="par" name='par' label="Par" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />

@@ -5,7 +5,7 @@ const initialState: InitialStateNewRoundsData = {
   isLoading: false,
   playerID: '',
   roundID: '',
-  holesCompleted: 1,
+  holesCompleted: 0,
   shots: [],
 }
 

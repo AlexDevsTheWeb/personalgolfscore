@@ -11,10 +11,10 @@ const AddNewRoundHoles = () => {
   const { roundHoles } = useSelector((store: RootState) => store.newRound.newRoundMain.round);
   const { shots } = useSelector((store: RootState) => store.newRound.newRoundHoles);
 
-  const [h, setH] = useState<any>();
+  const [holeForm, setHoleForm] = useState<any>();
 
   const handleOnClick = () => {
-    setH(<AddSingleHole />);
+    setHoleForm(<AddSingleHole />);
   }
 
   return (
@@ -27,12 +27,12 @@ const AddNewRoundHoles = () => {
           return (
             <Box>
               {`Hole #${index + 1} completed`}
-              <Box>{`${shot.holeNumber} ${shot.par}`}</Box>
+              <Box>{`Hole number: ${shot.holeNumber}. Hole PAR: ${shot.par}.`}</Box>
             </Box>
           )
         })
       }
-      {h}
+      {holeForm}
       {
         shots.length === 0 ?
           <Box>
