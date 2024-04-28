@@ -1,23 +1,21 @@
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { RootState } from '../../store/store';
 import { BoxPlayer, Grid } from '../../styles';
 
 import { Box, Typography } from '@mui/material';
 import { Gauge, gaugeClasses } from '@mui/x-charts';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
+import { IShotsTotals } from '../../types/roundTotals.types';
 
-const RoundsDataShotsTotals = () => {
-  const params = useParams();
-  const { totals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals);
-  const actualTotals = totals.filter((totals) => totals.roundID === params.roundID)
+interface Props {
+  totals: IShotsTotals[]
+}
 
+const RoundsDataShotsTotals = (props: Props) => {
+  const { totals } = props;
   return (
-
     <BoxPlayer>
       <Grid container spacing={0}>
         {
-          actualTotals.map((total) => {
+          totals.map((total) => {
             const { points, fir, left, right, gir, putts, sand, water, out, holeNumber } = total;
             return (
               <Box key={total.roundID} sx={{
