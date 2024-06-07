@@ -20,6 +20,12 @@ export interface IShots {
   out: number;
 }
 
+export interface IShotsTotals2 {
+  distance: number;
+  putts: number;
+  puttsTotals: number;
+}
+
 export type InitialStateRoundsData = {
   isLoading: boolean;
   playerID: string;

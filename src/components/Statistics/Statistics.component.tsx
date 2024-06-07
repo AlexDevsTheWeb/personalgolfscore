@@ -25,7 +25,7 @@ const Statistics = () => {
           <Typography>18 Holes</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <StatisticsNumbers totals={totals18} holes={totals.length} />
+          <StatisticsNumbers totals={totals18} holes={totals.filter((t) => t.holeNumber === 18).length} />
         </AccordionDetails>
       </Accordion>
       <Accordion disabled={totals9.roundID === ''}>
@@ -37,7 +37,7 @@ const Statistics = () => {
           <Typography>9 Holes</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <StatisticsNumbers totals={totals9} holes={totals.length} />
+          <StatisticsNumbers totals={totals9} holes={totals.filter((t) => t.holeNumber === 9).length} />
         </AccordionDetails>
       </Accordion>
     </Box>

@@ -23,9 +23,9 @@ const AddNewRoundHoles = () => {
 
       {
         shots.length !== 0 &&
-        shots.map((shot: IShots, index) => {
+        shots.map((shot: IShots, index: number) => {
           return (
-            <Box>
+            <Box key={index}>
               {`Hole #${index + 1} completed`}
               <Box>{`Hole number: ${shot.holeNumber}. Hole PAR: ${shot.par}.`}</Box>
             </Box>

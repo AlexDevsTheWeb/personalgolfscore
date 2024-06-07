@@ -69,7 +69,8 @@ const RoundsDataShotsTotals = (props: Props) => {
                       ({ value }) => `${value}%`
                     } />
                   <Typography>Putts</Typography>
-                  <Gauge width={100} height={100} value={putts} valueMin={1} valueMax={holeNumber * 2} />
+                  <Gauge width={100} height={100} value={putts / holeNumber} valueMin={1} valueMax={10} />
+                  <Gauge width={100} height={100} value={putts} valueMin={1} valueMax={holeNumber * 5} />
                 </Grid>
                 <Grid item md={4}>
                   <Typography>Fairway in regulation</Typography>

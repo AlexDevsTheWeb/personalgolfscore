@@ -31,6 +31,7 @@ export const checkSingleHoleValid = (hole: IShots) => {
     water,
     out } = hole;
 
+
   if (
     holeNumber &&
     distance &&

@@ -1,10 +1,11 @@
 import { STABLEFORDPOINTS, STABLEFORDSTARS } from "../../enum/shots.enum";
 import { IStablefordPointsProps } from "../../types/point.types";
+import { IShots } from "../../types/roundData.types";
 import { IShotsTotals } from "../../types/roundTotals.types";
 
 export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, finalPlayerHCP, totalHoles } = props;
-  let newPar = par;
+  let newPar = Number(par);
   const diff = finalPlayerHCP - totalHoles;
   if (diff === 0) {
     newPar = newPar + 1
@@ -20,7 +21,7 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
       newPar = newPar + 1;
     }
   }
-  return calculatePoints(newPar, strokes);
+  return calculatePoints(newPar, Number(strokes));
 }
 
 export const calculateStablefordStars = (props: IStablefordPointsProps) => {
@@ -81,6 +82,30 @@ export const calculateStars = (par: number, strokes: number) => {
       return STABLEFORDSTARS.ZERO;
   }
 
+}
+
+export const newRoundTotals = (totals: IShots[]) => {
+  const newTotals = totals.reduce((acc: IShots, total: IShots) => {
+    acc.distance += Number(total.distance);
+    acc.putts += Number(total.putts / totals.length)
+    return acc;
+  }, {
+    holeNumber: 0,
+    distance: 0,
+    hcp: 0,
+    par: 0,
+    strokes: 0,
+    points: 0,
+    teeClub: '',
+    fir: 0,
+    gir: false,
+    putts: 0,
+    sand: 0,
+    water: 0,
+    out: 0,
+  })
+
+  return newTotals
 }
 
 export function calculateTotals(totalsData: IShotsTotals[], holes?: number): IShotsTotals {

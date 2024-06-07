@@ -22,7 +22,7 @@ const Player: React.FC = () => {
   return (
     <BoxPlayer>
       <Grid container spacing={10}>
-        <Grid item md={10}>
+        <Grid item md={10} sx={{ pt: '0px !important' }}>
           <RowCard
             label={"Name"}
             value={`${player.firstName} ${player.lastName}`}

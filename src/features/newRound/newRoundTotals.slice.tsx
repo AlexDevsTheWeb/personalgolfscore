@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { InitialStateNewRoundsTotals } from "../../types/roundTotals.types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { INewShotsTotals, InitialStateNewRoundsTotals } from "../../types/roundTotals.types";
 
 const initialState: InitialStateNewRoundsTotals = {
   isLoading: false,
@@ -33,10 +33,14 @@ const newRoundTotalsSlice = createSlice({
   name: 'newRoundTotals',
   initialState,
   reducers: {
+    setNewTotal: (state, { payload }: PayloadAction<{ total: INewShotsTotals }>) => {
+      state.totals = payload.total
+    },
+
     resetNewRoundsTotals: () => initialState,
   },
   extraReducers: () => { }
 });
 
-export const { resetNewRoundsTotals } = newRoundTotalsSlice.actions;
+export const { setNewTotal, resetNewRoundsTotals } = newRoundTotalsSlice.actions;
 export default newRoundTotalsSlice.reducer;
