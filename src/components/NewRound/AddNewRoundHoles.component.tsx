@@ -20,6 +20,11 @@ const AddNewRoundHoles = () => {
   return (
     <BoxNewRound>
       <Typography>{`Holes ${roundHoles !== 0 ? roundHoles : ''}`}</Typography>
+      <Typography>{`Total Points:  ${shots.reduce(
+        (acc, curr) => acc + curr.points,
+        0)
+
+        }`}</Typography>
 
       {
         shots.length !== 0 &&
@@ -28,6 +33,7 @@ const AddNewRoundHoles = () => {
             <Box key={index}>
               {`Hole #${index + 1} completed`}
               <Box>{`Hole number: ${shot.holeNumber}. Hole PAR: ${shot.par}.`}</Box>
+              <Box sx={{ fontWeight: "bold", fontSize: "20px" }}>{`POINTS: ${shots[index].points}`}</Box>
             </Box>
           )
         })

@@ -14,6 +14,7 @@ const AddSingleHole = () => {
   const { shots, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
 
   const [holeFinished, setHoleFinished] = useState(0);
+  const [holePoints, setHolePoints] = useState<number>(0);
 
   const dispatch = useDispatch<any>();
   const [error, setError] = useState<boolean>(false);
@@ -36,16 +37,26 @@ const AddSingleHole = () => {
 
   const handleChange = (e: any) => {
     setHole(state => ({ ...state, [e.target.name]: e.target.value }));
+    if (e.target.name === 'strokes' && hole.par && hole.hcp) {
+      const pointCalc = {
+        hcp: hole.hcp,
+        par: hole.par,
+        strokes: hole.strokes,
+        finalPlayerHCP: roundPlayingHCP,
+        totalHoles: roundHoles
+      };
+      const x = calculateStablefordPoints(pointCalc);
+      setHolePoints(x as number);
+    }
   }
 
   const saveHole = () => {
     if (!!checkSingleHoleValid(hole)) {
-      let holePoints = calculateStablefordPoints({ hcp: hole.hcp, par: hole.par, strokes: hole.strokes, finalPlayerHCP: roundPlayingHCP, totalHoles: roundHoles });
-      setHole(state => ({ ...state, points: holePoints as number, holeNumber: holeFinished + 1 }))
+      setHole(state => ({ ...state, points: holePoints, holeNumber: holeFinished + 1 }))
 
       dispatch(setHolesCompleted())
       setError(false)
-      dispatch(setNewHole({ hole }));
+      dispatch(setNewHole({ hole, roundPlayingHCP, roundHoles }));
     } else {
       setError(true);
     }
@@ -53,8 +64,6 @@ const AddSingleHole = () => {
   useEffect(() => {
     setHoleFinished(holesCompleted + 1);
   }, [holesCompleted]);
-
-  console.log("--->", hole);
 
   return (
     <Box>
