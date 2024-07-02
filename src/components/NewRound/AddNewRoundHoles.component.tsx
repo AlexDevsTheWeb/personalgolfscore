@@ -19,21 +19,18 @@ const AddNewRoundHoles = () => {
 
   return (
     <BoxNewRound>
-      <Typography>{`Holes ${roundHoles !== 0 ? roundHoles : ''}`}</Typography>
-      <Typography>{`Total Points:  ${shots.reduce(
-        (acc, curr) => acc + curr.points,
-        0)
-
-        }`}</Typography>
-
+      <Typography>
+        {`Holes ${roundHoles !== 0 ? roundHoles : ''} TOTAL POINTS: ${shots.reduce(
+          (acc, curr) => acc + curr.points,
+          0)}`}</Typography>
       {
         shots.length !== 0 &&
         shots.map((shot: IShots, index: number) => {
           return (
             <Box key={index}>
-              {`Hole #${index + 1} completed`}
-              <Box>{`Hole number: ${shot.holeNumber}. Hole PAR: ${shot.par}.`}</Box>
-              <Box sx={{ fontWeight: "bold", fontSize: "20px" }}>{`POINTS: ${shots[index].points}`}</Box>
+              {`Hole #: ${shot.holeNumber} Par: ${shot.par} `}
+              {`Strokes: ${shots[index].strokes} POINTS: ${shots[index].points}`}
+              {/* <Box sx={{ fontWeight: "bold", fontSize: "20px" }}>{`POINTS: ${shots[index].points}`}</Box> */}
             </Box>
           )
         })

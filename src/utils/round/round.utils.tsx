@@ -22,7 +22,6 @@ export const checkSingleHoleValid = (hole: IShots) => {
     hcp,
     par,
     strokes,
-    points,
     teeClub,
     fir,
     gir,
@@ -38,7 +37,6 @@ export const checkSingleHoleValid = (hole: IShots) => {
     hcp &&
     par &&
     strokes &&
-    points &&
     teeClub &&
     fir &&
     gir &&
