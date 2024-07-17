@@ -5,7 +5,6 @@ import * as React from "react";
 
 type TextFieldProps = TextFieldPropsMui & {
   error?: boolean;
-
 }
 
 const StyledTextField = styled(TextFieldMui)(({ theme }) => ({
@@ -14,7 +13,10 @@ const StyledTextField = styled(TextFieldMui)(({ theme }) => ({
 
 const TextField: React.FC<TextFieldProps> = (props) => {
   return (
-    <StyledTextField {...props} >
+    <StyledTextField
+      error={props.error}
+      {...props}
+    >
       {props.children}
     </StyledTextField>
   );

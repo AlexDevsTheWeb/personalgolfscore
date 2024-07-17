@@ -1,8 +1,8 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select as SelectMui, SelectChangeEvent } from '@mui/material'
 import { capitalize } from 'lodash';
 import { useState } from 'react';
 
-const NumberSelect = ({ name, list, onChange }: { name: string, list: string[], onChange: any }) => {
+const Select = ({ name, list, onChange }: { name: string, list: string[], onChange: any }) => {
   const [selectedPar, setSelectedPar] = useState<string>('...');
   const [newList] = useState<string[]>(['...', ...list]);
 
@@ -14,7 +14,7 @@ const NumberSelect = ({ name, list, onChange }: { name: string, list: string[], 
   return (
     <FormControl variant='filled'>
       <InputLabel id="demo-simple-select-label">{capitalize(name)}</InputLabel>
-      <Select
+      <SelectMui
         value={selectedPar}
         name={name}
         onChange={(e: SelectChangeEvent) => handleChange(e)}
@@ -27,9 +27,9 @@ const NumberSelect = ({ name, list, onChange }: { name: string, list: string[], 
             )
           })
         }
-      </Select>
+      </SelectMui>
     </FormControl>
   )
 }
 
-export default NumberSelect
+export default Select

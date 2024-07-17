@@ -8,13 +8,16 @@ import { IShots } from '../../types/roundData.types';
 import { hcpList18, hcpList9, parList } from '../../utils/constant.utils';
 import { checkSingleHoleValid } from '../../utils/round/round.utils';
 import { calculateStablefordPoints } from '../../utils/shots/shots.utils';
-import NumberSelect from './components/NumberSelect.component';
-import _ from 'lodash';
+import Select from './components/Select.component';
 
-const AddSingleHole = () => {
+interface Props {
+  teeClubs: string[];
+}
+
+const AddSingleHole = (props: Props) => {
   const { roundHoles, roundPlayingHCP } = useSelector((store: RootState) => store.newRound.newRoundMain.round);
   const { shots, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const { clubs } = useSelector((store: RootState) => store.golfBag);
+
   const [holeFinished, setHoleFinished] = useState(0);
   const [holePoints, setHolePoints] = useState<number>(0);
   const dispatch = useDispatch<any>();
@@ -66,27 +69,33 @@ const AddSingleHole = () => {
     setHoleFinished(holesCompleted + 1);
   }, [holesCompleted]);
 
-  const flatten = _.flatMapDeep(clubs.types)
-  const x = [1, 2, 3, 4, 5, [6, 7, 8, 9], [10, 11, [23, 32]]]
-  console.log(_.flatMapDeep(x))
-  console.log(flatten)
-
   return (
     <Box>
       <Typography>{`Hole number: ${holeFinished}`}</Typography>
-      <TextField id="distance" name='distance' label="Distance" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
+      <Box flexDirection={'row'} sx={{ border: '1px solid #000' }} >
+        <TextField
+          id="distance"
+          name='distance'
+          label="Distance"
+          variant="filled"
+          type='number'
+          error={error}
+          onChange={e => handleChange(e)}
+        />
+        <Select name='par' list={parList} onChange={handleChange} />
+        <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} />
+        <Select name='teeClub' list={props.teeClubs} onChange={handleChange} />
+      </Box>
+      <Box>
 
-      {/* FIXME: select doesn't work with default values? */}
-
-      <NumberSelect name='par' list={parList} onChange={handleChange} />
-      <NumberSelect name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} />
+      </Box>
 
 
 
       <TextField id="strokes" name='strokes' label="Strokes" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
       {/* TODO: removed point input since is automatically calculated */}
 
-      <TextField id="teeClub" name='teeClub' label="Tee club" variant="filled" type='text' error={error} onChange={e => handleChange(e)} />
+
       <TextField id="fir" name='fir' label="FIR" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
       <TextField id="gir" name='gir' label="GIR" variant="filled" type='text' error={error} onChange={e => handleChange(e)} />
       <TextField id="putts" name='putts' label="Putts" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
@@ -109,3 +118,5 @@ const AddSingleHole = () => {
 }
 
 export default AddSingleHole
+
+

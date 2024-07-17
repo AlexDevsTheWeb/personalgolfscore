@@ -1,6 +1,7 @@
+import { IClub, IClubs, IGolfBag } from "../../types/clubs.types";
 import { INewRound } from "../../types/round.types";
 import { IShots } from "../../types/roundData.types";
-import _ from 'lodash';
+import _, { capitalize } from 'lodash';
 
 
 export const checkMainRoundDataValid = (round: INewRound) => {
@@ -31,9 +32,6 @@ export const checkSingleHoleValid = (hole: IShots) => {
     sand,
     water,
     out } = hole;
-
-
-  console.log("---> ", hole)
   if (
     holeNumber
     && distance
@@ -49,4 +47,23 @@ export const checkSingleHoleValid = (hole: IShots) => {
     && !_.isNull(out)
   ) return true
   else return false
+}
+
+export const getClubsNames = (clubs: IGolfBag) => {
+  const flattenClubs = _.flatMapDeep(clubs.types)
+  const clubsName = flattenClubs.map((ct: IClubs) => {
+    return (
+      ct.details.map((c: IClub) => {
+        switch (ct.typeName) {
+          case "iron":
+            return (`${ct.typeName.slice(0, 1).toLowerCase()}${c.clubNumber}`);
+          case "wedge":
+            return (`${capitalize(c.clubNumber as string)} ${ct.typeName.toUpperCase()}`);
+          default:
+            return (ct.typeName.toUpperCase());
+        }
+      })
+    );
+  })
+  return _.flatMapDeep(clubsName);
 }
