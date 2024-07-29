@@ -31,6 +31,7 @@ const useNewRoundTotals = () => {
     teeClub: '',
     fir: 0,
     gir: false,
+    girBogey: false,
     putts: 0,
     sand: 0,
     water: 0,

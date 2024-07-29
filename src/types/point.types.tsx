@@ -5,3 +5,9 @@ export interface IStablefordPointsProps {
   finalPlayerHCP: number
   totalHoles: number;
 }
+
+export interface IGirProps {
+  par: number;
+  putts: number;
+  strokes: number
+}

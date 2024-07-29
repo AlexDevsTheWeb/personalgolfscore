@@ -30,3 +30,7 @@ export interface IErrorType {
 export type ClubPayload = {
   payload: IGolfBag;
 }
+
+export interface ITeeClubProps {
+  teeClubs: string[];
+}

@@ -14,6 +14,7 @@ export interface IShots {
   teeClub: string;
   fir: number;
   gir: boolean;
+  girBogey: boolean;
   putts: number;
   sand: number;
   water: number;

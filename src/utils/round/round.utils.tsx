@@ -1,7 +1,7 @@
+import _, { capitalize } from 'lodash';
 import { IClub, IClubs, IGolfBag } from "../../types/clubs.types";
 import { INewRound } from "../../types/round.types";
 import { IShots } from "../../types/roundData.types";
-import _, { capitalize } from 'lodash';
 
 
 export const checkMainRoundDataValid = (round: INewRound) => {
@@ -27,11 +27,12 @@ export const checkSingleHoleValid = (hole: IShots) => {
     strokes,
     teeClub,
     fir,
-    gir,
     putts,
     sand,
     water,
     out } = hole;
+
+  console.log("hole ---> ", hole)
   if (
     holeNumber
     && distance
@@ -40,7 +41,6 @@ export const checkSingleHoleValid = (hole: IShots) => {
     && strokes
     && teeClub
     && fir
-    && gir
     && putts
     && !_.isNull(sand)
     && !_.isNull(water)

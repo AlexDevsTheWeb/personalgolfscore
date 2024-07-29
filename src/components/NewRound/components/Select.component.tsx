@@ -1,8 +1,15 @@
-import { FormControl, InputLabel, MenuItem, Select as SelectMui, SelectChangeEvent } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, SelectChangeEvent, Select as SelectMui } from '@mui/material';
 import { capitalize } from 'lodash';
 import { useState } from 'react';
 
-const Select = ({ name, list, onChange }: { name: string, list: string[], onChange: any }) => {
+interface ISelectProps {
+  name: string,
+  list: string[],
+  width?: number,
+  onChange: any
+}
+
+const Select = ({ name, list, width, onChange }: ISelectProps) => {
   const [selectedPar, setSelectedPar] = useState<string>('...');
   const [newList] = useState<string[]>(['...', ...list]);
 
@@ -18,6 +25,7 @@ const Select = ({ name, list, onChange }: { name: string, list: string[], onChan
         value={selectedPar}
         name={name}
         onChange={(e: SelectChangeEvent) => handleChange(e)}
+        sx={{ width: `${width}px` }}
       >
         {
           newList.map((l: string) => {

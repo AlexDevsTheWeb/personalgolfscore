@@ -1,6 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { InitialStateNewRoundsData } from "../../types/roundData.types";
-import { calculateStablefordPoints } from "../../utils/shots/shots.utils";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { InitialStateNewRoundsData, IShots } from "../../types/roundData.types";
+import { calculateGirBogeyValue, calculateGirValue, calculateStablefordPoints } from "../../utils/shots/shots.utils";
 
 const initialState: InitialStateNewRoundsData = {
   isLoading: false,
@@ -31,9 +31,17 @@ const newRoundHolesSlice = createSlice({
         finalPlayerHCP: payload.roundPlayingHCP,
         totalHoles: payload.roundHoles
       };
+      const girCalc = {
+        par: payload.hole.par,
+        putts: payload.hole.putts,
+        strokes: payload.hole.strokes
+      };
       const holePoints = calculateStablefordPoints(pointCalc);
+      const girValue = calculateGirValue(girCalc);
+      const girBogeyValue = calculateGirBogeyValue(girCalc)
 
-      const newHole = { ...payload.hole, points: holePoints };
+      const newHole: IShots = { ...payload.hole, points: holePoints, gir: girValue, girBogey: girBogeyValue };
+
       state.shots = [...state.shots, newHole]
     },
     resetNewRoundsHoles: () => initialState,

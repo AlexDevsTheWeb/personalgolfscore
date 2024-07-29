@@ -1,5 +1,5 @@
 import { STABLEFORDPOINTS, STABLEFORDSTARS } from "../../enum/shots.enum";
-import { IStablefordPointsProps } from "../../types/point.types";
+import { IGirProps, IStablefordPointsProps } from "../../types/point.types";
 import { IShots } from "../../types/roundData.types";
 import { IShotsTotals } from "../../types/roundTotals.types";
 
@@ -22,6 +22,17 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
     }
   }
   return calculatePoints(newPar, Number(strokes));
+}
+
+export const calculateGirValue = (props: IGirProps) => {
+  const { par, putts, strokes } = props;
+  const girDiff = par + putts - strokes;
+  return girDiff < 2 ? 0 : 1;
+}
+export const calculateGirBogeyValue = (props: IGirProps) => {
+  const { par, putts, strokes } = props;
+  const girDiff = par + putts - strokes;
+  return girDiff < 1 ? 0 : 1;
 }
 
 export const calculateStablefordStars = (props: IStablefordPointsProps) => {
@@ -99,6 +110,7 @@ export const newRoundTotals = (totals: IShots[]) => {
     teeClub: '',
     fir: 0,
     gir: false,
+    girBogey: false,
     putts: 0,
     sand: 0,
     water: 0,

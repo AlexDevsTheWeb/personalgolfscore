@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { BoxNewRound } from '../../styles'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { BoxNewRound } from '../../styles';
 import { IShots } from '../../types/roundData.types';
-import AddSingleHole from './AddSingleHole.component';
 import { getClubsNames } from '../../utils/round/round.utils';
+import AddSingleHole from './AddSingleHole.component';
 
 const AddNewRoundHoles = () => {
 
@@ -21,7 +21,6 @@ const AddNewRoundHoles = () => {
   }, [clubs]);
 
   const handleOnClick = () => {
-    console.log(teeClubs)
     setHoleForm(<AddSingleHole teeClubs={teeClubs} />);
   }
 
@@ -38,7 +37,6 @@ const AddNewRoundHoles = () => {
             <Box key={index}>
               {`Hole #: ${shot.holeNumber} Par: ${shot.par} `}
               {`Strokes: ${shots[index].strokes} POINTS: ${shots[index].points}`}
-              {/* <Box sx={{ fontWeight: "bold", fontSize: "20px" }}>{`POINTS: ${shots[index].points}`}</Box> */}
             </Box>
           )
         })
