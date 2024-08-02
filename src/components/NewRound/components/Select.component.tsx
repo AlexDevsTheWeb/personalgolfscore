@@ -5,11 +5,10 @@ import { useState } from 'react';
 interface ISelectProps {
   name: string,
   list: string[],
-  width?: number,
   onChange: any
 }
 
-const Select = ({ name, list, width, onChange }: ISelectProps) => {
+const Select = ({ name, list, onChange }: ISelectProps) => {
   const [selectedPar, setSelectedPar] = useState<string>('...');
   const [newList] = useState<string[]>(['...', ...list]);
 
@@ -25,7 +24,7 @@ const Select = ({ name, list, width, onChange }: ISelectProps) => {
         value={selectedPar}
         name={name}
         onChange={(e: SelectChangeEvent) => handleChange(e)}
-        sx={{ width: `${width}px` }}
+        sx={{ width: `auto` }}
       >
         {
           newList.map((l: string) => {

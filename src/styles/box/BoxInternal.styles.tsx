@@ -10,13 +10,11 @@ interface IStackProps extends StackPropsMui {
 
 const StyledStack = styled(Stack) <IStackProps>`
   display: flex;
-  flex-direction: ${props => props.isMobile ? 'column' : 'row'};
+  flex-direction: row;
   justify-content: space-between;
-  padding: ${props => props.isMobile ? '10px 0px' : '10px 0px'};
-  gap: ${props => props.isMobile ? '10px' : '0px'}
 `
 
-const BoxNewHole: React.FC<IStackProps> = props => {
+const BoxInternal: React.FC<IStackProps> = props => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -28,4 +26,4 @@ const BoxNewHole: React.FC<IStackProps> = props => {
   )
 };
 
-export default BoxNewHole;
+export default BoxInternal;

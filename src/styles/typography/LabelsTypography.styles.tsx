@@ -1,7 +1,7 @@
 import { Typography as TypographyMui, TypographyProps as TypographyPropsMui } from "@mui/material";
 import * as React from "react";
 import styled from "styled-components";
-import BoxNewHole from "../box/BoxNewHole.styles";
+import BoxInternal from "../box/BoxInternal.styles";
 
 type TypographyProps = TypographyPropsMui
 
@@ -10,20 +10,22 @@ interface ILabelsTypographyProps extends TypographyProps {
   value: string,
 }
 
-const StyledTypographyLabel = styled(TypographyMui)({})
+const StyledTypographyLabel = styled(TypographyMui)({
+  width: 300,
+})
 const StyledTypographyValue = styled(TypographyMui)({
   fontWeight: 'bold'
 })
 
 const LabelsTypography: React.FC<ILabelsTypographyProps> = (props: ILabelsTypographyProps) => {
-  return <BoxNewHole sx={{ width: 250, padding: '0px !important' }}>
+  return <BoxInternal>
     <StyledTypographyLabel {...props}>
       {props.string}
     </StyledTypographyLabel>
-    <StyledTypographyValue>
+    <StyledTypographyValue {...props}>
       {props.value}
     </StyledTypographyValue>
-  </BoxNewHole>
+  </BoxInternal>
 }
 
 export default LabelsTypography;

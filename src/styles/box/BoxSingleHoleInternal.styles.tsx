@@ -6,17 +6,21 @@ import styled, { useTheme } from 'styled-components';
 // type StackProps = StackPropsMui;
 interface IStackProps extends StackPropsMui {
   isMobile?: boolean;
+  width: number;
+  paddingTop?: number
 }
 
 const StyledStack = styled(Stack) <IStackProps>`
   display: flex;
-  flex-direction: ${props => props.isMobile ? 'column' : 'row'};
+  flex-direction: column;
   justify-content: space-between;
-  padding: ${props => props.isMobile ? '10px 0px' : '10px 0px'};
-  gap: ${props => props.isMobile ? '10px' : '0px'}
+  padding: ${props => props.isMobile ? '0px' : '10px'};
+  gap: 10px;
+  width: ${props => !props.isMobile ? `${props.width}%` : '100%'}; 
+  padding-top: ${props => props.paddingTop ? `${props.paddingTop}px` : '0px'}; 
 `
 
-const BoxNewHole: React.FC<IStackProps> = props => {
+const BoxSingleHoleInternal: React.FC<IStackProps> = props => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -28,4 +32,4 @@ const BoxNewHole: React.FC<IStackProps> = props => {
   )
 };
 
-export default BoxNewHole;
+export default BoxSingleHoleInternal;

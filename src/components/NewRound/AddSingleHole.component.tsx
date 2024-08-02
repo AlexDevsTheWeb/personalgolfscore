@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setHolesCompleted, setNewHole } from '../../features/newRound/newRoundHoles.slice';
 import { RootState } from '../../store/store';
 import { TextField } from '../../styles';
+import BoxSingleHoleContainer from '../../styles/box/BosSingleHoleContainer.styles';
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
+import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import LabelsTypography from '../../styles/typography/LabelsTypography.styles';
 import { ITeeClubProps } from '../../types/clubs.types';
 import { IShots } from '../../types/roundData.types';
@@ -102,41 +104,42 @@ const AddSingleHole = (props: ITeeClubProps) => {
   }, [holesCompleted]);
 
   return (
-    <Box>
-      <Typography>{`Hole number: ${holeFinished}`}</Typography>
-      <BoxNewHole>
-        <TextField
-          id="distance"
-          name='distance'
-          label="Distance"
-          variant="filled"
-          type='number'
-          error={error}
-          onChange={e => handleChange(e)}
-          sx={{ maxWidth: '150px' }}
-        />
-        <Select name='par' width={100} list={parList} onChange={handleChange} />
-        <Select name='hcp' width={100} list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} />
-        <Select name='teeClub' width={150} list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
-        <TextField id="strokes" name='strokes' label="Strokes" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
-      </BoxNewHole>
-      <BoxNewHole>
-        <TextField id="fir" name='fir' label="FIR" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
-        <TextField id="putts" name='putts' label="Putts" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
-
+    <BoxSingleHoleContainer>
+      <BoxSingleHoleInternal width={60}>
+        <BoxNewHole>
+          <TextField
+            id="distance"
+            name='distance'
+            label="Distance"
+            variant="filled"
+            type='number'
+            error={error}
+            onChange={e => handleChange(e)}
+            sx={{ width: 'auto' }}
+          />
+          <Select name='par' list={parList} onChange={handleChange} />
+          <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} />
+          <Select name='teeClub' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
+          <TextField id="strokes" name='strokes' label="Strokes" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
+        </BoxNewHole>
+        <BoxNewHole>
+          <TextField id="fir" name='fir' label="FIR" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
+          <TextField id="putts" name='putts' label="Putts" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
+          <TextField id="ud" name='ud' label="Up&Down" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
+        </BoxNewHole>
+        <BoxNewHole>
+          <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
+          <TextField id="water" name='water' label="Water" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
+          <TextField id="out" name='out' label="Out" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
+        </BoxNewHole>
+      </BoxSingleHoleInternal>
+      <BoxSingleHoleInternal width={40} paddingTop={10}>
         <Stack>
+          <Typography>{`Hole number: ${holeFinished}`}</Typography>
           <LabelsTypography string='Green in regulation:' value={gir !== '' ? gir.toUpperCase() : '-'}></LabelsTypography>
           <LabelsTypography string='Green in regulation (bogey):' value={girBogey !== '' ? girBogey.toUpperCase() : '-'}></LabelsTypography>
-
         </Stack>
-
-      </BoxNewHole>
-      <BoxNewHole>
-        <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
-        <TextField id="water" name='water' label="Water" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
-        <TextField id="out" name='out' label="Out" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
-      </BoxNewHole>
-
+      </BoxSingleHoleInternal>
       {
         shots.length <= roundHoles - 1 ?
           <Box>
@@ -147,7 +150,7 @@ const AddSingleHole = (props: ITeeClubProps) => {
           null
       }
 
-    </Box >
+    </BoxSingleHoleContainer >
   )
 }
 
