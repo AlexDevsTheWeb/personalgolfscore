@@ -11,3 +11,10 @@ export interface IGirProps {
   putts: number;
   strokes: number
 }
+
+export interface IUDProps {
+  girValue: number;
+  chipClub: string;
+  parValue: number;
+  strokesValue: number;
+}

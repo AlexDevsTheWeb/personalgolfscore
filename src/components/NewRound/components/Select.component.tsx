@@ -5,7 +5,7 @@ import { useState } from 'react';
 interface ISelectProps {
   name: string,
   list: string[],
-  onChange: any
+  onChange: any,
 }
 
 const Select = ({ name, list, onChange }: ISelectProps) => {
@@ -24,7 +24,7 @@ const Select = ({ name, list, onChange }: ISelectProps) => {
         value={selectedPar}
         name={name}
         onChange={(e: SelectChangeEvent) => handleChange(e)}
-        sx={{ width: `auto` }}
+        sx={{ minWidth: '100px', width: '150px' }}
       >
         {
           newList.map((l: string) => {

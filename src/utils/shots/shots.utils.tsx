@@ -1,5 +1,5 @@
 import { STABLEFORDPOINTS, STABLEFORDSTARS } from "../../enum/shots.enum";
-import { IGirProps, IStablefordPointsProps } from "../../types/point.types";
+import { IGirProps, IStablefordPointsProps, IUDProps } from "../../types/point.types";
 import { IShots } from "../../types/roundData.types";
 import { IShotsTotals } from "../../types/roundTotals.types";
 
@@ -33,6 +33,41 @@ export const calculateGirBogeyValue = (props: IGirProps) => {
   const { par, putts, strokes } = props;
   const girDiff = par + putts - strokes;
   return girDiff < 1 ? 0 : 1;
+}
+
+export const calculateUDValue = (props: IUDProps) => {
+  const { girValue, chipClub, parValue, strokesValue } = props;
+  if (girValue === 1) {
+    return ''
+  }
+  else {
+    if (checkChipClub(chipClub)) {
+      if (parValue >= strokesValue) {
+        return 'x';
+      }
+      else {
+        return 'n';
+      }
+    }
+    else {
+      return '';
+    }
+  }
+}
+
+const checkChipClub = (club: string) => {
+  switch (club) {
+    case 'Lw':
+    case 'Sw':
+    case 'Mw':
+    case 'Chip':
+    case 'Putt':
+    case 'Bunker':
+    case 'B':
+      return true;
+    default:
+      return false;
+  }
 }
 
 export const calculateStablefordStars = (props: IStablefordPointsProps) => {

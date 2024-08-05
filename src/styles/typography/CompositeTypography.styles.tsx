@@ -7,7 +7,7 @@ type TypographyProps = TypographyPropsMui
 
 interface ILabelsTypographyProps extends TypographyProps {
   string: string,
-  value: string,
+  value: string | number,
 }
 
 const StyledTypographyLabel = styled(TypographyMui)({
@@ -17,10 +17,10 @@ const StyledTypographyValue = styled(TypographyMui)({
   fontWeight: 'bold'
 })
 
-const LabelsTypography: React.FC<ILabelsTypographyProps> = (props: ILabelsTypographyProps) => {
+const CompositeTypography: React.FC<ILabelsTypographyProps> = (props: ILabelsTypographyProps) => {
   return <BoxInternal>
     <StyledTypographyLabel {...props}>
-      {props.string}
+      {`${props.string}:`}
     </StyledTypographyLabel>
     <StyledTypographyValue {...props}>
       {props.value}
@@ -28,4 +28,4 @@ const LabelsTypography: React.FC<ILabelsTypographyProps> = (props: ILabelsTypogr
   </BoxInternal>
 }
 
-export default LabelsTypography;
+export default CompositeTypography;

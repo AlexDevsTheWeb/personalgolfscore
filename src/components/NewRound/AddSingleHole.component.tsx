@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setHolesCompleted, setNewHole } from '../../features/newRound/newRoundHoles.slice';
@@ -7,12 +7,12 @@ import { TextField } from '../../styles';
 import BoxSingleHoleContainer from '../../styles/box/BosSingleHoleContainer.styles';
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
-import LabelsTypography from '../../styles/typography/LabelsTypography.styles';
+import { default as CompositeTypography } from '../../styles/typography/CompositeTypography.styles';
 import { ITeeClubProps } from '../../types/clubs.types';
 import { IShots } from '../../types/roundData.types';
-import { hcpList18, hcpList9, parList } from '../../utils/constant.utils';
+import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
 import { checkSingleHoleValid } from '../../utils/round/round.utils';
-import { calculateGirBogeyValue, calculateGirValue, calculateStablefordPoints } from '../../utils/shots/shots.utils';
+import { calculateGirBogeyValue, calculateGirValue, calculateStablefordPoints, calculateUDValue } from '../../utils/shots/shots.utils';
 import Select from './components/Select.component';
 
 const AddSingleHole = (props: ITeeClubProps) => {
@@ -26,6 +26,7 @@ const AddSingleHole = (props: ITeeClubProps) => {
   const [error, setError] = useState<boolean>(false);
   const [gir, setGir] = useState<string>('');
   const [girBogey, setGirBogey] = useState<string>('');
+  const [ud, setUD] = useState<string>('');
   const [hole, setHole] = useState<IShots>({
     holeNumber: holesCompleted + 1,
     distance: 0,
@@ -71,8 +72,10 @@ const AddSingleHole = (props: ITeeClubProps) => {
       };
       const girValue = calculateGirValue(girCalc);
       const girBogeyValue = calculateGirBogeyValue(girCalc);
+      const udValue = calculateUDValue({ girValue, chipClub: 'b', parValue: hole.par, strokesValue: hole.strokes });
       setGir(girValue === 1 ? 'Yes' : 'No');
       setGirBogey(girBogeyValue === 1 ? 'Yes' : 'No');
+      setUD(udValue);
     }
   }
 
@@ -105,39 +108,38 @@ const AddSingleHole = (props: ITeeClubProps) => {
 
   return (
     <BoxSingleHoleContainer>
-      <BoxSingleHoleInternal width={60}>
+      <BoxSingleHoleInternal width={70}>
         <BoxNewHole>
-          <TextField
-            id="distance"
-            name='distance'
-            label="Distance"
-            variant="filled"
-            type='number'
-            error={error}
-            onChange={e => handleChange(e)}
-            sx={{ width: 'auto' }}
-          />
           <Select name='par' list={parList} onChange={handleChange} />
           <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} />
-          <Select name='teeClub' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
           <TextField id="strokes" name='strokes' label="Strokes" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
-        </BoxNewHole>
-        <BoxNewHole>
-          <TextField id="fir" name='fir' label="FIR" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
           <TextField id="putts" name='putts' label="Putts" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
-          <TextField id="ud" name='ud' label="Up&Down" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
         </BoxNewHole>
         <BoxNewHole>
+          <Select name='fairways' list={fairwayValues} onChange={(e: any) => handleChangeTeeClub(e)} />
+          <Select name='teeClub' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
+          <TextField id='driveDistance' name='driveDistance' label='Drive distance' variant='filled' type='number' error={error} onChange={e => handleChange(e)} />
+        </BoxNewHole>
+        <BoxNewHole>
+          <Select name='toGreen' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
+          <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChangeTeeClub(e)} />
+          <Select name='chipClub' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
+        </BoxNewHole>
+        <BoxNewHole>
+          <TextField id="putt1" name='firstPutt' label="First putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
+          <TextField id="putt2" name='secondPutt' label="Second putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
+          <TextField id="putt3" name='thirdPutt' label="Third putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
           <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
           <TextField id="water" name='water' label="Water" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
           <TextField id="out" name='out' label="Out" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
         </BoxNewHole>
       </BoxSingleHoleInternal>
-      <BoxSingleHoleInternal width={40} paddingTop={10}>
+      <BoxSingleHoleInternal width={30} paddingTop={1.25}>
         <Stack>
-          <Typography>{`Hole number: ${holeFinished}`}</Typography>
-          <LabelsTypography string='Green in regulation:' value={gir !== '' ? gir.toUpperCase() : '-'}></LabelsTypography>
-          <LabelsTypography string='Green in regulation (bogey):' value={girBogey !== '' ? girBogey.toUpperCase() : '-'}></LabelsTypography>
+          <CompositeTypography string='Hole number' value={holeFinished} />
+          <CompositeTypography string='Green in regulation' value={gir !== '' ? gir.toUpperCase() : '-'} />
+          <CompositeTypography string='Green in regulation (bogey)' value={girBogey !== '' ? girBogey.toUpperCase() : '-'} />
+          <CompositeTypography string='Up&Down' value={ud === 'x' ? 'Yes' : ud === 'n' ? 'No' : '-'} />
         </Stack>
       </BoxSingleHoleInternal>
       {
