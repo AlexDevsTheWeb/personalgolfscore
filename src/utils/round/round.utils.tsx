@@ -31,8 +31,6 @@ export const checkSingleHoleValid = (hole: IShots) => {
     sand,
     water,
     out } = hole;
-
-  console.log("hole ---> ", hole)
   if (
     holeNumber
     && distance

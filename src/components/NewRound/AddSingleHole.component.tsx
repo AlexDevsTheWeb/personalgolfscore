@@ -52,43 +52,29 @@ const AddSingleHole = (props: ITeeClubProps) => {
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setHole(state => ({ ...state, [name]: Number(value) }));
-
-    if (name === 'strokes' && hole.par && hole.hcp) {
-      const pointCalc = {
-        hcp: hole.hcp,
-        par: hole.par,
-        strokes: hole.strokes,
-        finalPlayerHCP: roundPlayingHCP,
-        totalHoles: roundHoles
-      };
-      const holePoints = calculateStablefordPoints(pointCalc);
-      setHolePoints(holePoints as number);
-    }
-    if (name === 'putts' && hole.putts && hole.strokes && hole.par) {
-      const girCalc = {
-        par: hole.par,
-        putts: hole.putts,
-        strokes: hole.strokes
-      };
-      const girValue = calculateGirValue(girCalc);
-      const girBogeyValue = calculateGirBogeyValue(girCalc);
-      const udValue = calculateUDValue({ girValue, chipClub: 'b', parValue: hole.par, strokesValue: hole.strokes });
-      setGir(girValue === 1 ? 'Yes' : 'No');
-      setGirBogey(girBogeyValue === 1 ? 'Yes' : 'No');
-      setUD(udValue);
-    }
   }
 
   const handleGirCalculation = (e: any) => {
+    const pointCalc = {
+      hcp: hole.hcp,
+      par: hole.par,
+      strokes: hole.strokes,
+      finalPlayerHCP: roundPlayingHCP,
+      totalHoles: roundHoles
+    };
     const girCalc = {
       par: hole.par,
       putts: hole.putts,
       strokes: hole.strokes
     };
+    const holePoints = calculateStablefordPoints(pointCalc);
     const girValue = calculateGirValue(girCalc);
     const girBogeyValue = calculateGirBogeyValue(girCalc);
-    setGir(girValue === 1 ? 'Yes' : 'No');
-    setGirBogey(girBogeyValue === 1 ? 'Yes' : 'No');
+    const udValue = calculateUDValue({ girValue, chipClub: 'B', parValue: hole.par, strokesValue: hole.strokes });
+    setHolePoints(holePoints as number);
+    setGir(girValue === 1 ? 'yes' : 'no');
+    setGirBogey(girBogeyValue === 1 ? 'yes' : 'no');
+    setUD(udValue === 'x' ? 'yes' : ud === 'n' ? 'no' : '-');
   }
 
   const saveHole = () => {
@@ -110,8 +96,8 @@ const AddSingleHole = (props: ITeeClubProps) => {
     <BoxSingleHoleContainer>
       <BoxSingleHoleInternal width={70}>
         <BoxNewHole>
-          <Select name='par' list={parList} onChange={handleChange} />
           <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} />
+          <Select name='par' list={parList} onChange={handleChange} />
           <TextField id="strokes" name='strokes' label="Strokes" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
           <TextField id="putts" name='putts' label="Putts" variant="filled" type='number' error={error} onChange={e => handleChange(e)} onBlur={(e: any) => handleGirCalculation(e)} />
         </BoxNewHole>
@@ -122,8 +108,8 @@ const AddSingleHole = (props: ITeeClubProps) => {
         </BoxNewHole>
         <BoxNewHole>
           <Select name='toGreen' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
-          <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChangeTeeClub(e)} />
-          <Select name='chipClub' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
+          <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChangeTeeClub(e)} gir={gir} />
+          <Select name='chipClub' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} gir={gir} />
         </BoxNewHole>
         <BoxNewHole>
           <TextField id="putt1" name='firstPutt' label="First putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
@@ -137,9 +123,10 @@ const AddSingleHole = (props: ITeeClubProps) => {
       <BoxSingleHoleInternal width={30} paddingTop={1.25}>
         <Stack>
           <CompositeTypography string='Hole number' value={holeFinished} />
+          <CompositeTypography string='Hole points' value={holePoints} />
           <CompositeTypography string='Green in regulation' value={gir !== '' ? gir.toUpperCase() : '-'} />
           <CompositeTypography string='Green in regulation (bogey)' value={girBogey !== '' ? girBogey.toUpperCase() : '-'} />
-          <CompositeTypography string='Up&Down' value={ud === 'x' ? 'Yes' : ud === 'n' ? 'No' : '-'} />
+          <CompositeTypography string='Up&Down' value={ud.toUpperCase()} />
         </Stack>
       </BoxSingleHoleInternal>
       {

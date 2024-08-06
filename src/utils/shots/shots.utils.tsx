@@ -7,6 +7,8 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, finalPlayerHCP, totalHoles } = props;
   let newPar = Number(par);
   const diff = finalPlayerHCP - totalHoles;
+  console.log("props: ", props)
+  console.log("diff: ", diff);
   if (diff === 0) {
     newPar = newPar + 1
   }
@@ -38,7 +40,7 @@ export const calculateGirBogeyValue = (props: IGirProps) => {
 export const calculateUDValue = (props: IUDProps) => {
   const { girValue, chipClub, parValue, strokesValue } = props;
   if (girValue === 1) {
-    return ''
+    return '';
   }
   else {
     if (checkChipClub(chipClub)) {
