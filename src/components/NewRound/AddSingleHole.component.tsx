@@ -121,25 +121,29 @@ const AddSingleHole = (props: ITeeClubProps) => {
         </BoxNewHole>
       </BoxSingleHoleInternal>
       <BoxSingleHoleInternal width={30} paddingTop={1.25}>
-        <Stack>
-          <CompositeTypography string='Hole number' value={holeFinished} />
-          <CompositeTypography string='Hole points' value={holePoints} />
-          <CompositeTypography string='Green in regulation' value={gir !== '' ? gir.toUpperCase() : '-'} />
-          <CompositeTypography string='Green in regulation (bogey)' value={girBogey !== '' ? girBogey.toUpperCase() : '-'} />
-          <CompositeTypography string='Up&Down' value={ud.toUpperCase()} />
+        <Stack direction='column' justifyContent='space-between'>
+          <Stack>
+            <CompositeTypography string='Hole number' value={holeFinished} />
+            <CompositeTypography string='Hole points' value={holePoints} />
+            <CompositeTypography string='Green in regulation' value={gir !== '' ? gir.toUpperCase() : '-'} />
+            <CompositeTypography string='Green in regulation (bogey)' value={girBogey !== '' ? girBogey.toUpperCase() : '-'} />
+            <CompositeTypography string='Up&Down' value={ud.toUpperCase()} />
+          </Stack>
+          {
+            shots.length <= roundHoles - 1 ?
+              <Box>
+                <Button variant='contained' onClick={saveHole}>
+                  Save
+                </Button>
+              </Box> :
+              null
+          }
+
         </Stack>
       </BoxSingleHoleInternal>
-      {
-        shots.length <= roundHoles - 1 ?
-          <Box>
-            <Button variant='contained' onClick={saveHole}>
-              Save
-            </Button>
-          </Box> :
-          null
-      }
 
-    </BoxSingleHoleContainer >
+
+    </BoxSingleHoleContainer>
   )
 }
 
