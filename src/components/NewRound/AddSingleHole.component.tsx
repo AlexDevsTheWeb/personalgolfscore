@@ -8,18 +8,18 @@ import BoxSingleHoleContainer from '../../styles/box/BosSingleHoleContainer.styl
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import { default as CompositeTypography } from '../../styles/typography/CompositeTypography.styles';
-import { ITeeClubProps } from '../../types/clubs.types';
 import { IShots } from '../../types/roundData.types';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
 import { checkSingleHoleValid } from '../../utils/round/round.utils';
 import { calculateGirBogeyValue, calculateGirValue, calculateStablefordPoints, calculateUDValue } from '../../utils/shots/shots.utils';
 import Select from './components/Select.component';
 
-const AddSingleHole = (props: ITeeClubProps) => {
+const AddSingleHole = () => {
   const dispatch = useDispatch<any>();
 
   const { roundHoles, roundPlayingHCP } = useSelector((store: RootState) => store.newRound.newRoundMain.round);
   const { shots, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
+  const { teeClubs, greenClubs } = useSelector((store: RootState) => store.golfBag);
 
   const [holeFinished, setHoleFinished] = useState(0);
   const [holePoints, setHolePoints] = useState<number>(0);
@@ -103,13 +103,13 @@ const AddSingleHole = (props: ITeeClubProps) => {
         </BoxNewHole>
         <BoxNewHole>
           <Select name='fairways' list={fairwayValues} onChange={(e: any) => handleChangeTeeClub(e)} />
-          <Select name='teeClub' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
+          <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
           <TextField id='driveDistance' name='driveDistance' label='Drive distance' variant='filled' type='number' error={error} onChange={e => handleChange(e)} />
         </BoxNewHole>
         <BoxNewHole>
-          <Select name='toGreen' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
+          <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
           <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChangeTeeClub(e)} gir={gir} />
-          <Select name='chipClub' list={props.teeClubs} onChange={(e: any) => handleChangeTeeClub(e)} gir={gir} />
+          <Select name='chipClub' list={greenClubs} onChange={(e: any) => handleChangeTeeClub(e)} gir={gir} />
         </BoxNewHole>
         <BoxNewHole>
           <TextField id="putt1" name='firstPutt' label="First putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />

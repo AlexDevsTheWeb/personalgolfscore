@@ -21,6 +21,8 @@ export type InitialStateClubs = {
   totalClubs: number;
   selectedClubs: number;
   clubs: IGolfBag;
+  teeClubs: string[];
+  greenClubs: string[];
 }
 export interface IErrorType {
   errorMessage: string;

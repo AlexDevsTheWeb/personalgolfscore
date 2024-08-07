@@ -65,3 +65,13 @@ export const getClubsNames = (clubs: IGolfBag) => {
   })
   return _.flatMapDeep(clubsName);
 }
+
+export const getGreenClubs = (teeClubs: string[]) => {
+
+  const newTeeClubs = [...teeClubs];
+  newTeeClubs.push("mt.");
+  newTeeClubs.shift();
+
+  const greenTeeClubs = newTeeClubs;
+  return greenTeeClubs;
+}
