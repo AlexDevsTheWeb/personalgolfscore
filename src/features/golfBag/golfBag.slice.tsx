@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { CLUBSSELECTION } from "../../enum/shots.enum";
 import { ClubPayload, InitialStateClubs } from "../../types/clubs.types";
 import { getClubsThunk } from "./golfBag.thunk";
 
@@ -12,6 +13,7 @@ const initialState: InitialStateClubs = {
   },
   teeClubs: [],
   greenClubs: [],
+  chipClubs: [],
   error: {
     errorCode: 0,
     errorMessage: "",
@@ -52,14 +54,15 @@ const golfBagSlice = createSlice({
       }
     },
     updateTeeGreenClubs: (state, { payload }) => {
-      console.log(payload)
-
       switch (payload.type) {
-        case 'tee':
+        case CLUBSSELECTION.TEE:
           state.teeClubs = payload.updatedTeeClubs;
           break;
-        case 'green':
+        case CLUBSSELECTION.GREEN:
           state.greenClubs = payload.updatedGreenClubs;
+          break;
+        case CLUBSSELECTION.CHIP:
+          state.chipClubs = payload.updatedChipClubs;
           break;
         default:
           break;

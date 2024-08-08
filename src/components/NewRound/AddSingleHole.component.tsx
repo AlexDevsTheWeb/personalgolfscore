@@ -19,7 +19,7 @@ const AddSingleHole = () => {
 
   const { roundHoles, roundPlayingHCP } = useSelector((store: RootState) => store.newRound.newRoundMain.round);
   const { shots, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const { teeClubs, greenClubs } = useSelector((store: RootState) => store.golfBag);
+  const { teeClubs, greenClubs, chipClubs } = useSelector((store: RootState) => store.golfBag);
 
   const [holeFinished, setHoleFinished] = useState(0);
   const [holePoints, setHolePoints] = useState<number>(0);
@@ -27,6 +27,7 @@ const AddSingleHole = () => {
   const [gir, setGir] = useState<string>('');
   const [girBogey, setGirBogey] = useState<string>('');
   const [ud, setUD] = useState<string>('');
+  const [mtToGreen, setMtToGreen] = useState<boolean>(false);
   const [hole, setHole] = useState<IShots>({
     holeNumber: holesCompleted + 1,
     distance: 0,
@@ -46,6 +47,13 @@ const AddSingleHole = () => {
 
   const handleChangeTeeClub = (e: any) => {
     const { name, value } = e.target;
+    if (name === 'toGreen') {
+      if (value === 'mt.') {
+        setMtToGreen(true);
+      } else {
+        setMtToGreen(false)
+      }
+    }
     setHole(state => ({ ...state, [name]: value }));
   }
 
@@ -70,11 +78,11 @@ const AddSingleHole = () => {
     const holePoints = calculateStablefordPoints(pointCalc);
     const girValue = calculateGirValue(girCalc);
     const girBogeyValue = calculateGirBogeyValue(girCalc);
-    const udValue = calculateUDValue({ girValue, chipClub: 'B', parValue: hole.par, strokesValue: hole.strokes });
+    const udValue = calculateUDValue({ girValue, chipClub: 'Bunker', parValue: hole.par, strokesValue: hole.strokes, chipClubs });
     setHolePoints(holePoints as number);
     setGir(girValue === 1 ? 'yes' : 'no');
     setGirBogey(girBogeyValue === 1 ? 'yes' : 'no');
-    setUD(udValue === 'x' ? 'yes' : ud === 'n' ? 'no' : '-');
+    setUD(udValue === 'x' ? 'yes' : udValue === 'n' ? 'no' : '-');
   }
 
   const saveHole = () => {
@@ -108,13 +116,13 @@ const AddSingleHole = () => {
         </BoxNewHole>
         <BoxNewHole>
           <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChangeTeeClub(e)} />
+          {!!mtToGreen ? <TextField id="mtToGreen" name='mtToGreen' label="Meters to green" variant="filled" type='number' error={error} onChange={e => handleChange(e)} /> : null}
           <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChangeTeeClub(e)} gir={gir} />
-          <Select name='chipClub' list={greenClubs} onChange={(e: any) => handleChangeTeeClub(e)} gir={gir} />
+          <Select name='chipClub' list={chipClubs} onChange={(e: any) => handleChangeTeeClub(e)} gir={gir} />
         </BoxNewHole>
         <BoxNewHole>
           <TextField id="putt1" name='firstPutt' label="First putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
           <TextField id="putt2" name='secondPutt' label="Second putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
-          <TextField id="putt3" name='thirdPutt' label="Third putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
           <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
           <TextField id="water" name='water' label="Water" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />
           <TextField id="out" name='out' label="Out" variant="filled" type='number' error={error} onChange={e => handleChange(e)} />

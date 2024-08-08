@@ -5,7 +5,7 @@ import { updateTeeGreenClubs } from '../../features/golfBag/golfBag.slice';
 import { RootState } from '../../store/store';
 import { BoxNewRound } from '../../styles';
 import { IShots } from '../../types/roundData.types';
-import { getClubsNames, getGreenClubs } from '../../utils/round/round.utils';
+import { getChipClubs, getClubsNames, getGreenClubs } from '../../utils/round/round.utils';
 import AddSingleHole from './AddSingleHole.component';
 
 const AddNewRoundHoles = () => {
@@ -19,8 +19,10 @@ const AddNewRoundHoles = () => {
   useEffect(() => {
     const updatedTeeClubs = getClubsNames(clubs);
     const updatedGreenClubs = getGreenClubs(updatedTeeClubs);
+    const updatedChipClubs = getChipClubs(updatedTeeClubs);
     dispatch(updateTeeGreenClubs({ updatedTeeClubs, type: 'tee' }));
     dispatch(updateTeeGreenClubs({ updatedGreenClubs, type: 'green' }));
+    dispatch(updateTeeGreenClubs({ updatedChipClubs, type: 'chip' }));
   }, [clubs, dispatch]);
 
   const handleOnClick = () => {

@@ -67,11 +67,21 @@ export const getClubsNames = (clubs: IGolfBag) => {
 }
 
 export const getGreenClubs = (teeClubs: string[]) => {
-
   const newTeeClubs = [...teeClubs];
   newTeeClubs.push("mt.");
   newTeeClubs.shift();
 
   const greenTeeClubs = newTeeClubs;
   return greenTeeClubs;
+}
+
+export const getChipClubs = (teeClubs: string[]) => {
+  const newChipClubs = [...teeClubs];
+  newChipClubs.push("Bunker");
+  newChipClubs.push("Chip");
+  newChipClubs.shift();
+  newChipClubs.shift();
+  newChipClubs.shift();
+  const chipClubs = newChipClubs;
+  return chipClubs;
 }

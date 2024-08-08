@@ -7,8 +7,6 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, finalPlayerHCP, totalHoles } = props;
   let newPar = Number(par);
   const diff = finalPlayerHCP - totalHoles;
-  console.log("props: ", props)
-  console.log("diff: ", diff);
   if (diff === 0) {
     newPar = newPar + 1
   }
@@ -38,37 +36,22 @@ export const calculateGirBogeyValue = (props: IGirProps) => {
 }
 
 export const calculateUDValue = (props: IUDProps) => {
-  const { girValue, chipClub, parValue, strokesValue } = props;
+  const { girValue, chipClub, parValue, strokesValue, chipClubs } = props;
   if (girValue === 1) {
     return '';
   }
-  else {
-    if (checkChipClub(chipClub)) {
-      if (parValue >= strokesValue) {
-        return 'x';
-      }
-      else {
-        return 'n';
-      }
+
+  const validClub = chipClubs.filter((club: string) => club === chipClub);
+  if (validClub.length > 0) {
+    if (parValue >= strokesValue) {
+      return 'x';
     }
     else {
-      return '';
+      return 'n';
     }
   }
-}
-
-const checkChipClub = (club: string) => {
-  switch (club) {
-    case 'Lw':
-    case 'Sw':
-    case 'Mw':
-    case 'Chip':
-    case 'Putt':
-    case 'Bunker':
-    case 'B':
-      return true;
-    default:
-      return false;
+  else {
+    return '';
   }
 }
 
