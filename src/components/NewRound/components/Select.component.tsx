@@ -7,7 +7,7 @@ interface ISelectProps {
   name: string,
   list: string[],
   onChange: any,
-  gir?: string,
+  gir?: boolean,
 }
 
 const Select = ({ name, list, onChange, gir }: ISelectProps) => {
@@ -27,7 +27,7 @@ const Select = ({ name, list, onChange, gir }: ISelectProps) => {
         name={name}
         onChange={(e: SelectChangeEvent) => handleChange(e)}
         sx={{ minWidth: '100px', width: '150px' }}
-        disabled={(name === CHIPCONDITION.GREEN || name === CHIPCONDITION.CHIP) && gir === 'yes' ? true : false}
+        disabled={(name === CHIPCONDITION.GREEN || name === CHIPCONDITION.CHIP) && gir ? true : false}
       >
         {
           newList.map((l: string) => {

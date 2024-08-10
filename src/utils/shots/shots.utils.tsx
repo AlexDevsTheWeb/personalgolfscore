@@ -40,7 +40,6 @@ export const calculateUDValue = (props: IUDProps) => {
   if (girValue === 1) {
     return '';
   }
-
   const validClub = chipClubs.filter((club: string) => club === chipClub);
   if (validClub.length > 0) {
     if (parValue >= strokesValue) {
@@ -122,19 +121,28 @@ export const newRoundTotals = (totals: IShots[]) => {
     return acc;
   }, {
     holeNumber: 0,
+    chipClub: '',
     distance: 0,
-    hcp: 0,
-    par: 0,
-    strokes: 0,
-    points: 0,
-    teeClub: '',
+    driveDistance: 0,
+    fairway: "",
     fir: 0,
+    firstPutt: 0,
     gir: false,
     girBogey: false,
+    greenSide: '',
+    hcp: 0,
+    out: 0,
+    par: 0,
+    points: 0,
     putts: 0,
     sand: 0,
-    water: 0,
-    out: 0,
+    secondPutt: 0,
+    strokes: 0,
+    teeClub: '',
+    toGreen: '',
+    toGreenMeters: 0,
+    upDown: false,
+    water: 0
   })
 
   return newTotals

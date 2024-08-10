@@ -21,7 +21,6 @@ export const checkMainRoundDataValid = (round: INewRound) => {
 
 export const checkSingleHoleValid = (hole: IShots) => {
   const { holeNumber,
-    distance,
     hcp,
     par,
     strokes,
@@ -31,9 +30,10 @@ export const checkSingleHoleValid = (hole: IShots) => {
     sand,
     water,
     out } = hole;
+
+  console.log("hole to save: ", hole);
   if (
     holeNumber
-    && distance
     && hcp
     && par
     && strokes
@@ -48,8 +48,7 @@ export const checkSingleHoleValid = (hole: IShots) => {
 }
 
 export const getClubsNames = (clubs: IGolfBag) => {
-  const flattenClubs = _.flatMapDeep(clubs.types)
-  const clubsName = flattenClubs.map((ct: IClubs) => {
+  const clubsName = clubs.types.map((ct: IClubs) => {
     return (
       ct.details.map((c: IClub) => {
         switch (ct.typeName) {
