@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IShots } from "../../types/roundData.types";
+import { calculateGirValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
+
 
 const initialState: IShots = {
   holeNumber: 0,
@@ -23,7 +25,7 @@ const initialState: IShots = {
   teeClub: '',
   toGreen: '',
   toGreenMeters: 0,
-  upDown: false,
+  upDown: '',
   water: 0,
 };
 
@@ -31,7 +33,7 @@ const holeTmpSlice = createSlice({
   name: 'holeTmp',
   initialState,
   reducers: {
-    setTmpHoleData: (state: any, { payload: { name, value } }: any) => {
+    setTmpHoleData: (state: any, { payload: { name, value, roundPlayingHCP, roundHoles, chipClubs } }: any) => {
       if (typeof state[name] === 'number') {
         if (name === 'toGreen') {
           state['toGreenMeters'] = Number(value);
@@ -40,17 +42,47 @@ const holeTmpSlice = createSlice({
       }
       else { state[name] = value; }
 
+      state.points = calculateStablefordPoints({
+        hcp: Number(state.hcp),
+        par: Number(state.par),
+        strokes: Number(state.strokes),
+        roundPlayingHCP: Number(roundPlayingHCP),
+        roundHoles: Number(roundHoles)
+      });
+      state.gir = calculateGirValue({
+        par: Number(state.par),
+        putts: Number(state.putts),
+        strokes: Number(state.strokes),
+        bogey: false
+      });
+      state.girBogey = calculateGirValue({
+        par: Number(state.par),
+        putts: Number(state.putts),
+        strokes: Number(state.strokes),
+        bogey: true
+      });
+      state.upDown = calculateUDValue({
+        girValue: Number(state.gir),
+        chipClub: state.chipClub,
+        parValue: Number(state.par),
+        strokesValue: Number(state.strokes),
+        chipClubs: chipClubs
+      })
+
+
       // TODO: missing: 
       // TODO: 1) distance(?),
       // TODO: 2) fir calculation,
-      // TODO: 3) gir + gir bogey calculation,
       // TODO: 4) holeNumber(?),
-      // TODO: 5) points calculation,
+
+    },
+    setHoleCompleted: (state: any, { payload }: any) => {
+      state.holeNumber = payload;
     },
     resetNewRoundHoleTmp: () => initialState,
   },
   extraReducers: () => { }
 })
 
-export const { resetNewRoundHoleTmp, setTmpHoleData } = holeTmpSlice.actions;
+export const { resetNewRoundHoleTmp, setHoleCompleted, setTmpHoleData } = holeTmpSlice.actions;
 export default holeTmpSlice.reducer;

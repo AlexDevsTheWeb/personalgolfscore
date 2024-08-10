@@ -53,7 +53,7 @@ const useNewRoundTotals = () => {
     teeClub: '',
     toGreen: '',
     toGreenMeters: 0,
-    upDown: false,
+    upDown: '',
     water: 0
   });
 

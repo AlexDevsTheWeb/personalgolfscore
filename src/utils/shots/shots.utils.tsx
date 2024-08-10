@@ -4,9 +4,9 @@ import { IShots } from "../../types/roundData.types";
 import { IShotsTotals } from "../../types/roundTotals.types";
 
 export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
-  const { hcp, par, strokes, finalPlayerHCP, totalHoles } = props;
+  const { hcp, par, strokes, roundPlayingHCP, roundHoles } = props;
   let newPar = Number(par);
-  const diff = finalPlayerHCP - totalHoles;
+  const diff = roundPlayingHCP - roundHoles;
   if (diff === 0) {
     newPar = newPar + 1
   }
@@ -23,57 +23,57 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   }
   return calculatePoints(newPar, Number(strokes));
 }
-
 export const calculateGirValue = (props: IGirProps) => {
-  const { par, putts, strokes } = props;
+  const { par, putts, strokes, bogey } = props;
   const girDiff = par + putts - strokes;
-  return girDiff < 2 ? 0 : 1;
-}
-export const calculateGirBogeyValue = (props: IGirProps) => {
-  const { par, putts, strokes } = props;
-  const girDiff = par + putts - strokes;
-  return girDiff < 1 ? 0 : 1;
-}
-
-export const calculateUDValue = (props: IUDProps) => {
-  const { girValue, chipClub, parValue, strokesValue, chipClubs } = props;
-  if (girValue === 1) {
-    return '';
-  }
-  const validClub = chipClubs.filter((club: string) => club === chipClub);
-  if (validClub.length > 0) {
-    if (parValue >= strokesValue) {
-      return 'x';
-    }
-    else {
-      return 'n';
-    }
+  if (!bogey) {
+    return girDiff < 2 ? 0 : 1;
   }
   else {
-    return '';
+    return girDiff < 1 ? 0 : 1;
+  }
+}
+export const calculateUDValue = (props: IUDProps) => {
+  const { girValue, chipClub, parValue, strokesValue, chipClubs } = props;
+  if (chipClub !== '') {
+    if (girValue === 1) {
+      return '';
+    }
+    const validClub = chipClubs.filter((club: string) => club === chipClub);
+    if (validClub.length > 0) {
+      if (parValue >= strokesValue) {
+        return 'x';
+      }
+      else {
+        return 'n';
+      }
+    }
+    else {
+      return '';
+    }
   }
 }
 
-export const calculateStablefordStars = (props: IStablefordPointsProps) => {
-  const { hcp, par, finalPlayerHCP, totalHoles } = props;
-  let newPar = par;
-  const diff = finalPlayerHCP - totalHoles;
-  if (diff === 0) {
-    newPar = newPar + 1
-  }
-  else if (diff < 0) {
-    if (hcp <= diff) {
-      newPar = newPar + 1;
-    }
-  }
-  else if (diff > 0) {
-    newPar = newPar + 1;
-    if (hcp <= diff) {
-      newPar = newPar + 1;
-    }
-  }
-  return calculateStars(newPar, par);
-}
+// export const calculateStablefordStars = (props: IStablefordPointsProps) => {
+//   const { hcp, par, finalPlayerHCP, totalHoles } = props;
+//   let newPar = par;
+//   const diff = finalPlayerHCP - totalHoles;
+//   if (diff === 0) {
+//     newPar = newPar + 1
+//   }
+//   else if (diff < 0) {
+//     if (hcp <= diff) {
+//       newPar = newPar + 1;
+//     }
+//   }
+//   else if (diff > 0) {
+//     newPar = newPar + 1;
+//     if (hcp <= diff) {
+//       newPar = newPar + 1;
+//     }
+//   }
+//   return calculateStars(newPar, par);
+// }
 
 export const calculatePoints = (par: number, strokes: number) => {
   if (strokes === par) {
@@ -141,7 +141,7 @@ export const newRoundTotals = (totals: IShots[]) => {
     teeClub: '',
     toGreen: '',
     toGreenMeters: 0,
-    upDown: false,
+    upDown: '',
     water: 0
   })
 

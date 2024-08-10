@@ -26,7 +26,7 @@ export interface IShots {
   teeClub: string;
   toGreen: string;
   toGreenMeters: number;
-  upDown: boolean;
+  upDown: string;
   water: number;
 }
 

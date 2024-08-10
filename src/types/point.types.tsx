@@ -2,14 +2,15 @@ export interface IStablefordPointsProps {
   hcp: number;
   par: number;
   strokes: number;
-  finalPlayerHCP: number
-  totalHoles: number;
+  roundPlayingHCP: number;
+  roundHoles: number;
 }
 
 export interface IGirProps {
   par: number;
   putts: number;
-  strokes: number
+  strokes: number;
+  bogey: boolean;
 }
 
 export interface IUDProps {

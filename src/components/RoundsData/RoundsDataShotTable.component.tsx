@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { RootState } from '../../store/store';
 import { TableCell, TableRow } from '../../styles';
-import { calculateStablefordStars } from '../../utils/shots/shots.utils';
 import { ShotPosition } from '../common/shotPositions/ShotPosition.component';
 
 const RoundsDataShotTable = () => {
@@ -45,8 +44,10 @@ const RoundsDataShotTable = () => {
           {shots.map((shot) => {
             const { holeNumber, distance, hcp, par, strokes, points, teeClub, fir, gir, putts, sand, water, out } = shot;
 
+
+            // FIXME: calculateStablefordStars is not working anymore
             // const points = calculateStablefordPoints({ hcp, par, strokes, finalPlayerHCP, totalHoles });
-            const hcpStars = calculateStablefordStars({ hcp, par, strokes, finalPlayerHCP, totalHoles });
+            // const hcpStars = calculateStablefordStars({ hcp, par, strokes, finalPlayerHCP, totalHoles });
             return (
               <TableRow key={holeNumber}>
                 <TableCell component="th" scope="row" align='center' width={'5%'}>
@@ -54,7 +55,7 @@ const RoundsDataShotTable = () => {
                 </TableCell>
                 <TableCell align='center' width={'10%'}>{`${distance}`}</TableCell>
                 <TableCell align='center' width={'5%'}>{hcp}</TableCell>
-                <TableCell align='center' width={'10%'}>{`${par} ${hcpStars}`}</TableCell>
+                {/* <TableCell align='center' width={'10%'}>{`${par} ${hcpStars}`}</TableCell> */}
                 <TableCell align='center' width={'5%'}>{`${strokes}`}</TableCell>
                 <TableCell align='center' width={'5%'} variant={points && points >= 2 ? 'green' : points === 1 ? 'yellow' : 'red'}>{`${points}`}</TableCell>
                 <TableCell align='center' width={'10%'}>{teeClub}</TableCell>
