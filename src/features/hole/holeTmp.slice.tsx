@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IShots } from "../../types/roundData.types";
 import { calculateGirValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
 
@@ -68,21 +68,17 @@ const holeTmpSlice = createSlice({
         strokesValue: Number(state.strokes),
         chipClubs: chipClubs
       })
-
-
-      // TODO: missing: 
-      // TODO: 1) distance(?),
-      // TODO: 2) fir calculation,
       // TODO: 4) holeNumber(?),
 
     },
-    setHoleCompleted: (state: any, { payload }: any) => {
-      state.holeNumber = payload;
+    setHoleNumber: (state: any, { payload }: PayloadAction<{ newHoleNumber: number }>) => {
+      console.log("Payload: ", payload)
+      state.holeNumber = payload.newHoleNumber;
     },
     resetNewRoundHoleTmp: () => initialState,
   },
   extraReducers: () => { }
 })
 
-export const { resetNewRoundHoleTmp, setHoleCompleted, setTmpHoleData } = holeTmpSlice.actions;
+export const { resetNewRoundHoleTmp, setHoleNumber, setTmpHoleData } = holeTmpSlice.actions;
 export default holeTmpSlice.reducer;

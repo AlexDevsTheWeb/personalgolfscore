@@ -19,10 +19,11 @@ const newRoundHolesSlice = createSlice({
   initialState,
   reducers: {
 
-    setHolesCompleted: (state) => {
-      state.holesCompleted = state.holesCompleted + 1;
+    setHolesCompleted: (state, { payload }: PayloadAction<{ newHoleNumber: number }>) => {
+      state.holesCompleted = payload.newHoleNumber;
     },
     setNewHole: (state, { payload }: PayloadAction<{ tmpHole: any, roundPlayingHCP: number, roundHoles: number }>) => {
+      console.log("setNewHole: ", payload.tmpHole);
       state.shots = [...state.shots, payload.tmpHole]
     },
     resetNewRoundsHoles: () => initialState,

@@ -8,10 +8,11 @@ interface ISelectProps {
   list: string[],
   onChange: any,
   gir?: boolean,
+  value?: string,
 }
 
-const Select = ({ name, list, onChange, gir }: ISelectProps) => {
-  const [selectedPar, setSelectedPar] = useState<string>('...');
+const Select = ({ name, list, onChange, gir, value }: ISelectProps) => {
+  const [selectedPar, setSelectedPar] = useState<string>(value ? value : '...');
   const [newList] = useState<string[]>(['...', ...list]);
 
   const handleChange = (e: SelectChangeEvent) => {
@@ -21,7 +22,7 @@ const Select = ({ name, list, onChange, gir }: ISelectProps) => {
 
   return (
     <FormControl variant='filled'>
-      <InputLabel id="demo-simple-select-label">{capitalize(name)}</InputLabel>
+      <InputLabel id="newHole_select">{capitalize(name)}</InputLabel>
       <SelectMui
         value={selectedPar}
         name={name}

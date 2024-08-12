@@ -30,8 +30,6 @@ export const checkSingleHoleValid = (hole: IShots) => {
     sand,
     water,
     out } = hole;
-
-  console.log("hole to save: ", hole);
   if (
     holeNumber
     && hcp
