@@ -11,16 +11,19 @@ import { checkMainRoundDataValid } from '../../utils/round/round.utils';
 
 const AddNewRoundMain = () => {
   const dispatch = useDispatch();
+
+  // FIXME: this are fixed value to speed up test fase
   const [newRound, setNewRound] = useState<INewRound>({
     roundID: '',
     roundDate: '',
-    roundCourse: '',
-    roundHoles: 0,
-    roundTee: '',
-    roundPar: 0,
-    roundPlayingHCP: 0,
-    roundStrokes: 0,
+    roundCourse: 'test',
+    roundHoles: 18,
+    roundTee: 'Yellow',
+    roundPar: 72,
+    roundPlayingHCP: 29,
+    roundStrokes: 103,
   });
+
   const [error, setError] = useState<boolean>(false);
 
   const setDate = (value: any) => {
@@ -47,8 +50,6 @@ const AddNewRoundMain = () => {
         <Typography>Add new round</Typography>
 
         <Stack sx={{ flexWrap: 'wrap', flexDirection: 'row', rowGap: 1, columnGap: 1, justifyContent: 'space-between' }}>
-
-
           <TextField
             id="roundCourse"
             name='roundCourse'
@@ -57,7 +58,7 @@ const AddNewRoundMain = () => {
             sx={{ width: '100%' }}
             error={error}
             onChange={e => setField(e)}
-
+            value={newRound.roundCourse}
           />
         </Stack>
 
@@ -66,18 +67,58 @@ const AddNewRoundMain = () => {
             name='roundDate'
             label='Date of round'
             onChange={value => setDate(value)}
+          // value={newRound.roundDate}
           />
-          <TextField id="roundTee" name='roundTee' label="Starting Tee" variant="filled" onChange={e => setField(e)} error={error}
+          <TextField
+            id="roundTee"
+            name='roundTee'
+            label="Starting Tee"
+            variant="filled"
+            onChange={e => setField(e)}
+            error={error}
+            value={newRound.roundTee}
           />
-          <TextField id="roundHoles" name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => setField(e)} error={error}
+          <TextField
+            id="roundHoles"
+            name='roundHoles'
+            label="Holes"
+            variant="filled"
+            type='number'
+            onChange={e => setField(e)}
+            error={error}
+            value={newRound.roundHoles}
           />
-          <TextField id="roundPar" name='roundPar' label="Course Par" variant="filled" type='number' onChange={e => setField(e)} error={error}
+          <TextField
+            id="roundPar"
+            name='roundPar'
+            label="Course Par"
+            variant="filled"
+            type='number'
+            onChange={e => setField(e)}
+            error={error}
+            value={newRound.roundPar}
           />
 
-          <TextField id="roundPlayingHCP" name='roundPlayingHCP' label="Player HCP" variant="filled" type='number' onChange={e => setField(e)} error={error}
+          <TextField
+            id="roundPlayingHCP"
+            name='roundPlayingHCP'
+            label="Player HCP"
+            variant="filled"
+            type='number'
+            onChange={e => setField(e)}
+            error={error}
+            value={newRound.roundPlayingHCP}
           />
 
-          <TextField id="roundStrokes" name='roundStrokes' label="Strokes" variant="filled" type='number' onChange={e => setField(e)} error={error}
+          <TextField
+            id="roundStrokes"
+            name='roundStrokes'
+            label="Strokes"
+            variant="filled"
+            type='number'
+            onChange={e => setField(e)}
+            error={error}
+            value={newRound.roundStrokes}
           />
         </Stack>
 

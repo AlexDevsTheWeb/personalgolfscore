@@ -22,6 +22,7 @@ export interface IShots {
   putts: number;
   sand: number;
   secondPutt: number;
+  thirdPutt: number;
   strokes: number;
   teeClub: string;
   toGreen: string;

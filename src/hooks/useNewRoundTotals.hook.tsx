@@ -49,6 +49,7 @@ const useNewRoundTotals = () => {
     putts: 0,
     sand: 0,
     secondPutt: 0,
+    thirdPutt: 0,
     strokes: 0,
     teeClub: '',
     toGreen: '',

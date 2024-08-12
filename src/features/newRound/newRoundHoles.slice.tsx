@@ -13,6 +13,12 @@ const initialState: InitialStateNewRoundsData = {
 //   "rounds/getAllRounds",
 //   getAllRoundsThunk
 // );
+interface IPayloadActionNewHole {
+  tmpHole: any,
+  roundPlayingHCP: number
+  roundHoles: number,
+  holesCompleted: number
+};
 
 const newRoundHolesSlice = createSlice({
   name: 'newRoundHoles',
@@ -22,9 +28,9 @@ const newRoundHolesSlice = createSlice({
     setHolesCompleted: (state, { payload }: PayloadAction<{ newHoleNumber: number }>) => {
       state.holesCompleted = payload.newHoleNumber;
     },
-    setNewHole: (state, { payload }: PayloadAction<{ tmpHole: any, roundPlayingHCP: number, roundHoles: number }>) => {
-      console.log("setNewHole: ", payload.tmpHole);
-      state.shots = [...state.shots, payload.tmpHole]
+    setNewHole: (state, { payload }: PayloadAction<IPayloadActionNewHole>) => {
+      const completeHole = { ...payload.tmpHole, holeNumber: payload.holesCompleted };
+      state.shots = [...state.shots, completeHole]
     },
     resetNewRoundsHoles: () => initialState,
   },
