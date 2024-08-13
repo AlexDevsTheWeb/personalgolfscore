@@ -129,7 +129,7 @@ const components: Components<Omit<Theme, 'components'>> = {
       {
         props: { variant: 'contained' },
         style: {
-          justifyContent: 'flex-start',
+          justifyContent: 'center',
           padding: '13px 32px',
           lineHeight: 0,
           height: '56px',
@@ -1415,7 +1415,11 @@ const components: Components<Omit<Theme, 'components'>> = {
           backgroundColor: '#f5f5f5',
           borderRadius: 0,
           padding: 10,
-          width: '48%'
+          width: '48%',
+          [`@media (max-width:${breakpoints.values.md - 1}px)`]: {
+            flexDirection: 'row',
+            width: '100%',
+          },
         },
       },
       {

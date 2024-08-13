@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Card, Typography } from "../index";
 import { capitalize } from "../../utils/strings/strings.utils";
+import { Card, Typography } from "../index";
 
 type RowCardProps = {
   label: string;
@@ -37,10 +37,12 @@ const RowCard: React.FC<RowCardProps> = (props) => {
 
   return (
     <Card variant={props.head ? 'roundHead' : 'player'}>
-      <Typography variant='headline6'>
+      <Typography variant='body'>
         {labelName}
       </Typography>
-      <Typography variant='body'>{props.value}</Typography>
+      <Typography variant='headline6'>
+        {props.value}
+      </Typography>
     </Card>
   );
 };

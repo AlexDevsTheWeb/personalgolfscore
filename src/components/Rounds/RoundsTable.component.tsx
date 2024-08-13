@@ -18,7 +18,7 @@ const RoundsTable = () => {
     navigate(`/round/${id}`);
   }
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ width: '100%' }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>

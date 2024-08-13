@@ -1,22 +1,40 @@
-import { StackProps as StackPropsMui } from '@mui/material/Stack';
-import Stack from '@mui/material/Stack';
+import Stack, { StackProps as StackPropsMui } from '@mui/material/Stack';
 import styled from 'styled-components';
-import * as React from 'react';
+import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 
-type StackProps = StackPropsMui;
-
-const StyledStack = styled(Stack)<StackProps>({});
-
-const StackPlayer: React.FC<StackProps> = props => {
-  return (
-    <StyledStack
-      border={"1px solid #dadada"}
-      borderRadius={"5px"}
-      p={"15px"}
-      sx={{ background: "white", ...props.sx }}
-      {...props}
-    >{props.children}</StyledStack>
-  )
+interface StackProps extends StackPropsMui {
+  ismobile?: boolean;
 };
+
+const StyledStack = styled(Stack) <StackProps>`
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  padding: 15px;
+  background: white;
+  display: flex;
+  gap: 10px;
+  /* flex-direction: ${props => props.ismobile ? 'column' : 'row'}; */
+`;
+
+const StackPlayer: React.FC<StackProps> = (props) => {
+  const isMobile = useDeviceDetection();
+
+  return (
+    isMobile.isMobile
+      ? (<StyledStack
+        {...props}
+        sx={{ flexDirection: 'column' }}
+      >
+        {props.children}
+      </StyledStack>)
+      :
+      (<StyledStack
+        {...props}
+        sx={{ flexDirection: 'row' }}
+      >
+        {props.children}
+      </StyledStack>)
+  )
+}
 
 export default StackPlayer;

@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { getAllRounds } from '../../features/rounds/rounds.slice';
 import { RootState } from '../../store/store';
+import { BoxOverflow } from '../../styles';
 import RoundsTable from './RoundsTable.component';
-import { useNavigate } from 'react-router-dom';
 
 const Rounds = () => {
 
@@ -25,12 +26,19 @@ const Rounds = () => {
   }
 
   return (
-    <Box sx={{
-      display: 'flex', flexDirection: 'column', rowGap: 1.175
-    }}>
-      <RoundsTable />
-      <Button variant='contained' sx={{ width: '22%' }} onClick={handleAddNewRound}>Add new round</Button>
+
+    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <BoxOverflow direction='horizontal' variant='table'>
+        <RoundsTable />
+      </BoxOverflow>
+      <Button
+        variant='contained'
+        onClick={handleAddNewRound}
+      >
+        Add new round
+      </Button>
     </Box>
+
   )
 }
 

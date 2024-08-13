@@ -174,15 +174,14 @@ export const typography = {
   },
   headline6: {
     ...allVariantsCss,
-    fontSize: '18px',
-    lineHeight: '18px',
+    fontSize: '16px',
+    lineHeight: '120%',
     fontFamily: fonts.light,
     fontStyle: 'normal',
-    fontWeight: 700,
-    letterSpacing: '-1px',
+    fontWeight: 500,
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-      fontSize: '18px',
-      lineHeight: '18px',
+      fontSize: '16px',
+      lineHeight: '120%',
     },
   },
   subheadline1: {
