@@ -75,6 +75,8 @@ const AddSingleHole = () => {
     // eslint-disable-next-line
   }, [holesCompleted, dispatch])
 
+  console.log("form tmpHole.hcp: ", tmpHole.hcp);
+
   return (
     <BoxSingleHoleContainer>
       <BoxSingleHoleInternal width={70}>

@@ -12,9 +12,8 @@ interface ISelectProps {
 }
 
 const Select = (props: ISelectProps) => {
-
   const { name, list, onChange, gir, value } = props;
-  const [selectedValue, setSetlectedValue] = useState<string>((value && value !== '0') ? value : '');
+  const [selectedValue, setSetlectedValue] = useState<string>();
 
   const handleChange = (e: SelectChangeEvent) => {
     setSetlectedValue(e.target.value);
@@ -25,8 +24,7 @@ const Select = (props: ISelectProps) => {
     <FormControl variant='filled'>
       <InputLabel id="newHole_select">{capitalize(name)}</InputLabel>
       <SelectMui
-        value={selectedValue}
-        defaultValue={selectedValue}
+        value={value !== '0' ? value : ''}
         name={name}
         onChange={(e: SelectChangeEvent) => handleChange(e)}
         sx={{ minWidth: '75px', width: '150px' }}
