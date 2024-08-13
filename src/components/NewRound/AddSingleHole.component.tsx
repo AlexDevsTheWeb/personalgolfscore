@@ -20,32 +20,7 @@ const AddSingleHole = () => {
   const { teeClubs, greenClubs, chipClubs } = useSelector((store: RootState) => store.golfBag);
 
   const [holeFinished, setHoleFinished] = useState(0);
-  // const [error, setError] = useState<boolean>(false);
   const [mtToGreen, setMtToGreen] = useState<boolean>(false);
-  //   holeNumber: holesCompleted + 1,
-  //   chipClub: '',
-  //   distance: 0,
-  //   driveDistance: 0,
-  //   fairway: '',
-  //   fir: 0,
-  //   firstPutt: 0,
-  //   gir: false,
-  //   girBogey: false,
-  //   greenSide: '',
-  //   hcp: 0,
-  //   out: 0,
-  //   par: 0,
-  //   points: 0,
-  //   putts: 0,
-  //   sand: 0,
-  //   secondPutt: 0,
-  //   strokes: 0,
-  //   teeClub: '',
-  //   toGreen: '',
-  //   toGreenMeters: 0,
-  //   upDown: '',
-  //   water: 0
-  // });
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -74,8 +49,6 @@ const AddSingleHole = () => {
     }
     // eslint-disable-next-line
   }, [holesCompleted, dispatch])
-
-  console.log("form tmpHole.hcp: ", tmpHole.hcp);
 
   return (
     <BoxSingleHoleContainer>

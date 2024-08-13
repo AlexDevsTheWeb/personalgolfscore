@@ -8,7 +8,7 @@ const useDeviceDetection = () => {
     isDesktopSmall: useMediaQuery(theme.breakpoints.between("lg", "xl")),
     isTabletLandScape: useMediaQuery(theme.breakpoints.between("md", "lg")),
     isTabletPortrait: useMediaQuery(theme.breakpoints.between("sm", "md")),
-    isMobile: useMediaQuery(theme.breakpoints.down("sm")),
+    isMobile: useMediaQuery(theme.breakpoints.down("md")),
   };
 
   return {
