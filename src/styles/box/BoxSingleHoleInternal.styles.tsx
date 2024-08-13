@@ -1,7 +1,6 @@
-import { useMediaQuery } from '@mui/material';
 import Stack, { StackProps as StackPropsMui } from '@mui/material/Stack';
 import * as React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 
 // type StackProps = StackPropsMui;
 interface IStackProps extends StackPropsMui {
@@ -20,11 +19,8 @@ const StyledStack = styled(Stack) <IStackProps>`
 
 const BoxSingleHoleInternal: React.FC<IStackProps> = props => {
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   return (
-    <StyledStack {...props} isMobile={isMobile}>
+    <StyledStack {...props}>
       {props.children}
     </StyledStack >
   )

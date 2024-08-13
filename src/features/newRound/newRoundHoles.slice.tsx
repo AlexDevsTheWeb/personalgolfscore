@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { InitialStateNewRoundsData, IShots } from "../../types/roundData.types";
-import { calculateGirBogeyValue, calculateGirValue, calculateStablefordPoints } from "../../utils/shots/shots.utils";
+import { InitialStateNewRoundsData } from "../../types/roundData.types";
 
 const initialState: InitialStateNewRoundsData = {
   isLoading: false,
@@ -14,35 +13,24 @@ const initialState: InitialStateNewRoundsData = {
 //   "rounds/getAllRounds",
 //   getAllRoundsThunk
 // );
+interface IPayloadActionNewHole {
+  tmpHole: any,
+  roundPlayingHCP: number
+  roundHoles: number,
+  holesCompleted: number
+};
 
 const newRoundHolesSlice = createSlice({
   name: 'newRoundHoles',
   initialState,
   reducers: {
 
-    setHolesCompleted: (state) => {
-      state.holesCompleted = state.holesCompleted + 1;
+    setHolesCompleted: (state, { payload }: PayloadAction<{ newHoleNumber: number }>) => {
+      state.holesCompleted = payload.newHoleNumber;
     },
-    setNewHole: (state, { payload }: PayloadAction<{ hole: any, roundPlayingHCP: number, roundHoles: number }>) => {
-      const pointCalc = {
-        hcp: payload.hole.hcp,
-        par: payload.hole.par,
-        strokes: payload.hole.strokes,
-        finalPlayerHCP: payload.roundPlayingHCP,
-        totalHoles: payload.roundHoles
-      };
-      const girCalc = {
-        par: payload.hole.par,
-        putts: payload.hole.putts,
-        strokes: payload.hole.strokes
-      };
-      const holePoints = calculateStablefordPoints(pointCalc);
-      const girValue = calculateGirValue(girCalc);
-      const girBogeyValue = calculateGirBogeyValue(girCalc)
-
-      const newHole: IShots = { ...payload.hole, points: holePoints, gir: girValue, girBogey: girBogeyValue };
-
-      state.shots = [...state.shots, newHole]
+    setNewHole: (state, { payload }: PayloadAction<IPayloadActionNewHole>) => {
+      const completeHole = { ...payload.tmpHole, holeNumber: payload.holesCompleted };
+      state.shots = [...state.shots, completeHole]
     },
     resetNewRoundsHoles: () => initialState,
   },

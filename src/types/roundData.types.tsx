@@ -6,19 +6,29 @@ export interface IState {
 
 export interface IShots {
   holeNumber: number;
+  chipClub: string;
   distance: number;
-  hcp: number;
-  par: number;
-  strokes: number;
-  points: number;
-  teeClub: string;
+  driveDistance: number;
+  fairway: string;
   fir: number;
+  firstPutt: number;
   gir: boolean;
   girBogey: boolean;
+  greenSide: string;
+  hcp: number;
+  out: number
+  par: number;
+  points: number;
   putts: number;
   sand: number;
+  secondPutt: number;
+  thirdPutt: number;
+  strokes: number;
+  teeClub: string;
+  toGreen: string;
+  toGreenMeters: number;
+  upDown: string;
   water: number;
-  out: number;
 }
 
 export interface IShotsTotals2 {

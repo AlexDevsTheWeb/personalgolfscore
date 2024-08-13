@@ -13,3 +13,14 @@ export enum STABLEFORDSTARS {
   TWO = '**',
   THREE = '***',
 }
+
+export enum CLUBSSELECTION {
+  TEE = 'tee',
+  GREEN = 'green',
+  CHIP = 'chip',
+}
+
+export enum CHIPCONDITION {
+  GREEN = 'greenSide',
+  CHIP = 'chipClub'
+}

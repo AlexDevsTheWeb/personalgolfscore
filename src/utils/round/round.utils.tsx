@@ -21,7 +21,6 @@ export const checkMainRoundDataValid = (round: INewRound) => {
 
 export const checkSingleHoleValid = (hole: IShots) => {
   const { holeNumber,
-    distance,
     hcp,
     par,
     strokes,
@@ -31,11 +30,8 @@ export const checkSingleHoleValid = (hole: IShots) => {
     sand,
     water,
     out } = hole;
-
-  console.log("hole ---> ", hole)
   if (
     holeNumber
-    && distance
     && hcp
     && par
     && strokes
@@ -50,8 +46,7 @@ export const checkSingleHoleValid = (hole: IShots) => {
 }
 
 export const getClubsNames = (clubs: IGolfBag) => {
-  const flattenClubs = _.flatMapDeep(clubs.types)
-  const clubsName = flattenClubs.map((ct: IClubs) => {
+  const clubsName = clubs.types.map((ct: IClubs) => {
     return (
       ct.details.map((c: IClub) => {
         switch (ct.typeName) {
@@ -66,4 +61,24 @@ export const getClubsNames = (clubs: IGolfBag) => {
     );
   })
   return _.flatMapDeep(clubsName);
+}
+
+export const getGreenClubs = (teeClubs: string[]) => {
+  const newTeeClubs = [...teeClubs];
+  newTeeClubs.push("mt.");
+  newTeeClubs.shift();
+
+  const greenTeeClubs = newTeeClubs;
+  return greenTeeClubs;
+}
+
+export const getChipClubs = (teeClubs: string[]) => {
+  const newChipClubs = [...teeClubs];
+  newChipClubs.push("Bunker");
+  newChipClubs.push("Chip");
+  newChipClubs.shift();
+  newChipClubs.shift();
+  newChipClubs.shift();
+  const chipClubs = newChipClubs;
+  return chipClubs;
 }

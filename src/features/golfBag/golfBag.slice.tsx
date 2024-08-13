@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { CLUBSSELECTION } from "../../enum/shots.enum";
+import { ClubPayload, InitialStateClubs } from "../../types/clubs.types";
 import { getClubsThunk } from "./golfBag.thunk";
-import { InitialStateClubs, ClubPayload } from "../../types/clubs.types";
 
 const initialState: InitialStateClubs = {
   isLoading: false,
@@ -10,6 +11,9 @@ const initialState: InitialStateClubs = {
     playerID: "",
     types: [],
   },
+  teeClubs: [],
+  greenClubs: [],
+  chipClubs: [],
   error: {
     errorCode: 0,
     errorMessage: "",
@@ -25,22 +29,7 @@ const golfBagSlice = createSlice({
   name: "golfBag",
   initialState,
   reducers: {
-    updateClub: (state, action) => {
-      const { clubName, propertyName, newValue, typeName } = action.payload;
-
-      const typeIndex = state.clubs.types.findIndex((type) => type.typeName === typeName);
-
-      if (typeIndex !== -1) {
-        const clubIndex = state.clubs.types.findIndex((type) =>
-          type.details.some((detail) => detail.name === clubName)
-        );
-
-        // if (clubIndex !== -1) {
-        //   state.clubs.types[typeIndex].details[clubIndex][propertyName] = newValue; // Update property value
-        // }
-      }
-
-    },
+    updateClub: (state, action) => { },
     updateClubSelection: (state, { payload }) => {
       const { name, clubNumber, loft, selected, typeName } = payload;
 
@@ -62,6 +51,21 @@ const golfBagSlice = createSlice({
             0
           );
         }
+      }
+    },
+    updateTeeGreenClubs: (state, { payload }) => {
+      switch (payload.type) {
+        case CLUBSSELECTION.TEE:
+          state.teeClubs = payload.updatedTeeClubs;
+          break;
+        case CLUBSSELECTION.GREEN:
+          state.greenClubs = payload.updatedGreenClubs;
+          break;
+        case CLUBSSELECTION.CHIP:
+          state.chipClubs = payload.updatedChipClubs;
+          break;
+        default:
+          break;
       }
     },
     resetClubs: () => initialState,
@@ -93,5 +97,5 @@ const golfBagSlice = createSlice({
   },
 });
 
-export const { resetClubs, updateClubSelection, updateClub } = golfBagSlice.actions;
+export const { resetClubs, updateClubSelection, updateClub, updateTeeGreenClubs } = golfBagSlice.actions;
 export default golfBagSlice.reducer;

@@ -1,41 +1,45 @@
 import { FormControl, InputLabel, MenuItem, SelectChangeEvent, Select as SelectMui } from '@mui/material';
-import { capitalize } from 'lodash';
+import _, { capitalize } from 'lodash';
 import { useState } from 'react';
+import { CHIPCONDITION } from '../../../enum/shots.enum';
 
 interface ISelectProps {
   name: string,
   list: string[],
   onChange: any,
+  gir?: boolean,
+  value?: string,
 }
 
-const Select = ({ name, list, onChange }: ISelectProps) => {
-  const [selectedPar, setSelectedPar] = useState<string>('...');
-  const [newList] = useState<string[]>(['...', ...list]);
+const Select = (props: ISelectProps) => {
+  const { name, list, onChange, gir, value } = props;
+  const [selectedValue, setSetlectedValue] = useState<string>();
 
   const handleChange = (e: SelectChangeEvent) => {
-    setSelectedPar(e.target.value);
+    setSetlectedValue(e.target.value);
     onChange(e);
   }
 
   return (
     <FormControl variant='filled'>
-      <InputLabel id="demo-simple-select-label">{capitalize(name)}</InputLabel>
+      <InputLabel id="newHole_select">{capitalize(name)}</InputLabel>
       <SelectMui
-        value={selectedPar}
+        value={value !== '0' ? value : ''}
         name={name}
         onChange={(e: SelectChangeEvent) => handleChange(e)}
-        sx={{ minWidth: '100px', width: '150px' }}
+        sx={{ minWidth: '75px', width: '150px' }}
+        disabled={(name === CHIPCONDITION.GREEN || name === CHIPCONDITION.CHIP) && gir ? true : false}
       >
         {
-          newList.map((l: string) => {
+          list.map((l: string) => {
             return (
               //TODO: custom MenuItem con SelectItem to add hover color to elements in the select
-              <MenuItem sx={{}} value={l} key={l}>{l}</MenuItem>
+              <MenuItem sx={{}} value={l} key={_.uniqueId(`${name}`)}>{l}</MenuItem>
             )
           })
         }
       </SelectMui>
-    </FormControl>
+    </FormControl >
   )
 }
 
