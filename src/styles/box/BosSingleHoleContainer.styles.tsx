@@ -1,6 +1,7 @@
 import Stack, { StackProps as StackPropsMui } from '@mui/material/Stack';
 import * as React from 'react';
 import styled from 'styled-components';
+import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 
 interface IStackProps extends StackPropsMui {
   isMobile?: boolean;
@@ -8,13 +9,13 @@ interface IStackProps extends StackPropsMui {
 
 const StyledStack = styled(Stack) <IStackProps>`
   display: flex;
-  flex-direction: ${props => props.isMobile ? 'column-reverse' : 'row'};
+  flex-direction: ${props => props.isMobile ? 'column' : 'row'};
   justify-content: space-between;
-  padding: ${props => props.isMobile ? '0px' : '10px'};;
   gap: 10px;
 `
 
 const BoxSingleHoleContainer: React.FC<IStackProps> = props => {
+  const isMobile = useDeviceDetection();
 
   return (
     <StyledStack {...props}>

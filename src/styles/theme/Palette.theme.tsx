@@ -1,5 +1,6 @@
 export const colors = {
-  primary1: '#343434',
+  menubar: '#1a648e',
+  primary1: '#000000',
   primary2: '#091f5a',
   primary3: '#7888a5',
   black: '#111111',
@@ -63,7 +64,7 @@ const palette = {
     light: colors.primary1,
     dark: colors.primary1,
     contrastText: colors.white,
-    main: colors.primary1,
+    main: colors.menubar,
   },
   primary1: { ...defaultValues, main: colors.primary1 },
   primary2: { ...defaultValues, main: colors.primary2 },
