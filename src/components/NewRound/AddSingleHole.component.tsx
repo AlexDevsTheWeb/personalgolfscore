@@ -20,7 +20,7 @@ const AddSingleHole = () => {
   const { teeClubs, greenClubs, chipClubs } = useSelector((store: RootState) => store.golfBag);
 
   const [holeFinished, setHoleFinished] = useState(0);
-  const [error, setError] = useState<boolean>(false);
+  // const [error, setError] = useState<boolean>(false);
   const [mtToGreen, setMtToGreen] = useState<boolean>(false);
   //   holeNumber: holesCompleted + 1,
   //   chipClub: '',
@@ -99,7 +99,6 @@ const AddSingleHole = () => {
             label="Strokes"
             variant="filled"
             type='number'
-            error={error}
             onChange={e => handleChange(e)}
             value={tmpHole.strokes !== 0 ? tmpHole.strokes : ''}
           />
@@ -109,7 +108,6 @@ const AddSingleHole = () => {
             label="Putts"
             variant="filled"
             type='number'
-            error={error}
             onChange={e => handleChange(e)}
             value={tmpHole.putts !== 0 ? tmpHole.putts : ''}
           />
@@ -117,22 +115,22 @@ const AddSingleHole = () => {
         <BoxNewHole>
           <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway} />
           <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} />
-          <TextField id='driveDistance' name='driveDistance' label='Drive distance' variant='filled' type='number' error={error} onChange={e => handleChange(e)}
+          <TextField id='driveDistance' name='driveDistance' label='Drive distance' variant='filled' type='number' onChange={e => handleChange(e)}
             value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} />
         </BoxNewHole>
         <BoxNewHole>
           <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''} />
-          {!!mtToGreen ? <TextField id="mtToGreen" name='toGreenMeters' label="Meters to green" variant="filled" type='number' error={error} onChange={e => handleChange(e)} /> : null}
+          {!!mtToGreen ? <TextField id="mtToGreen" name='toGreenMeters' label="Meters to green" variant="filled" type='number' onChange={e => handleChange(e)} /> : null}
           <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} gir={tmpHole.gir} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} />
           <Select name='chipClub' list={chipClubs} onChange={(e: any) => handleChange(e)} gir={tmpHole.gir} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
         </BoxNewHole>
         <BoxNewHole>
-          <TextField id="putt1" name='firstPutt' label="First putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} value={tmpHole.firstPutt !== 0 ? tmpHole.firstPutt : ''} sx={{ width: 100 }} />
-          <TextField id="putt2" name='secondPutt' label="Second putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} value={tmpHole.secondPutt !== 0 ? tmpHole.secondPutt : ''} sx={{ width: 100 }} />
-          <TextField id="putt3" name='thirdPutt' label="Third putt" variant="filled" type='number' error={error} onChange={e => handleChange(e)} value={tmpHole.thirdPutt !== 0 ? tmpHole.thirdPutt : ''} sx={{ width: 100 }} />
-          <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' error={error} onChange={e => handleChange(e)} value={tmpHole.sand !== 0 ? tmpHole.sand : ''} sx={{ width: 75 }} />
-          <TextField id="water" name='water' label="Water" variant="filled" type='number' error={error} onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} sx={{ width: 75 }} />
-          <TextField id="out" name='out' label="Out" variant="filled" type='number' error={error} onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} sx={{ width: 75 }} />
+          <TextField id="putt1" name='firstPutt' label="First putt" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.firstPutt !== 0 ? tmpHole.firstPutt : ''} sx={{ width: 100 }} />
+          <TextField id="putt2" name='secondPutt' label="Second putt" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.secondPutt !== 0 ? tmpHole.secondPutt : ''} sx={{ width: 100 }} />
+          <TextField id="putt3" name='thirdPutt' label="Third putt" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.thirdPutt !== 0 ? tmpHole.thirdPutt : ''} sx={{ width: 100 }} />
+          <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.sand !== 0 ? tmpHole.sand : ''} sx={{ width: 75 }} />
+          <TextField id="water" name='water' label="Water" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} sx={{ width: 75 }} />
+          <TextField id="out" name='out' label="Out" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} sx={{ width: 75 }} />
         </BoxNewHole>
       </BoxSingleHoleInternal>
       <BoxSingleHoleInternal width={30} paddingTop={1.25}>

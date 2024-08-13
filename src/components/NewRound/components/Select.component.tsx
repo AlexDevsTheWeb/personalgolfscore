@@ -1,6 +1,5 @@
 import { FormControl, InputLabel, MenuItem, SelectChangeEvent, Select as SelectMui } from '@mui/material';
 import _, { capitalize } from 'lodash';
-import { useState } from 'react';
 import { CHIPCONDITION } from '../../../enum/shots.enum';
 
 interface ISelectProps {
@@ -13,10 +12,8 @@ interface ISelectProps {
 
 const Select = (props: ISelectProps) => {
   const { name, list, onChange, gir, value } = props;
-  const [selectedValue, setSetlectedValue] = useState<string>();
 
   const handleChange = (e: SelectChangeEvent) => {
-    setSetlectedValue(e.target.value);
     onChange(e);
   }
 
