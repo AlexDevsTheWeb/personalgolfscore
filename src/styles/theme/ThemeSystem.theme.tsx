@@ -27,7 +27,7 @@ export const themeSystem = createTheme({
               borderRadius: 6,
               height: 8,
               width: 8,
-              backgroundColor: '#031434',
+              backgroundColor: '#222',
             },
           },
         },
@@ -77,6 +77,20 @@ export const themeSystem = createTheme({
             },
           },
         },
+        {
+          props: { variant: 'clubs' },
+          style: {
+            overflow: 'auto'
+          }
+        },
+        {
+          props: { variant: 'section' },
+          style: {
+            overflow: 'auto',
+            padding: '10px 0px',
+
+          }
+        }
       ],
     },
     MuiSelectItem: {

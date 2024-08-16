@@ -13,7 +13,7 @@ const StackPlayer: React.FC<StackProps> = props => {
       border={"1px solid #dadada"}
       borderRadius={"5px"}
       p={"15px"}
-      sx={{ background: "white", minHeight: "180px", ...props.sx }}
+      sx={{ background: "white", ...props.sx }}
       {...props}
     >{props.children}</StyledStack>
   )

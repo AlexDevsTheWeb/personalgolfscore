@@ -1,3 +1,4 @@
+import React from 'react';
 import { breakpoints } from './Breakpoints.theme';
 import { colors } from './Palette.theme';
 
@@ -17,6 +18,8 @@ declare module '@mui/material/styles' {
     headline3: React.CSSProperties;
     subheadline1: React.CSSProperties;
     subheadline2: React.CSSProperties;
+    clubsTypeName: React.CSSProperties;
+    mainAppTitle: React.CSSProperties;
     title1: React.CSSProperties;
     title2: React.CSSProperties;
     title3: React.CSSProperties;
@@ -43,6 +46,7 @@ declare module '@mui/material/styles' {
     headline3: React.CSSProperties;
     subheadline1: React.CSSProperties;
     subheadline2: React.CSSProperties;
+    clubsTypeName: React.CSSProperties;
     title1: React.CSSProperties;
     title2: React.CSSProperties;
     title3: React.CSSProperties;
@@ -72,6 +76,8 @@ declare module '@mui/material/Typography' {
     headline6: true;
     subheadline1: true;
     subheadline2: true;
+    mainAppTitle: true;
+    clubsTypeName: true;
     title1: true;
     title2: true;
     title3: true;
@@ -143,14 +149,13 @@ export const typography = {
   },
   headline2: {
     ...allVariantsCss,
-    fontSize: '70px',
-    lineHeight: '72px',
+    fontSize: '24px',
+    lineHeight: '140%',
     fontFamily: fonts.light,
     fontStyle: 'normal',
-    fontWeight: 300,
-    letterSpacing: '-1px',
+    fontWeight: 700,
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-      fontSize: '50px',
+      fontSize: '16px',
       lineHeight: 'normal',
     },
   },
@@ -195,13 +200,36 @@ export const typography = {
   subheadline2: {
     ...allVariantsCss,
     fontSize: '20px',
-    fontFamily: fonts.light,
+    fontFamily: fonts.bold,
     fontStyle: 'normal',
-    fontWeight: 300,
+    fontWeight: 700,
     lineHeight: 'normal',
     letterSpacing: '0.2px',
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
       fontSize: '16px',
+    },
+  },
+  clubsTypeName: {
+    ...allVariantsCss,
+    fontsize: 28,
+    fontFamily: fonts.bold,
+    fontStyle: 'normal',
+    fontWeight: 700,
+    lineHeight: 1.4,
+    letterSpacing: '0.2px',
+    [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+      fontSize: '20px',
+    },
+  },
+  mainAppTitle: {
+    ...allVariantsCss,
+    fontSize: '32px',
+    lineHeight: '140%',
+    fontFamily: fonts.regular,
+    fontWeight: 700,
+    color: colors.grey4,
+    [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+      fontSize: '24px',
     },
   },
   title1: {

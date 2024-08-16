@@ -42,7 +42,8 @@ const components: Components<Omit<Theme, 'components'>> = {
           textTransform: 'none',
           webkitTextDecoration: 'none',
           textDecoration: 'none',
-          padding: 0,
+          padding: 5,
+          margin: 5,
           backgroundColor: 'transparent',
 
           '@media(hover: hover)': {
@@ -195,7 +196,12 @@ const components: Components<Omit<Theme, 'components'>> = {
           },
         },
       },
-
+      {
+        props: { variant: 'roundDetails' },
+        style: {
+          color: '#000'
+        }
+      },
       {
         props: { variant: 'underline' },
         style: {
@@ -443,6 +449,21 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
     },
   },
+  MuiAccordion: {
+    styleOverrides: {
+      root: {
+        boxShadow: 'none',
+        border: '1px solid #ddd',
+      }
+    }
+  },
+  MuiAccordionSummary: {
+    styleOverrides: {
+      root: {
+        backgroundColor: '#f5f5f5'
+      }
+    }
+  },
   MuiList: {
     styleOverrides: {
       root: {
@@ -553,6 +574,44 @@ const components: Components<Omit<Theme, 'components'>> = {
             },
           },
         },
+      },
+      {
+        props: { variant: 'clubsLoft' },
+        style: {
+          backgroundColor: 'transparent',
+          display: 'flex',
+          flexDirection: 'row',
+          alignContent: 'center',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }
+      },
+      {
+        props: { variant: 'clubs' },
+        style: {
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          alignContent: 'flex-start',
+          padding: 0,
+          backgroundColor: 'transparent',
+          border: 'none'
+        }
+      },
+      {
+        props: { variant: 'clubsHeader' },
+        style: {
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          alignContent: 'flex-start',
+          backgroundColor: 'transparent',
+          border: 'none',
+          marginTop: 10,
+          marginBottom: 10,
+        }
       },
       {
         props: { variant: 'confirm' },
@@ -676,6 +735,7 @@ const components: Components<Omit<Theme, 'components'>> = {
         marginRight: 0,
       },
     },
+
     defaultProps: {
       disableFocusRipple: true,
     },
@@ -814,7 +874,7 @@ const components: Components<Omit<Theme, 'components'>> = {
             maxHeight: 22.17,
             minHeight: 22.17,
             [`@media (min-width:${breakpoints.values.lg - 1}px)`]: {
-              width: 336,
+              width: 'auto',
             },
           }
           : {
@@ -1196,19 +1256,26 @@ const components: Components<Omit<Theme, 'components'>> = {
       root: {
         paddingTop: 10,
         paddingRight: 20,
-        paddingBottom: 0,
+        paddingBottom: 10,
         paddingLeft: 20,
 
-        fontSize: 13,
+        fontSize: 14,
         border: 0,
+
         [`&.MuiTableCell-head`]: {
-          paddingTop: 20,
+          textTransform: 'uppercase',
+          paddingTop: 10,
           paddingRight: 0,
           paddingBottom: 10,
           paddingLeft: 0,
         },
       },
     },
+    variants: [
+      { props: { variant: 'red' }, style: { backgroundColor: '#cf8484', color: 'black', fontWeight: 700, fontSize: 20 } },
+      { props: { variant: 'yellow' }, style: { backgroundColor: '#faf099', color: 'black', fontWeight: 700, fontSize: 20 } },
+      { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 700, fontSize: 20 } }
+    ]
   },
   MuiTableFooter: {
     styleOverrides: {
@@ -1278,8 +1345,13 @@ const components: Components<Omit<Theme, 'components'>> = {
         marginTop: 0,
       },
       item: {
-        paddingTop: 0,
-        marginBottom: 0,
+        display: 'flex',
+        flexDirection: 'row',
+        rowGap: 2,
+        columnGap: 20,
+        flexWrap: 'wrap',
+        alignContent: 'space-between',
+        justifyContent: 'space-between',
       },
       root: {
         paddingTop: 0,
@@ -1311,6 +1383,131 @@ const components: Components<Omit<Theme, 'components'>> = {
         letterSpacing: '0.2px',
       },
     },
+  },
+
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        maxWidth: '100%',
+        background: palette.grey6.main,
+        border: '1px solid #ccc',
+        borderRadius: 5,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 5,
+        // boxShadow: 'none',
+      }
+    },
+    variants: [
+      {
+        props: { variant: 'player' },
+        style: {
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignContent: 'center',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: 'none',
+          borderBottom: '1px solid #ddd',
+          backgroundColor: '#f5f5f5',
+          borderRadius: 0,
+          padding: 10,
+          width: '48%'
+        },
+      },
+      {
+        props: { variant: 'roundHead' },
+        style: {
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignContent: 'center',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: 'none',
+          borderBottom: 'none',
+          backgroundColor: '#f5f5f5',
+          borderRadius: 0,
+          padding: 10,
+          width: '48%'
+        },
+      },
+      {
+        props: { variant: 'clubs' },
+        style: {
+          width: '48%',
+          [`@media (max-width:${breakpoints.values.lg}px)`]: {
+            maxWidth: '100%',
+            width: 500,
+          },
+          [`@media (max-width:${breakpoints.values.sm}px)`]: {
+            maxWidth: '100%',
+            width: 363,
+          },
+        }
+      },
+      {
+        props: { variant: 'disabled' },
+        style: {
+          width: '48%',
+          backgroundColor: 'transparent',
+          flexDirection: 'row',
+          border: '2px solid red',
+          [`@media (max-width:${breakpoints.values.lg}px)`]: {
+            maxWidth: '100%',
+            width: 500,
+          },
+          [`@media (max-width:${breakpoints.values.sm}px)`]: {
+            maxWidth: '100%',
+            width: 363,
+          },
+        }
+      }
+    ],
+  },
+  MuiTypography: {
+    styleOverrides: {
+      root: {
+
+      }
+    }
+  },
+  MuiCardMedia: {
+    styleOverrides: {
+      root: {
+        width: '50%',
+        height: '200px',
+      }
+    },
+
+  },
+  MuiCardContent: {
+    styleOverrides: {
+      root: {
+        width: '50%',
+        padding: '4px 8px',
+        display: 'flex',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        alignContent: 'stretch',
+        justifyContent: 'space-between',
+        alignItems: 'stretch',
+      }
+    }
+  },
+  MuiCardActions: {
+    styleOverrides: {
+      root: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        padding: 4,
+        justifyContent: 'space-between'
+      }
+    }
   },
 };
 
