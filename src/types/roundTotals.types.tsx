@@ -47,6 +47,26 @@ export interface INewShotsTotals {
   out: number;
 }
 
+export interface ITotals {
+  numberOfHoles: number;
+  putt: ITotalsPutt;
+  gir: ITotalsGir
+  pointsAvg: number;
+  out: number;
+  water: number;
+}
+
+export interface ITotalsGir {
+  girPar: number;
+  girBogey: number;
+}
+export interface ITotalsPutt {
+  puttsHole: number;
+  puttFirst: number;
+  puttSecond: number;
+  puttThird: number;
+}
+
 export type InitialStateRoundsTotals = {
   isLoading: boolean;
   playerID: string;

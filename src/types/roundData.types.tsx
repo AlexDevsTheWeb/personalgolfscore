@@ -19,6 +19,7 @@ export interface IShots {
   out: number
   par: number;
   points: number;
+  pointsAvg: number;
   putts: number;
   sand: number;
   secondPutt: number;
@@ -29,12 +30,6 @@ export interface IShots {
   toGreenMeters: number;
   upDown: string;
   water: number;
-}
-
-export interface IShotsTotals2 {
-  distance: number;
-  putts: number;
-  puttsTotals: number;
 }
 
 export type InitialStateRoundsData = {

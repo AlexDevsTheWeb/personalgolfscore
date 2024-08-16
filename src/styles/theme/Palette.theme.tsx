@@ -16,6 +16,8 @@ export const colors = {
   error: '#902727',
   notes: '#f0f5af',
   behaviours: '#cbe3ff',
+  overMid: '#078800',
+  underMid: '#f25448'
 };
 
 declare module '@mui/material/styles' {
@@ -33,6 +35,7 @@ declare module '@mui/material/styles' {
     white: Palette['secondary'];
     notes: Palette['secondary'];
     behaviours: Palette['secondary'];
+    calc: Palette['primary'];
   }
 
   interface PaletteOptions {
@@ -49,6 +52,7 @@ declare module '@mui/material/styles' {
     white: Palette['secondary'];
     notes: Palette['secondary'];
     behaviours: Palette['secondary'];
+    calc: Palette['primary']
   }
 }
 
@@ -80,12 +84,21 @@ const palette = {
   success: { ...defaultValues, main: colors.success },
   warning: { ...defaultValues, main: colors.warning },
   error: { ...defaultValues, main: colors.error },
-  notes: { ...defaultValues, main: colors.notes },
+  notes: {
+    ...defaultValues,
+    main: colors.notes,
+    overMid: colors.overMid,
+    underMid: colors.underMid,
+  },
   behaviours: { ...defaultValues, main: colors.behaviours },
 
   background: {
     default: colors.grey6,
   },
+  calc: {
+    ...defaultValues,
+    main: colors.menubar
+  }
 };
 
 export default palette;

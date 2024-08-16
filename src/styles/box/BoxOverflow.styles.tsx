@@ -26,7 +26,6 @@ const BoxOverflow: React.FC<BoxProps> = props => {
 
   const isMobile = useDeviceDetection();
 
-  console.log(isMobile)
   return <StyledBox
     {...props}
     sx={{

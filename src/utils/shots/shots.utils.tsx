@@ -134,6 +134,7 @@ export const newRoundTotals = (totals: IShots[]) => {
     out: 0,
     par: 0,
     points: 0,
+    pointsAvg: 0,
     putts: 0,
     sand: 0,
     secondPutt: 0,

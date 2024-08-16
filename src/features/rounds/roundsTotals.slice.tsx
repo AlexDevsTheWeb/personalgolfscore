@@ -17,6 +17,10 @@ const roundsTotalsSlice = createSlice({
   name: "roundsTotals",
   initialState,
   reducers: {
+    setManualTotals: (state: any, { payload }: any) => {
+      console.log("shots sliceon: ", payload)
+      state.totals = payload;
+    },
     resetRounds: () => initialState,
   },
   extraReducers: (builder) => {
@@ -37,5 +41,5 @@ const roundsTotalsSlice = createSlice({
   },
 });
 
-export const { resetRounds } = roundsTotalsSlice.actions;
+export const { resetRounds, setManualTotals } = roundsTotalsSlice.actions;
 export default roundsTotalsSlice.reducer;

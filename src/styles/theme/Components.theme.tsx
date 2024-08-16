@@ -321,6 +321,7 @@ const components: Components<Omit<Theme, 'components'>> = {
         height: '100%',
         border: `1px solid ${palette.grey4.main}`,
         borderRadius: '4px',
+        width: '150px',
         '&:before': {
           borderBottom: 'none',
           borderBottomStyle: 'none',

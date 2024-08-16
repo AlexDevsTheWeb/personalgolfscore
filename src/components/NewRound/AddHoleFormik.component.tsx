@@ -36,7 +36,6 @@ const AddHoleFormik = () => {
     },
     // validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       setTmpHole(values);
       saveHole();
       // Kalert(JSON.stringify(values, null, 2));

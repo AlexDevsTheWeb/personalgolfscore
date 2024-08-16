@@ -1,8 +1,5 @@
-import { Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import useNewRoundTotals from '../../hooks/useNewRoundTotals.hook';
 import { BoxNewRound } from '../../styles';
-import RoundsDataShotsTotals from '../RoundsData/RoundsDataShotsTotals.component';
 
 // FIXME: round totals are not automatically calculated!
 
@@ -30,15 +27,13 @@ import RoundsDataShotsTotals from '../RoundsData/RoundsDataShotsTotals.component
 // }
 
 const AddNewRoundTotals = () => {
-  const { roundHoles } = useSelector((store: RootState) => store.newRound.newRoundMain.round);
-  const { totals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
-  let newTotals = [];
-  newTotals.push(totals);
+  const totals = useNewRoundTotals();
+  console.log("TOTALS: ", totals)
 
   return (
     <BoxNewRound>
-      <Typography>{`Totals ${roundHoles !== 0 ? roundHoles : ''}`}</Typography>
-      <RoundsDataShotsTotals totals={newTotals} />
+
+      {/* <RoundsDataShotsTotals totals={totals} /> */}
     </BoxNewRound>
   )
 }

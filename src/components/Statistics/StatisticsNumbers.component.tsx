@@ -22,7 +22,9 @@ const StatisticsNumbers = ({ totals, holes }: Props) => {
                 transform: 'translate(0px, 0px)',
               },
               [`& .${gaugeClasses.valueArc}`]: {
-                fill: (totals.points / holes >= 33) ? '#52b202' : '#f25448',
+                fill: (totals.points / holes >= 10)
+                  ? theme.palette.primary.main
+                  : '#f25448',
               },
               [`& .${gaugeClasses.referenceArc}`]: {
                 fill: theme.palette.divider,
@@ -63,7 +65,7 @@ const StatisticsNumbers = ({ totals, holes }: Props) => {
                 arcLabel: (item) => `${item.label}`,
                 arcLabelMinAngle: 45,
                 data: [
-                  { id: 0, value: totals.fir / holes, label: 'F.I.R. (%)', color: '#5f8d65' },
+                  { id: 0, value: totals.fir / holes, label: 'FAIRWAYS (%)', color: '#5f8d65' },
                   { id: 1, value: totals.left / holes, label: 'Left (%)', color: '#d29c70' },
                   { id: 2, value: totals.right / holes, label: 'Right (%)', color: '#fcb173' }
                 ],

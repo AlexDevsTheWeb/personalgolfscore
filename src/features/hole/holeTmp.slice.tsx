@@ -18,6 +18,7 @@ const initialState: IShots = {
   out: 0,
   par: 0,
   points: 0,
+  pointsAvg: 0,
   putts: 0,
   sand: 0,
   secondPutt: 0,
@@ -42,6 +43,9 @@ const holeTmpSlice = createSlice({
         else { state[name] = Number(value); }
       }
       else { state[name] = value; }
+      if (name === 'fairway') {
+        state['fairway'] = Number(value.toString().substring(0, 1));
+      }
 
       state.points = calculateStablefordPoints({
         hcp: Number(state.hcp),
@@ -69,8 +73,6 @@ const holeTmpSlice = createSlice({
         strokesValue: Number(state.strokes),
         chipClubs: chipClubs
       })
-      // TODO: 4) holeNumber(?),
-
     },
     setHoleNumber: (state: any, { payload }: PayloadAction<{ newHoleNumber: number }>) => {
       console.log("Payload: ", payload)
