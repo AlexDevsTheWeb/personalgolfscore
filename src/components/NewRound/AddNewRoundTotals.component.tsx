@@ -28,7 +28,6 @@ import { BoxNewRound } from '../../styles';
 
 const AddNewRoundTotals = () => {
   const totals = useNewRoundTotals();
-  console.log("TOTALS: ", totals)
 
   return (
     <BoxNewRound>

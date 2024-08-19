@@ -1,6 +1,6 @@
 import Accordion from "./accordion/Accordion.styles";
 import AccordionSummary from "./accordion/AccordionSummary.styles";
-import BoxNewRound from "./box/BoxTotals.styles";
+import BoxNewRound from "./box/BoxGeneralShadow.styles";
 import BoxOverflow from "./box/BoxOverflow.styles";
 import BoxPlayer from "./box/BoxPlayer.styles";
 import Card from "./card/Card.style";
@@ -14,8 +14,8 @@ import GridLabel from "./grid/GridLabel.styles";
 import Paper from "./paper/Paper.styles";
 
 import Stack from "./stack/Stack.styles";
-import Typography from "./typography/Typography.styles";
 import ClubTypography from "./typography/ClubTypography.styles";
+import Typography from "./typography/Typography.styles";
 
 import TableCell from "./table/TableCell.styles";
 import TableRow from "./table/TableRow.styles";
@@ -29,18 +29,12 @@ export {
   BoxNewRound,
   BoxOverflow,
   BoxPlayer,
-  Card,
-  DatePicker,
+  Card, ClubTypography, DatePicker,
   Grid,
   Grid2,
   GridLabel,
   Paper,
   RowCard,
-  Stack,
-  Typography,
-  ClubTypography,
-  TableRow,
-  TableCell,
-  TextField,
-  Tooltip
-}
+  Stack, TableCell, TableRow, TextField,
+  Tooltip, Typography
+};

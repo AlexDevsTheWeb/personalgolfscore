@@ -102,9 +102,6 @@ const AddSingleHole = () => {
           <TextField id="putt2" name='secondPutt' label="Putt 2" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.secondPutt !== 0 ? tmpHole.secondPutt : ''} />
           <TextField id="putt3" name='thirdPutt' label="Putt 3" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.thirdPutt !== 0 ? tmpHole.thirdPutt : ''} />
         </BoxNewHole>
-        {/* <BoxNewHole>
-
-        </BoxNewHole> */}
         <BoxNewHole>
           <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.sand !== 0 ? tmpHole.sand : ''} />
           <TextField id="water" name='water' label="Water" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} />

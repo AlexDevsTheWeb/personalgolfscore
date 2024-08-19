@@ -30,7 +30,7 @@ export interface INewRoundState {
 }
 export interface INewRound {
   roundID: string,
-  roundDate: string,
+  roundDate: any,
   roundCourse: string,
   roundHoles: number,
   roundTee: string,

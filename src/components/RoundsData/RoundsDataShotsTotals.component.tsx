@@ -10,7 +10,6 @@ interface Props {
 }
 
 const RoundsDataShotsTotals = (props: Props) => {
-  console.log(props.totals);
   const { totals } = props;
   const [wh, setWh] = useState<any>();
 

@@ -25,9 +25,8 @@ const StyledStack = styled(Stack) <IStackProps>`
 const BoxSingleHoleInternal: React.FC<IStackProps> = props => {
 
   const dimensions = useDeviceDetection();
-  console.log(dimensions.isDesktopLarge)
   return (
-    <StyledStack {...props} isMobile={dimensions.isDesktopLarge}>
+    <StyledStack {...props}>
       {props.children}
     </StyledStack >
   )

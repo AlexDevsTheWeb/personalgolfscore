@@ -3,7 +3,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 
-// type StackProps = StackPropsMui;
 interface IStackProps extends StackPropsMui {
   isMobile?: boolean;
 }
@@ -20,9 +19,10 @@ const StyledStack = styled(Stack) <IStackProps>`
 const BoxNewHole: React.FC<IStackProps> = props => {
 
   const dimensions = useDeviceDetection();
+  // const props2 = { ...props, isMobile: dimensions }
 
   return (
-    <StyledStack {...props} isMobile={dimensions.isDesktopLarge}>
+    <StyledStack {...props}>
       {props.children}
     </StyledStack >
   )

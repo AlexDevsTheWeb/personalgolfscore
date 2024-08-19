@@ -75,7 +75,6 @@ const holeTmpSlice = createSlice({
       })
     },
     setHoleNumber: (state: any, { payload }: PayloadAction<{ newHoleNumber: number }>) => {
-      console.log("Payload: ", payload)
       state.holeNumber = payload.newHoleNumber;
     },
     resetNewRoundHoleTmp: () => initialState,

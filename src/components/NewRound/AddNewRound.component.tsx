@@ -20,7 +20,7 @@ const NewRoundMain = () => {
   }, []);
 
   return (
-    <Stack sx={{ rowGap: 1 }}>
+    <Stack sx={{ rowGap: 3 }}>
       <AddNewRoundMain />
       <AddNewRoundHoles />
       <AddNewRoundTotals />

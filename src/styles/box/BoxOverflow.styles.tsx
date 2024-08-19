@@ -29,7 +29,7 @@ const BoxOverflow: React.FC<BoxProps> = props => {
   return <StyledBox
     {...props}
     sx={{
-      width: isMobile.isMobile ? '412px' : '100%',
+      width: isMobile.isPhone ? '412px' : '100%',
       overflow: isMobile.isMobile ? 'auto' : 'none'
     }}
   >
