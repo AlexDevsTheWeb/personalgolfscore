@@ -51,8 +51,6 @@ const AddHoleFormik = () => {
       setTmpHole({ ...tmpHole, holesCompleted: holesCompleted });
       dispatch(setNewHole({ tmpHole, roundPlayingHCP, roundHoles, holesCompleted }));
       dispatch(resetNewRoundHoleTmp())
-
-      console.log("tmphole: ", tmpHole);
     }
 
     // eslint-disable-next-line

@@ -9,7 +9,7 @@ interface BoxProps extends BoxPropsMui {
 const StyledBox = styled(Box) <BoxProps>`
   display: flex;
   flex-direction: ${props => props.direction};
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-content: start;
   justify-content: space-between;
   align-items: stretch;
@@ -23,7 +23,6 @@ const StyledBox = styled(Box) <BoxProps>`
  `;
 
 const BoxGeneralShadow: React.FC<BoxProps> = props => {
-  console.log(props);
   return (
     <StyledBox {...props}>{props.children}</StyledBox>
   )
