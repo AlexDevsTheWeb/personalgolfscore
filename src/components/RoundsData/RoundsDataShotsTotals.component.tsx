@@ -125,7 +125,7 @@ const RoundsDataShotsTotals = (props: Props) => {
   }
   return (
     <BoxPlayer>
-      {wh}
+      {/* {wh} */}
     </BoxPlayer>
   )
 }

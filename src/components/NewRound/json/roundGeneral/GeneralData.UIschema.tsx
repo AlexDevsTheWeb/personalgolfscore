@@ -1,6 +1,13 @@
 import { UiSchema } from "@rjsf/utils";
 
 export const generalUiSchema: UiSchema = {
+  "ui:submitButtonOptions": {
+    "submitText": "submit",
+    "norender": false,
+    "props": {
+      "disabled": false,
+    }
+  },
   "roundCourse": {
     "ui:title": "Course name",
     "ui:autofocus": true,
@@ -11,7 +18,6 @@ export const generalUiSchema: UiSchema = {
   "roundTee": { "ui:title": "Round starting Tees", },
   "roundHoles": {
     "ui:title": "Holes number",
-    "ui:widget": "range"
   },
   "roundPar": { "ui:title": "Course par", },
   "roundPlayingHCP": { "ui:title": "Player HCP", },

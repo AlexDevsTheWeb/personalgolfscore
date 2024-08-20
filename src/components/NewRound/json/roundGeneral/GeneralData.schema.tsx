@@ -8,17 +8,16 @@ export const generalData: RJSFSchema =
     "roundCourse",
   ],
   "properties": {
-    "roundCourse": { "type": 'string' },
+    "roundCourse": {
+      "type": 'string'
+    },
     "roundDate": {
       "type": 'string',
       "format": 'date',
     },
     "roundTee": { "type": 'string' },
     "roundHoles": {
-      "title": "Integer range",
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 18
+      "type": "number",
     },
     "roundPar": { "type": 'number' },
     "roundPlayingHCP": { "type": 'number' },

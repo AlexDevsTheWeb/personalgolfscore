@@ -10,7 +10,6 @@ const initialState: IShots = {
   driveDistance: 0,
   fairway: '',
   fir: 0,
-  firstPutt: 0,
   gir: false,
   girBogey: false,
   greenSide: '',
@@ -20,9 +19,8 @@ const initialState: IShots = {
   points: 0,
   pointsAvg: 0,
   putts: 0,
+  puttsLength: [],
   sand: 0,
-  secondPutt: 0,
-  thirdPutt: 0,
   strokes: 0,
   teeClub: '',
   toGreen: '',
@@ -43,10 +41,6 @@ const holeTmpSlice = createSlice({
         else { state[name] = Number(value); }
       }
       else { state[name] = value; }
-      if (name === 'fairway') {
-        state['fairway'] = Number(value.toString().substring(0, 1));
-      }
-
       state.points = calculateStablefordPoints({
         hcp: Number(state.hcp),
         par: Number(state.par),

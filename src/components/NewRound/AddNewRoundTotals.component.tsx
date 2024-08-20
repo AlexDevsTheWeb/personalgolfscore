@@ -1,4 +1,4 @@
-import useNewRoundTotals from '../../hooks/useNewRoundTotals.hook';
+import { useTotals } from '../../hooks/useNewRoundTotals.hook';
 import { BoxNewRound } from '../../styles';
 
 // FIXME: round totals are not automatically calculated!
@@ -27,7 +27,7 @@ import { BoxNewRound } from '../../styles';
 // }
 
 const AddNewRoundTotals = () => {
-  const totals = useNewRoundTotals();
+  const totals = useTotals();
 
   return (
     <BoxNewRound>

@@ -1,13 +1,14 @@
-import { LocalizationProvider } from '@mui/x-date-pickers';
+import { Button, TextField, Typography } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setRoundMainData } from '../../features/newRound/newRoundMain.slice';
 import BoxGeneralShadow from '../../styles/box/BoxGeneralShadow.styles';
+import BoxInternal from '../../styles/box/BoxInternal.styles';
 import { INewRound } from '../../types/round.types';
 import { checkMainRoundDataValid } from '../../utils/round/round.utils';
-import AddNewRoundJson from './AddNewRoundJson.component';
 
 const AddNewRoundMain = () => {
   const dispatch = useDispatch();
@@ -47,8 +48,7 @@ const AddNewRoundMain = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <BoxGeneralShadow direction={'column'}>
-        <AddNewRoundJson />
-        {/* <Typography>Add new round</Typography>
+        <Typography>Add new round</Typography>
         <BoxInternal>
           <BoxInternal>
             <TextField
@@ -120,7 +120,7 @@ const AddNewRoundMain = () => {
           </BoxInternal>
 
           <Button onClick={saveNewRound} variant='contained'>Save</Button>
-        </BoxInternal> */}
+        </BoxInternal>
       </BoxGeneralShadow>
     </LocalizationProvider>
   )
