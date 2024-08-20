@@ -42,5 +42,6 @@ export type InitialStateNewRound = {
   isLoading: boolean;
   isSaved: boolean;
   playerID: string;
+  setFirstHole: boolean;
   round: INewRound;
 }

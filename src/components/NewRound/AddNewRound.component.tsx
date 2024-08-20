@@ -5,7 +5,7 @@ import { getClubsDetails } from '../../features/golfBag/golfBag.slice';
 import { RootState } from '../../store/store';
 import { Stack } from '../../styles';
 import AddNewRoundHoles from './AddNewRoundHoles.component';
-import AddNewRoundMain from './AddNewRoundMain.component';
+import AddNewRoundJson from './AddNewRoundJson.component';
 import AddNewRoundTotals from './AddNewRoundTotals.component';
 
 const NewRoundMain = () => {
@@ -19,9 +19,11 @@ const NewRoundMain = () => {
     // eslint-disable-next-line
   }, []);
 
+
   return (
     <Stack sx={{ rowGap: 3 }}>
-      <AddNewRoundMain />
+      <AddNewRoundJson />
+      {/* <AddNewRoundMain /> */}
       <AddNewRoundHoles />
       <AddNewRoundTotals />
     </Stack>

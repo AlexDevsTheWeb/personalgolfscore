@@ -9,7 +9,6 @@ interface ISelectProps {
   name: string,
   list: string[],
   onChange: any,
-  gir?: boolean,
   par?: number,
   value?: string,
   label?: string,
@@ -18,7 +17,7 @@ interface ISelectProps {
 const Select = (props: ISelectProps) => {
 
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
-  const { name, list, onChange, gir, value, label } = props;
+  const { name, list, onChange, value, label } = props;
   const [disabled, setDisabled] = useState<boolean>(false);
 
   const handleChange = (e: SelectChangeEvent) => {
@@ -29,7 +28,12 @@ const Select = (props: ISelectProps) => {
     switch (name) {
       case CHIPCONDITION.GREEN:
       case CHIPCONDITION.CHIP:
-        if (!!gir) { setDisabled(true) }
+        if (tmpHole.gir) {
+          setDisabled(true)
+        }
+        else {
+          setDisabled(false);
+        }
         break;
       case CHIPCONDITION.FAIRWAY:
         if (tmpHole.par === 3) {
@@ -42,9 +46,7 @@ const Select = (props: ISelectProps) => {
       default:
         setDisabled(false);
     }
-  }, [name, gir, tmpHole.par]);
-
-
+  }, [name, tmpHole.gir, tmpHole.par]);
 
   return (
     <FormControl variant='filled'>
@@ -53,7 +55,7 @@ const Select = (props: ISelectProps) => {
         value={value !== '0' ? value : ''}
         name={name}
         onChange={(e: SelectChangeEvent) => handleChange(e)}
-        sx={{ minWidth: '75px', width: '150px' }}
+        sx={{ minWidth: '75px', width: '202px' }}
         disabled={disabled}
         label={label}
       >

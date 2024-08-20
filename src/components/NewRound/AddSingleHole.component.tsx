@@ -9,6 +9,7 @@ import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
 import HoleAutomaticInfo from './components/HoleAutomaticInfo.component';
+import PuttsGenerator from './components/PuttsGenerator.component';
 import Select from './components/Select.component';
 
 const AddSingleHole = () => {
@@ -21,6 +22,8 @@ const AddSingleHole = () => {
 
   const [holeFinished, setHoleFinished] = useState(0);
   const [mtToGreen, setMtToGreen] = useState<boolean>(false);
+  const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
+  const [puttsLength, setPuttsLength] = useState<number[]>(new Array(tmpHole.putts).fill(null))
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -34,6 +37,11 @@ const AddSingleHole = () => {
       setMtToGreen(false);
     }
   }
+  const handleChangePutts = (e: any, putts: number) => {
+    const updatedPuttsLength = [...puttsLength];
+    updatedPuttsLength[putts - 1] = e.target.value;
+    setPuttsLength(updatedPuttsLength);
+  }
 
   const saveHole = () => {
     const newHoleNumber = holesCompleted + 1
@@ -44,15 +52,25 @@ const AddSingleHole = () => {
   useEffect(() => {
     if (tmpHole.holeNumber !== 0) {
       setHoleFinished(holesCompleted + 1);
-      dispatch(setNewHole({ tmpHole, roundPlayingHCP, roundHoles, holesCompleted }));
+      const holeAdjusted = { ...tmpHole, fairway: Number(tmpHole.fairway.substring(0, 1)) }
+      dispatch(setNewHole({ holeAdjusted, roundPlayingHCP, roundHoles, holesCompleted }));
       dispatch(resetNewRoundHoleTmp())
     }
     // eslint-disable-next-line
   }, [holesCompleted, dispatch])
 
+  useEffect(() => {
+    setPuttsNumber(Array.apply(null, Array(tmpHole.putts))
+      .map(function (y, i) { return i + 1; }));
+  }, [tmpHole.putts]);
+
+  useEffect(() => {
+    dispatch(setTmpHoleData({ name: 'puttsLength', value: puttsLength, roundPlayingHCP, roundHoles, chipClubs } as any));
+  }, [puttsLength, dispatch, roundPlayingHCP, roundHoles, chipClubs])
+
   return (
     <BoxSingleHoleContainer>
-      <BoxSingleHoleInternal>
+      <BoxSingleHoleInternal side='left'>
         <BoxNewHole>
           <Select
             name='hcp'
@@ -71,7 +89,6 @@ const AddSingleHole = () => {
             name='strokes'
             label="Strokes"
             variant="filled"
-            sx={{ width: '150px' }}
             type='number'
             onChange={e => handleChange(e)}
             value={tmpHole.strokes !== 0 ? tmpHole.strokes : ''}
@@ -87,28 +104,29 @@ const AddSingleHole = () => {
           />
         </BoxNewHole>
         <BoxNewHole>
-          <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway} par={tmpHole.par} />
           <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} />
           <TextField id='driveDistance' name='driveDistance' label='Drive distance' variant='filled' type='number' onChange={e => handleChange(e)}
             value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} />
-          <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''} />
+          <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway} par={tmpHole.par} />
         </BoxNewHole>
         <BoxNewHole>
-
+          <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''} />
           {!!mtToGreen ? <TextField id="mtToGreen" name='toGreenMeters' label="Meters to green" variant="filled" type='number' onChange={e => handleChange(e)} /> : null}
-          <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} gir={tmpHole.gir} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} />
-          <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} gir={tmpHole.gir} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
-          <TextField id="putt1" name='firstPutt' label="Putt 1" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.firstPutt !== 0 ? tmpHole.firstPutt : ''} />
-          <TextField id="putt2" name='secondPutt' label="Putt 2" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.secondPutt !== 0 ? tmpHole.secondPutt : ''} />
-          <TextField id="putt3" name='thirdPutt' label="Putt 3" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.thirdPutt !== 0 ? tmpHole.thirdPutt : ''} />
+          <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} />
+          <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
         </BoxNewHole>
+        {
+          puttsNumber.length > 0
+            ? <PuttsGenerator puttsNumber={puttsNumber} setPuttDistance={handleChangePutts} />
+            : <></>
+        }
         <BoxNewHole>
           <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.sand !== 0 ? tmpHole.sand : ''} />
           <TextField id="water" name='water' label="Water" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} />
           <TextField id="out" name='out' label="Out" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} />
         </BoxNewHole>
       </BoxSingleHoleInternal>
-      <BoxSingleHoleInternal paddingTop={1.25}>
+      <BoxSingleHoleInternal paddingTop={1.25} side='right'>
         <HoleAutomaticInfo
           holeFinished={holeFinished}
           tmpHole={tmpHole}

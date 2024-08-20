@@ -1,14 +1,10 @@
-import {
-  Button,
-  Typography
-} from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setRoundMainData } from '../../features/newRound/newRoundMain.slice';
-import { TextField } from '../../styles';
 import BoxGeneralShadow from '../../styles/box/BoxGeneralShadow.styles';
 import BoxInternal from '../../styles/box/BoxInternal.styles';
 import { INewRound } from '../../types/round.types';

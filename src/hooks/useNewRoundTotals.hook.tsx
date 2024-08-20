@@ -12,9 +12,7 @@ const useNewRoundTotals = () => {
       acc.holeNumber += Number(total.holeNumber) || 0;
       acc.distance += Number(total.distance) / acc.holeNumber || 0;
       acc.driveDistance += Number(total.driveDistance) / acc.holeNumber || 0;
-      acc.firstPutt += total.firstPutt || 0;
-      acc.secondPutt += total.secondPutt || 0;
-      acc.thirdPutt += total.thirdPutt || 0;
+
       acc.fir += total.fir || 0;
       acc.gir = total.gir === true;
       acc.girBogey = total.girBogey === true;
@@ -39,9 +37,6 @@ const useNewRoundTotals = () => {
       holeNumber: 0,
       distance: 0,
       driveDistance: 0,
-      firstPutt: 0,
-      secondPutt: 0,
-      thirdPutt: 0,
       fir: 0,
       gir: false,
       girBogey: false,
@@ -50,6 +45,7 @@ const useNewRoundTotals = () => {
       points: 0,
       pointsAvg: 0,
       putts: 0,
+      puttsLength: [],
       sand: 0,
       strokes: 0,
       teeClub: '',
@@ -67,6 +63,63 @@ const useNewRoundTotals = () => {
   }, [shots])
 
   return totals
+}
+
+export const useTotals = () => {
+  const { shots } = useSelector((store: RootState) => store.newRound.newRoundHoles);
+  useEffect(() => {
+    const totals = shots.reduce((acc, shot) => {
+      acc.totDistance += shot.distance;
+      acc.totDriverDistance += shot.driveDistance;
+
+      // Use a switch statement for fairway counts
+      switch (shot.fairway) {
+        case '4':
+          acc.totFairwaysLeft++;
+          break;
+        case '5':
+          acc.totFairwaysCenter++;
+          break;
+        case '6':
+          acc.totFairwaysRight++;
+          break;
+      }
+
+      acc.totFir += shot.fir;
+      acc.totGir += shot.gir ? 1 : 0;
+      acc.totGirBogey += shot.girBogey ? 1 : 0;
+      // acc.totGreenSide[shot.greenSide.substring(0, 1)]++;
+      acc.totOut += shot.out;
+      acc.totWater += shot.water;
+      acc.totSand += shot.sand;
+      acc.totPoints += shot.points;
+      acc.totPutts += shot.putts;
+      acc.totStrokes += shot.strokes;
+      // acc.totUpDown[shot.upDown || 'V']++;
+
+      return acc;
+    }, {
+      totDistance: 0,
+      totDriverDistance: 0,
+      totFairwaysLeft: 0,
+      totFairwaysCenter: 0,
+      totFairwaysRight: 0,
+      totFir: 0,
+      totGir: 0,
+      totGirBogey: 0,
+      totGreenSide: { L: 0, O: 0, R: 0, C: 0 },
+      totOut: 0,
+      totWater: 0,
+      totSand: 0,
+      totPoints: 0,
+      totPutts: 0,
+      totStrokes: 0,
+      totUpDown: { X: 0, N: 0, V: 0 },
+    });
+
+    // Access the calculated totals here
+    console.log(totals);
+  }, [shots]);
 }
 
 export default useNewRoundTotals

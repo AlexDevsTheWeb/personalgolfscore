@@ -1,10 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { RootState } from '../../store/store';
 import RoundsDataShotTable from './RoundsDataShotTable.component';
 import RoundsHeadDetails from './RoundsHeadDetails.component';
-import RoundsDataShotsTotals from './RoundsDataShotsTotals.component';
-import { useParams } from 'react-router-dom';
 
 const RoundsDataMain = () => {
   const params = useParams();
@@ -23,7 +22,7 @@ const RoundsDataMain = () => {
       display: 'flex', flexDirection: 'column', rowGap: 1.175
     }}>
       <RoundsHeadDetails />
-      <RoundsDataShotsTotals totals={roundTotals} />
+      {/* <RoundsDataShotsTotals totals={roundTotals} /> */}
       <RoundsDataShotTable />
     </Box>
   )

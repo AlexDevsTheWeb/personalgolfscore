@@ -27,10 +27,10 @@ export const calculateGirValue = (props: IGirProps) => {
   const { par, putts, strokes, bogey } = props;
   const girDiff = par + putts - strokes;
   if (!bogey) {
-    return girDiff < 2 ? 0 : 1;
+    return girDiff < 2 ? false : true;
   }
   else {
-    return girDiff < 1 ? 0 : 1;
+    return girDiff < 1 ? false : true;
   }
 }
 export const calculateUDValue = (props: IUDProps) => {
@@ -126,7 +126,6 @@ export const newRoundTotals = (totals: IShots[]) => {
     driveDistance: 0,
     fairway: "",
     fir: 0,
-    firstPutt: 0,
     gir: false,
     girBogey: false,
     greenSide: '',
@@ -136,9 +135,8 @@ export const newRoundTotals = (totals: IShots[]) => {
     points: 0,
     pointsAvg: 0,
     putts: 0,
+    puttsLength: [],
     sand: 0,
-    secondPutt: 0,
-    thirdPutt: 0,
     strokes: 0,
     teeClub: '',
     toGreen: '',

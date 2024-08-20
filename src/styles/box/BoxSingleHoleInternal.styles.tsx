@@ -4,27 +4,26 @@ import styled from 'styled-components';
 import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 
 interface IStackProps extends StackPropsMui {
+  side: string;
   isMobile?: boolean;
   paddingTop?: number;
 }
 
-const StyledStack = styled(Stack) <IStackProps>`
-  display: flex;
-  flex-direction: ${props => props.isMobile ? 'row' : 'row'};
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  width: ${props => props.isMobile
-    ? props.paddingTop
+const StyledStack = styled(Stack)<IStackProps>((props: IStackProps) => ({
+  display: 'flex',
+  flexDirection: useDeviceDetection().isMobileDevice ? 'column' : 'row',
+  justifyContent: 'space-between',
+  gap: 10,
+  flexWrap: 'wrap',
+  width: useDeviceDetection().isMobileDevice
+    ? '100%'
+    : props.side === 'right'
       ? '30%'
-      : '70%'
-    : '100%'
-  }; 
-`
+      : '70%',
+}));
 
 const BoxSingleHoleInternal: React.FC<IStackProps> = props => {
 
-  const dimensions = useDeviceDetection();
   return (
     <StyledStack {...props}>
       {props.children}

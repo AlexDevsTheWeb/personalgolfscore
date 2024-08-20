@@ -11,7 +11,6 @@ export interface IShots {
   driveDistance: number;
   fairway: string;
   fir: number;
-  firstPutt: number;
   gir: boolean;
   girBogey: boolean;
   greenSide: string;
@@ -21,9 +20,8 @@ export interface IShots {
   points: number;
   pointsAvg: number;
   putts: number;
+  puttsLength: number[];
   sand: number;
-  secondPutt: number;
-  thirdPutt: number;
   strokes: number;
   teeClub: string;
   toGreen: string;

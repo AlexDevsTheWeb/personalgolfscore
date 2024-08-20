@@ -1,7 +1,6 @@
 import Stack, { StackProps as StackPropsMui } from '@mui/material/Stack';
 import * as React from 'react';
 import styled from 'styled-components';
-import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 
 interface IStackProps extends StackPropsMui {
   isMobile?: boolean;
@@ -17,9 +16,6 @@ const StyledStack = styled(Stack) <IStackProps>`
 `
 
 const BoxNewHole: React.FC<IStackProps> = props => {
-
-  const dimensions = useDeviceDetection();
-  // const props2 = { ...props, isMobile: dimensions }
 
   return (
     <StyledStack {...props}>

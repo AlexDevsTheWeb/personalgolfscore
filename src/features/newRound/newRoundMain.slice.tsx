@@ -5,6 +5,7 @@ const initialState: InitialStateNewRound = {
   isLoading: false,
   isSaved: false,
   playerID: '',
+  setFirstHole: false,
   round: {
     roundID: '',
     roundDate: '',
@@ -34,11 +35,15 @@ const newRoundMainSlice = createSlice({
     },
     setRoundMainData: (state, { payload }: PayloadAction<{ newRound: INewRound }>) => {
       state.round = payload.newRound
+      state.setFirstHole = true;
+    },
+    resetSetFirstHole: (state) => {
+      state.setFirstHole = false;
     },
     resetNewRoundsMain: () => initialState,
   },
   extraReducers: () => { }
 });
 
-export const { setRoundMainData, resetNewRoundsMain } = newRoundMainSlice.actions;
+export const { setRoundMainData, resetNewRoundsMain, resetSetFirstHole } = newRoundMainSlice.actions;
 export default newRoundMainSlice.reducer;
