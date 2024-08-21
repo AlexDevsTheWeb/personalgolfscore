@@ -15,8 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getAllRoundsData(""))
     dispatch(getAllRoundsTotals(""))
-    // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   return (
     <Box sx={{

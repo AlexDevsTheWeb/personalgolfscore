@@ -2,16 +2,16 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClubsDetails } from '../../features/golfBag/golfBag.slice';
+import { useTotals } from '../../hooks/useNewRoundTotals.hook';
 import { RootState } from '../../store/store';
 import { Stack } from '../../styles';
 import AddNewRoundHoles from './AddNewRoundHoles.component';
 import AddNewRoundJson from './AddNewRoundJson.component';
-import AddNewRoundTotals from './AddNewRoundTotals.component';
 
 const NewRoundMain = () => {
   const dispatch = useDispatch<any>();
   const { clubs } = useSelector((store: RootState) => store.golfBag);
-
+  useTotals();
   useEffect(() => {
     if (clubs.types.length === 0) {
       dispatch(getClubsDetails(""));
@@ -25,7 +25,6 @@ const NewRoundMain = () => {
       <AddNewRoundJson />
       {/* <AddNewRoundMain /> */}
       <AddNewRoundHoles />
-      <AddNewRoundTotals />
     </Stack>
 
   )

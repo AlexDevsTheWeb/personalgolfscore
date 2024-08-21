@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNewTotal } from '../features/newRound/newRoundTotals.slice';
 import { RootState } from '../store/store';
 import { IShots } from '../types/roundData.types';
 
@@ -66,14 +67,15 @@ const useNewRoundTotals = () => {
 }
 
 export const useTotals = () => {
-  const { shots } = useSelector((store: RootState) => store.newRound.newRoundHoles);
+  const dispatch = useDispatch<any>();
+  const { shots, roundID } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   useEffect(() => {
     const totals = shots.reduce((acc, shot) => {
       acc.totDistance += shot.distance;
       acc.totDriverDistance += shot.driveDistance;
 
       // Use a switch statement for fairway counts
-      switch (shot.fairway) {
+      switch (shot.fairway.toString()) {
         case '4':
           acc.totFairwaysLeft++;
           break;
@@ -84,21 +86,44 @@ export const useTotals = () => {
           acc.totFairwaysRight++;
           break;
       }
-
       acc.totFir += shot.fir;
       acc.totGir += shot.gir ? 1 : 0;
       acc.totGirBogey += shot.girBogey ? 1 : 0;
-      // acc.totGreenSide[shot.greenSide.substring(0, 1)]++;
+
+      switch (shot.greenSide.substring(0, 1)) {
+        case 'L':
+          acc.totGreenSide.L++;
+          break;
+        case 'O':
+          acc.totGreenSide.O++;
+          break;
+        case 'R':
+          acc.totGreenSide.R++;
+          break;
+        case 'S':
+          acc.totGreenSide.C++;
+          break;
+      }
       acc.totOut += shot.out;
       acc.totWater += shot.water;
       acc.totSand += shot.sand;
       acc.totPoints += shot.points;
       acc.totPutts += shot.putts;
       acc.totStrokes += shot.strokes;
-      // acc.totUpDown[shot.upDown || 'V']++;
-
+      switch (shot.upDown) {
+        case 'x':
+          acc.totUpDown.X++;
+          break;
+        case 'n':
+          acc.totUpDown.N++;
+          break;
+        case '':
+          acc.totUpDown.V++;
+          break;
+      }
       return acc;
     }, {
+      roundID: Number(roundID),
       totDistance: 0,
       totDriverDistance: 0,
       totFairwaysLeft: 0,
@@ -116,10 +141,9 @@ export const useTotals = () => {
       totStrokes: 0,
       totUpDown: { X: 0, N: 0, V: 0 },
     });
-
-    // Access the calculated totals here
-    console.log(totals);
-  }, [shots]);
+    dispatch(setNewTotal({ totals }));
+    // eslint-disable-next-line
+  }, [shots, dispatch]);
 }
 
 export default useNewRoundTotals

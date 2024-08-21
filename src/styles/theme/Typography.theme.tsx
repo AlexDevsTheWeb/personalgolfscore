@@ -179,6 +179,7 @@ export const typography = {
     fontFamily: fonts.light,
     fontStyle: 'normal',
     fontWeight: 500,
+    textTransform: 'uppercase',
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
       fontSize: '16px',
       lineHeight: '120%',

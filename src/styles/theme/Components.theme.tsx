@@ -894,127 +894,127 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
     },
   },
-  MuiCard: {
-    styleOverrides: {
-      root: {
-        maxWidth: '100%',
-        background: palette.grey6.main,
-        border: '1px solid #ccc',
-        borderRadius: 5,
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 5,
-        // boxShadow: 'none',
-      }
-    },
-    variants: [
-      {
-        props: { variant: 'player' },
-        style: {
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          alignContent: 'center',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          border: 'none',
-          borderBottom: '1px solid #ddd',
-          backgroundColor: '#f5f5f5',
-          borderRadius: 0,
-          padding: 10,
-          width: '48%',
-          [`@media (max-width:${breakpoints.values.md - 1}px)`]: {
-            flexDirection: 'row',
-            width: '100%',
-          },
-        },
-      },
-      {
-        props: { variant: 'roundHead' },
-        style: {
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          alignContent: 'center',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          border: 'none',
-          borderBottom: 'none',
-          backgroundColor: '#f5f5f5',
-          borderRadius: 0,
-          padding: 10,
-          width: '48%'
-        },
-      },
-      {
-        props: { variant: 'clubs' },
-        style: {
-          width: '48%',
-          [`@media (max-width:${breakpoints.values.lg}px)`]: {
-            maxWidth: '100%',
-            width: 500,
-          },
-          [`@media (max-width:${breakpoints.values.sm}px)`]: {
-            maxWidth: '100%',
-            width: 363,
-          },
-        }
-      },
-      {
-        props: { variant: 'disabled' },
-        style: {
-          width: '48%',
-          backgroundColor: 'transparent',
-          flexDirection: 'row',
-          border: '2px solid red',
-          [`@media (max-width:${breakpoints.values.lg}px)`]: {
-            maxWidth: '100%',
-            width: 500,
-          },
-          [`@media (max-width:${breakpoints.values.sm}px)`]: {
-            maxWidth: '100%',
-            width: 363,
-          },
-        }
-      }
-    ],
-  },
-  MuiCardMedia: {
-    styleOverrides: {
-      root: {
-        width: '50%',
-        height: '200px',
-      }
-    },
+  // MuiCard: {
+  //   styleOverrides: {
+  //     root: {
+  //       maxWidth: '100%',
+  //       background: palette.grey6.main,
+  //       border: '1px solid #ccc',
+  //       borderRadius: 5,
+  //       width: '100%',
+  //       display: 'flex',
+  //       flexDirection: 'row',
+  //       justifyContent: 'space-between',
+  //       padding: 5,
+  //       // boxShadow: 'none',
+  //     }
+  //   },
+  //   variants: [
+  //     {
+  //       props: { variant: 'player' },
+  //       style: {
+  //         display: 'flex',
+  //         flexDirection: 'row',
+  //         flexWrap: 'wrap',
+  //         alignContent: 'center',
+  //         justifyContent: 'space-between',
+  //         alignItems: 'center',
+  //         border: 'none',
+  //         borderBottom: '1px solid #ddd',
+  //         backgroundColor: '#f5f5f5',
+  //         borderRadius: 0,
+  //         padding: 10,
+  //         width: '48%',
+  //         [`@media (max-width:${breakpoints.values.md - 1}px)`]: {
+  //           flexDirection: 'row',
+  //           width: '100%',
+  //         },
+  //       },
+  //     },
+  //     {
+  //       props: { variant: 'roundHead' },
+  //       style: {
+  //         display: 'flex',
+  //         flexDirection: 'row',
+  //         flexWrap: 'wrap',
+  //         alignContent: 'center',
+  //         justifyContent: 'space-between',
+  //         alignItems: 'center',
+  //         border: 'none',
+  //         borderBottom: 'none',
+  //         backgroundColor: '#f5f5f5',
+  //         borderRadius: 0,
+  //         padding: 10,
+  //         width: '48%'
+  //       },
+  //     },
+  //     {
+  //       props: { variant: 'clubs' },
+  //       style: {
+  //         width: '48%',
+  //         [`@media (max-width:${breakpoints.values.lg}px)`]: {
+  //           maxWidth: '100%',
+  //           width: 500,
+  //         },
+  //         [`@media (max-width:${breakpoints.values.sm}px)`]: {
+  //           maxWidth: '100%',
+  //           width: 363,
+  //         },
+  //       }
+  //     },
+  //     {
+  //       props: { variant: 'disabled' },
+  //       style: {
+  //         width: '48%',
+  //         backgroundColor: 'transparent',
+  //         flexDirection: 'row',
+  //         border: '2px solid red',
+  //         [`@media (max-width:${breakpoints.values.lg}px)`]: {
+  //           maxWidth: '100%',
+  //           width: 500,
+  //         },
+  //         [`@media (max-width:${breakpoints.values.sm}px)`]: {
+  //           maxWidth: '100%',
+  //           width: 363,
+  //         },
+  //       }
+  //     }
+  //   ],
+  // },
+  // MuiCardMedia: {
+  //   styleOverrides: {
+  //     root: {
+  //       width: '50%',
+  //       height: '200px',
+  //     }
+  //   },
 
-  },
-  MuiCardContent: {
-    styleOverrides: {
-      root: {
-        width: '50%',
-        padding: '4px 8px',
-        display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'wrap',
-        alignContent: 'stretch',
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
-      }
-    }
-  },
-  MuiCardActions: {
-    styleOverrides: {
-      root: {
-        display: 'flex',
-        flexDirection: 'row',
-        width: '100%',
-        padding: 4,
-        justifyContent: 'space-between'
-      }
-    }
-  },
+  // },
+  // MuiCardContent: {
+  //   styleOverrides: {
+  //     root: {
+  //       width: '50%',
+  //       padding: '4px 8px',
+  //       display: 'flex',
+  //       flexDirection: 'column',
+  //       flexWrap: 'wrap',
+  //       alignContent: 'stretch',
+  //       justifyContent: 'space-between',
+  //       alignItems: 'stretch',
+  //     }
+  //   }
+  // },
+  // MuiCardActions: {
+  //   styleOverrides: {
+  //     root: {
+  //       display: 'flex',
+  //       flexDirection: 'row',
+  //       width: '100%',
+  //       padding: 4,
+  //       justifyContent: 'space-between'
+  //     }
+  //   }
+  // },
 };
 
 export default components;

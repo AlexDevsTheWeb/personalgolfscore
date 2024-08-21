@@ -3,15 +3,17 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
 import { TableCell, TableRow } from '../../styles';
+import { IShots } from '../../types/roundData.types';
 import { ShotPosition } from '../common/shotPositions/ShotPosition.component';
 
-const RoundsDataShotTable = () => {
-  // const { shots } = useSelector((store: RootState) => store.roundsNumber.roundsData);
+interface IRoundDataTable {
+  shots: IShots[]
+}
 
-  const { shots } = useSelector((store: RootState) => store.newRound.newRoundHoles);
+const RoundsDataShotTable = ({ shots }: IRoundDataTable) => {
+
+  console.log("shots: ", shots)
 
   return (
     <TableContainer component={Paper}>
@@ -21,10 +23,10 @@ const RoundsDataShotTable = () => {
             <TableCell component="th" scope="row" align='center' width={'5%'}>
               hole
             </TableCell>
-            <TableCell align='center' width={'10%'}>par</TableCell>
-            <TableCell align='center' width={'10%'}>meters</TableCell>
+            <TableCell align='center' width={'5%'}>par</TableCell>
             <TableCell align='center' width={'5%'}>hcp</TableCell>
             <TableCell align='center' width={'5%'}>strokes</TableCell>
+            <TableCell align='center' width={'10%'}>meters</TableCell>
             <TableCell align='center' width={'5%'}>points</TableCell>
             <TableCell align='center' width={'10%'}>tee Club</TableCell>
             <TableCell align='center' width={'10%'}>fir</TableCell>
@@ -40,22 +42,13 @@ const RoundsDataShotTable = () => {
           {shots.map((shot) => {
             const { holeNumber, driveDistance, hcp, par, strokes, points, teeClub, fairway, gir, girBogey, putts, sand, water, out } = shot;
 
-
-            // FIXME: calculateStablefordStars is not working anymore
-            // const points = calculateStablefordPoints({ hcp, par, strokes, finalPlayerHCP, totalHoles });
-            // const hcpStars = calculateStablefordStars({ hcp, par, strokes, finalPlayerHCP, totalHoles });
             return (
               <TableRow key={holeNumber}>
-                <TableCell component="th" scope="row" align='center' width={'5%'}>
-                  {holeNumber}
-                </TableCell>
-                <TableCell component="th" scope="row" align='center' width={'5%'}>
-                  {par}
-                </TableCell>
-                <TableCell align='center' width={'10%'}>{`${driveDistance}`}</TableCell>
+                <TableCell component="th" scope="row" align='center' width={'5%'}>{holeNumber}</TableCell>
+                <TableCell component="th" scope="row" align='center' width={'5%'}>{par}</TableCell>
                 <TableCell align='center' width={'5%'}>{hcp}</TableCell>
-                {/* <TableCell align='center' width={'10%'}>{`${par} ${hcpStars}`}</TableCell> */}
-                <TableCell align='center' width={'5%'}>{`${strokes}`}</TableCell>
+                <TableCell align='center' width={'5%'}>{strokes}</TableCell>
+                <TableCell align='center' width={'10%'}>{driveDistance}</TableCell>
                 <TableCell align='center' width={'5%'} variant={points && points >= 2 ? 'green' : points === 1 ? 'yellow' : 'red'}>{`${points}`}</TableCell>
                 <TableCell align='center' width={'10%'}>{teeClub}</TableCell>
                 <TableCell align='center' width={'10%'}>
@@ -70,6 +63,40 @@ const RoundsDataShotTable = () => {
               </TableRow>
             )
           })}
+          <TableRow key={'last'}>
+            <TableCell component="th" scope="row" align='center' width={'5%'}>Totals / AVG</TableCell>
+            <TableCell component="th" scope="row" align='center' width={'5%'}>
+              {`${shots.reduce((acc, curr) => acc + curr.par, 0).toFixed(2)}`}
+            </TableCell>
+            <TableCell align='center' width={'5%'}>
+              {`${shots.reduce((acc, curr) => acc + curr.hcp, 0).toFixed(2)} / ${(shots.reduce((acc, curr) => acc + curr.hcp, 0) / shots.length).toFixed(2)}`}
+            </TableCell>
+            <TableCell align='center' width={'5%'}>
+              {`${shots.reduce((acc, curr) => acc + curr.strokes, 0).toFixed(2)} / ${(shots.reduce((acc, curr) => acc + curr.strokes, 0) / shots.length).toFixed(2)}`}
+            </TableCell>
+            <TableCell align='center' width={'10%'}>
+              {`${shots.reduce((acc, curr) => acc + curr.driveDistance, 0).toFixed(2)} / ${(shots.reduce((acc, curr) => acc + curr.driveDistance, 0) / shots.length).toFixed(2)}`}
+            </TableCell>
+            <TableCell align='center' width={'5%'}>
+              {`${shots.reduce((acc, curr) => acc + curr.points, 0).toFixed(2)} / ${(shots.reduce((acc, curr) => acc + curr.points, 0) / shots.length).toFixed(2)}`}
+            </TableCell>
+            <TableCell align='center' width={'10%'}></TableCell>
+            <TableCell align='center' width={'10%'}></TableCell>
+            <TableCell align='center' width={'10%'}></TableCell>
+            <TableCell align='center' width={'10%'}></TableCell>
+            <TableCell align='center' width={'5%'}>
+              {`${shots.reduce((acc, curr) => acc + curr.putts, 0).toFixed(2)} / ${(shots.reduce((acc, curr) => acc + curr.putts, 0) / shots.length).toFixed(2)}`}
+            </TableCell>
+            <TableCell align='center' width={'5%'}>
+              {`${shots.reduce((acc, curr) => acc + curr.sand, 0).toFixed(2)} / ${(shots.reduce((acc, curr) => acc + curr.sand, 0) / shots.length).toFixed(2)}`}
+            </TableCell>
+            <TableCell align='center' width={'5%'}>
+              {`${shots.reduce((acc, curr) => acc + curr.water, 0).toFixed(2)} / ${(shots.reduce((acc, curr) => acc + curr.water, 0) / shots.length).toFixed(2)}`}
+            </TableCell>
+            <TableCell align='center' width={'5%'}>
+              {`${shots.reduce((acc, curr) => acc + curr.out, 0).toFixed(2)} / ${(shots.reduce((acc, curr) => acc + curr.out, 0) / shots.length).toFixed(2)}`}
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer >

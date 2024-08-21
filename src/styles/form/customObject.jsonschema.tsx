@@ -4,7 +4,6 @@ import BoxInternal from "../box/BoxInternal.styles";
 
 export function ObjectFieldTemplate(props: ObjectFieldTemplateProps) {
 
-  console.log("props ---> ", props);
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, flexGrow: 1 }}>
 

@@ -1,24 +1,35 @@
-import { Box, Button, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Button } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateTeeGreenClubs } from '../../features/golfBag/golfBag.slice';
 import { resetSetFirstHole } from '../../features/newRound/newRoundMain.slice';
 import { RootState } from '../../store/store';
+import BoxBetween from '../../styles/box/BoxBetween.styles';
 import BoxGeneralShadow from '../../styles/box/BoxGeneralShadow.styles';
-import { IShots } from '../../types/roundData.types';
 import { getChipClubs, getClubsNames, getGreenClubs } from '../../utils/round/round.utils';
+import { StatisticDialog } from '../dialog/StatisticDialog.component';
 import RoundsDataShotTable from '../RoundsData/RoundsDataShotTable.component';
 import AddSingleHole from './AddSingleHole.component';
 
 const AddNewRoundHoles = () => {
+
+  const [open, setOpen] = React.useState(false);
+
   const dispatch = useDispatch<any>();
-  const { setFirstHole } = useSelector((store: RootState) => store.newRound.newRoundMain);
-  const { roundHoles } = useSelector((store: RootState) => store.newRound.newRoundMain.round);
+  const { setFirstHole, round: { roundDate, roundCourse } } = useSelector((store: RootState) => store.newRound.newRoundMain);
+  const { totals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
   const { shots } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const { clubs } = useSelector((store: RootState) => store.golfBag);
 
   const [holeForm, setHoleForm] = useState<any>();
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     const updatedTeeClubs = getClubsNames(clubs);
     const updatedGreenClubs = getGreenClubs(updatedTeeClubs);
@@ -37,34 +48,29 @@ const AddNewRoundHoles = () => {
 
   return (
     <BoxGeneralShadow direction='column'>
-      {
-        shots.length > 0 &&
-        <RoundsDataShotTable />
-      }
-
-      <Typography>
-        {`Holes ${roundHoles !== 0 ? roundHoles : ''} TOTAL POINTS: ${shots.reduce(
-          (acc, curr) => acc + curr.points,
-          0)}`}</Typography>
-      {
-        shots.length !== 0 &&
-        shots.map((shot: IShots, index: number) => {
-          return (
-            <Box key={index}>
-              {`Hole #: ${shot.holeNumber} Par: ${shot.par} `}
-              {`Strokes: ${shots[index].strokes} POINTS: ${shots[index].points}`}
-            </Box>
-          )
-        })
-      }
       {holeForm}
       {
-        shots.length <= roundHoles - 1 ?
-          null
-          : <Box>
-            <Button variant='contained'>Save holes</Button>
-          </Box>
+        shots.length > 0 &&
+        <RoundsDataShotTable shots={shots} />
       }
+      {
+        shots.length > 0 &&
+        <BoxBetween>
+          <Button variant='contained'>Save holes</Button>
+          <Button variant="contained" onClick={handleClickOpen}>
+            See round statistics
+          </Button>
+        </BoxBetween>
+      }
+      <StatisticDialog
+        open={open}
+        handleClose={handleClose}
+        roundDate={roundDate}
+        roundCourse={roundCourse}
+        totals={totals}
+        shots={shots}
+      />
+
     </BoxGeneralShadow >
   )
 }
