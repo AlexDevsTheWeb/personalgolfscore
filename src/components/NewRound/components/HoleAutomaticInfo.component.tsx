@@ -16,11 +16,11 @@ const HoleAutomaticInfo = (props: IProps) => {
   return (
     <Stack direction='column' justifyContent='space-between'>
       <Stack>
-        <CompositeTypography string='Hole number' value={holeFinished} />
+        <CompositeTypography string='Hole number' value={holeFinished === 0 ? 1 : holeFinished} />
         <CompositeTypography string='Hole points' value={tmpHole.points} />
         <CompositeTypography string='Green in regulation' value={!!tmpHole.gir ? 'YES' : 'NO'} />
         <CompositeTypography string='Green in regulation (bogey)' value={!!tmpHole.girBogey ? 'YES' : 'NO'} />
-        <CompositeTypography string='Up&Down' value={!!tmpHole.upDown ? 'YES' : 'NO'} />
+        <CompositeTypography string='Up&Down' value={tmpHole.upDown === 'x' ? 'YES' : tmpHole.upDown === 'n' ? 'NO' : '-'} />
       </Stack>
       {
         shots.length <= roundHoles - 1 ?

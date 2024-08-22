@@ -23,7 +23,9 @@ export enum CLUBSSELECTION {
 export enum CHIPCONDITION {
   GREEN = 'greenSide',
   CHIP = 'chipClub',
-  FAIRWAY = 'fairway'
+  FAIRWAY = 'fairway',
+  TEECLUB = 'teeClub',
+  DRIVEDISTANCE = 'driveDistance'
 }
 
 export enum FAIRWAYSICONS {

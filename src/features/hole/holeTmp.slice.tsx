@@ -13,6 +13,10 @@ const initialState: IShots = {
   gir: false,
   girBogey: false,
   greenSide: '',
+  greenSideL: 0,
+  greenSideO: 0,
+  greenSideR: 0,
+  greenSideS: 0,
   hcp: 0,
   out: 0,
   par: 0,
@@ -20,12 +24,24 @@ const initialState: IShots = {
   pointsAvg: 0,
   putts: 0,
   puttsLength: [],
+  puttsUnder2: 0,
+  putts2_4: 0,
+  putts4_6: 0,
+  putts6_10: 0,
+  puttsOver10: 0,
   sand: 0,
   strokes: 0,
   teeClub: '',
   toGreen: '',
   toGreenMeters: 0,
+  toGreenMetersOver100: 0,
+  toGreenMeters80_100: 0,
+  toGreenMeters60_80: 0,
+  toGreenMetersUnder60: 0,
   upDown: '',
+  upDownX: 0,
+  upDownN: 0,
+  upDownE: 0,
   water: 0,
 };
 
@@ -40,7 +56,20 @@ const holeTmpSlice = createSlice({
         }
         else { state[name] = Number(value); }
       }
-      else { state[name] = value; }
+      else {
+        if (name === 'greenSide') {
+          state[name] = value;
+          if (state[`${name}L`] !== 0) { state[`${name}L`] = 0 }
+          if (state[`${name}O`] !== 0) { state[`${name}O`] = 0 }
+          if (state[`${name}R`] !== 0) { state[`${name}R`] = 0 }
+          if (state[`${name}S`] !== 0) { state[`${name}S`] = 0 }
+          state[`${name}${value.substring(0, 1)}`] = 1;
+        }
+        else {
+          state[name] = value;
+        }
+      }
+
       state.points = calculateStablefordPoints({
         hcp: Number(state.hcp),
         par: Number(state.par),

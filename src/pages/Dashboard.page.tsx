@@ -1,17 +1,21 @@
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { getAllRoundsData } from '../features/rounds/roundsData.slice';
 import { getAllRoundsTotals } from '../features/rounds/roundsTotals.slice';
 
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Player from '../components/Player/Player.component';
 import Rounds from '../components/Rounds/Rounds.component';
-import Statistics from '../components/Statistics/Statistics.component';
 
 const Dashboard = () => {
   const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
 
+  const handleClickStatistic = () => {
+    navigate(`/statistics`);
+  };
   useEffect(() => {
     dispatch(getAllRoundsData(""))
     dispatch(getAllRoundsTotals(""))
@@ -22,8 +26,9 @@ const Dashboard = () => {
       display: 'flex', flexDirection: 'column', rowGap: 1.175
     }}>
       <Player />
-      <Statistics />
+
       <Rounds />
+      <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>
     </Box>
   )
 }

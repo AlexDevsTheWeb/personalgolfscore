@@ -1,4 +1,3 @@
-import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetNewRoundHoleTmp, setHoleNumber, setTmpHoleData } from '../../features/hole/holeTmp.slice';
@@ -7,6 +6,7 @@ import { RootState } from '../../store/store';
 import BoxSingleHoleContainer from '../../styles/box/BosSingleHoleContainer.styles';
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
+import TextField from '../../styles/textfield/TextField.style';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
 import HoleAutomaticInfo from './components/HoleAutomaticInfo.component';
 import PuttsGenerator from './components/PuttsGenerator.component';
@@ -22,19 +22,26 @@ const AddSingleHole = () => {
 
   const [holeFinished, setHoleFinished] = useState(0);
   const [mtToGreen, setMtToGreen] = useState<boolean>(false);
+  const [teeshotDistance, setTeeshotDistance] = useState<boolean>(false);
   const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
   const [puttsLength, setPuttsLength] = useState<number[]>(new Array(tmpHole.putts).fill(null))
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     dispatch(setTmpHoleData({ name, value, roundPlayingHCP, roundHoles, chipClubs } as any));
-    if (name === 'toGreen' && value === 'mt.') {
-      if (value === 'mt.') {
-        setMtToGreen(true);
-      }
-    }
-    else {
-      setMtToGreen(false);
+    switch (name) {
+      case 'toGreen':
+        value !== 'mt.' ? setMtToGreen(true) : setMtToGreen(false);
+        break;
+      case 'fairway':
+        value.substring(0, 1) !== '5' ? setTeeshotDistance(true) : setTeeshotDistance(false);
+        break;
+      case 'par':
+        value === '3' ? setTeeshotDistance(true) : setTeeshotDistance(false);
+        break;
+      default:
+        setMtToGreen(false);
+        break;
     }
   }
   const handleChangePutts = (e: any, putts: number) => {
@@ -72,46 +79,20 @@ const AddSingleHole = () => {
     <BoxSingleHoleContainer>
       <BoxSingleHoleInternal side='left'>
         <BoxNewHole>
-          <Select
-            name='hcp'
-            list={Number(roundHoles) === 18 ? hcpList18 : hcpList9}
-            onChange={handleChange}
-            value={tmpHole.hcp.toString()}
-          />
-          <Select
-            name='par'
-            list={parList}
-            onChange={handleChange}
-            value={tmpHole.par.toString()}
-          />
-          <TextField
-            id="strokes"
-            name='strokes'
-            label="Strokes"
-            variant="filled"
-            type='number'
-            onChange={e => handleChange(e)}
-            value={tmpHole.strokes !== 0 ? tmpHole.strokes : ''}
-          />
-          <TextField
-            id="putts"
-            name='putts'
-            label="Putts"
-            variant="filled"
-            type='number'
-            onChange={e => handleChange(e)}
-            value={tmpHole.putts !== 0 ? tmpHole.putts : ''}
-          />
+          <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} />
+          <Select name='par' list={parList} onChange={handleChange} value={tmpHole.par.toString()} />
+          <TextField id="strokes" name='strokes' label="Strokes" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.strokes !== 0 ? tmpHole.strokes : ''} />
+          <TextField id="putts" name='putts' label="Putts" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.putts !== 0 ? tmpHole.putts : ''} />
         </BoxNewHole>
         <BoxNewHole>
+          <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway} par={tmpHole.par} />
           <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} />
           <TextField id='driveDistance' name='driveDistance' label='Drive distance' variant='filled' type='number' onChange={e => handleChange(e)}
-            value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} />
-          <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway} par={tmpHole.par} />
+            value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} disabled={teeshotDistance} />
         </BoxNewHole>
         <BoxNewHole>
           <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''} />
-          {!!mtToGreen ? <TextField id="mtToGreen" name='toGreenMeters' label="Meters to green" variant="filled" type='number' onChange={e => handleChange(e)} /> : null}
+          <TextField name='toGreenMeters' label="Meters to green" variant="filled" type='number' onChange={e => handleChange(e)} disabled={mtToGreen} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : 0} />
           <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} />
           <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
         </BoxNewHole>

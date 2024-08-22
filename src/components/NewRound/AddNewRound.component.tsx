@@ -23,7 +23,6 @@ const NewRoundMain = () => {
   return (
     <Stack sx={{ rowGap: 3 }}>
       <AddNewRoundJson />
-      {/* <AddNewRoundMain /> */}
       <AddNewRoundHoles />
     </Stack>
 

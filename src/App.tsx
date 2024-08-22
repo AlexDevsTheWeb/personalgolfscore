@@ -17,6 +17,7 @@ import ClubsPage from "./pages/Clubs.page";
 import Dashboard from "./pages/Dashboard.page";
 import RoundsData from './pages/RoundsData.page';
 import SharedLayout from './pages/SharedLayout.page';
+import Statistics from './pages/Statistics.page';
 import { store } from "./store/store";
 import { theme } from './styles/theme/ThemeStyle.theme';
 import { themeSystem } from './styles/theme/ThemeSystem.theme';
@@ -37,6 +38,7 @@ const App: React.FC = () => {
                   <Route path="/signin" element={<LoginForm />} />
                   <Route path="/round/:roundID" element={<RoundsData />} />
                   <Route path='/addNewRound' element={<AddNewRound />} />
+                  <Route path='/statistics' element={<Statistics />} />
                   {/* <Route path="/" element={<Navigation />}>
                     <Route index element={<Home />} />
                     <Route path="shop/*" element={<Shop />} />

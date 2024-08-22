@@ -35,23 +35,25 @@ export const calculateGirValue = (props: IGirProps) => {
 }
 export const calculateUDValue = (props: IUDProps) => {
   const { girValue, chipClub, parValue, strokesValue, chipClubs } = props;
+  let result = '';
   if (chipClub !== '') {
     if (girValue === 1) {
-      return '';
+      result = '';
     }
     const validClub = chipClubs.filter((club: string) => club === chipClub);
     if (validClub.length > 0) {
-      if (parValue >= strokesValue) {
-        return 'x';
+      if (parValue === strokesValue) {
+        result = 'x';
       }
       else {
-        return 'n';
+        result = 'n';
       }
     }
     else {
-      return '';
+      result = '';
     }
   }
+  return result;
 }
 
 // export const calculateStablefordStars = (props: IStablefordPointsProps) => {
@@ -129,6 +131,10 @@ export const newRoundTotals = (totals: IShots[]) => {
     gir: false,
     girBogey: false,
     greenSide: '',
+    greenSideL: 0,
+    greenSideO: 0,
+    greenSideR: 0,
+    greenSideS: 0,
     hcp: 0,
     out: 0,
     par: 0,
@@ -136,12 +142,24 @@ export const newRoundTotals = (totals: IShots[]) => {
     pointsAvg: 0,
     putts: 0,
     puttsLength: [],
+    puttsUnder2: 0,
+    putts2_4: 0,
+    putts4_6: 0,
+    putts6_10: 0,
+    puttsOver10: 0,
     sand: 0,
     strokes: 0,
     teeClub: '',
     toGreen: '',
     toGreenMeters: 0,
+    toGreenMetersOver100: 0,
+    toGreenMeters80_100: 0,
+    toGreenMeters60_80: 0,
+    toGreenMetersUnder60: 0,
     upDown: '',
+    upDownX: 0,
+    upDownN: 0,
+    upDownE: 0,
     water: 0
   })
 
@@ -194,4 +212,56 @@ export function calculateTotals(totalsData: IShotsTotals[], holes?: number): ISh
     water: 0,
     out: 0
   });
+}
+
+export function calculation(completeHole: any) {
+  const { puttsLength } = completeHole;
+  let puttsUnder2 = 0;
+  let putts2_4 = 0;
+  let putts4_6 = 0;
+  let putts6_10 = 0;
+  let puttsOver10 = 0;
+  let upDownX = 0;
+  let upDownN = 0;
+  let upDownE = 0;
+  let greenMetersOver100 = 0;
+  let greenMeters80_100 = 0;
+  let greenMeters60_80 = 0;
+  let greenMetersUnder60 = 0;
+
+  // PUTTS
+  for (let i = 0; i < puttsLength.length; i++) {
+    (Number(puttsLength[i]) <= 2) && puttsUnder2++;
+    (Number(puttsLength[i]) > 2 && Number(puttsLength[i]) <= 4) && putts2_4++;
+    (Number(puttsLength[i]) > 4 && Number(puttsLength[i]) <= 6) && putts4_6++;
+    (Number(puttsLength[i]) > 6 && Number(puttsLength[i]) <= 10) && putts6_10++;
+    (Number(puttsLength[i]) > 10) && puttsOver10++;
+  };
+
+  //UP & DOWN
+  (completeHole.upDown === 'x') && upDownX++;
+  (completeHole.upDown === 'n') && upDownN++;
+  (completeHole.upDown === '') && upDownE++;
+
+  // GREEN METERS
+  (completeHole.toGreenMeters >= 100) && greenMetersOver100++;
+  (completeHole.toGreenMeters <= 100 && completeHole.toGreenMeters > 80) && greenMeters80_100++;
+  (completeHole.toGreenMeters <= 80 && completeHole.toGreenMeters > 60) && greenMeters60_80++;
+  (completeHole.toGreenMeters <= 60) && greenMetersUnder60++;
+
+  const finalValues = {
+    puttsUnder2: puttsUnder2,
+    putts2_4: putts2_4,
+    putts4_6: putts4_6,
+    putts6_10: putts6_10,
+    puttsOver10: puttsOver10,
+    upDownX: upDownX,
+    upDownN: upDownN,
+    upDownE: upDownE,
+    greenMetersOver100: greenMetersOver100,
+    greenMeters80_100: greenMeters80_100,
+    greenMeters60_80: greenMeters60_80,
+    greenMetersUnder60: greenMetersUnder60,
+  }
+  return finalValues;
 }

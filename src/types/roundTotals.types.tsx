@@ -97,7 +97,10 @@ export interface INewTotals {
   totFir: number,
   totGir: number,
   totGirBogey: number,
-  totGreenSide: { L: number, O: number, R: number, C: number },
+  totGreenSideL: number;
+  totGreenSideO: number;
+  totGreenSideR: number;
+  totGreenSideS: number;
   totOut: number,
   totWater: number,
   totSand: number,

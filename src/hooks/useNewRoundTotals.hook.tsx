@@ -2,69 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNewTotal } from '../features/newRound/newRoundTotals.slice';
 import { RootState } from '../store/store';
-import { IShots } from '../types/roundData.types';
-
-const useNewRoundTotals = () => {
-  const { shots } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const [totals, setTotals] = useState<any>();
-
-  useEffect(() => {
-    const calculations = shots.reduce((acc: IShots, total: IShots) => {
-      acc.holeNumber += Number(total.holeNumber) || 0;
-      acc.distance += Number(total.distance) / acc.holeNumber || 0;
-      acc.driveDistance += Number(total.driveDistance) / acc.holeNumber || 0;
-
-      acc.fir += total.fir || 0;
-      acc.gir = total.gir === true;
-      acc.girBogey = total.girBogey === true;
-      acc.hcp += total.hcp || 0;
-      acc.out += total.out / total.holeNumber || 0;
-      acc.points += total.points || 0;
-      acc.pointsAvg += total.points / total.holeNumber || 0
-      acc.putts += total.putts || 0;
-      acc.sand += total.sand || 0;
-      acc.strokes += total.strokes || 0;
-      acc.teeClub += total.teeClub || '';
-      acc.water += total.water || 0;
-
-
-      // chipClub: "",
-      // airway: "",
-      // greenSide: "",
-      // toGreen: "",
-
-      return acc;
-    }, {
-      holeNumber: 0,
-      distance: 0,
-      driveDistance: 0,
-      fir: 0,
-      gir: false,
-      girBogey: false,
-      hcp: 0,
-      out: 0,
-      points: 0,
-      pointsAvg: 0,
-      putts: 0,
-      puttsLength: [],
-      sand: 0,
-      strokes: 0,
-      teeClub: '',
-      water: 0,
-      chipClub: '',
-      fairway: '',
-      greenSide: '',
-      par: 0,
-      toGreen: '',
-      toGreenMeters: 0,
-      upDown: ''
-    });
-
-    setTotals(calculations);
-  }, [shots])
-
-  return totals
-}
 
 export const useTotals = () => {
   const dispatch = useDispatch<any>();
@@ -74,7 +11,6 @@ export const useTotals = () => {
       acc.totDistance += shot.distance;
       acc.totDriverDistance += shot.driveDistance;
 
-      // Use a switch statement for fairway counts
       switch (shot.fairway.toString()) {
         case '4':
           acc.totFairwaysLeft++;
@@ -89,21 +25,10 @@ export const useTotals = () => {
       acc.totFir += shot.fir;
       acc.totGir += shot.gir ? 1 : 0;
       acc.totGirBogey += shot.girBogey ? 1 : 0;
-
-      switch (shot.greenSide.substring(0, 1)) {
-        case 'L':
-          acc.totGreenSide.L++;
-          break;
-        case 'O':
-          acc.totGreenSide.O++;
-          break;
-        case 'R':
-          acc.totGreenSide.R++;
-          break;
-        case 'S':
-          acc.totGreenSide.C++;
-          break;
-      }
+      acc.totGreenSideL += shot.greenSideL;
+      acc.totGreenSideO += shot.greenSideO;
+      acc.totGreenSideR += shot.greenSideR;
+      acc.totGreenSideS += shot.greenSideS;
       acc.totOut += shot.out;
       acc.totWater += shot.water;
       acc.totSand += shot.sand;
@@ -132,7 +57,10 @@ export const useTotals = () => {
       totFir: 0,
       totGir: 0,
       totGirBogey: 0,
-      totGreenSide: { L: 0, O: 0, R: 0, C: 0 },
+      totGreenSideL: 0,
+      totGreenSideO: 0,
+      totGreenSideR: 0,
+      totGreenSideS: 0,
       totOut: 0,
       totWater: 0,
       totSand: 0,
@@ -146,4 +74,64 @@ export const useTotals = () => {
   }, [shots, dispatch]);
 }
 
-export default useNewRoundTotals
+export const useGenerateStatistics = () => {
+  const { totals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals);
+  const [stat, setStat] = useState<any>();
+  useEffect(() => {
+    const statistics = totals.reduce((acc, stat) => {
+      acc.totDistance += stat.totDistance;
+      acc.totDriverDistance += stat.totDriverDistance;
+      acc.totFairwaysLeft += stat.totFairwaysLeft;
+      acc.totFairwaysCenter += stat.totFairwaysCenter;
+      acc.totFairwaysRight += stat.totFairwaysRight;
+      acc.totFir += stat.totFir;
+      acc.totGir += stat.totGir;
+      acc.totGirBogey += stat.totGirBogey;
+      acc.totOut += stat.totOut;
+      acc.totWater += stat.totWater;
+      acc.totSand += stat.totSand;
+      acc.totPoints += stat.totPoints;
+      acc.totPutts += stat.totPutts;
+      acc.totStrokes += stat.totStrokes;
+
+      switch (stat.totUpDown.toString()) {
+        case 'x':
+          acc.totUpDown.X++;
+          break;
+        case 'n':
+          acc.totUpDown.N++;
+          break;
+        case '':
+          acc.totUpDown.V++;
+          break;
+      }
+
+      return acc
+    }, {
+      roundID: 0,
+      totDistance: 0,
+      totDriverDistance: 0,
+      totFairwaysLeft: 0,
+      totFairwaysCenter: 0,
+      totFairwaysRight: 0,
+      totFir: 0,
+      totGir: 0,
+      totGirBogey: 0,
+      totGreenSide: { L: 0, O: 0, R: 0, C: 0 },
+      totOut: 0,
+      totWater: 0,
+      totSand: 0,
+      totPoints: 0,
+      totPutts: 0,
+      totStrokes: 0,
+      totUpDown: { X: 0, N: 0, V: 0 },
+    });
+
+
+    setStat(statistics);
+  }, [totals])
+
+  return stat;
+}
+
+export default useTotals

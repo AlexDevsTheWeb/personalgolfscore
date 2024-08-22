@@ -36,6 +36,7 @@ const Select = (props: ISelectProps) => {
         }
         break;
       case CHIPCONDITION.FAIRWAY:
+      case CHIPCONDITION.TEECLUB:
         if (tmpHole.par === 3) {
           setDisabled(true);
         }
@@ -68,7 +69,7 @@ const Select = (props: ISelectProps) => {
           })
         }
       </SelectMui>
-    </FormControl >
+    </FormControl>
   )
 }
 
