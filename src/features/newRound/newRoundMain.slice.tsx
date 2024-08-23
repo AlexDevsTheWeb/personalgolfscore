@@ -18,11 +18,6 @@ const initialState: InitialStateNewRound = {
   }
 }
 
-// export const getAllRounds = createAsyncThunk(
-//   "rounds/getAllRounds",
-//   getAllRoundsThunk
-// );
-
 const newRoundMainSlice = createSlice({
   name: 'newRoundsMain',
   initialState,

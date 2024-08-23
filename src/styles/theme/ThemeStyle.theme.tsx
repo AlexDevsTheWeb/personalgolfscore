@@ -1,17 +1,16 @@
+import { createTheme } from '@mui/material';
 import { breakpoints } from './Breakpoints.theme';
 import components from './Components.theme';
-import { createTheme } from '@mui/material';
 import palette from './Palette.theme';
 import { typography } from './Typography.theme';
 
-export enum OptionsDatepicker {
+enum OptionsDatepicker {
   Margin = 'margin',
   Field = 'field',
 }
 
 export const theme = createTheme({
   palette,
-  // spacing: {},
   typography,
   breakpoints,
   zIndex: {},

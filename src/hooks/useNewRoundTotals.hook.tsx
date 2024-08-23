@@ -133,5 +133,3 @@ export const useGenerateStatistics = () => {
 
   return stat;
 }
-
-export default useTotals

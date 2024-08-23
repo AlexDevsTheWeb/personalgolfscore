@@ -10,10 +10,6 @@ const initialState: InitialStateNewRoundsData = {
   shots: [],
 }
 
-// export const getAllRounds = createAsyncThunk(
-//   "rounds/getAllRounds",
-//   getAllRoundsThunk
-// );
 interface IPayloadActionNewHole {
   holeAdjusted: any,
   roundPlayingHCP: number

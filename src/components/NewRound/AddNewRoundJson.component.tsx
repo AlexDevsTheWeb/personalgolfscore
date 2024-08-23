@@ -10,7 +10,6 @@ import { formData as dataForm } from './json/roundGeneral/GeneralData.data';
 import { generalData as dataSchema } from './json/roundGeneral/GeneralData.schema';
 import { generalUiSchema as dataUISchema } from './json/roundGeneral/GeneralData.UIschema';
 
-
 const schema: RJSFSchema = dataSchema;
 const uiSchema: UiSchema = dataUISchema;
 const formData = dataForm;
@@ -41,7 +40,6 @@ const AddNewRoundJson = () => {
         uiSchema={uiSchema}
         validator={validator}
         formData={formData}
-        // onChange={() => { }}
         onSubmit={(e: RJSFSchema) => handleSubmit(e)}
         onError={(e: RJSFSchema) => console.log('errors:', e.formData)}
         templates={{ ObjectFieldTemplate, ButtonTemplates: { ButtonTemplates } }}

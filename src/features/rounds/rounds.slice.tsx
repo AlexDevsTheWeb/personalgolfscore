@@ -1,12 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllRoundsThunk } from "./rounds.thunk";
 import { InitialStateRounds, RoundPayload } from "../../types/round.types";
-// import { editCarrierThunk, getCarrierDetailsThunk } from "./carrierThunk";
-// import {
-//   CarrierPayload,
-//   CarrierResponse,
-//   InitialStateCarrier,
-// } from "types/Carrier";
+import { getAllRoundsThunk } from "./rounds.thunk";
+
 
 const initialState: InitialStateRounds = {
   isLoading: false,

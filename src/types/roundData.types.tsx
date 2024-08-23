@@ -1,4 +1,4 @@
-export interface IState {
+interface IState {
   roundID: string;
   playerID: string;
   shots: IShots[];

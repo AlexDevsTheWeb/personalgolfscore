@@ -1,9 +1,8 @@
 import Player from '../components/Player/Player.component'
 
-const PlayerPage = () => {
+export const PlayerPage = () => {
   return (
     <Player />
   )
 }
 
-export default PlayerPage

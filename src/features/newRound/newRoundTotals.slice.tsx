@@ -28,11 +28,6 @@ const initialState: InitialStateNewRoundsTotals = {
   },
 }
 
-// export const getAllRounds = createAsyncThunk(
-//   "rounds/getAllRounds",
-//   getAllRoundsThunk
-// );
-
 const newRoundTotalsSlice = createSlice({
   name: 'newRoundTotals',
   initialState,

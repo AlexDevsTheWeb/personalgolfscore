@@ -40,7 +40,7 @@ const golfBagSlice = createSlice({
           return (
             detail.clubNumber === clubNumber &&
             detail.name === name &&
-            detail.loft === loft // Add loft check if applicable
+            detail.loft === loft
           );
         });
 
@@ -92,7 +92,6 @@ const golfBagSlice = createSlice({
         state.clubs = [] as never;
         state.error.errorCode = 100;
         state.error.errorMessage = "ERROR!"
-        // Dispatch a separate clubsError action with error information (optional)
       });
   },
 });

@@ -1,15 +1,10 @@
 
-export interface IState {
+interface IState {
   playerID: string;
   totals: INewTotals[];
 }
 
-export interface INewState {
-  playerID: string;
-  totals: INewShotsTotals;
-}
-
-export interface IShotsTotals {
+interface IShotsTotals {
   roundID: string;
   holeNumber: number;
   distance: number;
@@ -28,26 +23,7 @@ export interface IShotsTotals {
   out: number;
 }
 
-export interface INewShotsTotals {
-  roundID: string;
-  holeNumber: number;
-  distance: number;
-  hcp: number;
-  par: number;
-  strokes: number;
-  points: number;
-  teeClub: string;
-  fir: number;
-  left: number;
-  right: number;
-  gir: number;
-  putts: number;
-  sand: number;
-  water: number;
-  out: number;
-}
-
-export interface ITotals {
+interface ITotals {
   numberOfHoles: number;
   putt: ITotalsPutt;
   gir: ITotalsGir
@@ -56,11 +32,11 @@ export interface ITotals {
   water: number;
 }
 
-export interface ITotalsGir {
+interface ITotalsGir {
   girPar: number;
   girBogey: number;
 }
-export interface ITotalsPutt {
+interface ITotalsPutt {
   puttsHole: number;
   puttFirst: number;
   puttSecond: number;
@@ -83,7 +59,7 @@ export type InitialStateNewRoundsTotals = {
   totals: INewTotals;
 }
 
-export type NewRoundsTotalsPayload = {
+type NewRoundsTotalsPayload = {
   payload: IState;
 }
 
@@ -126,34 +102,34 @@ export interface IRoundTotals {
   out: IRoundTotalsAvgINOUT,
 }
 
-export interface IRoundFairwatTotals {
+interface IRoundFairwatTotals {
   total: number,
   fairwayCenter: number,
   fairwayLeft: number,
   fairwayRight: number,
 }
 
-export interface IRoundTotalsAvg {
+interface IRoundTotalsAvg {
   totals: number,
   avg: string,
 }
-export interface IRoundTotalsUpDown {
+interface IRoundTotalsUpDown {
   totals: number,
   saved: number,
   perc: number,
 }
-export interface IRoundTotalsAvgSand extends IRoundTotalsAvg {
+interface IRoundTotalsAvgSand extends IRoundTotalsAvg {
   saved: number,
   avgSaved: string,
   savedPerc: number,
 }
-export interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
+interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
   totalsIN: number,
   avgIN: string,
   totalsOUT: number,
   avgOUT: string,
 }
-export interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
+interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
   vsPar: string,
   scoreIN: number,
   scoreOUT: number,
@@ -163,7 +139,7 @@ export interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
   avgOUT: string;
 }
 
-export interface IRoundPointsTotalsAvg extends IRoundTotalsAvg {
+interface IRoundPointsTotalsAvg extends IRoundTotalsAvg {
   pointsIN: number,
   pointsOUT: number,
   avgIN: string,

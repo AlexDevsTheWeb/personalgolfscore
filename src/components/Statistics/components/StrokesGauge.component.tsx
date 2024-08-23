@@ -55,7 +55,6 @@ const StrokesGauge = ({ values }: IPointsGaugeValues) => {
           <Typography>Total:</Typography>
           <Gauge
             {...settingsTotals}
-            // cornerRadius="50%"
             startAngle={-90}
             endAngle={90}
             innerRadius='50%'
@@ -79,7 +78,6 @@ const StrokesGauge = ({ values }: IPointsGaugeValues) => {
           <Typography>Avg:</Typography>
           <Gauge
             {...settingsAvg}
-            // cornerRadius="50%"
             startAngle={-90}
             endAngle={90}
             innerRadius='50%'

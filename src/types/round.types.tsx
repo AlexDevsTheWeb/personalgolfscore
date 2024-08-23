@@ -1,4 +1,4 @@
-export interface IState {
+interface IState {
   playerID: string,
   rounds: IRounds[]
 }
@@ -24,7 +24,7 @@ export type RoundPayload = {
   payload: IState;
 };
 
-export interface INewRoundState {
+interface INewRoundState {
   playerID: string,
   round: INewRound
 }

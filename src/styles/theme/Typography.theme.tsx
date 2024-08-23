@@ -39,7 +39,6 @@ declare module '@mui/material/styles' {
     dateInfo: React.CSSProperties;
   }
 
-  // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
     headline1: React.CSSProperties;
     headline2: React.CSSProperties;
@@ -67,7 +66,6 @@ declare module '@mui/material/styles' {
   }
 }
 
-// Update the Typography's variant prop options
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     headline1: true;

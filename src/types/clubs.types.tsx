@@ -25,7 +25,7 @@ export type InitialStateClubs = {
   greenClubs: string[];
   chipClubs: string[];
 }
-export interface IErrorType {
+interface IErrorType {
   errorMessage: string;
   errorCode: number;
 }
@@ -34,6 +34,6 @@ export type ClubPayload = {
   payload: IGolfBag;
 }
 
-export interface ITeeClubProps {
+interface ITeeClubProps {
   teeClubs: string[];
 }

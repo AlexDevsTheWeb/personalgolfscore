@@ -113,7 +113,6 @@ const UDGauge = ({ values }: IPointsGaugeValues) => {
           <Typography>Up&Down Failed:</Typography>
           <Gauge
             {...udFailed}
-            // cornerRadius="50%"
             startAngle={-90}
             endAngle={90}
             innerRadius='50%'
@@ -164,7 +163,6 @@ const UDGauge = ({ values }: IPointsGaugeValues) => {
           <Typography>Up&Down Failed %:</Typography>
           <Gauge
             {...udFailedPerc}
-            // cornerRadius="50%"
             startAngle={-90}
             endAngle={90}
             innerRadius='50%'
