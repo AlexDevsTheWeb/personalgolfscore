@@ -6,9 +6,10 @@ import StatisticsNumbers from '../Statistics/StatisticsNumbers.component';
 interface IRoundDataShotsTotals {
   totals: INewTotals;
   shots: IShots[];
+  coursePar: number;
 }
 
-const RoundsDataShotsTotals = ({ totals, shots }: IRoundDataShotsTotals) => {
+const RoundsDataShotsTotals = ({ totals, shots, coursePar }: IRoundDataShotsTotals) => {
 
   return (
     <Accordion>
@@ -19,6 +20,7 @@ const RoundsDataShotsTotals = ({ totals, shots }: IRoundDataShotsTotals) => {
         <StatisticsNumbers
           totals={totals}
           shots={shots}
+          coursePar={coursePar}
         />
       </AccordionDetails>
     </Accordion>

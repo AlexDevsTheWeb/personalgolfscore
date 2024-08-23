@@ -16,7 +16,7 @@ const AddNewRoundHoles = () => {
   const [open, setOpen] = React.useState(false);
 
   const dispatch = useDispatch<any>();
-  const { setFirstHole, round: { roundDate, roundCourse } } = useSelector((store: RootState) => store.newRound.newRoundMain);
+  const { setFirstHole, round: { roundDate, roundCourse, roundPar } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { totals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
   const { shots } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const { clubs } = useSelector((store: RootState) => store.golfBag);
@@ -69,6 +69,7 @@ const AddNewRoundHoles = () => {
         roundCourse={roundCourse}
         totals={totals}
         shots={shots}
+        coursePar={roundPar}
       />
 
     </BoxGeneralShadow >

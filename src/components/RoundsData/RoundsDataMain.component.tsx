@@ -12,6 +12,7 @@ const RoundsDataMain = () => {
   const { totals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals);
   const roundTotals = totals.filter((total) => Number(total.roundID) === Number(params.roundID))
   const { shots } = useSelector((store: RootState) => store.roundsNumber.roundsData);
+  const { round: { roundPar } } = useSelector((store: RootState) => store.newRound.newRoundMain);
 
   if (isLoading) {
     return <Typography>Loading...</Typography>
@@ -22,7 +23,7 @@ const RoundsDataMain = () => {
       display: 'flex', flexDirection: 'column', rowGap: 1.175
     }}>
       <RoundsHeadDetails />
-      <RoundsDataShotsTotals totals={roundTotals[0]} shots={shots} />
+      <RoundsDataShotsTotals totals={roundTotals[0]} shots={shots} coursePar={roundPar} />
       <RoundsDataShotTable shots={shots} />
     </Box>
   )

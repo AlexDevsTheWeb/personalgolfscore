@@ -8,6 +8,7 @@ import { INewTotals } from '../../types/roundTotals.types'
 import PieChartFairways from './components/PieChartsFairways.component'
 import PieChartsPenalties from './components/PieChartsPenalties.component'
 import PointsGauge from './components/PointsGauge.component'
+import StrokesGauge from './components/StrokesGauge.component'
 import UDGauge from './components/UDGauge.components'
 
 interface IStatisticNumbersProps {
@@ -15,9 +16,10 @@ interface IStatisticNumbersProps {
   roundCourse?: string;
   totals: INewTotals;
   shots: IShots[];
+  coursePar: number;
 }
 
-const StatisticsNumbers = ({ roundDate, roundCourse, totals, shots }: IStatisticNumbersProps) => {
+const StatisticsNumbers = ({ roundDate, roundCourse, totals, shots, coursePar }: IStatisticNumbersProps) => {
   return (
     <Box sx={{ padding: 1.5, display: 'flex', flexDirection: 'column', gap: 2 }}>
       {
@@ -37,11 +39,16 @@ const StatisticsNumbers = ({ roundDate, roundCourse, totals, shots }: IStatistic
       }
 
       <BoxGeneralShadow>
-        <PointsGauge values={{ name: 'strokes', value: totals.totStrokes, holes: shots.length, percentage: false }} />
+        <StrokesGauge values={{ name: 'strokes', value: totals.totStrokes, holes: shots.length, coursePar: coursePar }} />
         <PointsGauge values={{ name: 'points', value: totals.totPoints, holes: shots.length, percentage: false }} />
+        <PointsGauge values={{ name: 'strokes', value: totals.totStrokes, holes: shots.length, percentage: false }} />
+      </BoxGeneralShadow>
+      <BoxGeneralShadow>
+
         <PointsGauge values={{ name: 'gir', value: totals.totGir, holes: shots.length, percentage: true }} />
         <PointsGauge values={{ name: 'putts', value: totals.totPutts, holes: shots.length, percentage: false }} />
       </BoxGeneralShadow>
+
       <BoxGeneralShadow>
         <PieChartFairways values={{ name: 'fairways', value: totals, holes: shots.filter((s) => s.par !== 3).length }} />
         <PieChartsPenalties values={{ name: 'penalties', value: totals }} />
@@ -49,7 +56,7 @@ const StatisticsNumbers = ({ roundDate, roundCourse, totals, shots }: IStatistic
       <BoxGeneralShadow>
         <UDGauge values={{ name: 'up&down', value: totals.totUpDown, holes: shots.length, percentage: true }} />
       </BoxGeneralShadow>
-    </Box>
+    </Box >
 
   )
 }

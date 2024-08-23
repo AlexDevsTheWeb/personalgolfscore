@@ -126,7 +126,7 @@ export const newRoundTotals = (totals: IShots[]) => {
     chipClub: '',
     distance: 0,
     driveDistance: 0,
-    fairway: "",
+    fairway: 0,
     fir: 0,
     gir: false,
     girBogey: false,

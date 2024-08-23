@@ -34,7 +34,7 @@ const AddSingleHole = () => {
         value !== 'mt.' ? setMtToGreen(true) : setMtToGreen(false);
         break;
       case 'fairway':
-        value.substring(0, 1) !== '5' ? setTeeshotDistance(true) : setTeeshotDistance(false);
+        value !== 5 ? setTeeshotDistance(true) : setTeeshotDistance(false);
         break;
       case 'par':
         value === '3' ? setTeeshotDistance(true) : setTeeshotDistance(false);
@@ -59,7 +59,7 @@ const AddSingleHole = () => {
   useEffect(() => {
     if (tmpHole.holeNumber !== 0) {
       setHoleFinished(holesCompleted + 1);
-      const holeAdjusted = { ...tmpHole, fairway: Number(tmpHole.fairway.substring(0, 1)) }
+      const holeAdjusted = { ...tmpHole, fairway: Number(tmpHole.fairway) }
       dispatch(setNewHole({ holeAdjusted, roundPlayingHCP, roundHoles, holesCompleted }));
       dispatch(resetNewRoundHoleTmp())
     }
@@ -85,7 +85,7 @@ const AddSingleHole = () => {
           <TextField id="putts" name='putts' label="Putts" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.putts !== 0 ? tmpHole.putts : ''} />
         </BoxNewHole>
         <BoxNewHole>
-          <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway} par={tmpHole.par} />
+          <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} />
           <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} />
           <TextField id='driveDistance' name='driveDistance' label='Drive distance' variant='filled' type='number' onChange={e => handleChange(e)}
             value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} disabled={teeshotDistance} />

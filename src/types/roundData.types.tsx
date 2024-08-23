@@ -9,7 +9,7 @@ export interface IShots {
   chipClub: string;
   distance: number;
   driveDistance: number;
-  fairway: string;
+  fairway: number;
   fir: number;
   gir: boolean;
   girBogey: boolean;

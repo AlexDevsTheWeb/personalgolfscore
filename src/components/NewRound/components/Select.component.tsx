@@ -62,9 +62,12 @@ const Select = (props: ISelectProps) => {
       >
         {
           list.map((l: string) => {
+
             return (
-              //TODO: custom MenuItem con SelectItem to add hover color to elements in the select
-              <MenuItem sx={{}} value={l} key={_.uniqueId(`${name}`)}>{l}</MenuItem>
+              name === CHIPCONDITION.FAIRWAY
+                ? <MenuItem sx={{}} value={(Number(l.substring(0, 1)))} key={_.uniqueId(`${name}`)}>{l}</MenuItem>
+                : <MenuItem sx={{}} value={l} key={_.uniqueId(`${name}`)}>{l}</MenuItem>
+
             )
           })
         }

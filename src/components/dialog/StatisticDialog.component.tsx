@@ -19,10 +19,11 @@ interface IDialogProps {
   totals: any;
   shots: any;
   roundDate: any;
-  roundCourse: string
+  roundCourse: string;
+  coursePar: number;
 }
 
-export const StatisticDialog = ({ open, handleClose, totals, shots, roundDate, roundCourse }: IDialogProps) => {
+export const StatisticDialog = ({ open, handleClose, totals, shots, roundDate, roundCourse, coursePar }: IDialogProps) => {
 
   return (
     <Dialog
@@ -51,6 +52,7 @@ export const StatisticDialog = ({ open, handleClose, totals, shots, roundDate, r
         roundCourse={roundCourse}
         totals={totals}
         shots={shots}
+        coursePar={coursePar}
       />
     </Dialog>
   )

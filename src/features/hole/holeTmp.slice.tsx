@@ -2,13 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IShots } from "../../types/roundData.types";
 import { calculateGirValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
 
-
 const initialState: IShots = {
   holeNumber: 0,
   chipClub: '',
   distance: 0,
   driveDistance: 0,
-  fairway: '',
+  fairway: 0,
   fir: 0,
   gir: false,
   girBogey: false,

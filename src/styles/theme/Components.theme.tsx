@@ -821,9 +821,9 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
     },
     variants: [
-      { props: { variant: 'red' }, style: { backgroundColor: '#cf8484', color: 'black', fontWeight: 700, fontSize: 20 } },
-      { props: { variant: 'yellow' }, style: { backgroundColor: '#faf099', color: 'black', fontWeight: 700, fontSize: 20 } },
-      { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 700, fontSize: 20 } }
+      { props: { variant: 'red' }, style: { backgroundColor: '#cf8484', color: 'black', fontWeight: 500, fontSize: 16 } },
+      { props: { variant: 'yellow' }, style: { backgroundColor: '#faf099', color: 'black', fontWeight: 500, fontSize: 16 } },
+      { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 500, fontSize: 16 } }
     ]
   },
   MuiTableFooter: {
