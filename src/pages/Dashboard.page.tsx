@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import { getAllRoundsData } from '../features/rounds/roundsData.slice';
 import { getAllRoundsTotals } from '../features/rounds/roundsTotals.slice';
 
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Player from '../components/Player/Player.component';
 import Rounds from '../components/Rounds/Rounds.component';
+import BoxBetween from '../styles/box/BoxBetween.styles';
 
 const Dashboard = () => {
   const dispatch = useDispatch<any>();
@@ -16,20 +17,23 @@ const Dashboard = () => {
   const handleClickStatistic = () => {
     navigate(`/statistics`);
   };
+  const handleAddNewRound = () => {
+    navigate('/addNewRound')
+  }
   useEffect(() => {
     dispatch(getAllRoundsData(""))
     dispatch(getAllRoundsTotals(""))
   }, [dispatch]);
 
   return (
-    <Box sx={{
-      display: 'flex', flexDirection: 'column', rowGap: 1.175
-    }}>
+    <BoxBetween vertical={false}>
       <Player />
-
       <Rounds />
-      <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>
-    </Box>
+      <BoxBetween vertical={false}>
+        <Button variant='contained' onClick={handleAddNewRound}>Add new round</Button>
+        <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>
+      </BoxBetween>
+    </BoxBetween>
   )
 }
 

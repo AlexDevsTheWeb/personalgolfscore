@@ -3,16 +3,18 @@ import styled from 'styled-components';
 import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 
 interface BoxProps extends BoxPropsMui {
+  vertical?: boolean
 };
 
-const StyledBox = styled(Box)<BoxProps>(() => (({
+const StyledBox = styled(Box)<BoxProps>((props) => (({
   display: 'flex',
-  flexDirection: useDeviceDetection().isMobile ? 'column' : 'row',
-  gap: 2,
+  flexDirection: useDeviceDetection().isMobile || !!props.vertical ? 'column' : 'row',
+  gap: 20,
   flexWrap: 'wrap',
   justifyContent: 'space-between',
   alignContent: 'center',
-  alignItems: 'center'
+  alignItems: 'center',
+  width: '100%'
 })))
 
 const BoxBetween: React.FC<BoxProps> = props => {

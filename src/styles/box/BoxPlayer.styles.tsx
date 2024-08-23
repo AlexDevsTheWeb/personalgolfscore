@@ -6,35 +6,22 @@ interface StackProps extends StackPropsMui {
   ismobile?: boolean;
 };
 
-const StyledStack = styled(Stack) <StackProps>`
-  border: 1px solid #dadada;
-  border-radius: 5px;
-  padding: 15px;
-  background: white;
-  display: flex;
-  gap: 10px;
-  /* flex-direction: ${props => props.ismobile ? 'column' : 'row'}; */
-`;
+const StyledStack = styled(Stack)<StackProps>(() => (({
+  border: '1px solid #dadada',
+  borderRadius: '5px',
+  padding: '15px',
+  background: 'white',
+  display: 'flex',
+  gap: 1.125,
+  width: '100%',
+  flexDirection: useDeviceDetection().isMobile ? 'column' : 'row',
+})));
 
 const StackPlayer: React.FC<StackProps> = (props) => {
-  const isMobile = useDeviceDetection();
+  return (<StyledStack {...props}>
+    {props.children}
+  </StyledStack>)
 
-  return (
-    isMobile.isMobile
-      ? (<StyledStack
-        {...props}
-        sx={{ flexDirection: 'column' }}
-      >
-        {props.children}
-      </StyledStack>)
-      :
-      (<StyledStack
-        {...props}
-        sx={{ flexDirection: 'row' }}
-      >
-        {props.children}
-      </StyledStack>)
-  )
 }
 
 export default StackPlayer;
