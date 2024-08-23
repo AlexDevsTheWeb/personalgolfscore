@@ -1,6 +1,7 @@
-import axios, { AxiosError } from "axios";
 // import { getUserFromLocalStorage } from "./localStorage";
 // import _ from "lodash";
+
+import axios from "axios";
 
 const authFetch = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
