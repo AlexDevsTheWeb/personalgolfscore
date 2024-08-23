@@ -20,3 +20,8 @@ export interface IUDProps {
   strokesValue: number;
   chipClubs: string[];
 }
+export interface IScrambleProps {
+  girValue: number;
+  parValue: number;
+  strokesValue: number;
+}

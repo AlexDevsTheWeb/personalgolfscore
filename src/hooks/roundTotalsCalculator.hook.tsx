@@ -39,7 +39,8 @@ export const useRoundTotals = (shots: IShots[]) => {
   const upDown = shots.reduce((acc, curr) => acc + (!!curr.upDownX ? 1 : 0), 0);
   const upDownTotals = shots.reduce((acc, curr) => acc + (!!curr.upDownX && curr.strokes === curr.par && curr.putts === 1 ? 1 : 0) + (!!curr.upDownN && curr.strokes === curr.par && curr.putts === 1 ? 1 : 0), 0);
 
-  const scramble = shots.reduce((acc, curr) => acc + (curr.strokes === curr.par && curr.gir !== true ? 1 : 0), 0);
+  // const scramble = shots.reduce((acc, curr) => acc + (curr.strokes === curr.par && curr.gir !== true ? 1 : 0), 0);
+  const scramble = shots.reduce((acc, curr) => acc + curr.scramble, 0);
   const scrambleTotals = holes - gir;
 
   const putts = shots.reduce((acc, curr) => acc + curr.putts, 0);

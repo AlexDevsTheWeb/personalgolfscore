@@ -43,6 +43,7 @@ export interface IShots {
   upDownX: number;
   upDownN: number;
   upDownE: number;
+  scramble: number;
   water: number;
 }
 

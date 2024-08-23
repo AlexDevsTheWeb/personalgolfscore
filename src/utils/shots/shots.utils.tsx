@@ -1,5 +1,5 @@
 import { STABLEFORDPOINTS, STABLEFORDSTARS } from "../../enum/shots.enum";
-import { IGirProps, IStablefordPointsProps, IUDProps } from "../../types/point.types";
+import { IGirProps, IScrambleProps, IStablefordPointsProps, IUDProps } from "../../types/point.types";
 import { IShots } from "../../types/roundData.types";
 import { IShotsTotals } from "../../types/roundTotals.types";
 
@@ -55,6 +55,15 @@ export const calculateUDValue = (props: IUDProps) => {
   }
   return result;
 }
+
+export const calculateScrambleValue = (props: IScrambleProps) => {
+  let result = 0;
+  const { strokesValue, parValue, girValue } = props
+  if (strokesValue === parValue && girValue !== 1) {
+    result = 1;
+  }
+  return result;
+};
 
 // export const calculateStablefordStars = (props: IStablefordPointsProps) => {
 //   const { hcp, par, finalPlayerHCP, totalHoles } = props;
@@ -160,6 +169,7 @@ export const newRoundTotals = (totals: IShots[]) => {
     upDownX: 0,
     upDownN: 0,
     upDownE: 0,
+    scramble: 0,
     water: 0
   })
 
@@ -228,6 +238,7 @@ export function calculation(completeHole: any) {
   let greenMeters80_100 = 0;
   let greenMeters60_80 = 0;
   let greenMetersUnder60 = 0;
+  let scramble = 0;
 
   // PUTTS
   for (let i = 0; i < puttsLength.length; i++) {
@@ -242,6 +253,8 @@ export function calculation(completeHole: any) {
   (completeHole.upDown === 'x') && upDownX++;
   (completeHole.upDown === 'n') && upDownN++;
   (completeHole.upDown === '') && upDownE++;
+
+  scramble = completeHole.scramble;
 
   // GREEN METERS
   (completeHole.toGreenMeters >= 100) && greenMetersOver100++;
@@ -262,6 +275,7 @@ export function calculation(completeHole: any) {
     greenMeters80_100: greenMeters80_100,
     greenMeters60_80: greenMeters60_80,
     greenMetersUnder60: greenMetersUnder60,
+    scramble: scramble,
   }
   return finalValues;
 }

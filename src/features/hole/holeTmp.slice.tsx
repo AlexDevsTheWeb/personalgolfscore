@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IShots } from "../../types/roundData.types";
-import { calculateGirValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
+import { calculateGirValue, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
 
 const initialState: IShots = {
   holeNumber: 0,
@@ -41,6 +41,7 @@ const initialState: IShots = {
   upDownX: 0,
   upDownN: 0,
   upDownE: 0,
+  scramble: 0,
   water: 0,
 };
 
@@ -94,6 +95,11 @@ const holeTmpSlice = createSlice({
         parValue: Number(state.par),
         strokesValue: Number(state.strokes),
         chipClubs: chipClubs
+      })
+      state.scramble = calculateScrambleValue({
+        girValue: Number(state.gir),
+        parValue: Number(state.par),
+        strokesValue: Number(state.strokes)
       })
     },
     setHoleNumber: (state: any, { payload }: PayloadAction<{ newHoleNumber: number }>) => {

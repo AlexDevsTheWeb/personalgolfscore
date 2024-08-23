@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateTeeGreenClubs } from '../../features/golfBag/golfBag.slice';
@@ -47,11 +47,16 @@ const AddNewRoundHoles = () => {
   }, [setFirstHole, dispatch])
 
   return (
-    <BoxGeneralShadow direction='column'>
-      {holeForm}
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.125 }}>
+      <BoxGeneralShadow direction='column' >
+        {holeForm}
+      </BoxGeneralShadow >
       {
         shots.length > 0 &&
-        <RoundsDataShotTable shots={shots} />
+        <BoxGeneralShadow direction='column'>
+          <RoundsDataShotTable shots={shots} />
+        </BoxGeneralShadow>
+
       }
       {
         shots.length > 0 &&
@@ -71,8 +76,7 @@ const AddNewRoundHoles = () => {
         shots={shots}
         coursePar={roundPar}
       />
-
-    </BoxGeneralShadow >
+    </Box >
   )
 }
 

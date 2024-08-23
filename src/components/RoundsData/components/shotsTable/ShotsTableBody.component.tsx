@@ -9,7 +9,7 @@ interface IShotsTableBody {
 
 const ShotsTableBody = ({ shot }: IShotsTableBody) => {
 
-  const { holeNumber, hcp, par, strokes, points, fairway, gir, girBogey, upDown, putts, sand } = shot;
+  const { holeNumber, hcp, par, strokes, points, fairway, gir, girBogey, upDown, putts, sand, scramble } = shot;
 
   const vspar = useGetVsPar(strokes, par, true);
 
@@ -33,7 +33,7 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
       <TableCell align='center'><ShotPosition position={Number(fairway)} /></TableCell>
       <TableCell align='center'>{gir ? 'Yes' : 'No'}</TableCell>
       <TableCell align='center'>{girBogey ? 'Yes' : 'No'}</TableCell>
-      <TableCell align='center'>{upDown !== '' ? upDown.toUpperCase() : '-'}</TableCell>
+      <TableCell align='center'>{scramble !== 0 ? scramble : '-'}</TableCell>
       <TableCell align='center'>{upDown !== '' ? upDown.toUpperCase() : '-'}</TableCell>
       <TableCell align='center'>{putts}</TableCell>
       <TableCell align='center'>{sand !== 0 ? sand : '-'}</TableCell>

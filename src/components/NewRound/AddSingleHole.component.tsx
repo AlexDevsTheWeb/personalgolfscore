@@ -115,7 +115,6 @@ const AddSingleHole = () => {
           roundHoles={roundHoles}
           saveHole={saveHole}
         />
-
       </BoxSingleHoleInternal>
     </BoxSingleHoleContainer>
   )
