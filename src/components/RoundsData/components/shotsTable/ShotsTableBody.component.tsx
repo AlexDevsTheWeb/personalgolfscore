@@ -16,8 +16,8 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
   return (
     <TableRow key={holeNumber}>
       <TableCell align='center'>{holeNumber}</TableCell>
-      <TableCell align='center'>{hcp}</TableCell>
       <TableCell align='center'>{par}</TableCell>
+      <TableCell align='center'>{hcp}</TableCell>
       <TableCell align='center'
         variant={vspar.value.includes('-') ? 'green' : vspar.value.includes('+') ? 'red' : 'yellow'}>
         <Stack>

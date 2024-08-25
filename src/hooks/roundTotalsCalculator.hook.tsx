@@ -2,7 +2,7 @@ import _ from "lodash";
 import { IShots } from "../types/roundData.types";
 import { IRoundTotals } from "../types/roundTotals.types";
 import { initialStateRoundTotals } from "../utils/constant.utils";
-import { useGetVsPar } from "./singleHoleCalculator.hook";
+import { useGetVsParTotals } from "./singleHoleCalculator.hook";
 
 export const useRoundTotals = (shots: IShots[]) => {
   let totals: IRoundTotals = initialStateRoundTotals;
@@ -65,11 +65,11 @@ export const useRoundTotals = (shots: IShots[]) => {
     score: {
       totals: score,
       avg: (score / holes).toFixed(2),
-      vsPar: useGetVsPar(score, par, true).value,
+      vsPar: useGetVsParTotals(score, par, true).value,
       scoreIN: scoreIN,
       scoreOUT: scoreOUT,
-      vsParIN: useGetVsPar(scoreIN, parIN, true).value,
-      vsParOUT: useGetVsPar(scoreOUT, parOUT, true).value,
+      vsParIN: useGetVsParTotals(scoreIN, parIN, true).value,
+      vsParOUT: useGetVsParTotals(scoreOUT, parOUT, true).value,
       avgIN: scoreIN && holesIN
         ? (scoreIN / holesIN).toFixed(2)
         : '-',

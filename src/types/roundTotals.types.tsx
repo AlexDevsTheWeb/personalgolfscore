@@ -130,11 +130,11 @@ interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
   avgOUT: string,
 }
 interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
-  vsPar: string,
+  vsPar: number,
   scoreIN: number,
   scoreOUT: number,
-  vsParIN: string,
-  vsParOUT: string,
+  vsParIN: number,
+  vsParOUT: number,
   avgIN: string;
   avgOUT: string;
 }

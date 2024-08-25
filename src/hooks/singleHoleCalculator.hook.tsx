@@ -1,11 +1,15 @@
 
+export const useGetVsParTotals = (strokes: number, par: number, total?: boolean) => {
+  const diff = strokes - par;
+  const result = { value: diff };
+  return result;
+}
 export const useGetVsPar = (strokes: number, par: number, total?: boolean) => {
   const diff = strokes - par;
   let result = {
     value: '',
     string: ''
   };
-
   switch (diff) {
     case 0:
       result = {
@@ -28,7 +32,13 @@ export const useGetVsPar = (strokes: number, par: number, total?: boolean) => {
     case 3:
       result = {
         value: `+${diff}`,
-        string: 'DOUBLE BOGEY'
+        string: 'TRIPLE BOGEY'
+      };
+      break;
+    case 4:
+      result = {
+        value: `+${diff}`,
+        string: 'QUAD BOGEY'
       };
       break;
     case -1:

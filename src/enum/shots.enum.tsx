@@ -5,6 +5,8 @@ export enum STABLEFORDPOINTS {
   PAR = 2,
   BOGEY = 1,
   DOUBLEBOGEY = 0,
+  TRIPLEBOGEY = 0,
+  QUADRUPLEBOGEY = 0,
 }
 
 export enum CLUBSSELECTION {

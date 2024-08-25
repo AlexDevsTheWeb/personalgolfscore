@@ -44,7 +44,7 @@ const AddNewRoundHoles = () => {
       setHoleForm(<AddSingleHole />);
       dispatch(resetSetFirstHole());
     }
-  }, [setFirstHole, dispatch])
+  }, [setFirstHole, dispatch]);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.125 }}>
@@ -56,7 +56,6 @@ const AddNewRoundHoles = () => {
         <BoxGeneralShadow direction='column'>
           <RoundsDataShotTable shots={shots} />
         </BoxGeneralShadow>
-
       }
       {
         shots.length > 0 &&

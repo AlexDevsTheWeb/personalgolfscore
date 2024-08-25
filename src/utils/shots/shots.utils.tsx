@@ -21,6 +21,7 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   }
   return calculatePoints(newPar, Number(strokes));
 }
+
 export const calculateGirValue = (props: IGirProps) => {
   const { par, putts, strokes, bogey } = props;
   const girDiff = par + putts - strokes;
@@ -72,6 +73,12 @@ const calculatePoints = (par: number, strokes: number) => {
   }
   else if (strokes >= par + 2) {
     return STABLEFORDPOINTS.DOUBLEBOGEY;
+  }
+  else if (strokes >= par + 3) {
+    return STABLEFORDPOINTS.TRIPLEBOGEY;
+  }
+  else if (strokes >= par + 4) {
+    return STABLEFORDPOINTS.QUADRUPLEBOGEY;
   }
   else if (strokes === par - 1) {
     return STABLEFORDPOINTS.BIRDIE;

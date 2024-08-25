@@ -1,4 +1,5 @@
 import { Grid, Stack, TableBody, TableCell, TableRow, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useRoundTotals } from "../../../../hooks/roundTotalsCalculator.hook";
 import { IShots } from "../../../../types/roundData.types";
 
@@ -11,32 +12,77 @@ const ShotsTableTotalsBody = ({ shots }: IShotsTabelTotalsProps) => {
   const totals = useRoundTotals(shots);
   const { hcp, par, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble } = totals;
 
+  const [correctScore, setCorrectScore] = useState<string>('');
+  const [correctScoreIN, setCorrectScoreIN] = useState<string>('');
+  const [correctScoreOUT, setCorrectScoreOUT] = useState<string>('');
+
+  // FIXME: just for debug purpose, REMOVE IT!!
+  useEffect(() => {
+    if (shots && totals) {
+      console.log("SAVE THIS SHOTS: ", JSON.stringify(shots));
+      console.log("SAVE THIS TOTALS: ", JSON.stringify(totals));
+    }
+  }, [shots, totals]);
+  // FIXME: just for debug purpose, REMOVE IT!!
+
+  useEffect(() => {
+    if (score.vsPar === 0) {
+      setCorrectScore(score.vsPar.toString());
+    }
+    else {
+      if (score.vsPar < 0) {
+        setCorrectScore(`-${score.vsPar}`);
+      }
+      else { setCorrectScore(`+${score.vsPar}`); }
+    }
+    if (score.vsParIN === 0) {
+      setCorrectScoreIN(score.vsParIN.toString());
+    }
+    else {
+      if (score.vsParIN < 0) {
+        setCorrectScoreIN(`-${score.vsParIN}`);
+      }
+      else { setCorrectScoreIN(`+${score.vsParIN}`); }
+    }
+
+    if (score.vsParOUT === 0) {
+      setCorrectScoreOUT(score.vsParOUT.toString());
+    }
+    else {
+      if (score.vsParOUT < 0) {
+        setCorrectScoreOUT(`-${score.vsParOUT}`);
+      }
+      else { setCorrectScoreOUT(`+${score.vsParOUT}`); }
+    }
+
+
+  }, [score]);
+
+
   return (
     <TableBody>
       <TableRow key={'last'}>
         <TableCell align='center'></TableCell>
-        <TableCell align='center'>{hcp}</TableCell>
         <TableCell align='center'>{par}</TableCell>
+        <TableCell align='center'>{hcp}</TableCell>
         <TableCell align='center'>
           <Grid container spacing={1}>
             <Grid item xs={4}>
               <Stack>
-                <Typography fontWeight={'bold'}>
-                  {`${score.totals} (${score.vsPar})`}
-                </Typography>
+                <Typography fontWeight={'bold'}>{`${score.totals} (${correctScore})`}</Typography>
                 <Typography>{score.avg}</Typography>
               </Stack>
 
             </Grid>
             <Grid item xs={4}>
               <Stack>
-                <Typography fontWeight={'bold'}>{`${score.scoreIN} (${score.vsParIN})`}</Typography>
+                <Typography fontWeight={'bold'}>{`${score.scoreIN} (${correctScoreIN})`}</Typography>
                 <Typography>{score.avgIN}</Typography>
               </Stack>
             </Grid>
             <Grid item xs={4}>
               <Stack>
-                <Typography fontWeight={'bold'}>{`${score.scoreOUT} (${score.vsParOUT})`}</Typography>
+                <Typography fontWeight={'bold'}>{`${score.scoreOUT} (${correctScoreOUT})`}</Typography>
                 <Typography>{score.avgOUT}</Typography>
               </Stack>
             </Grid>
