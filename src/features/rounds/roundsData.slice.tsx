@@ -6,6 +6,8 @@ const initialState: InitialStateRoundsData = {
   isLoading: false,
   playerID: "",
   roundID: "",
+  roundDate: "",
+  roundCourse: "",
   shots: [],
 }
 
@@ -29,6 +31,8 @@ const roundsDataSlice = createSlice({
         state.isLoading = false;
         state.playerID = payload.playerID;
         state.roundID = payload.roundID;
+        state.roundCourse = payload.roundCourse;
+        state.roundDate = payload.roundDate;
         state.shots = payload.shots;
       })
       .addCase(getAllRoundsData.rejected, (state, { payload }: any) => {

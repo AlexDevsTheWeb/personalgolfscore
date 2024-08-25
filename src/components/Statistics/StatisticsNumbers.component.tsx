@@ -20,6 +20,7 @@ interface IStatisticNumbersProps {
 }
 
 const StatisticsNumbers = ({ roundDate, roundCourse, totals, shots, coursePar }: IStatisticNumbersProps) => {
+  console.log("T:", totals)
   return (
     <Box sx={{ padding: 1.5, display: 'flex', flexDirection: 'column', gap: 2 }}>
       {

@@ -26,7 +26,7 @@ const HoleAutomaticInfo = (props: IProps) => {
         setVsPar(`+${diff}`);
       }
       else {
-        setVsPar(`-${diff}`);
+        setVsPar(`${diff}`);
       }
     }
   }, [tmpHole])

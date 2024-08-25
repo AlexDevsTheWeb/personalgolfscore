@@ -24,7 +24,6 @@ interface IDialogProps {
 }
 
 export const StatisticDialog = ({ open, handleClose, totals, shots, roundDate, roundCourse, coursePar }: IDialogProps) => {
-
   return (
     <Dialog
       fullScreen

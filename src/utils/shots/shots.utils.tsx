@@ -65,29 +65,31 @@ export const calculateScrambleValue = (props: IScrambleProps) => {
 };
 
 const calculatePoints = (par: number, strokes: number) => {
-  if (strokes === par) {
-    return STABLEFORDPOINTS.PAR;
-  }
-  else if (strokes === par + 1) {
-    return STABLEFORDPOINTS.BOGEY;
-  }
-  else if (strokes >= par + 2) {
-    return STABLEFORDPOINTS.DOUBLEBOGEY;
-  }
-  else if (strokes >= par + 3) {
-    return STABLEFORDPOINTS.TRIPLEBOGEY;
-  }
-  else if (strokes >= par + 4) {
-    return STABLEFORDPOINTS.QUADRUPLEBOGEY;
-  }
-  else if (strokes === par - 1) {
-    return STABLEFORDPOINTS.BIRDIE;
-  }
-  else if (strokes === par - 2) {
-    return STABLEFORDPOINTS.EAGLE;
-  }
-  else if (strokes === par - 3) {
-    return STABLEFORDPOINTS.ALBATROSS;
+  if (strokes !== 0 && par !== 0) {
+    if (strokes === par) {
+      return STABLEFORDPOINTS.PAR;
+    }
+    else if (strokes === par + 1) {
+      return STABLEFORDPOINTS.BOGEY;
+    }
+    else if (strokes >= par + 2) {
+      return STABLEFORDPOINTS.DOUBLEBOGEY;
+    }
+    else if (strokes >= par + 3) {
+      return STABLEFORDPOINTS.TRIPLEBOGEY;
+    }
+    else if (strokes >= par + 4) {
+      return STABLEFORDPOINTS.QUADRUPLEBOGEY;
+    }
+    else if (strokes === par - 1) {
+      return STABLEFORDPOINTS.BIRDIE;
+    }
+    else if (strokes === par - 2) {
+      return STABLEFORDPOINTS.EAGLE;
+    }
+    else if (strokes === par - 3) {
+      return STABLEFORDPOINTS.ALBATROSS;
+    }
   }
 }
 

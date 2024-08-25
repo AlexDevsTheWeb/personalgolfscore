@@ -31,7 +31,7 @@ const ShotsTableTotalsBody = ({ shots }: IShotsTabelTotalsProps) => {
     }
     else {
       if (score.vsPar < 0) {
-        setCorrectScore(`-${score.vsPar}`);
+        setCorrectScore(`${score.vsPar}`);
       }
       else { setCorrectScore(`+${score.vsPar}`); }
     }
@@ -40,7 +40,7 @@ const ShotsTableTotalsBody = ({ shots }: IShotsTabelTotalsProps) => {
     }
     else {
       if (score.vsParIN < 0) {
-        setCorrectScoreIN(`-${score.vsParIN}`);
+        setCorrectScoreIN(`${score.vsParIN}`);
       }
       else { setCorrectScoreIN(`+${score.vsParIN}`); }
     }
@@ -50,7 +50,7 @@ const ShotsTableTotalsBody = ({ shots }: IShotsTabelTotalsProps) => {
     }
     else {
       if (score.vsParOUT < 0) {
-        setCorrectScoreOUT(`-${score.vsParOUT}`);
+        setCorrectScoreOUT(`${score.vsParOUT}`);
       }
       else { setCorrectScoreOUT(`+${score.vsParOUT}`); }
     }

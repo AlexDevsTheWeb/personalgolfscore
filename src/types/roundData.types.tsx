@@ -1,6 +1,8 @@
 interface IState {
   roundID: string;
   playerID: string;
+  roundCourse: string;
+  roundDate: string;
   shots: IShots[];
 }
 
@@ -51,6 +53,8 @@ export type InitialStateRoundsData = {
   isLoading: boolean;
   playerID: string;
   roundID: string;
+  roundDate: string;
+  roundCourse: string;
   shots: IShots[];
 }
 
