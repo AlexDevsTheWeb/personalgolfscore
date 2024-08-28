@@ -26,10 +26,10 @@ const Dashboard = () => {
   }, [dispatch]);
 
   return (
-    <BoxBetween vertical={false}>
+    <BoxBetween>
       <Player />
       <Rounds />
-      <BoxBetween vertical={false}>
+      <BoxBetween>
         <Button variant='contained' onClick={handleAddNewRound}>Add new round</Button>
         <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>
       </BoxBetween>

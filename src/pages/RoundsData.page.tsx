@@ -11,15 +11,15 @@ const RoundsData = () => {
   const dispatch = useDispatch<any>();
   const params = useParams();
 
-  const { rounds } = useSelector((store: RootState) => store.rounds);
+  const { roundHoles: { holes } } = useSelector((store: RootState) => store.singleRound);
 
   useEffect(() => {
-    if (rounds.length === 0) {
+    if (holes.length === 0) {
       dispatch(getAllRounds(""));
       dispatch(getSingleRoundHoles(params.roundID));
       dispatch(getSingleRoundTotals(params.roundID));
     }
-  }, [params.roundID, rounds.length, dispatch]);
+  }, [params.roundID, holes, dispatch]);
 
   return (
     <RoundsDataMain />

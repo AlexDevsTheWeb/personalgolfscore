@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IRoundTotalsInitialState } from "../../types/roundTotals.types";
 import { initialStateRoundTotals } from "../../utils/constant.utils";
-import { getAllRoundsTotals } from "../rounds/roundsTotals.slice";
 import { getSingleRoundTotalsThunk } from "./roundsTotals.thunk";
 
 const initialState: IRoundTotalsInitialState = {
@@ -25,14 +24,14 @@ const roundTotalsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllRoundsTotals.pending, (state) => {
+      .addCase(getSingleRoundTotals.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllRoundsTotals.fulfilled, (state, { payload }: any) => {
+      .addCase(getSingleRoundTotals.fulfilled, (state, { payload }: any) => {
         state.isLoading = false;
         state.roundTotals = payload;
       })
-      .addCase(getAllRoundsTotals.rejected, (state, { payload }: any) => {
+      .addCase(getSingleRoundTotals.rejected, (state, { payload }: any) => {
         state.isLoading = false;
         state.roundTotals = initialStateRoundTotals;
       })

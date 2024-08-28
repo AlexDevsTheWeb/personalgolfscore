@@ -1,7 +1,6 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { IShots } from '../../types/roundData.types';
 import { INewTotals } from '../../types/roundTotals.types';
-import StatisticsNumbers from '../Statistics/StatisticsNumbers.component';
 
 interface IRoundDataShotsTotals {
   totals: INewTotals;
@@ -17,11 +16,11 @@ const RoundsDataShotsTotals = ({ totals, shots, coursePar }: IRoundDataShotsTota
         Round statistics
       </AccordionSummary>
       <AccordionDetails>
-        <StatisticsNumbers
+        {/* <StatisticsNumbers
           totals={totals}
           shots={shots}
           coursePar={coursePar}
-        />
+        /> */}
       </AccordionDetails>
     </Accordion>
 

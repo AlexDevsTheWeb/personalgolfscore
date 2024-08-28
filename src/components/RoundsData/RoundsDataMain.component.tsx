@@ -6,12 +6,9 @@ import RoundsDataShotTable from './RoundsDataShotTable.component';
 import RoundsHeadDetails from './RoundsHeadDetails.component';
 
 const RoundsDataMain = () => {
-  // const { isLoading, mainData, holes } = useSelector((store: RootState) => store.roundsNumber.roundsData);
 
   const { isLoading, mainData, holes } = useSelector((store: RootState) => store.singleRound.roundHoles);
   const { roundTotals } = useSelector((store: RootState) => store.singleRound.roundTotals);
-
-  // const roundPar = holes.reduce((acc: number, curr: any) => acc + curr.par, 0);
   const roundPar = roundTotals.mainData.coursePar;
 
   if (isLoading) {
@@ -19,7 +16,7 @@ const RoundsDataMain = () => {
   }
 
   return (
-    <BoxBetween vertical={true}>
+    <BoxBetween>
       <RoundsHeadDetails />
       <RoundsDataShotTable
         roundDate={mainData.roundDate}

@@ -30,8 +30,6 @@ const roundsDataSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getAllRoundsData.fulfilled, (state, { payload }: PayloadAction<{ mainData: IRoundMainData, holes: IRoundHoles[] }>) => {
-
-        console.log(payload)
         state.isLoading = false;
         state.mainData = payload.mainData;
         state.holes = payload.holes;

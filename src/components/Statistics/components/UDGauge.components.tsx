@@ -19,7 +19,6 @@ interface IPointsGaugeValues {
 }
 
 const UDGauge = ({ values }: IPointsGaugeValues) => {
-
   const { name, value: { X, N } } = values;
 
   const upTotals = {

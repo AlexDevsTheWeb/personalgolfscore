@@ -50,7 +50,7 @@ const HolebyholeDialog = ({ open, handleCloseHolebyHole, totals, shots, roundDat
           </Typography>
         </Toolbar>
       </AppBar>
-      <BoxBetween vertical={true}>
+      <BoxBetween>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <ShotsTableHeader firstLabel='#' singleHole={true} />
           <TableBody>

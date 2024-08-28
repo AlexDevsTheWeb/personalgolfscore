@@ -2,13 +2,11 @@ import Box, { BoxProps as BoxPropsMui } from '@mui/material/Box';
 import styled from 'styled-components';
 import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 
-interface BoxProps extends BoxPropsMui {
-  vertical?: boolean
-};
+interface BoxProps extends BoxPropsMui { };
 
 const StyledBox = styled(Box)<BoxProps>((props) => (({
   display: 'flex',
-  flexDirection: useDeviceDetection().isMobile || !!props.vertical ? 'column' : 'row',
+  flexDirection: useDeviceDetection().isMobile ? 'column' : 'row',
   gap: 20,
   flexWrap: 'wrap',
   justifyContent: 'space-between',

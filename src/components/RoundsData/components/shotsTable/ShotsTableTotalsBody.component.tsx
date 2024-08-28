@@ -18,7 +18,6 @@ const ShotsTableTotalsBody = ({ holes }: IShotsTableTotalsProps) => {
   const [correctScoreIN, setCorrectScoreIN] = useState<string>('');
   const [correctScoreOUT, setCorrectScoreOUT] = useState<string>('');
 
-  console.log("round Totals: ", roundTotals)
   // FIXME: just for debug purpose, REMOVE IT!!
   useEffect(() => {
     if (holes && roundTotals) {

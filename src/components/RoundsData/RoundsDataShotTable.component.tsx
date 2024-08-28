@@ -36,9 +36,8 @@ const RoundsDataShotTable = ({ roundDate, roundCourse, roundPar, totals, holes }
     setOpenHolebyhole(false);
   };
 
-
   return (
-    <BoxBetween vertical={true}>
+    <BoxBetween>
       <TableContainer component={Paper}>
 
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
