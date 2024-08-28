@@ -16,7 +16,7 @@ const AddSingleHole = () => {
   const dispatch = useDispatch<any>();
   const { round: { roundPlayingHCP, roundHoles }
   } = useSelector((store: RootState) => store.newRound.newRoundMain);
-  const { shots, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
+  const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
   const { teeClubs, greenClubs, chipClubs } = useSelector((store: RootState) => store.golfBag);
 
@@ -111,7 +111,7 @@ const AddSingleHole = () => {
         <HoleAutomaticInfo
           holeFinished={holeFinished}
           tmpHole={tmpHole}
-          shots={shots}
+          shots={holes}
           roundHoles={roundHoles}
           saveHole={saveHole}
         />

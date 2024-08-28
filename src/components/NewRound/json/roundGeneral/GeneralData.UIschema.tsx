@@ -15,11 +15,12 @@ export const generalUiSchema: UiSchema = {
     "ui:autocomplete": "family-name"
   },
   "roundDate": { "ui:title": "Round date", },
+  "roundNumber": { "ui:title": "Round number", },
   "roundTee": { "ui:title": "Round starting Tees", },
   "roundHoles": {
     "ui:title": "Holes number",
   },
   "roundPar": { "ui:title": "Course par", },
   "roundPlayingHCP": { "ui:title": "Player HCP", },
-  "roundStrokes": { "ui:title": "Player strokes", }
+
 };

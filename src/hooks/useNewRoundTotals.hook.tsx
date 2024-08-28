@@ -5,13 +5,13 @@ import { RootState } from '../store/store';
 
 export const useTotals = () => {
   const dispatch = useDispatch<any>();
-  const { shots, roundID } = useSelector((store: RootState) => store.newRound.newRoundHoles);
+  const { holes, roundID } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   useEffect(() => {
-    const totals = shots.reduce((acc, shot) => {
-      acc.totDistance += shot.distance;
-      acc.totDriverDistance += shot.driveDistance;
+    const totals = holes.reduce((acc, hole) => {
+      acc.totDistance += hole.distance;
+      acc.totDriverDistance += hole.driveDistance;
 
-      switch (shot.fairway.toString()) {
+      switch (hole.fairway.toString()) {
         case '4':
           acc.totFairwaysLeft++;
           break;
@@ -22,20 +22,20 @@ export const useTotals = () => {
           acc.totFairwaysRight++;
           break;
       }
-      acc.totFir += shot.fir;
-      acc.totGir += shot.gir ? 1 : 0;
-      acc.totGirBogey += shot.girBogey ? 1 : 0;
-      acc.totGreenSideL += shot.greenSideL;
-      acc.totGreenSideO += shot.greenSideO;
-      acc.totGreenSideR += shot.greenSideR;
-      acc.totGreenSideS += shot.greenSideS;
-      acc.totOut += shot.out;
-      acc.totWater += shot.water;
-      acc.totSand += shot.sand;
-      acc.totPoints += shot.points;
-      acc.totPutts += shot.putts;
-      acc.totStrokes += shot.strokes;
-      switch (shot.upDown) {
+      acc.totFir += hole.fir;
+      acc.totGir += hole.gir ? 1 : 0;
+      acc.totGirBogey += hole.girBogey ? 1 : 0;
+      acc.totGreenSideL += hole.greenSideL;
+      acc.totGreenSideO += hole.greenSideO;
+      acc.totGreenSideR += hole.greenSideR;
+      acc.totGreenSideS += hole.greenSideS;
+      acc.totOut += hole.out;
+      acc.totWater += hole.water;
+      acc.totSand += hole.sand;
+      acc.totPoints += hole.points;
+      acc.totPutts += hole.putts;
+      acc.totStrokes += hole.strokes;
+      switch (hole.upDown) {
         case 'x':
           acc.totUpDown.X++;
           break;
@@ -71,7 +71,7 @@ export const useTotals = () => {
     });
     dispatch(setNewTotal({ totals }));
     // eslint-disable-next-line
-  }, [shots, dispatch]);
+  }, [holes, dispatch]);
 }
 
 export const useGenerateStatistics = () => {

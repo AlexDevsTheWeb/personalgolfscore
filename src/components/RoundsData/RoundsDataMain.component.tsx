@@ -25,7 +25,7 @@ const RoundsDataMain = () => {
         roundCourse={roundCourse}
         roundPar={roundPar}
         totals={totals[0]}
-        shots={shots} />
+        holes={shots} />
     </BoxBetween>
   )
 }

@@ -63,7 +63,7 @@ export type InitialStateNewRoundsData = {
   playerID: string;
   roundID: string;
   holesCompleted: number;
-  shots: IShots[];
+  holes: IShots[];
 }
 
 export type RoundsDataPayload = {

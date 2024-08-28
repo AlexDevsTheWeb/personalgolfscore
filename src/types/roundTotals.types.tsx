@@ -59,10 +59,6 @@ export type InitialStateNewRoundsTotals = {
   totals: INewTotals;
 }
 
-type NewRoundsTotalsPayload = {
-  payload: IState;
-}
-
 export interface INewTotals {
   roundID: number,
   totDistance: number,
@@ -87,8 +83,8 @@ export interface INewTotals {
 }
 
 export interface IRoundTotals {
-  hcp: number,
-  par: number,
+  playerID: string,
+  mainData: IRoundTotalsMainData,
   score: IRoundScoreTotalsAvg,
   points: IRoundPointsTotalsAvg,
   fairway: IRoundFairwatTotals,
@@ -100,6 +96,15 @@ export interface IRoundTotals {
   sand: IRoundTotalsAvgSand,
   water: IRoundTotalsAvgINOUT,
   out: IRoundTotalsAvgINOUT,
+}
+
+interface IRoundTotalsMainData {
+  roundCourse: string,
+  roundDate: string,
+  roundNumber: number,
+  roundTee: string,
+  coursePar: number,
+  playerHCP: number
 }
 
 interface IRoundFairwatTotals {
@@ -145,3 +150,5 @@ interface IRoundPointsTotalsAvg extends IRoundTotalsAvg {
   avgIN: string,
   avgOUT: string,
 }
+
+

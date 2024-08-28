@@ -7,7 +7,7 @@ const initialState: InitialStateNewRoundsData = {
   playerID: '',
   roundID: '',
   holesCompleted: 0,
-  shots: [],
+  holes: [],
 }
 
 interface IPayloadActionNewHole {
@@ -46,7 +46,7 @@ const newRoundHolesSlice = createSlice({
         toGreenMetersUnder60: newValues.greenMetersUnder60,
       };
 
-      state.shots = [...state.shots, finalHole];
+      state.holes = [...state.holes, finalHole];
     },
     resetNewRoundsHoles: () => initialState,
   },

@@ -24,10 +24,6 @@ export type RoundPayload = {
   payload: IState;
 };
 
-interface INewRoundState {
-  playerID: string,
-  round: INewRound
-}
 export interface INewRound {
   roundID: string,
   roundDate: any,
@@ -36,7 +32,7 @@ export interface INewRound {
   roundTee: string,
   roundPar: number,
   roundPlayingHCP: number,
-  roundStrokes: number
+  roundNumber: number
 }
 export type InitialStateNewRound = {
   isLoading: boolean;

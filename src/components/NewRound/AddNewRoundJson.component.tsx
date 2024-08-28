@@ -18,7 +18,7 @@ const AddNewRoundJson = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (e: RJSFSchema) => {
-    const { roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundStrokes } = e.formData;
+    const { roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundNumber } = e.formData;
     dispatch(setRoundMainData({
       newRound: {
         roundID: '',
@@ -28,7 +28,7 @@ const AddNewRoundJson = () => {
         roundTee: roundTee,
         roundPar: roundPar,
         roundPlayingHCP: roundPlayingHCP,
-        roundStrokes: roundStrokes,
+        roundNumber: roundNumber,
       }
     }));
   };

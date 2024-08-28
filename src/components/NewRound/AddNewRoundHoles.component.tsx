@@ -19,7 +19,7 @@ const AddNewRoundHoles = () => {
   const dispatch = useDispatch<any>();
   const { setFirstHole, round: { roundDate, roundCourse, roundPar } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { totals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
-  const { shots } = useSelector((store: RootState) => store.newRound.newRoundHoles);
+  const { holes } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const { clubs } = useSelector((store: RootState) => store.golfBag);
   const [openHolebyhole, setOpenHolebyhole] = React.useState(false);
   const [holeForm, setHoleForm] = useState<any>();
@@ -60,18 +60,18 @@ const AddNewRoundHoles = () => {
         {holeForm}
       </BoxGeneralShadow>
       {
-        shots.length > 0 &&
+        holes.length > 0 &&
         <BoxGeneralShadow direction='column' sx={{ width: '100% !important' }}>
           <RoundsDataShotTable
             roundDate={roundDate}
             roundPar={roundPar}
             roundCourse={roundCourse}
             totals={totals}
-            shots={shots} />
+            holes={holes} />
         </BoxGeneralShadow>
       }
       {
-        shots.length > 0 &&
+        holes.length > 0 &&
         <BoxBetween>
           <Button variant='contained' onClick={() => console.log("save all")}>Save holes</Button>
           <Button variant='contained' onClick={handleClickOpenHolebyHole}>View hole by hole</Button>
@@ -84,7 +84,7 @@ const AddNewRoundHoles = () => {
         roundDate={roundDate}
         roundCourse={roundCourse}
         totals={totals}
-        shots={shots}
+        shots={holes}
         coursePar={roundPar}
       />
       <StatisticDialog
@@ -93,7 +93,7 @@ const AddNewRoundHoles = () => {
         roundDate={roundDate}
         roundCourse={roundCourse}
         totals={totals}
-        shots={shots}
+        shots={holes}
         coursePar={roundPar}
       />
     </BoxBetween >

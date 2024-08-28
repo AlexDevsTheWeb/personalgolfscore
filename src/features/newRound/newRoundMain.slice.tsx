@@ -14,7 +14,7 @@ const initialState: InitialStateNewRound = {
     roundTee: '',
     roundPar: 0,
     roundPlayingHCP: 0,
-    roundStrokes: 0
+    roundNumber: 0
   }
 }
 

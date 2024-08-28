@@ -1,10 +1,15 @@
 import _ from "lodash";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 import { IShots } from "../types/roundData.types";
 import { IRoundTotals } from "../types/roundTotals.types";
 import { initialStateRoundTotals } from "../utils/constant.utils";
 import { useGetVsParTotals } from "./singleHoleCalculator.hook";
 
 export const useRoundTotals = (shots: IShots[]) => {
+
+  const { round: { roundDate, roundCourse, roundTee } } = useSelector((store: RootState) => store.newRound.newRoundMain);
+
   let totals: IRoundTotals = initialStateRoundTotals;
 
   const holes = shots.length;
@@ -60,8 +65,15 @@ export const useRoundTotals = (shots: IShots[]) => {
 
   totals = {
     ...totals,
-    hcp: hcp,
-    par: par,
+    playerID: "playerID",
+    mainData: {
+      roundCourse: roundCourse,
+      roundDate: roundDate,
+      roundNumber: 1,
+      roundTee: roundTee,
+      coursePar: par,
+      playerHCP: hcp
+    },
     score: {
       totals: score,
       avg: (score / holes).toFixed(2),

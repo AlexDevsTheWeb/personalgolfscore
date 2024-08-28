@@ -16,10 +16,10 @@ interface IRoundDataTable {
   roundCourse: string,
   roundPar: number,
   totals: INewTotals,
-  shots: IShots[]
+  holes: IShots[]
 }
 
-const RoundsDataShotTable = ({ roundDate, roundCourse, roundPar, totals, shots }: IRoundDataTable) => {
+const RoundsDataShotTable = ({ roundDate, roundCourse, roundPar, totals, holes }: IRoundDataTable) => {
   const [open, setOpen] = React.useState(false);
   const [openHolebyhole, setOpenHolebyhole] = React.useState(false);
 
@@ -43,7 +43,7 @@ const RoundsDataShotTable = ({ roundDate, roundCourse, roundPar, totals, shots }
 
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <ShotsTableHeader firstLabel='Tot.' singleHole={false} />
-          <ShotsTableTotalsBody shots={shots} />
+          <ShotsTableTotalsBody shots={holes} />
         </Table>
 
       </TableContainer>
@@ -59,7 +59,7 @@ const RoundsDataShotTable = ({ roundDate, roundCourse, roundPar, totals, shots }
         roundDate={roundDate}
         roundCourse={roundCourse}
         totals={totals}
-        shots={shots}
+        shots={holes}
         coursePar={roundPar}
       />
       <HolebyholeDialog
@@ -68,7 +68,7 @@ const RoundsDataShotTable = ({ roundDate, roundCourse, roundPar, totals, shots }
         roundDate={roundDate}
         roundCourse={roundCourse}
         totals={totals}
-        shots={shots}
+        shots={holes}
         coursePar={roundPar}
       />
     </BoxBetween>

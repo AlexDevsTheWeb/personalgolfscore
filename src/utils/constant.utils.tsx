@@ -12,8 +12,15 @@ export const pieChartDimensions = {
 }
 
 export const initialStateRoundTotals: IRoundTotals = {
-  hcp: 0,
-  par: 0,
+  playerID: 'playerID',
+  mainData: {
+    roundCourse: '',
+    roundDate: '',
+    roundNumber: 0,
+    roundTee: '',
+    coursePar: 0,
+    playerHCP: 0
+  },
   score: {
     totals: 0,
     vsPar: 0,

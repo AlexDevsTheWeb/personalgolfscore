@@ -10,7 +10,7 @@ interface IShotsTabelTotalsProps {
 const ShotsTableTotalsBody = ({ shots }: IShotsTabelTotalsProps) => {
 
   const totals = useRoundTotals(shots);
-  const { hcp, par, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble } = totals;
+  const { mainData: { coursePar, playerHCP }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble } = totals;
 
   const [correctScore, setCorrectScore] = useState<string>('');
   const [correctScoreIN, setCorrectScoreIN] = useState<string>('');
@@ -63,8 +63,8 @@ const ShotsTableTotalsBody = ({ shots }: IShotsTabelTotalsProps) => {
     <TableBody>
       <TableRow key={'last'}>
         <TableCell align='center'></TableCell>
-        <TableCell align='center'>{par}</TableCell>
-        <TableCell align='center'>{hcp}</TableCell>
+        <TableCell align='center'>{coursePar}</TableCell>
+        <TableCell align='center'>{playerHCP}</TableCell>
         <TableCell align='center'>
           <Grid container spacing={1}>
             <Grid item xs={4}>
