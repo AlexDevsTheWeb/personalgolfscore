@@ -1,4 +1,3 @@
-import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateTeeGreenClubs } from '../../features/golfBag/golfBag.slice';
@@ -18,7 +17,7 @@ const AddNewRoundHoles = () => {
 
   const dispatch = useDispatch<any>();
   const { setFirstHole, round: { roundDate, roundCourse, roundPar } } = useSelector((store: RootState) => store.newRound.newRoundMain);
-  const { totals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
+  const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
   const { holes } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const { clubs } = useSelector((store: RootState) => store.golfBag);
   const [openHolebyhole, setOpenHolebyhole] = React.useState(false);
@@ -66,24 +65,24 @@ const AddNewRoundHoles = () => {
             roundDate={roundDate}
             roundPar={roundPar}
             roundCourse={roundCourse}
-            totals={totals}
+            totals={roundTotals}
             holes={holes} />
         </BoxGeneralShadow>
       }
-      {
+      {/* {
         holes.length > 0 &&
         <BoxBetween>
           <Button variant='contained' onClick={() => console.log("save all")}>Save holes</Button>
           <Button variant='contained' onClick={handleClickOpenHolebyHole}>View hole by hole</Button>
           <Button variant="contained" onClick={handleClickOpen}>See round statistics</Button>
         </BoxBetween>
-      }
+      } */}
       <HolebyholeDialog
         open={openHolebyhole}
         handleCloseHolebyHole={handleCloseHolebyHole}
         roundDate={roundDate}
         roundCourse={roundCourse}
-        totals={totals}
+        totals={roundTotals}
         shots={holes}
         coursePar={roundPar}
       />
@@ -92,7 +91,7 @@ const AddNewRoundHoles = () => {
         handleClose={handleClose}
         roundDate={roundDate}
         roundCourse={roundCourse}
-        totals={totals}
+        totals={roundTotals}
         shots={holes}
         coursePar={roundPar}
       />

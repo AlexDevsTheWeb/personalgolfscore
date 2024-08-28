@@ -1,20 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IRoundTotalsInitialState } from "../../types/roundTotals.types";
 import { initialStateRoundTotals } from "../../utils/constant.utils";
-import { getAllRoundsTotalsThunk } from "./roundsTotals.thunk";
+import { getAllRoundsTotals } from "../rounds/roundsTotals.slice";
+import { getSingleRoundTotalsThunk } from "./roundsTotals.thunk";
 
 const initialState: IRoundTotalsInitialState = {
   isLoading: false,
   roundTotals: initialStateRoundTotals,
 }
 
-export const getAllRoundsTotals = createAsyncThunk(
-  "roundsTotals/getAllRoundsTotals",
-  getAllRoundsTotalsThunk
+export const getSingleRoundTotals = createAsyncThunk(
+  "roundTotals/getSingleRoundTotals",
+  getSingleRoundTotalsThunk
 );
 
-const roundsTotalsSlice = createSlice({
-  name: "roundsTotals",
+const roundTotalsSlice = createSlice({
+  name: "roundTotals",
   initialState,
   reducers: {
     setManualTotals: (state: any, { payload }: any) => {
@@ -38,5 +39,5 @@ const roundsTotalsSlice = createSlice({
   },
 });
 
-export const { resetRounds, setManualTotals } = roundsTotalsSlice.actions;
-export default roundsTotalsSlice.reducer;
+export const { resetRounds, setManualTotals } = roundTotalsSlice.actions;
+export default roundTotalsSlice.reducer;

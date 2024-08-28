@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IRoundHoles, IRoundInitialState, IRoundMainData } from "../../types/roundData.types";
-import { getAllRoundsDataThunk } from "./roundsData.thunk";
+import { getSingleRoundHolesThunk } from "./roundHoles.thunk";
 
 const initialState: IRoundInitialState = {
   isLoading: false,
@@ -13,30 +13,30 @@ const initialState: IRoundInitialState = {
   holes: []
 }
 
-export const getAllRoundsData = createAsyncThunk(
-  "roundsData/getAllRoundsData",
-  getAllRoundsDataThunk
+export const getSingleRoundHoles = createAsyncThunk(
+  "roundHoles/getSingleRoundHoles",
+  getSingleRoundHolesThunk
 );
 
-const roundsDataSlice = createSlice({
-  name: "roundsData",
+const roundHolesSlice = createSlice({
+  name: "roundHoles",
   initialState,
   reducers: {
     resetRounds: () => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllRoundsData.pending, (state) => {
+      .addCase(getSingleRoundHoles.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllRoundsData.fulfilled, (state, { payload }: PayloadAction<{ mainData: IRoundMainData, holes: IRoundHoles[] }>) => {
+      .addCase(getSingleRoundHoles.fulfilled, (state, { payload }: PayloadAction<{ mainData: IRoundMainData, holes: IRoundHoles[] }>) => {
 
         console.log(payload)
         state.isLoading = false;
         state.mainData = payload.mainData;
         state.holes = payload.holes;
       })
-      .addCase(getAllRoundsData.rejected, (state, { payload }: any) => {
+      .addCase(getSingleRoundHoles.rejected, (state, { payload }: any) => {
         state.isLoading = false;
         state.mainData = {
           playerID: "playerID",
@@ -49,5 +49,5 @@ const roundsDataSlice = createSlice({
   },
 });
 
-export const { resetRounds } = roundsDataSlice.actions;
-export default roundsDataSlice.reducer;
+export const { resetRounds } = roundHolesSlice.actions;
+export default roundHolesSlice.reducer;

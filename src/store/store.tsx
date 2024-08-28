@@ -5,6 +5,8 @@ import newRoundHolesReducer from '../features/newRound/newRoundHoles.slice';
 import newRoundMainReducer from '../features/newRound/newRoundMain.slice';
 import newRoundTotalsReducer from '../features/newRound/newRoundTotals.slice';
 import playerReducer from '../features/player/player.slice';
+import roundHolesReducer from '../features/round/roundHoles.slice';
+import roundTotalsReducer from '../features/round/roundTotals.slice';
 import roundsReducer from '../features/rounds/rounds.slice';
 import roundsDataReducer from '../features/rounds/roundsData.slice';
 import roundsTotalsReducer from '../features/rounds/roundsTotals.slice';
@@ -16,6 +18,10 @@ const rootReducer = {
   roundsNumber: combineReducers({
     roundsData: roundsDataReducer,
     roundsTotals: roundsTotalsReducer
+  }),
+  singleRound: combineReducers({
+    roundHoles: roundHolesReducer,
+    roundTotals: roundTotalsReducer,
   }),
   newRound: combineReducers({
     newRoundMain: newRoundMainReducer,

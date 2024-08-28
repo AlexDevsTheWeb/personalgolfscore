@@ -23,26 +23,6 @@ interface IShotsTotals {
   out: number;
 }
 
-interface ITotals {
-  numberOfHoles: number;
-  putt: ITotalsPutt;
-  gir: ITotalsGir
-  pointsAvg: number;
-  out: number;
-  water: number;
-}
-
-interface ITotalsGir {
-  girPar: number;
-  girBogey: number;
-}
-interface ITotalsPutt {
-  puttsHole: number;
-  puttFirst: number;
-  puttSecond: number;
-  puttThird: number;
-}
-
 export type InitialStateRoundsTotals = {
   isLoading: boolean;
   playerID: string;
@@ -80,6 +60,11 @@ export interface INewTotals {
   totPutts: number,
   totStrokes: number,
   totUpDown: { X: number, N: number, V: number },
+}
+
+export interface IRoundTotalsInitialState {
+  isLoading: boolean,
+  roundTotals: IRoundTotals
 }
 
 export interface IRoundTotals {

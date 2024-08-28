@@ -5,7 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import React from 'react';
 import BoxBetween from '../../styles/box/BoxBetween.styles';
 import { IShots } from '../../types/roundData.types';
-import { INewTotals } from '../../types/roundTotals.types';
+import { IRoundTotals } from '../../types/roundTotals.types';
 import HolebyholeDialog from '../dialog/HolebyholeDialog.component';
 import { StatisticDialog } from '../dialog/StatisticDialog.component';
 import ShotsTableHeader from './components/shotsTable/ShotsTableHeader.component';
@@ -15,7 +15,7 @@ interface IRoundDataTable {
   roundDate: any,
   roundCourse: string,
   roundPar: number,
-  totals: INewTotals,
+  totals: IRoundTotals,
   holes: IShots[]
 }
 
@@ -43,7 +43,7 @@ const RoundsDataShotTable = ({ roundDate, roundCourse, roundPar, totals, holes }
 
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <ShotsTableHeader firstLabel='Tot.' singleHole={false} />
-          <ShotsTableTotalsBody shots={holes} />
+          <ShotsTableTotalsBody holes={holes} />
         </Table>
 
       </TableContainer>

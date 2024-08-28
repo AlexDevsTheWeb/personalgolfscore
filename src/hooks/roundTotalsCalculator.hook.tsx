@@ -8,7 +8,7 @@ import { useGetVsParTotals } from "./singleHoleCalculator.hook";
 
 export const useRoundTotals = (shots: IShots[]) => {
 
-  const { round: { roundDate, roundCourse, roundTee } } = useSelector((store: RootState) => store.newRound.newRoundMain);
+  const { round: { roundDate, roundCourse, roundTee, roundPlayingHCP, roundNumber } } = useSelector((store: RootState) => store.newRound.newRoundMain);
 
   let totals: IRoundTotals = initialStateRoundTotals;
 
@@ -17,7 +17,7 @@ export const useRoundTotals = (shots: IShots[]) => {
   const shotsOUT = _.slice(shots, 9, 18);
   const holesIN = shotsIN.length;
   const holesOUT = shotsOUT.length;
-  const hcp = shots.reduce((acc, curr) => acc + curr.hcp, 0);
+  // const hcp = shots.reduce((acc, curr) => acc + curr.hcp, 0);
   const par = shots.reduce((acc, curr) => acc + curr.par, 0);
   const parIN = shotsIN.reduce((acc, curr) => acc + curr.par, 0);
   const parOUT = shotsOUT.reduce((acc, curr) => acc + curr.par, 0);
@@ -69,10 +69,10 @@ export const useRoundTotals = (shots: IShots[]) => {
     mainData: {
       roundCourse: roundCourse,
       roundDate: roundDate,
-      roundNumber: 1,
+      roundNumber: roundNumber,
       roundTee: roundTee,
       coursePar: par,
-      playerHCP: hcp
+      playerHCP: roundPlayingHCP
     },
     score: {
       totals: score,

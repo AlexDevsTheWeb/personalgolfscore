@@ -1,28 +1,32 @@
 import { Grid, Stack, TableBody, TableCell, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useRoundTotals } from "../../../../hooks/roundTotalsCalculator.hook";
 import { IShots } from "../../../../types/roundData.types";
 
-interface IShotsTabelTotalsProps {
-  shots: IShots[]
+interface IShotsTableTotalsProps {
+  holes: IShots[]
 }
 
-const ShotsTableTotalsBody = ({ shots }: IShotsTabelTotalsProps) => {
+const ShotsTableTotalsBody = ({ holes }: IShotsTableTotalsProps) => {
 
-  const totals = useRoundTotals(shots);
-  const { mainData: { coursePar, playerHCP }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble } = totals;
+  const dispatch = useDispatch<any>();
+  const roundTotals = useRoundTotals(holes);
+  const { mainData: { coursePar, playerHCP }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble } = roundTotals;
 
   const [correctScore, setCorrectScore] = useState<string>('');
   const [correctScoreIN, setCorrectScoreIN] = useState<string>('');
   const [correctScoreOUT, setCorrectScoreOUT] = useState<string>('');
 
+  console.log("round Totals: ", roundTotals)
   // FIXME: just for debug purpose, REMOVE IT!!
   useEffect(() => {
-    if (shots && totals) {
-      console.log("SAVE THIS SHOTS: ", JSON.stringify(shots));
-      console.log("SAVE THIS TOTALS: ", JSON.stringify(totals));
+    if (holes && roundTotals) {
+
+      // dispatch(setNewTotal({ roundTotals }));
     }
-  }, [shots, totals]);
+    // eslint-disable-next-line
+  }, [holes, dispatch]);
   // FIXME: just for debug purpose, REMOVE IT!!
 
   useEffect(() => {

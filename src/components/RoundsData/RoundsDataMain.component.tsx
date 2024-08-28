@@ -6,12 +6,13 @@ import RoundsDataShotTable from './RoundsDataShotTable.component';
 import RoundsHeadDetails from './RoundsHeadDetails.component';
 
 const RoundsDataMain = () => {
-  const { isLoading, roundCourse, roundDate } = useSelector((store: RootState) => store.roundsNumber.roundsData);
-  const { totals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals);
+  // const { isLoading, mainData, holes } = useSelector((store: RootState) => store.roundsNumber.roundsData);
 
-  const shots = useSelector((store: RootState) => store.roundsNumber.roundsData.shots);
+  const { isLoading, mainData, holes } = useSelector((store: RootState) => store.singleRound.roundHoles);
+  const { roundTotals } = useSelector((store: RootState) => store.singleRound.roundTotals);
 
-  const roundPar = shots.reduce((acc, curr) => acc + curr.par, 0);
+  // const roundPar = holes.reduce((acc: number, curr: any) => acc + curr.par, 0);
+  const roundPar = roundTotals.mainData.coursePar;
 
   if (isLoading) {
     return <Typography>Loading...</Typography>
@@ -21,11 +22,11 @@ const RoundsDataMain = () => {
     <BoxBetween vertical={true}>
       <RoundsHeadDetails />
       <RoundsDataShotTable
-        roundDate={roundDate}
-        roundCourse={roundCourse}
+        roundDate={mainData.roundDate}
+        roundCourse={mainData.roundCourse}
         roundPar={roundPar}
-        totals={totals[0]}
-        holes={shots} />
+        totals={roundTotals}
+        holes={holes} />
     </BoxBetween>
   )
 }
