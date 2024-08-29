@@ -77,7 +77,7 @@ export interface IRoundTotals {
   girBogey: IRoundTotalsAvgINOUT,
   upDown: IRoundTotalsUpDown,
   scramble: IRoundTotalsUpDown,
-  putts: IRoundTotalsAvgINOUT,
+  putts: IRoundTotalsPutts,
   sand: IRoundTotalsAvgSand,
   water: IRoundTotalsAvgINOUT,
   out: IRoundTotalsAvgINOUT,
@@ -113,13 +113,26 @@ interface IRoundTotalsAvgSand extends IRoundTotalsAvg {
   avgSaved: string,
   savedPerc: number,
 }
-interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
+export interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
   totalsIN: number,
   avgIN: string,
   totalsOUT: number,
   avgOUT: string,
 }
-interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
+export interface IRoundTotalsPutts extends IRoundTotalsAvg {
+  totalsIN: number,
+  avgIN: string,
+  totalsOUT: number,
+  avgOUT: string,
+  puttsGir: number,
+  puttsGirIn: number,
+  puttsGirOut: number,
+  puttsThree: number,
+  putts1: number,
+  putts2: number,
+  putts3More: number,
+}
+export interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
   vsPar: number,
   scoreIN: number,
   scoreOUT: number,
@@ -127,6 +140,17 @@ interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
   vsParOUT: number,
   avgIN: string;
   avgOUT: string;
+  par3: number,
+  par4: number,
+  par5: number,
+  scoreEagleBetter: number,
+  scoreBirdie: number,
+  scorePar: number,
+  scoreBogey: number,
+  scoreDoubleBogeyWorst: number,
+  scorePar3: number,
+  scorePar4: number,
+  scorePar5: number,
 }
 
 interface IRoundPointsTotalsAvg extends IRoundTotalsAvg {

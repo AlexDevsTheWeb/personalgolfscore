@@ -17,7 +17,18 @@
 		"vsParIN": 20,
 		"vsParOUT": 14,
 		"avgIN": "6.22",
-		"avgOUT": "5.44"
+		"avgOUT": "5.44",
+		"par3": 4,
+		"par4": 11,
+		"par5": 3,
+		"scoreEagleBetter": 0,
+		"scoreBirdie": 0,
+		"scorePar": 2,
+		"scoreBogey": 8,
+		"scoreDoubleBogeyWorst": 8,
+		"scorePar3": 17,
+		"scorePar4": 62,
+		"scorePar5": 25
 	},
 	"points": {
 		"totals": 31,
@@ -65,7 +76,11 @@
 		"totalsIN": 17,
 		"avgIN": "1.89",
 		"totalsOUT": 19,
-		"avgOUT": "2.11"
+		"avgOUT": "2.11",
+		"puttsGir": 5,
+		"puttsGirIn": 0,
+		"puttsGirOut": 5,
+		"puttsThree": 5
 	},
 	"sand": {
 		"totals": 3,

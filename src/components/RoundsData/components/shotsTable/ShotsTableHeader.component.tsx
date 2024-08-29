@@ -22,14 +22,22 @@ const ShotsTableHeader = ({ firstLabel, singleHole }: IShotsTableHeaderProps) =>
         <TableCell align='center'><ShotsTableHeaderStack firstRow='fairways' secondRow={!!singleHole ? '' : 'center total'} /></TableCell>
         <TableCell align='center'><ShotsTableHeaderStack firstRow='gir' secondRow={!!singleHole ? '' : 'TOT IN OUT'} /></TableCell>
         <TableCell align='center'><ShotsTableHeaderStack firstRow='gir bogey' secondRow={!!singleHole ? '' : 'TOT IN OUT'} /></TableCell>
-        <TableCell align='center'><ShotsTableHeaderStack firstRow='scramble' secondRow={!!singleHole ? '' : 'saved made'} /></TableCell>
-        <TableCell align='center'><ShotsTableHeaderStack firstRow='up & down' secondRow={!!singleHole ? '' : 'saved made'} /></TableCell>
+        <TableCell align='center' sx={{ borderLeft: '1px solid #ccc', borderTop: '1px solid #ccc' }}>
+          <ShotsTableHeaderStack firstRow='scramble' secondRow={!!singleHole ? '' : 'saved made'} />
+        </TableCell>
+        <TableCell align='center' sx={{ borderTop: '1px solid #ccc' }}>
+          <ShotsTableHeaderStack firstRow='up & down' secondRow={!!singleHole ? '' : 'saved made'} />
+        </TableCell>
+        <TableCell align='center' sx={{ borderRight: '1px solid #ccc', borderTop: '1px solid #ccc' }}>
+          <ShotsTableHeaderStack firstRow='sand' secondRow={!!singleHole ? '' : 'saved made'} />
+        </TableCell>
         <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='putts' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
         <TableCell align='center'>
-          <ShotsTableHeaderStack firstRow='sand' secondRow={!!singleHole ? '' : 'saved made'} />
+          <ShotsTableHeaderStack firstRow='putts/gir' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
+
         {/* <TableCell align='center'>
           <ShotsTableHeaderStack label='penalties' />
         </TableCell> */}

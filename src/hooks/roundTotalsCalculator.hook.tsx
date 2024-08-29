@@ -29,6 +29,20 @@ export const useRoundTotals = (shots: IShots[]) => {
   const pointsIN = shotsIN.reduce((acc, curr) => acc + curr.points, 0);
   const pointsOUT = shotsOUT.reduce((acc, curr) => acc + curr.points, 0);
 
+  const par3 = shots.filter((s) => s.par === 3).length;
+  const par4 = shots.filter((s) => s.par === 4).length;
+  const par5 = shots.filter((s) => s.par === 5).length;
+
+  const scoreEagleBetter = shots.reduce((acc, curr) => acc + ((score - par) <= -2 ? 1 : 0), 0);
+  const scoreBirdie = shots.reduce((acc, curr) => acc + ((score - par) === -1 ? 1 : 0), 0);
+  const scorePar = shots.reduce((acc, curr) => acc + ((score - par) === 0 ? 1 : 0), 0);
+  const scoreBogey = shots.reduce((acc, curr) => acc + ((score - par) === 1 ? 1 : 0), 0);
+  const scoreDoubleBogeyWorst = shots.reduce((acc, curr) => acc + ((score - par) >= 2 ? 1 : 0), 0);
+
+  const scorePar3 = shots.reduce((acc, curr) => acc + (curr.par === 3 ? curr.strokes : 0), 0);
+  const scorePar4 = shots.reduce((acc, curr) => acc + (curr.par === 4 ? curr.strokes : 0), 0);
+  const scorePar5 = shots.reduce((acc, curr) => acc + (curr.par === 5 ? curr.strokes : 0), 0);
+
   const fairwayTotal = shots.filter((hole) => hole.par !== 3).length;
   const fairwayCenter = shots.reduce((acc, curr) => acc + (curr.fairway === 5 ? 1 : 0), 0);
   const fairwayLeft = shots.reduce((acc, curr) => acc + (curr.fairway === 4 ? 1 : 0), 0);
@@ -44,13 +58,19 @@ export const useRoundTotals = (shots: IShots[]) => {
   const upDown = shots.reduce((acc, curr) => acc + (!!curr.upDownX ? 1 : 0), 0);
   const upDownTotals = shots.reduce((acc, curr) => acc + (!!curr.upDownX && curr.strokes === curr.par && curr.putts === 1 ? 1 : 0) + (!!curr.upDownN && curr.strokes === curr.par && curr.putts === 1 ? 1 : 0), 0);
 
-  // const scramble = shots.reduce((acc, curr) => acc + (curr.strokes === curr.par && curr.gir !== true ? 1 : 0), 0);
   const scramble = shots.reduce((acc, curr) => acc + curr.scramble, 0);
   const scrambleTotals = holes - gir;
 
   const putts = shots.reduce((acc, curr) => acc + curr.putts, 0);
   const puttsIN = shotsIN.reduce((acc, curr) => acc + curr.putts, 0);
   const puttsOUT = shotsOUT.reduce((acc, curr) => acc + curr.putts, 0);
+  const puttsGIR = shots.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
+  const puttsGIRIN = shotsIN.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
+  const puttsGIROUT = shotsOUT.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
+  const puttsThree = shots.reduce((acc, curr) => acc + (curr.putts === 3 ? 1 : 0), 0);
+  const putts1 = shots.reduce((acc, curr) => acc + (curr.puttsLength.length === 1 ? 1 : 0), 0);
+  const putts2 = shots.reduce((acc, curr) => acc + (curr.puttsLength.length === 2 ? 1 : 0), 0);
+  const putts3More = shots.reduce((acc, curr) => acc + (curr.puttsLength.length > 2 ? 1 : 0), 0);
 
   const sand = shots.reduce((acc, curr) => acc + curr.sand + (curr.chipClub === 'b' ? 1 : 0), 0);
   const sandSaved = shots.reduce((acc, curr) => acc +
@@ -88,6 +108,17 @@ export const useRoundTotals = (shots: IShots[]) => {
       avgOUT: scoreOUT && holesOUT
         ? (scoreOUT / holesOUT).toFixed(2)
         : '-',
+      par3: par3,
+      par4: par4,
+      par5: par5,
+      scoreEagleBetter: scoreEagleBetter,
+      scoreBirdie: scoreBirdie,
+      scorePar: scorePar,
+      scoreBogey: scoreBogey,
+      scoreDoubleBogeyWorst: scoreDoubleBogeyWorst,
+      scorePar3: scorePar3,
+      scorePar4: scorePar4,
+      scorePar5: scorePar5,
     },
     points: {
       totals: points,
@@ -136,6 +167,13 @@ export const useRoundTotals = (shots: IShots[]) => {
       avgIN: puttsIN && holesIN ? (puttsIN / holesIN).toFixed(2) : '-',
       totalsOUT: puttsOUT,
       avgOUT: puttsOUT && holesOUT ? (puttsOUT / holesOUT).toFixed(2) : '-',
+      puttsGir: puttsGIR,
+      puttsGirIn: puttsGIRIN,
+      puttsGirOut: puttsGIROUT,
+      puttsThree: puttsThree,
+      putts1: putts1,
+      putts2: putts2,
+      putts3More: putts3More
     },
     sand: {
       totals: sand,

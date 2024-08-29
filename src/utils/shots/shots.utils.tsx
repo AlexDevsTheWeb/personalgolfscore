@@ -1,5 +1,6 @@
 import { STABLEFORDPOINTS } from "../../enum/shots.enum";
 import { IGirProps, IScrambleProps, IStablefordPointsProps, IUDProps } from "../../types/point.types";
+import { IRoundScoreTotalsAvg } from "../../types/roundTotals.types";
 
 export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, roundPlayingHCP, roundHoles } = props;
@@ -147,4 +148,45 @@ export function calculation(completeHole: any) {
     scramble: scramble,
   }
   return finalValues;
+}
+
+export const correctVsParString = (score: IRoundScoreTotalsAvg) => {
+
+  let correctScore = '';
+  let correctScoreIN = '';
+  let correctScoreOUT = '';
+
+  if (score.vsPar === 0) {
+    correctScore = score.vsPar.toString();
+  }
+  else {
+    if (score.vsPar < 0) {
+      correctScore = `${score.vsPar}`;
+    }
+    else { correctScore = `+${score.vsPar}`; }
+  }
+  if (score.vsParIN === 0) {
+    correctScoreIN = score.vsParIN.toString();
+  }
+  else {
+    if (score.vsParIN < 0) {
+      correctScoreIN = `${score.vsParIN}`;
+    }
+    else { correctScoreIN = `+${score.vsParIN}`; }
+  }
+  if (score.vsParOUT === 0) {
+    correctScoreOUT = score.vsParOUT.toString();
+  }
+  else {
+    if (score.vsParOUT < 0) {
+      correctScoreOUT = `${score.vsParOUT}`;
+    }
+    else { correctScoreOUT = `+${score.vsParOUT}`; }
+  }
+
+  return {
+    correctScore: correctScore,
+    correctScoreIN: correctScoreIN,
+    correctScoreOUT: correctScoreOUT,
+  }
 }

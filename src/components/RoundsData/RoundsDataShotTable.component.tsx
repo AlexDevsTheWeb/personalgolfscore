@@ -8,6 +8,7 @@ import { IShots } from '../../types/roundData.types';
 import { IRoundTotals } from '../../types/roundTotals.types';
 import HolebyholeDialog from '../dialog/HolebyholeDialog.component';
 import { StatisticDialog } from '../dialog/StatisticDialog.component';
+import StatisticsPutts from '../Statistics/StatisticsPutts.component';
 import ShotsTableHeader from './components/shotsTable/ShotsTableHeader.component';
 import ShotsTableTotalsBody from './components/shotsTable/ShotsTableTotalsBody.component';
 
@@ -39,19 +40,16 @@ const RoundsDataShotTable = ({ roundDate, roundCourse, roundPar, totals, holes }
   return (
     <BoxBetween>
       <TableContainer component={Paper}>
-
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <ShotsTableHeader firstLabel='Tot.' singleHole={false} />
           <ShotsTableTotalsBody holes={holes} />
         </Table>
-
       </TableContainer>
       <BoxBetween>
-        <BoxBetween>
-          <Button variant='contained' onClick={handleClickOpenHolebyHole}>View hole by hole</Button>
-          <Button variant="contained" onClick={handleClickOpen}>See round statistics</Button>
-        </BoxBetween>
+        <Button variant='contained' onClick={handleClickOpenHolebyHole}>View hole by hole</Button>
+        <Button variant="contained" onClick={handleClickOpen}>See round statistics</Button>
       </BoxBetween>
+      <StatisticsPutts putts={totals.putts} gir={totals.gir} score={totals.score} />
       <StatisticDialog
         open={open}
         handleClose={handleClose}

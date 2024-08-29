@@ -53,7 +53,10 @@
 				"totalsIN": 19,
 				"avgIN": "2.11",
 				"totalsOUT": 20,
-				"avgOUT": "2.22"
+				"avgOUT": "2.22",
+				"puttsGir": 5,
+				"puttsGirIn": 0,
+				"puttsGirOut": 5
 			},
 			"sand": {
 				"totals": 2,
