@@ -14,45 +14,52 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
   let puttsAttempts46M = 0;
   let puttsAttempts610M = 0;
   let puttsAttemptsO10 = 0;
+  let puttsAverageU2M = 0;
+  let puttsAverage24M = 0;
+  let puttsAverage46M = 0;
+  let puttsAverage610M = 0;
+  let puttsAverageO10 = 0;
 
   for (let i = 0; i < shots.length; i++) {
     const puttsDone = shots[i].putts;
-
+    const puttsPerHole = shots[i].puttsLength.length - 1;
+    const firstPuttLength = Number(shots[i].puttsLength[0]);
+    const puttsLengthPerHole = Number(shots[i].puttsLength[puttsPerHole]);
     if (puttsDone === 1) {
-      if (shots[i].puttsLength[1] <= 2) {
-        puttsHoledU2M++;
+      if (puttsLengthPerHole <= 2) {
+        puttsHoledU2M = puttsHoledU2M + 1;
       }
-      if (shots[i].puttsLength[1] > 2 && shots[i].puttsLength[1] <= 4) {
-        puttsHoled24M++;
+      if (puttsLengthPerHole > 2 && puttsLengthPerHole <= 4) {
+        puttsHoled24M = puttsHoled24M + 1;
       }
-      if (shots[i].puttsLength[1] > 4 && shots[i].puttsLength[1] <= 6) {
-        puttsHoled46M++;
+      if (Number(puttsLengthPerHole) > 4 && Number(puttsLengthPerHole) <= 6) {
+        puttsHoled46M = puttsHoled46M + 1;
       }
-      if (shots[i].puttsLength[1] > 6 && shots[i].puttsLength[1] <= 10) {
-        puttsHoled610M++;
+      if (puttsLengthPerHole > 6 && puttsLengthPerHole <= 10) {
+        puttsHoled610M = puttsHoled610M + 1;
       }
-      if (shots[i].puttsLength[1] > 10) {
-        puttsHoledO10++;
+      if (puttsLengthPerHole > 10) {
+        puttsHoledO10 = puttsHoledO10 + 1;
       }
     }
 
-    if (shots[i].puttsLength[0] <= 2) {
+    if (firstPuttLength <= 2) {
       puttsAttempsU2M = puttsAttempsU2M + 1;
       // result.puttsU2M.puttsAverage = parseFloat((puttsDone / puttsAttempsU2M).toFixed(2));
     }
-    if (shots[i].puttsLength[0] > 2 && shots[i].puttsLength[0] <= 4) {
+    if (firstPuttLength > 2 && firstPuttLength <= 4) {
       puttsAttempts24M = puttsAttempts24M + 1;
       // result.putts24M.puttsAverage = parseFloat((puttsDone / puttsAttempts24M).toFixed(2));
     }
-    if (shots[i].puttsLength[0] > 4 && shots[i].puttsLength[0] <= 6) {
+    if (firstPuttLength > 4 && firstPuttLength <= 6) {
       puttsAttempts46M = puttsAttempts46M + 1;
-      // result.putts46M.puttsAverage = parseFloat((puttsDone / puttsAttempts46M).toFixed(2));
+      puttsAverage46M = parseFloat((puttsDone / puttsAttempts46M).toFixed(2));
     }
-    if (shots[i].puttsLength[0] > 6 && shots[i].puttsLength[0] <= 10) {
+    if (firstPuttLength > 6 && firstPuttLength <= 10) {
       puttsAttempts610M = puttsAttempts610M + 1;
       // result.putts610M.puttsAverage = parseFloat((puttsDone / puttsAttempts610M).toFixed(2));
     }
-    if (shots[i].puttsLength[0] > 10) {
+    if (firstPuttLength > 10) {
       puttsAttemptsO10 = puttsAttemptsO10 + 1;
       // result.puttsO10M.puttsAverage = parseFloat((puttsDone / puttsAttemptsO10).toFixed(2));
     }
@@ -79,13 +86,13 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
     putts46M: {
       puttsHoled: puttsHoled46M,
       puttsAttempts: puttsAttempts46M,
-      puttsAverage: 0,
+      puttsAverage: puttsAverage46M,
       puttsSecondoAverageLength: 0,
       puttsAverageDistance: 0,
       putts3: 0,
     },
     putts610M: {
-      puttsHoled: 0,
+      puttsHoled: puttsHoled610M,
       puttsAttempts: 0,
       puttsAverage: 0,
       puttsSecondoAverageLength: 0,
@@ -93,7 +100,7 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
       putts3: 0,
     },
     puttsO10M: {
-      puttsHoled: 0,
+      puttsHoled: puttsHoledO10,
       puttsAttempts: 0,
       puttsAverage: 0,
       puttsSecondoAverageLength: 0,
@@ -101,5 +108,7 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
       putts3: 0,
     },
   }
+
+  console.log("finalResult: ", finalResult)
   return finalResult;
 }

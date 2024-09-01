@@ -34,7 +34,9 @@ const AddNewRoundHoles = () => {
   }, [setFirstHole, dispatch]);
 
   useEffect(() => {
-    dispatch(setTotalsByHole({ holes }));
+    if (holes.length > 0) {
+      dispatch(setTotalsByHole({ holes }));
+    }
   }, [holes, dispatch])
 
   return (
