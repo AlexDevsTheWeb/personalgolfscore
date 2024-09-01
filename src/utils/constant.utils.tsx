@@ -1,4 +1,5 @@
-import { IRoundTotals } from "../types/roundTotals.types";
+import { IShots } from "../types/roundData.types";
+import { IPuttsStatistics, IRoundTotals } from "../types/roundTotals.types";
 
 export const parList = ['3', '4', '5'];
 export const hcpList18 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',];
@@ -97,6 +98,49 @@ export const initialStateRoundTotals: IRoundTotals = {
     putts1: 0,
     putts2: 0,
     putts3More: 0,
+    puttsDistGir: 0,
+    puttsStatistics: {
+      puttsU2M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        puttsAverage: 0,
+        puttsSecondoAverageLength: 0,
+        puttsAverageDistance: 0,
+        putts3: 0,
+      },
+      putts24M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        puttsAverage: 0,
+        puttsSecondoAverageLength: 0,
+        puttsAverageDistance: 0,
+        putts3: 0,
+      },
+      putts46M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        puttsAverage: 0,
+        puttsSecondoAverageLength: 0,
+        puttsAverageDistance: 0,
+        putts3: 0,
+      },
+      putts610M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        puttsAverage: 0,
+        puttsSecondoAverageLength: 0,
+        puttsAverageDistance: 0,
+        putts3: 0,
+      },
+      puttsO10M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        puttsAverage: 0,
+        puttsSecondoAverageLength: 0,
+        puttsAverageDistance: 0,
+        putts3: 0,
+      },
+    }
   },
   sand: {
     totals: 0,
@@ -122,4 +166,92 @@ export const initialStateRoundTotals: IRoundTotals = {
     avgOUT: '',
   }
 };
+
+export const initialStateTmpHole: IShots = {
+  holeNumber: 0,
+  chipClub: '',
+  distance: 0,
+  driveDistance: 0,
+  fairway: 0,
+  fir: 0,
+  gir: false,
+  girBogey: false,
+  greenSide: '',
+  greenSideL: 0,
+  greenSideO: 0,
+  greenSideR: 0,
+  greenSideS: 0,
+  hcp: 0,
+  out: 0,
+  par: 0,
+  bounceBack: 0,
+  bounceForward: 0,
+  points: 0,
+  pointsAvg: 0,
+  putts: 0,
+  puttsLength: [],
+  puttsUnder2: 0,
+  putts2_4: 0,
+  putts4_6: 0,
+  putts6_10: 0,
+  puttsOver10: 0,
+  sand: 0,
+  strokes: 0,
+  teeClub: '',
+  toGreen: '',
+  toGreenMeters: 0,
+  toGreenMetersOver100: 0,
+  toGreenMeters80_100: 0,
+  toGreenMeters60_80: 0,
+  toGreenMetersUnder60: 0,
+  upDown: '',
+  upDownX: 0,
+  upDownN: 0,
+  upDownE: 0,
+  scramble: 0,
+  water: 0,
+}
+
+export const initialPuttsStatistics: IPuttsStatistics = {
+  puttsU2M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    puttsAverage: 0,
+    puttsSecondoAverageLength: 0,
+    puttsAverageDistance: 0,
+    putts3: 0,
+  },
+  putts24M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    puttsAverage: 0,
+    puttsSecondoAverageLength: 0,
+    puttsAverageDistance: 0,
+    putts3: 0,
+  },
+  putts46M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    puttsAverage: 0,
+    puttsSecondoAverageLength: 0,
+    puttsAverageDistance: 0,
+    putts3: 0,
+  },
+  putts610M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    puttsAverage: 0,
+    puttsSecondoAverageLength: 0,
+    puttsAverageDistance: 0,
+    putts3: 0,
+  },
+  puttsO10M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    puttsAverage: 0,
+    puttsSecondoAverageLength: 0,
+    puttsAverageDistance: 0,
+    putts3: 0,
+  },
+}
 

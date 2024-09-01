@@ -2,10 +2,12 @@ import { RJSFSchema, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 import { useDispatch } from 'react-redux';
 import { setRoundMainData } from '../../features/newRound/newRoundMain.slice';
+import { setTotalMainData } from '../../features/newRound/newRoundTotals.slice';
 import BoxGeneralShadow from '../../styles/box/BoxGeneralShadow.styles';
 import { ButtonTemplates } from '../../styles/form/customButton.jsonschema';
 import { ObjectFieldTemplate } from '../../styles/form/customObject.jsonschema';
 import GeneralForm from '../../styles/form/GeneralForm.styles';
+import { INewRound } from '../../types/round.types';
 import { formData as dataForm } from './json/roundGeneral/GeneralData.data';
 import { generalData as dataSchema } from './json/roundGeneral/GeneralData.schema';
 import { generalUiSchema as dataUISchema } from './json/roundGeneral/GeneralData.UIschema';
@@ -19,6 +21,7 @@ const AddNewRoundJson = () => {
 
   const handleSubmit = (e: RJSFSchema) => {
     const { roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundNumber } = e.formData;
+
     dispatch(setRoundMainData({
       newRound: {
         roundID: '',
@@ -31,6 +34,17 @@ const AddNewRoundJson = () => {
         roundNumber: roundNumber,
       }
     }));
+    const round: INewRound = {
+      roundID: '',
+      roundCourse: roundCourse,
+      roundDate: roundDate,
+      roundNumber: roundNumber,
+      roundTee: roundTee,
+      roundPar: roundPar,
+      roundPlayingHCP: roundPlayingHCP,
+      roundHoles: roundHoles,
+    }
+    dispatch(setTotalMainData({ round }))
   };
 
   return (

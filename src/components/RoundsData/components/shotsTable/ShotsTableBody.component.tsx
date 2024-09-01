@@ -9,7 +9,7 @@ interface IShotsTableBody {
 
 const ShotsTableBody = ({ shot }: IShotsTableBody) => {
 
-  const { holeNumber, hcp, par, strokes, points, fairway, gir, girBogey, upDown, putts, sand, scramble } = shot;
+  const { holeNumber, par, strokes, points, fairway, gir, girBogey, upDown, putts, sand, scramble, out, water } = shot;
 
   const vspar = useGetVsPar(strokes, par, true);
 
@@ -17,7 +17,6 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
     <TableRow key={holeNumber}>
       <TableCell align='center'>{holeNumber}</TableCell>
       <TableCell align='center'>{par}</TableCell>
-      <TableCell align='center'>{hcp}</TableCell>
       <TableCell align='center'
         variant={vspar.value.includes('-') ? 'green' : vspar.value.includes('+') ? 'red' : 'yellow'}>
         <Stack>
@@ -33,12 +32,11 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
       <TableCell align='center'><ShotPosition position={Number(fairway)} /></TableCell>
       <TableCell align='center'>{gir ? 'Yes' : 'No'}</TableCell>
       <TableCell align='center'>{girBogey ? 'Yes' : 'No'}</TableCell>
-      <TableCell align='center'>{scramble !== 0 ? scramble : '-'}</TableCell>
+      <TableCell align='center' sx={{ borderLeft: '1px solid #ccc' }}>{scramble !== 0 ? scramble : '-'}</TableCell>
       <TableCell align='center'>{upDown !== '' ? upDown.toUpperCase() : '-'}</TableCell>
+      <TableCell align='center' sx={{ borderRight: '1px solid #ccc' }}>{sand}</TableCell>
       <TableCell align='center'>{putts}</TableCell>
-      <TableCell align='center'>{sand !== 0 ? sand : '-'}</TableCell>
-
-
+      <TableCell align='center'>{`${water} | ${out}`}</TableCell>
     </TableRow>
   )
 }

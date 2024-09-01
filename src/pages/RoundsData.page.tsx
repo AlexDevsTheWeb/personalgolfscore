@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -12,6 +13,7 @@ const RoundsData = () => {
   const params = useParams();
 
   const { roundHoles: { holes } } = useSelector((store: RootState) => store.singleRound);
+  const { roundTotals } = useSelector((store: RootState) => store.singleRound.roundTotals);
 
   useEffect(() => {
     if (holes.length === 0) {
@@ -20,6 +22,11 @@ const RoundsData = () => {
       dispatch(getSingleRoundTotals(params.roundID));
     }
   }, [params.roundID, holes, dispatch]);
+
+
+  if (roundTotals.playerID === '') {
+    return <Typography>Loading...</Typography>
+  }
 
   return (
     <RoundsDataMain />

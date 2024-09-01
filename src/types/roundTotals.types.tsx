@@ -4,25 +4,6 @@ interface IState {
   totals: INewTotals[];
 }
 
-interface IShotsTotals {
-  roundID: string;
-  holeNumber: number;
-  distance: number;
-  hcp: number;
-  par: number;
-  strokes: number;
-  points: number;
-  teeClub: string;
-  fir: number;
-  left: number;
-  right: number;
-  gir: number;
-  putts: number;
-  sand: number;
-  water: number;
-  out: number;
-}
-
 export type InitialStateRoundsTotals = {
   isLoading: boolean;
   playerID: string;
@@ -131,6 +112,8 @@ export interface IRoundTotalsPutts extends IRoundTotalsAvg {
   putts1: number,
   putts2: number,
   putts3More: number,
+  puttsDistGir: number,
+  puttsStatistics: IPuttsStatistics,
 }
 export interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
   vsPar: number,
@@ -160,4 +143,20 @@ interface IRoundPointsTotalsAvg extends IRoundTotalsAvg {
   avgOUT: string,
 }
 
+export interface IPuttsStatistics {
+  puttsU2M: IPuttsBreakDownStatistics,
+  putts24M: IPuttsBreakDownStatistics,
+  putts46M: IPuttsBreakDownStatistics,
+  putts610M: IPuttsBreakDownStatistics,
+  puttsO10M: IPuttsBreakDownStatistics,
+}
+
+interface IPuttsBreakDownStatistics {
+  puttsHoled: number,
+  puttsAttempts: number,
+  puttsAverage: number,
+  puttsSecondoAverageLength: number,
+  puttsAverageDistance: number,
+  putts3: number,
+}
 

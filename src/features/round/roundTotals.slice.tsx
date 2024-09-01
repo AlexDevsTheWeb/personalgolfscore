@@ -28,7 +28,6 @@ const roundTotalsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getSingleRoundTotals.fulfilled, (state, { payload }: any) => {
-        console.log("payload: ", payload);
         state.isLoading = false;
         state.roundTotals = payload;
       })

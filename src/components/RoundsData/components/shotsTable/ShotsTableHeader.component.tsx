@@ -12,7 +12,6 @@ const ShotsTableHeader = ({ firstLabel, singleHole }: IShotsTableHeaderProps) =>
       <TableRow>
         <TableCell align='center'><ShotsTableHeaderStack firstRow={firstLabel} secondRow={!!singleHole ? '' : ''} /></TableCell>
         <TableCell align='center'><ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} /></TableCell>
-        <TableCell align='center'><ShotsTableHeaderStack firstRow='hcp' secondRow={!!singleHole ? '' : ''} /></TableCell>
         <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='score' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
@@ -35,12 +34,8 @@ const ShotsTableHeader = ({ firstLabel, singleHole }: IShotsTableHeaderProps) =>
           <ShotsTableHeaderStack firstRow='putts' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
         <TableCell align='center'>
-          <ShotsTableHeaderStack firstRow='putts/gir' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
+          <ShotsTableHeaderStack firstRow='penalties' secondRow={'water out'} />
         </TableCell>
-
-        {/* <TableCell align='center'>
-          <ShotsTableHeaderStack label='penalties' />
-        </TableCell> */}
       </TableRow>
     </TableHead>
   )

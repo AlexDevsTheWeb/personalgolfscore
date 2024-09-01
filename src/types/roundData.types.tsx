@@ -23,6 +23,8 @@ export interface IShots {
   hcp: number;
   out: number
   par: number;
+  bounceBack: number,
+  bounceForward: number,
   points: number;
   pointsAvg: number;
   putts: number;
@@ -105,6 +107,8 @@ export interface IRoundHoles {
   hcp: number;
   out: number
   par: number;
+  bounceBack: number,
+  bounceForward: number,
   points: number;
   pointsAvg: number;
   putts: number;

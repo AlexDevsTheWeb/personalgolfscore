@@ -2,6 +2,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { AppBar, Dialog, IconButton, Slide, Toolbar, Typography } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
+import { useRoundPuttsStatistics } from '../../hooks/roundPuttsStatisticsCalculator.hook';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,7 +23,11 @@ interface IDialogProps {
   coursePar?: number;
 }
 
-export const StatisticDialog = ({ open, handleClose, totals, shots, roundDate, roundCourse, coursePar }: IDialogProps) => {
+export const DialogPuttsStatistics = ({ open, handleClose, totals, shots, roundDate, roundCourse, coursePar }: IDialogProps) => {
+
+  const result = useRoundPuttsStatistics(shots);
+
+  console.log(result)
   return (
     <Dialog
       fullScreen

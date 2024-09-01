@@ -40,9 +40,9 @@
 	},
 	"fairway": {
 		"total": 14,
-		"fairwayCenter": 4,
+		"fairwayCenter": 5,
 		"fairwayLeft": 4,
-		"fairwayRight": 7
+		"fairwayRight": 5
 	},
 	"gir": {
 		"totals": 2,
@@ -71,16 +71,17 @@
 		"perc": 100
 	},
 	"putts": {
-		"totals": 36,
-		"avg": "2.00",
-		"totalsIN": 17,
-		"avgIN": "1.89",
-		"totalsOUT": 19,
-		"avgOUT": "2.11",
+		"totals": 39,
+		"avg": "2.11",
+		"totalsIN": 18,
+		"avgIN": "2",
+		"totalsOUT": 21,
+		"avgOUT": "2.33",
 		"puttsGir": 5,
 		"puttsGirIn": 0,
 		"puttsGirOut": 5,
-		"puttsThree": 5
+		"puttsThree": 6,
+		"puttsDistGir": 10
 	},
 	"sand": {
 		"totals": 3,

@@ -1,25 +1,26 @@
 import { Grid, Stack, TableBody, TableCell, TableRow, Typography } from "@mui/material";
-import { useRoundTotals } from "../../../../hooks/roundTotalsCalculator.hook";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
 import { IShots } from "../../../../types/roundData.types";
 import { correctVsParString } from "../../../../utils/shots/shots.utils";
 
 interface IShotsTableTotalsProps {
-  holes: IShots[]
+  holes: IShots[],
+  // totals: IRoundTotals;
 }
 
 const ShotsTableTotalsBody = ({ holes }: IShotsTableTotalsProps) => {
-  const roundTotals = useRoundTotals(holes);
 
-  const { mainData: { coursePar, playerHCP }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble } = roundTotals;
+  const { roundTotals } = useSelector((store: RootState) => store.singleRound.roundTotals);
+
+  const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble } = roundTotals;
 
   const { correctScore, correctScoreIN, correctScoreOUT } = correctVsParString(score);
 
   return (
     <TableBody>
       <TableRow key={'last'}>
-        <TableCell align='center'></TableCell>
         <TableCell align='center'>{coursePar}</TableCell>
-        <TableCell align='center'>{playerHCP}</TableCell>
         <TableCell align='center'>
           <Grid container spacing={1}>
             <Grid item xs={4}>
@@ -117,6 +118,13 @@ const ShotsTableTotalsBody = ({ holes }: IShotsTableTotalsProps) => {
                 <Typography fontWeight={'bold'}>{gir.totalsOUT}</Typography>
                 <Typography>{gir.avgOUT}</Typography>
               </Stack>
+            </Grid>
+          </Grid>
+        </TableCell>
+        <TableCell align='center'>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Typography>{(putts.puttsDistGir / gir.totals).toFixed(2)}</Typography>
             </Grid>
           </Grid>
         </TableCell>

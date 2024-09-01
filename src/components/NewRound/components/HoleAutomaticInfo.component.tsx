@@ -32,19 +32,17 @@ const HoleAutomaticInfo = (props: IProps) => {
   }, [tmpHole])
 
   return (
-    <Stack direction='column' justifyContent='space-between'>
-      <Stack>
-        <CompositeTypography string='Hole number' value={holeFinished === 0 ? 1 : holeFinished} />
-        <CompositeTypography string='Strokes' value={tmpHole.strokes} />
-        <CompositeTypography string='Vs. Par' value={vsPar} />
-        <CompositeTypography string='Hole points' value={tmpHole.points} />
-        <CompositeTypography string='Green in regulation' value={!!tmpHole.gir ? 'YES' : 'NO'} />
-        <CompositeTypography string='Green in regulation (bogey)' value={!!tmpHole.girBogey ? 'YES' : 'NO'} />
-        <CompositeTypography string='Up&Down' value={tmpHole.upDown === 'x' ? 'YES' : tmpHole.upDown === 'n' ? 'NO' : '-'} />
-      </Stack>
+    <Stack direction='column' justifyContent='space-between' sx={{ width: '100%' }}>
+      <CompositeTypography string='Hole number' value={holeFinished === 0 ? 1 : holeFinished} />
+      <CompositeTypography string='Strokes' value={tmpHole.strokes} />
+      <CompositeTypography string='Vs. Par' value={vsPar} />
+      <CompositeTypography string='Hole points' value={tmpHole.points} />
+      <CompositeTypography string='Green in regulation' value={!!tmpHole.gir ? 'YES' : 'NO'} />
+      <CompositeTypography string='Green in regulation (bogey)' value={!!tmpHole.girBogey ? 'YES' : 'NO'} />
+      <CompositeTypography string='Up&Down' value={tmpHole.upDown === 'x' ? 'YES' : tmpHole.upDown === 'n' ? 'NO' : '-'} />
       {
         shots.length <= roundHoles - 1 ?
-          <Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
             <Button variant='contained' onClick={saveHole}>
               Save
             </Button>

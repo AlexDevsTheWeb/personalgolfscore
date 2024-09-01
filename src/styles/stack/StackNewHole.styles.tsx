@@ -4,12 +4,14 @@ import styled from 'styled-components';
 
 type StackProps = StackPropsMui;
 
-const StyledStack = styled(StackMui)<StackProps>(({}));
+const StyledStack = styled(StackMui)<StackProps>(() => ({
+  rowGap: '8px',
+}));
 
-const Stack: React.FC<StackProps> = props => {
+const StackNewHole: React.FC<StackProps> = props => {
   return (
     <StyledStack {...props}>{props.children}</StyledStack>
   )
 };
 
-export default Stack;
+export default StackNewHole;

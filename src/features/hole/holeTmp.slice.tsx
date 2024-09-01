@@ -1,49 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IShots } from "../../types/roundData.types";
+import { initialStateTmpHole } from "../../utils/constant.utils";
 import { calculateGirValue, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
 
-const initialState: IShots = {
-  holeNumber: 0,
-  chipClub: '',
-  distance: 0,
-  driveDistance: 0,
-  fairway: 0,
-  fir: 0,
-  gir: false,
-  girBogey: false,
-  greenSide: '',
-  greenSideL: 0,
-  greenSideO: 0,
-  greenSideR: 0,
-  greenSideS: 0,
-  hcp: 0,
-  out: 0,
-  par: 0,
-  points: 0,
-  pointsAvg: 0,
-  putts: 0,
-  puttsLength: [],
-  puttsUnder2: 0,
-  putts2_4: 0,
-  putts4_6: 0,
-  putts6_10: 0,
-  puttsOver10: 0,
-  sand: 0,
-  strokes: 0,
-  teeClub: '',
-  toGreen: '',
-  toGreenMeters: 0,
-  toGreenMetersOver100: 0,
-  toGreenMeters80_100: 0,
-  toGreenMeters60_80: 0,
-  toGreenMetersUnder60: 0,
-  upDown: '',
-  upDownX: 0,
-  upDownN: 0,
-  upDownE: 0,
-  scramble: 0,
-  water: 0,
-};
+const initialState: IShots = initialStateTmpHole;
 
 const holeTmpSlice = createSlice({
   name: 'holeTmp',
@@ -69,7 +29,7 @@ const holeTmpSlice = createSlice({
           state[name] = value;
         }
       }
-
+      state.bounceBack = state.score - state.par;
       state.points = calculateStablefordPoints({
         hcp: Number(state.hcp),
         par: Number(state.par),

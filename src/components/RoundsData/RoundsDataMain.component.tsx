@@ -15,15 +15,22 @@ const RoundsDataMain = () => {
     return <Typography>Loading...</Typography>
   }
 
+
   return (
     <BoxBetween>
       <RoundsHeadDetails />
-      <RoundsDataShotTable
-        roundDate={mainData.roundDate}
-        roundCourse={mainData.roundCourse}
-        roundPar={roundPar}
-        totals={roundTotals}
-        holes={holes} />
+
+      {roundTotals
+        ? <RoundsDataShotTable
+          roundDate={mainData.roundDate}
+          roundCourse={mainData.roundCourse}
+          roundPar={roundPar}
+          totals={roundTotals}
+          holes={holes}
+
+        />
+        : <Typography>Loading ...</Typography>
+      }
     </BoxBetween>
   )
 }
