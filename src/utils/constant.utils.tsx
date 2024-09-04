@@ -255,3 +255,26 @@ export const initialPuttsStatistics: IPuttsStatistics = {
   },
 }
 
+export const puttsDistanceConversion = (category: string) => {
+  let result = '';
+  switch (category) {
+    case 'puttsU2M':
+      result = 'Under 2 Mts.';
+      break;
+    case 'putts24M':
+      result = '2 to 4 Mts.';
+      break;
+    case 'putts46M':
+      result = '4 to 6 Mts.';
+      break;
+    case 'putts610M':
+      result = '6 to 10 Mts.';
+      break;
+    case 'puttsO10M':
+      result = 'Over 10 Mts.';
+      break;
+  }
+  return result;
+
+}
+

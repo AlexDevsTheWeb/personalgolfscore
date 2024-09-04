@@ -68,6 +68,8 @@ export const totalsCalculator = (shots: IShots[]) => {
   const putts3More = shots.reduce((acc, curr) => acc + (curr.puttsLength.length > 2 ? 1 : 0), 0);
   const puttsDistGir = shots.reduce((acc, curr) => acc + (!!curr.gir ? Number(curr.puttsLength[0]) : 0), 0);
 
+
+
   const puttsStatistics = calculatePuttsStatistics(shots);
 
   const sand = shots.reduce((acc, curr) => acc + curr.sand + (curr.chipClub === 'b' ? 1 : 0), 0);
