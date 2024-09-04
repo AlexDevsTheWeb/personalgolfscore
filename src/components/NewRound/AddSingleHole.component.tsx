@@ -48,7 +48,7 @@ const AddSingleHole = () => {
   }
   const handleChangePutts = (e: any, putts: number) => {
     const updatedPuttsLength = [...puttsLength];
-    updatedPuttsLength[putts - 1] = e.target.value;
+    updatedPuttsLength[putts - 1] = Number(e.target.value);
     setPuttsLength(updatedPuttsLength);
   }
   const saveHole = () => {

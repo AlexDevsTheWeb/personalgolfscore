@@ -39,22 +39,22 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                   <TableCell align='center' key={index}>
                     <Grid container spacing={1}>
                       <Grid item xs={2}>
-                        <Typography fontWeight={'bold'}>{value.puttsHoled}</Typography>
+                        <Typography fontWeight={'bold'}>{!_.isNaN(value.puttsHoled) || _.isFinite(value.puttsHoled) ? value.puttsHoled : '-'}</Typography>
                       </Grid>
                       <Grid item xs={2}>
-                        <Typography fontWeight={'bold'}>{value.puttsAttempts}</Typography>
+                        <Typography fontWeight={'bold'}>{!_.isNaN(value.puttsAttempts) || _.isFinite(value.puttsAttempts) ? value.puttsAttempts : '-'}</Typography>
                       </Grid>
                       <Grid item xs={2}>
-                        <Typography fontWeight={'bold'}>{value.puttsAverage}</Typography>
+                        <Typography fontWeight={'bold'}>{!_.isNaN(value.puttsAverage) || _.isFinite(value.puttsAverage) ? value.puttsAverage : '-'}</Typography>
                       </Grid>
                       <Grid item xs={2}>
-                        <Typography fontWeight={'bold'}>{value.puttsSecondoAverageLength}</Typography>
+                        <Typography fontWeight={'bold'}>{!_.isNaN(value.puttsSecondoAverageLength) || _.isFinite(value.puttsSecondoAverageLength) ? value.puttsSecondoAverageLength : '-'}</Typography>
                       </Grid>
                       <Grid item xs={2}>
-                        <Typography fontWeight={'bold'}>{value.puttsAverageDistance}</Typography>
+                        <Typography fontWeight={'bold'}>{!_.isNaN(value.puttsAverageDistance) || _.isFinite(value.puttsAverageDistance) ? value.puttsAverageDistance : '-'}</Typography>
                       </Grid>
                       <Grid item xs={2}>
-                        <Typography fontWeight={'bold'}>{value.putts3}</Typography>
+                        <Typography fontWeight={'bold'}>{!_.isNaN(value.putts3) || _.isFinite(value.putts3) ? value.putts3 : '-'}</Typography>
                       </Grid>
                     </Grid>
                   </TableCell>
