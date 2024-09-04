@@ -16,18 +16,9 @@ export const iAmintheZone = (start: number, finish: number, shots: number) => {
 }
 
 export const divide = (first: number, second: number) => {
-
   let result = 0;
-
-  const what = `first: ${first} / second: ${second} -> result: ${result}`;
-  console.log(what);
-  console.log("------------");
-
   if (first !== 0 && (second !== 0 || second !== 0.00)) {
     result = first / second;
   }
-
-
-
   return result
 }
