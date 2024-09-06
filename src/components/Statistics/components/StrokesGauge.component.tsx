@@ -18,7 +18,7 @@ interface IPointsGaugeValues {
   values: IPointsGauge;
 }
 
-const StrokesGauge = ({ values }: IPointsGaugeValues) => {
+export const StrokesGauge = ({ values }: IPointsGaugeValues) => {
 
   const { name, value, holes, coursePar } = values;
 
@@ -121,6 +121,4 @@ const StrokesGauge = ({ values }: IPointsGaugeValues) => {
       </CardContent>
     </Card>
   )
-}
-
-export default StrokesGauge
+};

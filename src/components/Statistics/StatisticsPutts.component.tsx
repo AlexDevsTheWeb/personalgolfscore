@@ -10,7 +10,7 @@ interface IStatisticsPuttsProps {
   score: IRoundScoreTotalsAvg,
 }
 
-const StatisticsPutts = ({ putts, gir, score }: IStatisticsPuttsProps) => {
+export const StatisticsPutts = ({ putts, gir, score }: IStatisticsPuttsProps) => {
 
   return (
     <BoxGeneralShadow sx={{ width: '100%' }}>
@@ -55,6 +55,4 @@ const StatisticsPutts = ({ putts, gir, score }: IStatisticsPuttsProps) => {
       </TableContainer>
     </BoxGeneralShadow>
   )
-}
-
-export default StatisticsPutts
+};

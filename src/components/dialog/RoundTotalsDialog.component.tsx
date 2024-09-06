@@ -24,7 +24,7 @@ interface IRoundTotalsProps {
   coursePar?: number;
 }
 
-const RoundTotalsDialog = ({ open, holes, totals, handleClose }: IRoundTotalsProps) => {
+export const RoundTotalsDialog = ({ open, holes, totals, handleClose }: IRoundTotalsProps) => {
   return (
     <Dialog
       fullScreen
@@ -42,5 +42,3 @@ const RoundTotalsDialog = ({ open, holes, totals, handleClose }: IRoundTotalsPro
     </Dialog>
   )
 }
-
-export default RoundTotalsDialog

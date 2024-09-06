@@ -16,7 +16,7 @@ interface IPenaltiesPieValues {
 }
 
 
-const PieChartsPenalties = ({ values }: IPenaltiesPieValues) => {
+export const PieChartsPenalties = ({ values }: IPenaltiesPieValues) => {
   const { name, value: { totWater, totOut } } = values;
 
   return (
@@ -78,6 +78,4 @@ const PieChartsPenalties = ({ values }: IPenaltiesPieValues) => {
       </CardContent>
     </Card>
   )
-}
-
-export default PieChartsPenalties
+};

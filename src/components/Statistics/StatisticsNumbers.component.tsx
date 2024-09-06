@@ -9,7 +9,7 @@ interface IStatisticNumbersProps {
   coursePar: number;
 }
 
-const StatisticsNumbers = ({ roundDate, roundCourse, totals, shots, coursePar }: IStatisticNumbersProps) => {
+export const StatisticsNumbers = ({ roundDate, roundCourse, totals, shots, coursePar }: IStatisticNumbersProps) => {
 
   return (
     <></>
@@ -51,6 +51,4 @@ const StatisticsNumbers = ({ roundDate, roundCourse, totals, shots, coursePar }:
     // </Box >
 
   )
-}
-
-export default StatisticsNumbers
+};

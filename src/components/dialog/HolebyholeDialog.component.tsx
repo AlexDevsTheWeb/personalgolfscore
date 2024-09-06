@@ -26,7 +26,7 @@ interface IDialogProps {
   coursePar: number;
 }
 
-const HolebyholeDialog = ({ open, handleCloseHolebyHole, totals, shots, roundDate, roundCourse, coursePar }: IDialogProps) => {
+export const HolebyholeDialog = ({ open, handleCloseHolebyHole, totals, shots, roundDate, roundCourse, coursePar }: IDialogProps) => {
   return (
 
     <Dialog
@@ -61,10 +61,5 @@ const HolebyholeDialog = ({ open, handleCloseHolebyHole, totals, shots, roundDat
         </Table>
       </BoxBetween>
     </Dialog>
-
-
-
   )
 }
-
-export default HolebyholeDialog

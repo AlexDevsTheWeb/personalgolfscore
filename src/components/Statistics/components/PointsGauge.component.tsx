@@ -18,7 +18,7 @@ interface IPointsGaugeValues {
   values: IPointsGauge;
 }
 
-const PointsGauge = ({ values }: IPointsGaugeValues) => {
+export const PointsGauge = ({ values }: IPointsGaugeValues) => {
 
   const { name, value, holes, percentage } = values;
 
@@ -125,6 +125,4 @@ const PointsGauge = ({ values }: IPointsGaugeValues) => {
       </CardContent>
     </Card>
   )
-}
-
-export default PointsGauge
+};

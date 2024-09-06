@@ -8,7 +8,7 @@ interface IRoundDataShotsTotals {
   coursePar: number;
 }
 
-const RoundsDataShotsTotals = ({ totals, shots, coursePar }: IRoundDataShotsTotals) => {
+export const RoundsDataShotsTotals = ({ totals, shots, coursePar }: IRoundDataShotsTotals) => {
 
   return (
     <Accordion>
@@ -26,5 +26,3 @@ const RoundsDataShotsTotals = ({ totals, shots, coursePar }: IRoundDataShotsTota
 
   )
 }
-
-export default RoundsDataShotsTotals

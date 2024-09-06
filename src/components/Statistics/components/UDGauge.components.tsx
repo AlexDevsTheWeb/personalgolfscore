@@ -18,7 +18,7 @@ interface IPointsGaugeValues {
   values: IPointsGauge;
 }
 
-const UDGauge = ({ values }: IPointsGaugeValues) => {
+export const UDGauge = ({ values }: IPointsGaugeValues) => {
   const { name, value: { X, N } } = values;
 
   const upTotals = {
@@ -185,6 +185,4 @@ const UDGauge = ({ values }: IPointsGaugeValues) => {
       </CardContent>
     </Card>
   )
-}
-
-export default UDGauge
+};

@@ -16,7 +16,7 @@ interface IPenaltiesPieValues {
   values: IPenaltiesPie;
 }
 
-const PieChartFairways = ({ values }: IPenaltiesPieValues) => {
+export const PieChartFairways = ({ values }: IPenaltiesPieValues) => {
   const { name, value: { totFairwaysCenter, totFairwaysLeft, totFairwaysRight }, holes } = values;
 
   return (
@@ -78,4 +78,3 @@ const PieChartFairways = ({ values }: IPenaltiesPieValues) => {
   )
 }
 
-export default PieChartFairways

@@ -1,9 +1,4 @@
 
-export const useGetVsParTotals = (strokes: number, par: number, total?: boolean) => {
-  const diff = strokes - par;
-  const result = { value: diff };
-  return result;
-}
 export const useGetVsPar = (strokes: number, par: number, total?: boolean) => {
   const diff = strokes - par;
   let result = {

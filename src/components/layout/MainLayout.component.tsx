@@ -60,7 +60,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-const MainLayout = () => {
+export const MainLayout = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerClick = () => {
@@ -131,5 +131,3 @@ const MainLayout = () => {
     </Box>
   );
 }
-
-export default MainLayout
