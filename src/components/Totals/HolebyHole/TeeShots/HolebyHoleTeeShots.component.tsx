@@ -1,29 +1,22 @@
-import { Divider, Grid, Paper, Stack, Table, TableBody, TableContainer, TableHead, Typography } from "@mui/material"
-import _ from "lodash"
-import { TableCell, TableRow } from "../../../../styles"
-import GridPuttsStat from "../../../../styles/grid/GridPuttsStat.styles"
-import { IRoundTotalsPutts } from "../../../../types/roundTotals.types"
-import { puttsDistanceConversion } from "../../../../utils/constant.utils"
-import { formatPerc } from "../../../../utils/number/number.utils"
-import ShotsTableHeaderStack from "../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component"
+import { Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import _ from "lodash";
+import { IRoundTotals } from "../../../../types/roundTotals.types";
 
-interface IHolebyHolePutts {
-  totalsPutts: IRoundTotalsPutts
+interface IHolebyHoleTeeShots {
+  totals: IRoundTotals
 }
 
-const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
+const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
 
-  const { puttsStatistics } = totalsPutts;
-
-  const puttsCat = Object.keys(puttsStatistics);
+  console.log("TOTALS: ", totals);
 
   return (
     <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Typography variant='headline2'>PUTTS STATISTICS</Typography>
+      <Typography variant='headline2'>TEE SHOTS STATISTICS</Typography>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            {
+            {/* {
               puttsCat.map((distance: string, index: number) => {
                 return (
                   <TableCell align='center' key={index} variant='putt'>
@@ -31,13 +24,13 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                   </TableCell>
                 )
               })
-            }
+            } */}
           </TableRow>
         </TableHead>
 
         <TableBody key={_.uniqueId("putts_")}>
           <TableRow>
-            {
+            {/* {
               Object.entries(puttsStatistics).map(([key, value], index: number) => {
                 return (
                   <TableCell align='center' key={index}>
@@ -107,12 +100,12 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                     </Stack>
                   </TableCell>
                 )
-              })}
+              })} */}
           </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  )
 }
 
-export default HolebyHolePutts
+export default HolebyHoleTeeShots

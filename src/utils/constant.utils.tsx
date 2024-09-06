@@ -1,5 +1,5 @@
 import { IShots } from "../types/roundData.types";
-import { IPuttsStatistics, IRoundTotals } from "../types/roundTotals.types";
+import { IPuttsStatistics, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
 
 export const parList = ['3', '4', '5'];
 export const hcpList18 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',];
@@ -57,6 +57,52 @@ export const initialStateRoundTotals: IRoundTotals = {
     fairwayCenter: 0,
     fairwayLeft: 0,
     fairwayRight: 0,
+  },
+  teeShots: {
+    teeDriver: {
+      fairwayHits: 0,
+      attempts: 0,
+      averageDistance: 0,
+      missLeft: 0,
+      missRight: 0,
+      noGreen: 0,
+      fairwayCenterPCT: 0,
+      fairwayLeftPCT: 0,
+      fairwayRightPCT: 0,
+    },
+    teeFW: {
+      fairwayHits: 0,
+      attempts: 0,
+      averageDistance: 0,
+      missLeft: 0,
+      missRight: 0,
+      noGreen: 0,
+      fairwayCenterPCT: 0,
+      fairwayLeftPCT: 0,
+      fairwayRightPCT: 0,
+    },
+    teeHY: {
+      fairwayHits: 0,
+      attempts: 0,
+      averageDistance: 0,
+      missLeft: 0,
+      missRight: 0,
+      noGreen: 0,
+      fairwayCenterPCT: 0,
+      fairwayLeftPCT: 0,
+      fairwayRightPCT: 0,
+    },
+    teeIron: {
+      fairwayHits: 0,
+      attempts: 0,
+      averageDistance: 0,
+      missLeft: 0,
+      missRight: 0,
+      noGreen: 0,
+      fairwayCenterPCT: 0,
+      fairwayLeftPCT: 0,
+      fairwayRightPCT: 0,
+    },
   },
   gir: {
     totals: 0,
@@ -286,5 +332,52 @@ export const puttsDistanceConversion = (category: string) => {
   }
   return result;
 
+}
+
+export const initialTeeShotsStatistics: IRoundTeeShotsTotals = {
+  teeDriver: {
+    fairwayHits: 0,
+    attempts: 0,
+    averageDistance: 0,
+    missLeft: 0,
+    missRight: 0,
+    noGreen: 0,
+    fairwayCenterPCT: 0,
+    fairwayLeftPCT: 0,
+    fairwayRightPCT: 0,
+  },
+  teeFW: {
+    fairwayHits: 0,
+    attempts: 0,
+    averageDistance: 0,
+    missLeft: 0,
+    missRight: 0,
+    noGreen: 0,
+    fairwayCenterPCT: 0,
+    fairwayLeftPCT: 0,
+    fairwayRightPCT: 0,
+  },
+  teeHY: {
+    fairwayHits: 0,
+    attempts: 0,
+    averageDistance: 0,
+    missLeft: 0,
+    missRight: 0,
+    noGreen: 0,
+    fairwayCenterPCT: 0,
+    fairwayLeftPCT: 0,
+    fairwayRightPCT: 0,
+  },
+  teeIron: {
+    fairwayHits: 0,
+    attempts: 0,
+    averageDistance: 0,
+    missLeft: 0,
+    missRight: 0,
+    noGreen: 0,
+    fairwayCenterPCT: 0,
+    fairwayLeftPCT: 0,
+    fairwayRightPCT: 0,
+  },
 }
 

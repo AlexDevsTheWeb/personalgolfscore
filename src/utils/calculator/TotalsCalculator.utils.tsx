@@ -2,9 +2,11 @@ import _ from "lodash";
 import { IShots } from "../../types/roundData.types";
 import { IRoundTotals } from "../../types/roundTotals.types";
 import { initialStateRoundTotals } from "../constant.utils";
-import { calculatePuttsStatistics } from "../totals/totals.utils";
+import { calculatePuttsStatistics, calculateTeeShotsStatistics } from "../totals/totals.utils";
 
 export const totalsCalculator = (shots: IShots[]) => {
+
+  console.log("SHOTS: ", shots);
   let totals: IRoundTotals = initialStateRoundTotals;
   const holes = shots.length;
   const shotsIN = _.slice(shots, 0, 9);
@@ -30,6 +32,14 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.scorePar3 += (curr.par === 3 ? curr.strokes : 0);
     acc.scorePar4 += (curr.par === 4 ? curr.strokes : 0);
     acc.scorePar5 += (curr.par === 5 ? curr.strokes : 0);
+
+    acc.teeDriver += (curr.teeClub === 'DRIVER' ? 1 : 0);
+    acc.teeFW += (curr.teeClub.includes('w') ? 1 : 0);
+    acc.teeHY += (curr.teeClub.includes('y') ? 1 : 0);
+    acc.teeIron += (curr.teeClub.includes('i') ? 1 : 0);
+    acc.noGreen += (curr.toGreen === 'NO' ? 1 : 0);
+
+
     acc.fairwayCenter += (curr.fairway === 5 ? 1 : 0);
     acc.fairwayLeft += (curr.fairway === 4 ? 1 : 0);
     acc.fairwayRight += (curr.fairway === 6 ? 1 : 0);
@@ -51,7 +61,7 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.out += curr.out;
 
     return acc
-  }, { par: 0, score: 0, points: 0, scoreEagleBetter: 0, scoreBirdie: 0, scorePar: 0, scoreBogey: 0, scoreDoubleBogeyWorst: 0, scorePar3: 0, scorePar4: 0, scorePar5: 0, fairwayCenter: 0, fairwayLeft: 0, fairwayRight: 0, gir: 0, girBogey: 0, upDown: 0, putts: 0, upDownTotals: 0, scramble: 0, puttsGIR: 0, puttsThree: 0, putts1: 0, putts2: 0, putts3More: 0, puttsDistGir: 0, sand: 0, sandSaved: 0, water: 0, out: 0 });
+  }, { par: 0, score: 0, points: 0, scoreEagleBetter: 0, scoreBirdie: 0, scorePar: 0, scoreBogey: 0, scoreDoubleBogeyWorst: 0, scorePar3: 0, scorePar4: 0, scorePar5: 0, teeDriver: 0, teeFW: 0, teeHY: 0, teeIron: 0, noGreen: 0, fairwayCenter: 0, fairwayLeft: 0, fairwayRight: 0, gir: 0, girBogey: 0, upDown: 0, putts: 0, upDownTotals: 0, scramble: 0, puttsGIR: 0, puttsThree: 0, putts1: 0, putts2: 0, putts3More: 0, puttsDistGir: 0, sand: 0, sandSaved: 0, water: 0, out: 0 });
 
   // SHOTS IN
   const totalIN = shotsIN.reduce((acc, curr) => {
@@ -90,6 +100,7 @@ export const totalsCalculator = (shots: IShots[]) => {
   const scrambleTotals = holes - totalALL.gir
 
   const puttsStatistics = calculatePuttsStatistics(shots);
+  const teeShotsStatistics = calculateTeeShotsStatistics(shots);
 
   totals = {
     ...totals,
@@ -134,6 +145,52 @@ export const totalsCalculator = (shots: IShots[]) => {
       fairwayCenter: totalALL.fairwayCenter,
       fairwayLeft: totalALL.fairwayLeft,
       fairwayRight: totalALL.fairwayRight,
+    },
+    teeShots: {
+      teeDriver: {
+        fairwayHits: 0,
+        attempts: totalALL.teeDriver,
+        averageDistance: 0,
+        missLeft: 0,
+        missRight: 0,
+        noGreen: totalALL.noGreen,
+        fairwayCenterPCT: 0,
+        fairwayLeftPCT: 0,
+        fairwayRightPCT: 0,
+      },
+      teeFW: {
+        fairwayHits: 0,
+        attempts: totalALL.teeDriver,
+        averageDistance: 0,
+        missLeft: 0,
+        missRight: 0,
+        noGreen: totalALL.noGreen,
+        fairwayCenterPCT: 0,
+        fairwayLeftPCT: 0,
+        fairwayRightPCT: 0,
+      },
+      teeHY: {
+        fairwayHits: 0,
+        attempts: totalALL.teeDriver,
+        averageDistance: 0,
+        missLeft: 0,
+        missRight: 0,
+        noGreen: totalALL.noGreen,
+        fairwayCenterPCT: 0,
+        fairwayLeftPCT: 0,
+        fairwayRightPCT: 0,
+      },
+      teeIron: {
+        fairwayHits: 0,
+        attempts: totalALL.teeDriver,
+        averageDistance: 0,
+        missLeft: 0,
+        missRight: 0,
+        noGreen: totalALL.noGreen,
+        fairwayCenterPCT: 0,
+        fairwayLeftPCT: 0,
+        fairwayRightPCT: 0,
+      },
     },
     gir: {
       totals: totalALL.gir,

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import BoxGeneralShadow from "../../../styles/box/BoxGeneralShadow.styles";
 import HolebyHolePutts from "./Putts/HolebyHolePutts.component";
+import HolebyHoleTeeShots from "./TeeShots/HolebyHoleTeeShots.component";
 
 const HolebyHoleTotals = () => {
 
@@ -9,6 +10,7 @@ const HolebyHoleTotals = () => {
 
   return (
     <BoxGeneralShadow>
+      <HolebyHoleTeeShots totals={roundTotals} />
       <HolebyHolePutts totalsPutts={roundTotals.putts} />
     </BoxGeneralShadow>
   )

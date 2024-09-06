@@ -1,5 +1,5 @@
 import { IShots } from "../../types/roundData.types";
-import { initialPuttsStatistics } from "../constant.utils";
+import { initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
 import { divide, iAmintheZone } from "./totalsPutts.utils";
 
 
@@ -82,4 +82,75 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
   };
 
   return finalResult;
+}
+
+export const calculateTeeShotsStatistics = (shots: IShots[]) => {
+
+  const calculateTeeShots = (club: string) => {
+    return shots.reduce((acc, curr) => {
+      const rightClub = isTheRightClub(club, curr.teeClub);
+
+      acc.fairwayHits += (rightClub && curr.fairway === 5 ? 1 : 0);
+      acc.attempts += (rightClub ? 1 : 0);
+      acc.averageDistance += (rightClub ? curr.driveDistance : 0);
+      acc.missLeft += (rightClub && curr.fairway === 4 ? 1 : 0);
+      acc.missRight += (rightClub && curr.fairway === 5 ? 1 : 0);
+      acc.noGreen += (rightClub && curr.toGreen === 'NO' ? 1 : 0);
+
+      return acc;
+    }, {
+      fairwayHits: 0,
+      attempts: 0,
+      averageDistance: 0,
+      missLeft: 0,
+      missRight: 0,
+      noGreen: 0,
+    });
+  };
+  const results = [
+    calculateTeeShots('DRIVER'),
+    calculateTeeShots('FAIRWAY WOOD'),
+    calculateTeeShots('HYBRID'),
+    calculateTeeShots('IRONS'),
+  ];
+
+  const finalResult = {
+    ...initialTeeShotsStatistics,
+
+    teeDriver: {
+      ...results[0],
+      fairwayCenterPCT: 0,
+      fairwayLeftPCT: 0,
+      fairwayRightPCT: 0,
+    },
+    teeFW: {
+      ...results[1],
+      fairwayCenterPCT: 0,
+      fairwayLeftPCT: 0,
+      fairwayRightPCT: 0,
+    },
+    teeHY: {
+      ...results[2],
+      fairwayCenterPCT: 0,
+      fairwayLeftPCT: 0,
+      fairwayRightPCT: 0,
+    },
+    teeIron: {
+      ...results[3],
+      fairwayCenterPCT: 0,
+      fairwayLeftPCT: 0,
+      fairwayRightPCT: 0,
+    },
+  };
+
+  return finalResult;
+
+}
+
+const isTheRightClub = (wanted: string, teeClub: string) => {
+  let isTheRightClub = false;
+
+  isTheRightClub = wanted === teeClub ? true : false;
+
+  return isTheRightClub;
 }
