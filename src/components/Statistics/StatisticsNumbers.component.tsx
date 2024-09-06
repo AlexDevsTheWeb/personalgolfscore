@@ -1,111 +1,55 @@
-import { Grid, Typography } from '@mui/material'
-import { Gauge, PieChart, gaugeClasses, pieArcLabelClasses } from '@mui/x-charts'
-import { BoxPlayer } from '../../styles'
+import { IShots } from '../../types/roundData.types'
+import { IRoundTotals } from '../../types/roundTotals.types'
 
-interface Props {
-  totals: any,
-  holes: number
+interface IStatisticNumbersProps {
+  roundDate?: string;
+  roundCourse?: string;
+  totals: IRoundTotals;
+  shots: IShots[];
+  coursePar: number;
 }
 
-const StatisticsNumbers = ({ totals, holes }: Props) => {
+const StatisticsNumbers = ({ roundDate, roundCourse, totals, shots, coursePar }: IStatisticNumbersProps) => {
+
   return (
-    <BoxPlayer>
-      <Grid container spacing={0}>
-        <Grid item md={10}>
-          <Typography>POINTS</Typography>
-          <Gauge width={100} height={100} value={totals.points / holes} valueMin={1} valueMax={100}
-            title='POINTS'
-            sx={(theme) => ({
-              [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 30,
-                fontWeight: 'bold',
-                transform: 'translate(0px, 0px)',
-              },
-              [`& .${gaugeClasses.valueArc}`]: {
-                fill: (totals.points / holes >= 10)
-                  ? theme.palette.primary.main
-                  : '#f25448',
-              },
-              [`& .${gaugeClasses.referenceArc}`]: {
-                fill: theme.palette.divider,
-              },
-            })}
-            text={
-              ({ value }) => `${value}`
+    <></>
+    // <Box sx={{ padding: 1.5, display: 'flex', flexDirection: 'column', gap: 2 }}>
+    //   {
+    //     (roundDate && roundCourse) &&
+    //     <BoxBetween>
+    //       <RowCard
+    //         label={"Round course"}
+    //         value={roundCourse}
+    //         name="round course"
+    //       />
+    //       <RowCard
+    //         label={"Round date"}
+    //         value={dayjs(roundDate).format("dddd, MMMM D, YYYY")}
+    //         name="round date"
+    //       />
+    //     </BoxBetween>
+    //   }
 
-            } />
-          <Typography>GIR</Typography>
-          <Gauge width={100} height={100} value={totals.gir / holes} valueMin={1} valueMax={100}
+    //   <BoxGeneralShadow>
+    //     <StrokesGauge values={{ name: 'strokes', value: totals.score, holes: shots.length, coursePar: coursePar }} />
+    //     <PointsGauge values={{ name: 'points', value: totals.points, holes: shots.length, percentage: false }} />
+    //     <PointsGauge values={{ name: 'strokes', value: totals.score, holes: shots.length, percentage: false }} />
+    //   </BoxGeneralShadow>
+    //   <BoxGeneralShadow>
 
-            sx={(theme) => ({
-              [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 18,
-                transform: 'translate(0px, 0px)',
-              },
-              [`& .${gaugeClasses.valueArc}`]: {
-                fill: totals.gir / holes >= 50 ? '#52b202' : '#f25448',
-              },
-              [`& .${gaugeClasses.referenceArc}`]: {
-                fill: theme.palette.divider,
-                border: '1px solid #ff9900'
-              },
-            })}
-            text={
-              ({ value }) => `${value}%`
-            } />
-          <Typography>Putts</Typography>
-          <Gauge width={100} height={100} value={totals.putts / holes} valueMin={1} />
-          <Gauge width={100} height={100} value={totals.putts} valueMin={1} />
-        </Grid>
-        <Grid item md={6}>
-          <Typography>Fairway in regulation</Typography>
-          <PieChart
-            series={[
-              {
-                arcLabel: (item) => `${item.label}`,
-                arcLabelMinAngle: 45,
-                data: [
-                  { id: 0, value: totals.fir / holes, label: 'FAIRWAYS (%)', color: '#5f8d65' },
-                  { id: 1, value: totals.left / holes, label: 'Left (%)', color: '#d29c70' },
-                  { id: 2, value: totals.right / holes, label: 'Right (%)', color: '#fcb173' }
-                ],
-              },
-            ]}
-            sx={{
-              [`& .${pieArcLabelClasses.root}`]: {
-                fill: 'white',
-                fontWeight: 'bold',
-              },
-            }}
-            height={250}
-          />
-        </Grid>
-        <Grid item md={5}>
-          <Typography>Penalties</Typography>
-          <PieChart
-            series={[
-              {
-                arcLabel: (item) => `${item.label}`,
-                arcLabelMinAngle: 30,
-                data: [
-                  { id: 3, value: totals.sand / holes, label: 'Sands', color: '#bb8c00' },
-                  { id: 4, value: totals.water / holes, label: 'Waters', color: '#70b0d2' },
-                  { id: 5, value: totals.out / holes, label: 'Outs', color: '#878787' }
-                ],
-              },
-            ]}
-            sx={{
-              [`& .${pieArcLabelClasses.root}`]: {
-                fill: 'white',
-                fontWeight: 'bold',
-              },
-            }}
-            height={250}
-          />
+    //     <PointsGauge values={{ name: 'gir', value: totals.gir, holes: shots.length, percentage: true }} />
+    //     <PointsGauge values={{ name: 'putts', value: totals.girBogey, holes: shots.length, percentage: false }} />
+    //   </BoxGeneralShadow>
 
-        </Grid>
-      </Grid>
-    </BoxPlayer>
+    //   <BoxGeneralShadow>
+    //     <PieChartFairways values={{ name: 'fairways', value: totals.fairway, holes: shots.filter((s) => s.par !== 3).length }} />
+    //     <PieChartsPenalties values={{ name: 'penalties', value: totals }} />
+    //   </BoxGeneralShadow>
+    //   <BoxGeneralShadow>
+    //     <UDGauge values={{ name: 'up&down', value: totals.upDown, holes: shots.length, percentage: true }} />
+    //   </BoxGeneralShadow>
+    // </Box >
+
   )
 }
 

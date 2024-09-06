@@ -1,12 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getPlayerInfoThunk } from "./player.thunk";
 import { IPlayer, InitialStatePlayer, PlayerPayload } from "../../types/player.types";
-// import { editCarrierThunk, getCarrierDetailsThunk } from "./carrierThunk";
-// import {
-//   CarrierPayload,
-//   CarrierResponse,
-//   InitialStateCarrier,
-// } from "types/Carrier";
+import { getPlayerInfoThunk } from "./player.thunk";
+
 
 const initialState: InitialStatePlayer = {
   isLoading: false,
@@ -22,12 +17,7 @@ const playerSlice = createSlice({
   name: "player",
   initialState,
   reducers: {
-    // setIsEditing: (state, { payload }) => {
-    //   state.isEditing = payload;
-    // },
-    // setCarrierLogo: (state, { payload }) => {
-    //   state.carrierLogo = payload;
-    // },
+
     resetPlayer: () => initialState,
   },
   extraReducers: (builder) => {

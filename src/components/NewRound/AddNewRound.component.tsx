@@ -3,10 +3,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClubsDetails } from '../../features/golfBag/golfBag.slice';
 import { RootState } from '../../store/store';
-import { Stack } from '../../styles';
+import StackNewHole from '../../styles/stack/StackNewHole.styles';
 import AddNewRoundHoles from './AddNewRoundHoles.component';
 import AddNewRoundJson from './AddNewRoundJson.component';
-import AddNewRoundTotals from './AddNewRoundTotals.component';
 
 const NewRoundMain = () => {
   const dispatch = useDispatch<any>();
@@ -19,15 +18,11 @@ const NewRoundMain = () => {
     // eslint-disable-next-line
   }, []);
 
-
   return (
-    <Stack sx={{ rowGap: 3 }}>
+    <StackNewHole>
       <AddNewRoundJson />
-      {/* <AddNewRoundMain /> */}
       <AddNewRoundHoles />
-      <AddNewRoundTotals />
-    </Stack>
-
+    </StackNewHole>
   )
 }
 

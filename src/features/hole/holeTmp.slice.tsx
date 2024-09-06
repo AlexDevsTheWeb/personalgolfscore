@@ -1,33 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IShots } from "../../types/roundData.types";
-import { calculateGirValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
+import { initialStateTmpHole } from "../../utils/constant.utils";
+import { calculateGirValue, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
 
-
-const initialState: IShots = {
-  holeNumber: 0,
-  chipClub: '',
-  distance: 0,
-  driveDistance: 0,
-  fairway: '',
-  fir: 0,
-  gir: false,
-  girBogey: false,
-  greenSide: '',
-  hcp: 0,
-  out: 0,
-  par: 0,
-  points: 0,
-  pointsAvg: 0,
-  putts: 0,
-  puttsLength: [],
-  sand: 0,
-  strokes: 0,
-  teeClub: '',
-  toGreen: '',
-  toGreenMeters: 0,
-  upDown: '',
-  water: 0,
-};
+const initialState: IShots = initialStateTmpHole;
 
 const holeTmpSlice = createSlice({
   name: 'holeTmp',
@@ -40,7 +16,20 @@ const holeTmpSlice = createSlice({
         }
         else { state[name] = Number(value); }
       }
-      else { state[name] = value; }
+      else {
+        if (name === 'greenSide') {
+          state[name] = value;
+          if (state[`${name}L`] !== 0) { state[`${name}L`] = 0 }
+          if (state[`${name}O`] !== 0) { state[`${name}O`] = 0 }
+          if (state[`${name}R`] !== 0) { state[`${name}R`] = 0 }
+          if (state[`${name}S`] !== 0) { state[`${name}S`] = 0 }
+          state[`${name}${value.substring(0, 1)}`] = 1;
+        }
+        else {
+          state[name] = value;
+        }
+      }
+      state.bounceBack = state.score - state.par;
       state.points = calculateStablefordPoints({
         hcp: Number(state.hcp),
         par: Number(state.par),
@@ -66,6 +55,11 @@ const holeTmpSlice = createSlice({
         parValue: Number(state.par),
         strokesValue: Number(state.strokes),
         chipClubs: chipClubs
+      })
+      state.scramble = calculateScrambleValue({
+        girValue: Number(state.gir),
+        parValue: Number(state.par),
+        strokesValue: Number(state.strokes)
       })
     },
     setHoleNumber: (state: any, { payload }: PayloadAction<{ newHoleNumber: number }>) => {

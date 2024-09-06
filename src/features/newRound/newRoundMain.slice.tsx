@@ -14,14 +14,9 @@ const initialState: InitialStateNewRound = {
     roundTee: '',
     roundPar: 0,
     roundPlayingHCP: 0,
-    roundStrokes: 0
+    roundNumber: 0
   }
 }
-
-// export const getAllRounds = createAsyncThunk(
-//   "rounds/getAllRounds",
-//   getAllRoundsThunk
-// );
 
 const newRoundMainSlice = createSlice({
   name: 'newRoundsMain',

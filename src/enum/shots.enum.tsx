@@ -5,13 +5,8 @@ export enum STABLEFORDPOINTS {
   PAR = 2,
   BOGEY = 1,
   DOUBLEBOGEY = 0,
-}
-
-export enum STABLEFORDSTARS {
-  ZERO = '',
-  ONE = '*',
-  TWO = '**',
-  THREE = '***',
+  TRIPLEBOGEY = 0,
+  QUADRUPLEBOGEY = 0,
 }
 
 export enum CLUBSSELECTION {
@@ -23,7 +18,9 @@ export enum CLUBSSELECTION {
 export enum CHIPCONDITION {
   GREEN = 'greenSide',
   CHIP = 'chipClub',
-  FAIRWAY = 'fairway'
+  FAIRWAY = 'fairway',
+  TEECLUB = 'teeClub',
+  DRIVEDISTANCE = 'driveDistance'
 }
 
 export enum FAIRWAYSICONS {
@@ -36,15 +33,4 @@ export enum FAIRWAYSICONS {
   LONGLEFT = 'long left',
   LONGCENTER = 'long center',
   LONGRIGHT = 'long right'
-}
-export enum FAIRWAYS {
-  SHORTLEFT = '1 - Short left',
-  SHORTCENTER = '2 - Short center',
-  SHORTRIGHT = '3 - Short right',
-  MIDLEFT = '4 - Left',
-  MIDCENTER = '5 - Center',
-  MIDRIGHT = '6 - Right',
-  LONGLEFT = '7 - Long left',
-  LONGCENTER = '8 - Long center',
-  LONGRIGHT = '9 - Long right'
 }

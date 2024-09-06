@@ -7,5 +7,5 @@ export const formData = {
   roundTee: 'yellow',
   roundPar: 72,
   roundPlayingHCP: 29,
-  roundStrokes: 103,
+  roundNumber: 1,
 };

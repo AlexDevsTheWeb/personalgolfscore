@@ -16,7 +16,7 @@ export type PlayerPayload = {
   payload: PlayerResponse;
 };
 
-export type PlayerResponse = {
+type PlayerResponse = {
   playerID: string,
   firstName: string,
   lastName: string,

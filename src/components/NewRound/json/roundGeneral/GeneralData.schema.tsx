@@ -15,13 +15,13 @@ export const generalData: RJSFSchema =
       "type": 'string',
       "format": 'date',
     },
+    "roundNumber": { "type": 'number' },
     "roundTee": { "type": 'string' },
     "roundHoles": {
       "type": "number",
     },
     "roundPar": { "type": 'number' },
     "roundPlayingHCP": { "type": 'number' },
-    "roundStrokes": { "type": 'number' },
 
   },
 

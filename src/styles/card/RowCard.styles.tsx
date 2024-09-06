@@ -38,7 +38,7 @@ const RowCard: React.FC<RowCardProps> = (props) => {
   return (
     <Card variant={props.head ? 'roundHead' : 'player'}>
       <Typography variant='body'>
-        {labelName}
+        {`${labelName}:`}
       </Typography>
       <Typography variant='headline6'>
         {props.value}

@@ -1,0 +1,109 @@
+{
+	"playerID": "playerID",
+	"mainData": {
+		"roundCourse": "Golf Club Carimate",
+		"roundDate": "24/08/2024",
+		"roundNumber": 1,
+		"roundTee": "Yellow",
+		"coursePar": 71,
+		"playerHCP": 28
+	},
+	"score": {
+		"totals": 105,
+		"avg": "5.83",
+		"vsPar": 34,
+		"scoreIN": 56,
+		"scoreOUT": 49,
+		"vsParIN": 20,
+		"vsParOUT": 14,
+		"avgIN": "6.22",
+		"avgOUT": "5.44",
+		"par3": 4,
+		"par4": 11,
+		"par5": 3,
+		"scoreEagleBetter": 0,
+		"scoreBirdie": 0,
+		"scorePar": 2,
+		"scoreBogey": 8,
+		"scoreDoubleBogeyWorst": 8,
+		"scorePar3": 17,
+		"scorePar4": 62,
+		"scorePar5": 25
+	},
+	"points": {
+		"totals": 31,
+		"avg": "1.72",
+		"pointsIN": 13,
+		"pointsOUT": 18,
+		"avgIN": "1.44",
+		"avgOUT": "2.00"
+	},
+	"fairway": {
+		"total": 14,
+		"fairwayCenter": 5,
+		"fairwayLeft": 4,
+		"fairwayRight": 5
+	},
+	"gir": {
+		"totals": 2,
+		"avg": "0.11",
+		"totalsIN": 0,
+		"avgIN": "-",
+		"totalsOUT": 2,
+		"avgOUT": "0.22"
+	},
+	"girBogey": {
+		"totals": 10,
+		"avg": "0.56",
+		"totalsIN": 0,
+		"avgIN": "-",
+		"totalsOUT": 2,
+		"avgOUT": "0.22"
+	},
+	"scramble": {
+		"totals": 16,
+		"saved": 1,
+		"perc": 6.25
+	},
+	"upDown": {
+		"totals": 1,
+		"saved": 1,
+		"perc": 100
+	},
+	"putts": {
+		"totals": 39,
+		"avg": "2.11",
+		"totalsIN": 18,
+		"avgIN": "2",
+		"totalsOUT": 21,
+		"avgOUT": "2.33",
+		"puttsGir": 5,
+		"puttsGirIn": 0,
+		"puttsGirOut": 5,
+		"puttsThree": 6,
+		"puttsDistGir": 10
+	},
+	"sand": {
+		"totals": 3,
+		"avg": "0.17",
+		"saved": 0,
+		"avgSaved": "-",
+		"savedPerc": 0
+	},
+	"water": {
+		"totals": 0,
+		"avg": "-",
+		"totalsIN": 0,
+		"avgIN": "-",
+		"totalsOUT": 0,
+		"avgOUT": "-"
+	},
+	"out": {
+		"totals": 4,
+		"avg": "0.22",
+		"totalsIN": 3,
+		"avgIN": "0.33",
+		"totalsOUT": 1,
+		"avgOUT": "0.11"
+	}
+}

@@ -1,7 +1,6 @@
-import { STABLEFORDPOINTS, STABLEFORDSTARS } from "../../enum/shots.enum";
-import { IGirProps, IStablefordPointsProps, IUDProps } from "../../types/point.types";
-import { IShots } from "../../types/roundData.types";
-import { IShotsTotals } from "../../types/roundTotals.types";
+import { STABLEFORDPOINTS } from "../../enum/shots.enum";
+import { IGirProps, IScrambleProps, IStablefordPointsProps, IUDProps } from "../../types/point.types";
+import { IRoundScoreTotalsAvg } from "../../types/roundTotals.types";
 
 export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, roundPlayingHCP, roundHoles } = props;
@@ -23,6 +22,7 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   }
   return calculatePoints(newPar, Number(strokes));
 }
+
 export const calculateGirValue = (props: IGirProps) => {
   const { par, putts, strokes, bogey } = props;
   const girDiff = par + putts - strokes;
@@ -35,163 +35,158 @@ export const calculateGirValue = (props: IGirProps) => {
 }
 export const calculateUDValue = (props: IUDProps) => {
   const { girValue, chipClub, parValue, strokesValue, chipClubs } = props;
+  let result = '';
   if (chipClub !== '') {
     if (girValue === 1) {
-      return '';
+      result = '';
     }
     const validClub = chipClubs.filter((club: string) => club === chipClub);
     if (validClub.length > 0) {
-      if (parValue >= strokesValue) {
-        return 'x';
+      if (parValue === strokesValue) {
+        result = 'x';
       }
       else {
-        return 'n';
+        result = 'n';
       }
     }
     else {
-      return '';
+      result = '';
+    }
+  }
+  return result;
+}
+
+export const calculateScrambleValue = (props: IScrambleProps) => {
+  let result = 0;
+  const { strokesValue, parValue, girValue } = props
+  if (strokesValue === parValue && girValue !== 1) {
+    result = 1;
+  }
+  return result;
+};
+
+const calculatePoints = (par: number, strokes: number) => {
+  if (strokes !== 0 && par !== 0) {
+    if (strokes === par) {
+      return STABLEFORDPOINTS.PAR;
+    }
+    else if (strokes === par + 1) {
+      return STABLEFORDPOINTS.BOGEY;
+    }
+    else if (strokes >= par + 2) {
+      return STABLEFORDPOINTS.DOUBLEBOGEY;
+    }
+    else if (strokes >= par + 3) {
+      return STABLEFORDPOINTS.TRIPLEBOGEY;
+    }
+    else if (strokes >= par + 4) {
+      return STABLEFORDPOINTS.QUADRUPLEBOGEY;
+    }
+    else if (strokes === par - 1) {
+      return STABLEFORDPOINTS.BIRDIE;
+    }
+    else if (strokes === par - 2) {
+      return STABLEFORDPOINTS.EAGLE;
+    }
+    else if (strokes === par - 3) {
+      return STABLEFORDPOINTS.ALBATROSS;
     }
   }
 }
 
-// export const calculateStablefordStars = (props: IStablefordPointsProps) => {
-//   const { hcp, par, finalPlayerHCP, totalHoles } = props;
-//   let newPar = par;
-//   const diff = finalPlayerHCP - totalHoles;
-//   if (diff === 0) {
-//     newPar = newPar + 1
-//   }
-//   else if (diff < 0) {
-//     if (hcp <= diff) {
-//       newPar = newPar + 1;
-//     }
-//   }
-//   else if (diff > 0) {
-//     newPar = newPar + 1;
-//     if (hcp <= diff) {
-//       newPar = newPar + 1;
-//     }
-//   }
-//   return calculateStars(newPar, par);
-// }
+export function calculation(completeHole: any) {
+  const { puttsLength } = completeHole;
+  let puttsUnder2 = 0;
+  let putts2_4 = 0;
+  let putts4_6 = 0;
+  let putts6_10 = 0;
+  let puttsOver10 = 0;
+  let upDownX = 0;
+  let upDownN = 0;
+  let upDownE = 0;
+  let greenMetersOver100 = 0;
+  let greenMeters80_100 = 0;
+  let greenMeters60_80 = 0;
+  let greenMetersUnder60 = 0;
+  let scramble = 0;
 
-export const calculatePoints = (par: number, strokes: number) => {
-  if (strokes === par) {
-    return STABLEFORDPOINTS.PAR;
+  // PUTTS
+  for (let i = 0; i < puttsLength.length; i++) {
+    (Number(puttsLength[i]) <= 2) && puttsUnder2++;
+    (Number(puttsLength[i]) > 2 && Number(puttsLength[i]) <= 4) && putts2_4++;
+    (Number(puttsLength[i]) > 4 && Number(puttsLength[i]) <= 6) && putts4_6++;
+    (Number(puttsLength[i]) > 6 && Number(puttsLength[i]) <= 10) && putts6_10++;
+    (Number(puttsLength[i]) > 10) && puttsOver10++;
+  };
+
+  //UP & DOWN
+  (completeHole.upDown === 'x') && upDownX++;
+  (completeHole.upDown === 'n') && upDownN++;
+  (completeHole.upDown === '') && upDownE++;
+
+  scramble = completeHole.scramble;
+
+  // GREEN METERS
+  (completeHole.toGreenMeters >= 100) && greenMetersOver100++;
+  (completeHole.toGreenMeters <= 100 && completeHole.toGreenMeters > 80) && greenMeters80_100++;
+  (completeHole.toGreenMeters <= 80 && completeHole.toGreenMeters > 60) && greenMeters60_80++;
+  (completeHole.toGreenMeters <= 60) && greenMetersUnder60++;
+
+  const finalValues = {
+    puttsUnder2: puttsUnder2,
+    putts2_4: putts2_4,
+    putts4_6: putts4_6,
+    putts6_10: putts6_10,
+    puttsOver10: puttsOver10,
+    upDownX: upDownX,
+    upDownN: upDownN,
+    upDownE: upDownE,
+    greenMetersOver100: greenMetersOver100,
+    greenMeters80_100: greenMeters80_100,
+    greenMeters60_80: greenMeters60_80,
+    greenMetersUnder60: greenMetersUnder60,
+    scramble: scramble,
   }
-  else if (strokes === par + 1) {
-    return STABLEFORDPOINTS.BOGEY;
-  }
-  else if (strokes >= par + 2) {
-    return STABLEFORDPOINTS.DOUBLEBOGEY;
-  }
-  else if (strokes === par - 1) {
-    return STABLEFORDPOINTS.BIRDIE;
-  }
-  else if (strokes === par - 2) {
-    return STABLEFORDPOINTS.EAGLE;
-  }
-  else if (strokes === par - 3) {
-    return STABLEFORDPOINTS.ALBATROSS;
-  }
+  return finalValues;
 }
 
-export const calculateStars = (par: number, strokes: number) => {
-  const diff = par - strokes;
+export const correctVsParString = (score: IRoundScoreTotalsAvg) => {
 
-  switch (diff) {
-    case 0:
-      return STABLEFORDSTARS.ZERO;
-    case 1:
-      return STABLEFORDSTARS.ONE;
-    case 2:
-      return STABLEFORDSTARS.TWO;
-    case 3:
-      return STABLEFORDSTARS.THREE;
-    default:
-      return STABLEFORDSTARS.ZERO;
-  }
+  let correctScore = '';
+  let correctScoreIN = '';
+  let correctScoreOUT = '';
 
-}
-
-export const newRoundTotals = (totals: IShots[]) => {
-  const newTotals = totals.reduce((acc: IShots, total: IShots) => {
-    acc.distance += Number(total.distance);
-    acc.putts += Number(total.putts / totals.length)
-    return acc;
-  }, {
-    holeNumber: 0,
-    chipClub: '',
-    distance: 0,
-    driveDistance: 0,
-    fairway: "",
-    fir: 0,
-    gir: false,
-    girBogey: false,
-    greenSide: '',
-    hcp: 0,
-    out: 0,
-    par: 0,
-    points: 0,
-    pointsAvg: 0,
-    putts: 0,
-    puttsLength: [],
-    sand: 0,
-    strokes: 0,
-    teeClub: '',
-    toGreen: '',
-    toGreenMeters: 0,
-    upDown: '',
-    water: 0
-  })
-
-  return newTotals
-}
-
-export function calculateTotals(totalsData: IShotsTotals[], holes?: number): IShotsTotals {
-  let searchableData;
-
-  if (holes === 9 || holes === 18) {
-    searchableData = totalsData.filter((data) => data.holeNumber === holes);
+  if (score.vsPar === 0) {
+    correctScore = score.vsPar.toString();
   }
   else {
-    searchableData = totalsData;
+    if (score.vsPar < 0) {
+      correctScore = `${score.vsPar}`;
+    }
+    else { correctScore = `+${score.vsPar}`; }
   }
-  return searchableData.reduce((acc: IShotsTotals, total: IShotsTotals) => {
-    acc.roundID += total.roundID || "";
-    acc.holeNumber += total.holeNumber || 0;
-    acc.distance += total.distance || 0;
-    acc.hcp += total.hcp || 0;
-    acc.par += total.par || 0;
-    acc.strokes += total.strokes || 0;
-    acc.points += total.points || 0;
-    acc.teeClub += total.teeClub || '';
-    acc.fir += total.fir || 0;
-    acc.left += total.left || 0;
-    acc.right += total.right || 0;
-    acc.gir += total.gir || 0;
-    acc.putts += total.putts || 0;
-    acc.sand += total.sand || 0;
-    acc.water += total.water || 0;
-    acc.out += total.out || 0;
+  if (score.vsParIN === 0) {
+    correctScoreIN = score.vsParIN.toString();
+  }
+  else {
+    if (score.vsParIN < 0) {
+      correctScoreIN = `${score.vsParIN}`;
+    }
+    else { correctScoreIN = `+${score.vsParIN}`; }
+  }
+  if (score.vsParOUT === 0) {
+    correctScoreOUT = score.vsParOUT.toString();
+  }
+  else {
+    if (score.vsParOUT < 0) {
+      correctScoreOUT = `${score.vsParOUT}`;
+    }
+    else { correctScoreOUT = `+${score.vsParOUT}`; }
+  }
 
-    return acc;
-  }, {
-    roundID: "",
-    holeNumber: 0,
-    distance: 0,
-    hcp: 0,
-    par: 0,
-    strokes: 0,
-    points: 0,
-    teeClub: '',
-    fir: 0,
-    left: 0,
-    right: 0,
-    gir: 0,
-    putts: 0,
-    sand: 0,
-    water: 0,
-    out: 0
-  });
+  return {
+    correctScore: correctScore,
+    correctScoreIN: correctScoreIN,
+    correctScoreOUT: correctScoreOUT,
+  }
 }

@@ -1,12 +1,16 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { InitialStateRoundsData, RoundsDataPayload } from "../../types/roundData.types";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IRoundHoles, IRoundInitialState, IRoundMainData } from "../../types/roundData.types";
 import { getAllRoundsDataThunk } from "./roundsData.thunk";
 
-const initialState: InitialStateRoundsData = {
+const initialState: IRoundInitialState = {
   isLoading: false,
-  playerID: "",
-  roundID: "",
-  shots: [],
+  mainData: {
+    playerID: "playerID",
+    roundID: 0,
+    roundDate: "",
+    roundCourse: "",
+  },
+  holes: []
 }
 
 export const getAllRoundsData = createAsyncThunk(
@@ -25,17 +29,20 @@ const roundsDataSlice = createSlice({
       .addCase(getAllRoundsData.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllRoundsData.fulfilled, (state, { payload }: RoundsDataPayload) => {
+      .addCase(getAllRoundsData.fulfilled, (state, { payload }: PayloadAction<{ mainData: IRoundMainData, holes: IRoundHoles[] }>) => {
         state.isLoading = false;
-        state.playerID = payload.playerID;
-        state.roundID = payload.roundID;
-        state.shots = payload.shots;
+        state.mainData = payload.mainData;
+        state.holes = payload.holes;
       })
       .addCase(getAllRoundsData.rejected, (state, { payload }: any) => {
         state.isLoading = false;
-        state.playerID = "";
-        state.roundID = "";
-        state.shots = [];
+        state.mainData = {
+          playerID: "playerID",
+          roundID: 0,
+          roundDate: "",
+          roundCourse: "",
+        };
+        state.holes = [];
       });
   },
 });

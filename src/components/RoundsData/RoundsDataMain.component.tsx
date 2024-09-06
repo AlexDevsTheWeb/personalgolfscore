@@ -1,30 +1,37 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { RootState } from '../../store/store';
+import BoxBetween from '../../styles/box/BoxBetween.styles';
 import RoundsDataShotTable from './RoundsDataShotTable.component';
 import RoundsHeadDetails from './RoundsHeadDetails.component';
 
 const RoundsDataMain = () => {
-  const params = useParams();
 
-  const { isLoading } = useSelector((store: RootState) => store.roundsNumber.roundsData);
-
-  const { totals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals);
-  const roundTotals = totals.filter((totals) => totals.roundID === params.roundID)
+  const { isLoading, mainData, holes } = useSelector((store: RootState) => store.singleRound.roundHoles);
+  const { roundTotals } = useSelector((store: RootState) => store.singleRound.roundTotals);
+  const roundPar = roundTotals.mainData.coursePar;
 
   if (isLoading) {
     return <Typography>Loading...</Typography>
   }
 
+
   return (
-    <Box sx={{
-      display: 'flex', flexDirection: 'column', rowGap: 1.175
-    }}>
+    <BoxBetween>
       <RoundsHeadDetails />
-      {/* <RoundsDataShotsTotals totals={roundTotals} /> */}
-      <RoundsDataShotTable />
-    </Box>
+
+      {roundTotals
+        ? <RoundsDataShotTable
+          roundDate={mainData.roundDate}
+          roundCourse={mainData.roundCourse}
+          roundPar={roundPar}
+          totals={roundTotals}
+          holes={holes}
+
+        />
+        : <Typography>Loading ...</Typography>
+      }
+    </BoxBetween>
   )
 }
 

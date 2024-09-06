@@ -1,6 +1,290 @@
+import { IShots } from "../types/roundData.types";
+import { IPuttsStatistics, IRoundTotals } from "../types/roundTotals.types";
 
 export const parList = ['3', '4', '5'];
 export const hcpList18 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',];
 export const hcpList9 = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 export const fairwayValues = ['4 - Left', '5 - Center', '6 - Right'];
 export const greenSideValues = ['S - Short', 'O - Over', 'L - Left', 'R - Right'];
+
+export const pieChartDimensions = {
+  height: 200,
+  width: 350,
+}
+
+export const initialStateRoundTotals: IRoundTotals = {
+  playerID: 'playerID',
+  mainData: {
+    roundCourse: '',
+    roundDate: '',
+    roundNumber: 0,
+    roundTee: '',
+    coursePar: 0,
+    playerHCP: 0
+  },
+  score: {
+    totals: 0,
+    vsPar: 0,
+    avg: '',
+    scoreIN: 0,
+    scoreOUT: 0,
+    vsParIN: 0,
+    vsParOUT: 0,
+    avgIN: '',
+    avgOUT: '',
+    par3: 0,
+    par4: 0,
+    par5: 0,
+    scoreEagleBetter: 0,
+    scoreBirdie: 0,
+    scorePar: 0,
+    scoreBogey: 0,
+    scoreDoubleBogeyWorst: 0,
+    scorePar3: 0,
+    scorePar4: 0,
+    scorePar5: 0,
+  },
+  points: {
+    totals: 0,
+    avg: '',
+    pointsIN: 0,
+    pointsOUT: 0,
+    avgIN: '',
+    avgOUT: '',
+  },
+  fairway: {
+    total: 0,
+    fairwayCenter: 0,
+    fairwayLeft: 0,
+    fairwayRight: 0,
+  },
+  gir: {
+    totals: 0,
+    avg: '',
+    totalsIN: 0,
+    avgIN: '',
+    totalsOUT: 0,
+    avgOUT: ''
+  },
+  girBogey: {
+    totals: 0,
+    avg: '',
+    totalsIN: 0,
+    avgIN: '',
+    totalsOUT: 0,
+    avgOUT: ''
+  },
+  scramble: {
+    totals: 0,
+    saved: 0,
+    perc: 0,
+  },
+  upDown: {
+    totals: 0,
+    saved: 0,
+    perc: 0,
+  },
+  putts: {
+    totals: 0,
+    avg: '',
+    totalsIN: 0,
+    avgIN: '',
+    totalsOUT: 0,
+    avgOUT: '',
+    puttsGir: 0,
+    puttsGirIn: 0,
+    puttsGirOut: 0,
+    puttsThree: 0,
+    putts1: 0,
+    putts2: 0,
+    putts3More: 0,
+    puttsDistGir: 0,
+    puttsStatistics: {
+      puttsU2M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        numberPuttsInRange: 0,
+        distanceSecondPutt: 0,
+        numberSecondPutt: 0,
+        distanceFirstPutt: 0,
+        putts3: 0,
+      },
+      putts24M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        numberPuttsInRange: 0,
+        distanceSecondPutt: 0,
+        numberSecondPutt: 0,
+        distanceFirstPutt: 0,
+        putts3: 0,
+      },
+      putts46M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        numberPuttsInRange: 0,
+        distanceSecondPutt: 0,
+        numberSecondPutt: 0,
+        distanceFirstPutt: 0,
+        putts3: 0,
+      },
+      putts610M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        numberPuttsInRange: 0,
+        distanceSecondPutt: 0,
+        numberSecondPutt: 0,
+        distanceFirstPutt: 0,
+        putts3: 0,
+      },
+      puttsO10M: {
+        puttsHoled: 0,
+        puttsAttempts: 0,
+        numberPuttsInRange: 0,
+        distanceSecondPutt: 0,
+        numberSecondPutt: 0,
+        distanceFirstPutt: 0,
+        putts3: 0,
+      },
+    }
+  },
+  sand: {
+    totals: 0,
+    avg: '',
+    saved: 0,
+    avgSaved: '',
+    savedPerc: 0,
+  },
+  water: {
+    totals: 0,
+    avg: '',
+    totalsIN: 0,
+    avgIN: '',
+    totalsOUT: 0,
+    avgOUT: '',
+  },
+  out: {
+    totals: 0,
+    avg: '',
+    totalsIN: 0,
+    avgIN: '',
+    totalsOUT: 0,
+    avgOUT: '',
+  }
+};
+
+export const initialStateTmpHole: IShots = {
+  holeNumber: 0,
+  chipClub: '',
+  distance: 0,
+  driveDistance: 0,
+  fairway: 0,
+  fir: 0,
+  gir: false,
+  girBogey: false,
+  greenSide: '',
+  greenSideL: 0,
+  greenSideO: 0,
+  greenSideR: 0,
+  greenSideS: 0,
+  hcp: 0,
+  out: 0,
+  par: 0,
+  bounceBack: 0,
+  bounceForward: 0,
+  points: 0,
+  pointsAvg: 0,
+  putts: 0,
+  puttsLength: [],
+  puttsUnder2: 0,
+  putts2_4: 0,
+  putts4_6: 0,
+  putts6_10: 0,
+  puttsOver10: 0,
+  sand: 0,
+  strokes: 0,
+  teeClub: '',
+  toGreen: '',
+  toGreenMeters: 0,
+  toGreenMetersOver100: 0,
+  toGreenMeters80_100: 0,
+  toGreenMeters60_80: 0,
+  toGreenMetersUnder60: 0,
+  upDown: '',
+  upDownX: 0,
+  upDownN: 0,
+  upDownE: 0,
+  scramble: 0,
+  water: 0,
+}
+
+export const initialPuttsStatistics: IPuttsStatistics = {
+  puttsU2M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    numberPuttsInRange: 0,
+    distanceSecondPutt: 0,
+    numberSecondPutt: 0,
+    distanceFirstPutt: 0,
+    putts3: 0,
+  },
+  putts24M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    numberPuttsInRange: 0,
+    distanceSecondPutt: 0,
+    numberSecondPutt: 0,
+    distanceFirstPutt: 0,
+    putts3: 0,
+  },
+  putts46M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    numberPuttsInRange: 0,
+    distanceSecondPutt: 0,
+    numberSecondPutt: 0,
+    distanceFirstPutt: 0,
+    putts3: 0,
+  },
+  putts610M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    numberPuttsInRange: 0,
+    distanceSecondPutt: 0,
+    numberSecondPutt: 0,
+    distanceFirstPutt: 0,
+    putts3: 0,
+  },
+  puttsO10M: {
+    puttsHoled: 0,
+    puttsAttempts: 0,
+    numberPuttsInRange: 0,
+    distanceSecondPutt: 0,
+    numberSecondPutt: 0,
+    distanceFirstPutt: 0,
+    putts3: 0,
+  },
+}
+
+export const puttsDistanceConversion = (category: string) => {
+  let result = '';
+  switch (category) {
+    case 'puttsU2M':
+      result = 'Under 2 Mts.';
+      break;
+    case 'putts24M':
+      result = '2 to 4 Mts.';
+      break;
+    case 'putts46M':
+      result = '4 to 6 Mts.';
+      break;
+    case 'putts610M':
+      result = '6 to 10 Mts.';
+      break;
+    case 'puttsO10M':
+      result = 'Over 10 Mts.';
+      break;
+  }
+  return result;
+
+}
+
