@@ -102,5 +102,6 @@ declare module '@mui/material/TableCell' {
     red: true;
     yellow: true;
     green: true;
+    putt: true;
   }
 }

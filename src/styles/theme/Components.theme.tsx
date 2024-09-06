@@ -708,12 +708,9 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiTableCell: {
     styleOverrides: {
       root: {
-        paddingTop: 10,
-        paddingRight: 20,
-        paddingBottom: 10,
-        paddingLeft: 20,
+        padding: 10,
 
-        fontSize: 14,
+        fontSize: 13,
         border: 0,
 
         [`&.MuiTableCell-head`]: {
@@ -728,7 +725,8 @@ const components: Components<Omit<Theme, 'components'>> = {
     variants: [
       { props: { variant: 'red' }, style: { backgroundColor: '#cf8484', color: 'black', fontWeight: 500, fontSize: 16 } },
       { props: { variant: 'yellow' }, style: { backgroundColor: '#faf099', color: 'black', fontWeight: 500, fontSize: 16 } },
-      { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 500, fontSize: 16 } }
+      { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 500, fontSize: 16 } },
+      { props: { variant: 'putt' }, style: { backgroundColor: '#cccccc', color: 'black', fontWeight: 500, fontSize: 16 } },
     ]
   },
   MuiTableFooter: {
