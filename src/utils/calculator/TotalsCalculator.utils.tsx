@@ -11,187 +11,195 @@ export const totalsCalculator = (shots: IShots[]) => {
   const shotsOUT = _.slice(shots, 9, 18);
   const holesIN = shotsIN.length;
   const holesOUT = shotsOUT.length;
-  const par = shots.reduce((acc, curr) => acc + curr.par, 0);
-  const parIN = shotsIN.reduce((acc, curr) => acc + curr.par, 0);
-  const parOUT = shotsOUT.reduce((acc, curr) => acc + curr.par, 0);
-  const score = shots.reduce((acc, curr) => acc + curr.strokes, 0);
-  const scoreIN = shotsIN.reduce((acc, curr) => acc + curr.strokes, 0);
-  const scoreOUT = shotsOUT.reduce((acc, curr) => acc + curr.strokes, 0);
-
-  const points = shots.reduce((acc, curr) => acc + curr.points, 0);
-  const pointsIN = shotsIN.reduce((acc, curr) => acc + curr.points, 0);
-  const pointsOUT = shotsOUT.reduce((acc, curr) => acc + curr.points, 0);
 
   const par3 = shots.filter((s) => s.par === 3).length;
   const par4 = shots.filter((s) => s.par === 4).length;
   const par5 = shots.filter((s) => s.par === 5).length;
-
-  const scoreEagleBetter = shots.reduce((acc, curr) => acc + ((score - par) <= -2 ? 1 : 0), 0);
-  const scoreBirdie = shots.reduce((acc, curr) => acc + ((score - par) === -1 ? 1 : 0), 0);
-  const scorePar = shots.reduce((acc, curr) => acc + ((score - par) === 0 ? 1 : 0), 0);
-  const scoreBogey = shots.reduce((acc, curr) => acc + ((score - par) === 1 ? 1 : 0), 0);
-  const scoreDoubleBogeyWorst = shots.reduce((acc, curr) => acc + ((score - par) >= 2 ? 1 : 0), 0);
-
-  const scorePar3 = shots.reduce((acc, curr) => acc + (curr.par === 3 ? curr.strokes : 0), 0);
-  const scorePar4 = shots.reduce((acc, curr) => acc + (curr.par === 4 ? curr.strokes : 0), 0);
-  const scorePar5 = shots.reduce((acc, curr) => acc + (curr.par === 5 ? curr.strokes : 0), 0);
-
   const fairwayTotal = shots.filter((hole) => hole.par !== 3).length;
-  const fairwayCenter = shots.reduce((acc, curr) => acc + (curr.fairway === 5 ? 1 : 0), 0);
-  const fairwayLeft = shots.reduce((acc, curr) => acc + (curr.fairway === 4 ? 1 : 0), 0);
-  const fairwayRight = shots.reduce((acc, curr) => acc + (curr.fairway === 6 ? 1 : 0), 0);
 
-  const gir = shots.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
-  const girIN = shotsIN.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
-  const girOUT = shotsOUT.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
-  const girBogey = shots.reduce((acc, curr) => acc + (!!curr.girBogey ? 1 : 0), 0);
-  const girBogeyIN = shotsIN.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
-  const girBogeyOUT = shotsOUT.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
+  //SHOTS
+  const totalALL = shots.reduce((acc, curr) => {
+    acc.par += curr.par;
+    acc.score += curr.strokes;
+    acc.points += curr.points;
+    acc.scoreEagleBetter += ((acc.score - acc.par) <= -2 ? 1 : 0);
+    acc.scoreBirdie += ((acc.score - acc.par) === -1 ? 1 : 0);
+    acc.scorePar += ((acc.score - acc.par) === 0 ? 1 : 0);
+    acc.scoreBogey += ((acc.score - acc.par) === 1 ? 1 : 0);
+    acc.scoreDoubleBogeyWorst += ((acc.score - acc.par) >= 2 ? 1 : 0);
+    acc.scorePar3 += (curr.par === 3 ? curr.strokes : 0);
+    acc.scorePar4 += (curr.par === 4 ? curr.strokes : 0);
+    acc.scorePar5 += (curr.par === 5 ? curr.strokes : 0);
+    acc.fairwayCenter += (curr.fairway === 5 ? 1 : 0);
+    acc.fairwayLeft += (curr.fairway === 4 ? 1 : 0);
+    acc.fairwayRight += (curr.fairway === 6 ? 1 : 0);
+    acc.gir += (!!curr.gir ? 1 : 0);
+    acc.girBogey += (!!curr.girBogey ? 1 : 0);
+    acc.upDown += (!!curr.upDownX ? 1 : 0);
+    acc.putts += curr.putts;
+    acc.upDownTotals += ((!!curr.gir && (curr.upDownX === 1 || curr.upDownN === 1)) ? 1 : 0);
+    acc.scramble += curr.scramble;
+    acc.puttsGIR += (!!curr.gir ? 1 : 0);
+    acc.puttsThree += (curr.putts === 3 ? 1 : 0);
+    acc.putts1 += (curr.puttsLength.length === 1 ? 1 : 0);
+    acc.putts2 += (curr.puttsLength.length === 2 ? 1 : 0);
+    acc.putts3More += (curr.puttsLength.length > 2 ? 1 : 0);
+    acc.puttsDistGir += (!!curr.gir ? Number(curr.puttsLength[0]) : 0);
+    acc.sand += curr.sand + (curr.chipClub === 'b' ? 1 : 0);
+    acc.sandSaved += ((curr.chipClub === 'b' && curr.upDown === 'x' && curr.strokes === curr.par) ? 1 : 0);
+    acc.water += curr.water;
+    acc.out += curr.out;
 
-  const upDown = shots.reduce((acc, curr) => acc + (!!curr.upDownX ? 1 : 0), 0);
-  const upDownTotals = shots.reduce((acc, curr) => acc + (
-    ((!!curr.gir && (curr.upDownX === 1 || curr.upDownN === 1)) ? 1 : 0)
-  ), 0);
+    return acc
+  }, { par: 0, score: 0, points: 0, scoreEagleBetter: 0, scoreBirdie: 0, scorePar: 0, scoreBogey: 0, scoreDoubleBogeyWorst: 0, scorePar3: 0, scorePar4: 0, scorePar5: 0, fairwayCenter: 0, fairwayLeft: 0, fairwayRight: 0, gir: 0, girBogey: 0, upDown: 0, putts: 0, upDownTotals: 0, scramble: 0, puttsGIR: 0, puttsThree: 0, putts1: 0, putts2: 0, putts3More: 0, puttsDistGir: 0, sand: 0, sandSaved: 0, water: 0, out: 0 });
 
-  const scramble = shots.reduce((acc, curr) => acc + curr.scramble, 0);
-  const scrambleTotals = holes - gir;
+  // SHOTS IN
+  const totalIN = shotsIN.reduce((acc, curr) => {
 
-  const putts = shots.reduce((acc, curr) => acc + curr.putts, 0);
-  const puttsIN = shotsIN.reduce((acc, curr) => acc + curr.putts, 0);
-  const puttsOUT = shotsOUT.reduce((acc, curr) => acc + curr.putts, 0);
-  const puttsGIR = shots.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
-  const puttsGIRIN = shotsIN.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
-  const puttsGIROUT = shotsOUT.reduce((acc, curr) => acc + (!!curr.gir ? 1 : 0), 0);
-  const puttsThree = shots.reduce((acc, curr) => acc + (curr.putts === 3 ? 1 : 0), 0);
-  const putts1 = shots.reduce((acc, curr) => acc + (curr.puttsLength.length === 1 ? 1 : 0), 0);
-  const putts2 = shots.reduce((acc, curr) => acc + (curr.puttsLength.length === 2 ? 1 : 0), 0);
-  const putts3More = shots.reduce((acc, curr) => acc + (curr.puttsLength.length > 2 ? 1 : 0), 0);
-  const puttsDistGir = shots.reduce((acc, curr) => acc + (!!curr.gir ? Number(curr.puttsLength[0]) : 0), 0);
+    acc.parIN += curr.par;
+    acc.scoreIN += curr.strokes;
+    acc.pointsIN += curr.points;
+    acc.girIN += (!!curr.gir ? 1 : 0);
+    acc.girBogeyIN += (!!curr.gir ? 1 : 0);
+    acc.puttsIN += curr.putts;
+    acc.puttsGIRIN += (!!curr.gir ? 1 : 0);
+    acc.waterIN += curr.water;
+    acc.outIN += curr.out;
 
+    return acc
+  }, { parIN: 0, scoreIN: 0, pointsIN: 0, girIN: 0, girBogeyIN: 0, puttsIN: 0, puttsGIRIN: 0, waterIN: 0, outIN: 0, }
+  );
 
+  // SHOTS OUT
+  const totalOUT = shotsOUT.reduce((acc, curr) => {
+
+    acc.parOUT += curr.par;
+    acc.scoreOUT += curr.strokes;
+    acc.pointsOUT += curr.points;
+    acc.girOUT += (!!curr.gir ? 1 : 0);
+    acc.girBogeyOUT += (!!curr.gir ? 1 : 0);
+    acc.puttsOUT += curr.putts;
+    acc.puttsGIROUT += (!!curr.gir ? 1 : 0);
+    acc.waterOUT += curr.water;
+    acc.outOUT += curr.out;
+
+    return acc
+  }, { parOUT: 0, scoreOUT: 0, pointsOUT: 0, girOUT: 0, girBogeyOUT: 0, puttsOUT: 0, puttsGIROUT: 0, waterOUT: 0, outOUT: 0, }
+  );
+
+  const scrambleTotals = holes - totalALL.gir
 
   const puttsStatistics = calculatePuttsStatistics(shots);
-
-  const sand = shots.reduce((acc, curr) => acc + curr.sand + (curr.chipClub === 'b' ? 1 : 0), 0);
-  const sandSaved = shots.reduce((acc, curr) => acc +
-    ((curr.chipClub === 'b' && curr.upDown === 'x' && curr.strokes === curr.par) ? 1 : 0), 0);
-
-  const water = shots.reduce((acc, curr) => acc + curr.water, 0);
-  const waterIN = shotsIN.reduce((acc, curr) => acc + curr.water, 0);
-  const waterOUT = shotsOUT.reduce((acc, curr) => acc + curr.water, 0);
-  const out = shots.reduce((acc, curr) => acc + curr.out, 0);
-  const outIN = shotsIN.reduce((acc, curr) => acc + curr.out, 0);
-  const outOUT = shotsOUT.reduce((acc, curr) => acc + curr.out, 0);
 
   totals = {
     ...totals,
     playerID: "playerID",
 
     score: {
-      totals: score,
-      avg: (score / holes).toFixed(2),
-      vsPar: getVsParTotals(score, par, true).value,
-      scoreIN: scoreIN,
-      scoreOUT: scoreOUT,
-      vsParIN: getVsParTotals(scoreIN, parIN, true).value,
-      vsParOUT: getVsParTotals(scoreOUT, parOUT, true).value,
-      avgIN: scoreIN && holesIN
-        ? (scoreIN / holesIN).toFixed(2)
+      totals: totalALL.score,
+      avg: (totalALL.score / holes).toFixed(2), // TODO: convert in number and add parseFloat()
+      vsPar: getVsParTotals(totalALL.score, totalALL.par, true).value,
+      scoreIN: totalIN.scoreIN,
+      scoreOUT: totalOUT.scoreOUT,
+      vsParIN: getVsParTotals(totalIN.scoreIN, totalIN.parIN, true).value,
+      vsParOUT: getVsParTotals(totalOUT.scoreOUT, totalOUT.parOUT, true).value,
+      avgIN: totalIN.scoreIN && holesIN
+        ? (totalIN.scoreIN / holesIN).toFixed(2) // TODO: convert in number and add parseFloat()
         : '-',
-      avgOUT: scoreOUT && holesOUT
-        ? (scoreOUT / holesOUT).toFixed(2)
+      avgOUT: totalOUT.scoreOUT && holesOUT
+        ? (totalOUT.scoreOUT / holesOUT).toFixed(2) // TODO: convert in number and add parseFloat()
         : '-',
       par3: par3,
       par4: par4,
       par5: par5,
-      scoreEagleBetter: scoreEagleBetter,
-      scoreBirdie: scoreBirdie,
-      scorePar: scorePar,
-      scoreBogey: scoreBogey,
-      scoreDoubleBogeyWorst: scoreDoubleBogeyWorst,
-      scorePar3: scorePar3,
-      scorePar4: scorePar4,
-      scorePar5: scorePar5,
+      scoreEagleBetter: totalALL.scoreEagleBetter,
+      scoreBirdie: totalALL.scoreBirdie,
+      scorePar: totalALL.scorePar,
+      scoreBogey: totalALL.scoreBogey,
+      scoreDoubleBogeyWorst: totalALL.scoreDoubleBogeyWorst,
+      scorePar3: totalALL.scorePar3,
+      scorePar4: totalALL.scorePar4,
+      scorePar5: totalALL.scorePar5,
     },
     points: {
-      totals: points,
-      avg: points && holes ? (points / holes).toFixed(2) : '-',
-      pointsIN: pointsIN,
-      pointsOUT: pointsOUT,
-      avgIN: pointsIN && holesIN ? (pointsIN / holesIN).toFixed(2) : '-',
-      avgOUT: pointsOUT && holesOUT ? (pointsOUT / holesOUT).toFixed(2) : '-',
+      totals: totalALL.points,
+      avg: totalALL.points && holes ? (totalALL.points / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      pointsIN: totalIN.pointsIN,
+      pointsOUT: totalOUT.pointsOUT,
+      avgIN: totalIN.pointsIN && holesIN ? (totalIN.pointsIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgOUT: totalOUT.pointsOUT && holesOUT ? (totalOUT.pointsOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
     },
     fairway: {
       total: fairwayTotal,
-      fairwayCenter: fairwayCenter,
-      fairwayLeft: fairwayLeft,
-      fairwayRight: fairwayRight,
+      fairwayCenter: totalALL.fairwayCenter,
+      fairwayLeft: totalALL.fairwayLeft,
+      fairwayRight: totalALL.fairwayRight,
     },
     gir: {
-      totals: gir,
-      avg: gir && holes ? (gir / holes).toFixed(2) : '-',
-      totalsIN: girIN,
-      avgIN: girIN && holesIN ? (girIN / holesIN).toFixed(2) : '-',
-      totalsOUT: girOUT,
-      avgOUT: girOUT && holesOUT ? (girOUT / holesOUT).toFixed(2) : '-',
+      totals: totalALL.gir,
+      avg: totalALL.gir && holes ? (totalALL.gir / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsIN: totalIN.girIN,
+      avgIN: totalIN.girIN && holesIN ? (totalIN.girIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsOUT: totalOUT.girOUT,
+      avgOUT: totalOUT.girOUT && holesOUT ? (totalOUT.girOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
     },
     girBogey: {
-      totals: girBogey,
-      avg: girBogey && holes ? (girBogey / holes).toFixed(2) : '-',
-      totalsIN: girBogeyIN,
-      avgIN: girBogeyIN && holesIN ? (girBogeyIN / holesIN).toFixed(2) : '-',
-      totalsOUT: girBogeyOUT,
-      avgOUT: girBogeyOUT && holesOUT ? (girBogeyOUT / holesOUT).toFixed(2) : '-',
+      totals: totalALL.girBogey,
+      avg: totalALL.girBogey && holes ? (totalALL.girBogey / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsIN: totalIN.girBogeyIN,
+      avgIN: totalIN.girBogeyIN && holesIN ? (totalIN.girBogeyIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsOUT: totalOUT.girBogeyOUT,
+      avgOUT: totalOUT.girBogeyOUT && holesOUT ? (totalOUT.girBogeyOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
     },
     scramble: {
       totals: scrambleTotals,
-      saved: scramble,
-      perc: scramble && scrambleTotals ? (scramble / scrambleTotals) * 100 : 0,
+      saved: totalALL.scramble,
+      perc: totalALL.scramble && scrambleTotals ? (totalALL.scramble / scrambleTotals) * 100 : 0,
     },
     upDown: {
-      totals: upDownTotals,
-      saved: upDown,
-      perc: upDown && upDownTotals ? (upDown / upDownTotals) * 100 : 0,
+      totals: totalALL.upDownTotals,
+      saved: totalALL.upDown,
+      perc: totalALL.upDown && totalALL.upDownTotals ? (totalALL.upDown / totalALL.upDownTotals) * 100 : 0,
     },
     putts: {
-      totals: putts,
-      avg: putts && holes ? (putts / holes).toFixed(2) : '-',
-      totalsIN: puttsIN,
-      avgIN: puttsIN && holesIN ? (puttsIN / holesIN).toFixed(2) : '-',
-      totalsOUT: puttsOUT,
-      avgOUT: puttsOUT && holesOUT ? (puttsOUT / holesOUT).toFixed(2) : '-',
-      puttsGir: puttsGIR,
-      puttsGirIn: puttsGIRIN,
-      puttsGirOut: puttsGIROUT,
-      puttsThree: puttsThree,
-      putts1: putts1,
-      putts2: putts2,
-      putts3More: putts3More,
-      puttsDistGir: puttsDistGir,
+      totals: totalALL.putts,
+      avg: totalALL.putts && holes ? (totalALL.putts / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsIN: totalIN.puttsIN,
+      avgIN: totalIN.puttsIN && holesIN ? (totalIN.puttsIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsOUT: totalOUT.puttsOUT,
+      avgOUT: totalOUT.puttsOUT && holesOUT ? (totalOUT.puttsOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      puttsGir: totalALL.puttsGIR,
+      puttsGirIn: totalIN.puttsGIRIN,
+      puttsGirOut: totalOUT.puttsGIROUT,
+      puttsThree: totalALL.puttsThree,
+      putts1: totalALL.putts1,
+      putts2: totalALL.putts2,
+      putts3More: totalALL.putts3More,
+      puttsDistGir: totalALL.puttsDistGir,
       puttsStatistics: puttsStatistics,
     },
     sand: {
-      totals: sand,
-      avg: sand && holes ? (sand / holes).toFixed(2) : '-',
-      saved: sandSaved,
-      avgSaved: sandSaved && holes ? (sandSaved / holes).toFixed(2) : '-',
-      savedPerc: sandSaved && sand ? (sandSaved / sand) * 100 : 0,
+      totals: totalALL.sand,
+      avg: totalALL.sand && holes ? (totalALL.sand / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      saved: totalALL.sandSaved,
+      avgSaved: totalALL.sandSaved && holes ? (totalALL.sandSaved / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      savedPerc: totalALL.sandSaved && totalALL.sand ? (totalALL.sandSaved / totalALL.sand) * 100 : 0,
     },
     water: {
-      totals: water,
-      avg: water && holes ? (water / holes).toFixed(2) : '-',
-      totalsIN: waterIN,
-      avgIN: waterIN && holesIN ? (waterIN / holesIN).toFixed(2) : '-',
-      totalsOUT: waterOUT,
-      avgOUT: waterOUT && holesOUT ? (waterOUT / holesOUT).toFixed(2) : '-',
+      totals: totalALL.water,
+      avg: totalALL.water && holes ? (totalALL.water / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsIN: totalIN.waterIN,
+      avgIN: totalIN.waterIN && holesIN ? (totalIN.waterIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsOUT: totalOUT.waterOUT,
+      avgOUT: totalOUT.waterOUT && holesOUT ? (totalOUT.waterOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
     },
     out: {
-      totals: out,
-      avg: out && holes ? (out / holes).toFixed(2) : '-',
-      totalsIN: outIN,
-      avgIN: outIN && holesIN ? (outIN / holesIN).toFixed(2) : '-',
-      totalsOUT: outOUT,
-      avgOUT: outOUT && holesOUT ? (outOUT / holesOUT).toFixed(2) : '-',
+      totals: totalALL.out,
+      avg: totalALL.out && holes ? (totalALL.out / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsIN: totalIN.outIN,
+      avgIN: totalIN.outIN && holesIN ? (totalIN.outIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      totalsOUT: totalOUT.outOUT,
+      avgOUT: totalOUT.outOUT && holesOUT ? (totalOUT.outOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
     }
   }
   return totals;

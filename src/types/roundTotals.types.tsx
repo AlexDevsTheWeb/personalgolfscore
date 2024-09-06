@@ -154,9 +154,10 @@ export interface IPuttsStatistics {
 interface IPuttsBreakDownStatistics {
   puttsHoled: number,
   puttsAttempts: number,
-  puttsAverage: number,
-  puttsSecondoAverageLength: number,
-  puttsAverageDistance: number,
+  numberPuttsInRange: number,
+  distanceSecondPutt: number,
+  numberSecondPutt: number,
+  distanceFirstPutt: number,
   putts3: number,
 }
 

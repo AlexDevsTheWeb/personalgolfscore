@@ -3,13 +3,13 @@ export const iAmintheZone = (start: number, finish: number, shots: number) => {
   let iAmintheZone = false;
 
   if (start === 0 && finish !== 0) {
-    iAmintheZone = Number(shots) > finish;
+    iAmintheZone = shots > finish;
   }
   if (start !== 0 && finish === 0) {
-    iAmintheZone = Number(shots) <= start;
+    iAmintheZone = shots <= start;
   }
   if (start !== 0 && finish !== 0) {
-    iAmintheZone = (Number(shots) > start) && (Number(shots) <= finish);
+    iAmintheZone = (shots > start) && (shots <= finish);
   }
 
   return iAmintheZone;
@@ -22,3 +22,5 @@ export const divide = (first: number, second: number) => {
   }
   return result
 }
+
+

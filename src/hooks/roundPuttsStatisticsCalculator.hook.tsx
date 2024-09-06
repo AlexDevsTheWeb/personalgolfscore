@@ -5,7 +5,5 @@ export const useRoundPuttsStatistics = (shots: IShots[]) => {
 
   const puttsStatistics = calculatePuttsStatistics(shots);
 
-
-  console.log("...passo di qui")
   return puttsStatistics
 }
