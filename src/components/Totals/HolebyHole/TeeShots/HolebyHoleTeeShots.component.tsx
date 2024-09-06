@@ -1,6 +1,10 @@
-import { Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Divider, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import _ from "lodash";
+import GridPuttsStat from "../../../../styles/grid/GridPuttsStat.styles";
 import { IRoundTotals } from "../../../../types/roundTotals.types";
+import { teeShotsConversion } from "../../../../utils/constant.utils";
+import { formatPerc } from "../../../../utils/number/number.utils";
+import ShotsTableHeaderStack from "../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
 interface IHolebyHoleTeeShots {
   totals: IRoundTotals
@@ -8,7 +12,8 @@ interface IHolebyHoleTeeShots {
 
 const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
 
-  console.log("TOTALS: ", totals);
+  const { teeShots } = totals;
+  const teeShotsCat = Object.keys(teeShots);
 
   return (
     <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
@@ -16,42 +21,42 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            {/* {
-              puttsCat.map((distance: string, index: number) => {
+            {
+              teeShotsCat.map((teeShot: string, index: number) => {
                 return (
                   <TableCell align='center' key={index} variant='putt'>
-                    <ShotsTableHeaderStack firstRow={puttsDistanceConversion(distance)} secondRow={''} />
+                    <ShotsTableHeaderStack firstRow={teeShotsConversion(teeShot)} secondRow={''} />
                   </TableCell>
                 )
               })
-            } */}
+            }
           </TableRow>
         </TableHead>
 
         <TableBody key={_.uniqueId("putts_")}>
           <TableRow>
-            {/* {
-              Object.entries(puttsStatistics).map(([key, value], index: number) => {
+            {
+              Object.entries(teeShots).map(([key, value], index: number) => {
                 return (
                   <TableCell align='center' key={index}>
                     <Stack>
                       <Grid container spacing={1}>
                         <GridPuttsStat item xs={4}>
                           <Stack>
-                            <Typography>1 putt %</Typography>
-                            <Typography fontWeight={'bold'}>{formatPerc(value.putt1Perc)}</Typography>
+                            <Typography>Left %</Typography>
+                            <Typography fontWeight={'bold'}>{formatPerc(value.fairwayLeftPCT)}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
-                            <Typography>2 putt %</Typography>
-                            <Typography fontWeight={'bold'}>{(value.putt1Perc === 0 && value.putt3Perc === 0) ? '-' : formatPerc(1 - value.putt1Perc - value.putt3Perc)}</Typography>
+                            <Typography>Center %</Typography>
+                            <Typography fontWeight={'bold'}>{(value.fairwayCenterPCT)}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
-                            <Typography>3 putt %</Typography>
-                            <Typography fontWeight={'bold'}>{formatPerc(value.putt3Perc)}</Typography>
+                            <Typography>Right %</Typography>
+                            <Typography fontWeight={'bold'}>{formatPerc(value.fairwayRightPCT)}</Typography>
                           </Stack>
                         </GridPuttsStat>
                       </Grid>
@@ -59,20 +64,20 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
                       <Grid container spacing={1}>
                         <GridPuttsStat item xs={4}>
                           <Stack>
-                            <Typography>Holed</Typography>
-                            <Typography fontWeight={'bold'}>{value.puttsHoled !== 0 ? value.puttsHoled : '-'}</Typography>
+                            <Typography>Fairways hit</Typography>
+                            <Typography fontWeight={'bold'}>{value.fairwayHits !== 0 ? value.puttsHoled : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>Attempts</Typography>
-                            <Typography fontWeight={'bold'}>{value.puttsAttempts !== 0 ? value.puttsAttempts : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.attempts !== 0 ? value.puttsAttempts : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
-                            <Typography>Average</Typography>
-                            <Typography fontWeight={'bold'}>{value.puttsAverage !== 0 ? value.puttsAverage : '-'}</Typography>
+                            <Typography>Average distance</Typography>
+                            <Typography fontWeight={'bold'}>{value.averageDistance !== 0 ? value.puttsAverage : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                       </Grid>
@@ -80,27 +85,27 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
                       <Grid container spacing={1}>
                         <GridPuttsStat item xs={4}>
                           <Stack>
-                            <Typography>Average distance</Typography>
-                            <Typography fontWeight={'bold'}>{value.puttsAverageDistance !== 0 ? value.puttsAverageDistance : '-'}</Typography>
+                            <Typography>Missed left</Typography>
+                            <Typography fontWeight={'bold'}>{value.missLeft !== 0 ? value.missLeft : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
-                            <Typography>Second putt avg. length</Typography>
-                            <Typography fontWeight={'bold'}>{value.puttsSecondAverageLength !== 0 ? value.puttsSecondAverageLength : '-'}</Typography>
+                            <Typography>Missed right</Typography>
+                            <Typography fontWeight={'bold'}>{value.missRight !== 0 ? value.missRight : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
-                            <Typography>3 putts</Typography>
-                            <Typography fontWeight={'bold'}>{value.putts3 !== 0 ? value.putts3 : '-'}</Typography>
+                            <Typography>No shot to green</Typography>
+                            <Typography fontWeight={'bold'}>{value.noGreen !== 0 ? value.putts3 : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                       </Grid>
                     </Stack>
                   </TableCell>
                 )
-              })} */}
+              })}
           </TableRow>
         </TableBody>
       </Table>

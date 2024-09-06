@@ -331,6 +331,24 @@ export const puttsDistanceConversion = (category: string) => {
       break;
   }
   return result;
+}
+export const teeShotsConversion = (string: string) => {
+  let result = '';
+  switch (string) {
+    case 'teeDriver':
+      result = 'Driver';
+      break;
+    case 'teeFW':
+      result = 'Fairway Wood';
+      break;
+    case 'teeHY':
+      result = 'Hybrid';
+      break;
+    case 'teeIron':
+      result = 'Irons';
+      break;
+  }
+  return result;
 
 }
 

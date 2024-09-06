@@ -92,16 +92,16 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
 
       acc.fairwayHits += (rightClub && curr.fairway === 5 ? 1 : 0);
       acc.attempts += (rightClub ? 1 : 0);
-      acc.averageDistance += (rightClub ? curr.driveDistance : 0);
+      acc.totDistance += (rightClub ? curr.driveDistance : 0);
       acc.missLeft += (rightClub && curr.fairway === 4 ? 1 : 0);
-      acc.missRight += (rightClub && curr.fairway === 5 ? 1 : 0);
+      acc.missRight += (rightClub && curr.fairway === 6 ? 1 : 0);
       acc.noGreen += (rightClub && curr.toGreen === 'NO' ? 1 : 0);
 
       return acc;
     }, {
       fairwayHits: 0,
       attempts: 0,
-      averageDistance: 0,
+      totDistance: 0,
       missLeft: 0,
       missRight: 0,
       noGreen: 0,
@@ -116,30 +116,33 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
 
   const finalResult = {
     ...initialTeeShotsStatistics,
-
     teeDriver: {
       ...results[0],
-      fairwayCenterPCT: 0,
-      fairwayLeftPCT: 0,
-      fairwayRightPCT: 0,
+      averageDistance: parseFloat(divide(results[0].totDistance, results[0].attempts).toFixed(2)),
+      fairwayCenterPCT: parseFloat(divide(results[0].fairwayHits, results[0].attempts).toFixed(2)),
+      fairwayLeftPCT: parseFloat(divide(results[0].missLeft, results[0].attempts).toFixed(2)),
+      fairwayRightPCT: parseFloat(divide(results[0].missRight, results[0].attempts).toFixed(2)),
     },
     teeFW: {
       ...results[1],
-      fairwayCenterPCT: 0,
-      fairwayLeftPCT: 0,
-      fairwayRightPCT: 0,
+      averageDistance: parseFloat(divide(results[1].totDistance, results[1].attempts).toFixed(2)),
+      fairwayCenterPCT: parseFloat(divide(results[1].fairwayHits, results[1].attempts).toFixed(2)),
+      fairwayLeftPCT: parseFloat(divide(results[1].missLeft, results[1].attempts).toFixed(2)),
+      fairwayRightPCT: parseFloat(divide(results[1].missRight, results[1].attempts).toFixed(2)),
     },
     teeHY: {
       ...results[2],
-      fairwayCenterPCT: 0,
-      fairwayLeftPCT: 0,
-      fairwayRightPCT: 0,
+      averageDistance: parseFloat(divide(results[2].totDistance, results[2].attempts).toFixed(2)),
+      fairwayCenterPCT: parseFloat(divide(results[2].fairwayHits, results[2].attempts).toFixed(2)),
+      fairwayLeftPCT: parseFloat(divide(results[2].missLeft, results[2].attempts).toFixed(2)),
+      fairwayRightPCT: parseFloat(divide(results[2].missRight, results[2].attempts).toFixed(2)),
     },
     teeIron: {
       ...results[3],
-      fairwayCenterPCT: 0,
-      fairwayLeftPCT: 0,
-      fairwayRightPCT: 0,
+      averageDistance: parseFloat(divide(results[3].totDistance, results[3].attempts).toFixed(2)),
+      fairwayCenterPCT: parseFloat(divide(results[3].fairwayHits, results[3].attempts).toFixed(2)),
+      fairwayLeftPCT: parseFloat(divide(results[3].missLeft, results[3].attempts).toFixed(2)),
+      fairwayRightPCT: parseFloat(divide(results[3].missRight, results[3].attempts).toFixed(2)),
     },
   };
 
@@ -148,9 +151,32 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
 }
 
 const isTheRightClub = (wanted: string, teeClub: string) => {
+
+  let correctClub = '';
   let isTheRightClub = false;
 
-  isTheRightClub = wanted === teeClub ? true : false;
+  switch (teeClub) {
+    case 'i1':
+    case 'i2':
+    case 'i3':
+    case 'i4':
+    case 'i5':
+    case 'i6':
+    case 'i7':
+    case 'i8':
+    case 'i9':
+      correctClub = 'IRONS';
+      break;
+    default:
+      correctClub = teeClub;
+      break;
+  }
+
+  isTheRightClub = wanted === correctClub
+    ? true
+    : correctClub.includes(wanted)
+      ? true
+      : false;
 
   return isTheRightClub;
 }
