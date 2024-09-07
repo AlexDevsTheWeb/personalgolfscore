@@ -24,7 +24,7 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
             {
               teeShotsCat.map((teeShot: string, index: number) => {
                 return (
-                  <TableCell align='center' key={index} variant='putt'>
+                  <TableCell align='center' key={index} variant='putt' sx={{ borderLeft: '1px solid #000' }}>
                     <ShotsTableHeaderStack firstRow={teeShotsConversion(teeShot)} secondRow={''} />
                   </TableCell>
                 )
@@ -38,7 +38,7 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
             {
               Object.entries(teeShots).map(([key, value], index: number) => {
                 return (
-                  <TableCell align='center' key={index}>
+                  <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
                     <Stack>
                       <Grid container spacing={1}>
                         <GridPuttsStat item xs={4}>
@@ -50,7 +50,7 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>Center %</Typography>
-                            <Typography fontWeight={'bold'}>{(value.fairwayCenterPCT)}</Typography>
+                            <Typography fontWeight={'bold'}>{formatPerc(value.fairwayCenterPCT)}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
@@ -65,19 +65,19 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>Fairways hit</Typography>
-                            <Typography fontWeight={'bold'}>{value.fairwayHits !== 0 ? value.puttsHoled : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.fairwayHits !== 0 ? value.fairwayHits : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>Attempts</Typography>
-                            <Typography fontWeight={'bold'}>{value.attempts !== 0 ? value.puttsAttempts : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.attempts !== 0 ? value.attempts : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>Average distance</Typography>
-                            <Typography fontWeight={'bold'}>{value.averageDistance !== 0 ? value.puttsAverage : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.averageDistance !== 0 ? value.averageDistance : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                       </Grid>
@@ -98,7 +98,7 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>No shot to green</Typography>
-                            <Typography fontWeight={'bold'}>{value.noGreen !== 0 ? value.putts3 : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.noGreen !== 0 ? value.noGreen : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                       </Grid>

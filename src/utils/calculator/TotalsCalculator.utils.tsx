@@ -5,8 +5,6 @@ import { initialStateRoundTotals } from "../constant.utils";
 import { calculatePuttsStatistics, calculateTeeShotsStatistics } from "../totals/totals.utils";
 
 export const totalsCalculator = (shots: IShots[]) => {
-
-  console.log("SHOTS: ", shots);
   let totals: IRoundTotals = initialStateRoundTotals;
   const holes = shots.length;
   const shotsIN = _.slice(shots, 0, 9);
