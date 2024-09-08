@@ -14,9 +14,13 @@ export {
 
   BoxOverflow,
   BoxPlayer,
-  Card, ClubTypography,
+  Card,
+  ClubTypography,
   Grid,
   RowCard,
-  Stack, TableCell, TableRow,
-  Tooltip, Typography
+  Stack,
+  TableCell,
+  TableRow,
+  Tooltip,
+  Typography
 };

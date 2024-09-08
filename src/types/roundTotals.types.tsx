@@ -1,25 +1,3 @@
-
-interface IState {
-  playerID: string;
-  totals: INewTotals[];
-}
-
-export type InitialStateRoundsTotals = {
-  isLoading: boolean;
-  playerID: string;
-  totals: INewTotals[];
-}
-
-export type RoundsTotalsPayload = {
-  payload: IState;
-}
-
-export type InitialStateNewRoundsTotals = {
-  isLoading: boolean;
-  playerID: string;
-  totals: INewTotals;
-}
-
 export interface INewTotals {
   roundID: number,
   totDistance: number,
@@ -113,7 +91,7 @@ interface IRoundTotalsAvgSand extends IRoundTotalsAvg {
   avgSaved: string,
   savedPerc: number,
 }
-export interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
+interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
   totalsIN: number,
   avgIN: string,
   totalsOUT: number,

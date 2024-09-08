@@ -51,15 +51,6 @@ export interface IShots {
   water: number;
 }
 
-export type InitialStateRoundsData = {
-  isLoading: boolean;
-  playerID: string;
-  roundID: string;
-  roundDate: string;
-  roundCourse: string;
-  shots: IShots[];
-}
-
 export type InitialStateNewRoundsData = {
   isLoading: boolean;
   playerID: string;
@@ -68,19 +59,10 @@ export type InitialStateNewRoundsData = {
   holes: IShots[];
 }
 
-export type RoundsDataPayload = {
-  payload: IState;
-}
-
 export interface IRoundInitialState {
   isLoading: boolean;
   mainData: IRoundMainData;
   holes: IRoundHoles[];
-}
-
-export interface IRoundPayload {
-  mainData: IRoundMainData;
-  holes: IRoundHoles[] | [];
 }
 
 export interface IRoundMainData {
