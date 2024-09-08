@@ -25,8 +25,8 @@ const RoundsDataShotTable = ({ totals, holes, onClick }: IRoundDataTable) => {
       <Button variant="contained" onClick={onClick}>Close</Button>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <ShotsTableHeader firstLabel='Tot.' singleHole={false} />
-          <ShotsTableTotalsBody holes={holes} />
+          <ShotsTableHeader firstLabel='Tot.' singleHole={false} firstColumn={true} />
+          <ShotsTableTotalsBody firstColumn={false} />
         </Table>
       </TableContainer>
       {/* <StatisticsPutts putts={totals.putts} gir={totals.gir} score={totals.score} /> */}

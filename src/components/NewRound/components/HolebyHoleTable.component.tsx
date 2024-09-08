@@ -12,7 +12,7 @@ const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
   return (
     <BoxGeneralShadow>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <ShotsTableHeader firstLabel='#' singleHole={true} />
+        <ShotsTableHeader firstLabel='#' singleHole={true} firstColumn={true} />
         <TableBody>
           {holes.map((hole: IShots, index: number) => {
             return (<ShotsTableBody shot={hole} key={index} />)

@@ -11,12 +11,13 @@ const StyledGrid = styled(GridMui)<GridProps>({
   alignContent: 'center',
   justifyContent: 'space-between',
   alignItems: 'center',
+  // minHeight: '60px'
 })
 
-const GridPuttsStat: React.FC<GridProps> = props => {
+const GridCellStats: React.FC<GridProps> = props => {
   return (
     <StyledGrid {...props}>{props.children}</StyledGrid>
   )
 };
 
-export default GridPuttsStat;
+export default GridCellStats;

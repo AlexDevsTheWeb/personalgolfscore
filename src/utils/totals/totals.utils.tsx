@@ -1,5 +1,5 @@
 import { IShots } from "../../types/roundData.types";
-import { initialPuttsStatistics } from "../constant.utils";
+import { initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
 import { divide, iAmintheZone } from "./totalsPutts.utils";
 
 
@@ -82,4 +82,101 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
   };
 
   return finalResult;
+}
+
+export const calculateTeeShotsStatistics = (shots: IShots[]) => {
+
+  const calculateTeeShots = (club: string) => {
+    return shots.reduce((acc, curr) => {
+      const rightClub = isTheRightClub(club, curr.teeClub);
+
+      acc.fairwayHits += (rightClub && curr.fairway === 5 ? 1 : 0);
+      acc.attempts += (rightClub ? 1 : 0);
+      acc.totDistance += (rightClub ? curr.driveDistance : 0);
+      acc.missLeft += (rightClub && curr.fairway === 4 ? 1 : 0);
+      acc.missRight += (rightClub && curr.fairway === 6 ? 1 : 0);
+      acc.noGreen += (rightClub && curr.toGreen === 'NO' ? 1 : 0);
+
+      return acc;
+    }, {
+      fairwayHits: 0,
+      attempts: 0,
+      totDistance: 0,
+      missLeft: 0,
+      missRight: 0,
+      noGreen: 0,
+    });
+  };
+  const results = [
+    calculateTeeShots('DRIVER'),
+    calculateTeeShots('FAIRWAY WOOD'),
+    calculateTeeShots('HYBRID'),
+    calculateTeeShots('IRONS'),
+  ];
+
+  const finalResult = {
+    ...initialTeeShotsStatistics,
+    teeDriver: {
+      ...results[0],
+      averageDistance: results[0].attempts !== 0 ? parseFloat(divide(results[0].totDistance, results[0].attempts).toFixed(2)) : 0,
+      fairwayCenterPCT: results[0].attempts !== 0 ? parseFloat(divide(results[0].fairwayHits, results[0].attempts).toFixed(2)) : 0,
+      fairwayLeftPCT: results[0].attempts !== 0 ? parseFloat(divide(results[0].missLeft, results[0].attempts).toFixed(2)) : 0,
+      fairwayRightPCT: results[0].attempts !== 0 ? parseFloat(divide(results[0].missRight, results[0].attempts).toFixed(2)) : 0,
+    },
+    teeFW: {
+      ...results[1],
+      averageDistance: results[1].attempts !== 0 ? parseFloat(divide(results[1].totDistance, results[1].attempts).toFixed(2)) : 0,
+      fairwayCenterPCT: results[1].attempts !== 0 ? parseFloat(divide(results[1].fairwayHits, results[1].attempts).toFixed(2)) : 0,
+      fairwayLeftPCT: results[1].attempts !== 0 ? parseFloat(divide(results[1].missLeft, results[1].attempts).toFixed(2)) : 0,
+      fairwayRightPCT: results[1].attempts !== 0 ? parseFloat(divide(results[1].missRight, results[1].attempts).toFixed(2)) : 0,
+    },
+    teeHY: {
+      ...results[2],
+      averageDistance: results[2].attempts !== 0 ? parseFloat(divide(results[2].totDistance, results[2].attempts).toFixed(2)) : 0,
+      fairwayCenterPCT: results[2].attempts !== 0 ? parseFloat(divide(results[2].fairwayHits, results[2].attempts).toFixed(2)) : 0,
+      fairwayLeftPCT: results[2].attempts !== 0 ? parseFloat(divide(results[2].missLeft, results[2].attempts).toFixed(2)) : 0,
+      fairwayRightPCT: results[2].attempts !== 0 ? parseFloat(divide(results[2].missRight, results[2].attempts).toFixed(2)) : 0,
+    },
+    teeIron: {
+      ...results[3],
+      averageDistance: results[3].attempts !== 0 ? parseFloat(divide(results[3].totDistance, results[3].attempts).toFixed(2)) : 0,
+      fairwayCenterPCT: results[3].attempts !== 0 ? parseFloat(divide(results[3].fairwayHits, results[3].attempts).toFixed(2)) : 0,
+      fairwayLeftPCT: results[3].attempts !== 0 ? parseFloat(divide(results[3].missLeft, results[3].attempts).toFixed(2)) : 0,
+      fairwayRightPCT: results[3].attempts !== 0 ? parseFloat(divide(results[3].missRight, results[3].attempts).toFixed(2)) : 0,
+    },
+  };
+
+  return finalResult;
+
+}
+
+const isTheRightClub = (wanted: string, teeClub: string) => {
+
+  let correctClub = '';
+  let isTheRightClub = false;
+
+  switch (teeClub) {
+    case 'i1':
+    case 'i2':
+    case 'i3':
+    case 'i4':
+    case 'i5':
+    case 'i6':
+    case 'i7':
+    case 'i8':
+    case 'i9':
+      correctClub = 'IRONS';
+      break;
+    default:
+      correctClub = teeClub;
+      break;
+  }
+
+  isTheRightClub = wanted === correctClub
+    ? true
+    : correctClub.includes(wanted)
+      ? true
+      : false;
+
+  return isTheRightClub;
 }

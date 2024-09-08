@@ -22,6 +22,7 @@ export const getClubsNames = (clubs: IGolfBag) => {
 export const getGreenClubs = (teeClubs: string[]) => {
   const newTeeClubs = [...teeClubs];
   newTeeClubs.push("mt.");
+  newTeeClubs.push("NO");
   newTeeClubs.shift();
 
   const greenTeeClubs = newTeeClubs;

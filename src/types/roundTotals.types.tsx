@@ -53,7 +53,8 @@ export interface IRoundTotals {
   mainData: IRoundTotalsMainData,
   score: IRoundScoreTotalsAvg,
   points: IRoundPointsTotalsAvg,
-  fairway: IRoundFairwatTotals,
+  fairway: IRoundFairwayTotals,
+  teeShots: IRoundTeeShotsTotals,
   gir: IRoundTotalsAvgINOUT,
   girBogey: IRoundTotalsAvgINOUT,
   upDown: IRoundTotalsUpDown,
@@ -64,6 +65,24 @@ export interface IRoundTotals {
   out: IRoundTotalsAvgINOUT,
 }
 
+export interface IRoundTeeShotsTotals {
+  teeDriver: IRoundTeeShotClubTotals,
+  teeFW: IRoundTeeShotClubTotals,
+  teeHY: IRoundTeeShotClubTotals,
+  teeIron: IRoundTeeShotClubTotals,
+}
+
+interface IRoundTeeShotClubTotals {
+  fairwayHits: number;
+  attempts: number;
+  averageDistance: number;
+  missLeft: number;
+  missRight: number;
+  noGreen: number;
+  fairwayCenterPCT: number;
+  fairwayLeftPCT: number;
+  fairwayRightPCT: number;
+}
 interface IRoundTotalsMainData {
   roundCourse: string,
   roundDate: string,
@@ -73,7 +92,7 @@ interface IRoundTotalsMainData {
   playerHCP: number
 }
 
-interface IRoundFairwatTotals {
+interface IRoundFairwayTotals {
   total: number,
   fairwayCenter: number,
   fairwayLeft: number,

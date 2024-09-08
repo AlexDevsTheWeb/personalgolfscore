@@ -4,23 +4,45 @@ import ShotsTableHeaderStack from "./ShotsTableHeaderStack.component";
 interface IShotsTableHeaderProps {
   firstLabel: string;
   singleHole: boolean;
+  firstColumn: boolean,
 }
 
-const ShotsTableHeader = ({ firstLabel, singleHole }: IShotsTableHeaderProps) => {
+const ShotsTableHeader = ({ firstColumn, singleHole }: IShotsTableHeaderProps) => {
   return (
     <TableHead>
       <TableRow>
-        <TableCell align='center'><ShotsTableHeaderStack firstRow={firstLabel} secondRow={!!singleHole ? '' : ''} /></TableCell>
-        <TableCell align='center'><ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} /></TableCell>
+
+        {
+          firstColumn &&
+          <TableCell align='center'>
+            <ShotsTableHeaderStack firstRow='#' secondRow={!!singleHole ? '' : ''} />
+          </TableCell>
+        }
+
+        <TableCell align='center'>
+          <ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} />
+        </TableCell>
         <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='score' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
         <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='points' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
-        <TableCell align='center'><ShotsTableHeaderStack firstRow='fairways' secondRow={!!singleHole ? '' : 'center total'} /></TableCell>
-        <TableCell align='center'><ShotsTableHeaderStack firstRow='gir' secondRow={!!singleHole ? '' : 'TOT IN OUT'} /></TableCell>
-        <TableCell align='center'><ShotsTableHeaderStack firstRow='gir bogey' secondRow={!!singleHole ? '' : 'TOT IN OUT'} /></TableCell>
+        <TableCell align='center'>
+          <ShotsTableHeaderStack firstRow='fairways' secondRow={!!singleHole ? '' : 'center total'} />
+        </TableCell>
+        <TableCell align='center'>
+          <ShotsTableHeaderStack firstRow='gir' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
+        </TableCell>
+
+        {!firstColumn &&
+          <TableCell align='center'>
+            <ShotsTableHeaderStack firstRow='putts/gir' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
+          </TableCell>
+        }
+        <TableCell align='center'>
+          <ShotsTableHeaderStack firstRow='gir bogey' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
+        </TableCell>
         <TableCell align='center' sx={{ borderLeft: '1px solid #ccc', borderTop: '1px solid #ccc' }}>
           <ShotsTableHeaderStack firstRow='scramble' secondRow={!!singleHole ? '' : 'saved made'} />
         </TableCell>
@@ -33,9 +55,10 @@ const ShotsTableHeader = ({ firstLabel, singleHole }: IShotsTableHeaderProps) =>
         <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='putts' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
-        <TableCell align='center'>
+
+        {/* <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='penalties' secondRow={'water out'} />
-        </TableCell>
+        </TableCell> */}
       </TableRow>
     </TableHead>
   )
