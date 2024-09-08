@@ -4,10 +4,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import BoxGeneralShadow from "../../../styles/box/BoxGeneralShadow.styles";
+import HolebyHoleChipping from "./ChippingPitching/HolebyHoleChipping.component";
 import HolebyHoleGeneral from "./General/HolebyHoleGeneral.component";
 import HolebyHolePutts from "./Putts/HolebyHolePutts.component";
 import HolebyHoleTeeShots from "./TeeShots/HolebyHoleTeeShots.component";
-
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -92,7 +92,7 @@ const HolebyHoleTotals = () => {
         </TabPanel>
 
         <TabPanel value={value} index={4} dir={theme.direction}>
-          {/* <HolebyHoleTeeShots totals={roundTotals} /> */}
+          <HolebyHoleChipping totals={roundTotals} />
         </TabPanel>
 
         <TabPanel value={value} index={5} dir={theme.direction}>

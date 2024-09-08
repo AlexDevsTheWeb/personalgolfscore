@@ -1,7 +1,7 @@
+import { divide } from "lodash";
 import { IShots } from "../../types/roundData.types";
 import { initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
-import { divide, iAmintheZone } from "./totalsPutts.utils";
-
+import { iAmintheZone, isTheRightClub, isTheRightClubChip } from "./totalsGenFunc.utils";
 
 export const calculatePuttsStatistics = (shots: IShots[]) => {
 
@@ -150,33 +150,58 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
 
 }
 
-const isTheRightClub = (wanted: string, teeClub: string) => {
+export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
+  const calculateChippingPitching = (club: string) => {
+    return shots.reduce((acc, curr) => {
+      const rightClub = isTheRightClubChip(club, curr.teeClub);
+      const shots = curr.strokes - curr.par + 2;
+      acc.upDownMade += (rightClub && curr.upDownX === 1 ? 1 : 0);
+      acc.upDownAttempts += (rightClub ? 1 : 0);
+      acc.averageDistance += (rightClub && curr.fairway === 4 ? 1 : 0);
+      acc.shotsHoled += (rightClub && curr.fairway === 6 ? 1 : 0);
+      acc.greensMissed += (rightClub && curr.toGreen === 'NO' ? 1 : 0);
 
-  let correctClub = '';
-  let isTheRightClub = false;
+      return acc;
+    }, {
+      upDownMade: 0,
+      upDownAttempts: 0,
+      shots: 0,
+      averageDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
+    });
+  };
+  const results = [
+    calculateChippingPitching('LW'),
+    calculateChippingPitching('SW'),
+    calculateChippingPitching('MW'),
+    calculateChippingPitching('B'),
+    calculateChippingPitching('PUTT'),
+    calculateChippingPitching('CHIP')
+  ];
 
-  switch (teeClub) {
-    case 'i1':
-    case 'i2':
-    case 'i3':
-    case 'i4':
-    case 'i5':
-    case 'i6':
-    case 'i7':
-    case 'i8':
-    case 'i9':
-      correctClub = 'IRONS';
-      break;
-    default:
-      correctClub = teeClub;
-      break;
-  }
+  const finalResult = {
+    ...initialTeeShotsStatistics,
+    lobWedge: {
+      ...results[0],
+      averageShots: results[0].upDownAttempts !== 0 ? parseFloat(divide(results[0].shots, results[0].upDownAttempts).toFixed(2)) : 0,
+    },
+    sandWedge: {
+      ...results[1],
+    },
+    mWedge: {
+      ...results[2],
+    },
+    bunker: {
+      ...results[3],
+    },
+    putt: {
+      ...results[4],
+    },
+    chip: {
+      ...results[5],
+    },
+  };
 
-  isTheRightClub = wanted === correctClub
-    ? true
-    : correctClub.includes(wanted)
-      ? true
-      : false;
-
-  return isTheRightClub;
+  return finalResult;
 }
