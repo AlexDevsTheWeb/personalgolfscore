@@ -1,7 +1,7 @@
 import { Divider, Grid, Paper, Stack, Table, TableBody, TableContainer, TableHead, Typography } from "@mui/material"
 import _ from "lodash"
 import { TableCell, TableRow } from "../../../../styles"
-import GridPuttsStat from "../../../../styles/grid/GridPuttsStat.styles"
+import GridPuttsStat from "../../../../styles/grid/GridCellStats.styles"
 import { IRoundTotalsPutts } from "../../../../types/roundTotals.types"
 import { puttsDistanceConversion } from "../../../../utils/constant.utils"
 import { formatPerc } from "../../../../utils/number/number.utils"
@@ -19,7 +19,6 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
 
   return (
     <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Typography variant='headline2'>PUTTS STATISTICS</Typography>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>

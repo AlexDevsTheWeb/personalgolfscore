@@ -1,6 +1,6 @@
 import { Divider, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import _ from "lodash";
-import GridPuttsStat from "../../../../styles/grid/GridPuttsStat.styles";
+import GridPuttsStat from "../../../../styles/grid/GridCellStats.styles";
 import { IRoundTotals } from "../../../../types/roundTotals.types";
 import { teeShotsConversion } from "../../../../utils/constant.utils";
 import { formatPerc } from "../../../../utils/number/number.utils";
@@ -17,7 +17,6 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
 
   return (
     <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Typography variant='headline2'>TEE SHOTS STATISTICS</Typography>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>

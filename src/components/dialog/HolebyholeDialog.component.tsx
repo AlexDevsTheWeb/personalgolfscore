@@ -52,7 +52,7 @@ export const HolebyholeDialog = ({ open, handleCloseHolebyHole, totals, shots, r
       </AppBar>
       <BoxBetween>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <ShotsTableHeader firstLabel='#' singleHole={true} />
+          <ShotsTableHeader firstLabel='#' singleHole={true} firstColumn={true} />
           <TableBody>
             {shots.map((shot: IShots, index: number) => {
               return (<ShotsTableBody shot={shot} key={index} />)

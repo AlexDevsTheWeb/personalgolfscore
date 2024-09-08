@@ -14,10 +14,10 @@ const StyledGrid = styled(GridMui)<GridProps>({
   // minHeight: '60px'
 })
 
-const GridPuttsStat: React.FC<GridProps> = props => {
+const GridCellStats: React.FC<GridProps> = props => {
   return (
     <StyledGrid {...props}>{props.children}</StyledGrid>
   )
 };
 
-export default GridPuttsStat;
+export default GridCellStats;
