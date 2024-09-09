@@ -154,9 +154,21 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
   const calculateChippingPitching = (club: string) => {
     return shots.reduce((acc, curr) => {
       const rightClub = isTheRightClubChip(club, curr.teeClub);
-      const shots = curr.strokes - curr.par + 2;
+
+
+
+      acc.shots = curr.strokes - curr.par + 2;
+      acc.extraChip = acc.shots - curr.putts - 1;
       acc.upDownMade += (rightClub && curr.upDownX === 1 ? 1 : 0);
-      acc.upDownAttempts += (rightClub ? 1 : 0);
+      acc.attempts += (rightClub ? 1 : 0);
+      acc.temp += (rightClub && acc.shots === 1 ? 1 : 0);
+
+
+
+
+
+
+
       acc.averageDistance += (rightClub && curr.fairway === 4 ? 1 : 0);
       acc.shotsHoled += (rightClub && curr.fairway === 6 ? 1 : 0);
       acc.greensMissed += (rightClub && curr.toGreen === 'NO' ? 1 : 0);
@@ -164,8 +176,10 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
       return acc;
     }, {
       upDownMade: 0,
-      upDownAttempts: 0,
+      attempts: 0,
       shots: 0,
+      temp: 0,
+      extraChip: 0,
       averageDistance: 0,
       shotsHoled: 0,
       greensMissed: 0,
@@ -182,24 +196,54 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
 
   const finalResult = {
     ...initialTeeShotsStatistics,
-    lobWedge: {
+
+    lw: {
       ...results[0],
-      averageShots: results[0].upDownAttempts !== 0 ? parseFloat(divide(results[0].shots, results[0].upDownAttempts).toFixed(2)) : 0,
+      averageShots: results[0].attempts !== 0 ? parseFloat(divide(results[0].temp, results[0].attempts).toFixed(2)) : 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
     },
-    sandWedge: {
+    sw: {
       ...results[1],
+      averageShots: results[1].attempts !== 0 ? parseFloat(divide(results[1].temp, results[1].attempts).toFixed(2)) : 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
     },
-    mWedge: {
+    mw: {
       ...results[2],
+      averageShots: results[2].attempts !== 0 ? parseFloat(divide(results[2].temp, results[2].attempts).toFixed(2)) : 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
     },
-    bunker: {
+    b: {
       ...results[3],
+      averageShots: results[3].attempts !== 0 ? parseFloat(divide(results[3].temp, results[3].attempts).toFixed(2)) : 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
     },
     putt: {
       ...results[4],
+      averageShots: results[4].attempts !== 0 ? parseFloat(divide(results[4].temp, results[4].attempts).toFixed(2)) : 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
     },
     chip: {
       ...results[5],
+      averageShots: results[5].attempts !== 0 ? parseFloat(divide(results[5].temp, results[5].attempts).toFixed(2)) : 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
     },
   };
 

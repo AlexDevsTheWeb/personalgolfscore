@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
+import { Box, Tab, Tabs, useTheme } from "@mui/material";
 import AppBar from '@mui/material/AppBar';
 import React from "react";
 import { useSelector } from "react-redux";
@@ -29,7 +29,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ width: '100%' }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>

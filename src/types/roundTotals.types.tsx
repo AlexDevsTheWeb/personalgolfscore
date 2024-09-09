@@ -33,6 +33,7 @@ export interface IRoundTotals {
   points: IRoundPointsTotalsAvg,
   fairway: IRoundFairwayTotals,
   teeShots: IRoundTeeShotsTotals,
+  chipPitch: IRoundChipPitchTotals,
   gir: IRoundTotalsAvgINOUT,
   girBogey: IRoundTotalsAvgINOUT,
   upDown: IRoundTotalsUpDown,
@@ -41,6 +42,24 @@ export interface IRoundTotals {
   sand: IRoundTotalsAvgSand,
   water: IRoundTotalsAvgINOUT,
   out: IRoundTotalsAvgINOUT,
+}
+
+export interface IRoundChipPitchTotals {
+  lw: IRoundChipPitch,
+  sw: IRoundChipPitch,
+  mw: IRoundChipPitch,
+  b: IRoundChipPitch,
+  putt: IRoundChipPitch,
+  chip: IRoundChipPitch
+}
+
+interface IRoundChipPitch {
+  upDownMade: number,
+  attempts: number,
+  averageShot: number,
+  averageHoleDistance: number,
+  shotsHoled: number,
+  greensMissed: number,
 }
 
 export interface IRoundTeeShotsTotals {
