@@ -45,19 +45,25 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>1 putt %</Typography>
-                            <Typography fontWeight={'bold'}>{formatPerc(value.putt1Perc)}</Typography>
+                            <Typography fontWeight={'bold'}>
+                              {formatPerc(value.putt1Perc)}
+                            </Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>2 putt %</Typography>
-                            <Typography fontWeight={'bold'}>{(value.putt1Perc === 0 && value.putt3Perc === 0) ? '-' : formatPerc(1 - value.putt1Perc - value.putt3Perc)}</Typography>
+                            <Typography fontWeight={'bold'}>
+                              {(value.putt1Perc === 0 && value.putt3Perc === 0) ? '-' : formatPerc(1 - value.putt1Perc - value.putt3Perc)}
+                            </Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>3 putt %</Typography>
-                            <Typography fontWeight={'bold'}>{formatPerc(value.putt3Perc)}</Typography>
+                            <Typography fontWeight={'bold'}>
+                              {formatPerc(value.putt3Perc)}
+                            </Typography>
                           </Stack>
                         </GridPuttsStat>
                       </Grid>
@@ -66,7 +72,9 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>Holed</Typography>
-                            <Typography fontWeight={'bold'}>{value.puttsHoled !== 0 ? value.puttsHoled : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>
+                              {value.puttsHoled !== 0 ? value.puttsHoled : '-'}
+                            </Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>
@@ -93,7 +101,7 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                         <GridPuttsStat item xs={4}>
                           <Stack>
                             <Typography>Second putt avg. length</Typography>
-                            <Typography fontWeight={'bold'}>{value.puttsSecondAverageLength !== 0 ? value.puttsSecondAverageLength : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{Number(value.puttsSecondAverageLength) !== 0 ? Number(value.puttsSecondAverageLength) : '-'}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={4}>

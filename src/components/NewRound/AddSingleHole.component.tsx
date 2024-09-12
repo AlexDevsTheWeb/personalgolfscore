@@ -38,9 +38,6 @@ const AddSingleHole = () => {
       case 'fairway':
         value !== 5 ? setTeeshotDistance(true) : setTeeshotDistance(false);
         break;
-      case 'par':
-        value === '3' ? setTeeshotDistance(true) : setTeeshotDistance(false);
-        break;
       default:
         setMtToGreen(false);
         break;

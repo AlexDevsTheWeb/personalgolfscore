@@ -1,5 +1,7 @@
 import _, { capitalize } from 'lodash';
+import { CHIPCONDITION } from '../../enum/shots.enum';
 import { IClub, IClubs, IGolfBag } from "../../types/clubs.types";
+import { IShots } from '../../types/roundData.types';
 
 export const getClubsNames = (clubs: IGolfBag) => {
   const clubsName = clubs.types.map((ct: IClubs) => {
@@ -38,4 +40,26 @@ export const getChipClubs = (teeClubs: string[]) => {
   newChipClubs.shift();
   const chipClubs = newChipClubs;
   return chipClubs;
+}
+
+export const newRoundDisabledSelect = (name: string, tmpHole: IShots) => {
+  switch (name) {
+    case CHIPCONDITION.GREEN:
+    case CHIPCONDITION.CHIP:
+      if (tmpHole.gir) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    case CHIPCONDITION.FAIRWAY:
+      if (tmpHole.par === 3) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    default:
+      return false;
+  }
 }
