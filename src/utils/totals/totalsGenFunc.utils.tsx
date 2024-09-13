@@ -29,9 +29,16 @@ export const isTheRightClub = (wanted: string, teeClub: string) => {
   return isTheRightClub;
 }
 
-export const isTheRightClubChip = (wanted: string, teeClub: string) => {
-  let correctClub = '';
+export const isTheRightClubChip = (wanted: string, chipClub: string) => {
   let isTheRightClub = false;
+
+  switch (wanted) {
+    case 'B':
+      if (chipClub === 'Bunker') isTheRightClub = true;
+      break;
+    default:
+      break;
+  }
 
   return isTheRightClub;
 }

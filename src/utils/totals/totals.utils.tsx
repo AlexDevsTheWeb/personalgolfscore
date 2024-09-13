@@ -1,5 +1,5 @@
 import { IShots } from "../../types/roundData.types";
-import { initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
+import { initialPitchChipStatistics, initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
 import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip } from "./totalsGenFunc.utils";
 
 export const calculatePuttsStatistics = (shots: IShots[]) => {
@@ -118,36 +118,35 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
 export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
   const calculateChippingPitching = (club: string) => {
     return shots.reduce((acc, curr) => {
-      const rightClub = isTheRightClubChip(club, curr.teeClub);
 
-
-
-
+      const rightClub = isTheRightClubChip(club, curr.chipClub);
 
       acc.shots = curr.strokes - curr.par + 2;
       acc.extraChip = acc.shots - curr.putts - 1;
+      acc.distance = acc.extraChip === 1 ? 0 : curr.puttsLength[0];
+      acc.totalsDistanceNumber += acc.extraChip === 1 ? 0 : 1;
       acc.upDownMade += (rightClub && curr.upDownX === 1 ? 1 : 0);
       acc.attempts += (rightClub ? 1 : 0);
-
       acc.totalsForAverageShots += (rightClub ? acc.shots : 0);
+      acc.totalsForAvgDistanceToHole += ((rightClub && acc.extraChip === 0) ? acc.distance : 0);
+      acc.shotsHoled += ((acc.attempts !== 0 && rightClub && acc.shots === 1) ? 1 : 0);
+      acc.totalsForGreenMissed += ((rightClub && acc.extraChip === 0) ? 1 : 0);
 
-
-
-
-      acc.averageDistance += (rightClub && curr.fairway === 4 ? 1 : 0);
-      acc.shotsHoled += (rightClub && curr.fairway === 6 ? 1 : 0);
-      acc.greensMissed += (rightClub && curr.toGreen === 'NO' ? 1 : 0);
+      acc.greenMissed = acc.attempts - acc.totalsForGreenMissed;
 
       return acc;
     }, {
+      shots: 0,
+      extraChip: 0,
+      distance: 0,
+      totalsDistanceNumber: 0,
       upDownMade: 0,
       attempts: 0,
       totalsForAverageShots: 0,
-      shots: 0,
-      extraChip: 0,
-      averageDistance: 0,
+      totalsForAvgDistanceToHole: 0,
       shotsHoled: 0,
-      greensMissed: 0,
+      totalsForGreenMissed: 0,
+      greenMissed: 0
     });
   };
   const results = [
@@ -160,20 +159,20 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
   ];
 
   const createFinalObject = (array: any) => {
+
+    console.log("ARRAY: ", array);
+    console.log("AVG SHOTS: ", parseFloat(divide(array.totalsForAverageShots, array.attempts).toFixed(2)))
     return (
       {
         ...array,
         averageShots: array.attempts !== 0 ? parseFloat(divide(array.totalsForAverageShots, array.attempts).toFixed(2)) : 0,
-        averageShot: 0,
-        averageHoleDistance: 0,
-        shotsHoled: 0,
-        greensMissed: 0,
+        averageaverageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsforAvgDistanceToHole, array.totalsDistanceNumber).toFixed(2)) : 0,
       }
     )
   }
 
   const finalResult = {
-    ...initialTeeShotsStatistics,
+    ...initialPitchChipStatistics,
 
     lw: createFinalObject(results[0]),
     sw: createFinalObject(results[1]),
