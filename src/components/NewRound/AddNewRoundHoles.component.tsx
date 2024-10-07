@@ -43,8 +43,8 @@ const AddNewRoundHoles = () => {
   return (
     <>
       {holeForm}
-      {holes.length > 0 && <HolebyHoleTable holes={holes} />}
       {holes.length > 0 && <HolebyHoleTotals />}
+      {holes.length > 0 && <HolebyHoleTable holes={holes} />}
       {(holes.length !== 0 && holes.length === round.roundHoles) && <RoundSave />}
     </>
   )

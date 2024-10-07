@@ -11,7 +11,7 @@ const StyledGrid = styled(GridMui)<GridProps>({
   alignContent: 'center',
   justifyContent: 'space-between',
   alignItems: 'center',
-  // minHeight: '60px'
+  padding: '0px'
 })
 
 const GridCellStats: React.FC<GridProps> = props => {

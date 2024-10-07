@@ -158,10 +158,8 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
     calculateChippingPitching('CHIP')
   ];
 
+  console.log("B -> ", calculateChippingPitching('B'));
   const createFinalObject = (array: any) => {
-
-    console.log("ARRAY: ", array);
-    console.log("AVG SHOTS: ", parseFloat(divide(array.totalsForAverageShots, array.attempts).toFixed(2)))
     return (
       {
         ...array,

@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import BoxGeneralShadow from "../../../styles/box/BoxGeneralShadow.styles";
 import HolebyHoleChipping from "./ChippingPitching/HolebyHoleChipping.component";
 import HolebyHoleGeneral from "./General/HolebyHoleGeneral.component";
 import HolebyHolePutts from "./Putts/HolebyHolePutts.component";
@@ -54,52 +53,49 @@ const HolebyHoleTotals = () => {
   };
 
   return (
-    <BoxGeneralShadow>
+    <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
+      <AppBar position="static">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="secondary"
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+        >
+          <Tab label="General" {...a11yProps(0)} />
+          <Tab label="Tee shots" {...a11yProps(1)} />
+          <Tab label="Fairway Woods & Irons" {...a11yProps(2)} />
+          <Tab label="Inside 100mt" {...a11yProps(3)} />
+          <Tab label="Pitching & Chipping" {...a11yProps(4)} />
+          <Tab label="Putts" {...a11yProps(5)} />
+        </Tabs>
+      </AppBar>
 
-      <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
-        <AppBar position="static">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="secondary"
-            textColor="inherit"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-          >
-            <Tab label="General" {...a11yProps(0)} />
-            <Tab label="Tee shots" {...a11yProps(1)} />
-            <Tab label="Fairway Woods & Irons" {...a11yProps(2)} />
-            <Tab label="Inside 100mt" {...a11yProps(3)} />
-            <Tab label="Pitching & Chipping" {...a11yProps(4)} />
-            <Tab label="Putts" {...a11yProps(5)} />
-          </Tabs>
-        </AppBar>
+      <TabPanel value={value} index={0} dir={theme.direction}>
+        <HolebyHoleGeneral />
+      </TabPanel>
 
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <HolebyHoleGeneral />
-        </TabPanel>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        <HolebyHoleTeeShots totals={roundTotals} />
+      </TabPanel>
 
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <HolebyHoleTeeShots totals={roundTotals} />
-        </TabPanel>
+      <TabPanel value={value} index={2} dir={theme.direction}>
+        {/* <HolebyHoleTeeShots totals={roundTotals} /> */}
+      </TabPanel>
 
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          {/* <HolebyHoleTeeShots totals={roundTotals} /> */}
-        </TabPanel>
+      <TabPanel value={value} index={3} dir={theme.direction}>
+        {/* <HolebyHoleTeeShots totals={roundTotals} /> */}
+      </TabPanel>
 
-        <TabPanel value={value} index={3} dir={theme.direction}>
-          {/* <HolebyHoleTeeShots totals={roundTotals} /> */}
-        </TabPanel>
+      <TabPanel value={value} index={4} dir={theme.direction}>
+        <HolebyHoleChipping totals={roundTotals} />
+      </TabPanel>
 
-        <TabPanel value={value} index={4} dir={theme.direction}>
-          <HolebyHoleChipping totals={roundTotals} />
-        </TabPanel>
-
-        <TabPanel value={value} index={5} dir={theme.direction}>
-          <HolebyHolePutts totalsPutts={roundTotals.putts} />
-        </TabPanel>
-      </Box>
-    </BoxGeneralShadow>
+      <TabPanel value={value} index={5} dir={theme.direction}>
+        <HolebyHolePutts totalsPutts={roundTotals.putts} />
+      </TabPanel>
+    </Box>
   )
 }
 

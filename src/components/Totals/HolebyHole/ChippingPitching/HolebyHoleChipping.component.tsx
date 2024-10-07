@@ -35,8 +35,6 @@ const HolebyHoleChipping = ({ totals }: IHolebyHoleChipping) => {
           <TableRow>
             {
               Object.entries(chipPitch).map(([key, value], index: number) => {
-
-                console.log("value: ", value);
                 return (
                   <TableCell align='center' key={index}>
                     <Stack>

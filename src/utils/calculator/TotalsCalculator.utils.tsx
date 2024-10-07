@@ -37,7 +37,6 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.teeIron += (curr.teeClub.includes('i') ? 1 : 0);
     acc.noGreen += (curr.toGreen === 'NO' ? 1 : 0);
 
-
     acc.fairwayCenter += (curr.fairway === 5 ? 1 : 0);
     acc.fairwayLeft += (curr.fairway === 4 ? 1 : 0);
     acc.fairwayRight += (curr.fairway === 6 ? 1 : 0);

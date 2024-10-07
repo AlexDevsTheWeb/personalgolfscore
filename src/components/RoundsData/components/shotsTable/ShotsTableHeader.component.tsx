@@ -56,9 +56,9 @@ const ShotsTableHeader = ({ firstColumn, singleHole }: IShotsTableHeaderProps) =
           <ShotsTableHeaderStack firstRow='putts' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
 
-        {/* <TableCell align='center'>
-          <ShotsTableHeaderStack firstRow='penalties' secondRow={'water out'} />
-        </TableCell> */}
+        <TableCell align='center'>
+          <ShotsTableHeaderStack firstRow='penalties' secondRow={'water | out'} />
+        </TableCell>
       </TableRow>
     </TableHead>
   )
