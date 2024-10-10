@@ -15,9 +15,9 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
 
   return (
     <TableRow key={holeNumber}>
-      <TableCell align='center'>{holeNumber}</TableCell>
-      <TableCell align='center'>{par}</TableCell>
-      <TableCell align='center'
+      <TableCell align='center' sx={{ padding: '0px' }}>{holeNumber}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>{par}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}
         variant={vspar.value.includes('-') ? 'green' : vspar.value.includes('+') ? 'red' : 'yellow'}>
         <Stack>
           <Box>
@@ -25,18 +25,18 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
           </Box>
         </Stack>
       </TableCell>
-      <TableCell align='center'
+      <TableCell align='center' sx={{ padding: '0px' }}
         variant={points && points >= 2 ? 'green' : points === 1 ? 'yellow' : 'red'}>
         {points}
       </TableCell>
-      <TableCell align='center'><ShotPosition position={Number(fairway)} /></TableCell>
-      <TableCell align='center'>{gir ? 'Yes' : 'No'}</TableCell>
-      <TableCell align='center'>{girBogey ? 'Yes' : 'No'}</TableCell>
-      <TableCell align='center' sx={{ borderLeft: '1px solid #ccc' }}>{scramble !== 0 ? scramble : '-'}</TableCell>
-      <TableCell align='center'>{upDown !== '' ? upDown.toUpperCase() : '-'}</TableCell>
-      <TableCell align='center' sx={{ borderRight: '1px solid #ccc' }}>{sand}</TableCell>
-      <TableCell align='center'>{putts}</TableCell>
-      <TableCell align='center'>{`${water} | ${out}`}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}><ShotPosition position={Number(fairway)} /></TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>{gir ? 'Yes' : 'No'}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>{girBogey ? 'Yes' : 'No'}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>{scramble !== 0 ? scramble : '-'}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>{upDown !== '' ? upDown.toUpperCase() : '-'}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>{sand}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>{putts}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>{`${water} | ${out}`}</TableCell>
     </TableRow>
   )
 }

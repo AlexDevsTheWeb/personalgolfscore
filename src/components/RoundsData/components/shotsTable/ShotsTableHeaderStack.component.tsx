@@ -18,15 +18,17 @@ const ShotsTableHeaderStack = ({ firstRow, secondRow }: IShotsTableHeaderStack) 
         flexDirection: 'column',
         flexWrap: 'wrap',
         alignContent: 'center',
-        backgroundColor: '#cccccc',
+        backgroundColor: '#f0f0f0',
         color: 'black',
         fontWeight: 500,
-        fontSize: 16,
-        padding: '10px',
+        fontSize: 14,
+        padding: '0px',
+        minHeight: '65px',
+        justifyContent: 'center'
       }}
     >
       <Typography fontWeight={'bold'}>{firstRow}</Typography>
-      {secondRow !== '' && <Typography>{secondRow}</Typography>}
+      {secondRow !== '' && <Typography sx={{ fontSize: '12px' }}>{secondRow}</Typography>}
     </Stack>
   )
 }

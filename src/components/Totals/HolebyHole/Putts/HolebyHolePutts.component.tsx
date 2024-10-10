@@ -1,8 +1,11 @@
-import { Box } from "@mui/material";
+import { Divider, Paper, Table, TableBody, TableContainer, TableHead } from "@mui/material";
+import _ from "lodash";
+import { BoxOverflow, Grid, Stack, TableCell, TableRow, Typography } from "../../../../styles";
+import GridPuttsStat from "../../../../styles/grid/GridCellStats.styles";
 import { IRoundTotalsPutts } from "../../../../types/roundTotals.types";
 import { puttsDistanceConversion } from "../../../../utils/constant.utils";
+import { formatPerc } from "../../../../utils/number/number.utils";
 import ShotsTableHeaderStack from "../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
-import TotalsDisplay from "../../components/TotalsDisplay.component";
 
 interface IHolebyHolePutts {
   totalsPutts: IRoundTotalsPutts
@@ -15,30 +18,10 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
   const puttsCat = Object.keys(puttsStatistics);
   const puttsValues = Object.entries(puttsStatistics);
 
-  console.log("cat: ", puttsCat);
-  console.log("puttsValues: ", puttsValues);
-
   return (
-    <>
-      <Box display='flex'>
-        {
-          puttsValues.map((value: any, index: number) => {
-            return (
-              <Box sx={{ border: '1px solid #ccc' }}>
-                <ShotsTableHeaderStack
-                  firstRow={puttsDistanceConversion(value[0])}
-                  secondRow={''}
-                />
-                <TotalsDisplay value={value[1]} />
-              </Box>
-
-            )
-          })
-        }
-      </Box>
-
-      {/* <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+    <BoxOverflow direction='horizontal' variant='table'>
+      <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
+        <Table sx={{ minWidth: '1500px', width: '100%' }} aria-label="customized table">
           <TableHead>
             <TableRow>
               {
@@ -59,7 +42,7 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                 puttsValues.map(([key, value], index: number) => {
                   return (
                     <TableCell align='center' key={index}>
-                      <TotalsDisplay value={value} />
+                      {/* <TotalsDisplay value={value} /> */}
                       <Stack>
                         <Grid container spacing={1}>
                           <GridPuttsStat item xs={4}>
@@ -138,8 +121,8 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
             </TableRow>
           </TableBody>
         </Table>
-      </TableContainer> */}
-    </>
+      </TableContainer>
+    </BoxOverflow>
 
   );
 }
