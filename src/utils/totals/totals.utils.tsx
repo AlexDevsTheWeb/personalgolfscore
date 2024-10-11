@@ -150,34 +150,34 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
     });
   };
   const results = [
-    calculateChippingPitching('LW'),
-    calculateChippingPitching('SW'),
-    calculateChippingPitching('MW'),
+    calculateChippingPitching('Pitch Wedge'),
+    calculateChippingPitching('Gap Wedge'),
+    calculateChippingPitching('Sand Wedge'),
+    calculateChippingPitching('Lob Wedge'),
     calculateChippingPitching('B'),
-    calculateChippingPitching('PUTT'),
-    calculateChippingPitching('CHIP')
+    calculateChippingPitching('CHIP'),
+    calculateChippingPitching('PUTT')
   ];
 
-  console.log("B -> ", calculateChippingPitching('B'));
   const createFinalObject = (array: any) => {
     return (
       {
         ...array,
         averageShots: array.attempts !== 0 ? parseFloat(divide(array.totalsForAverageShots, array.attempts).toFixed(2)) : 0,
-        averageaverageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsforAvgDistanceToHole, array.totalsDistanceNumber).toFixed(2)) : 0,
+        averageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsforAvgDistanceToHole, array.totalsDistanceNumber).toFixed(2)) : 0,
       }
     )
   }
 
   const finalResult = {
     ...initialPitchChipStatistics,
-
-    lw: createFinalObject(results[0]),
-    sw: createFinalObject(results[1]),
-    mw: createFinalObject(results[2]),
-    b: createFinalObject(results[3]),
-    putt: createFinalObject(results[4]),
+    pw: createFinalObject(results[0]),
+    lw: createFinalObject(results[1]),
+    sw: createFinalObject(results[2]),
+    gw: createFinalObject(results[3]),
+    b: createFinalObject(results[4]),
     chip: createFinalObject(results[5]),
+    putt: createFinalObject(results[6]),
 
   };
 

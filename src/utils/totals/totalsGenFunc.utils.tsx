@@ -1,3 +1,4 @@
+
 export const isTheRightClub = (wanted: string, teeClub: string) => {
 
   let correctClub = '';
@@ -37,6 +38,11 @@ export const isTheRightClubChip = (wanted: string, chipClub: string) => {
       if (chipClub === 'Bunker') isTheRightClub = true;
       break;
     default:
+      console.log("wanted: ", wanted);
+      console.log("chipClub: ", chipClub.toUpperCase());
+      console.log("è quella che voglio?", chipClub.toUpperCase() === wanted.toUpperCase())
+
+      if (chipClub.toUpperCase() === wanted.toUpperCase()) isTheRightClub = true;
       break;
   }
 

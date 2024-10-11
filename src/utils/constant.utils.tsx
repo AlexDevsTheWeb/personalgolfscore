@@ -105,7 +105,15 @@ export const initialStateRoundTotals: IRoundTotals = {
     },
   },
   chipPitch: {
-    lw: {
+    pw: {
+      upDownMade: 0,
+      attempts: 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
+    },
+    gw: {
       upDownMade: 0,
       attempts: 0,
       averageShot: 0,
@@ -121,7 +129,7 @@ export const initialStateRoundTotals: IRoundTotals = {
       shotsHoled: 0,
       greensMissed: 0,
     },
-    mw: {
+    lw: {
       upDownMade: 0,
       attempts: 0,
       averageShot: 0,
@@ -450,7 +458,15 @@ export const initialTeeShotsStatistics: IRoundTeeShotsTotals = {
 }
 
 export const initialPitchChipStatistics: IRoundChipPitchTotals = {
-  lw: {
+  pw: {
+    upDownMade: 0,
+    attempts: 0,
+    averageShot: 0,
+    averageHoleDistance: 0,
+    shotsHoled: 0,
+    greensMissed: 0,
+  },
+  gw: {
     upDownMade: 0,
     attempts: 0,
     averageShot: 0,
@@ -466,7 +482,7 @@ export const initialPitchChipStatistics: IRoundChipPitchTotals = {
     shotsHoled: 0,
     greensMissed: 0,
   },
-  mw: {
+  lw: {
     upDownMade: 0,
     attempts: 0,
     averageShot: 0,

@@ -45,12 +45,13 @@ export interface IRoundTotals {
 }
 
 export interface IRoundChipPitchTotals {
-  lw: IRoundChipPitch,
+  pw: IRoundChipPitch,
+  gw: IRoundChipPitch,
   sw: IRoundChipPitch,
-  mw: IRoundChipPitch,
+  lw: IRoundChipPitch,
   b: IRoundChipPitch,
-  putt: IRoundChipPitch,
   chip: IRoundChipPitch
+  putt: IRoundChipPitch,
 }
 
 interface IRoundChipPitch {

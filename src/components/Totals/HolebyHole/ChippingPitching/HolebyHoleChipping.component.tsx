@@ -1,5 +1,6 @@
 import { Divider, Grid, Paper, Stack, Table, TableBody, TableContainer, TableHead, Typography } from "@mui/material";
 import _ from "lodash";
+import { CHIPPING } from "../../../../enum/shots.enum";
 import { BoxOverflow, TableCell, TableRow } from "../../../../styles";
 import GridPuttsStat from "../../../../styles/grid/GridCellStats.styles";
 import { IRoundTotals } from "../../../../types/roundTotals.types";
@@ -22,9 +23,10 @@ const HolebyHoleChipping = ({ totals }: IHolebyHoleChipping) => {
             <TableRow>
               {
                 chipPitchCat.map((club: string, index: number) => {
+                  const clubType = CHIPPING[club.toUpperCase() as keyof typeof CHIPPING] || club;
                   return (
                     <TableCell align='center' key={index} variant='putt'>
-                      <ShotsTableHeaderStack firstRow={club} secondRow={''} />
+                      <ShotsTableHeaderStack firstRow={clubType as string} secondRow={''} />
                     </TableCell>
                   )
                 })
@@ -58,10 +60,8 @@ const HolebyHoleChipping = ({ totals }: IHolebyHoleChipping) => {
                           </GridPuttsStat>
                           <GridPuttsStat item xs={4}>
                             <Stack>
-                              <Typography>Avg. Shots</Typography>
-                              <Typography fontWeight={'bold'}>
-                                {value.averageShot}
-                              </Typography>
+                              <Typography>Shots holed</Typography>
+                              <Typography fontWeight={'bold'}>{value.shotsHoled}</Typography>
                             </Stack>
                           </GridPuttsStat>
                         </Grid>
@@ -69,16 +69,18 @@ const HolebyHoleChipping = ({ totals }: IHolebyHoleChipping) => {
                         <Grid container spacing={1}>
                           <GridPuttsStat item xs={4}>
                             <Stack>
-                              <Typography>Avg. Distance</Typography>
+                              <Typography>Avg. Shots</Typography>
                               <Typography fontWeight={'bold'}>
-                                {value.averageHoleDistance}
+                                {value.averageShots}
                               </Typography>
                             </Stack>
                           </GridPuttsStat>
                           <GridPuttsStat item xs={4}>
                             <Stack>
-                              <Typography>Shots holed</Typography>
-                              <Typography fontWeight={'bold'}>{value.shotsHoled}</Typography>
+                              <Typography>Avg. Distance</Typography>
+                              <Typography fontWeight={'bold'}>
+                                {value.averageHoleDistanceShot}
+                              </Typography>
                             </Stack>
                           </GridPuttsStat>
                           <GridPuttsStat item xs={4}>
