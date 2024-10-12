@@ -44,7 +44,7 @@ const HolebyHoleChipping = ({ totals }: IHolebyHoleChipping) => {
                         <Grid container spacing={1}>
                           <GridPuttsStat item xs={4}>
                             <Stack>
-                              <Typography>U&D Made</Typography>
+                              <Typography>U&D made</Typography>
                               <Typography fontWeight={'bold'}>
                                 {value.upDownMade}
                               </Typography>
@@ -52,7 +52,7 @@ const HolebyHoleChipping = ({ totals }: IHolebyHoleChipping) => {
                           </GridPuttsStat>
                           <GridPuttsStat item xs={4}>
                             <Stack>
-                              <Typography>Attempts</Typography>
+                              <Typography>Attempts made</Typography>
                               <Typography fontWeight={'bold'}>
                                 {value.attempts}
                               </Typography>
@@ -69,7 +69,7 @@ const HolebyHoleChipping = ({ totals }: IHolebyHoleChipping) => {
                         <Grid container spacing={1}>
                           <GridPuttsStat item xs={4}>
                             <Stack>
-                              <Typography>Avg. Shots</Typography>
+                              <Typography>Avg. shots</Typography>
                               <Typography fontWeight={'bold'}>
                                 {value.averageShots}
                               </Typography>
@@ -77,7 +77,7 @@ const HolebyHoleChipping = ({ totals }: IHolebyHoleChipping) => {
                           </GridPuttsStat>
                           <GridPuttsStat item xs={4}>
                             <Stack>
-                              <Typography>Avg. Distance</Typography>
+                              <Typography>Avg. distance</Typography>
                               <Typography fontWeight={'bold'}>
                                 {value.averageHoleDistanceShot}
                               </Typography>
