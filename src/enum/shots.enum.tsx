@@ -34,3 +34,13 @@ export enum FAIRWAYSICONS {
   LONGCENTER = 'long center',
   LONGRIGHT = 'long right'
 }
+
+export enum CHIPPING {
+  PW = 'Pitch Wedge',
+  GW = 'Gap Wedge',
+  SW = 'Sand Wedge',
+  LW = 'Lob Wedge',
+  B = 'Bunker',
+  CHIP = 'Chip',
+  PUTT = 'Putt',
+}

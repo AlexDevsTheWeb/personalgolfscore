@@ -1,5 +1,5 @@
 import { IShots } from "../types/roundData.types";
-import { IPuttsStatistics, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
+import { IPuttsStatistics, IRoundChipPitchTotals, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
 
 export const parList = ['3', '4', '5'];
 export const hcpList18 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',];
@@ -102,6 +102,64 @@ export const initialStateRoundTotals: IRoundTotals = {
       fairwayCenterPCT: 0,
       fairwayLeftPCT: 0,
       fairwayRightPCT: 0,
+    },
+  },
+  chipPitch: {
+    pw: {
+      upDownMade: 0,
+      attempts: 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
+    },
+    gw: {
+      upDownMade: 0,
+      attempts: 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
+    },
+    sw: {
+      upDownMade: 0,
+      attempts: 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
+    },
+    lw: {
+      upDownMade: 0,
+      attempts: 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
+    },
+    b: {
+      upDownMade: 0,
+      attempts: 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
+    },
+    putt: {
+      upDownMade: 0,
+      attempts: 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
+    },
+    chip: {
+      upDownMade: 0,
+      attempts: 0,
+      averageShot: 0,
+      averageHoleDistance: 0,
+      shotsHoled: 0,
+      greensMissed: 0,
     },
   },
   gir: {
@@ -399,3 +457,61 @@ export const initialTeeShotsStatistics: IRoundTeeShotsTotals = {
   },
 }
 
+export const initialPitchChipStatistics: IRoundChipPitchTotals = {
+  pw: {
+    upDownMade: 0,
+    attempts: 0,
+    averageShot: 0,
+    averageHoleDistance: 0,
+    shotsHoled: 0,
+    greensMissed: 0,
+  },
+  gw: {
+    upDownMade: 0,
+    attempts: 0,
+    averageShot: 0,
+    averageHoleDistance: 0,
+    shotsHoled: 0,
+    greensMissed: 0,
+  },
+  sw: {
+    upDownMade: 0,
+    attempts: 0,
+    averageShot: 0,
+    averageHoleDistance: 0,
+    shotsHoled: 0,
+    greensMissed: 0,
+  },
+  lw: {
+    upDownMade: 0,
+    attempts: 0,
+    averageShot: 0,
+    averageHoleDistance: 0,
+    shotsHoled: 0,
+    greensMissed: 0,
+  },
+  b: {
+    upDownMade: 0,
+    attempts: 0,
+    averageShot: 0,
+    averageHoleDistance: 0,
+    shotsHoled: 0,
+    greensMissed: 0,
+  },
+  putt: {
+    upDownMade: 0,
+    attempts: 0,
+    averageShot: 0,
+    averageHoleDistance: 0,
+    shotsHoled: 0,
+    greensMissed: 0,
+  },
+  chip: {
+    upDownMade: 0,
+    attempts: 0,
+    averageShot: 0,
+    averageHoleDistance: 0,
+    shotsHoled: 0,
+    greensMissed: 0,
+  },
+}

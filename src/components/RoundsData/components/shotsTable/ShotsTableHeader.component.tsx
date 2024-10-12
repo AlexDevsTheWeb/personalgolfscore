@@ -43,22 +43,22 @@ const ShotsTableHeader = ({ firstColumn, singleHole }: IShotsTableHeaderProps) =
         <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='gir bogey' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
-        <TableCell align='center' sx={{ borderLeft: '1px solid #ccc', borderTop: '1px solid #ccc' }}>
+        <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='scramble' secondRow={!!singleHole ? '' : 'saved made'} />
         </TableCell>
-        <TableCell align='center' sx={{ borderTop: '1px solid #ccc' }}>
+        <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='up & down' secondRow={!!singleHole ? '' : 'saved made'} />
         </TableCell>
-        <TableCell align='center' sx={{ borderRight: '1px solid #ccc', borderTop: '1px solid #ccc' }}>
+        <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='sand' secondRow={!!singleHole ? '' : 'saved made'} />
         </TableCell>
         <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='putts' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
 
-        {/* <TableCell align='center'>
-          <ShotsTableHeaderStack firstRow='penalties' secondRow={'water out'} />
-        </TableCell> */}
+        <TableCell align='center'>
+          <ShotsTableHeaderStack firstRow='penalties' secondRow={'water | out'} />
+        </TableCell>
       </TableRow>
     </TableHead>
   )

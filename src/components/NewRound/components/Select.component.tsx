@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CHIPCONDITION } from '../../../enum/shots.enum';
 import { RootState } from '../../../store/store';
+import { newRoundDisabledSelect } from '../../../utils/round/round.utils';
 
 interface ISelectProps {
   name: string,
@@ -25,29 +26,8 @@ const Select = (props: ISelectProps) => {
   }
 
   useEffect(() => {
-    switch (name) {
-      case CHIPCONDITION.GREEN:
-      case CHIPCONDITION.CHIP:
-        if (tmpHole.gir) {
-          setDisabled(true)
-        }
-        else {
-          setDisabled(false);
-        }
-        break;
-      case CHIPCONDITION.FAIRWAY:
-      case CHIPCONDITION.TEECLUB:
-        if (tmpHole.par === 3) {
-          setDisabled(true);
-        }
-        else {
-          setDisabled(false);
-        }
-        break;
-      default:
-        setDisabled(false);
-    }
-  }, [name, tmpHole.gir, tmpHole.par]);
+    setDisabled(newRoundDisabledSelect(name, tmpHole));
+  }, [name, tmpHole]);
 
   return (
     <FormControl variant='filled'>

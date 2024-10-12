@@ -1,7 +1,6 @@
 import { IShots } from "../../types/roundData.types";
-import { initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
-import { divide, iAmintheZone } from "./totalsPutts.utils";
-
+import { initialPitchChipStatistics, initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
+import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip } from "./totalsGenFunc.utils";
 
 export const calculatePuttsStatistics = (shots: IShots[]) => {
 
@@ -37,48 +36,26 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
     calculatePutts(0, 10),
   ];
 
+  const createFinalObject = (object: any) => {
+    return (
+      {
+        ...object,
+        puttsAverage: parseFloat(divide(object.numberPuttsInRange, object.puttsAttempts).toFixed(2)),
+        puttsSecondAverageLength: parseFloat(divide(object.distanceSecondPutt, object.numberSecondPutt).toFixed(2)),
+        puttsAverageDistance: parseFloat(divide(object.distanceFirstPutt, object.puttsAttempts).toFixed(2)),
+        putt1Perc: parseFloat(divide(object.puttsHoled, object.puttsAttempts).toFixed(2)),
+        putt3Perc: parseFloat(divide(object.putts3, object.puttsAttempts).toFixed(2)),
+      }
+    )
+  }
+
   const finalResult = {
     ...initialPuttsStatistics,
-    puttsU2M: {
-      ...results[0],
-      puttsAverage: parseFloat(divide(results[0].numberPuttsInRange, results[0].puttsAttempts).toFixed(2)),
-      puttsSecondAverageLength: parseFloat(divide(results[0].distanceSecondPutt, results[0].numberSecondPutt).toFixed(2)),
-      puttsAverageDistance: parseFloat(divide(results[0].distanceFirstPutt, results[0].puttsAttempts).toFixed(2)),
-      putt1Perc: parseFloat(divide(results[0].puttsHoled, results[0].puttsAttempts).toFixed(2)),
-      putt3Perc: parseFloat(divide(results[0].putts3, results[0].puttsAttempts).toFixed(2)),
-    },
-    putts24M: {
-      ...results[1],
-      puttsAverage: parseFloat(divide(results[1].numberPuttsInRange, results[1].puttsAttempts).toFixed(2)),
-      puttsSecondAverageLength: parseFloat(divide(results[1].distanceSecondPutt, results[1].numberSecondPutt).toFixed(2)),
-      puttsAverageDistance: parseFloat(divide(results[1].distanceFirstPutt, results[1].puttsAttempts).toFixed(2)),
-      putt1Perc: parseFloat(divide(results[1].puttsHoled, results[1].puttsAttempts).toFixed(2)),
-      putt3Perc: parseFloat(divide(results[1].putts3, results[1].puttsAttempts).toFixed(2)),
-    },
-    putts46M: {
-      ...results[2],
-      puttsAverage: parseFloat(divide(results[2].numberPuttsInRange, results[2].puttsAttempts).toFixed(2)),
-      puttsSecondAverageLength: parseFloat(divide(results[2].distanceSecondPutt, results[2].numberSecondPutt).toFixed(2)),
-      puttsAverageDistance: parseFloat(divide(results[2].distanceFirstPutt, results[2].puttsAttempts).toFixed(2)),
-      putt1Perc: parseFloat(divide(results[2].puttsHoled, results[2].puttsAttempts).toFixed(2)),
-      putt3Perc: parseFloat(divide(results[2].putts3, results[2].puttsAttempts).toFixed(2)),
-    },
-    putts610M: {
-      ...results[3],
-      puttsAverage: parseFloat(divide(results[3].numberPuttsInRange, results[3].puttsAttempts).toFixed(2)),
-      puttsSecondAverageLength: parseFloat(divide(results[3].distanceSecondPutt, results[3].numberSecondPutt).toFixed(2)),
-      puttsAverageDistance: parseFloat(divide(results[3].distanceFirstPutt, results[3].puttsAttempts).toFixed(2)),
-      putt1Perc: parseFloat(divide(results[3].puttsHoled, results[3].puttsAttempts).toFixed(2)),
-      putt3Perc: parseFloat(divide(results[3].putts3, results[3].puttsAttempts).toFixed(2)),
-    },
-    puttsO10M: {
-      ...results[4],
-      puttsAverage: parseFloat(divide(results[4].numberPuttsInRange, results[4].puttsAttempts).toFixed(2)),
-      puttsSecondAverageLength: parseFloat(divide(results[4].distanceSecondPutt, results[4].numberSecondPutt).toFixed(2)),
-      puttsAverageDistance: parseFloat(divide(results[4].distanceFirstPutt, results[4].puttsAttempts).toFixed(2)),
-      putt1Perc: parseFloat(divide(results[4].puttsHoled, results[4].puttsAttempts).toFixed(2)),
-      putt3Perc: parseFloat(divide(results[4].putts3, results[4].puttsAttempts).toFixed(2)),
-    },
+    puttsU2M: createFinalObject(results[0]),
+    putts24M: createFinalObject(results[1]),
+    putts46M: createFinalObject(results[2]),
+    putts610M: createFinalObject(results[3]),
+    puttsO10M: createFinalObject(results[4]),
   };
 
   return finalResult;
@@ -114,69 +91,95 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
     calculateTeeShots('IRONS'),
   ];
 
+  const createFinalObject = (object: any) => {
+    return (
+      {
+        ...object,
+        averageDistance: object.attempts !== 0 ? parseFloat(divide(object.totDistance, object.attempts).toFixed(2)) : 0,
+        fairwayCenterPCT: object.attempts !== 0 ? parseFloat(divide(object.fairwayHits, object.attempts).toFixed(2)) : 0,
+        fairwayLeftPCT: object.attempts !== 0 ? parseFloat(divide(object.missLeft, object.attempts).toFixed(2)) : 0,
+        fairwayRightPCT: object.attempts !== 0 ? parseFloat(divide(object.missRight, object.attempts).toFixed(2)) : 0,
+      }
+    )
+  }
+
   const finalResult = {
     ...initialTeeShotsStatistics,
-    teeDriver: {
-      ...results[0],
-      averageDistance: results[0].attempts !== 0 ? parseFloat(divide(results[0].totDistance, results[0].attempts).toFixed(2)) : 0,
-      fairwayCenterPCT: results[0].attempts !== 0 ? parseFloat(divide(results[0].fairwayHits, results[0].attempts).toFixed(2)) : 0,
-      fairwayLeftPCT: results[0].attempts !== 0 ? parseFloat(divide(results[0].missLeft, results[0].attempts).toFixed(2)) : 0,
-      fairwayRightPCT: results[0].attempts !== 0 ? parseFloat(divide(results[0].missRight, results[0].attempts).toFixed(2)) : 0,
-    },
-    teeFW: {
-      ...results[1],
-      averageDistance: results[1].attempts !== 0 ? parseFloat(divide(results[1].totDistance, results[1].attempts).toFixed(2)) : 0,
-      fairwayCenterPCT: results[1].attempts !== 0 ? parseFloat(divide(results[1].fairwayHits, results[1].attempts).toFixed(2)) : 0,
-      fairwayLeftPCT: results[1].attempts !== 0 ? parseFloat(divide(results[1].missLeft, results[1].attempts).toFixed(2)) : 0,
-      fairwayRightPCT: results[1].attempts !== 0 ? parseFloat(divide(results[1].missRight, results[1].attempts).toFixed(2)) : 0,
-    },
-    teeHY: {
-      ...results[2],
-      averageDistance: results[2].attempts !== 0 ? parseFloat(divide(results[2].totDistance, results[2].attempts).toFixed(2)) : 0,
-      fairwayCenterPCT: results[2].attempts !== 0 ? parseFloat(divide(results[2].fairwayHits, results[2].attempts).toFixed(2)) : 0,
-      fairwayLeftPCT: results[2].attempts !== 0 ? parseFloat(divide(results[2].missLeft, results[2].attempts).toFixed(2)) : 0,
-      fairwayRightPCT: results[2].attempts !== 0 ? parseFloat(divide(results[2].missRight, results[2].attempts).toFixed(2)) : 0,
-    },
-    teeIron: {
-      ...results[3],
-      averageDistance: results[3].attempts !== 0 ? parseFloat(divide(results[3].totDistance, results[3].attempts).toFixed(2)) : 0,
-      fairwayCenterPCT: results[3].attempts !== 0 ? parseFloat(divide(results[3].fairwayHits, results[3].attempts).toFixed(2)) : 0,
-      fairwayLeftPCT: results[3].attempts !== 0 ? parseFloat(divide(results[3].missLeft, results[3].attempts).toFixed(2)) : 0,
-      fairwayRightPCT: results[3].attempts !== 0 ? parseFloat(divide(results[3].missRight, results[3].attempts).toFixed(2)) : 0,
-    },
+    teeDriver: createFinalObject(results[0]),
+    teeFW: createFinalObject(results[1]),
+    teeHY: createFinalObject(results[2]),
+    teeIron: createFinalObject(results[3]),
   };
 
   return finalResult;
 
 }
 
-const isTheRightClub = (wanted: string, teeClub: string) => {
+export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
+  const calculateChippingPitching = (club: string) => {
+    return shots.reduce((acc, curr) => {
 
-  let correctClub = '';
-  let isTheRightClub = false;
+      const rightClub = isTheRightClubChip(club, curr.chipClub);
 
-  switch (teeClub) {
-    case 'i1':
-    case 'i2':
-    case 'i3':
-    case 'i4':
-    case 'i5':
-    case 'i6':
-    case 'i7':
-    case 'i8':
-    case 'i9':
-      correctClub = 'IRONS';
-      break;
-    default:
-      correctClub = teeClub;
-      break;
+      acc.shots = curr.strokes - curr.par + 2;
+      acc.extraChip = acc.shots - curr.putts - 1;
+      acc.distance = acc.extraChip === 1 ? 0 : curr.puttsLength[0];
+      acc.totalsDistanceNumber += acc.extraChip === 1 ? 0 : 1;
+      acc.upDownMade += (rightClub && curr.upDownX === 1 ? 1 : 0);
+      acc.attempts += (rightClub ? 1 : 0);
+      acc.totalsForAverageShots += (rightClub ? acc.shots : 0);
+      acc.totalsForAvgDistanceToHole += ((rightClub && acc.extraChip === 0) ? acc.distance : 0);
+      acc.shotsHoled += ((acc.attempts !== 0 && rightClub && acc.shots === 1) ? 1 : 0);
+      acc.totalsForGreenMissed += ((rightClub && acc.extraChip === 0) ? 1 : 0);
+
+      acc.greenMissed = acc.attempts - acc.totalsForGreenMissed;
+
+      return acc;
+    }, {
+      shots: 0,
+      extraChip: 0,
+      distance: 0,
+      totalsDistanceNumber: 0,
+      upDownMade: 0,
+      attempts: 0,
+      totalsForAverageShots: 0,
+      totalsForAvgDistanceToHole: 0,
+      shotsHoled: 0,
+      totalsForGreenMissed: 0,
+      greenMissed: 0
+    });
+  };
+  const results = [
+    calculateChippingPitching('Pitch Wedge'),
+    calculateChippingPitching('Gap Wedge'),
+    calculateChippingPitching('Sand Wedge'),
+    calculateChippingPitching('Lob Wedge'),
+    calculateChippingPitching('B'),
+    calculateChippingPitching('CHIP'),
+    calculateChippingPitching('PUTT')
+  ];
+
+  const createFinalObject = (array: any) => {
+    return (
+      {
+        ...array,
+        averageShots: array.attempts !== 0 ? parseFloat(divide(array.totalsForAverageShots, array.attempts).toFixed(2)) : 0,
+        averageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsforAvgDistanceToHole, array.totalsDistanceNumber).toFixed(2)) : 0,
+      }
+    )
   }
 
-  isTheRightClub = wanted === correctClub
-    ? true
-    : correctClub.includes(wanted)
-      ? true
-      : false;
+  const finalResult = {
+    ...initialPitchChipStatistics,
+    pw: createFinalObject(results[0]),
+    lw: createFinalObject(results[1]),
+    sw: createFinalObject(results[2]),
+    gw: createFinalObject(results[3]),
+    b: createFinalObject(results[4]),
+    chip: createFinalObject(results[5]),
+    putt: createFinalObject(results[6]),
 
-  return isTheRightClub;
+  };
+
+  return finalResult;
 }

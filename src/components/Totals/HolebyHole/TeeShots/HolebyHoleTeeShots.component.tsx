@@ -1,5 +1,6 @@
-import { Divider, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Divider, Grid, Paper, Stack, Table, TableBody, TableContainer, TableHead, Typography } from "@mui/material";
 import _ from "lodash";
+import { TableCell, TableRow } from "../../../../styles";
 import GridPuttsStat from "../../../../styles/grid/GridCellStats.styles";
 import { IRoundTotals } from "../../../../types/roundTotals.types";
 import { teeShotsConversion } from "../../../../utils/constant.utils";

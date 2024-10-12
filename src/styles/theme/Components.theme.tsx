@@ -715,9 +715,9 @@ const components: Components<Omit<Theme, 'components'>> = {
 
         [`&.MuiTableCell-head`]: {
           textTransform: 'uppercase',
-          paddingTop: 10,
+          paddingTop: 0,
           paddingRight: 0,
-          paddingBottom: 10,
+          paddingBottom: 0,
           paddingLeft: 0,
         },
       },
@@ -726,7 +726,7 @@ const components: Components<Omit<Theme, 'components'>> = {
       { props: { variant: 'red' }, style: { backgroundColor: '#cf8484', color: 'black', fontWeight: 500, fontSize: 16 } },
       { props: { variant: 'yellow' }, style: { backgroundColor: '#faf099', color: 'black', fontWeight: 500, fontSize: 16 } },
       { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 500, fontSize: 16 } },
-      { props: { variant: 'putt' }, style: { backgroundColor: '#cccccc', color: 'black', fontWeight: 500, fontSize: 16 } },
+      { props: { variant: 'putt' }, style: { backgroundColor: '#f0f0f0', color: 'black', fontWeight: 500, fontSize: 16 } },
     ]
   },
   MuiTableFooter: {
