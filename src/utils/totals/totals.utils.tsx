@@ -1,5 +1,5 @@
 import { IShots } from "../../types/roundData.types";
-import { initialPitchChipStatistics, initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
+import { initialInside100MtStatistics, initialPitchChipStatistics, initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
 import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip } from "./totalsGenFunc.utils";
 
 export const calculatePuttsStatistics = (shots: IShots[]) => {
@@ -182,4 +182,69 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
   };
 
   return finalResult;
+}
+
+export const calculateInside100mtStatistics = (shots: IShots[]) => {
+
+  const calculateInside100 = (start: number, finish: number) => {
+    return shots.reduce((acc, curr) => {
+
+      const isWithinRange = iAmintheZone(start, finish, curr.toGreenMeters);
+
+      acc.greensHits = 0
+      // acc.shots = curr.strokes - curr.par + 2;
+      // acc.extraChip = acc.shots - curr.putts - 1;
+      // acc.distance = acc.extraChip === 1 ? 0 : curr.puttsLength[0];
+      // acc.totalsDistanceNumber += acc.extraChip === 1 ? 0 : 1;
+      // acc.upDownMade += (isWithinRange && curr.upDownX === 1 ? 1 : 0);
+      // acc.attempts += (isWithinRange ? 1 : 0);
+      // acc.totalsForAverageShots += (isWithinRange ? acc.shots : 0);
+      // acc.totalsForAvgDistanceToHole += ((isWithinRange && acc.extraChip === 0) ? acc.distance : 0);
+      // acc.shotsHoled += ((acc.attempts !== 0 && isWithinRange && acc.shots === 1) ? 1 : 0);
+      // acc.totalsForGreenMissed += ((isWithinRange && acc.extraChip === 0) ? 1 : 0);
+
+      // acc.greenMissed = acc.attempts - acc.totalsForGreenMissed;
+
+      return acc;
+    }, {
+      greensHits: 0,
+      attempts: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedLong: 0
+    });
+  };
+
+  const results = [
+    calculateInside100(0, 100),
+    calculateInside100(100, 81),
+    calculateInside100(80, 61),
+    calculateInside100(60, 0),
+  ];
+
+  const createFinalObject = (object: any) => {
+    return (
+      {
+        ...object,
+        averageDistance: object.attempts !== 0 ? parseFloat(divide(object.totDistance, object.attempts).toFixed(2)) : 0,
+        fairwayCenterPCT: object.attempts !== 0 ? parseFloat(divide(object.fairwayHits, object.attempts).toFixed(2)) : 0,
+        fairwayLeftPCT: object.attempts !== 0 ? parseFloat(divide(object.missLeft, object.attempts).toFixed(2)) : 0,
+        fairwayRightPCT: object.attempts !== 0 ? parseFloat(divide(object.missRight, object.attempts).toFixed(2)) : 0,
+      }
+    )
+  }
+
+  const finalResult = {
+    ...initialInside100MtStatistics,
+    over100mt: createFinalObject(results[0]),
+    inside10081: createFinalObject(results[1]),
+    inside8061: createFinalObject(results[2]),
+    inside60: createFinalObject(results[3]),
+  }
+
+  return finalResult;
+
 }

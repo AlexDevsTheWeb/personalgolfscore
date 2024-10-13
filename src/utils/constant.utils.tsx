@@ -1,5 +1,5 @@
 import { IShots } from "../types/roundData.types";
-import { IPuttsStatistics, IRoundChipPitchTotals, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
+import { IPuttsStatistics, IRoundChipPitchTotals, IRoundInside100MtTotals, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
 
 export const parList = ['3', '4', '5'];
 export const hcpList18 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',];
@@ -160,6 +160,49 @@ export const initialStateRoundTotals: IRoundTotals = {
       averageHoleDistance: 0,
       shotsHoled: 0,
       greensMissed: 0,
+    },
+  },
+
+  inside100Mt: {
+    over100mt: {
+      greensHits: 0,
+      attempts: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedLong: 0
+    },
+    inside10081: {
+      greensHits: 0,
+      attempts: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedLong: 0
+    },
+    inside8061: {
+      greensHits: 0,
+      attempts: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedLong: 0
+    },
+    inside60: {
+      greensHits: 0,
+      attempts: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedLong: 0
     },
   },
   gir: {
@@ -513,5 +556,48 @@ export const initialPitchChipStatistics: IRoundChipPitchTotals = {
     averageHoleDistance: 0,
     shotsHoled: 0,
     greensMissed: 0,
+  },
+}
+
+export const initialInside100MtStatistics: IRoundInside100MtTotals = {
+  over100mt: {
+    greensHits: 0,
+    attempts: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedLong: 0
+  },
+  inside10081: {
+    greensHits: 0,
+    attempts: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedLong: 0
+  },
+  inside8061: {
+    greensHits: 0,
+    attempts: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedLong: 0
+  },
+  inside60: {
+    greensHits: 0,
+    attempts: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedLong: 0
   },
 }
