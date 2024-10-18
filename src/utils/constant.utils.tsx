@@ -1,5 +1,5 @@
 import { IShots } from "../types/roundData.types";
-import { IPuttsStatistics, IRoundChipPitchTotals, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
+import { IPuttsStatistics, IRoundChipPitchTotals, IRoundInside100MtTotals, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
 
 export const parList = ['3', '4', '5'];
 export const hcpList18 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',];
@@ -160,6 +160,49 @@ export const initialStateRoundTotals: IRoundTotals = {
       averageHoleDistance: 0,
       shotsHoled: 0,
       greensMissed: 0,
+    },
+  },
+
+  inside100Mt: {
+    over100mt: {
+      greensHits: 0,
+      attempts: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedLong: 0
+    },
+    inside10081: {
+      greensHits: 0,
+      attempts: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedLong: 0
+    },
+    inside8061: {
+      greensHits: 0,
+      attempts: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedLong: 0
+    },
+    inside60: {
+      greensHits: 0,
+      attempts: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedLong: 0
     },
   },
   gir: {
@@ -368,10 +411,21 @@ export const initialPuttsStatistics: IPuttsStatistics = {
     putts3: 0,
   },
 }
-
-export const puttsDistanceConversion = (category: string) => {
+export const catConversion = (string: string) => {
   let result = '';
-  switch (category) {
+  switch (string) {
+    case 'teeDriver':
+      result = 'Driver';
+      break;
+    case 'teeFW':
+      result = 'Fairway Wood';
+      break;
+    case 'teeHY':
+      result = 'Hybrid';
+      break;
+    case 'teeIron':
+      result = 'Irons';
+      break;
     case 'puttsU2M':
       result = 'Under 2 Mts.';
       break;
@@ -387,27 +441,20 @@ export const puttsDistanceConversion = (category: string) => {
     case 'puttsO10M':
       result = 'Over 10 Mts.';
       break;
-  }
-  return result;
-}
-export const teeShotsConversion = (string: string) => {
-  let result = '';
-  switch (string) {
-    case 'teeDriver':
-      result = 'Driver';
+    case 'over100mt':
+      result = 'Over 100 Mts.';
       break;
-    case 'teeFW':
-      result = 'Fairway Wood';
+    case 'inside10081':
+      result = '100 to 80 Mts.'
       break;
-    case 'teeHY':
-      result = 'Hybrid';
+    case 'inside8061':
+      result = '80 to 60 Mts.'
       break;
-    case 'teeIron':
-      result = 'Irons';
+    case 'inside60':
+      result = 'Inside 60 Mts.'
       break;
   }
   return result;
-
 }
 
 export const initialTeeShotsStatistics: IRoundTeeShotsTotals = {
@@ -513,5 +560,48 @@ export const initialPitchChipStatistics: IRoundChipPitchTotals = {
     averageHoleDistance: 0,
     shotsHoled: 0,
     greensMissed: 0,
+  },
+}
+
+export const initialInside100MtStatistics: IRoundInside100MtTotals = {
+  over100mt: {
+    greensHits: 0,
+    attempts: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedLong: 0
+  },
+  inside10081: {
+    greensHits: 0,
+    attempts: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedLong: 0
+  },
+  inside8061: {
+    greensHits: 0,
+    attempts: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedLong: 0
+  },
+  inside60: {
+    greensHits: 0,
+    attempts: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedLong: 0
   },
 }

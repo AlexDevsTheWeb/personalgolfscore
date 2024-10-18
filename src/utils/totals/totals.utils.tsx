@@ -1,5 +1,5 @@
 import { IShots } from "../../types/roundData.types";
-import { initialPitchChipStatistics, initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
+import { initialInside100MtStatistics, initialPitchChipStatistics, initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
 import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip } from "./totalsGenFunc.utils";
 
 export const calculatePuttsStatistics = (shots: IShots[]) => {
@@ -182,4 +182,76 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
   };
 
   return finalResult;
+}
+
+export const calculateInside100mtStatistics = (shots: IShots[]) => {
+
+  const calculateInside100 = (start: number, finish: number) => {
+    return shots.reduce((acc, curr) => {
+
+      const isWithinRange = iAmintheZone(start, finish, curr.toGreenMeters);
+
+      acc.greenHits += (isWithinRange && curr.gir === true) ? 1 : 0;
+      acc.attempts += (isWithinRange) ? 1 : 0;
+
+      acc.shotsPar4 += (isWithinRange && curr.par === 4) ? curr.strokes : 0;
+      acc.shotsPar5 += (isWithinRange && curr.par === 5) ? curr.strokes : 0;
+      acc.countShotsPar4 += (isWithinRange && curr.par === 4) ? 1 : 0;
+      acc.countShotsPar5 += (isWithinRange && curr.par === 5) ? 1 : 0;
+      acc.toGreen += (isWithinRange ? 1 : 0);
+
+      acc.totalDistGIR += (isWithinRange && curr.gir === true) ? curr.puttsLength[0] : 0;
+
+      acc.missedLeft += (isWithinRange && !curr.gir && curr.greenSideL === 1) ? 1 : 0;
+      acc.missedRight += (isWithinRange && !curr.gir && curr.greenSideR === 1) ? 1 : 0;
+      acc.missedShort += (isWithinRange && !curr.gir && curr.greenSideS === 1) ? 1 : 0;
+      acc.missedOver += (isWithinRange && !curr.gir && curr.greenSideO === 1) ? 1 : 0;
+
+      return acc;
+    }, {
+
+      greenHits: 0,
+      attempts: 0,
+      shotsPar4: 0,
+      shotsPar5: 0,
+      countShotsPar4: 0,
+      countShotsPar5: 0,
+      toGreen: 0,
+      totalDistGIR: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedOver: 0
+
+
+    });
+  };
+
+  const results = [
+    calculateInside100(0, 100),
+    calculateInside100(100, 81),
+    calculateInside100(80, 61),
+    calculateInside100(60, 0),
+  ];
+
+  const createFinalObject = (object: any) => {
+    return (
+      {
+        ...object,
+        averageShots: object.toGreen !== 0 ? parseFloat((((object.shotsPar4 - object.countShotsPar4) + (object.shotsPar5 - object.countShotsPar5 * 2)) / object.toGreen).toFixed(2)) : 0,
+        averageDistGIR: object.greenHits !== 0 ? parseFloat((object.totalDistGIR / object.greenHits).toFixed(2)) : 0,
+      }
+    )
+  }
+
+  const finalResult = {
+    ...initialInside100MtStatistics,
+    over100mt: createFinalObject(results[0]),
+    inside10081: createFinalObject(results[1]),
+    inside8061: createFinalObject(results[2]),
+    inside60: createFinalObject(results[3]),
+  }
+
+  return finalResult;
+
 }

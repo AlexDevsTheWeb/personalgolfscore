@@ -34,6 +34,7 @@ export interface IRoundTotals {
   fairway: IRoundFairwayTotals,
   teeShots: IRoundTeeShotsTotals,
   chipPitch: IRoundChipPitchTotals,
+  inside100Mt: IRoundInside100MtTotals,
   gir: IRoundTotalsAvgINOUT,
   girBogey: IRoundTotalsAvgINOUT,
   upDown: IRoundTotalsUpDown,
@@ -44,6 +45,22 @@ export interface IRoundTotals {
   out: IRoundTotalsAvgINOUT,
 }
 
+export interface IRoundInside100MtTotals {
+  over100mt: IRoundInside100Mt,
+  inside10081: IRoundInside100Mt,
+  inside8061: IRoundInside100Mt,
+  inside60: IRoundInside100Mt
+}
+export interface IRoundInside100Mt {
+  greensHits: number,
+  attempts: number,
+  averageShots: number,
+  averageDistGIR: number,
+  missedLeft: number,
+  missedRight: number,
+  missedShort: number,
+  missedLong: number
+}
 export interface IRoundChipPitchTotals {
   pw: IRoundChipPitch,
   gw: IRoundChipPitch,

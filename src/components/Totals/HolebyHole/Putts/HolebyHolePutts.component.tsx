@@ -3,7 +3,7 @@ import _ from "lodash";
 import { BoxOverflow, Grid, Stack, TableCell, TableRow, Typography } from "../../../../styles";
 import GridPuttsStat from "../../../../styles/grid/GridCellStats.styles";
 import { IRoundTotalsPutts } from "../../../../types/roundTotals.types";
-import { puttsDistanceConversion } from "../../../../utils/constant.utils";
+import { catConversion } from "../../../../utils/constant.utils";
 import { formatPerc } from "../../../../utils/number/number.utils";
 import ShotsTableHeaderStack from "../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
@@ -28,7 +28,7 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                 puttsCat.map((distance: string, index: number) => {
                   return (
                     <TableCell align='center' key={index} variant='putt'>
-                      <ShotsTableHeaderStack firstRow={puttsDistanceConversion(distance)} secondRow={''} />
+                      <ShotsTableHeaderStack firstRow={catConversion(distance)} secondRow={''} />
                     </TableCell>
                   )
                 })
