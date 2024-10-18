@@ -191,30 +191,39 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
 
       const isWithinRange = iAmintheZone(start, finish, curr.toGreenMeters);
 
-      acc.greensHits = 0
-      // acc.shots = curr.strokes - curr.par + 2;
-      // acc.extraChip = acc.shots - curr.putts - 1;
-      // acc.distance = acc.extraChip === 1 ? 0 : curr.puttsLength[0];
-      // acc.totalsDistanceNumber += acc.extraChip === 1 ? 0 : 1;
-      // acc.upDownMade += (isWithinRange && curr.upDownX === 1 ? 1 : 0);
-      // acc.attempts += (isWithinRange ? 1 : 0);
-      // acc.totalsForAverageShots += (isWithinRange ? acc.shots : 0);
-      // acc.totalsForAvgDistanceToHole += ((isWithinRange && acc.extraChip === 0) ? acc.distance : 0);
-      // acc.shotsHoled += ((acc.attempts !== 0 && isWithinRange && acc.shots === 1) ? 1 : 0);
-      // acc.totalsForGreenMissed += ((isWithinRange && acc.extraChip === 0) ? 1 : 0);
+      acc.greenHits += (isWithinRange && curr.gir === true) ? 1 : 0;
+      acc.attempts += (isWithinRange) ? 1 : 0;
 
-      // acc.greenMissed = acc.attempts - acc.totalsForGreenMissed;
+      acc.shotsPar4 += (isWithinRange && curr.par === 4) ? curr.strokes : 0;
+      acc.shotsPar5 += (isWithinRange && curr.par === 5) ? curr.strokes : 0;
+      acc.countShotsPar4 += (isWithinRange && curr.par === 4) ? 1 : 0;
+      acc.countShotsPar5 += (isWithinRange && curr.par === 5) ? 1 : 0;
+      acc.toGreen += (isWithinRange ? 1 : 0);
+
+      acc.totalDistGIR += (isWithinRange && curr.gir === true) ? curr.puttsLength[0] : 0;
+
+      acc.missedLeft += (isWithinRange && !curr.gir && curr.greenSideL === 1) ? 1 : 0;
+      acc.missedRight += (isWithinRange && !curr.gir && curr.greenSideR === 1) ? 1 : 0;
+      acc.missedShort += (isWithinRange && !curr.gir && curr.greenSideS === 1) ? 1 : 0;
+      acc.missedOver += (isWithinRange && !curr.gir && curr.greenSideO === 1) ? 1 : 0;
 
       return acc;
     }, {
-      greensHits: 0,
+
+      greenHits: 0,
       attempts: 0,
-      averageShots: 0,
-      averageDistGIR: 0,
+      shotsPar4: 0,
+      shotsPar5: 0,
+      countShotsPar4: 0,
+      countShotsPar5: 0,
+      toGreen: 0,
+      totalDistGIR: 0,
       missedLeft: 0,
       missedRight: 0,
       missedShort: 0,
-      missedLong: 0
+      missedOver: 0
+
+
     });
   };
 
@@ -229,10 +238,8 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        averageDistance: object.attempts !== 0 ? parseFloat(divide(object.totDistance, object.attempts).toFixed(2)) : 0,
-        fairwayCenterPCT: object.attempts !== 0 ? parseFloat(divide(object.fairwayHits, object.attempts).toFixed(2)) : 0,
-        fairwayLeftPCT: object.attempts !== 0 ? parseFloat(divide(object.missLeft, object.attempts).toFixed(2)) : 0,
-        fairwayRightPCT: object.attempts !== 0 ? parseFloat(divide(object.missRight, object.attempts).toFixed(2)) : 0,
+        averageShots: object.toGreen !== 0 ? parseFloat((((object.shotsPar4 - object.countShotsPar4) + (object.shotsPar5 - object.countShotsPar5 * 2)) / object.toGreen).toFixed(2)) : 0,
+        averageDistGIR: object.greenHits !== 0 ? parseFloat((object.totalDistGIR / object.greenHits).toFixed(2)) : 0,
       }
     )
   }

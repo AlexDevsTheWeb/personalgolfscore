@@ -3,9 +3,9 @@ import _ from "lodash";
 import { TableCell, TableRow } from "../../../../styles";
 import GridPuttsStat from "../../../../styles/grid/GridCellStats.styles";
 import { IRoundTotals } from "../../../../types/roundTotals.types";
-import { teeShotsConversion } from "../../../../utils/constant.utils";
-import { formatPerc } from "../../../../utils/number/number.utils";
+import { catConversion } from "../../../../utils/constant.utils";
 import ShotsTableHeaderStack from "../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
+import Cross from "../../components/Cross.component";
 
 interface IHolebyHoleTeeShots {
   totals: IRoundTotals
@@ -13,8 +13,8 @@ interface IHolebyHoleTeeShots {
 
 const HolebyHoleInside100 = ({ totals }: IHolebyHoleTeeShots) => {
 
-  const { teeShots } = totals;
-  const teeShotsCat = Object.keys(teeShots);
+  const { inside100Mt } = totals;
+  const categories = Object.keys(inside100Mt);
 
   return (
     <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
@@ -22,10 +22,10 @@ const HolebyHoleInside100 = ({ totals }: IHolebyHoleTeeShots) => {
         <TableHead>
           <TableRow>
             {
-              teeShotsCat.map((teeShot: string, index: number) => {
+              categories.map((cat: string, index: number) => {
                 return (
                   <TableCell align='center' key={index} variant='putt' sx={{ borderLeft: '1px solid #000' }}>
-                    <ShotsTableHeaderStack firstRow={teeShotsConversion(teeShot)} secondRow={''} />
+                    <ShotsTableHeaderStack firstRow={catConversion(cat)} secondRow={''} />
                   </TableCell>
                 )
               })
@@ -36,35 +36,35 @@ const HolebyHoleInside100 = ({ totals }: IHolebyHoleTeeShots) => {
         <TableBody key={_.uniqueId("putts_")}>
           <TableRow>
             {
-
-
-              Object.entries(teeShots).map(([key, value], index: number) => {
+              Object.entries(inside100Mt).map(([key, value], index: number) => {
                 return (
                   <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
                     <Stack>
+                      <Cross left={value.missedLeft} right={value.missedRight} center={value.greenHits} short={value.missedShort} over={value.missedOver} totals={value.attempts} />
+                      <Divider />
                       <Grid container spacing={1}>
                         <GridPuttsStat item xs={3}>
                           <Stack>
                             <Typography>Greens hit</Typography>
-                            <Typography fontWeight={'bold'}>{formatPerc(value.fairwayLeftPCT)}</Typography>
+                            <Typography fontWeight={'bold'}>{value.greenHits}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={3}>
                           <Stack>
                             <Typography>Attempts</Typography>
-                            <Typography fontWeight={'bold'}>{formatPerc(value.fairwayCenterPCT)}</Typography>
+                            <Typography fontWeight={'bold'}>{value.attempts}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={3}>
                           <Stack>
                             <Typography>Avg. shots</Typography>
-                            <Typography fontWeight={'bold'}>{formatPerc(value.fairwayRightPCT)}</Typography>
+                            <Typography fontWeight={'bold'}>{value.averageShots}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={3}>
                           <Stack>
                             <Typography>Avg. dist. GIR</Typography>
-                            <Typography fontWeight={'bold'}>{value.fairwayHits !== 0 ? value.fairwayHits : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.averageDistGIR}</Typography>
                           </Stack>
                         </GridPuttsStat>
                       </Grid>
@@ -74,25 +74,25 @@ const HolebyHoleInside100 = ({ totals }: IHolebyHoleTeeShots) => {
                         <GridPuttsStat item xs={3}>
                           <Stack>
                             <Typography>Left</Typography>
-                            <Typography fontWeight={'bold'}>{value.attempts !== 0 ? value.attempts : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.missedLeft}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={3}>
                           <Stack>
                             <Typography>Right</Typography>
-                            <Typography fontWeight={'bold'}>{value.averageDistance !== 0 ? value.averageDistance : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.missedRight}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={3}>
                           <Stack>
                             <Typography>Short</Typography>
-                            <Typography fontWeight={'bold'}>{value.missLeft !== 0 ? value.missLeft : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.missedShort}</Typography>
                           </Stack>
                         </GridPuttsStat>
                         <GridPuttsStat item xs={3}>
                           <Stack>
                             <Typography>Long</Typography>
-                            <Typography fontWeight={'bold'}>{value.missRight !== 0 ? value.missRight : '-'}</Typography>
+                            <Typography fontWeight={'bold'}>{value.missedOver}</Typography>
                           </Stack>
                         </GridPuttsStat>
                       </Grid>

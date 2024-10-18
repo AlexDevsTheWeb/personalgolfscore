@@ -3,7 +3,7 @@ import _ from "lodash";
 import { TableCell, TableRow } from "../../../../styles";
 import GridPuttsStat from "../../../../styles/grid/GridCellStats.styles";
 import { IRoundTotals } from "../../../../types/roundTotals.types";
-import { teeShotsConversion } from "../../../../utils/constant.utils";
+import { catConversion } from "../../../../utils/constant.utils";
 import { formatPerc } from "../../../../utils/number/number.utils";
 import ShotsTableHeaderStack from "../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
@@ -25,7 +25,7 @@ const HolebyHoleTeeShots = ({ totals }: IHolebyHoleTeeShots) => {
               teeShotsCat.map((teeShot: string, index: number) => {
                 return (
                   <TableCell align='center' key={index} variant='putt' sx={{ borderLeft: '1px solid #000' }}>
-                    <ShotsTableHeaderStack firstRow={teeShotsConversion(teeShot)} secondRow={''} />
+                    <ShotsTableHeaderStack firstRow={catConversion(teeShot)} secondRow={''} />
                   </TableCell>
                 )
               })
