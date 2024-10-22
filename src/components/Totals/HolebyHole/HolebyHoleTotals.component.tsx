@@ -82,7 +82,7 @@ const HolebyHoleTotals = () => {
       </TabPanel>
 
       <TabPanel value={value} index={2} dir={theme.direction}>
-        {/* <HolebyHoleTeeShots totals={roundTotals} /> */}
+        <HolebyHoleTeeShots totals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={3} dir={theme.direction}>

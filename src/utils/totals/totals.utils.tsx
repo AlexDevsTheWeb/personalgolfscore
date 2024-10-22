@@ -209,7 +209,6 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
 
       return acc;
     }, {
-
       greenHits: 0,
       attempts: 0,
       shotsPar4: 0,
@@ -222,8 +221,6 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
       missedRight: 0,
       missedShort: 0,
       missedOver: 0
-
-
     });
   };
 
