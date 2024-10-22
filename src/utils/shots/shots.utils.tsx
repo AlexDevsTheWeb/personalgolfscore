@@ -58,10 +58,16 @@ export const calculateUDValue = (props: IUDProps) => {
 
 export const calculateScrambleValue = (props: IScrambleProps) => {
   let result = 0;
-  const { strokesValue, parValue, girValue } = props
-  if (strokesValue === parValue && girValue !== 1) {
-    result = 1;
+  // debugger;
+  const { strokesValue, parValue, girValue } = props;
+  if (strokesValue === parValue) {
+    if (girValue !== 1) {
+      result = 1;
+    }
+    else { result = 0; }
   }
+  else { result = 0; }
+
   return result;
 };
 

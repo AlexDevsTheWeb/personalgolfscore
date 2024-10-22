@@ -56,11 +56,13 @@ const holeTmpSlice = createSlice({
         strokesValue: Number(state.strokes),
         chipClubs: chipClubs
       })
-      state.scramble = calculateScrambleValue({
-        girValue: Number(state.gir),
-        parValue: Number(state.par),
-        strokesValue: Number(state.strokes)
-      })
+      if (name === 'gir' || name === 'par' || name === 'strokes') {
+        state.scramble = calculateScrambleValue({
+          girValue: Number(state.gir),
+          parValue: Number(state.par),
+          strokesValue: Number(state.strokes)
+        });
+      }
     },
     setHoleNumber: (state: any, { payload }: PayloadAction<{ newHoleNumber: number }>) => {
       state.holeNumber = payload.newHoleNumber;

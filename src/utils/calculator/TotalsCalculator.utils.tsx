@@ -3,6 +3,7 @@ import { IShots } from "../../types/roundData.types";
 import { IRoundTotals } from "../../types/roundTotals.types";
 import { initialStateRoundTotals } from "../constant.utils";
 import { calculateChippingPitchingStatistics, calculateInside100mtStatistics, calculatePuttsStatistics, calculateTeeShotsStatistics } from "../totals/totals.utils";
+import { divide } from "../totals/totalsGenFunc.utils";
 
 export const totalsCalculator = (shots: IShots[]) => {
   let totals: IRoundTotals = initialStateRoundTotals;
@@ -107,17 +108,17 @@ export const totalsCalculator = (shots: IShots[]) => {
 
     score: {
       totals: totalALL.score,
-      avg: (totalALL.score / holes).toFixed(2), // TODO: convert in number and add parseFloat()
+      avg: divide(totalALL.score, holes).toFixed(2),
       vsPar: getVsParTotals(totalALL.score, totalALL.par, true).value,
       scoreIN: totalIN.scoreIN,
       scoreOUT: totalOUT.scoreOUT,
       vsParIN: getVsParTotals(totalIN.scoreIN, totalIN.parIN, true).value,
       vsParOUT: getVsParTotals(totalOUT.scoreOUT, totalOUT.parOUT, true).value,
       avgIN: totalIN.scoreIN && holesIN
-        ? (totalIN.scoreIN / holesIN).toFixed(2) // TODO: convert in number and add parseFloat()
+        ? divide(totalIN.scoreIN, holesIN).toFixed(2)
         : '-',
       avgOUT: totalOUT.scoreOUT && holesOUT
-        ? (totalOUT.scoreOUT / holesOUT).toFixed(2) // TODO: convert in number and add parseFloat()
+        ? divide(totalOUT.scoreOUT, holesOUT).toFixed(2)
         : '-',
       par3: par3,
       par4: par4,
@@ -133,11 +134,11 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     points: {
       totals: totalALL.points,
-      avg: totalALL.points && holes ? (totalALL.points / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avg: totalALL.points && holes ? divide(totalALL.points, holes).toFixed(2) : '-',
       pointsIN: totalIN.pointsIN,
       pointsOUT: totalOUT.pointsOUT,
-      avgIN: totalIN.pointsIN && holesIN ? (totalIN.pointsIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
-      avgOUT: totalOUT.pointsOUT && holesOUT ? (totalOUT.pointsOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgIN: totalIN.pointsIN && holesIN ? divide(totalIN.pointsIN, holesIN).toFixed(2) : '-',
+      avgOUT: totalOUT.pointsOUT && holesOUT ? divide(totalOUT.pointsOUT, holesOUT).toFixed(2) : '-',
     },
     fairway: {
       total: fairwayTotal,
@@ -150,19 +151,19 @@ export const totalsCalculator = (shots: IShots[]) => {
     inside100Mt: inside100MtStatistics,
     gir: {
       totals: totalALL.gir,
-      avg: totalALL.gir && holes ? (totalALL.gir / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avg: totalALL.gir && holes ? divide(totalALL.gir, holes).toFixed(2) : '-',
       totalsIN: totalIN.girIN,
-      avgIN: totalIN.girIN && holesIN ? (totalIN.girIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgIN: totalIN.girIN && holesIN ? divide(totalIN.girIN, holesIN).toFixed(2) : '-',
       totalsOUT: totalOUT.girOUT,
-      avgOUT: totalOUT.girOUT && holesOUT ? (totalOUT.girOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgOUT: totalOUT.girOUT && holesOUT ? divide(totalOUT.girOUT, holesOUT).toFixed(2) : '-',
     },
     girBogey: {
       totals: totalALL.girBogey,
-      avg: totalALL.girBogey && holes ? (totalALL.girBogey / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avg: totalALL.girBogey && holes ? divide(totalALL.girBogey, holes).toFixed(2) : '-',
       totalsIN: totalIN.girBogeyIN,
-      avgIN: totalIN.girBogeyIN && holesIN ? (totalIN.girBogeyIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgIN: totalIN.girBogeyIN && holesIN ? divide(totalIN.girBogeyIN, holesIN).toFixed(2) : '-',
       totalsOUT: totalOUT.girBogeyOUT,
-      avgOUT: totalOUT.girBogeyOUT && holesOUT ? (totalOUT.girBogeyOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgOUT: totalOUT.girBogeyOUT && holesOUT ? divide(totalOUT.girBogeyOUT, holesOUT).toFixed(2) : '-',
     },
     scramble: {
       totals: scrambleTotals,
@@ -176,11 +177,11 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     putts: {
       totals: totalALL.putts,
-      avg: totalALL.putts && holes ? (totalALL.putts / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avg: totalALL.putts && holes ? divide(totalALL.putts, holes).toFixed(2) : '-',
       totalsIN: totalIN.puttsIN,
-      avgIN: totalIN.puttsIN && holesIN ? (totalIN.puttsIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgIN: totalIN.puttsIN && holesIN ? divide(totalIN.puttsIN, holesIN).toFixed(2) : '-',
       totalsOUT: totalOUT.puttsOUT,
-      avgOUT: totalOUT.puttsOUT && holesOUT ? (totalOUT.puttsOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgOUT: totalOUT.puttsOUT && holesOUT ? divide(totalOUT.puttsOUT, holesOUT).toFixed(2) : '-',
       puttsGir: totalALL.puttsGIR,
       puttsGirIn: totalIN.puttsGIRIN,
       puttsGirOut: totalOUT.puttsGIROUT,
@@ -193,26 +194,26 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     sand: {
       totals: totalALL.sand,
-      avg: totalALL.sand && holes ? (totalALL.sand / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avg: totalALL.sand && holes ? divide(totalALL.sand, holes).toFixed(2) : '-',
       saved: totalALL.sandSaved,
-      avgSaved: totalALL.sandSaved && holes ? (totalALL.sandSaved / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgSaved: totalALL.sandSaved && holes ? divide(totalALL.sandSaved, holes).toFixed(2) : '-',
       savedPerc: totalALL.sandSaved && totalALL.sand ? (totalALL.sandSaved / totalALL.sand) * 100 : 0,
     },
     water: {
       totals: totalALL.water,
-      avg: totalALL.water && holes ? (totalALL.water / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avg: totalALL.water && holes ? divide(totalALL.water, holes).toFixed(2) : '-',
       totalsIN: totalIN.waterIN,
-      avgIN: totalIN.waterIN && holesIN ? (totalIN.waterIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgIN: totalIN.waterIN && holesIN ? divide(totalIN.waterIN, holesIN).toFixed(2) : '-',
       totalsOUT: totalOUT.waterOUT,
-      avgOUT: totalOUT.waterOUT && holesOUT ? (totalOUT.waterOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgOUT: totalOUT.waterOUT && holesOUT ? divide(totalOUT.waterOUT, holesOUT).toFixed(2) : '-',
     },
     out: {
       totals: totalALL.out,
-      avg: totalALL.out && holes ? (totalALL.out / holes).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avg: totalALL.out && holes ? divide(totalALL.out, holes).toFixed(2) : '-',
       totalsIN: totalIN.outIN,
-      avgIN: totalIN.outIN && holesIN ? (totalIN.outIN / holesIN).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgIN: totalIN.outIN && holesIN ? divide(totalIN.outIN, holesIN).toFixed(2) : '-',
       totalsOUT: totalOUT.outOUT,
-      avgOUT: totalOUT.outOUT && holesOUT ? (totalOUT.outOUT / holesOUT).toFixed(2) : '-', // TODO: convert in number and add parseFloat()
+      avgOUT: totalOUT.outOUT && holesOUT ? divide(totalOUT.outOUT, holesOUT).toFixed(2) : '-',
     }
   }
   return totals;
