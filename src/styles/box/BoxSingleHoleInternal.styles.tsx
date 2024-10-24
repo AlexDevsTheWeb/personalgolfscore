@@ -19,7 +19,7 @@ const StyledStack = styled(Stack)<IStackProps>((props: IStackProps) => ({
     ? '100%'
     : props.side === 'right'
       ? '30%'
-      : '70%',
+      : props.side === 'full' ? '100%' : '70%',
 }));
 
 const BoxSingleHoleInternal: React.FC<IStackProps> = props => {

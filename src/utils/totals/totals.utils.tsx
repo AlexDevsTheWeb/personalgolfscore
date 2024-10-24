@@ -125,7 +125,7 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
       acc.extraChip = acc.shots - curr.putts - 1;
       acc.distance = acc.extraChip === 1 ? 0 : curr.puttsLength[0];
       acc.totalsDistanceNumber += acc.extraChip === 1 ? 0 : 1;
-      acc.upDownMade += (rightClub && curr.upDownX === 1 ? 1 : 0);
+      acc.upDownMade += (rightClub && curr.upDown.made === 1 ? 1 : 0);
       acc.attempts += (rightClub ? 1 : 0);
       acc.totalsForAverageShots += (rightClub ? acc.shots : 0);
       acc.totalsForAvgDistanceToHole += ((rightClub && acc.extraChip === 0) ? acc.distance : 0);

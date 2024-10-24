@@ -356,11 +356,11 @@ export const initialStateTmpHole: IShots = {
   toGreenMeters80_100: 0,
   toGreenMeters60_80: 0,
   toGreenMetersUnder60: 0,
-  upDown: '',
-  upDownX: 0,
-  upDownN: 0,
-  upDownE: 0,
-  scramble: 0,
+  upDown: { made: 0, attempts: 0 },
+  // upDownX: 0,
+  // upDownN: 0,
+  // upDownE: 0,
+  scramble: { made: 0, attempts: 0 },
   water: 0,
 }
 

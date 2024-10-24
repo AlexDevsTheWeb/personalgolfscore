@@ -32,8 +32,16 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
       <TableCell align='center' sx={{ padding: '0px' }}><ShotPosition position={Number(fairway)} /></TableCell>
       <TableCell align='center' sx={{ padding: '0px' }}>{gir ? 'Yes' : 'No'}</TableCell>
       <TableCell align='center' sx={{ padding: '0px' }}>{girBogey ? 'Yes' : 'No'}</TableCell>
-      <TableCell align='center' sx={{ padding: '0px' }}>{scramble !== 0 ? scramble : '-'}</TableCell>
-      <TableCell align='center' sx={{ padding: '0px' }}>{upDown !== '' ? upDown.toUpperCase() : '-'}</TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>
+        {
+          scramble.attempts === 0 ? '-' : scramble.made === 1 ? 'Y' : 'N'
+        }
+      </TableCell>
+      <TableCell align='center' sx={{ padding: '0px' }}>
+        {
+          upDown.attempts === 0 ? '-' : upDown.made === 1 ? 'Y' : 'N'
+        }
+      </TableCell>
       <TableCell align='center' sx={{ padding: '0px' }}>{sand}</TableCell>
       <TableCell align='center' sx={{ padding: '0px' }}>{putts}</TableCell>
       <TableCell align='center' sx={{ padding: '0px' }}>{`${water} | ${out}`}</TableCell>

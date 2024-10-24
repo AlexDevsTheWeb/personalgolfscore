@@ -19,15 +19,12 @@ const RoundsDataMain = () => {
   return (
     <BoxBetween>
       <RoundsHeadDetails />
-
       {roundTotals
         ? <RoundsDataShotTable
           roundDate={mainData.roundDate}
           roundCourse={mainData.roundCourse}
           roundPar={roundPar}
           totals={roundTotals}
-          holes={holes}
-
         />
         : <Typography>Loading ...</Typography>
       }

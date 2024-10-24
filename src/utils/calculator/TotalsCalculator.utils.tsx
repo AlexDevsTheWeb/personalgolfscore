@@ -43,10 +43,11 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.fairwayRight += (curr.fairway === 6 ? 1 : 0);
     acc.gir += (!!curr.gir ? 1 : 0);
     acc.girBogey += (!!curr.girBogey ? 1 : 0);
-    acc.upDown += (!!curr.upDownX ? 1 : 0);
+    acc.upDownMade += (!!curr.upDown.made ? 1 : 0);
+    acc.upDownAttempts += (!!curr.upDown.attempts ? 1 : 0);
     acc.putts += curr.putts;
-    acc.upDownTotals += ((!!curr.gir && (curr.upDownX === 1 || curr.upDownN === 1)) ? 1 : 0);
-    acc.scramble += curr.scramble;
+    acc.scrambleMade += (!!curr.scramble.made ? 1 : 0);
+    acc.scrambleAttempts += (!!curr.scramble.attempts ? 1 : 0);
     acc.puttsGIR += (!!curr.gir ? 1 : 0);
     acc.puttsThree += (curr.putts === 3 ? 1 : 0);
     acc.putts1 += (curr.puttsLength.length === 1 ? 1 : 0);
@@ -54,12 +55,12 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.putts3More += (curr.puttsLength.length > 2 ? 1 : 0);
     acc.puttsDistGir += (!!curr.gir ? Number(curr.puttsLength[0]) : 0);
     acc.sand += curr.sand + (curr.chipClub === 'b' ? 1 : 0);
-    acc.sandSaved += ((curr.chipClub === 'b' && curr.upDown === 'x' && curr.strokes === curr.par) ? 1 : 0);
+    acc.sandSaved += ((curr.chipClub === 'b' && curr.upDown.made === 1 && curr.strokes === curr.par) ? 1 : 0);
     acc.water += curr.water;
     acc.out += curr.out;
 
     return acc
-  }, { par: 0, score: 0, points: 0, scoreEagleBetter: 0, scoreBirdie: 0, scorePar: 0, scoreBogey: 0, scoreDoubleBogeyWorst: 0, scorePar3: 0, scorePar4: 0, scorePar5: 0, teeDriver: 0, teeFW: 0, teeHY: 0, teeIron: 0, noGreen: 0, fairwayCenter: 0, fairwayLeft: 0, fairwayRight: 0, gir: 0, girBogey: 0, upDown: 0, putts: 0, upDownTotals: 0, scramble: 0, puttsGIR: 0, puttsThree: 0, putts1: 0, putts2: 0, putts3More: 0, puttsDistGir: 0, sand: 0, sandSaved: 0, water: 0, out: 0 });
+  }, { par: 0, score: 0, points: 0, scoreEagleBetter: 0, scoreBirdie: 0, scorePar: 0, scoreBogey: 0, scoreDoubleBogeyWorst: 0, scorePar3: 0, scorePar4: 0, scorePar5: 0, teeDriver: 0, teeFW: 0, teeHY: 0, teeIron: 0, noGreen: 0, fairwayCenter: 0, fairwayLeft: 0, fairwayRight: 0, gir: 0, girBogey: 0, upDownMade: 0, upDownAttempts: 0, putts: 0, scrambleMade: 0, scrambleAttempts: 0, puttsGIR: 0, puttsThree: 0, putts1: 0, putts2: 0, putts3More: 0, puttsDistGir: 0, sand: 0, sandSaved: 0, water: 0, out: 0 });
 
   // SHOTS IN
   const totalIN = shotsIN.reduce((acc, curr) => {
@@ -166,14 +167,14 @@ export const totalsCalculator = (shots: IShots[]) => {
       avgOUT: totalOUT.girBogeyOUT && holesOUT ? divide(totalOUT.girBogeyOUT, holesOUT).toFixed(2) : '-',
     },
     scramble: {
-      totals: scrambleTotals,
-      saved: totalALL.scramble,
-      perc: totalALL.scramble && scrambleTotals ? (totalALL.scramble / scrambleTotals) * 100 : 0,
+      totals: totalALL.scrambleAttempts,
+      saved: totalALL.scrambleMade,
+      perc: totalALL.scrambleMade && totalALL.scrambleAttempts ? (totalALL.scrambleMade / totalALL.scrambleAttempts) * 100 : 0,
     },
     upDown: {
-      totals: totalALL.upDownTotals,
-      saved: totalALL.upDown,
-      perc: totalALL.upDown && totalALL.upDownTotals ? (totalALL.upDown / totalALL.upDownTotals) * 100 : 0,
+      totals: totalALL.upDownAttempts,
+      saved: totalALL.upDownMade,
+      perc: totalALL.upDownMade && totalALL.upDownAttempts ? (totalALL.upDownMade / totalALL.upDownAttempts) * 100 : 0,
     },
     putts: {
       totals: totalALL.putts,
