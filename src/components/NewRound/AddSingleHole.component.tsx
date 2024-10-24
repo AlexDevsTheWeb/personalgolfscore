@@ -1,3 +1,4 @@
+import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetNewRoundHoleTmp, setHoleNumber, setTmpHoleData } from '../../features/hole/holeTmp.slice';
@@ -8,8 +9,8 @@ import BoxGeneralShadow from '../../styles/box/BoxGeneralShadow.styles';
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import TextField from '../../styles/textfield/TextField.style';
+import CompositeTypography from '../../styles/typography/CompositeTypography.styles';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
-import HoleAutomaticInfo from './components/HoleAutomaticInfo.component';
 import PuttsGenerator from './components/PuttsGenerator.component';
 import Select from './components/Select.component';
 
@@ -77,14 +78,13 @@ const AddSingleHole = () => {
   return (
     <BoxGeneralShadow>
       <BoxSingleHoleContainer>
-        <BoxSingleHoleInternal side='left'>
+        <BoxSingleHoleInternal side='full'>
+          <CompositeTypography string='Hole number' value={holeFinished === 0 ? 1 : holeFinished} />
           <BoxNewHole>
             <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} />
             <Select name='par' list={parList} onChange={handleChange} value={tmpHole.par.toString()} />
             <TextField id="strokes" name='strokes' label="Strokes" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.strokes !== 0 ? tmpHole.strokes : ''} />
             <TextField id="putts" name='putts' label="Putts" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.putts !== 0 ? tmpHole.putts : ''} />
-          </BoxNewHole>
-          <BoxNewHole>
             <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} />
             <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} />
             <TextField id='driveDistance' name='driveDistance' label='Drive distance' variant='filled' type='number' onChange={e => handleChange(e)}
@@ -95,26 +95,27 @@ const AddSingleHole = () => {
             <TextField name='toGreenMeters' label="Meters to green" variant="filled" type='number' onChange={e => handleChange(e)} disabled={mtToGreen} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : 0} />
             <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} />
             <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
+
+            <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.sand !== 0 ? tmpHole.sand : ''} />
+            <TextField id="water" name='water' label="Water" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} />
+            <TextField id="out" name='out' label="Out" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} />
           </BoxNewHole>
           {
             puttsNumber.length > 0
               ? <PuttsGenerator puttsNumber={puttsNumber} setPuttDistance={handleChangePutts} />
               : <></>
           }
-          <BoxNewHole>
-            <TextField id="sand" name='sand' label="Sand" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.sand !== 0 ? tmpHole.sand : ''} />
-            <TextField id="water" name='water' label="Water" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} />
-            <TextField id="out" name='out' label="Out" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} />
-          </BoxNewHole>
-        </BoxSingleHoleInternal>
-        <BoxSingleHoleInternal paddingTop={1.25} side='right'>
-          <HoleAutomaticInfo
-            holeFinished={holeFinished}
-            tmpHole={tmpHole}
-            shots={holes}
-            roundHoles={roundHoles}
-            saveHole={saveHole}
-          />
+          <Box>
+            {
+              holes.length <= roundHoles - 1 ?
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                  <Button variant='contained' onClick={saveHole}>
+                    Save
+                  </Button>
+                </Box> :
+                null
+            }
+          </Box>
         </BoxSingleHoleInternal>
       </BoxSingleHoleContainer>
     </BoxGeneralShadow>

@@ -55,8 +55,8 @@ const holeTmpSlice = createSlice({
         parValue: Number(state.par),
         strokesValue: Number(state.strokes),
         chipClubs: chipClubs
-      })
-      if (name === 'gir' || name === 'par' || name === 'strokes') {
+      });
+      if (name !== 'puttsLength') {
         state.scramble = calculateScrambleValue({
           girValue: Number(state.gir),
           parValue: Number(state.par),

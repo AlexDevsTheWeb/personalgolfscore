@@ -44,10 +44,10 @@ const ShotsTableHeader = ({ firstColumn, singleHole }: IShotsTableHeaderProps) =
           <ShotsTableHeaderStack firstRow='gir bogey' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
         </TableCell>
         <TableCell align='center'>
-          <ShotsTableHeaderStack firstRow='scramble' secondRow={!!singleHole ? '' : 'saved made'} />
+          <ShotsTableHeaderStack firstRow='scramble' secondRow={!!singleHole ? 'Par saved outside green' : 'made attempts'} />
         </TableCell>
         <TableCell align='center'>
-          <ShotsTableHeaderStack firstRow='up & down' secondRow={!!singleHole ? '' : 'saved made'} />
+          <ShotsTableHeaderStack firstRow='up & down' secondRow={!!singleHole ? 'Par saved without GIR' : 'made attempts'} />
         </TableCell>
         <TableCell align='center'>
           <ShotsTableHeaderStack firstRow='sand' secondRow={!!singleHole ? '' : 'saved made'} />

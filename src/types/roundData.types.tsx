@@ -43,12 +43,17 @@ export interface IShots {
   toGreenMeters80_100: number;
   toGreenMeters60_80: number;
   toGreenMetersUnder60: number;
-  upDown: string;
-  upDownX: number;
-  upDownN: number;
-  upDownE: number;
-  scramble: number;
+  upDown: IMadeAttempts;
+  // upDownX: number;
+  // upDownN: number;
+  // upDownE: number;
+  scramble: IMadeAttempts;
   water: number;
+}
+
+export interface IMadeAttempts {
+  made: number,
+  attempts: number
 }
 
 export type InitialStateNewRoundsData = {

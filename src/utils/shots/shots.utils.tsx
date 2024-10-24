@@ -33,40 +33,45 @@ export const calculateGirValue = (props: IGirProps) => {
     return girDiff < 1 ? false : true;
   }
 }
+
 export const calculateUDValue = (props: IUDProps) => {
   const { girValue, chipClub, parValue, strokesValue, chipClubs } = props;
-  let result = '';
-  if (chipClub !== '') {
-    if (girValue === 1) {
-      result = '';
-    }
-    const validClub = chipClubs.filter((club: string) => club === chipClub);
-    if (validClub.length > 0) {
-      if (parValue === strokesValue) {
-        result = 'x';
+  let result = { made: 0, attempts: 0 };
+  if (chipClub !== '' && parValue !== 0 && strokesValue !== 0) {
+
+    if (girValue !== 1) {
+
+      const validClub = chipClubs.filter((club: string) => club === chipClub);
+
+      if (validClub.length > 0) {
+
+        if (parValue < strokesValue) {
+          result = { made: 0, attempts: 1 };
+        }
+        else {
+          result = { made: 1, attempts: 1 };
+        }
       }
-      else {
-        result = 'n';
-      }
-    }
-    else {
-      result = '';
+
     }
   }
   return result;
 }
 
 export const calculateScrambleValue = (props: IScrambleProps) => {
-  let result = 0;
-  // debugger;
+  let result = { made: 0, attempts: 0 };
   const { strokesValue, parValue, girValue } = props;
-  if (strokesValue === parValue) {
+  if (strokesValue !== 0 && parValue !== 0) {
+
     if (girValue !== 1) {
-      result = 1;
+      if ((strokesValue - parValue) <= 0) {
+        result = { made: 1, attempts: 1 };
+      }
+      else {
+        result = { made: 0, attempts: 1 };
+      }
     }
-    else { result = 0; }
   }
-  else { result = 0; }
 
   return result;
 };
