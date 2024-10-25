@@ -44,9 +44,6 @@ export interface IShots {
   toGreenMeters60_80: number;
   toGreenMetersUnder60: number;
   upDown: IMadeAttempts;
-  // upDownX: number;
-  // upDownN: number;
-  // upDownE: number;
   scramble: IMadeAttempts;
   water: number;
 }

@@ -160,11 +160,12 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
   ];
 
   const createFinalObject = (array: any) => {
+    debugger;
     return (
       {
         ...array,
         averageShots: array.attempts !== 0 ? parseFloat(divide(array.totalsForAverageShots, array.attempts).toFixed(2)) : 0,
-        averageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsforAvgDistanceToHole, array.totalsDistanceNumber).toFixed(2)) : 0,
+        averageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsForAvgDistanceToHole, array.totalsDistanceNumber).toFixed(2)) : 0,
       }
     )
   }

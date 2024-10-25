@@ -96,8 +96,6 @@ export const totalsCalculator = (shots: IShots[]) => {
   }, { parOUT: 0, scoreOUT: 0, pointsOUT: 0, girOUT: 0, girBogeyOUT: 0, puttsOUT: 0, puttsGIROUT: 0, waterOUT: 0, outOUT: 0, }
   );
 
-  const scrambleTotals = holes - totalALL.gir
-
   const puttsStatistics = calculatePuttsStatistics(shots);
   const teeShotsStatistics = calculateTeeShotsStatistics(shots);
   const chipPitchStatistics = calculateChippingPitchingStatistics(shots);
