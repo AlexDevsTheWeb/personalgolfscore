@@ -1,10 +1,10 @@
-interface IState {
-  roundID: string;
-  playerID: string;
-  roundCourse: string;
-  roundDate: string;
-  shots: IShots[];
-}
+// interface IState {
+//   roundID: string;
+//   playerID: string;
+//   roundCourse: string;
+//   roundDate: string;
+//   shots: IShots[];
+// }
 
 export interface IShots {
   holeNumber: number;

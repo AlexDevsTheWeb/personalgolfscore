@@ -424,31 +424,31 @@ export const catConversion = (string: string) => {
       result = 'Irons';
       break;
     case 'puttsU2M':
-      result = 'Under 2 Mts.';
+      result = 'First putt under 2 mts.';
       break;
     case 'putts24M':
-      result = '2 to 4 Mts.';
+      result = 'First putt from 2 to 4 mts.';
       break;
     case 'putts46M':
-      result = '4 to 6 Mts.';
+      result = 'First putt from 4 to 6 mts.';
       break;
     case 'putts610M':
-      result = '6 to 10 Mts.';
+      result = 'First putt from 6 to 10 mts.';
       break;
     case 'puttsO10M':
-      result = 'Over 10 Mts.';
+      result = 'First putt over 10 Mts.';
       break;
     case 'over100mt':
-      result = 'Over 100 Mts.';
+      result = 'Over 100 mts.';
       break;
     case 'inside10081':
-      result = '100 to 80 Mts.'
+      result = '100 to 80 mts.'
       break;
     case 'inside8061':
-      result = '80 to 60 Mts.'
+      result = '80 to 60 mts.'
       break;
     case 'inside60':
-      result = 'Inside 60 Mts.'
+      result = 'Inside 60 mts.'
       break;
   }
   return result;

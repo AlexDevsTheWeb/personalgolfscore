@@ -11,8 +11,8 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
       acc.puttsHoled += (isWithinRange && curr.puttsLength.length === 1) ? 1 : 0;
       acc.puttsAttempts += isWithinRange ? 1 : 0;
       acc.numberPuttsInRange += isWithinRange ? curr.puttsLength.length : 0;
-      acc.distanceSecondPutt += (isWithinRange && curr.puttsLength.length === 2) ? curr.puttsLength[1] : 0;
-      acc.numberSecondPutt += (isWithinRange && curr.puttsLength.length === 2) ? 1 : 0;
+      acc.distanceSecondPutt += (isWithinRange && curr.puttsLength.length > 1) ? curr.puttsLength[1] : 0;
+      acc.numberSecondPutt += (isWithinRange && curr.puttsLength.length > 1) ? 1 : 0;
       acc.distanceFirstPutt += isWithinRange ? curr.puttsLength[0] : 0;
       acc.putts3 += isWithinRange && curr.puttsLength.length >= 3 ? 1 : 0;
 
@@ -160,7 +160,6 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
   ];
 
   const createFinalObject = (array: any) => {
-    debugger;
     return (
       {
         ...array,
