@@ -105,6 +105,14 @@ export const totalsCalculator = (shots: IShots[]) => {
     ...totals,
     playerID: "playerID",
 
+    mainData: {
+      roundCourse: '',
+      roundDate: '',
+      roundNumber: 0,
+      roundTee: '',
+      coursePar: totalALL.par,
+      playerHCP: 0
+    },
     score: {
       totals: totalALL.score,
       avg: divide(totalALL.score, holes).toFixed(2),
