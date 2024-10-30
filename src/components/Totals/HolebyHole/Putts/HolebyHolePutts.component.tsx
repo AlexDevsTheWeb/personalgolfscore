@@ -15,8 +15,13 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
 
   const { puttsStatistics } = totalsPutts;
 
-  const puttsCat = Object.keys(puttsStatistics);
-  const puttsValues = Object.entries(puttsStatistics);
+  const puttsCat = Object.keys(puttsStatistics).filter(e => e !== '_puttsOverall');
+  const puttsValues = Object.entries(puttsStatistics).filter(e => e[0] !== '_puttsOverall');
+  const puttsOverallCat = Object.keys(puttsStatistics).filter(e => e === '_puttsOverall');
+  const puttsOverallValues = Object.entries(puttsStatistics).filter(e => e[0] === '_puttsOverall');
+
+  console.log("puttsCat: ", puttsCat);
+  console.log("puttsValues: ", puttsValues);
 
   return (
     <BoxOverflow direction='horizontal' variant='table'>
@@ -24,6 +29,15 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
         <Table sx={{ minWidth: '1500px', width: '100%' }} aria-label="customized table">
           <TableHead>
             <TableRow>
+              {
+                puttsOverallCat.map((distance: string, index: number) => {
+                  return (
+                    <TableCell align='center' key={index} variant='putt'>
+                      <ShotsTableHeaderStack firstRow={catConversion(distance)} secondRow={''} />
+                    </TableCell>
+                  )
+                })
+              }
               {
                 puttsCat.map((distance: string, index: number) => {
                   return (
@@ -38,6 +52,51 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
 
           <TableBody key={_.uniqueId("putts_")}>
             <TableRow>
+              {
+                puttsOverallValues.map(([key, value], index: number) => {
+                  return (
+                    <TableCell align='center' key={index}>
+                      {/* <TotalsDisplay value={value} /> */}
+                      <Stack>
+                        <Grid container spacing={1}>
+                          <GridPuttsStat item xs={12}>
+                            <Stack>
+                              <Typography>Putts</Typography>
+                              <Typography fontWeight={'bold'}>
+                                {value.totalPutts !== 0 ? value.totalPutts : '-'}
+                              </Typography>
+                            </Stack>
+                          </GridPuttsStat>
+                          <GridPuttsStat item xs={12}>
+                            <Stack>
+                              <Typography>Putts/GIR</Typography>
+                              <Typography fontWeight={'bold'}>
+                                {value.totalPuttsInGIR !== 0 ? value.totalPuttsInGIR : '-'}
+                              </Typography>
+                            </Stack>
+                          </GridPuttsStat>
+                        </Grid>
+                        <Divider />
+                        <Grid container spacing={1}>
+                          <GridPuttsStat item xs={12}>
+                            <Stack>
+                              <Typography>Birdie conv.</Typography>
+                              <Typography fontWeight={'bold'}>
+                                {value.birdieConversion !== 0 ? value.birdieConversion : '-'}
+                              </Typography>
+                            </Stack>
+                          </GridPuttsStat>
+                          <GridPuttsStat item xs={12}>
+                            <Stack>
+                              <Typography>3 putts per round</Typography>
+                              <Typography fontWeight={'bold'}>{value.threePutts !== 0 ? value.threePutts : '-'}</Typography>
+                            </Stack>
+                          </GridPuttsStat>
+                        </Grid>
+                      </Stack>
+                    </TableCell>
+                  )
+                })}
               {
                 puttsValues.map(([key, value], index: number) => {
                   return (

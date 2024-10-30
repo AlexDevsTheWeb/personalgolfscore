@@ -94,7 +94,6 @@ const HolebyHoleTotals = () => {
       </TabPanel>
 
       <TabPanel value={value} index={5} dir={theme.direction}>
-        {/* TODO: we are missing the OVERALL category for putts: Putt, Putt/GIR, Birdie conversion, 3 putts per round */}
         <HolebyHolePutts totalsPutts={roundTotals.putts} />
       </TabPanel>
     </Box>
