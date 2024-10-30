@@ -5,6 +5,8 @@ import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip } from "./tota
 export const calculatePuttsStatistics = (shots: IShots[]) => {
 
   const calculatePutts = (start: number, finish: number) => {
+    const puttsOverall = calculatePuttsOverall(shots);
+
     return shots.reduce((acc, curr) => {
       const isWithinRange = iAmintheZone(start, finish, curr.puttsLength[0]);
 
@@ -29,12 +31,32 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
   };
 
   const results = [
+    calculatePutts(0, 0),
     calculatePutts(2, 0),
     calculatePutts(2, 4),
     calculatePutts(4, 6),
     calculatePutts(6, 10),
     calculatePutts(0, 10),
   ];
+
+  const calculatePuttsOverall = (shots: IShots[]) => {
+    return shots.reduce((acc, curr) => {
+
+      acc.totalPutts += curr.puttsLength.length;
+      acc.gir += curr.gir === true ? 1 : 0;
+      acc.puttsInGIR += curr.gir === true ? curr.puttsLength.length : 0;
+      acc.birdieBetter += curr.strokes < curr.par ? 1 : 0;
+      acc.threePutts += curr.puttsLength.length >= 0 ? 1 : 0;
+
+      return acc;
+    }, {
+      totalPutts: 0,
+      gir: 0,
+      puttsInGIR: 0,
+      birdieBetter: 0,
+      threePutts: 0,
+    });
+  }
 
   const createFinalObject = (object: any) => {
     return (
@@ -48,9 +70,17 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
       }
     )
   }
+  const createOverallObject = (object: any) => {
+    return (
+      {
+        ...object,
+      }
+    )
+  }
 
   const finalResult = {
     ...initialPuttsStatistics,
+    puttsOverall: createOverallObject(results[0]),
     puttsU2M: createFinalObject(results[0]),
     putts24M: createFinalObject(results[1]),
     putts46M: createFinalObject(results[2]),

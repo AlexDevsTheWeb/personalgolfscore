@@ -57,6 +57,9 @@ export const iAmintheZone = (start: number, finish: number, shots: number) => {
   if (start !== 0 && finish !== 0) {
     iAmintheZone = (shots > start) && (shots <= finish);
   }
+  if (start === 0 && finish === 0) {
+    iAmintheZone = true;
+  }
 
   return iAmintheZone;
 }
