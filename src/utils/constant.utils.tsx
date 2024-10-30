@@ -423,6 +423,9 @@ export const catConversion = (string: string) => {
     case 'teeIron':
       result = 'Irons';
       break;
+    case '_puttsOverall':
+      result = 'Overall';
+      break;
     case 'puttsU2M':
       result = 'First putt under 2 mts.';
       break;

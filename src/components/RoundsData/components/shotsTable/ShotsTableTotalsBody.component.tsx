@@ -15,7 +15,7 @@ interface IShotsTableProps {
 const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
 
   const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
-  const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble } = roundTotals;
+  const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = roundTotals;
   const { correctScore, correctScoreIN, correctScoreOUT } = correctVsParString(score);
 
   return (
@@ -273,31 +273,73 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
           </Grid>
         </TableCell>
 
-        {/* <TableCell align='center'>
+        <TableCell align='center'>
           <Grid container spacing={1}>
             <GridCellStats item xs={4}>
               <Stack>
                 <Typography fontWeight={'bold'}>
-                  {(putts.puttsGir !== 0 && gir.totals !== 0) ? putts.puttsGir / gir.totals : 0}
+                  {(water.totals !== 0) ? water.totals : 0}
+                </Typography>
+                <Typography>
+                  {`${(water.avg !== '-') ? water.avg : '-'}`}
                 </Typography>
               </Stack>
             </GridCellStats>
             <GridCellStats item xs={4}>
               <Stack>
                 <Typography fontWeight={'bold'}>
-                  {(putts.puttsGirIn !== 0 && gir.totalsIN !== 0) ? putts.puttsGirIn / gir.totalsIN : 0}
+                  {(water.totalsIN !== 0) ? water.totalsIN : 0}
+                </Typography>
+                <Typography>
+                  {`${(water.avgIN !== '-') ? water.avgIN : '-'}`}
                 </Typography>
               </Stack>
             </GridCellStats>
             <GridCellStats item xs={4}>
               <Stack>
                 <Typography fontWeight={'bold'}>
-                  {(putts.puttsGirOut !== 0 && gir.totalsOUT !== 0) ? putts.puttsGirOut / gir.totalsOUT : 0}
+                  {(water.totalsOUT !== 0) ? water.totalsOUT : 0}
+                </Typography>
+                <Typography>
+                  {`${(water.avgOUT !== '-') ? water.avgOUT : '-'}`}
                 </Typography>
               </Stack>
             </GridCellStats>
           </Grid>
-        </TableCell> */}
+          <Divider />
+          <Grid container spacing={1}>
+            <GridCellStats item xs={4}>
+              <Stack>
+                <Typography fontWeight={'bold'}>
+                  {(out.totals !== 0) ? out.totals : 0}
+                </Typography>
+                <Typography>
+                  {`${(out.avg !== '-') ? out.avg : '-'}`}
+                </Typography>
+              </Stack>
+            </GridCellStats>
+            <GridCellStats item xs={4}>
+              <Stack>
+                <Typography fontWeight={'bold'}>
+                  {(out.totalsIN !== 0) ? out.totalsIN : 0}
+                </Typography>
+                <Typography>
+                  {`${(out.avgIN !== '-') ? out.avgIN : '-'}`}
+                </Typography>
+              </Stack>
+            </GridCellStats>
+            <GridCellStats item xs={4}>
+              <Stack>
+                <Typography fontWeight={'bold'}>
+                  {(out.totalsOUT !== 0) ? out.totalsOUT : 0}
+                </Typography>
+                <Typography>
+                  {`${(out.avgOUT !== '-') ? out.avgOUT : '-'}`}
+                </Typography>
+              </Stack>
+            </GridCellStats>
+          </Grid>
+        </TableCell>
 
       </TableRow>
     </TableBody>
