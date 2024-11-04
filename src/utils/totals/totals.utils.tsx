@@ -1,6 +1,6 @@
 import { IShots } from "../../types/roundData.types";
-import { initialInside100MtStatistics, initialPitchChipStatistics, initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
-import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip } from "./totalsGenFunc.utils";
+import { initialFwAndIronsStatistics, initialInside100MtStatistics, initialPitchChipStatistics, initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
+import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip, isTheRightClubFw } from "./totalsGenFunc.utils";
 
 export const calculatePuttsStatistics = (shots: IShots[]) => {
 
@@ -221,7 +221,7 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
 
       const isWithinRange = iAmintheZone(start, finish, curr.toGreenMeters);
 
-      acc.greenHits += (isWithinRange && curr.gir === true) ? 1 : 0;
+      acc.greenHits += (isWithinRange && !!curr.gir) ? 1 : 0;
       acc.attempts += (isWithinRange) ? 1 : 0;
 
       acc.shotsPar4 += (isWithinRange && curr.par === 4) ? curr.strokes : 0;
@@ -230,7 +230,7 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
       acc.countShotsPar5 += (isWithinRange && curr.par === 5) ? 1 : 0;
       acc.toGreen += (isWithinRange ? 1 : 0);
 
-      acc.totalDistGIR += (isWithinRange && curr.gir === true) ? curr.puttsLength[0] : 0;
+      acc.totalDistGIR += (isWithinRange && !!curr.gir) ? curr.puttsLength[0] : 0;
 
       acc.missedLeft += (isWithinRange && !curr.gir && curr.greenSideL === 1) ? 1 : 0;
       acc.missedRight += (isWithinRange && !curr.gir && curr.greenSideR === 1) ? 1 : 0;
@@ -281,4 +281,76 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
 
   return finalResult;
 
+}
+
+export const calculateFWIrons = (shots: IShots[]) => {
+
+  const calculateFWIrons = (start: string, finish: string) => {
+    return shots.reduce((acc, curr) => {
+
+      const isTheRightClub = isTheRightClubFw(start, curr.toGreen);
+      // const gir2 = (curr.par + curr.putts - curr.strokes) < 3 ? true : false;
+
+      acc.greenHits += (isTheRightClub && !!curr.gir) ? 1 : 0;
+      acc.attempts += isTheRightClub ? 1 : 0;
+
+      acc.totalScorePar3 += (isTheRightClub && curr.par === 3) ? curr.strokes : 0;
+      acc.totalScorePar4 += (isTheRightClub && curr.par === 4) ? curr.strokes : 0;
+      acc.totalScorePar5 += (isTheRightClub && curr.par === 5) ? curr.strokes : 0;
+      acc.totalNumberPar4 += (isTheRightClub && curr.par === 4) ? 1 : 0;
+      acc.totalNumberPar5 += (isTheRightClub && curr.par === 5) ? 1 : 0;
+
+      acc.totalDistanceGIR += (isTheRightClub && !!curr.gir) ? curr.puttsLength[0] : 0;
+      acc.totalGirGir2Made += (isTheRightClub && !!curr.gir) ? 1 : 0;
+
+      acc.missedLeft += (isTheRightClub && !curr.gir && curr.greenSideL === 1) ? 1 : 0
+      acc.missedRight += (isTheRightClub && !curr.gir && curr.greenSideR === 1) ? 1 : 0
+      acc.missedShort += (isTheRightClub && !curr.gir && curr.greenSideS === 1) ? 1 : 0
+      acc.missedOver += (isTheRightClub && !curr.gir && curr.greenSideO === 1) ? 1 : 0
+
+      return acc;
+    }, {
+      greenHits: 0,
+      attempts: 0,
+
+      totalScorePar3: 0,
+      totalScorePar4: 0,
+      totalNumberPar4: 0,
+      totalScorePar5: 0,
+      totalNumberPar5: 0,
+
+      totalDistanceGIR: 0,
+      totalGirGir2Made: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedOver: 0
+    });
+  };
+
+  const results = [
+    calculateFWIrons('4w', 'hy'),
+    calculateFWIrons('i4', 'i6'),
+    calculateFWIrons('i7', 'i9'),
+  ];
+
+  const createFinalObject = (object: any) => {
+    return (
+      {
+        ...object,
+        averageShots: object.attempts !== 0 ? parseFloat(((object.totalScorePar3 + object.totalScorePar4 - object.totalNumberPar4 + object.totalScorePar5 - object.totalNumberPar5 * 2) / object.attempts).toFixed(2)) : 0,
+        averageDistGIR: object.totalGirGir2Made !== 0 ? parseFloat((object.totalDistanceGIR / object.totalGirGir2Made).toFixed(2)) : 0,
+      }
+    )
+  }
+
+  const finalResult = {
+    ...initialFwAndIronsStatistics,
+
+    fwHy: createFinalObject(results[0]),
+    longIrons: createFinalObject(results[1]),
+    shortIrons: createFinalObject(results[2]),
+  }
+
+  return finalResult;
 }

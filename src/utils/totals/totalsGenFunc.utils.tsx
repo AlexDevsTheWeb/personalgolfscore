@@ -30,6 +30,16 @@ export const isTheRightClub = (wanted: string, teeClub: string) => {
   return isTheRightClub;
 }
 
+export const isTheRightClubFw = (start: string, toGreenClub: string) => {
+  const clubGroups = {
+    '4w': ['FAIRWAY WOOD', 'HYBRID'],
+    'i4': ['i4', 'i5', 'i6'],
+    'i7': ['i8', 'i8', 'i9'],
+  } as any;
+
+  return clubGroups[start]?.includes(toGreenClub) ?? false;
+};
+
 export const isTheRightClubChip = (wanted: string, chipClub: string) => {
   let isTheRightClub = false;
 

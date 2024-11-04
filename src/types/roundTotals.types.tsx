@@ -35,6 +35,7 @@ export interface IRoundTotals {
   teeShots: IRoundTeeShotsTotals,
   chipPitch: IRoundChipPitchTotals,
   inside100Mt: IRoundInside100MtTotals,
+  fwAndIrons: IRoundFwAndIronsTotals,
   gir: IRoundTotalsAvgINOUT,
   girBogey: IRoundTotalsAvgINOUT,
   upDown: IRoundTotalsUpDown,
@@ -60,6 +61,30 @@ export interface IRoundInside100Mt {
   missedRight: number,
   missedShort: number,
   missedLong: number
+}
+
+export interface IRoundFwAndIronsTotals {
+  fwHy: IRoundFWAndIrons,
+  longIrons: IRoundFWAndIrons,
+  shortIrons: IRoundFWAndIrons,
+}
+
+export interface IRoundFWAndIrons {
+  greenHits: number,
+  attempts: number,
+  totalScorePar3: number,
+  totalScorePar4: number,
+  totalNumberPar4: number,
+  totalScorePar5: number,
+  totalNumberPar5: number,
+  totalDistanceGIR: number,
+  totalGirGir2Made: number,
+  missedLeft: number,
+  missedRight: number,
+  missedShort: number,
+  missedOver: number,
+  averageShots: number,
+  averageDistGIR: number,
 }
 export interface IRoundChipPitchTotals {
   pw: IRoundChipPitch,

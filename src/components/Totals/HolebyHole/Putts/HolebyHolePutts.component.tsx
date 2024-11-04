@@ -20,9 +20,6 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
   const puttsOverallCat = Object.keys(puttsStatistics).filter(e => e === '_puttsOverall');
   const puttsOverallValues = Object.entries(puttsStatistics).filter(e => e[0] === '_puttsOverall');
 
-  console.log("puttsCat: ", puttsCat);
-  console.log("puttsValues: ", puttsValues);
-
   return (
     <BoxOverflow direction='horizontal' variant='table'>
       <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>

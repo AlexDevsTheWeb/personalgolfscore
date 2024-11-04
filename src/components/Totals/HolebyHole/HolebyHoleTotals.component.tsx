@@ -4,6 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import HolebyHoleChipping from "./ChippingPitching/HolebyHoleChipping.component";
+import HolebyHoleFwAndIrons from "./FairwayWoodAndIrons/HolebyHoleFwAndIrons.component";
 import HolebyHoleGeneral from "./General/HolebyHoleGeneral.component";
 import HolebyHoleInside100 from "./Inside100mt/HolebyHoleInside100.component";
 import HolebyHolePutts from "./Putts/HolebyHolePutts.component";
@@ -82,7 +83,7 @@ const HolebyHoleTotals = () => {
       </TabPanel>
 
       <TabPanel value={value} index={2} dir={theme.direction}>
-        <HolebyHoleTeeShots totals={roundTotals} />
+        <HolebyHoleFwAndIrons totals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={3} dir={theme.direction}>
