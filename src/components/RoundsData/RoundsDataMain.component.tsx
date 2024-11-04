@@ -7,7 +7,7 @@ import RoundsHeadDetails from './RoundsHeadDetails.component';
 
 const RoundsDataMain = () => {
 
-  const { isLoading, mainData, holes } = useSelector((store: RootState) => store.singleRound.roundHoles);
+  const { isLoading, mainData } = useSelector((store: RootState) => store.singleRound.roundHoles);
   const { roundTotals } = useSelector((store: RootState) => store.singleRound.roundTotals);
   const roundPar = roundTotals.mainData.coursePar;
 
