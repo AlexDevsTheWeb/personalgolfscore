@@ -1,5 +1,5 @@
 import { IShots } from "../types/roundData.types";
-import { IPuttsStatistics, IRoundChipPitchTotals, IRoundInside100MtTotals, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
+import { IPuttsStatistics, IRoundChipPitchTotals, IRoundFwAndIronsTotals, IRoundInside100MtTotals, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
 
 export const parList = ['3', '4', '5'];
 export const hcpList18 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',];
@@ -162,7 +162,59 @@ export const initialStateRoundTotals: IRoundTotals = {
       greensMissed: 0,
     },
   },
-
+  fwAndIrons: {
+    fwHy: {
+      greenHits: 0,
+      attempts: 0,
+      totalScorePar3: 0,
+      totalScorePar4: 0,
+      totalNumberPar4: 0,
+      totalScorePar5: 0,
+      totalNumberPar5: 0,
+      totalDistanceGIR: 0,
+      totalGirGir2Made: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedOver: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+    },
+    longIrons: {
+      greenHits: 0,
+      attempts: 0,
+      totalScorePar3: 0,
+      totalScorePar4: 0,
+      totalNumberPar4: 0,
+      totalScorePar5: 0,
+      totalNumberPar5: 0,
+      totalDistanceGIR: 0,
+      totalGirGir2Made: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedOver: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+    },
+    shortIrons: {
+      greenHits: 0,
+      attempts: 0,
+      totalScorePar3: 0,
+      totalScorePar4: 0,
+      totalNumberPar4: 0,
+      totalScorePar5: 0,
+      totalNumberPar5: 0,
+      totalDistanceGIR: 0,
+      totalGirGir2Made: 0,
+      missedLeft: 0,
+      missedRight: 0,
+      missedShort: 0,
+      missedOver: 0,
+      averageShots: 0,
+      averageDistGIR: 0,
+    }
+  },
   inside100Mt: {
     over100mt: {
       greensHits: 0,
@@ -205,6 +257,8 @@ export const initialStateRoundTotals: IRoundTotals = {
       missedLong: 0
     },
   },
+
+
   gir: {
     totals: 0,
     avg: '',
@@ -426,6 +480,15 @@ export const catConversion = (string: string) => {
     case '_puttsOverall':
       result = 'Overall';
       break;
+    case 'fwHy':
+      result = '4w - Hybrid';
+      break;
+    case 'longIrons':
+      result = '4i - 6i';
+      break;
+    case 'shortIrons':
+      result = '7i - 9i';
+      break;
     case 'puttsU2M':
       result = 'First putt under 2 mts.';
       break;
@@ -603,5 +666,59 @@ export const initialInside100MtStatistics: IRoundInside100MtTotals = {
     missedRight: 0,
     missedShort: 0,
     missedLong: 0
+  },
+}
+
+export const initialFwAndIronsStatistics: IRoundFwAndIronsTotals = {
+  fwHy: {
+    greenHits: 0,
+    attempts: 0,
+    totalScorePar3: 0,
+    totalScorePar4: 0,
+    totalNumberPar4: 0,
+    totalScorePar5: 0,
+    totalNumberPar5: 0,
+    totalDistanceGIR: 0,
+    totalGirGir2Made: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedOver: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+  },
+  longIrons: {
+    greenHits: 0,
+    attempts: 0,
+    totalScorePar3: 0,
+    totalScorePar4: 0,
+    totalNumberPar4: 0,
+    totalScorePar5: 0,
+    totalNumberPar5: 0,
+    totalDistanceGIR: 0,
+    totalGirGir2Made: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedOver: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
+  },
+  shortIrons: {
+    greenHits: 0,
+    attempts: 0,
+    totalScorePar3: 0,
+    totalScorePar4: 0,
+    totalNumberPar4: 0,
+    totalScorePar5: 0,
+    totalNumberPar5: 0,
+    totalDistanceGIR: 0,
+    totalGirGir2Made: 0,
+    missedLeft: 0,
+    missedRight: 0,
+    missedShort: 0,
+    missedOver: 0,
+    averageShots: 0,
+    averageDistGIR: 0,
   },
 }

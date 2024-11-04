@@ -2,7 +2,7 @@ import _ from "lodash";
 import { IShots } from "../../types/roundData.types";
 import { IRoundTotals } from "../../types/roundTotals.types";
 import { initialStateRoundTotals } from "../constant.utils";
-import { calculateChippingPitchingStatistics, calculateInside100mtStatistics, calculatePuttsStatistics, calculateTeeShotsStatistics } from "../totals/totals.utils";
+import { calculateChippingPitchingStatistics, calculateFWIrons, calculateInside100mtStatistics, calculatePuttsStatistics, calculateTeeShotsStatistics } from "../totals/totals.utils";
 import { divide } from "../totals/totalsGenFunc.utils";
 
 export const totalsCalculator = (shots: IShots[]) => {
@@ -100,6 +100,7 @@ export const totalsCalculator = (shots: IShots[]) => {
   const teeShotsStatistics = calculateTeeShotsStatistics(shots);
   const chipPitchStatistics = calculateChippingPitchingStatistics(shots);
   const inside100MtStatistics = calculateInside100mtStatistics(shots);
+  const fairwayWoodAndIrons = calculateFWIrons(shots);
 
   totals = {
     ...totals,
@@ -156,6 +157,7 @@ export const totalsCalculator = (shots: IShots[]) => {
     teeShots: teeShotsStatistics,
     chipPitch: chipPitchStatistics,
     inside100Mt: inside100MtStatistics,
+    fwAndIrons: fairwayWoodAndIrons,
     gir: {
       totals: totalALL.gir,
       avg: totalALL.gir && holes ? divide(totalALL.gir, holes).toFixed(2) : '-',
