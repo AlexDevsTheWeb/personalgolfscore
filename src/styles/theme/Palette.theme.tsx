@@ -1,5 +1,6 @@
 export const colors = {
-  primary1: '#031434',
+  menubar: '#000000',
+  primary1: '#494949',
   primary2: '#091f5a',
   primary3: '#7888a5',
   black: '#111111',
@@ -15,10 +16,13 @@ export const colors = {
   error: '#902727',
   notes: '#f0f5af',
   behaviours: '#cbe3ff',
+  overMid: '#078800',
+  underMid: '#f25448'
 };
 
 declare module '@mui/material/styles' {
   interface Palette {
+    primary: Palette['primary'];
     primary1: Palette['primary'];
     primary2: Palette['secondary'];
     primary3: Palette['secondary'];
@@ -63,7 +67,8 @@ const palette = {
     light: colors.primary1,
     dark: colors.primary1,
     contrastText: colors.white,
-    main: colors.primary1,
+    main: colors.menubar,
+    menubar: colors.menubar,
   },
   primary1: { ...defaultValues, main: colors.primary1 },
   primary2: { ...defaultValues, main: colors.primary2 },
@@ -79,7 +84,12 @@ const palette = {
   success: { ...defaultValues, main: colors.success },
   warning: { ...defaultValues, main: colors.warning },
   error: { ...defaultValues, main: colors.error },
-  notes: { ...defaultValues, main: colors.notes },
+  notes: {
+    ...defaultValues,
+    main: colors.notes,
+    overMid: colors.overMid,
+    underMid: colors.underMid,
+  },
   behaviours: { ...defaultValues, main: colors.behaviours },
 
   background: {

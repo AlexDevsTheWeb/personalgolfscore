@@ -1,55 +1,68 @@
 {
-  "name": "personalgolfscore",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.11",
-    "@mui/material": "^5.15.11",
-    "@mui/x-data-grid": "^6.10.1",
-    "@mui/x-date-pickers": "^6.19.5",
-    "@reduxjs/toolkit": "^2.2.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/firebase": "^3.2.1",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.83",
-    "@types/react": "^18.2.58",
-    "@types/react-dom": "^18.2.19",
-    "firebase": "^10.8.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^9.1.0",
-    "react-router-dom": "^6.22.1",
-    "react-scripts": "5.0.1",
-    "styled-components": "^6.1.8",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+	"name": "personalgolfscore",
+	"version": "0.2.0",
+	"private": true,
+	"dependencies": {
+		"@emotion/react": "^11.11.3",
+		"@emotion/styled": "^11.11.0",
+		"@mui/icons-material": "^5.15.11",
+		"@mui/material": "^5.15.11",
+		"@mui/x-charts": "^7.2.0",
+		"@mui/x-data-grid": "^6.10.1",
+		"@mui/x-date-pickers": "^6.19.5",
+		"@reduxjs/toolkit": "^2.2.1",
+		"@rjsf/core": "^6.0.0-alpha.0",
+		"@rjsf/mui": "^6.0.0-alpha.0",
+		"@rjsf/utils": "^5.20.0",
+		"@rjsf/validator-ajv8": "^6.0.0-alpha.0",
+		"@testing-library/jest-dom": "^5.17.0",
+		"@testing-library/react": "^13.4.0",
+		"@testing-library/user-event": "^13.5.0",
+		"@types/firebase": "^3.2.1",
+		"@types/jest": "^27.5.2",
+		"@types/node": "^16.18.83",
+		"@types/react": "^18.2.58",
+		"@types/react-dom": "^18.2.19",
+		"axios": "^1.6.7",
+		"caniuse-lite": "^1.0.30001651",
+		"dayjs": "^1.11.10",
+		"firebase": "^10.8.0",
+		"formik": "^2.4.6",
+		"lodash": "^4.17.21",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-redux": "^9.1.0",
+		"react-router-dom": "^6.22.1",
+		"react-scripts": "5.0.1",
+		"styled-components": "^6.1.8",
+		"typescript": "^4.9.5",
+		"web-vitals": "^2.1.4"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.17.6"
+	}
 }

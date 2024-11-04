@@ -1,0 +1,122 @@
+{
+	"clubs": [
+		{
+			"degree": 9.5,
+			"name": "Ping G20",
+			"playerID": "playerID",
+			"type": {
+				"cat": "driver",
+				"number": "1"
+			}
+		},
+		{
+			"degree": 16.5,
+			"name": "Ping G20",
+			"playerID": "playerID",
+			"type": {
+				"cat": "fairway wood",
+				"number": "4"
+			}
+		},
+		{
+			"degree": 20,
+			"name": "Ping G20",
+			"playerID": "playerID",
+			"type": {
+				"cat": "hybrid",
+				"number": "3"
+			}
+		},
+		{
+			"degree": 10.5,
+			"name": "Wilson Staff Di9",
+			"playerID": "playerID",
+			"type": {
+				"cat": "iron",
+				"number": "4"
+			}
+		},
+		{
+			"degree": 10.5,
+			"name": "Wilson Staff Di9",
+			"playerID": "playerID",
+			"type": {
+				"cat": "iron",
+				"number": "5"
+			}
+		},
+		{
+			"degree": 10.5,
+			"name": "Wilson Staff Di9",
+			"playerID": "playerID",
+			"type": {
+				"cat": "iron",
+				"number": "6"
+			}
+		},
+		{
+			"degree": 10.5,
+			"name": "Wilson Staff Di9",
+			"playerID": "playerID",
+			"imageURL": "https://www.golfalot.com/ReviewImages/irons/wilson/staffdi9L.jpg",
+			"type": {
+				"cat": "iron",
+				"number": "7"
+			}
+		},
+		{
+			"degree": 10.5,
+			"name": "Wilson Staff Di9",
+			"playerID": "playerID",
+			"type": {
+				"cat": "iron",
+				"number": "8"
+			}
+		},
+		{
+			"degree": 10.5,
+			"name": "Wilson Staff Di9",
+			"playerID": "playerID",
+			"type": {
+				"cat": "iron",
+				"number": "9"
+			}
+		},
+		{
+			"degree": 10.5,
+			"name": "Wilson Staff Di9",
+			"playerID": "playerID",
+			"type": {
+				"cat": "wedge",
+				"number": "pitch"
+			}
+		},
+		{
+			"degree": 52,
+			"name": "Wilson Staff Tw9",
+			"playerID": "playerID",
+			"type": {
+				"cat": "wedge",
+				"number": "gap"
+			}
+		},
+		{
+			"degree": 56,
+			"name": "Wilson Staff Tw9",
+			"playerID": "playerID",
+			"type": {
+				"cat": "wedge",
+				"number": "sand"
+			}
+		},
+		{
+			"degree": 0,
+			"name": "Mati Putter",
+			"playerID": "playerID",
+			"type": {
+				"cat": "putt",
+				"number": "1"
+			}
+		}
+	]
+}

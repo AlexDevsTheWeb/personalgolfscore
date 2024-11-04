@@ -1,14 +1,15 @@
 import { styled } from "@mui/system";
 import * as React from 'react';
+import useDeviceDetection from "../../hooks/useDeviceDetection.hook";
 
 interface BoxProps {
   direction: 'horizontal' | 'vertical'
-  variant: 'list' | 'table' | 'section' | 'edit' | 'page';
+  variant: 'list' | 'table' | 'section' | 'edit' | 'page' | 'clubs';
   loading?: boolean;
   children: React.ReactNode;
   sx?: any;
-  isSearch?: boolean
-  isEdit?: boolean
+  isSearch?: boolean;
+  isEdit?: boolean;
 };
 
 const StyledBox = styled('div', {
@@ -22,7 +23,18 @@ const StyledBox = styled('div', {
 })<BoxProps>({});
 
 const BoxOverflow: React.FC<BoxProps> = props => {
-  return <StyledBox {...props}>{props.children}</StyledBox>;
+
+  const isMobile = useDeviceDetection();
+
+  return <StyledBox
+    {...props}
+    sx={{
+      width: '100%',
+      overflow: 'auto'
+    }}
+  >
+    {props.children}
+  </StyledBox >;
 };
 
 export default BoxOverflow;

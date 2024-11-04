@@ -1,17 +1,16 @@
+import { createTheme } from '@mui/material';
 import { breakpoints } from './Breakpoints.theme';
 import components from './Components.theme';
-import { createTheme } from '@mui/material';
 import palette from './Palette.theme';
 import { typography } from './Typography.theme';
 
-export enum OptionsDatepicker {
+enum OptionsDatepicker {
   Margin = 'margin',
   Field = 'field',
 }
 
 export const theme = createTheme({
   palette,
-  // spacing: {},
   typography,
   breakpoints,
   zIndex: {},
@@ -22,11 +21,11 @@ export const theme = createTheme({
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
-    xs: false;
+    xs: true;
     sm: true;
     md: true;
     lg: true;
-    xl: false;
+    xl: true;
   }
 }
 
@@ -37,12 +36,25 @@ declare module '@mui/material/Button' {
     home: true;
     outlinedDark: true;
     underline: true;
-    upload: true
+    upload: true;
+    roundDetails: true;
+  }
+}
+
+declare module '@mui/material/IconButton' {
+  interface IconButtonVariantOverrides {
+    roundDetail: true;
   }
 }
 
 declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
+    player: true;
+    roundHead: true;
+    clubs: true;
+    clubsHeader: true;
+    clubsLoft: true;
+    disabled: true;
     light: true;
     dialog: true;
     uploadFileDialog: true;
@@ -50,6 +62,18 @@ declare module '@mui/material/Paper' {
     service: true;
     payment: true;
     card: true;
+  }
+}
+
+declare module '@mui/material/Grid' {
+  interface GridPropsVariantOverrides {
+    club: true;
+  }
+}
+declare module '@mui/material/Box' {
+  interface BoxPropsVariantOverrides {
+    test: true;
+    clubsContainer: true;
   }
 }
 
@@ -70,5 +94,14 @@ declare module '@mui/material/TextField' {
 
   interface TextFieldPropsVariantsOptions {
     eye: string;
+  }
+}
+
+declare module '@mui/material/TableCell' {
+  interface TableCellPropsVariantOverrides {
+    red: true;
+    yellow: true;
+    green: true;
+    putt: true;
   }
 }
