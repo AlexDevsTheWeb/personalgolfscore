@@ -1,6 +1,5 @@
 import { styled } from "@mui/system";
 import * as React from 'react';
-import useDeviceDetection from "../../hooks/useDeviceDetection.hook";
 
 interface BoxProps {
   direction: 'horizontal' | 'vertical'
@@ -23,8 +22,6 @@ const StyledBox = styled('div', {
 })<BoxProps>({});
 
 const BoxOverflow: React.FC<BoxProps> = props => {
-
-  const isMobile = useDeviceDetection();
 
   return <StyledBox
     {...props}
