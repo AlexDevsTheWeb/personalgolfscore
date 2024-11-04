@@ -63,6 +63,7 @@
 		]
 	},
 	"devDependencies": {
-		"@types/lodash": "^4.17.6"
+		"@types/lodash": "^4.17.6",
+		"release-it": "^17.10.0"
 	}
 }
