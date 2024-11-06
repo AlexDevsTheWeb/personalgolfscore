@@ -1,5 +1,5 @@
-import { TextField } from "@mui/material";
-import BoxNewHole from "../../../styles/box/BoxNewHole.styles";
+import { Box } from "@mui/material";
+import TextField from '../../../styles/textfield/TextField.style';
 
 interface IPuttsProps {
   puttsNumber: number[],
@@ -8,7 +8,7 @@ interface IPuttsProps {
 
 const PuttsGenerator = ({ puttsNumber, setPuttDistance }: IPuttsProps) => {
   return (
-    <BoxNewHole>
+    <Box sx={{ gap: 1, display: 'flex' }}>
       {puttsNumber.map((putt: number) => {
         return (
           <TextField
@@ -21,7 +21,7 @@ const PuttsGenerator = ({ puttsNumber, setPuttDistance }: IPuttsProps) => {
           />
         );
       })}
-    </BoxNewHole>
+    </Box>
   )
 }
 
