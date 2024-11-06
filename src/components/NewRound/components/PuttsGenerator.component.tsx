@@ -9,7 +9,7 @@ interface IPuttsProps {
 const PuttsGenerator = ({ puttsNumber, setPuttDistance }: IPuttsProps) => {
   return (
     <Box sx={{ gap: 1, display: 'flex' }}>
-      {puttsNumber.map((putt: number) => {
+      {puttsNumber.slice(0, 3).map((putt: number) => {
         return (
           <TextField
             key={putt}

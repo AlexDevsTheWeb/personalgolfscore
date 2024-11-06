@@ -23,7 +23,7 @@ const ShotsTableHeaderStack = ({ firstRow, secondRow }: IShotsTableHeaderStack) 
         fontWeight: 500,
         fontSize: 14,
         padding: '0px',
-        minHeight: '30px',
+        minHeight: '50px',
         justifyContent: 'center'
       }}
     >
