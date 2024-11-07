@@ -6,6 +6,7 @@ type StackProps = StackPropsMui;
 
 const StyledStack = styled(StackMui)<StackProps>(() => ({
   rowGap: '8px',
+  marginTop: '0px !important'
 }));
 
 const StackNewHole: React.FC<StackProps> = props => {

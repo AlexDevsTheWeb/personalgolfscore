@@ -28,7 +28,7 @@ const StyledForm = styled(Form)<IFormProps>(() => ({
 
 const GeneralForm: React.FC<IFormProps> = props => {
   return (
-    <StyledForm {...props} />
+    <StyledForm {...props} className="xxx" />
   )
 }
 

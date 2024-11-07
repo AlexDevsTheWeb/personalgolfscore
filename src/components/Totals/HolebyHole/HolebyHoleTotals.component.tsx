@@ -2,6 +2,7 @@ import { Box, Tab, Tabs, useTheme } from "@mui/material";
 import AppBar from '@mui/material/AppBar';
 import React from "react";
 import { useSelector } from "react-redux";
+import useDeviceDetection from "../../../hooks/useDeviceDetection.hook";
 import { RootState } from "../../../store/store";
 import HolebyHoleChipping from "./ChippingPitching/HolebyHoleChipping.component";
 import HolebyHoleFwAndIrons from "./FairwayWoodAndIrons/HolebyHoleFwAndIrons.component";
@@ -62,12 +63,14 @@ const HolebyHoleTotals = () => {
           onChange={handleChange}
           indicatorColor="secondary"
           textColor="inherit"
-          variant="fullWidth"
-          aria-label="full width tabs example"
+          variant={useDeviceDetection().isMobile ? 'scrollable' : 'fullWidth'}
+          scrollButtons
+          allowScrollButtonsMobile
+          aria-label="scrollable auto tabs"
         >
           <Tab label="General" {...a11yProps(0)} />
           <Tab label="Tee shots" {...a11yProps(1)} />
-          <Tab label="Fairway Woods & Irons" {...a11yProps(2)} />
+          <Tab label="Fw Woods & Irons" {...a11yProps(2)} />
           <Tab label="Inside 100mt" {...a11yProps(3)} />
           <Tab label="Pitching & Chipping" {...a11yProps(4)} />
           <Tab label="Putts" {...a11yProps(5)} />
@@ -75,7 +78,7 @@ const HolebyHoleTotals = () => {
       </AppBar>
 
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <HolebyHoleGeneral />
+        <HolebyHoleGeneral totals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={1} dir={theme.direction}>

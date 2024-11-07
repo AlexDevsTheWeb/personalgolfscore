@@ -1,8 +1,13 @@
 import { Grid as GridMui, GridProps as GridPropsMui } from '@mui/material';
 import * as React from 'react';
 import styled from 'styled-components';
+import CompositeTypography from '../typography/CompositeTypography.styles';
 
-type GridProps = GridPropsMui
+type GridProps = GridPropsMui & {
+  isMobile?: boolean,
+  string?: string | undefined,
+  value?: string | number | undefined,
+}
 
 const StyledGrid = styled(GridMui)<GridProps>({
   display: 'flex',
@@ -16,7 +21,12 @@ const StyledGrid = styled(GridMui)<GridProps>({
 
 const GridCellStats: React.FC<GridProps> = props => {
   return (
-    <StyledGrid {...props}>{props.children}</StyledGrid>
+    <StyledGrid {...props}>
+      <CompositeTypography
+        string={props.string as string}
+        value={props.value as string}
+      />
+    </StyledGrid>
   )
 };
 
