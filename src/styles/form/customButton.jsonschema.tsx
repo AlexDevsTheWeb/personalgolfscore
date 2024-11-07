@@ -1,4 +1,4 @@
-import { Box, Button, styled } from "@mui/material";
+import { Button } from "@mui/material";
 import { SubmitButtonProps, getSubmitButtonOptions } from "@rjsf/utils";
 
 export function ButtonTemplates(props: SubmitButtonProps) {
@@ -8,21 +8,9 @@ export function ButtonTemplates(props: SubmitButtonProps) {
     return null;
   }
 
-  interface Props { }
-
-  const MyBox = styled(Box)<Props>(() => ({
-    border: '2px solid #ff9900',
-    marginTop: '-24px'
-  }))
-
   return (
-    <MyBox>
-
-      <Button variant="contained" type='submit'>
-        {submitText}
-      </Button>
-    </MyBox>
-
-
+    <Button variant="contained" type='submit'>
+      {submitText}
+    </Button>
   );
 }

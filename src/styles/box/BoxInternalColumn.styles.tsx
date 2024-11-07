@@ -3,24 +3,25 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 interface IStackProps extends StackPropsMui {
-  isMobile?: boolean;
+  center?: string | undefined;
 }
 
 const StyledStack = styled(Stack)<IStackProps>((props) => ({
   display: 'flex',
-  flexDirection: 'row',
+  flexDirection: 'column',
   justifyContent: 'space-between',
+  alignItems: 'center',
   gap: 10,
-
+  backgroundColor: props.center ? 'green' : 'transparent'
 }));
 
 
-const BoxInternal: React.FC<IStackProps> = props => {
+const BoxInternalColumn: React.FC<IStackProps> = props => {
   return (
-    <StyledStack {...props} >
+    <StyledStack {...props}>
       {props.children}
     </StyledStack >
   )
 };
 
-export default BoxInternal;
+export default BoxInternalColumn;

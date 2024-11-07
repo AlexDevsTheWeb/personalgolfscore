@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, SelectChangeEvent, Select as SelectMui } from '@mui/material';
-import _, { capitalize } from 'lodash';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CHIPCONDITION } from '../../../enum/shots.enum';
@@ -31,12 +31,12 @@ const Select = (props: ISelectProps) => {
 
   return (
     <FormControl variant='filled'>
-      <InputLabel id="newHole_select">{capitalize(name)}</InputLabel>
+      <InputLabel id="newHole_select">{label}</InputLabel>
       <SelectMui
         value={value !== '0' ? value : ''}
         name={name}
         onChange={(e: SelectChangeEvent) => handleChange(e)}
-        sx={{ minWidth: '75px', width: '202px' }}
+        sx={{ minWidth: '75px', width: '170px' }}
         disabled={disabled}
         label={label}
       >

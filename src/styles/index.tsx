@@ -1,6 +1,9 @@
 import BoxOverflow from "./box/BoxOverflow.styles";
 import BoxPlayer from "./box/BoxPlayer.styles";
 import Card from "./card/Card.style";
+import { HoleCard } from "./card/hole/HoleCard";
+import { HoleCardContent } from "./card/hole/HoleCardContent";
+import { HoleCardHeader } from "./card/hole/HoleCardHeader";
 import RowCard from "./card/RowCard.styles";
 import Grid from "./grid/Grid.styles";
 import Stack from "./stack/Stack.styles";
@@ -16,11 +19,10 @@ export {
   BoxPlayer,
   Card,
   ClubTypography,
-  Grid,
-  RowCard,
-  Stack,
+  Grid, HoleCard, HoleCardContent, HoleCardHeader, RowCard, Stack,
   TableCell,
   TableRow,
   Tooltip,
   Typography
 };
+

@@ -10,7 +10,6 @@ interface IHolebyHoleProps {
 
 const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
 
-
   return (
     <BoxOverflow direction="horizontal" variant="table">
       <Table sx={{ minWidth: '1500px', width: '100%' }} aria-label="customized table">
@@ -22,7 +21,6 @@ const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
         </TableBody>
       </Table>
     </BoxOverflow>
-
   )
 }
 

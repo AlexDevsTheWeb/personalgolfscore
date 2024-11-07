@@ -1,5 +1,6 @@
-import { Grid, Stack, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import GridCross from "../../../styles/grid/GridCross.styles";
+import CompositeTypography from "../../../styles/typography/CompositeTypography.styles";
 import { formatPerc } from "../../../utils/number/number.utils";
 import { divide } from "../../../utils/totals/totalsGenFunc.utils";
 
@@ -16,36 +17,16 @@ const Cross = ({ left, over, right, short, center, totals }: ICrossProps) => {
 
   return (
     <Grid container sx={{ width: '100%', justifyContent: 'space-between' }}>
-
       <GridCross item>
-        <Stack>
-          <Typography>Left</Typography>
-          <Typography fontWeight={'bold'}>{formatPerc(divide(left, totals))}</Typography>
-        </Stack>
+        <CompositeTypography string='Left' value={formatPerc(divide(left, totals))} />
       </GridCross>
       <GridCross item>
-
-        <Stack>
-          <Typography>Over</Typography>
-          <Typography fontWeight={'bold'}>{formatPerc(divide(over, totals))}</Typography>
-        </Stack>
-
-        <Stack sx={{ backgroundColor: 'green', padding: '10px', color: 'white' }}>
-          <Typography sx={{ color: 'white !important' }}>CENTER</Typography>
-          <Typography fontWeight={'bold'} sx={{ color: 'white !important' }}>{formatPerc(divide(center, totals))}</Typography>
-        </Stack>
-
-        <Stack>
-          <Typography>Short</Typography>
-          <Typography fontWeight={'bold'}>{formatPerc(divide(short, totals))}</Typography>
-        </Stack>
-
+        <CompositeTypography string='Over' value={formatPerc(divide(over, totals))} />
+        <CompositeTypography string='CENTER' value={formatPerc(divide(center, totals))} sx={{ padding: '10px', color: 'white !important' }} center='green' />
+        <CompositeTypography string='Short' value={formatPerc(divide(short, totals))} />
       </GridCross>
       <GridCross item>
-        <Stack>
-          <Typography>Right</Typography>
-          <Typography fontWeight={'bold'}>{formatPerc(divide(right, totals))}</Typography>
-        </Stack>
+        <CompositeTypography string='Right' value={formatPerc(divide(right, totals))} />
       </GridCross>
     </Grid>
   )

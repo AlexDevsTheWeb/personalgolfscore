@@ -1,31 +1,35 @@
 import { Typography as TypographyMui, TypographyProps as TypographyPropsMui } from "@mui/material";
-import * as React from "react";
+import React from "react";
 import styled from "styled-components";
-import BoxInternal from "../box/BoxInternal.styles";
+import BoxInternalColumn from "../box/BoxInternalColumn.styles";
 
 type TypographyProps = TypographyPropsMui
 
 interface ILabelsTypographyProps extends TypographyProps {
   string: string,
   value: string | number,
+  center?: string | undefined
 }
 
-const StyledTypographyLabel = styled(TypographyMui)({
-  width: 300,
-})
+const StyledTypographyLabel = styled(TypographyMui)<ILabelsTypographyProps>((props) => ({
+  color: props.center === 'green' ? 'white !important' : 'inherit',
+  fontWeight: props.center === 'green' ? 'bold !important' : 'auto',
+  padding: props.center === 'green' ? '5px' : '0px'
+}));
+
 const StyledTypographyValue = styled(TypographyMui)({
-  fontWeight: 'bold'
+  fontWeight: 'bold',
 })
 
 const CompositeTypography: React.FC<ILabelsTypographyProps> = (props: ILabelsTypographyProps) => {
-  return <BoxInternal>
+  return <BoxInternalColumn center={props.center}>
     <StyledTypographyLabel {...props}>
-      {`${props.string}:`}
+      {`${props.string !== '' ? `${props.string}:` : ''}`}
     </StyledTypographyLabel>
     <StyledTypographyValue {...props}>
       {props.value}
     </StyledTypographyValue>
-  </BoxInternal>
+  </BoxInternalColumn>
 }
 
 export default CompositeTypography;

@@ -123,6 +123,8 @@ const components: Components<Omit<Theme, 'components'>> = {
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
             height: '42px',
             padding: '13px 22px',
+            minWidth: '100%',
+            width: '100%'
           },
         },
       },
@@ -132,7 +134,8 @@ const components: Components<Omit<Theme, 'components'>> = {
           justifyContent: 'center',
           padding: '13px 32px',
           lineHeight: 0,
-          height: '56px',
+          height: '50px',
+          marginTop: '10px',
           '@media(hover: hover)': {
             '&:hover': {
               backgroundColor: palette.primary2.main,
@@ -142,6 +145,9 @@ const components: Components<Omit<Theme, 'components'>> = {
             height: '42px',
             padding: '13px 22px',
             lineHeight: 0,
+            minWidth: '100%',
+            width: '100%',
+
             '@media(hover: hover)': {
               '&:hover': {
                 backgroundColor: palette.primary2.main,
