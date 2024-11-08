@@ -3,16 +3,16 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetNewRoundHoleTmp, setHoleNumber, setTmpHoleData } from '../../features/hole/holeTmp.slice';
 import { setHolesCompleted, setNewHole } from '../../features/newRound/newRoundHoles.slice';
+import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 import { RootState } from '../../store/store';
 import { HoleCard, HoleCardContent, HoleCardHeader } from '../../styles';
 import BoxSingleHoleContainer from '../../styles/box/BosSingleHoleContainer.styles';
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import TextField from '../../styles/textfield/TextField.style';
-import CompositeTypography from '../../styles/typography/CompositeTypography.styles';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
-import PuttsGenerator from './components/PuttsGenerator.component';
-import Select from './components/Select.component';
+import PuttsGenerator from './Components/PuttsGenerator.component';
+import Select from './Components/Select.component';
 
 const AddSingleHole = () => {
 
@@ -72,14 +72,13 @@ const AddSingleHole = () => {
   return (
     <BoxSingleHoleContainer>
       <BoxSingleHoleInternal side='full'>
-        <CompositeTypography string='Hole number' value={holeFinished === 0 ? 1 : holeFinished} />
         <BoxNewHole>
           <HoleCard>
-            <HoleCardHeader title='General Info' />
+            <HoleCardHeader title={`Hole number: ${holeFinished === 0 ? 1 : holeFinished} - General Info`} />
             <HoleCardContent>
               <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} label='Hole HCP' />
               <Select name='par' list={parList} onChange={handleChange} value={tmpHole.par.toString()} label='Hole Par' />
-              <TextField id="length" name='distance' label="Hole length" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.distance !== 0 ? tmpHole.distance : ''}></TextField>
+              <TextField id="length" name='distance' label="Length" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.distance !== 0 ? tmpHole.distance : ''} width={useDeviceDetection().isMobile ? '30%' : 'auto'}></TextField>
               <TextField id="strokes" name='strokes' label="Score" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.strokes !== 0 ? tmpHole.strokes : ''} />
 
               <TextField id="putts" name='putts' label="# of putts" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.putts !== 0 ? tmpHole.putts : ''} />
@@ -100,15 +99,15 @@ const AddSingleHole = () => {
               <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} label='Tee club' />
               <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} label='Fairway position' />
               <TextField id='driveDistance' name='driveDistance' label='Teeshot distance' variant='filled' type='number' onChange={e => handleChange(e)}
-                value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} />
+                value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} width={useDeviceDetection().isMobile ? '30%' : 'auto'} />
             </HoleCardContent>
           </HoleCard>
 
           <HoleCard>
             <HoleCardHeader title='Pitch & Chip' />
             <HoleCardContent>
+              <TextField name='toGreenMeters' label="Meters to green" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : ''} width={useDeviceDetection().isMobile ? '30%' : 'auto'} />
               <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''} label='To green club' />
-              <TextField name='toGreenMeters' label="Meters to green" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : ''} />
               <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} label='Green side' />
               <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
             </HoleCardContent>
@@ -117,8 +116,8 @@ const AddSingleHole = () => {
           <HoleCard>
             <HoleCardHeader title='Penalties' />
             <HoleCardContent>
-              <TextField id="water" name='water' label="Water" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} width={90} />
-              <TextField id="out" name='out' label="Out" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} sx={{ width: '90px !important' }} width={90} />
+              <TextField id="water" name='water' label="Water" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} width={80} />
+              <TextField id="out" name='out' label="Out" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} sx={{ width: '90px !important' }} width={80} />
             </HoleCardContent>
 
           </HoleCard>

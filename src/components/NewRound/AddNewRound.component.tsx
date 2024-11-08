@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getClubsDetails } from '../../features/golfBag/golfBag.slice';
 import { RootState } from '../../store/store';
 import StackNewHole from '../../styles/stack/StackNewHole.styles';
+import AddNewRoundForm from './AddNewRoundForm.component';
 import AddNewRoundHoles from './AddNewRoundHoles.component';
-import AddNewRoundJson from './AddNewRoundJson.component';
 
 const NewRoundMain = () => {
   const dispatch = useDispatch<any>();
@@ -20,7 +20,7 @@ const NewRoundMain = () => {
 
   return (
     <StackNewHole>
-      <AddNewRoundJson />
+      <AddNewRoundForm />
       <AddNewRoundHoles />
     </StackNewHole>
   )
