@@ -1,11 +1,7 @@
 import { Box, Button } from "@mui/material";
 
 const RoundSave = () => {
-
-
-  const handleClick = () => {
-
-  };
+  const handleClick = () => { console.log("saving a round of golf...") };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>

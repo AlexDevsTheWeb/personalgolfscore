@@ -8,7 +8,7 @@ import { getChipClubs, getClubsNames, getGreenClubs } from '../../utils/round/ro
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddSingleHole from './AddSingleHole.component';
 import HolebyHoleTable from './Components/HolebyHoleTable.component';
-import RoundSave from './Components/RoundSave.component';
+import RoundSave from './RoundSave.component';
 
 const AddNewRoundHoles = () => {
   const dispatch = useDispatch<any>();
