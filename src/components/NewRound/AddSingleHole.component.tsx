@@ -11,8 +11,8 @@ import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import TextField from '../../styles/textfield/TextField.style';
 import { greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
-import PuttsGenerator from './Components/PuttsGenerator.component';
-import Select from './Components/Select.component';
+import PuttsGenerator from './PuttsGenerator.component';
+import Select from './Select.component';
 
 const AddSingleHole = () => {
 
