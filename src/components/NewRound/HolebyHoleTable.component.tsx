@@ -1,8 +1,8 @@
 import { Table, TableBody } from "@mui/material";
-import { BoxOverflow } from "../../../styles";
-import { IShots } from "../../../types/roundData.types";
-import ShotsTableBody from "../../RoundsData/components/shotsTable/ShotsTableBody.component";
-import ShotsTableHeader from "../../RoundsData/components/shotsTable/ShotsTableHeader.component";
+import { BoxOverflow } from "../../styles";
+import { IShots } from "../../types/roundData.types";
+import ShotsTableBody from "../RoundsData/components/shotsTable/ShotsTableBody.component";
+import ShotsTableHeader from "../RoundsData/components/shotsTable/ShotsTableHeader.component";
 
 interface IHolebyHoleProps {
   holes: IShots[],

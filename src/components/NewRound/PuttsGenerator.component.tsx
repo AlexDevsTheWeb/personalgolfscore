@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import TextField from '../../../styles/textfield/TextField.style';
+import TextField from '../../styles/textfield/TextField.style';
 
 interface IPuttsProps {
   puttsNumber: number[],
