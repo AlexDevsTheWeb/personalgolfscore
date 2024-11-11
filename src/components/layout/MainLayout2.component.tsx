@@ -15,6 +15,7 @@ import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 import { TLinkSidebar } from '../../types/general.types';
 import links from '../../utils/links/links.utils';
+import Footer from './Footer.component';
 
 
 interface Props {
@@ -75,79 +76,84 @@ export default function DrawerAppBar(props: Props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar component="nav">
-        <Toolbar sx={{ display: 'flex' }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, ml: '5px', display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: '#ffffff' }}
-          >
-            Personal Golf Score
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-            <List sx={{ display: 'flex' }}>
-              {links.map((link: TLinkSidebar, index: number) => {
-                return (
-                  <ListItem key={index} disablePadding sx={{ display: 'flex' }}>
-                    <ListItemButton
-                      sx={{
-                        minHeight: 48,
-                        px: 2.5,
-                      }}
-                      href={link.link}
-
-                    >
-                      <ListItemIcon
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px', justifyContent: 'space-between', height: '100vh' }}>
+      <Box>
+        <CssBaseline />
+        <AppBar component="nav">
+          <Toolbar sx={{ display: 'flex' }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, ml: '5px', display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: '#ffffff' }}
+            >
+              Personal Golf Score
+            </Typography>
+            <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+              <List sx={{ display: 'flex' }}>
+                {links.map((link: TLinkSidebar, index: number) => {
+                  return (
+                    <ListItem key={index} disablePadding sx={{ display: 'flex' }}>
+                      <ListItemButton
                         sx={{
-                          minWidth: 0,
-                          color: '#ffffff !important',
-                          justifyContent: 'center',
-                          marginRight: '10px'
+                          minHeight: 48,
+                          px: 2.5,
                         }}
-                      >
-                        <SvgIcon component={link.icon} inheritViewBox />
-                      </ListItemIcon>
-                      <Typography sx={{ color: '#ffffff' }}>{link.name}</Typography>
+                        href={link.link}
 
-                    </ListItemButton>
-                  </ListItem>
-                );
-              })}
-            </List>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <nav>
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
-      <Box component="main" sx={{ p: 1, width: '100%' }}>
-        <Toolbar />
-        <Outlet />
+                      >
+                        <ListItemIcon
+                          sx={{
+                            minWidth: 0,
+                            color: '#ffffff !important',
+                            justifyContent: 'center',
+                            marginRight: '10px'
+                          }}
+                        >
+                          <SvgIcon component={link.icon} inheritViewBox />
+                        </ListItemIcon>
+                        <Typography sx={{ color: '#ffffff' }}>{link.name}</Typography>
+
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        <nav>
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </nav>
+        <Box component="main" sx={{ p: 1, width: '100%' }}>
+          <Toolbar />
+          <Outlet />
+        </Box>
       </Box>
-    </Box >
+      <Box>
+        <Footer />
+      </Box>
+    </Box>
   );
 }

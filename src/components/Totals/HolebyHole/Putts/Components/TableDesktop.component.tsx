@@ -21,7 +21,7 @@ const TableDesktop = ({ totalsPutts }: IHolebyHolePutts) => {
 
   return (
     <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Table sx={{ minWidth: '1500px', width: '100%' }} aria-label="customized table">
+      <Table sx={{ width: '100%', overflow: 'hidden' }} aria-label="customized table">
         <TableHead>
           <TableRow>
             {

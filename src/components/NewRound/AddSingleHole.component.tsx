@@ -10,7 +10,7 @@ import BoxSingleHoleContainer from '../../styles/box/BosSingleHoleContainer.styl
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import TextField from '../../styles/textfield/TextField.style';
-import { greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
+import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
 import PuttsGenerator from './PuttsGenerator.component';
 import Select from './Select.component';
 
@@ -96,8 +96,8 @@ const AddSingleHole = () => {
           <HoleCard>
             <HoleCardHeader title='Tee shot' />
             <HoleCardContent>
-              {/* <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} label='Tee club' />
-              <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} label='Fairway position' /> */}
+              <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} label='Tee club' />
+              <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} label='Fairway position' />
               <TextField id='driveDistance' name='driveDistance' label='Teeshot distance' variant='filled' type='number' onChange={e => handleChange(e)}
                 value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} width={useDeviceDetection().isMobile ? '30%' : 'auto'} />
             </HoleCardContent>
