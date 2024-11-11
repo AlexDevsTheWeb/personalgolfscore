@@ -9,7 +9,6 @@ import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddSingleHole from './AddSingleHole.component';
 import HolebyHoleTable from './Components/HolebyHoleTable.component';
 import RoundSave from './Components/RoundSave.component';
-// import HolebyHoleTable from './Components/HolebyHoleTable.component';
 
 const AddNewRoundHoles = () => {
   const dispatch = useDispatch<any>();
