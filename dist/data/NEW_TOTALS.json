@@ -1,0 +1,86 @@
+{
+	"playerID": "playerID",
+	"totals": [
+		{
+			"hcp": 171,
+			"par": 71,
+			"score": {
+				"totals": 105,
+				"avg": "5.83",
+				"vsPar": "",
+				"scoreIN": 56,
+				"scoreOUT": 49,
+				"vsParIN": "",
+				"vsParOUT": "",
+				"avgIN": "6.22",
+				"avgOUT": "5.44"
+			},
+			"points": {
+				"totals": 31,
+				"avg": "1.72",
+				"pointsIN": 13,
+				"pointsOUT": 18,
+				"avgIN": "1.44",
+				"avgOUT": "2.00"
+			},
+			"fairway": {
+				"total": 14,
+				"fairwayCenter": 5,
+				"fairwayLeft": 4,
+				"fairwayRight": 5
+			},
+			"gir": {
+				"totals": 2,
+				"avg": "0.11",
+				"totalsIN": 0,
+				"avgIN": "-",
+				"totalsOUT": 2,
+				"avgOUT": "0.22"
+			},
+			"girBogey": {
+				"totals": 10,
+				"avg": "0.56",
+				"totalsIN": 0,
+				"avgIN": "-",
+				"totalsOUT": 2,
+				"avgOUT": "0.22"
+			},
+			"scramble": { "totals": 16, "saved": 1, "perc": 6.25 },
+			"upDown": { "totals": 1, "saved": 1, "perc": 100 },
+			"putts": {
+				"totals": 39,
+				"avg": "2.17",
+				"totalsIN": 19,
+				"avgIN": "2.11",
+				"totalsOUT": 20,
+				"avgOUT": "2.22",
+				"puttsGir": 5,
+				"puttsGirIn": 0,
+				"puttsGirOut": 5
+			},
+			"sand": {
+				"totals": 2,
+				"avg": "0.11",
+				"saved": 0,
+				"avgSaved": "-",
+				"savedPerc": 0
+			},
+			"water": {
+				"totals": 0,
+				"avg": "-",
+				"totalsIN": 0,
+				"avgIN": "-",
+				"totalsOUT": 0,
+				"avgOUT": "-"
+			},
+			"out": {
+				"totals": 3,
+				"avg": "0.17",
+				"totalsIN": 2,
+				"avgIN": "0.22",
+				"totalsOUT": 1,
+				"avgOUT": "0.11"
+			}
+		}
+	]
+}
