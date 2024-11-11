@@ -10,9 +10,7 @@ import BoxSingleHoleContainer from '../../styles/box/BosSingleHoleContainer.styl
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import TextField from '../../styles/textfield/TextField.style';
-import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
-import PuttsGenerator from './Components/PuttsGenerator.component';
-import Select from './Components/Select.component';
+// import Select from './Components/Select.component';
 
 const AddSingleHole = () => {
 
@@ -76,18 +74,18 @@ const AddSingleHole = () => {
           <HoleCard>
             <HoleCardHeader title={`Hole number: ${holeFinished === 0 ? 1 : holeFinished} - General Info`} />
             <HoleCardContent>
-              <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} label='Hole HCP' />
-              <Select name='par' list={parList} onChange={handleChange} value={tmpHole.par.toString()} label='Hole Par' />
+              {/* <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} label='Hole HCP' />
+              <Select name='par' list={parList} onChange={handleChange} value={tmpHole.par.toString()} label='Hole Par' /> */}
               <TextField id="length" name='distance' label="Length" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.distance !== 0 ? tmpHole.distance : ''} width={useDeviceDetection().isMobile ? '30%' : 'auto'}></TextField>
               <TextField id="strokes" name='strokes' label="Score" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.strokes !== 0 ? tmpHole.strokes : ''} />
 
               <TextField id="putts" name='putts' label="# of putts" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.putts !== 0 ? tmpHole.putts : ''} />
 
-              {
+              {/* {
                 puttsNumber.length > 0
                   ? <PuttsGenerator puttsNumber={puttsNumber} setPuttDistance={handleChangePutts} />
                   : <></>
-              }
+              } */}
             </HoleCardContent>
           </HoleCard>
         </BoxNewHole>
@@ -96,8 +94,8 @@ const AddSingleHole = () => {
           <HoleCard>
             <HoleCardHeader title='Tee shot' />
             <HoleCardContent>
-              <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} label='Tee club' />
-              <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} label='Fairway position' />
+              {/* <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} label='Tee club' />
+              <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} label='Fairway position' /> */}
               <TextField id='driveDistance' name='driveDistance' label='Teeshot distance' variant='filled' type='number' onChange={e => handleChange(e)}
                 value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} width={useDeviceDetection().isMobile ? '30%' : 'auto'} />
             </HoleCardContent>
@@ -107,9 +105,9 @@ const AddSingleHole = () => {
             <HoleCardHeader title='Pitch & Chip' />
             <HoleCardContent>
               <TextField name='toGreenMeters' label="Meters to green" variant="filled" type='number' onChange={e => handleChange(e)} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : ''} width={useDeviceDetection().isMobile ? '30%' : 'auto'} />
-              <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''} label='To green club' />
+              {/* <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''} label='To green club' />
               <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} label='Green side' />
-              <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
+              <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} /> */}
             </HoleCardContent>
           </HoleCard>
 
