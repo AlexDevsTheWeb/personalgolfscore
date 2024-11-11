@@ -7,6 +7,8 @@ import { RootState } from '../../store/store';
 import { getChipClubs, getClubsNames, getGreenClubs } from '../../utils/round/round.utils';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddSingleHole from './AddSingleHole.component';
+import HolebyHoleTable from './Components/HolebyHoleTable.component';
+import RoundSave from './Components/RoundSave.component';
 // import HolebyHoleTable from './Components/HolebyHoleTable.component';
 
 const AddNewRoundHoles = () => {
@@ -43,8 +45,8 @@ const AddNewRoundHoles = () => {
     <>
       {holeForm}
       {holes.length > 0 && <HolebyHoleTotals />}
-      {/* {holes.length > 0 && <HolebyHoleTable holes={holes} />} */}
-      {/* {(holes.length !== 0 && holes.length === round.roundHoles) && <RoundSave />} */}
+      {holes.length > 0 && <HolebyHoleTable holes={holes} />}
+      {(holes.length !== 0 && holes.length === round.roundHoles) && <RoundSave />}
     </>
   )
 }
