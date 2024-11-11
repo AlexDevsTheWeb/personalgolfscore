@@ -14,7 +14,8 @@ const AddNewRoundHoles = () => {
   const dispatch = useDispatch<any>();
   const { setFirstHole, round } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holes } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const { clubs } = useSelector((store: RootState) => store.golfBag);
+  // const { clubs } = useSelector((store: RootState) => store.golfBag);
+  const clubs = useSelector((store: RootState) => store.golfBag.clubs);
 
   const [holeForm, setHoleForm] = useState<any>();
 
