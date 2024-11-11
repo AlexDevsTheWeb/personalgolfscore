@@ -7,7 +7,7 @@ import { RootState } from '../../store/store';
 import { getChipClubs, getClubsNames, getGreenClubs } from '../../utils/round/round.utils';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddSingleHole from './AddSingleHole.component';
-import HolebyHoleTable from './Components/HolebyHoleTable.component';
+import HolebyHoleTable from './HolebyHoleTable.component';
 import RoundSave from './RoundSave.component';
 
 const AddNewRoundHoles = () => {
