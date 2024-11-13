@@ -225,6 +225,30 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
           </Grid>
         </TableCell>
 
+        <TableCell align='center'>
+          <Grid container spacing={1}>
+            <NewGridCellStats item xs={4}>
+              <Stack>
+                <Typography fontWeight={'bold'}>{putts.totals}</Typography>
+                <Typography>{putts.avg}</Typography>
+              </Stack>
+
+            </NewGridCellStats>
+            <NewGridCellStats item xs={4}>
+              <Stack>
+                <Typography fontWeight={'bold'}>{putts.totalsIN}</Typography>
+                <Typography>{putts.avgIN}</Typography>
+              </Stack>
+            </NewGridCellStats>
+            <NewGridCellStats item xs={4}>
+              <Stack>
+                <Typography fontWeight={'bold'}>{putts.totalsOUT}</Typography>
+                <Typography>{putts.avgOUT}</Typography>
+              </Stack>
+            </NewGridCellStats>
+          </Grid>
+        </TableCell>
+
         <TableCell align='center' sx={{ borderRight: '1px solid #ccc' }}>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={6}>
@@ -249,29 +273,7 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
           </Grid>
         </TableCell>
 
-        <TableCell align='center'>
-          <Grid container spacing={1}>
-            <NewGridCellStats item xs={4}>
-              <Stack>
-                <Typography fontWeight={'bold'}>{putts.totals}</Typography>
-                <Typography>{putts.avg}</Typography>
-              </Stack>
 
-            </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
-              <Stack>
-                <Typography fontWeight={'bold'}>{putts.totalsIN}</Typography>
-                <Typography>{putts.avgIN}</Typography>
-              </Stack>
-            </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
-              <Stack>
-                <Typography fontWeight={'bold'}>{putts.totalsOUT}</Typography>
-                <Typography>{putts.avgOUT}</Typography>
-              </Stack>
-            </NewGridCellStats>
-          </Grid>
-        </TableCell>
 
         <TableCell align='center'>
           <Grid container spacing={1}>

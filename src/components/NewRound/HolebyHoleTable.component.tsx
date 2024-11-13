@@ -11,8 +11,8 @@ interface IHolebyHoleProps {
 const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
 
   return (
-    <BoxOverflow direction="horizontal" variant="table">
-      <Table sx={{ width: '100%', overflow: 'hidden' }} aria-label="customized table">
+    <BoxOverflow direction="horizontal" variant="table" sx={{ marginBottom: '20px' }}>
+      <Table sx={{ width: '100%', overflow: 'auto' }} aria-label="customized table">
         <ShotsTableHeader firstLabel='#' singleHole={true} firstColumn={true} />
         <TableBody>
           {holes.map((hole: IShots, index: number) => {

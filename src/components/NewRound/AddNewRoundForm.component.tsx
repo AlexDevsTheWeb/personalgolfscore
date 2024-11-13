@@ -56,21 +56,26 @@ const AddNewRoundForm = () => {
   }
 
   return (
-    <BoxGeneralShadow direction={'column'} sx={{ flexDirection: 'row !important', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: '10px' }}>
+    <BoxGeneralShadow direction={'column'} sx={{ flexDirection: 'row !important', alignItems: 'center', flexWrap: 'wrap' }}>
+      <Box sx={{
+        display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: '10px', padding: '0px !important', alignContent: 'stretch',
+        alignItems: 'center'
+      }}>
+
         <TextField name='roundCourse' label="Round course" variant="filled" onChange={e => handleChange(e)} width={isMobile ? '100%' : 200} />
         <DatePicker onChange={e => handleChangeDate(e)} />
-        <TextField name='roundNumber' label="Round #" variant="filled" type='number' onChange={e => handleChange(e)} />
-        <TextField name='roundPar' label="Par" variant="filled" type='number' onChange={e => handleChange(e)} />
-        <TextField name='roundPlayingHCP' label="HCP" variant="filled" type='number' onChange={e => handleChange(e)} />
+
+        <TextField name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => handleChange(e)} width={isMobile ? '70px' : 'auto'} />
+        <TextField name='roundPar' label="Par" variant="filled" type='number' onChange={e => handleChange(e)} width={isMobile ? '70px' : 'auto'} />
+        <TextField name='roundPlayingHCP' label="HCP" variant="filled" type='number' onChange={e => handleChange(e)} width={isMobile ? '70px' : 'auto'} />
 
         <TextField name='roundTee' label="Tee" variant="filled" onChange={e => handleChange(e)} />
-        <TextField name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => handleChange(e)} />
+        <TextField name='roundNumber' label="Round #" variant="filled" type='number' onChange={e => handleChange(e)} />
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', width: isMobile ? '100%' : 'auto' }}>
         <Button fullWidth={isMobile ? true : false} variant='contained' onClick={handleSubmit} sx={{ marginTop: '0px' }}>SUBMIT</Button>
       </Box>
-    </BoxGeneralShadow>
+    </BoxGeneralShadow >
   )
 }
 

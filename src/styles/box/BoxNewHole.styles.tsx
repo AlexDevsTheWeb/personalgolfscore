@@ -7,18 +7,18 @@ interface IStackProps extends StackPropsMui {
   isMobile?: boolean;
 }
 
-const StyledStack = styled(Stack) <IStackProps>`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  gap: ${(props) => props.isMobile ? '10px' : '0px'};
-`
+const StyledStack = styled(Stack)<IStackProps>((props) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  width: '100%',
+  gap: useDeviceDetection().isMobile ? '10px' : '0px'
+}));
 
 const BoxNewHole: React.FC<IStackProps> = props => {
   return (
-    <StyledStack {...props} isMobile={useDeviceDetection().isMobile}>
+    <StyledStack {...props}>
       {props.children}
     </StyledStack >
   )

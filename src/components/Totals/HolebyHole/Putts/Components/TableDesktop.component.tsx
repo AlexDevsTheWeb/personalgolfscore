@@ -50,7 +50,7 @@ const TableDesktop = ({ totalsPutts }: IHolebyHolePutts) => {
             {
               puttsOverallValues.map(([key, value], index: number) => {
                 return (
-                  <TableCell align='center' key={index}>
+                  <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
                     <Stack>
                       <Grid container spacing={1}>
                         <GridPuttsStat item xs={12} string='Putts' value={value.totalPutts !== 0 ? value.totalPutts : '-'} />
@@ -68,7 +68,7 @@ const TableDesktop = ({ totalsPutts }: IHolebyHolePutts) => {
             {
               puttsValues.map(([key, value], index: number) => {
                 return (
-                  <TableCell align='center' key={index}>
+                  <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
                     <Stack>
                       <Grid container spacing={1}>
                         <GridPuttsStat item xs={4} string='1 putt %' value={formatPerc(value.putt1Perc)} />

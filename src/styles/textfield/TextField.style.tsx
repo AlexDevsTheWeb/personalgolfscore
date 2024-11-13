@@ -17,12 +17,11 @@ const StyledTextField = styled(TextFieldMui)<TextFieldProps>((props) => ({
       ? `${props.width}px`
       : `${props.width}`}`
     : useDeviceDetection().isMobile ? '31%' : '150px',
-
+  padding: '2px !important'
 
 
 }));
 
-console.log("xxx");
 const TextField: React.FC<TextFieldProps> = (props) => {
   return (
     <StyledTextField
