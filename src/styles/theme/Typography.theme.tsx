@@ -36,6 +36,7 @@ declare module '@mui/material/styles' {
     price1: React.CSSProperties;
     price2: React.CSSProperties;
     bodyLinkTablet: React.CSSProperties;
+    footer: React.CSSProperties;
     dateInfo: React.CSSProperties;
   }
 
@@ -62,6 +63,7 @@ declare module '@mui/material/styles' {
     price1: React.CSSProperties;
     price2: React.CSSProperties;
     bodyLinkTablet: React.CSSProperties;
+    footer: React.CSSProperties;
     dateInfo: React.CSSProperties;
   }
 }
@@ -94,6 +96,7 @@ declare module '@mui/material/Typography' {
     price2: true;
     button: true;
     bodyLinkTablet: true;
+    footer: true;
     dateInfo: true;
     payment: true;
     //original to be removed
@@ -466,6 +469,15 @@ export const typography = {
     fontWeight: 700,
     fontStyle: 'normal',
     letterSpacing: '0.2px',
+  },
+  footer: {
+    ...allVariantsCss,
+    fontSize: '11px',
+    lineHeight: '120%',
+    fontFamily: fonts.medium,
+    fontWeight: 400,
+    fontStyle: 'normal'
+
   },
   dateInfo: {
     ...allVariantsCss,

@@ -12,7 +12,7 @@ const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
 
   return (
     <BoxOverflow direction="horizontal" variant="table">
-      <Table sx={{ minWidth: '1500px', width: '100%' }} aria-label="customized table">
+      <Table sx={{ width: '100%', overflow: 'hidden' }} aria-label="customized table">
         <ShotsTableHeader firstLabel='#' singleHole={true} firstColumn={true} />
         <TableBody>
           {holes.map((hole: IShots, index: number) => {

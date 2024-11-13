@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 
 import * as React from "react";
 import styled from "styled-components";
-import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 
 interface IDatepickerProps {
   // value: dayjs.Dayjs | null;
@@ -25,9 +24,11 @@ const StyledDatePicker = styled(DatePickerMui)<IDatepickerProps>(({ theme }) => 
 }));
 
 
+
+
 const DatePicker: React.FC<IDatepickerProps> = (props) => {
   return (
-    <StyledDatePicker {...props} sx={{ width: useDeviceDetection().isMobile ? '37%' : 200, }} />
+    <StyledDatePicker {...props} />
   );
 };
 
