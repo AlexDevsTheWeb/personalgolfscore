@@ -4,9 +4,6 @@ import packageJson from "../../../package.json";
 import BoxFooter from "../../styles/box/BoxFooter.styles";
 
 const Footer = () => {
-
-  console.log("import: ", import.meta.env)
-
   return (
     <BoxFooter>
       <Typography variant='footer'>

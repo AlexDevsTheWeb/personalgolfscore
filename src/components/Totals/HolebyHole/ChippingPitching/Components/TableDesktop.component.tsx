@@ -39,8 +39,8 @@ const TableDesktop = ({ totals }: IHolebyHoleTeeShots) => {
               {
                 Object.entries(chipPitch).map(([key, value], index: number) => {
                   return (
-                    <TableCell align='center' key={index}>
-                      <Stack>
+                    <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
+                      <Stack >
                         <Grid container spacing={1}>
                           <GridPuttsStat item xs={4} string='U&D made' value={value.upDownMade} />
                           <GridPuttsStat item xs={4} string='Attempts made' value={value.attempts} />
