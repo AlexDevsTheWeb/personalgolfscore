@@ -58,14 +58,14 @@ const AddNewRoundForm = () => {
   return (
     <BoxGeneralShadow direction={'column'} sx={{ flexDirection: 'row !important', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: '10px' }}>
-        <TextField width={isMobile ? '100%' : 500} id="roundCourse" name='roundCourse' label="Round course" variant="filled" onChange={e => handleChange(e)} />
+        <TextField name='roundCourse' label="Round course" variant="filled" onChange={e => handleChange(e)} width={isMobile ? '100%' : 200} />
         <DatePicker onChange={e => handleChangeDate(e)} />
-        <TextField width={isMobile ? '28%' : 100} id="roundNumber" name='roundNumber' label="Round #" variant="filled" type='number' onChange={e => handleChange(e)} />
-        <TextField width={isMobile ? '28%' : 100} id="roundPar" name='roundPar' label="Par" variant="filled" type='number' onChange={e => handleChange(e)} />
-        <TextField width={isMobile ? '31%' : 100} id="roundPlayingHCP" name='roundPlayingHCP' label="HCP" variant="filled" type='number' onChange={e => handleChange(e)} />
+        <TextField name='roundNumber' label="Round #" variant="filled" type='number' onChange={e => handleChange(e)} />
+        <TextField name='roundPar' label="Par" variant="filled" type='number' onChange={e => handleChange(e)} />
+        <TextField name='roundPlayingHCP' label="HCP" variant="filled" type='number' onChange={e => handleChange(e)} />
 
-        <TextField width={isMobile ? '31%' : 100} id="roundTee" name='roundTee' label="Tee" variant="filled" onChange={e => handleChange(e)} />
-        <TextField width={isMobile ? '31%' : 100} id="roundHoles" name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => handleChange(e)} />
+        <TextField name='roundTee' label="Tee" variant="filled" onChange={e => handleChange(e)} />
+        <TextField name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => handleChange(e)} />
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', width: isMobile ? '100%' : 'auto' }}>
         <Button fullWidth={isMobile ? true : false} variant='contained' onClick={handleSubmit} sx={{ marginTop: '0px' }}>SUBMIT</Button>

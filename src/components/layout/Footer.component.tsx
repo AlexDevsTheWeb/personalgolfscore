@@ -1,16 +1,18 @@
-import { Box } from "@mui/material";
+import { Typography } from "@mui/material";
 import dayjs from "dayjs";
-import { useState } from "react";
+import packageJson from "../../../package.json";
+import BoxFooter from "../../styles/box/BoxFooter.styles";
 
 const Footer = () => {
 
-  const [year, setYear] = useState(dayjs().format('YYYY'));
+  console.log("import: ", import.meta.env)
 
-  console.log(dayjs().format('YYYY'))
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', backgroundColor: '#ddd', padding: '20px', bottom: '0', justifyContent: 'center' }}>
-      {`Footer ${year}`}
-    </Box>
+    <BoxFooter>
+      <Typography variant='footer'>
+        {`${import.meta.env.VITE_APP_NAME} @ ${dayjs().format('YYYY')} - v.${packageJson.version}`}
+      </Typography>
+    </BoxFooter>
   )
 }
 

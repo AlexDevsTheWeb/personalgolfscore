@@ -1,7 +1,7 @@
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import Box, { BoxProps as BoxPropsMui } from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -13,6 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
 import { TLinkSidebar } from '../../types/general.types';
 import links from '../../utils/links/links.utils';
 import Footer from './Footer.component';
@@ -76,7 +77,7 @@ export default function DrawerAppBar(props: Props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px', justifyContent: 'space-between', height: '100vh' }}>
+    <BoxFooter sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh' }}>
       <Box>
         <CssBaseline />
         <AppBar component="nav">
@@ -154,6 +155,19 @@ export default function DrawerAppBar(props: Props) {
       <Box>
         <Footer />
       </Box>
-    </Box>
+    </BoxFooter>
   );
 }
+
+interface BoxProps extends BoxPropsMui { };
+
+const StyledBox = styled(Box)<BoxProps>((props) => (({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between', height: '100vh'
+})));
+const BoxFooter: React.FC<BoxProps> = props => {
+  return (
+    <StyledBox {...props}>{props.children}</StyledBox>
+  )
+};
