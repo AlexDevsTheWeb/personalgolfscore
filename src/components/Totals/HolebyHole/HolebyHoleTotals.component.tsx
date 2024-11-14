@@ -55,6 +55,8 @@ const HolebyHoleTotals = () => {
     setValue(newValue);
   };
 
+  console.log("totals:", JSON.stringify(roundTotals));
+
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
       <AppBar position="static">

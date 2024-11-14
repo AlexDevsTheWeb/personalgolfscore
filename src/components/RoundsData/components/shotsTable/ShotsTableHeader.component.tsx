@@ -40,14 +40,12 @@ const ShotsTableHeader = ({ firstColumn, singleHole }: IShotsTableHeaderProps) =
           </TableRow>
           :
           <TableRow>
-
             {
               firstColumn &&
               <TableCell align='center'>
                 <ShotsTableHeaderStack firstRow='#' secondRow={!!singleHole ? '' : ''} />
               </TableCell>
             }
-
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} />
             </TableCell>

@@ -10,6 +10,8 @@ interface IHolebyHoleProps {
 
 const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
 
+  console.log("holes:", JSON.stringify(holes));
+
   return (
     <BoxOverflow direction="horizontal" variant="table" sx={{ marginBottom: '20px' }}>
       <Table sx={{ width: '100%', overflow: 'auto' }} aria-label="customized table">

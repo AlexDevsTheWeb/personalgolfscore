@@ -54,8 +54,8 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.putts2 += (curr.puttsLength.length === 2 ? 1 : 0);
     acc.putts3More += (curr.puttsLength.length > 2 ? 1 : 0);
     acc.puttsDistGir += (!!curr.gir ? Number(curr.puttsLength[0]) : 0);
-    acc.sand += (curr.chipClub === 'b' ? 1 : 0);
-    acc.sandSaved += ((curr.chipClub === 'b' && curr.upDown.made === 1 && curr.strokes === curr.par) ? 1 : 0);
+    acc.sand += (curr.chipClub === 'Bunker' ? 1 : 0);
+    acc.sandSaved += ((curr.chipClub === 'Bunker' && curr.upDown.made === 1 && curr.strokes === curr.par) ? 1 : 0);
     acc.water += curr.water;
     acc.out += curr.out;
 

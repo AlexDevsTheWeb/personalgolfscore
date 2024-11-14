@@ -69,8 +69,8 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
             upDown.attempts === 0 ? '-' : upDown.made === 1 ? 'Y' : 'N'
           }
         </TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>{sand}</TableCell>
         <TableCell align='center' sx={{ padding: '0px' }}>{putts}</TableCell>
+        <TableCell align='center' sx={{ padding: '0px' }}>{sand}</TableCell>
         <TableCell align='center' sx={{ padding: '0px' }}>{`${water} | ${out}`}</TableCell>
 
       </TableRow>

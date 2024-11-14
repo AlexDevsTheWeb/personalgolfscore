@@ -29,6 +29,10 @@ const holeTmpSlice = createSlice({
           state[name] = value;
         }
       }
+      if (name === 'chipClub') {
+        state[name] = value;
+        state.sand = 1;
+      }
       state.bounceBack = state.score - state.par;
       state.points = calculateStablefordPoints({
         hcp: Number(state.hcp),
