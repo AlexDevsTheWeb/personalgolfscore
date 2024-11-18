@@ -31,7 +31,10 @@ const holeTmpSlice = createSlice({
       }
       if (name === 'chipClub') {
         state[name] = value;
-        state.sand = 1;
+        if (value.toString().toLowerCase() === 'bunker'
+          || value.toString().toLowerCase() === 'b') {
+          state.sand = 1;
+        }
       }
       state.bounceBack = state.score - state.par;
       state.points = calculateStablefordPoints({
@@ -57,6 +60,7 @@ const holeTmpSlice = createSlice({
         girValue: Number(state.gir),
         chipClub: state.chipClub,
         parValue: Number(state.par),
+        numberOfPutts: state.putts,
         strokesValue: Number(state.strokes),
         chipClubs: chipClubs
       });

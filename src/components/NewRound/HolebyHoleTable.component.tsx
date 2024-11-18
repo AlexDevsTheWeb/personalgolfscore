@@ -10,7 +10,10 @@ interface IHolebyHoleProps {
 
 const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
 
-  console.log("holes:", JSON.stringify(holes));
+  if (holes.length === 18) {
+    console.log("holes:", JSON.stringify(holes));
+  }
+
 
   return (
     <BoxOverflow direction="horizontal" variant="table" sx={{ marginBottom: '20px' }}>

@@ -35,7 +35,7 @@ export const calculateGirValue = (props: IGirProps) => {
 }
 
 export const calculateUDValue = (props: IUDProps) => {
-  const { girValue, chipClub, parValue, strokesValue, chipClubs } = props;
+  const { girValue, chipClub, parValue, numberOfPutts, strokesValue, chipClubs } = props;
   let result = { made: 0, attempts: 0 };
   if (chipClub !== '' && parValue !== 0 && strokesValue !== 0) {
 
@@ -45,7 +45,7 @@ export const calculateUDValue = (props: IUDProps) => {
 
       if (validClub.length > 0) {
 
-        if (parValue < strokesValue) {
+        if (numberOfPutts > 1) {
           result = { made: 0, attempts: 1 };
         }
         else {
