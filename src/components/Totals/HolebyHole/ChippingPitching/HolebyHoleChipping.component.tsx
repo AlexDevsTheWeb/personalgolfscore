@@ -1,22 +1,16 @@
 import useDeviceDetection from "../../../../hooks/useDeviceDetection.hook";
-import { IRoundTotals } from "../../../../types/roundTotals.types";
+import { IRoundTotalsProps } from "../../../../types/props.types";
 import TableDesktop from "./Components/TableDesktop.component";
 import TableMobile from "./Components/TableMobile.component";
 
-interface IHolebyHoleChipping {
-  totals: IRoundTotals
-}
-
-const HolebyHoleChipping = ({ totals }: IHolebyHoleChipping) => {
+const HolebyHoleChipping = ({ roundTotals }: IRoundTotalsProps) => {
 
   return (
     !useDeviceDetection().isMobile ?
-      <TableDesktop totals={totals} />
+      <TableDesktop roundTotals={roundTotals} />
       :
-      <TableMobile totals={totals} />
+      <TableMobile roundTotals={roundTotals} />
   )
-
-
 }
 
 export default HolebyHoleChipping

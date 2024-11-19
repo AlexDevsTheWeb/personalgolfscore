@@ -1,22 +1,14 @@
 import { Box, Tab, Tabs, useTheme } from "@mui/material";
 import AppBar from '@mui/material/AppBar';
 import React from "react";
-import { useSelector } from "react-redux";
 import useDeviceDetection from "../../../hooks/useDeviceDetection.hook";
-import { RootState } from "../../../store/store";
+import { IRoundTotalsProps, TabPanelProps } from "../../../types/props.types";
 import HolebyHoleChipping from "./ChippingPitching/HolebyHoleChipping.component";
 import HolebyHoleFwAndIrons from "./FairwayWoodAndIrons/HolebyHoleFwAndIrons.component";
 import HolebyHoleGeneral from "./General/HolebyHoleGeneral.component";
 import HolebyHoleInside100 from "./Inside100mt/HolebyHoleInside100.component";
 import HolebyHolePutts from "./Putts/HolebyHolePutts.component";
 import HolebyHoleTeeShots from "./TeeShots/HolebyHoleTeeShots.component";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  dir?: string;
-  index: number;
-  value: number;
-}
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -45,9 +37,7 @@ function a11yProps(index: number) {
   };
 }
 
-const HolebyHoleTotals = () => {
-  const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
-
+const HolebyHoleTotals = ({ roundTotals }: IRoundTotalsProps) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -80,23 +70,23 @@ const HolebyHoleTotals = () => {
       </AppBar>
 
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <HolebyHoleGeneral totals={roundTotals} />
+        <HolebyHoleGeneral roundTotals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={1} dir={theme.direction}>
-        <HolebyHoleTeeShots totals={roundTotals} />
+        <HolebyHoleTeeShots roundTotals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={2} dir={theme.direction}>
-        <HolebyHoleFwAndIrons totals={roundTotals} />
+        <HolebyHoleFwAndIrons roundTotals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={3} dir={theme.direction}>
-        <HolebyHoleInside100 totals={roundTotals} />
+        <HolebyHoleInside100 roundTotals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={4} dir={theme.direction}>
-        <HolebyHoleChipping totals={roundTotals} />
+        <HolebyHoleChipping roundTotals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={5} dir={theme.direction}>

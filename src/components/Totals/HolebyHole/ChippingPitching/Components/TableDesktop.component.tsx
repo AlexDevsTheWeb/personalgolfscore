@@ -3,16 +3,10 @@ import _ from "lodash";
 import { CHIPPING } from "../../../../../enum/shots.enum";
 import { BoxOverflow } from "../../../../../styles";
 import GridPuttsStat from "../../../../../styles/grid/GridCellStats.styles";
-import { IRoundTotals } from "../../../../../types/roundTotals.types";
+import { IRoundTotalsProps } from "../../../../../types/props.types";
 import ShotsTableHeaderStack from "../../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
-interface IHolebyHoleTeeShots {
-  totals: IRoundTotals
-}
-
-const TableDesktop = ({ totals }: IHolebyHoleTeeShots) => {
-
-  const { chipPitch } = totals;
+const TableDesktop = ({ roundTotals: { chipPitch } }: IRoundTotalsProps) => {
   const chipPitchCat = Object.keys(chipPitch);
 
   return (

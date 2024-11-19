@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import GridPuttsStat from "../../../styles/grid/GridCellStats.styles";
+import GridPuttsStat from "../../../../styles/grid/GridCellStats.styles";
 
 
 interface IGridStat {

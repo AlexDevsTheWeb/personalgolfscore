@@ -1,20 +1,13 @@
 import { Divider, Grid, Stack, TableBody, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store/store";
 import { TableCell, TableRow } from "../../../../styles";
 import NewGridCellStats from "../../../../styles/grid/NewGridCellStats.style";
+import { IShotsTableProps } from "../../../../types/props.types";
 import { formatPerc } from "../../../../utils/number/number.utils";
 import { correctVsParString } from "../../../../utils/shots/shots.utils";
 import { ShotPosition } from "../../../common/shotPositions/ShotPosition.component";
 
-interface IShotsTableProps {
-  firstColumn: boolean;
-}
+const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) => {
 
-
-const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
-
-  const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
   const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = roundTotals;
   const { correctScore, correctScoreIN, correctScoreOUT } = correctVsParString(score);
 

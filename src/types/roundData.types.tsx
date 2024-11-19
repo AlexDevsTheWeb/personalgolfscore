@@ -64,7 +64,7 @@ export type InitialStateNewRoundsData = {
 export interface IRoundInitialState {
   isLoading: boolean;
   mainData: IRoundMainData;
-  holes: IRoundHoles[];
+  holes: IShots[];
 }
 
 export interface IRoundMainData {
@@ -111,10 +111,10 @@ export interface IRoundHoles {
   toGreenMeters80_100: number;
   toGreenMeters60_80: number;
   toGreenMetersUnder60: number;
-  upDown: string;
+  upDown: { made: number, attempts: number };
   upDownX: number;
   upDownN: number;
   upDownE: number;
-  scramble: number;
+  scramble: { made: number, attempts: number };
   water: number;
 }

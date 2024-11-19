@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IRoundHoles, IRoundInitialState, IRoundMainData } from "../../types/roundData.types";
+import { IRoundHoles, IRoundInitialState } from "../../types/roundData.types";
 import { getSingleRoundHolesThunk } from "./roundHoles.thunk";
 
 const initialState: IRoundInitialState = {
@@ -29,10 +29,9 @@ const roundHolesSlice = createSlice({
       .addCase(getSingleRoundHoles.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getSingleRoundHoles.fulfilled, (state, { payload }: PayloadAction<{ mainData: IRoundMainData, holes: IRoundHoles[] }>) => {
+      .addCase(getSingleRoundHoles.fulfilled, (state, { payload }: PayloadAction<IRoundHoles[]>) => {
         state.isLoading = false;
-        state.mainData = payload.mainData;
-        state.holes = payload.holes;
+        state.holes = payload;
       })
       .addCase(getSingleRoundHoles.rejected, (state, { payload }: any) => {
         state.isLoading = false;
