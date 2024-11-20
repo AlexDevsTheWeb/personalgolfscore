@@ -1,10 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { IRounds } from "../../../../types/round.types";
+import { IRoundMainDataProp } from "../../../../types/props.types";
 import ShotsTableHeaderStack from "../shotsTable/ShotsTableHeaderStack.component";
-
-interface IRoundMainDataProp {
-  round: IRounds;
-}
 
 const TableDekstop = ({ round }: IRoundMainDataProp) => {
   const { roundCourse, roundDate, roundHoles, roundPar, roundTee, roundPlayingHCP, roundStrokes } = round

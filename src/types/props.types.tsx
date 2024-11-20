@@ -1,3 +1,4 @@
+import { IRounds } from "./round.types";
 import { IRoundTotals } from "./roundTotals.types";
 
 export interface TabPanelProps {
@@ -11,16 +12,12 @@ export interface IRoundTotalsProps {
   roundTotals: IRoundTotals;
 }
 
-export interface IRoundDataTableProps {
-  roundDate?: any,
-  roundCourse?: string,
-  roundPar?: number,
-  roundTotals: IRoundTotals,
-  onClick?: any,
-}
-
 export interface IShotsTableProps {
   firstColumn: boolean;
   roundTotals: IRoundTotals;
+}
+
+export interface IRoundMainDataProp {
+  round: IRounds;
 }
 
