@@ -8,7 +8,8 @@ type TypographyProps = TypographyPropsMui
 interface ILabelsTypographyProps extends TypographyProps {
   string: string,
   value: string | number,
-  center?: string | undefined
+  center?: string | undefined,
+  dir?: string | undefined,
 }
 
 const StyledTypographyLabel = styled(TypographyMui)<ILabelsTypographyProps>((props) => ({
@@ -22,7 +23,7 @@ const StyledTypographyValue = styled(TypographyMui)({
 })
 
 const CompositeTypography: React.FC<ILabelsTypographyProps> = (props: ILabelsTypographyProps) => {
-  return <BoxInternalColumn center={props.center}>
+  return <BoxInternalColumn center={props.center} dir={props.dir}>
     <StyledTypographyLabel {...props}>
       {`${props.string !== '' ? `${props.string}:` : ''}`}
     </StyledTypographyLabel>

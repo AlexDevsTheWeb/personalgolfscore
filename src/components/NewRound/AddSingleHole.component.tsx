@@ -87,6 +87,13 @@ const AddSingleHole = () => {
               }
             </HoleCardContent>
           </HoleCard>
+          <HoleCard>
+            <HoleCardHeader title='Penalties' />
+            <HoleCardContent>
+              <TextField name='water' label="Water" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} width={80} />
+              <TextField name='out' label="Out" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} width={80} />
+            </HoleCardContent>
+          </HoleCard>
         </BoxNewHole>
 
         <BoxNewHole>
@@ -110,14 +117,7 @@ const AddSingleHole = () => {
             </HoleCardContent>
           </HoleCard>
 
-          <HoleCard>
-            <HoleCardHeader title='Penalties' />
-            <HoleCardContent>
-              <TextField name='water' label="Water" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} width={80} />
-              <TextField name='out' label="Out" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} width={80} />
-            </HoleCardContent>
 
-          </HoleCard>
         </BoxNewHole>
         <Box>
           {

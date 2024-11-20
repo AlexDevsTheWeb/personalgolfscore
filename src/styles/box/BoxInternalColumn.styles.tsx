@@ -4,11 +4,12 @@ import styled from 'styled-components';
 
 interface IStackProps extends StackPropsMui {
   center?: string | undefined;
+  dir?: string;
 }
 
 const StyledStack = styled(Stack)<IStackProps>((props) => ({
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: props.dir && props.dir === 'row' ? props.dir : 'column',
   justifyContent: 'space-between',
   alignItems: 'center',
   gap: 10,
