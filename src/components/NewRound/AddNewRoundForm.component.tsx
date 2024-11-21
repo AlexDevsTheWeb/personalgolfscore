@@ -62,12 +62,12 @@ const AddNewRoundForm = () => {
         alignItems: 'center'
       }}>
 
-        <TextField name='roundCourse' label="Round course" variant="filled" onChange={e => handleChange(e)} width={isMobile ? '100%' : 200} />
+        <TextField name='roundCourse' label="Round course" variant="filled" onChange={e => handleChange(e)} />
         <DatePicker onChange={e => handleChangeDate(e)} />
 
-        <TextField name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => handleChange(e)} width={isMobile ? '70px' : 'auto'} />
-        <TextField name='roundPar' label="Par" variant="filled" type='number' onChange={e => handleChange(e)} width={isMobile ? '70px' : 'auto'} />
-        <TextField name='roundPlayingHCP' label="HCP" variant="filled" type='number' onChange={e => handleChange(e)} width={isMobile ? '70px' : 'auto'} />
+        <TextField name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => handleChange(e)} />
+        <TextField name='roundPar' label="Par" variant="filled" type='number' onChange={e => handleChange(e)} />
+        <TextField name='roundPlayingHCP' label="HCP" variant="filled" type='number' onChange={e => handleChange(e)} />
 
         <TextField name='roundTee' label="Tee" variant="filled" onChange={e => handleChange(e)} />
         <TextField name='roundNumber' label="Round #" variant="filled" type='number' onChange={e => handleChange(e)} />

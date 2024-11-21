@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import golfBagReducer from '../features/golfBag/golfBag.slice';
 import holeTmpReducer from '../features/hole/holeTmp.slice';
+import newroundDistanceReducer from '../features/newRound/newRoundDistances.slice';
 import newRoundHolesReducer from '../features/newRound/newRoundHoles.slice';
 import newRoundMainReducer from '../features/newRound/newRoundMain.slice';
 import newRoundTotalsReducer from '../features/newRound/newRoundTotals.slice';
@@ -28,6 +29,7 @@ const rootReducer = {
     newRoundHoles: newRoundHolesReducer,
     newRoundTotals: newRoundTotalsReducer,
     holeTmp: holeTmpReducer,
+    newRoundDistances: newroundDistanceReducer,
   }),
 };
 

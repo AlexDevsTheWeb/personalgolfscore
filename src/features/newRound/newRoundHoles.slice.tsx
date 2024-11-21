@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IPayloadActionNewHole } from "../../types/round.types";
 import { InitialStateNewRoundsData } from "../../types/roundData.types";
 import { calculation } from "../../utils/shots/shots.utils";
 
@@ -9,13 +10,6 @@ const initialState: InitialStateNewRoundsData = {
   holesCompleted: 0,
   holes: [],
 }
-
-interface IPayloadActionNewHole {
-  holeAdjusted: any,
-  roundPlayingHCP: number
-  roundHoles: number,
-  holesCompleted: number
-};
 
 const newRoundHolesSlice = createSlice({
   name: 'newRoundHoles',

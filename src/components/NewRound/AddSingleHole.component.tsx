@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetNewRoundHoleTmp, setHoleNumber, setTmpHoleData } from '../../features/hole/holeTmp.slice';
@@ -9,6 +9,7 @@ import BoxSingleHoleContainer from '../../styles/box/BosSingleHoleContainer.styl
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import TextField from '../../styles/textfield/TextField.style';
+import { IDistance } from '../../types/roundData.types';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
 import PuttsGenerator from './PuttsGenerator.component';
 import Select from './Select.component';
@@ -20,7 +21,7 @@ const AddSingleHole = () => {
   const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
-  const { teeClubs, greenClubs, chipClubs } = useSelector((store: RootState) => store.golfBag);
+  const { teeClubs, distanceClubs, greenClubs, chipClubs } = useSelector((store: RootState) => store.golfBag);
 
   const [holeFinished, setHoleFinished] = useState<number>(0);
   // const [mtToGreen, setMtToGreen] = useState<boolean>(false);
@@ -28,6 +29,8 @@ const AddSingleHole = () => {
   const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
   const [puttsLength, setPuttsLength] = useState<number[]>(new Array(tmpHole.putts).fill(null))
   const [handleSave, setHandleSave] = useState(false);
+
+  const [distance, setDistance] = useState<IDistance[]>([]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -72,7 +75,7 @@ const AddSingleHole = () => {
     <BoxSingleHoleContainer>
       <BoxSingleHoleInternal side='full'>
         <BoxNewHole>
-          <HoleCard>
+          <HoleCard sx={{ width: '100%' }}>
             <HoleCardHeader title={`Hole number: ${holeFinished === 0 ? 1 : holeFinished} - General Info`} />
             <HoleCardContent>
               <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} label='Hole HCP' />
@@ -87,13 +90,7 @@ const AddSingleHole = () => {
               }
             </HoleCardContent>
           </HoleCard>
-          <HoleCard>
-            <HoleCardHeader title='Penalties' />
-            <HoleCardContent>
-              <TextField name='water' label="Water" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} width={80} />
-              <TextField name='out' label="Out" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} width={80} />
-            </HoleCardContent>
-          </HoleCard>
+
         </BoxNewHole>
 
         <BoxNewHole>
@@ -116,20 +113,42 @@ const AddSingleHole = () => {
               <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
             </HoleCardContent>
           </HoleCard>
+        </BoxNewHole>
+        <BoxNewHole>
+
+          <HoleCard>
+            <HoleCardHeader title='Penalties' />
+            <HoleCardContent>
+              <TextField name='water' label="Water" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} width={80} />
+              <TextField name='out' label="Out" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} width={80} />
+            </HoleCardContent>
+          </HoleCard>
+
+          <HoleCard>
+            <HoleCardHeader title='Club distance' />
+            <HoleCardContent>
+              <Select name='distanceClubs' list={distanceClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} label='Club' />
+              <TextField name='distanceMeters' label="Meters done" type='number' onChange={e => handleChange(e)} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : ''} />
+              <Button variant='contained' onClick={saveHole} disabled={!handleSave} sx={{ marginTop: '0px' }}>
+                {'Next hole'}
+              </Button>
+            </HoleCardContent>
+          </HoleCard>
+
+          {
+            holes.length <= roundHoles - 1
+              ?
+              <Button variant='contained' onClick={saveHole} disabled={!handleSave} sx={{ marginTop: '0px' }}>
+                {'Next hole'}
+              </Button>
+              : null
+          }
+        </BoxNewHole>
+
+        <BoxNewHole sx={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center', alignItems: 'center' }}>
 
 
         </BoxNewHole>
-        <Box>
-          {
-            holes.length <= roundHoles - 1 ?
-              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <Button variant='contained' onClick={saveHole} disabled={!handleSave}>
-                  {'Next hole'}
-                </Button>
-              </Box> :
-              null
-          }
-        </Box>
       </BoxSingleHoleInternal>
     </BoxSingleHoleContainer>
   )

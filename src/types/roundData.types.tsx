@@ -1,11 +1,3 @@
-// interface IState {
-//   roundID: string;
-//   playerID: string;
-//   roundCourse: string;
-//   roundDate: string;
-//   shots: IShots[];
-// }
-
 export interface IShots {
   holeNumber: number;
   chipClub: string;
@@ -59,6 +51,18 @@ export type InitialStateNewRoundsData = {
   roundID: string;
   holesCompleted: number;
   holes: IShots[];
+}
+
+export type InitialStateNewRoundDistances = {
+  isLoading: boolean;
+  playerID: string;
+  roundID: string;
+  roundDistances: IDistance[];
+}
+
+export type IDistance = {
+  club: string,
+  mt: number
 }
 
 export interface IRoundInitialState {

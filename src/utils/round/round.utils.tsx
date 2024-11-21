@@ -21,6 +21,13 @@ export const getClubsNames = (clubs: IGolfBag) => {
   return _.flatMapDeep(clubsName);
 }
 
+export const getDistanceClubs = (distanceClubs: string[]) => {
+  const newDistanceClubs = [...distanceClubs];
+  newDistanceClubs.pop();
+
+  return newDistanceClubs;
+}
+
 export const getGreenClubs = (teeClubs: string[]) => {
   const newTeeClubs = [...teeClubs];
   newTeeClubs.push("mt.");
