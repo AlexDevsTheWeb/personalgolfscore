@@ -82,6 +82,11 @@ export interface IRoundInitialState {
   holes: IShots[];
 }
 
+export interface IRoundsDistanceInitialState {
+  isLoading: boolean;
+  roundsDistances: IDistance[];
+}
+
 export interface IRoundMainData {
   playerID: string,
   roundID: number,
