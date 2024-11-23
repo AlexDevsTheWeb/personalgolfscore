@@ -12,17 +12,12 @@ type TextFieldProps = TextFieldPropsMui & {
 
 const StyledTextField = styled(TextFieldMui)<TextFieldProps>((props) => ({
   backgroundColor: 'transparent',
-  // width: props.width ?
-  //   `${_.isNumber(props.width)
-  //     ? `${props.width}px`
-  //     : `${props.width}`}`
-  //   : useDeviceDetection().isMobile ? '31%' : '150px',
   width: props.width
     ? `${_.isNumber(props.width)
       ? `${props.width}px`
       : `${props.width}`}`
     : useDeviceDetection().isMobile
-      ? '31%'
+      ? '48%'
       : props.name === 'roundCourse'
         ? '300px'
         : '100px',

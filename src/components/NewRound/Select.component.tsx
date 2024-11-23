@@ -31,7 +31,7 @@ const Select = (props: ISelectProps) => {
   }, [name, tmpHole]);
 
   return (
-    <FormControl variant='filled' sx={{ width: useDeviceDetection().isMobile ? '32%' : '170px' }}>
+    <FormControl variant='filled' sx={{ width: useDeviceDetection().isMobile ? '48%' : '170px' }}>
       <InputLabel id="newHole_select">{label}</InputLabel>
       <SelectMui
         value={value !== '0' ? value : ''}

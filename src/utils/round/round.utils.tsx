@@ -1,7 +1,7 @@
 import _, { capitalize } from 'lodash';
 import { CHIPCONDITION } from '../../enum/shots.enum';
 import { IClub, IClubs, IGolfBag } from "../../types/clubs.types";
-import { IShots } from '../../types/roundData.types';
+import { IDistance, IDistanceSingle, IShots } from '../../types/roundData.types';
 
 export const getClubsNames = (clubs: IGolfBag) => {
   const clubsName = clubs.types.map((ct: IClubs) => {
@@ -69,4 +69,43 @@ export const newRoundDisabledSelect = (name: string, tmpHole: IShots) => {
     default:
       return false;
   }
+}
+
+export const createDistanceObject = (value: IDistanceSingle) => {
+  let newDistance: IDistance[] = [];
+  const { roundDistances, course, date, club, mt } = value;
+
+  if (roundDistances.length === 0) {
+    return [{ course, date, club, mt: [mt], avg: mt }];
+  }
+
+  const existingIndex = roundDistances.findIndex((distance) => distance.club === club);
+
+  if (existingIndex === -1) {
+    newDistance = [...roundDistances, { course: course, date: date, club: club, mt: [mt], avg: mt }];
+  }
+  else {
+    const newClubMt = [...roundDistances[existingIndex].mt, mt];
+    const newAvg = calculateAvg(newClubMt);
+    newDistance = [...roundDistances, { course: course, date: date, club: club, mt: newClubMt, avg: newAvg }];
+    newDistance.splice(existingIndex, 1);
+  }
+  return newDistance;
+}
+
+const calculateAvg = (values: number[]) => {
+  let finalAvg = 0;
+  const items = values.length;
+
+  const sum = values.reduce((acc, curr) => {
+    acc.total += curr;
+    return acc;
+  }, {
+    total: 0
+  });
+
+  console.log(sum.total);
+  console.log(items);
+  finalAvg = Math.floor(sum.total / items);
+  return finalAvg;
 }

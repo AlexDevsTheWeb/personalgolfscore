@@ -1,9 +1,7 @@
 
-// TODO: use a new initialState that is consistent with distance saving
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IDistance, InitialStateNewRoundDistances } from "../../types/roundData.types";
 
-// TODO: use a new initialState that is consistent with distance saving
 const initialState: InitialStateNewRoundDistances = {
   isLoading: false,
   playerID: '',
@@ -15,8 +13,8 @@ const newRoundDistanceSlice = createSlice({
   name: 'newRoundDistance',
   initialState,
   reducers: {
-    addNewDistanceWithClub: (state, { payload }: PayloadAction<IDistance>) => {
-      state.roundDistances = [...state.roundDistances, payload];
+    addNewDistanceWithClub: (state, { payload }: PayloadAction<IDistance[]>) => {
+      state.roundDistances = payload;
     },
     resetNewHoleDistance: () => initialState,
   },

@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetNewRoundHoleTmp, setHoleNumber, setTmpHoleData } from '../../features/hole/holeTmp.slice';
@@ -9,8 +9,8 @@ import BoxSingleHoleContainer from '../../styles/box/BosSingleHoleContainer.styl
 import BoxNewHole from '../../styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '../../styles/box/BoxSingleHoleInternal.styles';
 import TextField from '../../styles/textfield/TextField.style';
-import { IDistance } from '../../types/roundData.types';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '../../utils/constant.utils';
+import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
 import PuttsGenerator from './PuttsGenerator.component';
 import Select from './Select.component';
 
@@ -21,16 +21,14 @@ const AddSingleHole = () => {
   const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
-  const { teeClubs, distanceClubs, greenClubs, chipClubs } = useSelector((store: RootState) => store.golfBag);
+  const { teeClubs, greenClubs, chipClubs } = useSelector((store: RootState) => store.golfBag);
 
   const [holeFinished, setHoleFinished] = useState<number>(0);
-  // const [mtToGreen, setMtToGreen] = useState<boolean>(false);
-  // const [teeshotDistance, setTeeshotDistance] = useState<boolean>(false);
   const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
   const [puttsLength, setPuttsLength] = useState<number[]>(new Array(tmpHole.putts).fill(null))
   const [handleSave, setHandleSave] = useState(false);
 
-  const [distance, setDistance] = useState<IDistance[]>([]);
+  const [showDistances, setShowDistances] = useState<boolean>(false);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -50,6 +48,9 @@ const AddSingleHole = () => {
     dispatch(setHoleNumber({ newHoleNumber }));
     setHandleSave(false);
   };
+  const handleDistances = () => {
+    setShowDistances(!showDistances);
+  }
 
   useEffect(() => {
     if (tmpHole.holeNumber !== 0) {
@@ -90,6 +91,13 @@ const AddSingleHole = () => {
               }
             </HoleCardContent>
           </HoleCard>
+          <HoleCard>
+            <HoleCardHeader title='Penalties' />
+            <HoleCardContent>
+              <TextField name='water' label="Water" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} width={80} />
+              <TextField name='out' label="Out" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} width={80} />
+            </HoleCardContent>
+          </HoleCard>
 
         </BoxNewHole>
 
@@ -99,7 +107,7 @@ const AddSingleHole = () => {
             <HoleCardContent>
               <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} label='Tee club' />
               <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} label='Fairway position' />
-              <TextField name='driveDistance' label='Teeshot distance' variant='filled' type='number' onChange={e => handleChange(e)}
+              <TextField name='driveDistance' label='Distance' variant='filled' type='number' onChange={e => handleChange(e)}
                 value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} />
             </HoleCardContent>
           </HoleCard>
@@ -107,48 +115,34 @@ const AddSingleHole = () => {
           <HoleCard>
             <HoleCardHeader title='Pitch & Chip' />
             <HoleCardContent>
-              <TextField name='toGreenMeters' label="Meters to green" type='number' onChange={e => handleChange(e)} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : ''} />
+              <TextField name='toGreenMeters' label="Mts. to green" type='number' onChange={e => handleChange(e)} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : ''} />
               <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''} label='To green club' />
               <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} label='Green side' />
               <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
             </HoleCardContent>
           </HoleCard>
-        </BoxNewHole>
-        <BoxNewHole>
 
-          <HoleCard>
-            <HoleCardHeader title='Penalties' />
-            <HoleCardContent>
-              <TextField name='water' label="Water" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} width={80} />
-              <TextField name='out' label="Out" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} width={80} />
-            </HoleCardContent>
-          </HoleCard>
-
-          <HoleCard>
-            <HoleCardHeader title='Club distance' />
-            <HoleCardContent>
-              <Select name='distanceClubs' list={distanceClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} label='Club' />
-              <TextField name='distanceMeters' label="Meters done" type='number' onChange={e => handleChange(e)} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : ''} />
-              <Button variant='contained' onClick={saveHole} disabled={!handleSave} sx={{ marginTop: '0px' }}>
-                {'Next hole'}
-              </Button>
-            </HoleCardContent>
-          </HoleCard>
-
-          {
-            holes.length <= roundHoles - 1
-              ?
-              <Button variant='contained' onClick={saveHole} disabled={!handleSave} sx={{ marginTop: '0px' }}>
-                {'Next hole'}
-              </Button>
-              : null
-          }
+          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+            <Button variant='contained' onClick={handleDistances} sx={{ marginTop: '0px' }}>
+              Distances
+            </Button>
+            {
+              holes.length <= roundHoles - 1
+                ?
+                <Button variant='contained' onClick={saveHole} disabled={!handleSave} sx={{ marginTop: '0px' }}>
+                  {'Next hole'}
+                </Button>
+                : null
+            }
+          </Box>
         </BoxNewHole>
 
-        <BoxNewHole sx={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center', alignItems: 'center' }}>
+        {
+          !!showDistances &&
+          <ClubDistanceDialog open={showDistances} handleClose={handleDistances} />
 
 
-        </BoxNewHole>
+        }
       </BoxSingleHoleInternal>
     </BoxSingleHoleContainer>
   )

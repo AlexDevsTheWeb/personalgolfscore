@@ -61,8 +61,19 @@ export type InitialStateNewRoundDistances = {
 }
 
 export type IDistance = {
+  course: string,
+  date: string,
   club: string,
-  mt: number
+  mt: number[],
+  avg: number,
+}
+
+export type IDistanceSingle = {
+  roundDistances: IDistance[],
+  course: string,
+  date: string,
+  club: string,
+  mt: number,
 }
 
 export interface IRoundInitialState {
