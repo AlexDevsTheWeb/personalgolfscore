@@ -27,7 +27,6 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
 const ClubDistanceDialog = ({ open, handleClose }: IClubDistanceDialogProps) => {
   const dispatch = useDispatch<any>();
   const { distanceClubs } = useSelector((store: RootState) => store.golfBag);

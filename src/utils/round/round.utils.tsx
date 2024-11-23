@@ -103,9 +103,6 @@ const calculateAvg = (values: number[]) => {
   }, {
     total: 0
   });
-
-  console.log(sum.total);
-  console.log(items);
   finalAvg = Math.floor(sum.total / items);
   return finalAvg;
 }

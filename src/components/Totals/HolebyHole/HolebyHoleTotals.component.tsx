@@ -41,11 +41,15 @@ const HolebyHoleTotals = ({ roundTotals }: IRoundTotalsProps) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
+
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
+  // TODO: delete this once saved to file result JSON
   console.log("totals:", JSON.stringify(roundTotals));
+  // TODO: delete this once saved to file result JSON
 
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
