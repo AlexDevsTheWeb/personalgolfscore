@@ -1,4 +1,4 @@
-import { IShots } from "../types/roundData.types";
+import { IDistance, IShots } from "../types/roundData.types";
 import { IPuttsStatistics, IRoundChipPitchTotals, IRoundFwAndIronsTotals, IRoundInside100MtTotals, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
 
 export const parList = ['3', '4', '5'];
@@ -11,6 +11,8 @@ export const pieChartDimensions = {
   height: 200,
   width: 350,
 }
+
+export const initialStateDistance: IDistance[] = [];
 
 export const initialStateRoundTotals: IRoundTotals = {
   playerID: 'playerID',

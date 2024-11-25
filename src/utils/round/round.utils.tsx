@@ -73,21 +73,21 @@ export const newRoundDisabledSelect = (name: string, tmpHole: IShots) => {
 
 export const createDistanceObject = (value: IDistanceSingle) => {
   let newDistance: IDistance[] = [];
-  const { roundDistances, course, date, club, mt } = value;
+  const { roundDistances, roundID, course, date, club, mt } = value;
 
   if (roundDistances.length === 0) {
-    return [{ course, date, club, mt: [mt], avg: mt }];
+    return [{ roundID, course, date, club, mt: [mt], avg: mt }];
   }
 
   const existingIndex = roundDistances.findIndex((distance) => distance.club === club);
 
   if (existingIndex === -1) {
-    newDistance = [...roundDistances, { course: course, date: date, club: club, mt: [mt], avg: mt }];
+    newDistance = [...roundDistances, { roundID: roundID, course: course, date: date, club: club, mt: [mt], avg: mt }];
   }
   else {
     const newClubMt = [...roundDistances[existingIndex].mt, mt];
     const newAvg = calculateAvg(newClubMt);
-    newDistance = [...roundDistances, { course: course, date: date, club: club, mt: newClubMt, avg: newAvg }];
+    newDistance = [...roundDistances, { roundID: roundID, course: course, date: date, club: club, mt: newClubMt, avg: newAvg }];
     newDistance.splice(existingIndex, 1);
   }
   return newDistance;

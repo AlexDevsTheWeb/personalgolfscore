@@ -61,6 +61,7 @@ export type InitialStateNewRoundDistances = {
 }
 
 export type IDistance = {
+  roundID: string,
   course: string,
   date: string,
   club: string,
@@ -70,6 +71,7 @@ export type IDistance = {
 
 export type IDistanceSingle = {
   roundDistances: IDistance[],
+  roundID: string,
   course: string,
   date: string,
   club: string,

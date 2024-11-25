@@ -12,7 +12,6 @@ import { IDistance } from '../../types/roundData.types';
 import { createDistanceObject } from '../../utils/round/round.utils';
 import Select from '../NewRound/Select.component';
 
-
 interface IClubDistanceDialogProps {
   open: boolean,
   handleClose: any
@@ -37,8 +36,8 @@ const ClubDistanceDialog = ({ open, handleClose }: IClubDistanceDialogProps) => 
   const [meters, setMeters] = useState<number>(0);
 
   const saveDistance = (e: any) => {
-    const { roundCourse, roundDate } = round;
-    const items = createDistanceObject({ roundDistances, course: roundCourse, date: roundDate, club, mt: meters });
+    const { roundCourse, roundDate, roundID } = round;
+    const items = createDistanceObject({ roundID: roundID, roundDistances, course: roundCourse, date: roundDate, club, mt: meters });
     dispatch(addNewDistanceWithClub(items));
     setClub('');
     setMeters(0);

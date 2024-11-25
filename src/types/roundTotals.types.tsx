@@ -1,3 +1,5 @@
+import { IDistance } from "./roundData.types";
+
 export interface INewTotals {
   roundID: number,
   totDistance: number,
@@ -24,6 +26,11 @@ export interface INewTotals {
 export interface IRoundTotalsInitialState {
   isLoading: boolean,
   roundTotals: IRoundTotals
+}
+
+export interface IRoundDistanceInitialState {
+  isLoading: boolean,
+  roundDistance: IDistance[]
 }
 
 export interface IRoundTotals {
