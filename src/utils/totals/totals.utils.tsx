@@ -1,4 +1,4 @@
-import { IShots } from "../../types/roundData.types";
+import { IShots } from "@/types/roundData.types";
 import { initialFwAndIronsStatistics, initialInside100MtStatistics, initialPitchChipStatistics, initialPuttsStatistics, initialTeeShotsStatistics } from "../constant.utils";
 import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip, isTheRightClubFw } from "./totalsGenFunc.utils";
 

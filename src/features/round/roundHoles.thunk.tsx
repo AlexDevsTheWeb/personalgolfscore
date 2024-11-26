@@ -1,4 +1,4 @@
-import authFetch, { checkForUnauthorizedResponse } from "../../utils/axios/axiox.utils";
+import authFetch, { checkForUnauthorizedResponse } from "@/utils/axios/axiox.utils";
 
 export const getSingleRoundHolesThunk = async (thunkAPI: any) => {
   let roundsDataURL = `/data/NEW/CARIMATE/HOLES_CARIMATE.json`;

@@ -1,5 +1,5 @@
+import { INewRound, InitialStateNewRound } from "@/types/round.types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { INewRound, InitialStateNewRound } from "../../types/round.types";
 
 const initialState: InitialStateNewRound = {
   isLoading: false,

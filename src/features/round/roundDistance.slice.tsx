@@ -1,7 +1,6 @@
+import { IRoundDistanceInitialState } from "@/types/roundTotals.types";
+import { initialStateDistance } from "@/utils/constant.utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { round } from "lodash";
-import { IRoundDistanceInitialState } from "../../types/roundTotals.types";
-import { initialStateDistance } from "../../utils/constant.utils";
 import { getSingleRoundDistanceThunk } from "./roundDistance.thunk";
 
 const initialState: IRoundDistanceInitialState = {
@@ -14,7 +13,7 @@ export const getSingleRoundDistance = createAsyncThunk(
   getSingleRoundDistanceThunk
 );
 
-const roundDistance = createSlice({
+const roundDistanceSlice = createSlice({
   name: "roundDistance",
   initialState,
   reducers: {
@@ -36,4 +35,5 @@ const roundDistance = createSlice({
   }
 });
 
-export const { } = round
+export const { resetDistance } = roundDistanceSlice.actions;
+export default roundDistanceSlice.reducer;

@@ -1,5 +1,5 @@
-import useDeviceDetection from "../../../../hooks/useDeviceDetection.hook";
-import { IRoundTotalsProps } from "../../../../types/props.types";
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
+import { IRoundTotalsProps } from "@/types/props.types";
 import TableDesktop from "./Components/TableDesktop.components";
 import TableMobile from "./Components/TableMobile.component";
 

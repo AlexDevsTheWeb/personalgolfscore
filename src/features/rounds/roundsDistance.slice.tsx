@@ -1,5 +1,5 @@
+import { IDistance, IRoundsDistanceInitialState } from "@/types/roundData.types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IDistance, IRoundsDistanceInitialState } from "../../types/roundData.types";
 import { getRoundsDistancesThunk } from "./roundsDistance.thunk";
 
 const initialState: IRoundsDistanceInitialState = {
@@ -12,7 +12,7 @@ export const getRoundsDistances = createAsyncThunk(
   getRoundsDistancesThunk
 );
 
-const roundsDistances = createSlice({
+const roundsDistancesSlice = createSlice({
   name: 'roundsDistances',
   initialState,
   reducers: {
@@ -34,5 +34,5 @@ const roundsDistances = createSlice({
   }
 });
 
-export const { resetDistances } = roundsDistances.actions;
-export default roundsDistances.reducer;
+export const { resetDistances } = roundsDistancesSlice.actions;
+export default roundsDistancesSlice.reducer;

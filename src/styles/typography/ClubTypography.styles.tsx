@@ -1,7 +1,7 @@
-import * as React from "react";
+import { capitalize } from "@/utils/strings/strings.utils";
 import { Paper, Typography as TypographyMui, TypographyProps as TypographyPropsMui } from "@mui/material";
+import * as React from "react";
 import styled from "styled-components";
-import { capitalize } from "../../utils/strings/strings.utils";
 
 interface TypographyProps extends TypographyPropsMui {
   details: any,

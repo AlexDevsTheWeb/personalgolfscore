@@ -1,8 +1,8 @@
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
+import { IRoundTotalsProps, TabPanelProps } from "@/types/props.types";
 import { Box, Tab, Tabs, useTheme } from "@mui/material";
 import AppBar from '@mui/material/AppBar';
 import React from "react";
-import useDeviceDetection from "../../../hooks/useDeviceDetection.hook";
-import { IRoundTotalsProps, TabPanelProps } from "../../../types/props.types";
 import HolebyHoleChipping from "./ChippingPitching/HolebyHoleChipping.component";
 import HolebyHoleFwAndIrons from "./FairwayWoodAndIrons/HolebyHoleFwAndIrons.component";
 import HolebyHoleGeneral from "./General/HolebyHoleGeneral.component";

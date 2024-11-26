@@ -1,8 +1,8 @@
+import GridCross from "@/styles/grid/GridCross.styles";
+import CompositeTypography from "@/styles/typography/CompositeTypography.styles";
+import { formatPerc } from "@/utils/number/number.utils";
+import { divide } from "@/utils/totals/totalsGenFunc.utils";
 import { Grid } from "@mui/material";
-import GridCross from "../../../../styles/grid/GridCross.styles";
-import CompositeTypography from "../../../../styles/typography/CompositeTypography.styles";
-import { formatPerc } from "../../../../utils/number/number.utils";
-import { divide } from "../../../../utils/totals/totalsGenFunc.utils";
 
 interface ICrossProps {
   left: number,

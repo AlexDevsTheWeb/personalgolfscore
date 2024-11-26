@@ -1,5 +1,5 @@
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
 import { Divider, Stack, Typography } from "@mui/material"
-import useDeviceDetection from "../../../../hooks/useDeviceDetection.hook"
 
 interface IShotsTableHeaderStack {
   firstRow: string,

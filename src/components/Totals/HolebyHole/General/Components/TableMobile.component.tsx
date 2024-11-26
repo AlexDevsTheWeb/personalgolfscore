@@ -1,14 +1,14 @@
+import { ShotPosition } from "@/components/common/shotPositions/ShotPosition.component";
+import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
+import NewGridCellStats from '@/styles/grid/NewGridCellStats.style';
+import CompositeTypography from '@/styles/typography/CompositeTypography.styles';
+import { IRoundTotalsProps } from '@/types/props.types';
+import { formatPerc } from '@/utils/number/number.utils';
+import { correctVsParString } from '@/utils/shots/shots.utils';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Stack, Typography } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import _ from "lodash";
-import NewGridCellStats from '../../../../../styles/grid/NewGridCellStats.style';
-import CompositeTypography from '../../../../../styles/typography/CompositeTypography.styles';
-import { IRoundTotalsProps } from '../../../../../types/props.types';
-import { formatPerc } from '../../../../../utils/number/number.utils';
-import { correctVsParString } from '../../../../../utils/shots/shots.utils';
-import { ShotPosition } from '../../../../common/shotPositions/ShotPosition.component';
-import ShotsTableHeaderStack from "../../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
 const TableMobile = ({ roundTotals }: IRoundTotalsProps) => {
   const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = roundTotals;

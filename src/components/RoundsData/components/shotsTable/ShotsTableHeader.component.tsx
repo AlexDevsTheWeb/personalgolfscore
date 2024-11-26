@@ -1,5 +1,5 @@
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import { TableCell, TableHead, TableRow } from "@mui/material";
-import useDeviceDetection from "../../../../hooks/useDeviceDetection.hook";
 import ShotsTableHeaderStack from "./ShotsTableHeaderStack.component";
 
 interface IShotsTableHeaderProps {

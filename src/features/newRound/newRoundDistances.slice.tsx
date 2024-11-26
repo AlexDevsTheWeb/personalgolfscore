@@ -1,6 +1,6 @@
 
+import { IDistance, InitialStateNewRoundDistances } from "@/types/roundData.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IDistance, InitialStateNewRoundDistances } from "../../types/roundData.types";
 
 const initialState: InitialStateNewRoundDistances = {
   isLoading: false,

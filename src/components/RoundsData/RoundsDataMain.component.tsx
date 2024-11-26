@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import BoxBetween from '../../styles/box/BoxBetween.styles';
-import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
-
+import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+import { RootState } from '@/store/store';
+import BoxBetween from '@/styles/box/BoxBetween.styles';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
+import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import TableDesktop from './components/roundData/TableDekstop.component';
 import TableMobile from './components/roundData/TableMobile.component';
@@ -12,7 +11,6 @@ import TableMobile from './components/roundData/TableMobile.component';
 
 const RoundsDataMain = () => {
   const params = useParams();
-  const dispatch = useDispatch<any>();
 
   const { holes } = useSelector((store: RootState) => store.singleRound.roundHoles);
   const { roundTotals } = useSelector((store: RootState) => store.singleRound.roundTotals);

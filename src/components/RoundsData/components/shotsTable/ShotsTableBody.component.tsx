@@ -1,8 +1,8 @@
+import { ShotPosition } from "@/components/common/shotPositions/ShotPosition.component";
+import { useGetVsPar } from "@/hooks/singleHoleCalculator.hook";
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
+import { IShots } from "@/types/roundData.types";
 import { Box, Stack, TableCell, TableRow } from "@mui/material";
-import { useGetVsPar } from "../../../../hooks/singleHoleCalculator.hook";
-import useDeviceDetection from "../../../../hooks/useDeviceDetection.hook";
-import { IShots } from "../../../../types/roundData.types";
-import { ShotPosition } from "../../../common/shotPositions/ShotPosition.component";
 
 interface IShotsTableBody {
   shot: IShots,

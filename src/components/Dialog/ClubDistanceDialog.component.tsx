@@ -1,15 +1,15 @@
+import { addNewDistanceWithClub } from '@/features/newRound/newRoundDistances.slice';
+import { RootState } from '@/store/store';
+import { HoleCard, HoleCardContent } from '@/styles';
+import BoxNewHole from '@/styles/box/BoxNewHole.styles';
+import { IDistance } from '@/types/roundData.types';
+import { createDistanceObject } from '@/utils/round/round.utils';
 import CloseIcon from '@mui/icons-material/Close';
 import { AppBar, Box, Button, Dialog, IconButton, TextField, Toolbar, Typography } from "@mui/material";
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewDistanceWithClub } from '../../features/newRound/newRoundDistances.slice';
-import { RootState } from '../../store/store';
-import { HoleCard, HoleCardContent } from '../../styles';
-import BoxNewHole from '../../styles/box/BoxNewHole.styles';
-import { IDistance } from '../../types/roundData.types';
-import { createDistanceObject } from '../../utils/round/round.utils';
 import Select from '../NewRound/Select.component';
 
 interface IClubDistanceDialogProps {

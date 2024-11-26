@@ -1,10 +1,10 @@
+import { ShotPosition } from "@/components/common/shotPositions/ShotPosition.component";
+import NewGridCellStats from "@/styles/grid/NewGridCellStats.style";
+import { TableCell, TableRow } from "@/styles/index";
+import { IShotsTableProps } from "@/types/props.types";
+import { formatPerc } from "@/utils/number/number.utils";
+import { correctVsParString } from "@/utils/shots/shots.utils";
 import { Divider, Grid, Stack, TableBody, Typography } from "@mui/material";
-import { TableCell, TableRow } from "../../../../styles";
-import NewGridCellStats from "../../../../styles/grid/NewGridCellStats.style";
-import { IShotsTableProps } from "../../../../types/props.types";
-import { formatPerc } from "../../../../utils/number/number.utils";
-import { correctVsParString } from "../../../../utils/shots/shots.utils";
-import { ShotPosition } from "../../../common/shotPositions/ShotPosition.component";
 
 const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) => {
 

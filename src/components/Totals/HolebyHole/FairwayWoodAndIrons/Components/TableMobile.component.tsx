@@ -1,11 +1,11 @@
+import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
+import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
+import { catConversion } from "@/utils/constant.utils";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid, Stack } from "@mui/material";
 import _ from "lodash";
-import GridPuttsStat from "../../../../../styles/grid/GridCellStats.styles";
-import { catConversion } from "../../../../../utils/constant.utils";
-import ShotsTableHeaderStack from "../../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
-import { IRoundTotalsProps } from '../../../../../types/props.types';
+import { IRoundTotalsProps } from '@/types/props.types';
 import Cross from "../../components/Cross.component";
 
 const TableMobile = ({ roundTotals: { fwAndIrons } }: IRoundTotalsProps) => {

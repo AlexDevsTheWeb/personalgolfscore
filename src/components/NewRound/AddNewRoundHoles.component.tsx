@@ -1,10 +1,10 @@
+import { updateTeeGreenClubs } from '@/features/golfBag/golfBag.slice';
+import { resetSetFirstHole } from '@/features/newRound/newRoundMain.slice';
+import { setTotalsByHole } from '@/features/newRound/newRoundTotals.slice';
+import { RootState } from '@/store/store';
+import { getChipClubs, getClubsNames, getDistanceClubs, getGreenClubs } from '@/utils/round/round.utils';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateTeeGreenClubs } from '../../features/golfBag/golfBag.slice';
-import { resetSetFirstHole } from '../../features/newRound/newRoundMain.slice';
-import { setTotalsByHole } from '../../features/newRound/newRoundTotals.slice';
-import { RootState } from '../../store/store';
-import { getChipClubs, getClubsNames, getDistanceClubs, getGreenClubs } from '../../utils/round/round.utils';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddSingleHole from './AddSingleHole.component';
 import HolebyHoleTable from './HolebyHoleTable.component';

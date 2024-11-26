@@ -1,5 +1,5 @@
+import { IRoundHoles, IRoundInitialState } from "@/types/roundData.types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IRoundHoles, IRoundInitialState } from "../../types/roundData.types";
 import { getSingleRoundHolesThunk } from "./roundHoles.thunk";
 
 const initialState: IRoundInitialState = {

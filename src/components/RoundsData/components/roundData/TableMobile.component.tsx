@@ -1,7 +1,7 @@
+import CompositeTypography from '@/styles/typography/CompositeTypography.styles';
+import { IRoundMainDataProp } from '@/types/props.types';
 import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import CompositeTypography from '../../../../styles/typography/CompositeTypography.styles';
-import { IRoundMainDataProp } from '../../../../types/props.types';
 
 const TableMobile = ({ round }: IRoundMainDataProp) => {
 

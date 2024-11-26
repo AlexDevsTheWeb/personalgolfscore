@@ -1,5 +1,5 @@
+import { IRoundMainDataProp } from "@/types/props.types";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { IRoundMainDataProp } from "../../../../types/props.types";
 import ShotsTableHeaderStack from "../shotsTable/ShotsTableHeaderStack.component";
 
 const TableDekstop = ({ round }: IRoundMainDataProp) => {

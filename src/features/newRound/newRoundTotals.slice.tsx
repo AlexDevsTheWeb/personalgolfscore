@@ -1,9 +1,9 @@
+import { INewRound } from "@/types/round.types";
+import { IShots } from "@/types/roundData.types";
+import { IRoundTotals, IRoundTotalsInitialState } from "@/types/roundTotals.types";
+import { totalsCalculator } from "@/utils/calculator/TotalsCalculator.utils";
+import { initialStateRoundTotals } from "@/utils/constant.utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { INewRound } from "../../types/round.types";
-import { IShots } from "../../types/roundData.types";
-import { IRoundTotals, IRoundTotalsInitialState } from "../../types/roundTotals.types";
-import { totalsCalculator } from "../../utils/calculator/TotalsCalculator.utils";
-import { initialStateRoundTotals } from "../../utils/constant.utils";
 
 const initialState: IRoundTotalsInitialState = {
   isLoading: false,

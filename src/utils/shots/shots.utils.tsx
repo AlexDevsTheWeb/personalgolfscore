@@ -1,6 +1,6 @@
-import { STABLEFORDPOINTS } from "../../enum/shots.enum";
-import { IGirProps, IScrambleProps, IStablefordPointsProps, IUDProps } from "../../types/point.types";
-import { IRoundScoreTotalsAvg } from "../../types/roundTotals.types";
+import { STABLEFORDPOINTS } from "@/enum/shots.enum";
+import { IGirProps, IScrambleProps, IStablefordPointsProps, IUDProps } from "@/types/point.types";
+import { IRoundScoreTotalsAvg } from "@/types/roundTotals.types";
 
 export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, roundPlayingHCP, roundHoles } = props;

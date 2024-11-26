@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 // import { useEffect, useState } from 'react'
-// import { db } from "../../utils/firebase/firebase.utils";
+// import { db } from "@/utils/firebase/firebase.utils";
 // import { collection, getDocs } from "firebase/firestore";
+import { getPlayerDetails } from '@/features/player/player.slice';
+import { RootState } from '@/store/store';
+import { BoxPlayer, RowCard, Typography } from '@/styles';
 import { useEffect } from 'react';
-import { getPlayerDetails } from '../../features/player/player.slice';
-import { RootState } from '../../store/store';
-import { BoxPlayer, RowCard, Typography } from '../../styles';
 
 const Player: React.FC = () => {
   const dispatch = useDispatch<any>();

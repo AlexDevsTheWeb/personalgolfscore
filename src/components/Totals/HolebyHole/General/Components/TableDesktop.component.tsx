@@ -1,7 +1,7 @@
+import ShotsTableHeader from "@/components/RoundsData/components/shotsTable/ShotsTableHeader.component"
+import ShotsTableTotalsBody from "@/components/RoundsData/components/shotsTable/ShotsTableTotalsBody.component"
+import { IRoundTotalsProps } from "@/types/props.types"
 import { Paper, Table, TableContainer } from "@mui/material"
-import { IRoundTotalsProps } from "../../../../../types/props.types"
-import ShotsTableHeader from "../../../../RoundsData/components/shotsTable/ShotsTableHeader.component"
-import ShotsTableTotalsBody from "../../../../RoundsData/components/shotsTable/ShotsTableTotalsBody.component"
 
 const TableDesktop = ({ roundTotals }: IRoundTotalsProps) => {
   return (

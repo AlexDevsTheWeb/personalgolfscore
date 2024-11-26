@@ -1,5 +1,5 @@
-import useDeviceDetection from "../../../../hooks/useDeviceDetection.hook";
-import { IRoundTotalsPutts } from "../../../../types/roundTotals.types";
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
+import { IRoundTotalsPutts } from "@/types/roundTotals.types";
 import TableDesktop from "./Components/TableDesktop.component";
 import TableMobile from "./Components/TableMobile.component";
 

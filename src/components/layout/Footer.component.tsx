@@ -1,7 +1,7 @@
+import BoxFooter from "@/styles/box/BoxFooter.styles";
 import { Typography } from "@mui/material";
 import dayjs from "dayjs";
 import packageJson from "../../../package.json";
-import BoxFooter from "../../styles/box/BoxFooter.styles";
 
 const Footer = () => {
   return (

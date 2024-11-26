@@ -1,6 +1,6 @@
+import { IShots } from "@/types/roundData.types";
+import { IRoundTotals } from "@/types/roundTotals.types";
 import _ from "lodash";
-import { IShots } from "../../types/roundData.types";
-import { IRoundTotals } from "../../types/roundTotals.types";
 import { initialStateRoundTotals } from "../constant.utils";
 import { calculateChippingPitchingStatistics, calculateFWIrons, calculateInside100mtStatistics, calculatePuttsStatistics, calculateTeeShotsStatistics } from "../totals/totals.utils";
 import { divide } from "../totals/totalsGenFunc.utils";

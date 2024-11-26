@@ -1,8 +1,8 @@
-import * as React from "react";
+import { RootState } from "@/store/store";
 import { Paper, Typography as TypographyMui, TypographyProps as TypographyPropsMui } from "@mui/material";
-import styled from "styled-components";
+import * as React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import styled from "styled-components";
 
 interface TypographyProps extends TypographyPropsMui { }
 

@@ -1,14 +1,14 @@
+import { setRoundMainData } from '@/features/newRound/newRoundMain.slice';
+import { setTotalMainData } from '@/features/newRound/newRoundTotals.slice';
+import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+import BoxGeneralShadow from '@/styles/box/BoxGeneralShadow.styles';
+import DatePicker from '@/styles/datepicker/DatePicker.styles';
+import TextField from '@/styles/textfield/TextField.style';
+import { INewRound } from '@/types/round.types';
 import { Box, Button } from '@mui/material';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setRoundMainData } from '../../features/newRound/newRoundMain.slice';
-import { setTotalMainData } from '../../features/newRound/newRoundTotals.slice';
-import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
-import BoxGeneralShadow from '../../styles/box/BoxGeneralShadow.styles';
-import DatePicker from '../../styles/datepicker/DatePicker.styles';
-import TextField from '../../styles/textfield/TextField.style';
-import { INewRound } from '../../types/round.types';
 
 const AddNewRoundForm = () => {
   const dispatch = useDispatch();

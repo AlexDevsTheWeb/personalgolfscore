@@ -1,4 +1,4 @@
-import authFetch, { checkForUnauthorizedResponse } from "../../utils/axios/axiox.utils";
+import authFetch, { checkForUnauthorizedResponse } from "@/utils/axios/axiox.utils";
 
 export const getSingleRoundTotalsThunk = async (thunkAPI: any) => {
   let roundsDataTotalsURL = `/data/NEW/CARIMATE/TOTALS_CARIMATE.json`;

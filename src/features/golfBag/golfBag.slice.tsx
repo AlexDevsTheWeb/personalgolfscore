@@ -1,6 +1,6 @@
+import { CLUBSSELECTION } from "@/enum/shots.enum";
+import { ClubPayload, InitialStateClubs } from "@/types/clubs.types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CLUBSSELECTION } from "../../enum/shots.enum";
-import { ClubPayload, InitialStateClubs } from "../../types/clubs.types";
 import { getClubsThunk } from "./golfBag.thunk";
 
 const initialState: InitialStateClubs = {

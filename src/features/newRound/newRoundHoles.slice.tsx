@@ -1,7 +1,7 @@
+import { IPayloadActionNewHole } from "@/types/round.types";
+import { InitialStateNewRoundsData } from "@/types/roundData.types";
+import { calculation } from "@/utils/shots/shots.utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IPayloadActionNewHole } from "../../types/round.types";
-import { InitialStateNewRoundsData } from "../../types/roundData.types";
-import { calculation } from "../../utils/shots/shots.utils";
 
 const initialState: InitialStateNewRoundsData = {
   isLoading: false,

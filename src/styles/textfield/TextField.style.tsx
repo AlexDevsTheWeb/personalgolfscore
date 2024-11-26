@@ -1,9 +1,9 @@
 import { TextField as TextFieldMui, TextFieldProps as TextFieldPropsMui } from "@mui/material";
 
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import _ from "lodash";
 import * as React from "react";
 import styled from "styled-components";
-import useDeviceDetection from "../../hooks/useDeviceDetection.hook";
 
 type TextFieldProps = TextFieldPropsMui & {
   error?: boolean;

@@ -1,7 +1,7 @@
+import { CHIPCONDITION } from '@/enum/shots.enum';
+import { IClub, IClubs, IGolfBag } from "@/types/clubs.types";
+import { IDistance, IDistanceSingle, IShots } from '@/types/roundData.types';
 import _, { capitalize } from 'lodash';
-import { CHIPCONDITION } from '../../enum/shots.enum';
-import { IClub, IClubs, IGolfBag } from "../../types/clubs.types";
-import { IDistance, IDistanceSingle, IShots } from '../../types/roundData.types';
 
 export const getClubsNames = (clubs: IGolfBag) => {
   const clubsName = clubs.types.map((ct: IClubs) => {

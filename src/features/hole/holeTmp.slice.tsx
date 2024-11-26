@@ -1,7 +1,7 @@
+import { IShots } from "@/types/roundData.types";
+import { initialStateTmpHole } from "@/utils/constant.utils";
+import { calculateGirValue, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from "@/utils/shots/shots.utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IShots } from "../../types/roundData.types";
-import { initialStateTmpHole } from "../../utils/constant.utils";
-import { calculateGirValue, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
 
 const initialState: IShots = initialStateTmpHole;
 
