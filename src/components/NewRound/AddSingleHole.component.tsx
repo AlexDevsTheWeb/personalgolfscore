@@ -1,7 +1,6 @@
 import { resetNewRoundHoleTmp, setHoleNumber, setTmpHoleData } from '@/features/hole/holeTmp.slice';
 import { setHolesCompleted, setNewHole } from '@/features/newRound/newRoundHoles.slice';
 import { RootState } from '@/store/store';
-import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles';
 import BoxSingleHoleContainer from '@/styles/box/BosSingleHoleContainer.styles';
 import BoxNewHole from '@/styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '@/styles/box/BoxSingleHoleInternal.styles';
@@ -10,6 +9,7 @@ import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/
 import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { HoleCard, HoleCardContent, HoleCardHeader } from '../../styles';
 import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
 import PuttsGenerator from './PuttsGenerator.component';
 import Select from './Select.component';
@@ -73,7 +73,10 @@ const AddSingleHole = () => {
   }, [puttsLength, dispatch, roundPlayingHCP, roundHoles, chipClubs])
 
   return (
+
+
     <BoxSingleHoleContainer>
+      {/* TODO: Maybe we can use Autocomplete in some cases instead of TextField? */}
       <BoxSingleHoleInternal side='full'>
         <BoxNewHole>
           <HoleCard sx={{ width: '100%' }}>
@@ -144,7 +147,7 @@ const AddSingleHole = () => {
 
         }
       </BoxSingleHoleInternal>
-    </BoxSingleHoleContainer>
+    </BoxSingleHoleContainer >
   )
 }
 

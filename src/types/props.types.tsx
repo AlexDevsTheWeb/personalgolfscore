@@ -1,3 +1,4 @@
+import { IPlayer } from "./player.types";
 import { IRounds } from "./round.types";
 import { IRoundTotals } from "./roundTotals.types";
 
@@ -19,5 +20,9 @@ export interface IShotsTableProps {
 
 export interface IRoundMainDataProp {
   round: IRounds;
+}
+
+export interface IPlayerProps {
+  player: IPlayer,
 }
 

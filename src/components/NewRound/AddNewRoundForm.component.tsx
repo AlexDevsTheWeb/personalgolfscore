@@ -62,6 +62,7 @@ const AddNewRoundForm = () => {
         alignItems: 'center'
       }}>
 
+        {/* TODO: Maybe we can use Autocomplete in some cases instead of TextField? */}
         <TextField name='roundCourse' label="Round course" variant="filled" onChange={e => handleChange(e)} />
         <DatePicker onChange={e => handleChangeDate(e)} />
 

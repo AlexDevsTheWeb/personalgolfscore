@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { collection, getDocs } from "firebase/firestore";
 import { getPlayerDetails } from '@/features/player/player.slice';
 import { RootState } from '@/store/store';
-import { BoxPlayer, RowCard, Typography } from '@/styles';
 import { useEffect } from 'react';
+import { BoxPlayer, RowCard, Typography } from '../../styles';
 
 const Player: React.FC = () => {
   const dispatch = useDispatch<any>();
