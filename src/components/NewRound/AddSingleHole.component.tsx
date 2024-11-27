@@ -73,15 +73,14 @@ const AddSingleHole = () => {
   }, [puttsLength, dispatch, roundPlayingHCP, roundHoles, chipClubs])
 
   return (
-
-
     <BoxSingleHoleContainer>
-      {/* TODO: Maybe we can use Autocomplete in some cases instead of TextField? */}
       <BoxSingleHoleInternal side='full'>
         <BoxNewHole>
           <HoleCard sx={{ width: '100%' }}>
             <HoleCardHeader title={`Hole number: ${holeFinished === 0 ? 1 : holeFinished} - General Info`} />
             <HoleCardContent>
+
+
               <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} label='Hole HCP' />
               <Select name='par' list={parList} onChange={handleChange} value={tmpHole.par.toString()} label='Hole Par' />
               <TextField name='distance' label="Length" type='number' onChange={e => handleChange(e)} value={tmpHole.distance !== 0 ? tmpHole.distance : ''} />

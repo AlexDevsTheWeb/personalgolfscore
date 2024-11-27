@@ -47,9 +47,9 @@ const HolebyHoleTotals = ({ roundTotals }: IRoundTotalsProps) => {
     setValue(newValue);
   };
 
-  // TODO: delete this once saved to file result JSON
-  console.log("totals:", JSON.stringify(roundTotals));
-  // TODO: delete this once saved to file result JSON
+  // // TODO: delete this once saved to file result JSON
+  // console.log("totals:", JSON.stringify(roundTotals));
+  // // TODO: delete this once saved to file result JSON
 
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>

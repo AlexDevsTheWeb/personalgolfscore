@@ -1,3 +1,4 @@
+import { getPlayerDetails } from "@/features/player/player.slice"
 import { getAllRoundsData } from "@/features/rounds/roundsData.slice"
 import { getAllRoundsTotals } from "@/features/rounds/roundsTotals.slice"
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
@@ -8,18 +9,13 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Rounds from "../Rounds/Rounds.component"
-import TableDesktop from "./components/TableDesktop.component"
-import TableMobile from "./components/TableMobile.component"
+import PlayerDesktop from "./components/PlayerDesktop.component"
+import PlayerMobile from "./components/PlayerMobile.component"
 
 const Dashboard = () => {
   const { player } = useSelector((store: RootState) => store.player);
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(getAllRoundsData(""))
-    dispatch(getAllRoundsTotals(""))
-  }, [dispatch]);
 
   const handleClickStatistic = () => {
     navigate(`/statistics`);
@@ -27,15 +23,19 @@ const Dashboard = () => {
   const handleAddNewRound = () => {
     navigate('/addNewRound')
   }
+  useEffect(() => {
+    dispatch(getPlayerDetails(""))
+    dispatch(getAllRoundsData(""))
+    dispatch(getAllRoundsTotals(""))
+  }, [dispatch]);
 
   return (
     <BoxBetween>
-      {/* <Player /> */}
       {
         !useDeviceDetection().isMobile ?
-          <TableDesktop player={player} />
+          <PlayerDesktop player={player} />
           :
-          <TableMobile player={player} />
+          <PlayerMobile player={player} />
       }
       <Rounds />
       <BoxBetween>

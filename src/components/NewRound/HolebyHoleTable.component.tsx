@@ -1,5 +1,5 @@
 import { RootState } from "@/store/store";
-import { BoxOverflow } from "@/styles";
+import { BoxOverflow } from "@/styles/index";
 import { IShots } from "@/types/roundData.types";
 import { Table, TableBody } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -11,13 +11,13 @@ interface IHolebyHoleProps {
 }
 
 const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
+  const { roundDistances } = useSelector((store: RootState) => store.newRound.newRoundDistances);
 
   // TODO: delete this once saved to file result JSON
-  const { roundDistances } = useSelector((store: RootState) => store.newRound.newRoundDistances);
-  if (holes.length === 18) {
-    console.log("holes:", JSON.stringify(holes));
-    console.log("roundDistances:", JSON.stringify(roundDistances));
-  }
+  // if (holes.length === 18) {
+  //   console.log("holes:", JSON.stringify(holes));
+  //   console.log("roundDistances:", JSON.stringify(roundDistances));
+  // }
   // TODO: delete this once saved to file result JSON
 
   return (

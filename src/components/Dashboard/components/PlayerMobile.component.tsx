@@ -2,7 +2,7 @@ import CompositeTypography from "@/styles/typography/CompositeTypography.styles"
 import { IPlayerProps } from "@/types/props.types";
 import { Stack } from "@mui/material";
 
-const TableMobile = ({ player }: IPlayerProps) => {
+const PlayerMobile = ({ player }: IPlayerProps) => {
   const { firstName, lastName, email, hcp, dob } = player;
 
   return (
@@ -16,4 +16,4 @@ const TableMobile = ({ player }: IPlayerProps) => {
   )
 }
 
-export default TableMobile
+export default PlayerMobile

@@ -2,7 +2,7 @@ import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable
 import { IPlayerProps } from "@/types/props.types";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 
-const TableDesktop = ({ player }: IPlayerProps) => {
+const PlayerDesktop = ({ player }: IPlayerProps) => {
 
   const { firstName, lastName, email, hcp, dob } = player;
   return (
@@ -46,4 +46,4 @@ const TableDesktop = ({ player }: IPlayerProps) => {
   )
 }
 
-export default TableDesktop
+export default PlayerDesktop
