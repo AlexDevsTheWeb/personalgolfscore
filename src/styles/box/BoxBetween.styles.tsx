@@ -1,6 +1,6 @@
+import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import Box, { BoxProps as BoxPropsMui } from '@mui/material/Box';
 import styled from 'styled-components';
-import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
 
 interface BoxProps extends BoxPropsMui { };
 

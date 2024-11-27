@@ -1,5 +1,5 @@
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import { TableCell, TableHead, TableRow } from "@mui/material";
-import useDeviceDetection from "../../../../hooks/useDeviceDetection.hook";
 import ShotsTableHeaderStack from "./ShotsTableHeaderStack.component";
 
 interface IShotsTableHeaderProps {
@@ -15,14 +15,12 @@ const ShotsTableHeader = ({ firstColumn, singleHole }: IShotsTableHeaderProps) =
         useDeviceDetection().isMobile
           ?
           <TableRow>
-
             {
               firstColumn &&
               <TableCell align='center'>
                 <ShotsTableHeaderStack firstRow='#' secondRow={!!singleHole ? '' : ''} />
               </TableCell>
             }
-
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} />
             </TableCell>

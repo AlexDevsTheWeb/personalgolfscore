@@ -1,5 +1,5 @@
+import { capitalize } from "@/utils/strings/strings.utils";
 import * as React from "react";
-import { capitalize } from "../../utils/strings/strings.utils";
 import { Card, Typography } from "../index";
 
 type RowCardProps = {

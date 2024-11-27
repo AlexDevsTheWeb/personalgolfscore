@@ -1,6 +1,6 @@
+import { IRoundTotalsInitialState } from "@/types/roundTotals.types";
+import { initialStateRoundTotals } from "@/utils/constant.utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IRoundTotalsInitialState } from "../../types/roundTotals.types";
-import { initialStateRoundTotals } from "../../utils/constant.utils";
 import { getAllRoundsTotalsThunk } from "./roundsTotals.thunk";
 
 const initialState: IRoundTotalsInitialState = {

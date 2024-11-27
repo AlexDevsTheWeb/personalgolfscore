@@ -13,7 +13,6 @@ const RoundsData = () => {
   const params = useParams();
 
   const { roundHoles: { holes } } = useSelector((store: RootState) => store.singleRound);
-  const { roundTotals } = useSelector((store: RootState) => store.singleRound.roundTotals);
 
   useEffect(() => {
     if (holes.length === 0) {
@@ -23,8 +22,7 @@ const RoundsData = () => {
     }
   }, [params.roundID, holes, dispatch]);
 
-
-  if (roundTotals.playerID === '') {
+  if (holes.length === 0) {
     return <Typography>Loading...</Typography>
   }
 

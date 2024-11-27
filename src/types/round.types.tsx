@@ -1,3 +1,10 @@
+export interface IPayloadActionNewHole {
+  holeAdjusted: any,
+  roundPlayingHCP: number
+  roundHoles: number,
+  holesCompleted: number
+};
+
 interface IState {
   playerID: string,
   rounds: IRounds[]

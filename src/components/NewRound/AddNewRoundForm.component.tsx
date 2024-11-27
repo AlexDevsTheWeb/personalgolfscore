@@ -1,14 +1,14 @@
+import { setRoundMainData } from '@/features/newRound/newRoundMain.slice';
+import { setTotalMainData } from '@/features/newRound/newRoundTotals.slice';
+import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+import BoxGeneralShadow from '@/styles/box/BoxGeneralShadow.styles';
+import DatePicker from '@/styles/datepicker/DatePicker.styles';
+import TextField from '@/styles/textfield/TextField.style';
+import { INewRound } from '@/types/round.types';
 import { Box, Button } from '@mui/material';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setRoundMainData } from '../../features/newRound/newRoundMain.slice';
-import { setTotalMainData } from '../../features/newRound/newRoundTotals.slice';
-import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
-import BoxGeneralShadow from '../../styles/box/BoxGeneralShadow.styles';
-import DatePicker from '../../styles/datepicker/DatePicker.styles';
-import TextField from '../../styles/textfield/TextField.style';
-import { INewRound } from '../../types/round.types';
 
 const AddNewRoundForm = () => {
   const dispatch = useDispatch();
@@ -62,15 +62,16 @@ const AddNewRoundForm = () => {
         alignItems: 'center'
       }}>
 
-        <TextField name='roundCourse' label="Round course" variant="filled" onChange={e => handleChange(e)} width={isMobile ? '100%' : 200} />
+        {/* TODO: Maybe we can use Autocomplete in some cases instead of TextField? */}
+        <TextField name='roundCourse' label="Round course" variant="filled" onChange={e => handleChange(e)} />
         <DatePicker onChange={e => handleChangeDate(e)} />
 
-        <TextField name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => handleChange(e)} width={isMobile ? '70px' : 'auto'} />
-        <TextField name='roundPar' label="Par" variant="filled" type='number' onChange={e => handleChange(e)} width={isMobile ? '70px' : 'auto'} />
-        <TextField name='roundPlayingHCP' label="HCP" variant="filled" type='number' onChange={e => handleChange(e)} width={isMobile ? '70px' : 'auto'} />
+        <TextField name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => handleChange(e)} width={80} />
+        <TextField name='roundPar' label="Par" variant="filled" type='number' onChange={e => handleChange(e)} width={80} />
+        <TextField name='roundPlayingHCP' label="HCP" variant="filled" type='number' onChange={e => handleChange(e)} width={80} />
 
-        <TextField name='roundTee' label="Tee" variant="filled" onChange={e => handleChange(e)} />
-        <TextField name='roundNumber' label="Round #" variant="filled" type='number' onChange={e => handleChange(e)} />
+        <TextField name='roundTee' label="Tee" variant="filled" onChange={e => handleChange(e)} width={80} />
+        <TextField name='roundNumber' label="Round #" variant="filled" type='number' onChange={e => handleChange(e)} width={80} />
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', width: isMobile ? '100%' : 'auto' }}>
         <Button fullWidth={isMobile ? true : false} variant='contained' onClick={handleSubmit} sx={{ marginTop: '0px' }}>SUBMIT</Button>

@@ -11,6 +11,7 @@ export enum STABLEFORDPOINTS {
 
 export enum CLUBSSELECTION {
   TEE = 'tee',
+  DISTANCE = 'distance',
   GREEN = 'green',
   CHIP = 'chip',
 }

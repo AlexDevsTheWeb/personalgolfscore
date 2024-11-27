@@ -1,11 +1,11 @@
+import { CHIPCONDITION } from '@/enum/shots.enum';
+import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+import { RootState } from '@/store/store';
+import { newRoundDisabledSelect } from '@/utils/round/round.utils';
 import { FormControl, InputLabel, MenuItem, SelectChangeEvent, Select as SelectMui } from '@mui/material';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CHIPCONDITION } from '../../enum/shots.enum';
-import useDeviceDetection from '../../hooks/useDeviceDetection.hook';
-import { RootState } from '../../store/store';
-import { newRoundDisabledSelect } from '../../utils/round/round.utils';
 
 interface ISelectProps {
   name: string,
@@ -31,7 +31,7 @@ const Select = (props: ISelectProps) => {
   }, [name, tmpHole]);
 
   return (
-    <FormControl variant='filled' sx={{ width: useDeviceDetection().isMobile ? '32%' : '170px' }}>
+    <FormControl variant='filled' sx={{ width: useDeviceDetection().isMobile ? '48%' : '170px' }}>
       <InputLabel id="newHole_select">{label}</InputLabel>
       <SelectMui
         value={value !== '0' ? value : ''}

@@ -1,6 +1,6 @@
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import { Card as CardMui, CardProps } from "@mui/material";
 import styled from "styled-components";
-import useDeviceDetection from "../../../hooks/useDeviceDetection.hook";
 
 interface IReactCardProps extends CardProps { }
 

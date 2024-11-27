@@ -1,23 +1,18 @@
+import { ShotPosition } from "@/components/common/shotPositions/ShotPosition.component";
+import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
+import NewGridCellStats from '@/styles/grid/NewGridCellStats.style';
+import CompositeTypography from '@/styles/typography/CompositeTypography.styles';
+import { IRoundTotalsProps } from '@/types/props.types';
+import { formatPerc } from '@/utils/number/number.utils';
+import { correctVsParString } from '@/utils/shots/shots.utils';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Stack, Typography } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import _ from "lodash";
-import NewGridCellStats from '../../../../../styles/grid/NewGridCellStats.style';
-import CompositeTypography from '../../../../../styles/typography/CompositeTypography.styles';
-import { IRoundTotals } from "../../../../../types/roundTotals.types";
-import { formatPerc } from '../../../../../utils/number/number.utils';
-import { correctVsParString } from '../../../../../utils/shots/shots.utils';
-import { ShotPosition } from '../../../../common/shotPositions/ShotPosition.component';
-import ShotsTableHeaderStack from "../../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
-interface IHolebyHoleTeeShots {
-  totals: IRoundTotals
-}
-
-const TableMobile = ({ totals }: IHolebyHoleTeeShots) => {
-  const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = totals;
+const TableMobile = ({ roundTotals }: IRoundTotalsProps) => {
+  const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = roundTotals;
   const { correctScore, correctScoreIN, correctScoreOUT } = correctVsParString(score);
-
 
   return (
     <Box key={_.uniqueId("fwIrons_")} sx={{ gap: '10px', border: '1px solid #ddd' }}>
@@ -42,7 +37,7 @@ const TableMobile = ({ totals }: IHolebyHoleTeeShots) => {
               <Stack sx={{ textAlign: 'center' }}>
                 <Typography>{'TOT'}</Typography>
                 <Typography fontWeight={'bold'}>{`${score.totals} (${correctScore})`}</Typography>
-                <Typography>{totals.score.avg}</Typography>
+                <Typography>{roundTotals.score.avg}</Typography>
               </Stack>
             </NewGridCellStats>
             <NewGridCellStats item xs={4}>

@@ -17,6 +17,7 @@ export interface IUDProps {
   girValue: number;
   chipClub: string;
   parValue: number;
+  numberOfPutts: number;
   strokesValue: number;
   chipClubs: string[];
 }

@@ -22,6 +22,7 @@ export type InitialStateClubs = {
   selectedClubs: number;
   clubs: IGolfBag;
   teeClubs: string[];
+  distanceClubs: string[];
   greenClubs: string[];
   chipClubs: string[];
 }

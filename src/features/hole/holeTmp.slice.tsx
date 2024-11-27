@@ -1,7 +1,7 @@
+import { IShots } from "@/types/roundData.types";
+import { initialStateTmpHole } from "@/utils/constant.utils";
+import { calculateGirValue, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from "@/utils/shots/shots.utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IShots } from "../../types/roundData.types";
-import { initialStateTmpHole } from "../../utils/constant.utils";
-import { calculateGirValue, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from "../../utils/shots/shots.utils";
 
 const initialState: IShots = initialStateTmpHole;
 
@@ -31,7 +31,10 @@ const holeTmpSlice = createSlice({
       }
       if (name === 'chipClub') {
         state[name] = value;
-        state.sand = 1;
+        if (value.toString().toLowerCase() === 'bunker'
+          || value.toString().toLowerCase() === 'b') {
+          state.sand = 1;
+        }
       }
       state.bounceBack = state.score - state.par;
       state.points = calculateStablefordPoints({
@@ -57,6 +60,7 @@ const holeTmpSlice = createSlice({
         girValue: Number(state.gir),
         chipClub: state.chipClub,
         parValue: Number(state.par),
+        numberOfPutts: state.putts,
         strokesValue: Number(state.strokes),
         chipClubs: chipClubs
       });

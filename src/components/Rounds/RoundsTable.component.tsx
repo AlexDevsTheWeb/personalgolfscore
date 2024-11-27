@@ -1,3 +1,5 @@
+import { RootState } from '@/store/store';
+import { TableCell, TableRow } from '@/styles';
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -7,8 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../../store/store';
-import { TableCell, TableRow } from '../../styles';
 
 const RoundsTable = () => {
   const navigate = useNavigate();
