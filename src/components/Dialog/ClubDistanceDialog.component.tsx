@@ -1,7 +1,8 @@
+import { setShowDistances } from '@/features/app/controls.slice';
 import { addNewDistanceWithClub } from '@/features/newRound/newRoundDistances.slice';
 import { RootState } from '@/store/store';
-import { HoleCard, HoleCardContent } from '@/styles';
 import BoxNewHole from '@/styles/box/BoxNewHole.styles';
+import { HoleCard, HoleCardContent } from '@/styles/index';
 import { IDistance } from '@/types/roundData.types';
 import { createDistanceObject } from '@/utils/round/round.utils';
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,7 +15,6 @@ import Select from '../NewRound/Select.component';
 
 interface IClubDistanceDialogProps {
   open: boolean,
-  handleClose: any
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -26,7 +26,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const ClubDistanceDialog = ({ open, handleClose }: IClubDistanceDialogProps) => {
+const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
   const dispatch = useDispatch<any>();
   const { distanceClubs } = useSelector((store: RootState) => store.golfBag);
   const { round } = useSelector((store: RootState) => store.newRound.newRoundMain);
@@ -41,6 +41,10 @@ const ClubDistanceDialog = ({ open, handleClose }: IClubDistanceDialogProps) => 
     dispatch(addNewDistanceWithClub(items));
     setClub('');
     setMeters(0);
+  }
+
+  const handleClose = () => {
+    dispatch(setShowDistances(false));
   }
 
   return (
@@ -96,3 +100,4 @@ const ClubDistanceDialog = ({ open, handleClose }: IClubDistanceDialogProps) => 
 }
 
 export default ClubDistanceDialog
+
