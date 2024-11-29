@@ -5,6 +5,7 @@ import newroundDistanceReducer from '@/features/newRound/newRoundDistances.slice
 import newRoundHolesReducer from '@/features/newRound/newRoundHoles.slice';
 import newRoundMainReducer from '@/features/newRound/newRoundMain.slice';
 import newRoundTotalsReducer from '@/features/newRound/newRoundTotals.slice';
+import roundSaverReducer from '@/features/newRound/roundSaver.slice';
 import playerReducer from '@/features/player/player.slice';
 import roundDistanceReducer from '@/features/round/roundDistance.slice';
 import roundHolesReducer from '@/features/round/roundHoles.slice';
@@ -37,6 +38,7 @@ const rootReducer = {
     holeTmp: holeTmpReducer,
     newRoundDistances: newroundDistanceReducer,
   }),
+  roundSaver: roundSaverReducer,
 };
 
 export const store = configureStore({
