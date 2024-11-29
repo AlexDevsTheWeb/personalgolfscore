@@ -1,3 +1,6 @@
+import { IDistance, IShots } from "./roundData.types"
+import { IRoundTotals } from "./roundTotals.types"
+
 export interface IPayloadActionNewHole {
   holeAdjusted: any,
   roundPlayingHCP: number
@@ -47,4 +50,23 @@ export type InitialStateNewRound = {
   playerID: string;
   setFirstHole: boolean;
   round: INewRound;
+}
+
+export interface IRoundFinalData {
+  roundMainData: INewRound,
+  roundHolesData: IShots[],
+  roundTotalsData: IRoundTotals,
+  roundDistancesData: IDistance[],
+}
+
+export interface IRoundFinalDataProps {
+  round: INewRound,
+  holes: IShots[],
+  roundTotals: IRoundTotals,
+  roundDistances: IDistance[],
+}
+
+export interface IInitialStateRoundSave {
+  isLoading: false,
+  roundToSave: IRoundFinalData
 }

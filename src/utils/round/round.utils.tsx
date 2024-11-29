@@ -1,5 +1,6 @@
 import { CHIPCONDITION } from '@/enum/shots.enum';
 import { IClub, IClubs, IGolfBag } from "@/types/clubs.types";
+import { IRoundFinalData, IRoundFinalDataProps } from '@/types/round.types';
 import { IDistance, IDistanceSingle, IShots } from '@/types/roundData.types';
 import _, { capitalize } from 'lodash';
 
@@ -105,4 +106,15 @@ const calculateAvg = (values: number[]) => {
   });
   finalAvg = Math.floor(sum.total / items);
   return finalAvg;
+}
+
+export const finalRoundGeneration = ({ round, holes, roundTotals, roundDistances }: IRoundFinalDataProps) => {
+  const roundFinalData: IRoundFinalData = {
+    roundMainData: round,
+    roundHolesData: holes,
+    roundTotalsData: roundTotals,
+    roundDistancesData: roundDistances,
+  }
+
+  return roundFinalData;
 }
