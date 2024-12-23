@@ -41,6 +41,7 @@ const SaveRoundButton = () => {
 
   useEffect(() => {
     if (howManyHolesToPlay === 0) {
+      setLabel("Save round");
       setHandleSave(true);
     }
     else {
