@@ -1,14 +1,9 @@
+import AllRoundsGeneral from '@/components/Totals/AllRounds/General/AllRoundsGeneral.component';
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
-import { IRoundTotalsProps, TabPanelProps } from "@/types/props.types";
+import { IAllRoundsTotalsProps, TabPanelProps } from "@/types/props.types";
 import { Box, Tab, Tabs, useTheme } from "@mui/material";
 import AppBar from '@mui/material/AppBar';
 import React from "react";
-import HolebyHoleChipping from "./ChippingPitching/HolebyHoleChipping.component";
-import HolebyHoleFwAndIrons from "./FairwayWoodAndIrons/HolebyHoleFwAndIrons.component";
-import HolebyHoleGeneral from "./General/HolebyHoleGeneral.component";
-import HolebyHoleInside100 from "./Inside100mt/HolebyHoleInside100.component";
-import HolebyHolePutts from "./Putts/HolebyHolePutts.component";
-import HolebyHoleTeeShots from "./TeeShots/HolebyHoleTeeShots.component";
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -37,7 +32,7 @@ function a11yProps(index: number) {
   };
 }
 
-const HolebyHoleTotals = ({ roundTotals }: IRoundTotalsProps) => {
+const TotalsStatistics = ({ newTotals: { newTotals } }: IAllRoundsTotalsProps) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -68,30 +63,30 @@ const HolebyHoleTotals = ({ roundTotals }: IRoundTotalsProps) => {
       </AppBar>
 
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <HolebyHoleGeneral roundTotals={roundTotals} />
+        <AllRoundsGeneral newTotals={newTotals} />
       </TabPanel>
 
-      <TabPanel value={value} index={1} dir={theme.direction}>
-        <HolebyHoleTeeShots roundTotals={roundTotals} />
+      {/* <TabPanel value={value} index={1} dir={theme.direction}>
+        <AllRoundsTeeShots roundTotals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={2} dir={theme.direction}>
-        <HolebyHoleFwAndIrons roundTotals={roundTotals} />
+        <AllRoundsFwAndIrons roundTotals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={3} dir={theme.direction}>
-        <HolebyHoleInside100 roundTotals={roundTotals} />
+        <AllRoundsInside100 roundTotals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={4} dir={theme.direction}>
-        <HolebyHoleChipping roundTotals={roundTotals} />
+        <AllRoundsChipping roundTotals={roundTotals} />
       </TabPanel>
 
       <TabPanel value={value} index={5} dir={theme.direction}>
-        <HolebyHolePutts totalsPutts={roundTotals.putts} />
-      </TabPanel>
+        <AllRoundsPutts totalsPutts={roundTotals.putts} />
+      </TabPanel> */}
     </Box>
   )
 }
 
-export default HolebyHoleTotals
+export default TotalsStatistics

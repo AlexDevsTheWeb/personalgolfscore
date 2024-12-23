@@ -1,11 +1,11 @@
-import { IRoundTotalsInitialState } from "@/types/roundTotals.types";
-import { initialStateRoundTotals } from "@/utils/constant.utils";
+import { IRoundsTotalsInitialState } from "@/types/roundTotals.types";
+import { initialStateRoundsTotals } from "@/utils/constant.utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAllRoundsTotalsThunk } from "./roundsTotals.thunk";
 
-const initialState: IRoundTotalsInitialState = {
+const initialState: IRoundsTotalsInitialState = {
   isLoading: false,
-  roundTotals: initialStateRoundTotals,
+  roundTotals: initialStateRoundsTotals,
 }
 
 export const getAllRoundsTotals = createAsyncThunk(
@@ -33,7 +33,7 @@ const roundsTotalsSlice = createSlice({
       })
       .addCase(getAllRoundsTotals.rejected, (state, { payload }: any) => {
         state.isLoading = false;
-        state.roundTotals = initialStateRoundTotals;
+        state.roundTotals = initialStateRoundsTotals;
       })
   },
 });
