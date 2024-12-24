@@ -10,7 +10,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Stack, Typ
 import Grid from '@mui/material/Grid2';
 import _ from "lodash";
 
-const TableMobile = ({ roundTotals }: IRoundTotalsProps) => {
+const TableMobile = ({ roundTotals, dashboard }: IRoundTotalsProps) => {
   const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = roundTotals;
   const { correctScore, correctScoreIN, correctScoreOUT } = correctVsParString(score);
 
@@ -457,7 +457,7 @@ const TableMobile = ({ roundTotals }: IRoundTotalsProps) => {
                   {(water.totals !== 0) ? water.totals : 0}
                 </Typography>
                 <Typography>
-                  {`${(water.avg !== '-') ? water.avg : '-'}`}
+                  {`${(water.avg !== 0) ? water.avg : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -468,7 +468,7 @@ const TableMobile = ({ roundTotals }: IRoundTotalsProps) => {
                   {(water.totalsIN !== 0) ? water.totalsIN : 0}
                 </Typography>
                 <Typography>
-                  {`${(water.avgIN !== '-') ? water.avgIN : '-'}`}
+                  {`${(water.avgIN !== 0) ? water.avgIN : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -479,7 +479,7 @@ const TableMobile = ({ roundTotals }: IRoundTotalsProps) => {
                   {(water.totalsOUT !== 0) ? water.totalsOUT : 0}
                 </Typography>
                 <Typography>
-                  {`${(water.avgOUT !== '-') ? water.avgOUT : '-'}`}
+                  {`${(water.avgOUT !== 0) ? water.avgOUT : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -494,7 +494,7 @@ const TableMobile = ({ roundTotals }: IRoundTotalsProps) => {
                   {(out.totals !== 0) ? out.totals : 0}
                 </Typography>
                 <Typography>
-                  {`${(out.avg !== '-') ? out.avg : '-'}`}
+                  {`${(out.avg !== 0) ? out.avg : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -505,7 +505,7 @@ const TableMobile = ({ roundTotals }: IRoundTotalsProps) => {
                   {(out.totalsIN !== 0) ? out.totalsIN : 0}
                 </Typography>
                 <Typography>
-                  {`${(out.avgIN !== '-') ? out.avgIN : '-'}`}
+                  {`${(out.avgIN !== 0) ? out.avgIN : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -516,7 +516,7 @@ const TableMobile = ({ roundTotals }: IRoundTotalsProps) => {
                   {(out.totalsOUT !== 0) ? out.totalsOUT : 0}
                 </Typography>
                 <Typography>
-                  {`${(out.avgOUT !== '-') ? out.avgOUT : '-'}`}
+                  {`${(out.avgOUT !== 0) ? out.avgOUT : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>

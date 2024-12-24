@@ -3,13 +3,13 @@ import { IRoundTotalsProps } from "@/types/props.types";
 import TableDesktop from "./Components/TableDesktop.component";
 import TableMobile from "./Components/TableMobile.component";
 
-const HolebyHoleGeneral = ({ roundTotals }: IRoundTotalsProps) => {
+const HolebyHoleGeneral = ({ roundTotals, dashboard }: IRoundTotalsProps) => {
 
   return (
     !useDeviceDetection().isMobile ?
-      <TableDesktop roundTotals={roundTotals} />
+      <TableDesktop roundTotals={roundTotals} dashboard={dashboard} />
       :
-      <TableMobile roundTotals={roundTotals} />
+      <TableMobile roundTotals={roundTotals} dashboard={dashboard} />
   )
 
 }

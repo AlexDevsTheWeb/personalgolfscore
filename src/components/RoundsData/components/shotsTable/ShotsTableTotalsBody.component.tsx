@@ -6,7 +6,7 @@ import { formatPerc } from "@/utils/number/number.utils";
 import { correctVsParString } from "@/utils/shots/shots.utils";
 import { Divider, Grid, Stack, TableBody, Typography } from "@mui/material";
 
-const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) => {
+const ShotsTableTotalsBody = ({ firstColumn, roundTotals, dashboard }: IShotsTableProps) => {
 
   const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = roundTotals;
   const { correctScore, correctScoreIN, correctScoreOUT } = correctVsParString(score);
@@ -15,7 +15,8 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
     <TableBody>
       <TableRow key={'last'}>
         {firstColumn && <TableCell align='center'>{''}</TableCell>}
-        <TableCell align='center'>{coursePar}</TableCell>
+        {!dashboard && <TableCell align='center'>{coursePar}</TableCell>}
+
         <TableCell align='center'>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={4}>
@@ -276,7 +277,7 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
                   {(water.totals !== 0) ? water.totals : 0}
                 </Typography>
                 <Typography>
-                  {`${(water.avg !== '-') ? water.avg : '-'}`}
+                  {`${(water.avg !== 0) ? water.avg : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -286,7 +287,7 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
                   {(water.totalsIN !== 0) ? water.totalsIN : 0}
                 </Typography>
                 <Typography>
-                  {`${(water.avgIN !== '-') ? water.avgIN : '-'}`}
+                  {`${(water.avgIN !== 0) ? water.avgIN : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -296,7 +297,7 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
                   {(water.totalsOUT !== 0) ? water.totalsOUT : 0}
                 </Typography>
                 <Typography>
-                  {`${(water.avgOUT !== '-') ? water.avgOUT : '-'}`}
+                  {`${(water.avgOUT !== 0) ? water.avgOUT : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -309,7 +310,7 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
                   {(out.totals !== 0) ? out.totals : 0}
                 </Typography>
                 <Typography>
-                  {`${(out.avg !== '-') ? out.avg : '-'}`}
+                  {`${(out.avg !== 0) ? out.avg : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -319,7 +320,7 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
                   {(out.totalsIN !== 0) ? out.totalsIN : 0}
                 </Typography>
                 <Typography>
-                  {`${(out.avgIN !== '-') ? out.avgIN : '-'}`}
+                  {`${(out.avgIN !== 0) ? out.avgIN : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -329,7 +330,7 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
                   {(out.totalsOUT !== 0) ? out.totalsOUT : 0}
                 </Typography>
                 <Typography>
-                  {`${(out.avgOUT !== '-') ? out.avgOUT : '-'}`}
+                  {`${(out.avgOUT !== 0) ? out.avgOUT : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>

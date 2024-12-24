@@ -79,5 +79,6 @@ export const divide = (first: number, second: number) => {
   if (first !== 0 && (second !== 0 || second !== 0.00)) {
     result = first / second;
   }
+
   return result
 }

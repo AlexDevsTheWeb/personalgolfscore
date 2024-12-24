@@ -1,6 +1,6 @@
 import { IPlayer } from "./player.types";
 import { IRounds } from "./round.types";
-import { IRoundTotals } from "./roundTotals.types";
+import { IAllRoundsTotals, IRoundTotals } from "./roundTotals.types";
 
 export interface TabPanelProps {
   children?: React.ReactNode;
@@ -10,10 +10,15 @@ export interface TabPanelProps {
 }
 
 export interface IRoundTotalsProps {
+  dashboard?: boolean,
   roundTotals: IRoundTotals;
+}
+interface IAllRoundsTotalsProps {
+  newTotals: IAllRoundsTotals
 }
 
 export interface IShotsTableProps {
+  dashboard?: boolean;
   firstColumn: boolean;
   roundTotals: IRoundTotals;
 }

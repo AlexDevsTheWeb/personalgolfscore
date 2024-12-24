@@ -40,7 +40,7 @@ export interface IShots {
   water: number;
 }
 
-export interface IMadeAttempts {
+interface IMadeAttempts {
   made: number,
   attempts: number
 }

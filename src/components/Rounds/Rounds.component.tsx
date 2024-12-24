@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getAllRounds } from '@/features/rounds/rounds.slice';
 import { RootState } from '@/store/store';
-import { BoxOverflow } from '@/styles';
 import { Box, Typography } from '@mui/material';
+import { BoxOverflow } from '../../styles';
 import RoundsTable from './RoundsTable.component';
 
 const Rounds = () => {
