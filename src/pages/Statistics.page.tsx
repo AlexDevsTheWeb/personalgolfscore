@@ -6,13 +6,12 @@ import StatisticsMain from "../components/Statistics/StatisticsMain.component";
 
 const Statistics = () => {
   const dispatch = useDispatch<any>();
-  const { totals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals.roundTotals);
-
+  const { roundsTotals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals.roundsTotals);
   useEffect(() => {
-    if (totals.length < 1) {
+    if (roundsTotals.length < 1) {
       dispatch(getAllRoundsTotals(""))
     }
-  }, [totals, dispatch]);
+  }, [roundsTotals, dispatch]);
 
   return (
     <StatisticsMain />

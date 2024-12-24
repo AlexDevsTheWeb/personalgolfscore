@@ -1,7 +1,7 @@
 {
-	"playerID": "playerID",
-	"totals": [
+	"roundsTotals": [
 		{
+			"playerID": "playerID",
 			"mainData": {
 				"roundCourse": "",
 				"roundDate": "",
@@ -326,7 +326,7 @@
 				"totals": 2,
 				"avg": "0.11",
 				"totalsIN": 0,
-				"avgIN": "-",
+				"avgIN": 0,
 				"totalsOUT": 2,
 				"avgOUT": "0.22"
 			},
@@ -334,7 +334,7 @@
 				"totals": 10,
 				"avg": "0.56",
 				"totalsIN": 0,
-				"avgIN": "-",
+				"avgIN": 0,
 				"totalsOUT": 2,
 				"avgOUT": "0.22"
 			},
@@ -439,18 +439,18 @@
 			},
 			"sand": {
 				"totals": 1,
-				"avg": "0.06",
+				"avg": 0.06,
 				"saved": 0,
-				"avgSaved": "-",
+				"avgSaved": 0,
 				"savedPerc": 0
 			},
 			"water": {
 				"totals": 0,
-				"avg": "-",
+				"avg": 0,
 				"totalsIN": 0,
-				"avgIN": "-",
+				"avgIN": 0,
 				"totalsOUT": 0,
-				"avgOUT": "-"
+				"avgOUT": 0
 			},
 			"out": {
 				"totals": 2,
@@ -458,10 +458,11 @@
 				"totalsIN": 2,
 				"avgIN": "0.22",
 				"totalsOUT": 0,
-				"avgOUT": "-"
+				"avgOUT": 0
 			}
 		},
 		{
+			"playerID": "playerID",
 			"mainData": {
 				"roundCourse": "",
 				"roundDate": "",
@@ -892,18 +893,18 @@
 			},
 			"sand": {
 				"totals": 1,
-				"avg": "0.06",
+				"avg": 0.06,
 				"saved": 0,
-				"avgSaved": "-",
+				"avgSaved": 0,
 				"savedPerc": 0
 			},
 			"water": {
 				"totals": 0,
-				"avg": "-",
+				"avg": 0,
 				"totalsIN": 0,
-				"avgIN": "-",
+				"avgIN": 0,
 				"totalsOUT": 0,
-				"avgOUT": "-"
+				"avgOUT": 0
 			},
 			"out": {
 				"totals": 4,
@@ -915,6 +916,7 @@
 			}
 		},
 		{
+			"playerID": "playerID",
 			"mainData": {
 				"roundCourse": "",
 				"roundDate": "",
@@ -1354,24 +1356,24 @@
 				"totals": 4,
 				"avg": "0.22",
 				"saved": 0,
-				"avgSaved": "-",
+				"avgSaved": 0,
 				"savedPerc": 0
 			},
 			"water": {
 				"totals": 0,
-				"avg": "-",
+				"avg": 0,
 				"totalsIN": 0,
-				"avgIN": "-",
+				"avgIN": 0,
 				"totalsOUT": 0,
-				"avgOUT": "-"
+				"avgOUT": 0
 			},
 			"out": {
 				"totals": 0,
-				"avg": "-",
+				"avg": 0,
 				"totalsIN": 0,
-				"avgIN": "-",
+				"avgIN": 0,
 				"totalsOUT": 0,
-				"avgOUT": "-"
+				"avgOUT": 0
 			}
 		}
 	]

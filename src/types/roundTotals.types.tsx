@@ -30,7 +30,7 @@ export interface IRoundTotalsInitialState {
 
 export interface IRoundsTotalsInitialState {
   isLoading: boolean,
-  roundTotals: IRoundsTotals
+  roundsTotals: IAllRoundsTotals
 }
 
 export interface IRoundDistanceInitialState {
@@ -59,30 +59,15 @@ export interface IRoundTotals {
 }
 
 export interface IAllRoundsTotals {
-  newTotals: {
-    score: IRoundScoreTotalsAvg,
-    points: IRoundPointsTotalsAvg,
-    fairway: IRoundFairwayTotals,
-    teeShots: IRoundTeeShotsTotals,
-    chipPitch: IRoundChipPitchTotals,
-    inside100Mt: IRoundInside100MtTotals,
-    fwAndIrons: IRoundFwAndIronsTotals,
-    gir: IRoundTotalsAvgINOUT,
-    girBogey: IRoundTotalsAvgINOUT,
-    upDown: IRoundTotalsUpDown,
-    scramble: IRoundTotalsUpDown,
-    putts: IRoundTotalsPutts,
-    sand: IRoundTotalsAvgSand,
-    water: IRoundTotalsAvgINOUT,
-    out: IRoundTotalsAvgINOUT,
-  }
+  roundsTotals: IRoundTotals[]
 }
-export interface IRoundsTotals {
+
+interface IRoundsTotals {
   playerID: string,
   totals: IAllRoundsTotalsNew[];
 }
 
-export interface IAllRoundsTotalsNew {
+interface IAllRoundsTotalsNew {
   mainData: IRoundTotalsMainData,
   score: IRoundScoreTotalsAvg,
   points: IRoundPointsTotalsAvg,
@@ -107,7 +92,7 @@ export interface IRoundInside100MtTotals {
   inside8061: IRoundInside100Mt,
   inside60: IRoundInside100Mt
 }
-export interface IRoundInside100Mt {
+interface IRoundInside100Mt {
   greensHits: number,
   attempts: number,
   averageShots: number,
@@ -124,7 +109,7 @@ export interface IRoundFwAndIronsTotals {
   shortIrons: IRoundFWAndIrons,
 }
 
-export interface IRoundFWAndIrons {
+interface IRoundFWAndIrons {
   greenHits: number,
   attempts: number,
   totalScorePar3: number,
@@ -263,15 +248,29 @@ export interface IPuttsStatistics {
   putts46M: IPuttsBreakDownStatistics,
   putts610M: IPuttsBreakDownStatistics,
   puttsO10M: IPuttsBreakDownStatistics,
+  _puttsOverall: {
+    birdieBetter: number,
+    birdieConversion: number,
+    gir: number,
+    puttsInGIR: number,
+    threePutts: number,
+    totalPutts: number,
+    totalPuttsInGIR: number,
+  }
 }
 
 interface IPuttsBreakDownStatistics {
-  puttsHoled: number,
-  puttsAttempts: number,
-  numberPuttsInRange: number,
-  distanceSecondPutt: number,
-  numberSecondPutt: number,
   distanceFirstPutt: number,
+  distanceSecondPutt: number,
+  numberPuttsInRange: number,
+  numberSecondPutt: number,
+  putt1Perc: number,
+  putt3Perc: number,
   putts3: number,
+  puttsAttempts: number,
+  puttsAverage: number,
+  puttsAverageDistance: number,
+  puttsHoled: number,
+  puttsSecondAverageLength: number,
 }
 

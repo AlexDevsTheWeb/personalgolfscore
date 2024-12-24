@@ -11,9 +11,7 @@ interface IHolebyHolePutts {
 }
 
 const TableDesktop = ({ totalsPutts }: IHolebyHolePutts) => {
-
   const { puttsStatistics } = totalsPutts;
-
   const puttsCat = Object.keys(puttsStatistics).filter(e => e !== '_puttsOverall');
   const puttsValues = Object.entries(puttsStatistics).filter(e => e[0] !== '_puttsOverall');
   const puttsOverallCat = Object.keys(puttsStatistics).filter(e => e === '_puttsOverall');
@@ -71,7 +69,8 @@ const TableDesktop = ({ totalsPutts }: IHolebyHolePutts) => {
                   <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
                     <Stack>
                       <Grid container spacing={1}>
-                        <GridPuttsStat item xs={4} string='1 putt %' value={formatPerc(value.putt1Perc)} />
+                        {/* <GridPuttsStat item xs={4} string='1 putt %' value={formatPerc(value.putt1Perc)} /> */}
+                        <GridPuttsStat item xs={4} string='1 putt %' value={value.putt1Perc} />
                         <GridPuttsStat item xs={4} string='2 putt %' value={(value.putt1Perc === 0 && value.putt3Perc === 0) ? '-' : formatPerc(1 - value.putt1Perc - value.putt3Perc)} />
                         <GridPuttsStat item xs={4} string='3 putt %' value={formatPerc(value.putt3Perc)} />
                       </Grid>

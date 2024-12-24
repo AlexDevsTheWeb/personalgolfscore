@@ -1,21 +1,28 @@
+import { getAllRoundsTotals } from '@/features/rounds/roundsTotals.slice';
 import { RootState } from '@/store/store';
+import { IRoundTotals } from '@/types/roundTotals.types';
 import { allRoundsCalculator } from '@/utils/calculator/AllRoundsCalculator.utils';
-import { Box, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
-import TotalsStatistics from '../Totals/AllRounds/TotalsStatistics.component';
+import { initialStateRoundTotals } from '@/utils/constant.utils';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 
 const StatisticsMain = () => {
 
-  const { totals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals.roundTotals);
-  const newTotals = allRoundsCalculator(totals);
-
-  console.log("new totals ---> ", newTotals)
+  const dispatch = useDispatch<any>();
+  const { roundsTotals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals.roundsTotals);
+  const [newTotals, setNewTotals] = useState<IRoundTotals>(initialStateRoundTotals);
+  useEffect(() => {
+    if (roundsTotals.length < 1) {
+      dispatch(getAllRoundsTotals(""));
+    }
+    else {
+      setNewTotals(allRoundsCalculator(roundsTotals));
+    }
+  }, [roundsTotals, dispatch]);
 
   return (
-    <Box>
-      <Typography>Statistics Main</Typography>
-      <TotalsStatistics newTotals={newTotals} />
-    </Box>
+    <HolebyHoleTotals roundTotals={newTotals} dashboard={true} />
   )
 }
 

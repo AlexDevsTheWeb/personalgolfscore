@@ -10,13 +10,15 @@ export interface TabPanelProps {
 }
 
 export interface IRoundTotalsProps {
+  dashboard?: boolean,
   roundTotals: IRoundTotals;
 }
-export interface IAllRoundsTotalsProps {
+interface IAllRoundsTotalsProps {
   newTotals: IAllRoundsTotals
 }
 
 export interface IShotsTableProps {
+  dashboard?: boolean;
   firstColumn: boolean;
   roundTotals: IRoundTotals;
 }

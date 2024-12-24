@@ -4,11 +4,12 @@ import { getAllRoundsTotals } from "@/features/rounds/roundsTotals.slice"
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
 import { RootState } from "@/store/store"
 import BoxBetween from "@/styles/box/BoxBetween.styles"
-import { Button } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Rounds from "../Rounds/Rounds.component"
+import StatisticsMain from "../Statistics/StatisticsMain.component"
 import PlayerDesktop from "./components/PlayerDesktop.component"
 import PlayerMobile from "./components/PlayerMobile.component"
 
@@ -27,7 +28,7 @@ const Dashboard = () => {
     dispatch(getPlayerDetails(""))
     dispatch(getAllRoundsData(""))
     dispatch(getAllRoundsTotals(""))
-  }, [dispatch]);
+  }, []);
 
   return (
     <BoxBetween>
@@ -38,6 +39,10 @@ const Dashboard = () => {
           <PlayerMobile player={player} />
       }
       <Rounds />
+      <Box sx={{ width: '100%' }}>
+        <StatisticsMain />
+      </Box>
+
       <BoxBetween>
         <Button variant='contained' onClick={handleAddNewRound}>Add new round</Button>
         <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>

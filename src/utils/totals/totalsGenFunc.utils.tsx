@@ -80,6 +80,5 @@ export const divide = (first: number, second: number) => {
     result = first / second;
   }
 
-  console.log("result --> ", result);
   return result
 }

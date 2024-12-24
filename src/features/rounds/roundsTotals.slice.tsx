@@ -5,7 +5,7 @@ import { getAllRoundsTotalsThunk } from "./roundsTotals.thunk";
 
 const initialState: IRoundsTotalsInitialState = {
   isLoading: false,
-  roundTotals: initialStateRoundsTotals,
+  roundsTotals: initialStateRoundsTotals,
 }
 
 export const getAllRoundsTotals = createAsyncThunk(
@@ -17,9 +17,9 @@ const roundsTotalsSlice = createSlice({
   name: "roundsTotals",
   initialState,
   reducers: {
-    setManualTotals: (state: any, { payload }: any) => {
-      state.roundTotals = payload;
-    },
+    // setManualTotals: (state: any, { payload }: any) => {
+    //   state.roundTotals = payload;
+    // },
     resetRounds: () => initialState,
   },
   extraReducers: (builder) => {
@@ -29,14 +29,14 @@ const roundsTotalsSlice = createSlice({
       })
       .addCase(getAllRoundsTotals.fulfilled, (state, { payload }: any) => {
         state.isLoading = false;
-        state.roundTotals = payload;
+        state.roundsTotals = payload;
       })
       .addCase(getAllRoundsTotals.rejected, (state, { payload }: any) => {
         state.isLoading = false;
-        state.roundTotals = initialStateRoundsTotals;
+        state.roundsTotals = initialStateRoundsTotals;
       })
   },
 });
 
-export const { resetRounds, setManualTotals } = roundsTotalsSlice.actions;
+export const { resetRounds } = roundsTotalsSlice.actions;
 export default roundsTotalsSlice.reducer;
