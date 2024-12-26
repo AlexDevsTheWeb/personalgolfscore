@@ -1,4 +1,4 @@
-interface IRoundsTotals {
+export interface IRoundsTotals {
   "roundNumber": number,
   "totalsStrokes": IRoundsTotalsStrokes,
   "totalsPoints": IRoundsTotalsPoints,

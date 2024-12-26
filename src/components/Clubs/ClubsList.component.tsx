@@ -1,5 +1,4 @@
 import { updateClub, updateClubSelection } from "@/features/golfBag/golfBag.slice";
-import { ClubTypography } from "@/styles";
 import BoxClubs from "@/styles/box/BoxClubs.styles";
 import { IClub } from "@/types/clubs.types";
 import CheckCircleOutlineTwoToneIcon from '@mui/icons-material/CheckCircleOutlineTwoTone';
@@ -12,6 +11,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { ClubTypography } from "../../styles";
 
 const ClubsList = (props: any) => {
   const { typeName, details } = props;
