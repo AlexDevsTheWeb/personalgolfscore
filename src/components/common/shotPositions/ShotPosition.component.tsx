@@ -1,3 +1,5 @@
+import { FAIRWAYSICONS } from '@/enum/shots.enum';
+import { capitalize } from '@/utils/strings/strings.utils';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import EastIcon from '@mui/icons-material/East';
@@ -7,9 +9,7 @@ import NorthWestIcon from '@mui/icons-material/NorthWest';
 import SouthEastIcon from '@mui/icons-material/SouthEast';
 import SouthWestIcon from '@mui/icons-material/SouthWest';
 import WestIcon from '@mui/icons-material/West';
-import { FAIRWAYSICONS } from '../../../enum/shots.enum';
 import { Tooltip } from '../../../styles';
-import { capitalize } from '../../../utils/strings/strings.utils';
 
 type Props = {
   position: number;

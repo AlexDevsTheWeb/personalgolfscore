@@ -1,11 +1,3 @@
-// interface IState {
-//   roundID: string;
-//   playerID: string;
-//   roundCourse: string;
-//   roundDate: string;
-//   shots: IShots[];
-// }
-
 export interface IShots {
   holeNumber: number;
   chipClub: string;
@@ -48,7 +40,7 @@ export interface IShots {
   water: number;
 }
 
-export interface IMadeAttempts {
+interface IMadeAttempts {
   made: number,
   attempts: number
 }
@@ -61,10 +53,40 @@ export type InitialStateNewRoundsData = {
   holes: IShots[];
 }
 
+export type InitialStateNewRoundDistances = {
+  isLoading: boolean;
+  playerID: string;
+  roundID: string;
+  roundDistances: IDistance[];
+}
+
+export type IDistance = {
+  roundID: string,
+  course: string,
+  date: string,
+  club: string,
+  mt: number[],
+  avg: number,
+}
+
+export type IDistanceSingle = {
+  roundDistances: IDistance[],
+  roundID: string,
+  course: string,
+  date: string,
+  club: string,
+  mt: number,
+}
+
 export interface IRoundInitialState {
   isLoading: boolean;
   mainData: IRoundMainData;
-  holes: IRoundHoles[];
+  holes: IShots[];
+}
+
+export interface IRoundsDistanceInitialState {
+  isLoading: boolean;
+  roundsDistances: IDistance[];
 }
 
 export interface IRoundMainData {
@@ -111,10 +133,10 @@ export interface IRoundHoles {
   toGreenMeters80_100: number;
   toGreenMeters60_80: number;
   toGreenMetersUnder60: number;
-  upDown: string;
+  upDown: { made: number, attempts: number };
   upDownX: number;
   upDownN: number;
   upDownE: number;
-  scramble: number;
+  scramble: { made: number, attempts: number };
   water: number;
 }

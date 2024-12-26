@@ -1,6 +1,6 @@
 {
 	"name": "personalgolfscore",
-	"version": "2024.0.3",
+	"version": "2024.2.0",
 	"private": true,
 	"dependencies": {
 		"@emotion/react": "^11.11.3",

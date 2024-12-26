@@ -1,20 +1,13 @@
+import { ShotPosition } from "@/components/common/shotPositions/ShotPosition.component";
+import NewGridCellStats from "@/styles/grid/NewGridCellStats.style";
+import { TableCell, TableRow } from "@/styles/index";
+import { IShotsTableProps } from "@/types/props.types";
+import { formatPerc } from "@/utils/number/number.utils";
+import { correctVsParString } from "@/utils/shots/shots.utils";
 import { Divider, Grid, Stack, TableBody, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store/store";
-import { TableCell, TableRow } from "../../../../styles";
-import NewGridCellStats from "../../../../styles/grid/NewGridCellStats.style";
-import { formatPerc } from "../../../../utils/number/number.utils";
-import { correctVsParString } from "../../../../utils/shots/shots.utils";
-import { ShotPosition } from "../../../common/shotPositions/ShotPosition.component";
 
-interface IShotsTableProps {
-  firstColumn: boolean;
-}
+const ShotsTableTotalsBody = ({ firstColumn, roundTotals, dashboard }: IShotsTableProps) => {
 
-
-const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
-
-  const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
   const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = roundTotals;
   const { correctScore, correctScoreIN, correctScoreOUT } = correctVsParString(score);
 
@@ -22,7 +15,8 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
     <TableBody>
       <TableRow key={'last'}>
         {firstColumn && <TableCell align='center'>{''}</TableCell>}
-        <TableCell align='center'>{coursePar}</TableCell>
+        {!dashboard && <TableCell align='center'>{coursePar}</TableCell>}
+
         <TableCell align='center'>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={4}>
@@ -225,30 +219,6 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
           </Grid>
         </TableCell>
 
-        <TableCell align='center' sx={{ borderRight: '1px solid #ccc' }}>
-          <Grid container spacing={1}>
-            <NewGridCellStats item xs={6}>
-              <Stack>
-                <Typography fontWeight={'bold'}>{sand.saved}</Typography>
-                <Typography>{sand.avgSaved}</Typography>
-              </Stack>
-            </NewGridCellStats>
-            <NewGridCellStats item xs={6}>
-              <Stack>
-                <Typography fontWeight={'bold'}>{sand.totals}</Typography>
-                <Typography>{sand.avg}</Typography>
-              </Stack>
-            </NewGridCellStats>
-          </Grid>
-          <Grid container spacing={1}>
-            <NewGridCellStats item xs={12}>
-              <Stack>
-                <Typography>{sand.savedPerc !== 0 && `${sand.savedPerc}%`}</Typography>
-              </Stack>
-            </NewGridCellStats>
-          </Grid>
-        </TableCell>
-
         <TableCell align='center'>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={4}>
@@ -273,6 +243,32 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
           </Grid>
         </TableCell>
 
+        <TableCell align='center' sx={{ borderRight: '1px solid #ccc' }}>
+          <Grid container spacing={1}>
+            <NewGridCellStats item xs={6}>
+              <Stack>
+                <Typography fontWeight={'bold'}>{sand.saved}</Typography>
+                <Typography>{sand.avgSaved}</Typography>
+              </Stack>
+            </NewGridCellStats>
+            <NewGridCellStats item xs={6}>
+              <Stack>
+                <Typography fontWeight={'bold'}>{sand.totals}</Typography>
+                <Typography>{sand.avg}</Typography>
+              </Stack>
+            </NewGridCellStats>
+          </Grid>
+          <Grid container spacing={1}>
+            <NewGridCellStats item xs={12}>
+              <Stack>
+                <Typography>{sand.savedPerc !== 0 && `${sand.savedPerc}%`}</Typography>
+              </Stack>
+            </NewGridCellStats>
+          </Grid>
+        </TableCell>
+
+
+
         <TableCell align='center'>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={4}>
@@ -281,7 +277,7 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
                   {(water.totals !== 0) ? water.totals : 0}
                 </Typography>
                 <Typography>
-                  {`${(water.avg !== '-') ? water.avg : '-'}`}
+                  {`${(water.avg !== 0) ? water.avg : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -291,7 +287,7 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
                   {(water.totalsIN !== 0) ? water.totalsIN : 0}
                 </Typography>
                 <Typography>
-                  {`${(water.avgIN !== '-') ? water.avgIN : '-'}`}
+                  {`${(water.avgIN !== 0) ? water.avgIN : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -301,7 +297,7 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
                   {(water.totalsOUT !== 0) ? water.totalsOUT : 0}
                 </Typography>
                 <Typography>
-                  {`${(water.avgOUT !== '-') ? water.avgOUT : '-'}`}
+                  {`${(water.avgOUT !== 0) ? water.avgOUT : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -314,7 +310,7 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
                   {(out.totals !== 0) ? out.totals : 0}
                 </Typography>
                 <Typography>
-                  {`${(out.avg !== '-') ? out.avg : '-'}`}
+                  {`${(out.avg !== 0) ? out.avg : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -324,7 +320,7 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
                   {(out.totalsIN !== 0) ? out.totalsIN : 0}
                 </Typography>
                 <Typography>
-                  {`${(out.avgIN !== '-') ? out.avgIN : '-'}`}
+                  {`${(out.avgIN !== 0) ? out.avgIN : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>
@@ -334,7 +330,7 @@ const ShotsTableTotalsBody = ({ firstColumn }: IShotsTableProps) => {
                   {(out.totalsOUT !== 0) ? out.totalsOUT : 0}
                 </Typography>
                 <Typography>
-                  {`${(out.avgOUT !== '-') ? out.avgOUT : '-'}`}
+                  {`${(out.avgOUT !== 0) ? out.avgOUT : '-'}`}
                 </Typography>
               </Stack>
             </NewGridCellStats>

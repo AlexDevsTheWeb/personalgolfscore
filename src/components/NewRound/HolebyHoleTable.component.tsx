@@ -1,6 +1,8 @@
+import { RootState } from "@/store/store";
+import { BoxOverflow } from "@/styles/index";
+import { IShots } from "@/types/roundData.types";
 import { Table, TableBody } from "@mui/material";
-import { BoxOverflow } from "../../styles";
-import { IShots } from "../../types/roundData.types";
+import { useSelector } from "react-redux";
 import ShotsTableBody from "../RoundsData/components/shotsTable/ShotsTableBody.component";
 import ShotsTableHeader from "../RoundsData/components/shotsTable/ShotsTableHeader.component";
 
@@ -9,10 +11,18 @@ interface IHolebyHoleProps {
 }
 
 const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
+  const { roundDistances } = useSelector((store: RootState) => store.newRound.newRoundDistances);
+
+  // TODO: delete this once saved to file result JSON
+  // if (holes.length === 18) {
+  //   console.log("holes:", JSON.stringify(holes));
+  //   console.log("roundDistances:", JSON.stringify(roundDistances));
+  // }
+  // TODO: delete this once saved to file result JSON
 
   return (
-    <BoxOverflow direction="horizontal" variant="table">
-      <Table sx={{ width: '100%', overflow: 'hidden' }} aria-label="customized table">
+    <BoxOverflow direction="horizontal" variant="table" sx={{ marginBottom: '20px' }}>
+      <Table sx={{ width: '100%', overflow: 'auto' }} aria-label="customized table">
         <ShotsTableHeader firstLabel='#' singleHole={true} firstColumn={true} />
         <TableBody>
           {holes.map((hole: IShots, index: number) => {

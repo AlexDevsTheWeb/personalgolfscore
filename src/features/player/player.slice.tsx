@@ -1,5 +1,5 @@
+import { IPlayer, InitialStatePlayer, PlayerPayload } from "@/types/player.types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IPlayer, InitialStatePlayer, PlayerPayload } from "../../types/player.types";
 import { getPlayerInfoThunk } from "./player.thunk";
 
 

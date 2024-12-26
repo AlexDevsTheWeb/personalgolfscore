@@ -1,18 +1,12 @@
+import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
+import { CHIPPING } from '@/enum/shots.enum';
+import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
+import { IRoundTotalsProps } from '@/types/props.types';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid, Stack } from "@mui/material";
 import _ from "lodash";
-import { CHIPPING } from '../../../../../enum/shots.enum';
-import GridPuttsStat from "../../../../../styles/grid/GridCellStats.styles";
-import { IRoundTotals } from "../../../../../types/roundTotals.types";
-import ShotsTableHeaderStack from "../../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
-interface IHolebyHoleChipping {
-  totals: IRoundTotals
-}
-
-const TableMobile = ({ totals }: IHolebyHoleChipping) => {
-
-  const { chipPitch } = totals;
+const TableMobile = ({ roundTotals: { chipPitch } }: IRoundTotalsProps) => {
 
   return (
     <Box>

@@ -2,11 +2,11 @@ import {
   Typography
 } from '@mui/material';
 
+import { BoxStatistics } from '@/styles/box/BoxStatistics.styles';
+import { Card } from '@/styles/card/statistics/Card.styles';
+import { CardContent } from '@/styles/card/statistics/CardContent.styles';
+import { CardHeader } from '@/styles/card/statistics/CardHeader.styles';
 import { Gauge, gaugeClasses } from "@mui/x-charts";
-import { BoxStatistics } from '../../../styles/box/BoxStatistics.styles';
-import { Card } from '../../../styles/card/statistics/Card.styles';
-import { CardContent } from '../../../styles/card/statistics/CardContent.styles';
-import { CardHeader } from '../../../styles/card/statistics/CardHeader.styles';
 
 interface IPointsGauge {
   name: string;

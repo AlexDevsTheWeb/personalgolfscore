@@ -1,5 +1,5 @@
+import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
 import { Divider, Stack, Typography } from "@mui/material"
-import useDeviceDetection from "../../../../hooks/useDeviceDetection.hook"
 
 interface IShotsTableHeaderStack {
   firstRow: string,
@@ -21,8 +21,8 @@ const ShotsTableHeaderStack = ({ firstRow, secondRow }: IShotsTableHeaderStack) 
         alignContent: 'center',
         backgroundColor: '#f0f0f0',
         color: 'black',
-        fontWeight: 500,
-        fontSize: '14px',
+        fontWeight: 'bold',
+        fontSize: '13px',
         padding: '0px',
         minHeight: '50px',
         justifyContent: 'center',
@@ -33,7 +33,7 @@ const ShotsTableHeaderStack = ({ firstRow, secondRow }: IShotsTableHeaderStack) 
       }}
     >
       <Typography fontWeight={'bold'}>{firstRow}</Typography>
-      {secondRow !== '' && <Typography sx={{ fontSize: '12px' }}>{secondRow}</Typography>}
+      {secondRow !== '' && <Typography sx={{ fontSize: useDeviceDetection().isMobile ? '10px' : '12px' }}>{secondRow}</Typography>}
     </Stack>
   )
 }

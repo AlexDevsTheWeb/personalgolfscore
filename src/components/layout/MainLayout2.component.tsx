@@ -1,3 +1,5 @@
+import { TLinkSidebar } from '@/types/general.types';
+import links from '@/utils/links/links.utils';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
@@ -14,8 +16,6 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import { TLinkSidebar } from '../../types/general.types';
-import links from '../../utils/links/links.utils';
 import Footer from './Footer.component';
 
 

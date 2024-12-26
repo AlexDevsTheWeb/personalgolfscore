@@ -1,18 +1,12 @@
+import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
+import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
+import { IRoundTotalsProps } from "@/types/props.types";
+import { catConversion } from "@/utils/constant.utils";
+import { formatPerc } from "@/utils/number/number.utils";
 import { Divider, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import _ from "lodash";
-import GridPuttsStat from "../../../../../styles/grid/GridCellStats.styles";
-import { IRoundTotals } from "../../../../../types/roundTotals.types";
-import { catConversion } from "../../../../../utils/constant.utils";
-import { formatPerc } from "../../../../../utils/number/number.utils";
-import ShotsTableHeaderStack from "../../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
-interface IHolebyHoleTeeShots {
-  totals: IRoundTotals
-}
-
-const TableDesktop = ({ totals }: IHolebyHoleTeeShots) => {
-
-  const { teeShots } = totals;
+const TableDesktop = ({ roundTotals: { teeShots } }: IRoundTotalsProps) => {
   const categories = Object.keys(teeShots);
 
   return (

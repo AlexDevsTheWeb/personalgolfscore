@@ -1,18 +1,17 @@
-import { Box, TextField, Typography, capitalize } from "@mui/material";
+import { updateClub, updateClubSelection } from "@/features/golfBag/golfBag.slice";
+import { ClubTypography } from "@/styles";
+import BoxClubs from "@/styles/box/BoxClubs.styles";
+import { IClub } from "@/types/clubs.types";
+import CheckCircleOutlineTwoToneIcon from '@mui/icons-material/CheckCircleOutlineTwoTone';
+import DoNotDisturbAltTwoToneIcon from '@mui/icons-material/DoNotDisturbAltTwoTone';
+import SportsGolfTwoToneIcon from '@mui/icons-material/SportsGolfTwoTone';
+import { Box, Button, TextField, Typography, capitalize } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import BoxClubs from "../../styles/box/BoxClubs.styles";
-import { ClubTypography } from "../../styles";
-import CheckCircleOutlineTwoToneIcon from '@mui/icons-material/CheckCircleOutlineTwoTone';
-import DoNotDisturbAltTwoToneIcon from '@mui/icons-material/DoNotDisturbAltTwoTone';
-import SportsGolfTwoToneIcon from '@mui/icons-material/SportsGolfTwoTone';
-import { Button } from '@mui/material';
-import { IClub } from "../../types/clubs.types";
-import { useDispatch } from "react-redux";
-import { updateClub, updateClubSelection } from "../../features/golfBag/golfBag.slice";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const ClubsList = (props: any) => {
   const { typeName, details } = props;

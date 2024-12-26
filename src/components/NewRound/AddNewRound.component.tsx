@@ -1,9 +1,9 @@
 
+import { getClubsDetails } from '@/features/golfBag/golfBag.slice';
+import { RootState } from '@/store/store';
+import StackNewHole from '@/styles/stack/StackNewHole.styles';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClubsDetails } from '../../features/golfBag/golfBag.slice';
-import { RootState } from '../../store/store';
-import StackNewHole from '../../styles/stack/StackNewHole.styles';
 import AddNewRoundForm from './AddNewRoundForm.component';
 import AddNewRoundHoles from './AddNewRoundHoles.component';
 

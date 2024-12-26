@@ -1,7 +1,8 @@
+import { CHIPCONDITION } from '@/enum/shots.enum';
+import { IClub, IClubs, IGolfBag } from "@/types/clubs.types";
+import { IRoundFinalData, IRoundFinalDataProps } from '@/types/round.types';
+import { IDistance, IDistanceSingle, IShots } from '@/types/roundData.types';
 import _, { capitalize } from 'lodash';
-import { CHIPCONDITION } from '../../enum/shots.enum';
-import { IClub, IClubs, IGolfBag } from "../../types/clubs.types";
-import { IShots } from '../../types/roundData.types';
 
 export const getClubsNames = (clubs: IGolfBag) => {
   const clubsName = clubs.types.map((ct: IClubs) => {
@@ -19,6 +20,13 @@ export const getClubsNames = (clubs: IGolfBag) => {
     );
   })
   return _.flatMapDeep(clubsName);
+}
+
+export const getDistanceClubs = (distanceClubs: string[]) => {
+  const newDistanceClubs = [...distanceClubs];
+  newDistanceClubs.pop();
+
+  return newDistanceClubs;
 }
 
 export const getGreenClubs = (teeClubs: string[]) => {
@@ -62,4 +70,51 @@ export const newRoundDisabledSelect = (name: string, tmpHole: IShots) => {
     default:
       return false;
   }
+}
+
+export const createDistanceObject = (value: IDistanceSingle) => {
+  let newDistance: IDistance[] = [];
+  const { roundDistances, roundID, course, date, club, mt } = value;
+
+  if (roundDistances.length === 0) {
+    return [{ roundID, course, date, club, mt: [mt], avg: mt }];
+  }
+
+  const existingIndex = roundDistances.findIndex((distance) => distance.club === club);
+
+  if (existingIndex === -1) {
+    newDistance = [...roundDistances, { roundID: roundID, course: course, date: date, club: club, mt: [mt], avg: mt }];
+  }
+  else {
+    const newClubMt = [...roundDistances[existingIndex].mt, mt];
+    const newAvg = calculateAvg(newClubMt);
+    newDistance = [...roundDistances, { roundID: roundID, course: course, date: date, club: club, mt: newClubMt, avg: newAvg }];
+    newDistance.splice(existingIndex, 1);
+  }
+  return newDistance;
+}
+
+const calculateAvg = (values: number[]) => {
+  let finalAvg = 0;
+  const items = values.length;
+
+  const sum = values.reduce((acc, curr) => {
+    acc.total += curr;
+    return acc;
+  }, {
+    total: 0
+  });
+  finalAvg = Math.floor(sum.total / items);
+  return finalAvg;
+}
+
+export const finalRoundGeneration = ({ round, holes, roundTotals, roundDistances }: IRoundFinalDataProps) => {
+  const roundFinalData: IRoundFinalData = {
+    roundMainData: round,
+    roundHolesData: holes,
+    roundTotalsData: roundTotals,
+    roundDistancesData: roundDistances,
+  }
+
+  return roundFinalData;
 }

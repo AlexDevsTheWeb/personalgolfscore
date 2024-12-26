@@ -1,18 +1,12 @@
+import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
+import { CHIPPING } from "@/enum/shots.enum";
+import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
+import { BoxOverflow } from "@/styles/index";
+import { IRoundTotalsProps } from "@/types/props.types";
 import { Divider, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import _ from "lodash";
-import { CHIPPING } from "../../../../../enum/shots.enum";
-import { BoxOverflow } from "../../../../../styles";
-import GridPuttsStat from "../../../../../styles/grid/GridCellStats.styles";
-import { IRoundTotals } from "../../../../../types/roundTotals.types";
-import ShotsTableHeaderStack from "../../../../RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 
-interface IHolebyHoleTeeShots {
-  totals: IRoundTotals
-}
-
-const TableDesktop = ({ totals }: IHolebyHoleTeeShots) => {
-
-  const { chipPitch } = totals;
+const TableDesktop = ({ roundTotals: { chipPitch } }: IRoundTotalsProps) => {
   const chipPitchCat = Object.keys(chipPitch);
 
   return (
@@ -39,8 +33,8 @@ const TableDesktop = ({ totals }: IHolebyHoleTeeShots) => {
               {
                 Object.entries(chipPitch).map(([key, value], index: number) => {
                   return (
-                    <TableCell align='center' key={index}>
-                      <Stack>
+                    <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
+                      <Stack >
                         <Grid container spacing={1}>
                           <GridPuttsStat item xs={4} string='U&D made' value={value.upDownMade} />
                           <GridPuttsStat item xs={4} string='Attempts made' value={value.attempts} />

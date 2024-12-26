@@ -1,6 +1,6 @@
+import { TLinkSidebar } from "@/types/general.types";
 import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import SportsGolfIcon from '@mui/icons-material/SportsGolf';
-import { TLinkSidebar } from "../../types/general.types";
 
 const navbar_items: TLinkSidebar[] = [
   {

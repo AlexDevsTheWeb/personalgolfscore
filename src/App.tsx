@@ -15,7 +15,7 @@ import SignupForm from "./components/LoginForm/SignupForm.component";
 import Spinner from "./components/spinner/Spinner.component";
 import AddNewRound from './pages/AddNewRound.page';
 import ClubsPage from "./pages/Clubs.page";
-import Dashboard from "./pages/Dashboard.page";
+import DashboardPage from "./pages/DashboardPage.page";
 import RoundsData from './pages/RoundsData.page';
 import SharedLayout from './pages/SharedLayout.page';
 import Statistics from './pages/Statistics.page';
@@ -39,7 +39,7 @@ const App: React.FC = () => {
               <StyledComponentsThemeProvider theme={theme}>
                 <Routes>
                   <Route element={<SharedLayout />}>
-                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/" element={<DashboardPage />} />
                     <Route path="/clubs" element={<ClubsPage />} />
                     <Route path="/signup" element={<SignupForm />} />
                     <Route path="/signin" element={<LoginForm />} />

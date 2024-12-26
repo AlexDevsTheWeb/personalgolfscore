@@ -1,4 +1,4 @@
-import authFetch, { checkForUnauthorizedResponse } from "../../utils/axios/axiox.utils";
+import authFetch, { checkForUnauthorizedResponse } from "@/utils/axios/axiox.utils";
 
 export const getAllRoundsTotalsThunk = async (thunkAPI: any) => {
   let roundsDataTotalsURL = `/data/NEW/TOTALS_new.json`;

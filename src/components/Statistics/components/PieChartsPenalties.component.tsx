@@ -1,11 +1,11 @@
+import { BoxStatistics } from "@/styles/box/BoxStatistics.styles";
+import { Card } from "@/styles/card/statistics/Card.styles";
+import { CardContent } from "@/styles/card/statistics/CardContent.styles";
+import { CardHeader } from "@/styles/card/statistics/CardHeader.styles";
+import { INewTotals } from "@/types/roundTotals.types";
+import { pieChartDimensions } from "@/utils/constant.utils";
 import { Typography } from "@mui/material";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts";
-import { BoxStatistics } from "../../../styles/box/BoxStatistics.styles";
-import { Card } from "../../../styles/card/statistics/Card.styles";
-import { CardContent } from "../../../styles/card/statistics/CardContent.styles";
-import { CardHeader } from "../../../styles/card/statistics/CardHeader.styles";
-import { INewTotals } from "../../../types/roundTotals.types";
-import { pieChartDimensions } from "../../../utils/constant.utils";
 
 interface IPenaltiesPie {
   name: string;

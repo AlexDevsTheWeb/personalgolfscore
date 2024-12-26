@@ -1,6 +1,6 @@
+import { IShots } from "@/types/roundData.types";
+import { IRoundTotals } from "@/types/roundTotals.types";
 import _ from "lodash";
-import { IShots } from "../../types/roundData.types";
-import { IRoundTotals } from "../../types/roundTotals.types";
 import { initialStateRoundTotals } from "../constant.utils";
 import { calculateChippingPitchingStatistics, calculateFWIrons, calculateInside100mtStatistics, calculatePuttsStatistics, calculateTeeShotsStatistics } from "../totals/totals.utils";
 import { divide } from "../totals/totalsGenFunc.utils";
@@ -54,8 +54,8 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.putts2 += (curr.puttsLength.length === 2 ? 1 : 0);
     acc.putts3More += (curr.puttsLength.length > 2 ? 1 : 0);
     acc.puttsDistGir += (!!curr.gir ? Number(curr.puttsLength[0]) : 0);
-    acc.sand += (curr.chipClub === 'b' ? 1 : 0);
-    acc.sandSaved += ((curr.chipClub === 'b' && curr.upDown.made === 1 && curr.strokes === curr.par) ? 1 : 0);
+    acc.sand += (curr.chipClub === 'Bunker' ? 1 : 0);
+    acc.sandSaved += ((curr.chipClub === 'Bunker' && curr.upDown.made === 1 && curr.strokes === curr.par) ? 1 : 0);
     acc.water += curr.water;
     acc.out += curr.out;
 
@@ -116,18 +116,16 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     score: {
       totals: totalALL.score,
-      avg: divide(totalALL.score, holes).toFixed(2),
+      avg: Number(divide(totalALL.score, holes).toFixed(2)),
       vsPar: getVsParTotals(totalALL.score, totalALL.par, true).value,
       scoreIN: totalIN.scoreIN,
       scoreOUT: totalOUT.scoreOUT,
       vsParIN: getVsParTotals(totalIN.scoreIN, totalIN.parIN, true).value,
       vsParOUT: getVsParTotals(totalOUT.scoreOUT, totalOUT.parOUT, true).value,
       avgIN: totalIN.scoreIN && holesIN
-        ? divide(totalIN.scoreIN, holesIN).toFixed(2)
-        : '-',
+        ? Number(divide(totalIN.scoreIN, holesIN).toFixed(2)) : 0,
       avgOUT: totalOUT.scoreOUT && holesOUT
-        ? divide(totalOUT.scoreOUT, holesOUT).toFixed(2)
-        : '-',
+        ? Number(divide(totalOUT.scoreOUT, holesOUT).toFixed(2)) : 0,
       par3: par3,
       par4: par4,
       par5: par5,
@@ -142,11 +140,11 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     points: {
       totals: totalALL.points,
-      avg: totalALL.points && holes ? divide(totalALL.points, holes).toFixed(2) : '-',
+      avg: totalALL.points && holes ? Number(divide(totalALL.points, holes).toFixed(2)) : 0,
       pointsIN: totalIN.pointsIN,
       pointsOUT: totalOUT.pointsOUT,
-      avgIN: totalIN.pointsIN && holesIN ? divide(totalIN.pointsIN, holesIN).toFixed(2) : '-',
-      avgOUT: totalOUT.pointsOUT && holesOUT ? divide(totalOUT.pointsOUT, holesOUT).toFixed(2) : '-',
+      avgIN: totalIN.pointsIN && holesIN ? Number(divide(totalIN.pointsIN, holesIN).toFixed(2)) : 0,
+      avgOUT: totalOUT.pointsOUT && holesOUT ? Number(divide(totalOUT.pointsOUT, holesOUT).toFixed(2)) : 0,
     },
     fairway: {
       total: fairwayTotal,
@@ -160,19 +158,19 @@ export const totalsCalculator = (shots: IShots[]) => {
     fwAndIrons: fairwayWoodAndIrons,
     gir: {
       totals: totalALL.gir,
-      avg: totalALL.gir && holes ? divide(totalALL.gir, holes).toFixed(2) : '-',
+      avg: totalALL.gir && holes ? Number(divide(totalALL.gir, holes).toFixed(2)) : 0,
       totalsIN: totalIN.girIN,
-      avgIN: totalIN.girIN && holesIN ? divide(totalIN.girIN, holesIN).toFixed(2) : '-',
+      avgIN: totalIN.girIN && holesIN ? Number(divide(totalIN.girIN, holesIN).toFixed(2)) : 0,
       totalsOUT: totalOUT.girOUT,
-      avgOUT: totalOUT.girOUT && holesOUT ? divide(totalOUT.girOUT, holesOUT).toFixed(2) : '-',
+      avgOUT: totalOUT.girOUT && holesOUT ? Number(divide(totalOUT.girOUT, holesOUT).toFixed(2)) : 0,
     },
     girBogey: {
       totals: totalALL.girBogey,
-      avg: totalALL.girBogey && holes ? divide(totalALL.girBogey, holes).toFixed(2) : '-',
+      avg: totalALL.girBogey && holes ? Number(divide(totalALL.girBogey, holes).toFixed(2)) : 0,
       totalsIN: totalIN.girBogeyIN,
-      avgIN: totalIN.girBogeyIN && holesIN ? divide(totalIN.girBogeyIN, holesIN).toFixed(2) : '-',
+      avgIN: totalIN.girBogeyIN && holesIN ? Number(divide(totalIN.girBogeyIN, holesIN).toFixed(2)) : 0,
       totalsOUT: totalOUT.girBogeyOUT,
-      avgOUT: totalOUT.girBogeyOUT && holesOUT ? divide(totalOUT.girBogeyOUT, holesOUT).toFixed(2) : '-',
+      avgOUT: totalOUT.girBogeyOUT && holesOUT ? Number(divide(totalOUT.girBogeyOUT, holesOUT).toFixed(2)) : 0,
     },
     scramble: {
       totals: totalALL.scrambleAttempts,
@@ -186,11 +184,11 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     putts: {
       totals: totalALL.putts,
-      avg: totalALL.putts && holes ? divide(totalALL.putts, holes).toFixed(2) : '-',
+      avg: totalALL.putts && holes ? Number(divide(totalALL.putts, holes).toFixed(2)) : 0,
       totalsIN: totalIN.puttsIN,
-      avgIN: totalIN.puttsIN && holesIN ? divide(totalIN.puttsIN, holesIN).toFixed(2) : '-',
+      avgIN: totalIN.puttsIN && holesIN ? Number(divide(totalIN.puttsIN, holesIN).toFixed(2)) : 0,
       totalsOUT: totalOUT.puttsOUT,
-      avgOUT: totalOUT.puttsOUT && holesOUT ? divide(totalOUT.puttsOUT, holesOUT).toFixed(2) : '-',
+      avgOUT: totalOUT.puttsOUT && holesOUT ? Number(divide(totalOUT.puttsOUT, holesOUT).toFixed(2)) : 0,
       puttsGir: totalALL.puttsGIR,
       puttsGirIn: totalIN.puttsGIRIN,
       puttsGirOut: totalOUT.puttsGIROUT,
@@ -203,26 +201,26 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     sand: {
       totals: totalALL.sand,
-      avg: totalALL.sand && holes ? divide(totalALL.sand, holes).toFixed(2) : '-',
+      avg: totalALL.sand && holes ? Number(divide(totalALL.sand, holes).toFixed(2)) : 0,
       saved: totalALL.sandSaved,
-      avgSaved: totalALL.sandSaved && holes ? divide(totalALL.sandSaved, holes).toFixed(2) : '-',
-      savedPerc: totalALL.sandSaved && totalALL.sand ? (totalALL.sandSaved / totalALL.sand) * 100 : 0,
+      avgSaved: totalALL.sandSaved && holes ? Number(divide(totalALL.sandSaved, holes).toFixed(2)) : 0,
+      savedPerc: totalALL.sandSaved && totalALL.sand ? Number((totalALL.sandSaved / totalALL.sand) * 100) : 0,
     },
     water: {
       totals: totalALL.water,
-      avg: totalALL.water && holes ? divide(totalALL.water, holes).toFixed(2) : '-',
+      avg: totalALL.water && holes ? Number(divide(totalALL.water, holes).toFixed(2)) : 0,
       totalsIN: totalIN.waterIN,
-      avgIN: totalIN.waterIN && holesIN ? divide(totalIN.waterIN, holesIN).toFixed(2) : '-',
+      avgIN: totalIN.waterIN && holesIN ? Number(divide(totalIN.waterIN, holesIN).toFixed(2)) : 0,
       totalsOUT: totalOUT.waterOUT,
-      avgOUT: totalOUT.waterOUT && holesOUT ? divide(totalOUT.waterOUT, holesOUT).toFixed(2) : '-',
+      avgOUT: totalOUT.waterOUT && holesOUT ? Number(divide(totalOUT.waterOUT, holesOUT).toFixed(2)) : 0,
     },
     out: {
       totals: totalALL.out,
-      avg: totalALL.out && holes ? divide(totalALL.out, holes).toFixed(2) : '-',
+      avg: totalALL.out && holes ? Number(divide(totalALL.out, holes).toFixed(2)) : 0,
       totalsIN: totalIN.outIN,
-      avgIN: totalIN.outIN && holesIN ? divide(totalIN.outIN, holesIN).toFixed(2) : '-',
+      avgIN: totalIN.outIN && holesIN ? Number(divide(totalIN.outIN, holesIN).toFixed(2)) : 0,
       totalsOUT: totalOUT.outOUT,
-      avgOUT: totalOUT.outOUT && holesOUT ? divide(totalOUT.outOUT, holesOUT).toFixed(2) : '-',
+      avgOUT: totalOUT.outOUT && holesOUT ? Number(divide(totalOUT.outOUT, holesOUT).toFixed(2)) : 0,
     }
   }
   return totals;

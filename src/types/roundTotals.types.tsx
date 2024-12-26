@@ -1,3 +1,5 @@
+import { IDistance } from "./roundData.types";
+
 export interface INewTotals {
   roundID: number,
   totDistance: number,
@@ -26,8 +28,46 @@ export interface IRoundTotalsInitialState {
   roundTotals: IRoundTotals
 }
 
+export interface IRoundsTotalsInitialState {
+  isLoading: boolean,
+  roundsTotals: IAllRoundsTotals
+}
+
+export interface IRoundDistanceInitialState {
+  isLoading: boolean,
+  roundDistance: IDistance[]
+}
+
 export interface IRoundTotals {
   playerID: string,
+  mainData: IRoundTotalsMainData,
+  score: IRoundScoreTotalsAvg,
+  points: IRoundPointsTotalsAvg,
+  fairway: IRoundFairwayTotals,
+  teeShots: IRoundTeeShotsTotals,
+  chipPitch: IRoundChipPitchTotals,
+  inside100Mt: IRoundInside100MtTotals,
+  fwAndIrons: IRoundFwAndIronsTotals,
+  gir: IRoundTotalsAvgINOUT,
+  girBogey: IRoundTotalsAvgINOUT,
+  upDown: IRoundTotalsUpDown,
+  scramble: IRoundTotalsUpDown,
+  putts: IRoundTotalsPutts,
+  sand: IRoundTotalsAvgSand,
+  water: IRoundTotalsAvgINOUT,
+  out: IRoundTotalsAvgINOUT,
+}
+
+export interface IAllRoundsTotals {
+  roundsTotals: IRoundTotals[]
+}
+
+interface IRoundsTotals {
+  playerID: string,
+  totals: IAllRoundsTotalsNew[];
+}
+
+interface IAllRoundsTotalsNew {
   mainData: IRoundTotalsMainData,
   score: IRoundScoreTotalsAvg,
   points: IRoundPointsTotalsAvg,
@@ -52,7 +92,7 @@ export interface IRoundInside100MtTotals {
   inside8061: IRoundInside100Mt,
   inside60: IRoundInside100Mt
 }
-export interface IRoundInside100Mt {
+interface IRoundInside100Mt {
   greensHits: number,
   attempts: number,
   averageShots: number,
@@ -69,7 +109,7 @@ export interface IRoundFwAndIronsTotals {
   shortIrons: IRoundFWAndIrons,
 }
 
-export interface IRoundFWAndIrons {
+interface IRoundFWAndIrons {
   greenHits: number,
   attempts: number,
   totalScorePar3: number,
@@ -92,7 +132,7 @@ export interface IRoundChipPitchTotals {
   sw: IRoundChipPitch,
   lw: IRoundChipPitch,
   b: IRoundChipPitch,
-  chip: IRoundChipPitch
+  chip: IRoundChipPitch,
   putt: IRoundChipPitch,
 }
 
@@ -141,7 +181,7 @@ interface IRoundFairwayTotals {
 
 interface IRoundTotalsAvg {
   totals: number,
-  avg: string,
+  avg: number,
 }
 interface IRoundTotalsUpDown {
   totals: number,
@@ -150,20 +190,20 @@ interface IRoundTotalsUpDown {
 }
 interface IRoundTotalsAvgSand extends IRoundTotalsAvg {
   saved: number,
-  avgSaved: string,
+  avgSaved: number,
   savedPerc: number,
 }
 interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
   totalsIN: number,
-  avgIN: string,
+  avgIN: number,
   totalsOUT: number,
-  avgOUT: string,
+  avgOUT: number,
 }
 export interface IRoundTotalsPutts extends IRoundTotalsAvg {
   totalsIN: number,
-  avgIN: string,
+  avgIN: number,
   totalsOUT: number,
-  avgOUT: string,
+  avgOUT: number,
   puttsGir: number,
   puttsGirIn: number,
   puttsGirOut: number,
@@ -180,8 +220,8 @@ export interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
   scoreOUT: number,
   vsParIN: number,
   vsParOUT: number,
-  avgIN: string;
-  avgOUT: string;
+  avgIN: number;
+  avgOUT: number;
   par3: number,
   par4: number,
   par5: number,
@@ -198,8 +238,8 @@ export interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
 interface IRoundPointsTotalsAvg extends IRoundTotalsAvg {
   pointsIN: number,
   pointsOUT: number,
-  avgIN: string,
-  avgOUT: string,
+  avgIN: number,
+  avgOUT: number,
 }
 
 export interface IPuttsStatistics {
@@ -208,15 +248,29 @@ export interface IPuttsStatistics {
   putts46M: IPuttsBreakDownStatistics,
   putts610M: IPuttsBreakDownStatistics,
   puttsO10M: IPuttsBreakDownStatistics,
+  _puttsOverall: {
+    birdieBetter: number,
+    birdieConversion: number,
+    gir: number,
+    puttsInGIR: number,
+    threePutts: number,
+    totalPutts: number,
+    totalPuttsInGIR: number,
+  }
 }
 
 interface IPuttsBreakDownStatistics {
-  puttsHoled: number,
-  puttsAttempts: number,
-  numberPuttsInRange: number,
-  distanceSecondPutt: number,
-  numberSecondPutt: number,
   distanceFirstPutt: number,
+  distanceSecondPutt: number,
+  numberPuttsInRange: number,
+  numberSecondPutt: number,
+  putt1Perc: number,
+  putt3Perc: number,
   putts3: number,
+  puttsAttempts: number,
+  puttsAverage: number,
+  puttsAverageDistance: number,
+  puttsHoled: number,
+  puttsSecondAverageLength: number,
 }
 

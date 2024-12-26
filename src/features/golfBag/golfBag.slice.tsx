@@ -1,6 +1,6 @@
+import { CLUBSSELECTION } from "@/enum/shots.enum";
+import { ClubPayload, InitialStateClubs } from "@/types/clubs.types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CLUBSSELECTION } from "../../enum/shots.enum";
-import { ClubPayload, InitialStateClubs } from "../../types/clubs.types";
 import { getClubsThunk } from "./golfBag.thunk";
 
 const initialState: InitialStateClubs = {
@@ -12,6 +12,7 @@ const initialState: InitialStateClubs = {
     types: [],
   },
   teeClubs: [],
+  distanceClubs: [],
   greenClubs: [],
   chipClubs: [],
   error: {
@@ -57,6 +58,9 @@ const golfBagSlice = createSlice({
       switch (payload.type) {
         case CLUBSSELECTION.TEE:
           state.teeClubs = payload.updatedTeeClubs;
+          break;
+        case CLUBSSELECTION.DISTANCE:
+          state.distanceClubs = payload.updatedDistanceClubs;
           break;
         case CLUBSSELECTION.GREEN:
           state.greenClubs = payload.updatedGreenClubs;
