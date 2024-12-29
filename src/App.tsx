@@ -10,7 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import LoginForm from "./components/LoginForm/LoginForm.component";
+// import LoginForm from "./components/LoginForm/LoginForm.component";
 import SignupForm from "./components/LoginForm/SignupForm.component";
 import Spinner from "./components/spinner/Spinner.component";
 import AddNewRound from './pages/AddNewRound.page';
@@ -26,6 +26,8 @@ import { themeSystem } from './styles/theme/ThemeSystem.theme';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import 'dayjs/locale/it';
+import LoginPage from './pages/Login.page';
+import ProtectedRoute from './pages/ProtectedRoute.page';
 
 const App: React.FC = () => {
   return (
@@ -38,23 +40,42 @@ const App: React.FC = () => {
               <MuiCssBaseline />
               <StyledComponentsThemeProvider theme={theme}>
                 <Routes>
-                  <Route element={<SharedLayout />}>
-                    <Route path="/" element={<DashboardPage />} />
+                  {["/", "/login"].map((path) => (
+                    <Route key={path} path={path} element={<LoginPage />} />
+                  ))}
+
+                  <Route
+                    path="/"
+                    element={
+                      <ProtectedRoute>
+                        <SharedLayout />
+                      </ProtectedRoute>
+                    }
+                  >
+                    <Route path="/dashboard" element={<DashboardPage />} />
                     <Route path="/clubs" element={<ClubsPage />} />
-                    <Route path="/signup" element={<SignupForm />} />
-                    <Route path="/signin" element={<LoginForm />} />
                     <Route path="/round/:roundID" element={<RoundsData />} />
                     <Route path='/addNewRound' element={<AddNewRound />} />
                     <Route path='/statistics' element={<Statistics />} />
-                    {/* <Route path="/" element={<Navigation />}>
-                    <Route index element={<Home />} />
-                    <Route path="shop/*" element={<Shop />} />
-                    <Route path="auth" element={<Authentication />} />
-                    <Route path="checkout" element={<Checkout />} />
-                  </Route> 
-              */}
                   </Route>
+
+                  <Route path="*" element={<LoginPage />} /> // TODO: change with a proper 404 error page
+                  <Route path="/signup" element={<SignupForm />} />
                 </Routes>
+
+                // TODO: consider to add this block
+                {/* <ToastElement />
+                  <ErrorDialog /> */}
+                {/* <GeneralErrorDialog
+                    isOpen={isOpen}
+                    onClick={() => {
+                      setIsOpen(false);
+                      localStorage.removeItem("error");
+                    }}
+                  />
+                  <DialogConfirm /> */}
+                // TODO: consider to add this block
+
               </StyledComponentsThemeProvider>
             </MuiThemeProvider>
           </StyledEngineProvider>
