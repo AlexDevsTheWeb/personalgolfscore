@@ -26,6 +26,7 @@ import { themeSystem } from './styles/theme/ThemeSystem.theme';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import 'dayjs/locale/it';
+import Error from './pages/Error.page';
 import LoginPage from './pages/Login.page';
 import ProtectedRoute from './pages/ProtectedRoute.page';
 
@@ -59,7 +60,8 @@ const App: React.FC = () => {
                     <Route path='/statistics' element={<Statistics />} />
                   </Route>
 
-                  <Route path="*" element={<LoginPage />} /> // TODO: change with a proper 404 error page
+                  <Route path="*" element={<Error />} />
+                  <Route path="/error" element={<Error />} /> // TODO: change with a proper 404 error page
                   <Route path="/signup" element={<SignupForm />} />
                 </Routes>
 

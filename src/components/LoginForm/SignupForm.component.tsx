@@ -1,47 +1,30 @@
-
-// function Copyright(props: any) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
-import { db } from "@/utils/firebase/firebase.utils";
+import { registerUser } from "@/utils/firebase/firebaseSignup.utils";
 import { Copyright } from "@mui/icons-material";
 import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, TextField, Typography } from "@mui/material";
-import { addDoc, collection } from "firebase/firestore";
+import console from "console";
+import { getAuth } from "firebase/auth";
 import { Link } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 // const defaultTheme = createTheme();
 
 export default function SignupForm() {
+  const auth = getAuth();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    const userInfo = {
-      email: data.get('email'),
-      displayName: data.get('firstName') + ' ' + data.get('lastName'),
-      password: data.get('password'),
-    };
+    const email = data.get('email') as string;
+    const password = data.get('password') as string;
+    const firstName = data.get('firstName') as string;
+    const lastName = data.get('lastName') as string;
 
     try {
-      const docRef = await addDoc(collection(db, "users"), userInfo);
-      console.log("User added with ID: ", docRef.id);
+
+      const newUser = await registerUser(auth, { email, password, firstName, lastName });
+
     } catch (error) {
       console.error("Error adding user: ", error);
     }
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   };
 
   return (

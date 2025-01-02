@@ -36,7 +36,7 @@ const GoogleLoginButton = () => {
       // }
 
       const usersCollection = collection(db, 'users');
-      const q = query(usersCollection, where("email", "==", user.email));
+      const q = query(usersCollection, where("uid", "==", user.uid));
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {

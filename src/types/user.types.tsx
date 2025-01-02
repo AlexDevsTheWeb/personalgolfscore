@@ -1,4 +1,5 @@
-export interface User {
+
+export interface IUser {
   displayName?: string;
   email?: string;
   photoURL?: string;
@@ -7,5 +8,5 @@ export interface User {
 
 export interface InitialStateUser {
   isLoading: boolean;
-  user: User;
+  user: IUser;
 }

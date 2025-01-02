@@ -1,4 +1,4 @@
-import { InitialStateUser, User } from "@/types/user.types";
+import { InitialStateUser, IUser } from "@/types/user.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getAllRounds } from "../rounds/rounds.slice";
 
@@ -12,7 +12,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     resetRounds: () => initialState,
-    setLoginUser: (state, { payload }: PayloadAction<User>) => {
+    setLoginUser: (state, { payload }: PayloadAction<IUser>) => {
       state.isLoading = false;
       state.user = payload;
     },
