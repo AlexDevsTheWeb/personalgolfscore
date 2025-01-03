@@ -14,10 +14,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from './Footer.component';
+import User from './User.component';
 
 
 interface Props {
@@ -32,8 +33,16 @@ interface Props {
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const dispatch = useDispatch<any>();
   const { user } = useSelector((store: any) => store.user);
 
+  // React.useEffect(() => {
+  //   if (_.isEmpty(user)) {
+  //     const uid = readUserLocalStorage();
+  //     dispatch(getUserDetails(uid));
+  //   }
+
+  // }, [dispatch, user]);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -98,7 +107,7 @@ export default function DrawerAppBar(props: Props) {
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: '#ffffff' }}
             >
-              Personal Golf Score | {user?.displayName}
+              Personal Golf Score
             </Typography>
             <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
               <List sx={{ display: 'flex' }}>
@@ -129,7 +138,10 @@ export default function DrawerAppBar(props: Props) {
                     </ListItem>
                   );
                 })}
+                <User />
               </List>
+
+
             </Box>
           </Toolbar>
         </AppBar>

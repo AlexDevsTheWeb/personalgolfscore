@@ -13,10 +13,8 @@ export const login = async (auth: Auth, email: string, password: string) => {
 
     if (docSnap.exists()) {
       return docSnap;
-
     }
     else {
-      console.log("---> USER DOES NOT EXIST in FIRESTORE");
       return null;
     }
     // Signed in

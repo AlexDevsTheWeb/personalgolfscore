@@ -34,9 +34,11 @@ const SignIn = (props: { disableCustomTheme?: boolean }) => {
     setOpen(false);
   };
 
+
+  // TODO: remove this, is useless
   const handleLoginSuccess = () => {
     // Handle successful login (e.g., navigate to another page)
-    console.log('Login successful!');
+    // console.log('Login successful!');
   };
 
   return (

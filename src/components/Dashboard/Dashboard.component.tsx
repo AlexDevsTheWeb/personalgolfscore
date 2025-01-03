@@ -15,7 +15,6 @@ import PlayerMobile from "./components/PlayerMobile.component"
 
 const Dashboard = () => {
   const { player } = useSelector((store: RootState) => store.player);
-  const { user } = useSelector((store: any) => store.user);
 
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();

@@ -24,14 +24,12 @@ const LoginForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     const auth = getAuth();
     try {
       const docSnap = await login(auth, email, password);
-      console.log("docsnap: ", docSnap?.data());
-      console.log("id: ", docSnap?.id);
       if (docSnap) {
         writeUserLocalStorage({ uid: docSnap.id })
         const user: IUser = {
           displayName: docSnap?.data().displayName,
           email: docSnap?.data().email,
-          photoURL: '',
+          photoURL: docSnap?.data().photoURL,
           uid: docSnap.id,
         };
         dispatch(setLoginUser(user));
