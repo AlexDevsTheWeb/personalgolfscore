@@ -1,60 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
-
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
-
-interface User {
-  displayName?: string;
-  email?: string;
-  photoURL?: string;
-  uid?: string;
-}
+import { setLoginUser } from "@/features/user/user.slice";
+import { IUser } from "@/types/user.types";
+import { db } from "@/utils/firebase/firebase.utils";
+import { writeUserLocalStorage } from "@/utils/storage/localStorage.utils";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const GoogleLoginButton = () => {
-  const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const firebaseConfig = {
-      apiKey: "AIzaSyDFLUPrfBBkFSaZYdAANokV8FrZjbX67Jg",
-      authDomain: "pgs-personalgolfscore.firebaseapp.com",
-      projectId: "pgs-personalgolfscore",
-      storageBucket: "pgs-personalgolfscore.appspot.com",
-      messagingSenderId: "26033768355",
-      appId: "1:26033768355:web:bd6a43dc19affbfdc0bc16",
-      measurementId: "G-2GPMKQTCWM"
-    };
-
-    const auth = getAuth();
-    // const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-    //   setUser(firebaseUser);
-    // });
-
-    //return unsubscribe;
-  }, []);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
+
     try {
+      const auth = getAuth();
+      const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      //setUser(user);
+
+      const userDocRef = doc(db, 'users', user.uid);
+      const docSnap = await getDoc(userDocRef);
+
+      if (!docSnap.exists()) {
+        navigate('/login');
+      }
+      else {
+        writeUserLocalStorage({ uid: docSnap.id })
+        const user: IUser = {
+          displayName: docSnap?.data().displayName,
+          email: docSnap?.data().email,
+          photoURL: result?.user.photoURL as string,
+          uid: docSnap.id,
+        };
+        dispatch(setLoginUser(user));
+        navigate('/dashboard');
+      }
     } catch (error) {
-      console.error(error);
+      console.log("ERROR LOGGIN IN WITH GOOGLE: ", error)
     }
-  };
+  }
+
 
   return (
     <div>
-      {user ? (
-        <div>
-          <p>Welcome, {user.displayName}!</p>
-          <img src={user.photoURL} alt="Profile picture" />
-          {/* <button onClick={() => signOut(getAuth())}>Sign out</button> */}
-        </div>
-      ) : (
-        <button onClick={handleGoogleLogin}>Sign in with Google</button>
-      )}
+
+      <button onClick={handleGoogleLogin}>Sign in with Google</button>
+
     </div>
   );
 };

@@ -14,6 +14,7 @@ import roundsReducer from '@/features/rounds/rounds.slice';
 import roundsDataReducer from '@/features/rounds/roundsData.slice';
 import roundsDistanceReducer from '@/features/rounds/roundsDistance.slice';
 import roundsTotalsReducer from '@/features/rounds/roundsTotals.slice';
+import userReducer from '@/features/user/user.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = {
@@ -39,6 +40,7 @@ const rootReducer = {
     newRoundDistances: newroundDistanceReducer,
   }),
   roundSaver: roundSaverReducer,
+  user: userReducer,
 };
 
 export const store = configureStore({
