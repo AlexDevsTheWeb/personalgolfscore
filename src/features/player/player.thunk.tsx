@@ -12,25 +12,18 @@ export const getPlayerInfoThunk = async (uid: string, thunkAPI: any) => {
   //   return checkForUnauthorizedResponse(error, thunkAPI);
   // }
 
-
-
-  console.log("arrivo?")
-
   const fetchData = async () => {
     try {
       const docRef = doc(db, 'players', uid);
       const docSnap = await getDoc(docRef);
 
-      console.log("docSnap -> ", docSnap.data());
-
       if (!docSnap.exists()) {
         return null;
       }
 
-
       thunkAPI.dispatch(setPlayer(docSnap.data()));
 
-      return docSnap.data();
+      return true;
 
     } catch (error) {
       console.error("Error getting document:", error);

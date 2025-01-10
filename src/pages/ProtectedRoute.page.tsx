@@ -16,8 +16,9 @@ const ProtectedRoute = ({ children }: any) => {
   }, [user])
 
   if (!uid) {
-    return <Navigate to="/login"></Navigate>;
+    return <Navigate to="/login" />;
   }
+
   return children;
 };
 

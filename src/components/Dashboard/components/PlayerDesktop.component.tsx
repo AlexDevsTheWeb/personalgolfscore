@@ -1,16 +1,14 @@
 import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
+import Spinner from "@/components/spinner/Spinner.component";
 import { IPlayerProps } from "@/types/props.types";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import dayjs from "dayjs";
 import _ from "lodash";
 
 const PlayerDesktop = ({ player }: IPlayerProps) => {
 
-  // const { firstName, lastName, email, hcp, dob } = player;
-
-  if (_.isUndefined(player)) {
-    return (
-      <Typography>loading</Typography>
-    )
+  if (_.isEmpty(player)) {
+    return <Spinner />
   }
 
   return (
@@ -38,13 +36,13 @@ const PlayerDesktop = ({ player }: IPlayerProps) => {
               <Typography>{`${player.firstName} ${player.lastName}`}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{`${player.email}`}</Typography>
+              <Typography>{player.email}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{`${player.HCP}`}</Typography>
+              <Typography>{player.HCP}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{`${player.dob}`}</Typography>
+              <Typography>{player.DOB.seconds ? dayjs.unix(player.DOB.seconds).format('DD/MM/YYYY') : '-'}</Typography>
             </TableCell>
           </TableRow>
         </TableBody>

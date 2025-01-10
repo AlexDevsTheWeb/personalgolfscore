@@ -35,7 +35,6 @@ const App: React.FC = () => {
     <Suspense fallback={<Spinner />}>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="it">
         <Provider store={store}>
-
           <StyledEngineProvider injectFirst>
             <MuiThemeProvider theme={deepmerge(themeSystem, theme)}>
               <MuiCssBaseline />
@@ -44,7 +43,6 @@ const App: React.FC = () => {
                   {["/login"].map((path) => (
                     <Route key={path} path={path} element={<LoginPage />} />
                   ))}
-
                   <Route
                     path="/"
                     element={
@@ -60,7 +58,6 @@ const App: React.FC = () => {
                     <Route path='/addNewRound' element={<AddNewRound />} />
                     <Route path='/statistics' element={<Statistics />} />
                   </Route>
-
                   <Route path="*" element={<Error />} />
                   <Route path="/error" element={<Error />} /> // TODO: change with a proper 404 error page
                   <Route path="/signup" element={<SignupForm />} />

@@ -1,7 +1,9 @@
+import Spinner from "@/components/spinner/Spinner.component";
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import { IRoundTotalsProps, TabPanelProps } from "@/types/props.types";
 import { Box, Tab, Tabs, useTheme } from "@mui/material";
 import AppBar from '@mui/material/AppBar';
+import _ from "lodash";
 import React from "react";
 import HolebyHoleChipping from "./ChippingPitching/HolebyHoleChipping.component";
 import HolebyHoleFwAndIrons from "./FairwayWoodAndIrons/HolebyHoleFwAndIrons.component";
@@ -44,6 +46,12 @@ const HolebyHoleTotals = ({ roundTotals, dashboard }: IRoundTotalsProps) => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  if (_.isEmpty(roundTotals)) {
+    console.log("roundsTotals: ", roundTotals);
+    return <Spinner />
+  }
+
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
       <AppBar position="static">

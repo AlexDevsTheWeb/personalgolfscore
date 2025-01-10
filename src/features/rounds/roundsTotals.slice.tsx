@@ -1,11 +1,13 @@
 import { IRoundsTotalsInitialState } from "@/types/roundTotals.types";
 import { initialStateRoundsTotals } from "@/utils/constant.utils";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getAllRoundsTotalsThunk } from "./roundsTotals.thunk";
 
 const initialState: IRoundsTotalsInitialState = {
   isLoading: false,
-  roundsTotals: initialStateRoundsTotals,
+  roundsTotals: {
+    roundsTotals: []
+  },
 }
 
 export const getAllRoundsTotals = createAsyncThunk(
@@ -20,6 +22,10 @@ const roundsTotalsSlice = createSlice({
     // setManualTotals: (state: any, { payload }: any) => {
     //   state.roundTotals = payload;
     // },
+    setRoundsTotals: (state, { payload }: PayloadAction<any>) => {
+      state.isLoading = false;
+      state.roundsTotals = payload;
+    },
     resetRounds: () => initialState,
   },
   extraReducers: (builder) => {
@@ -27,9 +33,10 @@ const roundsTotalsSlice = createSlice({
       .addCase(getAllRoundsTotals.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllRoundsTotals.fulfilled, (state, { payload }: any) => {
+      .addCase(getAllRoundsTotals.fulfilled, (state, payload: any) => {
         state.isLoading = false;
-        state.roundsTotals = payload;
+        console.log("payload: ", payload);
+        // state.roundsTotals = payload;
       })
       .addCase(getAllRoundsTotals.rejected, (state, { payload }: any) => {
         state.isLoading = false;
@@ -38,5 +45,5 @@ const roundsTotalsSlice = createSlice({
   },
 });
 
-export const { resetRounds } = roundsTotalsSlice.actions;
+export const { resetRounds, setRoundsTotals } = roundsTotalsSlice.actions;
 export default roundsTotalsSlice.reducer;

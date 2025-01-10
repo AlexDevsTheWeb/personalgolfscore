@@ -20,8 +20,6 @@ const stringToColor = (string: string) => {
 }
 
 export const stringAvatar = (name: string) => {
-
-  console.log("name --> ", name)
   return {
     sx: {
       bgcolor: stringToColor(name),

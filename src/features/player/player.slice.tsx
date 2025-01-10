@@ -28,10 +28,10 @@ const playerSlice = createSlice({
       .addCase(getPlayerDetails.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getPlayerDetails.fulfilled, (state, { payload }: any) => {
+      .addCase(getPlayerDetails.fulfilled, (state, payload: any) => {
         // TODO: error in "any" payload type, RESOLVE IT
         state.isLoading = false;
-        state.player = payload;
+        // state.player = payload;
       })
       .addCase(getPlayerDetails.rejected, (state, { payload }: any) => {
         state.isLoading = false;
