@@ -14,10 +14,12 @@ import PlayerDesktop from "./components/PlayerDesktop.component"
 import PlayerMobile from "./components/PlayerMobile.component"
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<any>();
   const { player } = useSelector((store: RootState) => store.player);
 
-  const dispatch = useDispatch<any>();
-  const navigate = useNavigate();
+
+
 
   const handleClickStatistic = () => {
     navigate(`/statistics`);
@@ -26,12 +28,13 @@ const Dashboard = () => {
     navigate('/addNewRound')
   }
   useEffect(() => {
-    dispatch(getPlayerDetails(""))
+    dispatch(getPlayerDetails("RdlAtzFQmTZFJy812wwOCcovt0L2"))
     dispatch(getAllRoundsData(""))
     dispatch(getAllRoundsTotals(""))
   }, []);
 
   return (
+
     <BoxBetween>
       {
         !useDeviceDetection().isMobile ?

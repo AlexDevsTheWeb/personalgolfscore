@@ -1,13 +1,18 @@
+import { resetUser } from "@/features/user/user.slice";
+import { Typography } from "@/styles/index";
+import { deleteUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { stringAvatar } from "@/utils/user/user.utils";
 import { Logout, Settings } from "@mui/icons-material";
 import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Stack, Tooltip } from "@mui/material";
-import _ from "lodash";
+import { getAuth, signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const User = () => {
   const dispatch = useDispatch<any>();
   const { user, isLoading } = useSelector((store: any) => store.user);
+
+
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -18,6 +23,22 @@ const User = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    const auth = getAuth();
+
+    setAnchorEl(null);
+    signOut(auth).then(() => {
+      deleteUserLocalStorage();
+      dispatch(resetUser());
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+
+  };
+
+
 
   return (
     !!isLoading
@@ -37,14 +58,9 @@ const User = () => {
             {
               user?.photoURL === ''
                 ? <Avatar alt={user?.displayName}{...stringAvatar(user?.displayName)} />
-                : _.isNull(anchorEl)
-                  ? <Avatar alt={user?.displayName} src={user?.photoURL} />
-                  : <Avatar alt={user?.displayName}{...stringAvatar(user?.displayName)} />
+                : <Avatar alt={user?.displayName} src={user?.photoURL} />
             }
           </IconButton>
-
-
-
         </Tooltip>
         <Menu
           anchorEl={anchorEl}
@@ -86,14 +102,9 @@ const User = () => {
 
           <MenuItem onClick={handleClose}>
             <Stack sx={{ gap: 1, justifyContent: 'center', alignItems: 'center' }}>
-              {user?.displayName}
-              {
-                user?.photoURL === ''
-                  ? <Avatar alt={user?.displayName}{...stringAvatar(user?.displayName)} />
-                  : _.isNull(anchorEl)
-                    ? <Avatar alt={user?.displayName}{...stringAvatar(user?.displayName)} />
-                    : <Avatar alt={user?.displayName} src={user?.photoURL} />
-              }
+              <Typography variant='headline2'>
+                {user?.displayName}
+              </Typography>
             </Stack>
 
 
@@ -107,7 +118,9 @@ const User = () => {
             </ListItemIcon>
             Settings
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+
+
+          <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>

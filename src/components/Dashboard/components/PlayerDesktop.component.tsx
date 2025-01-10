@@ -1,10 +1,18 @@
 import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 import { IPlayerProps } from "@/types/props.types";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import _ from "lodash";
 
 const PlayerDesktop = ({ player }: IPlayerProps) => {
 
-  const { firstName, lastName, email, hcp, dob } = player;
+  // const { firstName, lastName, email, hcp, dob } = player;
+
+  if (_.isUndefined(player)) {
+    return (
+      <Typography>loading</Typography>
+    )
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ width: '100%', overflow: 'hidden' }} aria-label="customized table">
@@ -27,16 +35,16 @@ const PlayerDesktop = ({ player }: IPlayerProps) => {
         <TableBody>
           <TableRow key={'last'}>
             <TableCell align='center'>
-              <Typography>{`${firstName} ${lastName}`}</Typography>
+              <Typography>{`${player.firstName} ${player.lastName}`}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{`${email}`}</Typography>
+              <Typography>{`${player.email}`}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{`${hcp}`}</Typography>
+              <Typography>{`${player.HCP}`}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{`${dob}`}</Typography>
+              <Typography>{`${player.dob}`}</Typography>
             </TableCell>
           </TableRow>
         </TableBody>

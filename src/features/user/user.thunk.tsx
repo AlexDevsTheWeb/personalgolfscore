@@ -2,7 +2,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase/firebase.utils";
 import { setLoginUser } from "./user.slice";
 
-
 export const getUserDetailsThunk = async (uid: string, thunkAPI: any) => {
   const fetchData = async () => {
     try {

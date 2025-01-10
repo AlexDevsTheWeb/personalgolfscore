@@ -2,8 +2,8 @@ export interface IPlayer {
   playerID: string,
   firstName: string,
   lastName: string,
-  dob: string,
-  hcp: number,
+  DOB: string,
+  HCP: number,
   email: string
 }
 

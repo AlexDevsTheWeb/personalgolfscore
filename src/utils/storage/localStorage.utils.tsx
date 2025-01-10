@@ -11,8 +11,13 @@ export const writeUserLocalStorage = (user: IUser) => {
 
 export const readUserLocalStorage = () => {
   const user = localStorage.getItem('user');
+
   if (user) {
     return JSON.parse(user!).uid;
   }
   return null;
+}
+
+export const deleteUserLocalStorage = () => {
+  localStorage.clear();
 }

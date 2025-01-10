@@ -41,7 +41,7 @@ const App: React.FC = () => {
               <MuiCssBaseline />
               <StyledComponentsThemeProvider theme={theme}>
                 <Routes>
-                  {["/", "/login"].map((path) => (
+                  {["/login"].map((path) => (
                     <Route key={path} path={path} element={<LoginPage />} />
                   ))}
 
@@ -53,6 +53,7 @@ const App: React.FC = () => {
                       </ProtectedRoute>
                     }
                   >
+                    <Route path="/" element={<DashboardPage />} />
                     <Route path="/dashboard" element={<DashboardPage />} />
                     <Route path="/clubs" element={<ClubsPage />} />
                     <Route path="/round/:roundID" element={<RoundsData />} />
@@ -65,8 +66,10 @@ const App: React.FC = () => {
                   <Route path="/signup" element={<SignupForm />} />
                 </Routes>
 
-                // TODO: consider to add this block
+
+
                 {/* <ToastElement />
+                // TODO: consider to add this block
                   <ErrorDialog /> */}
                 {/* <GeneralErrorDialog
                     isOpen={isOpen}
@@ -75,8 +78,9 @@ const App: React.FC = () => {
                       localStorage.removeItem("error");
                     }}
                   />
+                  // TODO: consider to add this block
                   <DialogConfirm /> */}
-                // TODO: consider to add this block
+
 
               </StyledComponentsThemeProvider>
             </MuiThemeProvider>

@@ -1,4 +1,5 @@
 import { InitialStateUser, IUser } from "@/types/user.types";
+import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getAllRounds } from "../rounds/rounds.slice";
 import { getUserDetailsThunk } from "./user.thunk";
@@ -18,10 +19,11 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    resetRounds: () => initialState,
+    resetUser: () => initialState,
     setLoginUser: (state, { payload }: PayloadAction<IUser>) => {
       state.isLoading = false;
       state.user = payload;
+      state.user.uid = readUserLocalStorage();
     },
   },
   extraReducers: (builder) => {
@@ -29,8 +31,6 @@ const userSlice = createSlice({
       .addCase(getUserDetails.pending, (state) => { state.isLoading = true; })
       .addCase(getUserDetails.fulfilled, (state, { payload }: any) => {
         state.isLoading = false;
-
-        // console.log("payload ---> ", payload)
         state.user = payload;
       })
       .addCase(getUserDetails.rejected, (state, { payload }: any) => {
@@ -51,5 +51,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { resetRounds, setLoginUser } = userSlice.actions;
+export const { resetUser, setLoginUser } = userSlice.actions;
 export default userSlice.reducer;

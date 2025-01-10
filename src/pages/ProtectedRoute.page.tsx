@@ -1,23 +1,19 @@
-import { getUserDetails } from "@/features/user/user.slice";
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import _ from "lodash";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }: any) => {
-  const dispatch = useDispatch<any>();
-  const { user } = useSelector((store: any) => store.user);
+  const navigate = useNavigate();
   const uid = readUserLocalStorage();
-  console.log('USER SHARED LAYOUT', user);
+  const { user, isLoading } = useSelector((store: any) => store.user);
+
   useEffect(() => {
-
-    if (_.isEmpty(user)) {
-      const uid = readUserLocalStorage();
-      dispatch(getUserDetails(uid));
+    if (_.isEmpty(user) && !isLoading && !uid) {
+      navigate("/login");
     }
-
-  }, [user, dispatch]);
+  }, [user])
 
   if (!uid) {
     return <Navigate to="/login"></Navigate>;
