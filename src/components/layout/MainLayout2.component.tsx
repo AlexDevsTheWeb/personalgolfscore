@@ -17,7 +17,7 @@ import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from './Footer.component';
-
+import User from './User.component';
 
 interface Props {
   /**
@@ -26,7 +26,6 @@ interface Props {
    */
   window?: () => Window;
 }
-
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
@@ -126,7 +125,10 @@ export default function DrawerAppBar(props: Props) {
                     </ListItem>
                   );
                 })}
+                <User />
               </List>
+
+
             </Box>
           </Toolbar>
         </AppBar>
@@ -166,6 +168,7 @@ const StyledBox = styled(Box)<BoxProps>((props) => (({
   flexDirection: 'column',
   justifyContent: 'space-between', height: '100vh'
 })));
+
 const BoxFooter: React.FC<BoxProps> = props => {
   return (
     <StyledBox {...props}>{props.children}</StyledBox>

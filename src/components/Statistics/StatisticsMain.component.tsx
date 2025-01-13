@@ -1,25 +1,24 @@
-import { getAllRoundsTotals } from '@/features/rounds/roundsTotals.slice';
 import { RootState } from '@/store/store';
 import { IRoundTotals } from '@/types/roundTotals.types';
 import { allRoundsCalculator } from '@/utils/calculator/AllRoundsCalculator.utils';
 import { initialStateRoundTotals } from '@/utils/constant.utils';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import Spinner from '../spinner/Spinner.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 
 const StatisticsMain = () => {
 
-  const dispatch = useDispatch<any>();
-  const { roundsTotals } = useSelector((store: RootState) => store.roundsNumber.roundsTotals.roundsTotals);
+  const { roundsTotals: { roundsTotals } } = useSelector((store: RootState) => store.roundsNumber.roundsTotals);
   const [newTotals, setNewTotals] = useState<IRoundTotals>(initialStateRoundTotals);
+
+  if (roundsTotals.length === 1) {
+    return <Spinner />
+  }
+
   useEffect(() => {
-    if (roundsTotals.length < 1) {
-      dispatch(getAllRoundsTotals(""));
-    }
-    else {
-      setNewTotals(allRoundsCalculator(roundsTotals));
-    }
-  }, [roundsTotals, dispatch]);
+    setNewTotals(allRoundsCalculator(roundsTotals));
+  }, [roundsTotals]);
 
   return (
     <HolebyHoleTotals roundTotals={newTotals} dashboard={true} />

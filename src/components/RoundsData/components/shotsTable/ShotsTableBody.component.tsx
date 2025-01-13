@@ -12,6 +12,7 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
 
   const { holeNumber, par, strokes, points, fairway, gir, girBogey, upDown, putts, sand, scramble, out, water } = shot;
 
+
   const vspar = useGetVsPar(strokes, par, true);
 
   return (

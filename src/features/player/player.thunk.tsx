@@ -1,11 +1,18 @@
-import authFetch, { checkForUnauthorizedResponse } from "@/utils/axios/axiox.utils";
+import { db } from "@/utils/firebase/firebase.utils";
+import { collection, documentId, getDocs, query, where } from "firebase/firestore";
 
-export const getPlayerInfoThunk = async (thunkAPI: any) => {
-  let playerURL = `/data/player.json`;
-  try {
-    const response = await authFetch.get(playerURL);
-    return response.data;
-  } catch (error) {
-    return checkForUnauthorizedResponse(error, thunkAPI);
-  }
+export const getPlayerInfoThunk = async (uid: string, thunkAPI: any) => {
+
+  const booksRef = collection(db, 'players')
+  const q = query(booksRef, where(documentId(), '==', uid))
+
+  const querySnapshot = await getDocs(q);
+  const x = querySnapshot.docs.map((doc) => {
+    return {
+      ...doc.data(),
+      uid: doc.id
+    };
+  }) as any;
+
+  return x.pop();
 };

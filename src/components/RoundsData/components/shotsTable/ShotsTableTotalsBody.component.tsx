@@ -6,17 +6,14 @@ import { formatPerc } from "@/utils/number/number.utils";
 import { correctVsParString } from "@/utils/shots/shots.utils";
 import { Divider, Grid, Stack, TableBody, Typography } from "@mui/material";
 
-const ShotsTableTotalsBody = ({ firstColumn, roundTotals, dashboard }: IShotsTableProps) => {
-
-  const { mainData: { coursePar }, score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = roundTotals;
+const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) => {
+  const { score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out } = roundTotals;
   const { correctScore, correctScoreIN, correctScoreOUT } = correctVsParString(score);
 
   return (
     <TableBody>
       <TableRow key={'last'}>
         {firstColumn && <TableCell align='center'>{''}</TableCell>}
-        {!dashboard && <TableCell align='center'>{coursePar}</TableCell>}
-
         <TableCell align='center'>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={4}>

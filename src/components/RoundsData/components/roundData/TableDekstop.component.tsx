@@ -3,11 +3,12 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import ShotsTableHeaderStack from "../shotsTable/ShotsTableHeaderStack.component";
 
 const TableDekstop = ({ round }: IRoundMainDataProp) => {
-  const { roundCourse, roundDate, roundHoles, roundPar, roundTee, roundPlayingHCP, roundStrokes } = round
+  const { general: { roundCourse, roundDate, coursePar, roundTee, playerHCP }, holes, totals } = round
 
+  const roundStrokes = totals.score.totals;
   const score = roundStrokes;
-  const overParNet = roundStrokes - roundPar;
-  const overParGross = roundStrokes - (roundPar + roundPlayingHCP);
+  const overParNet = roundStrokes - coursePar;
+  const overParGross = roundStrokes - (coursePar + playerHCP);
   const overParNetString = overParNet > 0 ? `+${overParNet}` : `${overParNet}`;
   const overParGrossString = overParGross > 0 ? `+${overParGross}` : `${overParGross}`;
 
@@ -46,24 +47,24 @@ const TableDekstop = ({ round }: IRoundMainDataProp) => {
               <Typography>{roundCourse}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{roundDate}</Typography>
+              <Typography>{roundDate.toString()}</Typography>
             </TableCell>
             <TableCell align='center'>
               <Typography>{roundTee}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{roundHoles}</Typography>
+              <Typography>{holes.length}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{roundPar}</Typography>
+              <Typography>{coursePar}</Typography>
             </TableCell>
             <TableCell align='center'>
-              <Typography>{roundPlayingHCP}</Typography>
+              <Typography>{playerHCP}</Typography>
             </TableCell>
             <TableCell align='center'>
               <Typography fontWeight={'bold'}
                 sx={{
-                  backgroundColor: roundStrokes <= roundPar + roundPlayingHCP ? '#82b38b' : '#cf8484',
+                  backgroundColor: roundStrokes <= coursePar + playerHCP ? '#82b38b' : '#cf8484',
                   padding: '5px !important'
                 }}
               >{`${score} | ${overParNetString} | ${overParGrossString}`}</Typography>

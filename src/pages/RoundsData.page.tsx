@@ -1,29 +1,25 @@
-import { Typography } from '@mui/material';
+import Spinner from '@/components/spinner/Spinner.component';
+import { getAllRounds } from '@/features/rounds/rounds.slice';
+import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import RoundsDataMain from '../components/RoundsData/RoundsDataMain.component';
-import { getSingleRoundHoles } from '../features/round/roundHoles.slice';
-import { getSingleRoundTotals } from '../features/round/roundTotals.slice';
-import { getAllRounds } from '../features/rounds/rounds.slice';
 import { RootState } from '../store/store';
 
 const RoundsData = () => {
   const dispatch = useDispatch<any>();
-  const params = useParams();
 
-  const { roundHoles: { holes } } = useSelector((store: RootState) => store.singleRound);
+  const { rounds } = useSelector((store: RootState) => store.rounds);
+  const uid = readUserLocalStorage();
 
   useEffect(() => {
-    if (holes.length === 0) {
-      dispatch(getAllRounds(""));
-      dispatch(getSingleRoundHoles(params.roundID));
-      dispatch(getSingleRoundTotals(params.roundID));
+    if (rounds.length === 0) {
+      dispatch(getAllRounds(uid));
     }
-  }, [params.roundID, holes, dispatch]);
+  }, [rounds])
 
-  if (holes.length === 0) {
-    return <Typography>Loading...</Typography>
+  if (rounds.length === 0) {
+    return <Spinner />
   }
 
   return (

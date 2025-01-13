@@ -22,12 +22,6 @@ const ShotsTableHeader = ({ firstColumn, singleHole, dashboard }: IShotsTableHea
                 <ShotsTableHeaderStack firstRow='#' secondRow={!!singleHole ? '' : ''} />
               </TableCell>
             }
-            {
-              !dashboard &&
-              <TableCell align='center'>
-                <ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} />
-              </TableCell>
-            }
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='score' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
@@ -46,12 +40,6 @@ const ShotsTableHeader = ({ firstColumn, singleHole, dashboard }: IShotsTableHea
               firstColumn &&
               <TableCell align='center'>
                 <ShotsTableHeaderStack firstRow='#' secondRow={!!singleHole ? '' : ''} />
-              </TableCell>
-            }
-            {
-              !dashboard &&
-              <TableCell align='center'>
-                <ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} />
               </TableCell>
             }
             <TableCell align='center'>

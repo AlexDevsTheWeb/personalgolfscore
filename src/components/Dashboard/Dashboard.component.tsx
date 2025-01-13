@@ -1,9 +1,9 @@
-import { getPlayerDetails } from "@/features/player/player.slice"
-import { getAllRoundsData } from "@/features/rounds/roundsData.slice"
+import { getAllRounds } from "@/features/rounds/rounds.slice"
 import { getAllRoundsTotals } from "@/features/rounds/roundsTotals.slice"
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
 import { RootState } from "@/store/store"
 import BoxBetween from "@/styles/box/BoxBetween.styles"
+import { readUserLocalStorage } from "@/utils/storage/localStorage.utils"
 import { Box, Button } from "@mui/material"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -14,9 +14,11 @@ import PlayerDesktop from "./components/PlayerDesktop.component"
 import PlayerMobile from "./components/PlayerMobile.component"
 
 const Dashboard = () => {
-  const { player } = useSelector((store: RootState) => store.player);
-  const dispatch = useDispatch<any>();
   const navigate = useNavigate();
+  const dispatch = useDispatch<any>();
+  const { player } = useSelector((store: RootState) => store.player);
+  const uid = readUserLocalStorage();
+
 
   const handleClickStatistic = () => {
     navigate(`/statistics`);
@@ -25,12 +27,13 @@ const Dashboard = () => {
     navigate('/addNewRound')
   }
   useEffect(() => {
-    dispatch(getPlayerDetails(""))
-    dispatch(getAllRoundsData(""))
-    dispatch(getAllRoundsTotals(""))
+    // dispatch(getAllRoundsData(""))
+    dispatch(getAllRoundsTotals(uid))
+    dispatch(getAllRounds(uid));
   }, []);
 
   return (
+
     <BoxBetween>
       {
         !useDeviceDetection().isMobile ?

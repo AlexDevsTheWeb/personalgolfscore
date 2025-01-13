@@ -34,20 +34,20 @@ const RoundsTable = () => {
         </TableHead>
         <TableBody>
           {rounds.map((round) => {
-            const { roundID, roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundStrokes } = round;
+            // const { roundID, roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundStrokes } = round;
             return (
-              <TableRow key={roundID}>
+              <TableRow key={round.general.roundID}>
                 <TableCell component="th" scope="row" align='center'>
-                  {roundDate}
+                  {/* {round.general.roundDate} */}
                 </TableCell>
-                <TableCell align='left'>{roundCourse}</TableCell>
-                <TableCell align='left'>{roundTee}</TableCell>
-                <TableCell align='center'>{roundHoles}</TableCell>
-                <TableCell align='center'>{roundPar}</TableCell>
-                <TableCell align='center'>{roundPlayingHCP}</TableCell>
-                <TableCell align='center'>{roundStrokes}</TableCell>
+                <TableCell align='left'>{round.general.roundCourse}</TableCell>
+                <TableCell align='left'>{round.general.roundTee}</TableCell>
+                <TableCell align='center'>{round.holes.length}</TableCell>
+                <TableCell align='center'>{round.general.coursePar}</TableCell>
+                <TableCell align='center'>{round.general.playerHCP}</TableCell>
+                <TableCell align='center'>{round.totals.score.totals}</TableCell>
                 <TableCell align={'right'} width={1}>
-                  <Button onClick={() => handleClick(roundID)} >
+                  <Button onClick={() => handleClick(round.general.roundID.toString())}>
                     <ArrowCircleRightRoundedIcon />
                   </Button>
                 </TableCell>
