@@ -1,25 +1,20 @@
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../utils/firebase/firebase.utils";
-import { setLoginUser } from "./user.slice";
+import { IUser } from "@/types/user.types";
+import { db } from "@/utils/firebase/firebase.utils";
+import { collection, documentId, getDocs, query, where } from "firebase/firestore";
 
 export const getUserDetailsThunk = async (uid: string, thunkAPI: any) => {
-  const fetchData = async () => {
-    try {
-      const docRef = doc(db, 'users', uid);
-      const docSnap = await getDoc(docRef);
+  const booksRef = collection(db, 'users')
+  const q = query(booksRef, where(documentId(), '==', uid))
 
-      if (!docSnap.exists()) {
-        return null;
-      }
+  const querySnapshot = await getDocs(q);
 
-      thunkAPI.dispatch(setLoginUser(docSnap.data()));
+  const response = querySnapshot.docs.map((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    return {
+      ...doc.data(),
+      uid: doc.id
+    };
+  }) as IUser[];
 
-      return docSnap.data();
-
-    } catch (error) {
-      console.error("Error getting document:", error);
-    }
-  };
-
-  fetchData();
+  return response.pop();
 };

@@ -24,6 +24,7 @@ const LoginForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     const auth = getAuth();
     try {
       const docSnap = await login(auth, email, password);
+
       if (docSnap) {
         writeUserLocalStorage({ uid: docSnap.id })
         const user: IUser = {

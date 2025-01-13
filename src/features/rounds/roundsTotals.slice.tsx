@@ -19,9 +19,6 @@ const roundsTotalsSlice = createSlice({
   name: "roundsTotals",
   initialState,
   reducers: {
-    // setManualTotals: (state: any, { payload }: any) => {
-    //   state.roundTotals = payload;
-    // },
     setRoundsTotals: (state, { payload }: PayloadAction<any>) => {
       state.isLoading = false;
       state.roundsTotals = payload;
@@ -33,10 +30,14 @@ const roundsTotalsSlice = createSlice({
       .addCase(getAllRoundsTotals.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllRoundsTotals.fulfilled, (state, payload: any) => {
+      .addCase(getAllRoundsTotals.fulfilled, (state, { payload }: PayloadAction<any>) => {
         state.isLoading = false;
-        console.log("payload: ", payload);
-        // state.roundsTotals = payload;
+        const newPayload = {
+          roundsTotals: payload.roundsTotals.map((rt: any) => {
+            return JSON.parse(rt);
+          })
+        };
+        state.roundsTotals = newPayload;
       })
       .addCase(getAllRoundsTotals.rejected, (state, { payload }: any) => {
         state.isLoading = false;

@@ -1,34 +1,18 @@
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../utils/firebase/firebase.utils";
-import { setPlayer } from "./player.slice";
-
+import { db } from "@/utils/firebase/firebase.utils";
+import { collection, documentId, getDocs, query, where } from "firebase/firestore";
 
 export const getPlayerInfoThunk = async (uid: string, thunkAPI: any) => {
-  // let playerURL = `/data/player.json`;
-  // try {
-  //   const response = await authFetch.get(playerURL);
-  //   return response.data;
-  // } catch (error) {
-  //   return checkForUnauthorizedResponse(error, thunkAPI);
-  // }
 
-  const fetchData = async () => {
-    try {
-      const docRef = doc(db, 'players', uid);
-      const docSnap = await getDoc(docRef);
+  const booksRef = collection(db, 'players')
+  const q = query(booksRef, where(documentId(), '==', uid))
 
-      if (!docSnap.exists()) {
-        return null;
-      }
+  const querySnapshot = await getDocs(q);
+  const x = querySnapshot.docs.map((doc) => {
+    return {
+      ...doc.data(),
+      uid: doc.id
+    };
+  }) as any;
 
-      thunkAPI.dispatch(setPlayer(docSnap.data()));
-
-      return true;
-
-    } catch (error) {
-      console.error("Error getting document:", error);
-    }
-  };
-
-  fetchData();
+  return x.pop();
 };

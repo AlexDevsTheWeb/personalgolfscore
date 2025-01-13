@@ -19,7 +19,6 @@ const GoogleLoginButton = () => {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
       const userDocRef = doc(db, 'users', user.uid);
       const docSnap = await getDoc(userDocRef);
 
@@ -38,7 +37,7 @@ const GoogleLoginButton = () => {
         navigate('/dashboard');
       }
     } catch (error) {
-      console.log("ERROR LOGGIN IN WITH GOOGLE: ", error)
+      console.log(error)
     }
   }
 

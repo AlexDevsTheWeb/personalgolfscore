@@ -1,9 +1,9 @@
-import { getPlayerDetails } from "@/features/player/player.slice"
 import { getAllRoundsData } from "@/features/rounds/roundsData.slice"
 import { getAllRoundsTotals } from "@/features/rounds/roundsTotals.slice"
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
 import { RootState } from "@/store/store"
 import BoxBetween from "@/styles/box/BoxBetween.styles"
+import { readUserLocalStorage } from "@/utils/storage/localStorage.utils"
 import { Box, Button } from "@mui/material"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -17,8 +17,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
   const { player } = useSelector((store: RootState) => store.player);
-
-
+  const uid = readUserLocalStorage();
 
 
   const handleClickStatistic = () => {
@@ -28,9 +27,8 @@ const Dashboard = () => {
     navigate('/addNewRound')
   }
   useEffect(() => {
-    dispatch(getPlayerDetails("RdlAtzFQmTZFJy812wwOCcovt0L2"))
     dispatch(getAllRoundsData(""))
-    dispatch(getAllRoundsTotals(""))
+    dispatch(getAllRoundsTotals(uid))
   }, []);
 
   return (

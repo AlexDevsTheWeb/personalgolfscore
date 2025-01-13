@@ -4,7 +4,7 @@
 import axios from "axios";
 
 const authFetch = axios.create({
-  // baseURL: import.meta.env.REACT_APP_API_URL,
+  baseURL: `${import.meta.env.VITE_APP_URL}${import.meta.env.VITE_APP_PROJECT_ID}${import.meta.env.VITE_APP_DB_URL}`
 });
 
 // authFetch.interceptors.request.use(

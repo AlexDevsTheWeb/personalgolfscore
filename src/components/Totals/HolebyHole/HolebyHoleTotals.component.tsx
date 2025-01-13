@@ -48,7 +48,6 @@ const HolebyHoleTotals = ({ roundTotals, dashboard }: IRoundTotalsProps) => {
   };
 
   if (_.isEmpty(roundTotals)) {
-    console.log("roundsTotals: ", roundTotals);
     return <Spinner />
   }
 
