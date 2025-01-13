@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs"
 import { IDistance, IShots } from "./roundData.types"
 import { IRoundTotals } from "./roundTotals.types"
 
@@ -14,14 +15,27 @@ interface IState {
 }
 
 export interface IRounds {
-  roundID: string,
-  roundDate: string,
+  // roundID: string,
+  // roundDate: string,
+  // roundCourse: string,
+  // roundHoles: number,
+  // roundTee: string,
+  // roundPar: number,
+  // roundPlayingHCP: number,
+  // roundStrokes: number
+  general: IRoundGeneral,
+  holes: any,
+  totals: any
+}
+
+interface IRoundGeneral {
+  roundID: number,
   roundCourse: string,
-  roundHoles: number,
+  roundDate: Dayjs,
+  roundNumber: number,
   roundTee: string,
-  roundPar: number,
-  roundPlayingHCP: number,
-  roundStrokes: number
+  coursePar: number,
+  playerHCP: number
 }
 
 export type InitialStateRounds = {

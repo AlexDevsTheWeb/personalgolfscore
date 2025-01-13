@@ -1,4 +1,4 @@
-import { getAllRoundsData } from "@/features/rounds/roundsData.slice"
+import { getAllRounds } from "@/features/rounds/rounds.slice"
 import { getAllRoundsTotals } from "@/features/rounds/roundsTotals.slice"
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
 import { RootState } from "@/store/store"
@@ -27,8 +27,9 @@ const Dashboard = () => {
     navigate('/addNewRound')
   }
   useEffect(() => {
-    dispatch(getAllRoundsData(""))
+    // dispatch(getAllRoundsData(""))
     dispatch(getAllRoundsTotals(uid))
+    dispatch(getAllRounds(uid));
   }, []);
 
   return (
