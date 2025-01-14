@@ -6,15 +6,14 @@ import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { SitemarkIcon } from '../../assets/CustomIcons.assets';
 import GoogleLoginButton from './components/GoogleLoginButton.component';
 import LoginForm from './components/LoginForm.component';
 // import { FacebookIcon, GoogleIcon, SitemarkIcon } from './CustomIcons';
 // import ForgotPassword from './ForgotPassword';
 // import AppTheme from './theme/AppTheme';
 // import ColorModeSelect from './theme/ColorModeSelect';
+import Logo from '../../../public/icons8-golf-67.png';
 
 const SignIn = (props: { disableCustomTheme?: boolean }) => {
   // const [emailError, setEmailError] = React.useState(false);
@@ -24,16 +23,6 @@ const SignIn = (props: { disableCustomTheme?: boolean }) => {
 
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
 
   // TODO: remove this, is useless
   const handleLoginSuccess = () => {
@@ -48,7 +37,13 @@ const SignIn = (props: { disableCustomTheme?: boolean }) => {
       <SigninContainer direction="column" justifyContent="space-between">
         {/* <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} /> */}
         <LoginCard variant="outlined">
-          <SitemarkIcon />
+          {/* <SitemarkIcon /> */}
+          <Box
+            sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'center' }}>
+            <img src={Logo} style={{ width: '50px' }} />
+            <Typography>Personal Golf Score</Typography>
+          </Box>
+
           <Typography
             component="h1"
 
@@ -66,8 +61,7 @@ const SignIn = (props: { disableCustomTheme?: boolean }) => {
             <Typography sx={{ textAlign: 'center' }}>
               Don&apos;t have an account?{' '}
               <Link
-                href="/material-ui/getting-started/templates/sign-in/"
-
+                href="/signup"
                 sx={{ alignSelf: 'center' }}
               >
                 Sign up
@@ -75,7 +69,7 @@ const SignIn = (props: { disableCustomTheme?: boolean }) => {
             </Typography>
           </Box>
         </LoginCard>
-      </SigninContainer>
+      </SigninContainer >
       {/* </AppTheme>
     */}
     </>
