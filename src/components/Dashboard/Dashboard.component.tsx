@@ -1,13 +1,8 @@
-import { getAllRounds } from "@/features/rounds/rounds.slice"
-import { getAllRoundsTotals } from "@/features/rounds/roundsTotals.slice"
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
 import { RootState } from "@/store/store"
 import BoxBetween from "@/styles/box/BoxBetween.styles"
-import { readUserLocalStorage } from "@/utils/storage/localStorage.utils"
 import { Box, Button } from "@mui/material"
-import { getAuth } from "firebase/auth"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Rounds from "../Rounds/Rounds.component"
 import StatisticsMain from "../Statistics/StatisticsMain.component"
@@ -16,10 +11,7 @@ import PlayerMobile from "./components/PlayerMobile.component"
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<any>();
   const { player } = useSelector((store: RootState) => store.player);
-  const uid = readUserLocalStorage();
-  const auth = getAuth();
 
   const handleClickStatistic = () => {
     navigate(`/statistics`);
@@ -27,14 +19,6 @@ const Dashboard = () => {
   const handleAddNewRound = () => {
     navigate('/addNewRound')
   }
-  useEffect(() => {
-    if (auth) {
-      // dispatch(getAllRoundsData(""))
-      dispatch(getAllRoundsTotals(uid))
-      dispatch(getAllRounds(uid));
-    }
-  }, [uid]);
-
 
   return (
     <BoxBetween>

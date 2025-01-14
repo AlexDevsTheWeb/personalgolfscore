@@ -1,3 +1,4 @@
 export interface IControls {
-  showDistances: boolean
+  showDistances: boolean,
+  isLoading: boolean,
 }
