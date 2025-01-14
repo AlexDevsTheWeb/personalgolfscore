@@ -105,7 +105,7 @@ export default function SignupForm() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to="/signin">
+              <Link to="/login">
                 Already have an account? Sign in
               </Link>
             </Grid>
