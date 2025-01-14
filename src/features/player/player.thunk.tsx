@@ -7,12 +7,12 @@ export const getPlayerInfoThunk = async (uid: string, thunkAPI: any) => {
   const q = query(booksRef, where(documentId(), '==', uid))
 
   const querySnapshot = await getDocs(q);
-  const x = querySnapshot.docs.map((doc) => {
+  const response = querySnapshot.docs.map((doc) => {
     return {
       ...doc.data(),
       uid: doc.id
     };
   }) as any;
 
-  return x.pop();
+  return response.pop();
 };

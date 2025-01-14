@@ -5,6 +5,7 @@ import { RootState } from "@/store/store"
 import BoxBetween from "@/styles/box/BoxBetween.styles"
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils"
 import { Box, Button } from "@mui/material"
+import { getAuth } from "firebase/auth"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -18,7 +19,7 @@ const Dashboard = () => {
   const dispatch = useDispatch<any>();
   const { player } = useSelector((store: RootState) => store.player);
   const uid = readUserLocalStorage();
-
+  const auth = getAuth();
 
   const handleClickStatistic = () => {
     navigate(`/statistics`);
@@ -27,13 +28,15 @@ const Dashboard = () => {
     navigate('/addNewRound')
   }
   useEffect(() => {
-    // dispatch(getAllRoundsData(""))
-    dispatch(getAllRoundsTotals(uid))
-    dispatch(getAllRounds(uid));
-  }, []);
+    if (auth) {
+      // dispatch(getAllRoundsData(""))
+      dispatch(getAllRoundsTotals(uid))
+      dispatch(getAllRounds(uid));
+    }
+  }, [uid]);
+
 
   return (
-
     <BoxBetween>
       {
         !useDeviceDetection().isMobile ?

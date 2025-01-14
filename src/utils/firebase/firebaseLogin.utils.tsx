@@ -8,7 +8,7 @@ export const login = async (auth: Auth, email: string, password: string) => {
     const result = await signInWithEmailAndPassword(auth, email, password);
     const user = result.user;
 
-    const userDocRef = doc(db, 'users', user.uid);
+    const userDocRef = doc(db, 'players', user.uid);
     const docSnap = await getDoc(userDocRef);
 
     if (docSnap.exists()) {

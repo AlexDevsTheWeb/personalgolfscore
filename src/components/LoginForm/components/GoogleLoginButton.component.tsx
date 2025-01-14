@@ -2,10 +2,12 @@ import { setLoginUser } from "@/features/user/user.slice";
 import { IUser } from "@/types/user.types";
 import { db } from "@/utils/firebase/firebase.utils";
 import { writeUserLocalStorage } from "@/utils/storage/localStorage.utils";
+import { Button } from "@mui/material";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { GoogleIcon } from "../../../assets/CustomIcons.assets";
 
 const GoogleLoginButton = () => {
 
@@ -19,20 +21,35 @@ const GoogleLoginButton = () => {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      const userDocRef = doc(db, 'users', user.uid);
+
+
+      const photoURL = result.user.photoURL;
+      const userDocRef = doc(db, 'players', user.uid);
       const docSnap = await getDoc(userDocRef);
+
+
 
       if (!docSnap.exists()) {
         navigate('/login');
       }
       else {
+
+        const userRef = doc(db, "players", docSnap.id);
+
+        await updateDoc(userRef, {
+          "photoURL": photoURL as string
+        });
+
+        debugger;
         writeUserLocalStorage({ uid: docSnap.id })
         const user: IUser = {
           displayName: docSnap?.data().displayName,
           email: docSnap?.data().email,
-          photoURL: result?.user.photoURL as string,
+          photoURL: photoURL as string,
           uid: docSnap.id,
         };
+
+        console.log("user -> ", user);
         dispatch(setLoginUser(user));
         navigate('/dashboard');
       }
@@ -43,11 +60,15 @@ const GoogleLoginButton = () => {
 
 
   return (
-    <div>
-
-      <button onClick={handleGoogleLogin}>Sign in with Google</button>
-
-    </div>
+    <Button
+      fullWidth
+      variant="outlined"
+      onClick={handleGoogleLogin}
+      startIcon={<GoogleIcon />}
+      sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
+    >
+      Sign in with Google
+    </Button>
   );
 };
 
