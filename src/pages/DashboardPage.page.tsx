@@ -3,7 +3,6 @@ import Spinner from "@/components/spinner/Spinner.component";
 import { setIsLoading } from "@/features/app/controls.slice";
 import { getPlayerDetails } from "@/features/player/player.slice";
 import { getAllRounds } from "@/features/rounds/rounds.slice";
-import { getAllRoundsTotals } from "@/features/rounds/roundsTotals.slice";
 import { getUserDetails } from "@/features/user/user.slice";
 import { RootState } from "@/store/store";
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
@@ -11,10 +10,12 @@ import { getAuth } from "@firebase/auth";
 import _ from "lodash";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
-  const { isLoading } = useSelector((store: RootState) => store.controls);
+  const navigate = useNavigate();
   const dispatch = useDispatch<any>();
+  const { isLoading } = useSelector((store: RootState) => store.controls);
   const uid = readUserLocalStorage();
   const auth = getAuth();
 
@@ -24,14 +25,18 @@ const DashboardPage = () => {
         dispatch(setIsLoading(true));
         dispatch(getUserDetails(uid));
         dispatch(getPlayerDetails(uid));
-        dispatch(getAllRoundsTotals(uid));
         dispatch(getAllRounds(uid));
+        // dispatch(getAllRoundsTotals(uid));
         dispatch(setIsLoading(false));
       }
     }
   }, [uid]);
 
-  if (!uid || _.isNull(auth) || !!isLoading) {
+  if (_.isNull(auth)) {
+    navigate('/login')
+  }
+
+  if (!uid || !!isLoading) {
     return <Spinner />
   }
 

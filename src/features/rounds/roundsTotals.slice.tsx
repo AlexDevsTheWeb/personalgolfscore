@@ -28,16 +28,20 @@ const roundsTotalsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllRoundsTotals.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = false;
       })
       .addCase(getAllRoundsTotals.fulfilled, (state, { payload }: PayloadAction<any>) => {
         state.isLoading = false;
-        const newPayload = {
-          roundsTotals: payload.roundsTotals.map((rt: any) => {
-            return JSON.parse(rt);
-          })
-        };
-        state.roundsTotals = newPayload;
+        if (payload.length > 0) {
+          state.roundsTotals = {
+            roundsTotals: payload.roundsTotals.map((rt: any) => {
+              return JSON.parse(rt);
+            })
+          };
+        }
+        else {
+          state.roundsTotals = payload;
+        }
       })
       .addCase(getAllRoundsTotals.rejected, (state, { payload }: any) => {
         state.isLoading = false;

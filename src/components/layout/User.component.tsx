@@ -5,14 +5,13 @@ import { stringAvatar } from "@/utils/user/user.utils";
 import { Logout, Settings } from "@mui/icons-material";
 import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Stack, Tooltip } from "@mui/material";
 import { getAuth, signOut } from "firebase/auth";
+import _ from "lodash";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const User = () => {
   const dispatch = useDispatch<any>();
   const { user, isLoading } = useSelector((store: any) => store.user);
-
-
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -38,14 +37,10 @@ const User = () => {
 
   };
 
-
-
   return (
-    !!isLoading
+    !!isLoading || _.isUndefined(user.photoURL)
       ? <Skeleton variant="circular" width={40} height={40} />
-      :
-
-      <Box>
+      : <Box>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -56,9 +51,9 @@ const User = () => {
             aria-expanded={open ? 'true' : undefined}
           >
             {
-              user?.photoURL === ''
-                ? <Avatar alt={user?.displayName}{...stringAvatar(user?.displayName)} />
-                : <Avatar alt={user?.displayName} src={user?.photoURL} />
+              user?.photoURL === '' || _.isUndefined(user.photoURL)
+                ? <Avatar alt={user.displayName}{...stringAvatar(user.displayName)} />
+                : <Avatar alt={user.displayName} src={user.photoURL} />
             }
           </IconButton>
         </Tooltip>
@@ -99,15 +94,12 @@ const User = () => {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-
           <MenuItem onClick={handleClose}>
             <Stack sx={{ gap: 1, justifyContent: 'center', alignItems: 'center' }}>
               <Typography variant='headline2'>
                 {user?.displayName}
               </Typography>
             </Stack>
-
-
           </MenuItem>
 
           <Divider />
@@ -118,8 +110,6 @@ const User = () => {
             </ListItemIcon>
             Settings
           </MenuItem>
-
-
           <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <Logout fontSize="small" />
@@ -128,7 +118,6 @@ const User = () => {
           </MenuItem>
         </Menu>
       </Box>
-
   )
 }
 
