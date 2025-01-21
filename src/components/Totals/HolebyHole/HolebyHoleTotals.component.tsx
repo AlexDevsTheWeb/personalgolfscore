@@ -39,7 +39,7 @@ function a11yProps(index: number) {
   };
 }
 
-const HolebyHoleTotals = ({ roundTotals, dashboard }: IRoundTotalsProps) => {
+const HolebyHoleTotals = ({ roundTotals, dashboard, par }: IRoundTotalsProps) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -74,7 +74,7 @@ const HolebyHoleTotals = ({ roundTotals, dashboard }: IRoundTotalsProps) => {
       </AppBar>
 
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <HolebyHoleGeneral roundTotals={roundTotals} dashboard={dashboard} />
+        <HolebyHoleGeneral roundTotals={roundTotals} dashboard={dashboard} par={par} />
       </TabPanel>
 
       <TabPanel value={value} index={1} dir={theme.direction}>

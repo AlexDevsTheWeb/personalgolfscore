@@ -32,7 +32,7 @@ const ShotsTableHeaderStack = ({ firstRow, secondRow }: IShotsTableHeaderStack) 
         }),
       }}
     >
-      <Typography fontWeight={'bold'}>{firstRow}</Typography>
+      <Typography fontWeight={'bold'} sx={{ textAlign: 'center', padding: 1 }}>{firstRow}</Typography>
       {secondRow !== '' && <Typography sx={{ fontSize: useDeviceDetection().isMobile ? '10px' : '12px' }}>{secondRow}</Typography>}
     </Stack>
   )

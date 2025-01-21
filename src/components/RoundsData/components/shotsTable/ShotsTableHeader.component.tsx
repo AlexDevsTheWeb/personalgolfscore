@@ -23,6 +23,9 @@ const ShotsTableHeader = ({ firstColumn, singleHole, dashboard }: IShotsTableHea
               </TableCell>
             }
             <TableCell align='center'>
+              <ShotsTableHeaderStack firstRow='Par' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
+            </TableCell>
+            <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='score' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
             <TableCell align='center'>

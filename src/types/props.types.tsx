@@ -11,6 +11,7 @@ export interface TabPanelProps {
 
 export interface IRoundTotalsProps {
   dashboard?: boolean,
+  par?: number,
   roundTotals: IRoundTotals;
 }
 interface IAllRoundsTotalsProps {

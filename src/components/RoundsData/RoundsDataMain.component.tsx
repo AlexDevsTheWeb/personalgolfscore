@@ -3,7 +3,9 @@ import BoxBetween from '@/styles/box/BoxBetween.styles';
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
 import Spinner from '../spinner/Spinner.component';
+import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import RoundsDataHeader from './components/roundData/RoundsDataHeader.component';
 
 const RoundsDataMain = () => {
@@ -26,8 +28,8 @@ const RoundsDataMain = () => {
     <BoxBetween sx={{ width: '100%' }}>
       <RoundsDataHeader round={round} />
 
-      {/* {round.holes.length > 0 && <HolebyHoleTotals roundTotals={round.totals} />} */}
-      {/* {round.holes.length > 0 && <HolebyHoleTable holes={round.holes} />} */}
+      {round.holes.length > 0 && <HolebyHoleTotals roundTotals={round.totals} par={round.general.coursePar} />}
+      {round.holes.length > 0 && <HolebyHoleTable holes={round.holes} />}
     </BoxBetween>
   )
 }

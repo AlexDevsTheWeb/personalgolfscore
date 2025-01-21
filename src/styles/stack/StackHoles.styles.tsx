@@ -5,13 +5,7 @@ import styled from 'styled-components';
 
 type StackProps = StackPropsMui & {
   name: string,
-  value?: string | number,
-  scoreValue?: {
-    score: number,
-    overParNetString: string,
-    overParGrossString: string
-  },
-  underPar?: boolean
+  value: string | number,
 };
 
 const StyledStack = styled(StackMui)<StackProps>(() => ({
@@ -19,31 +13,14 @@ const StyledStack = styled(StackMui)<StackProps>(() => ({
 }));
 
 const StackHoles: React.FC<StackProps> = props => {
-
-  const { name, value, underPar, scoreValue } = props;
+  const { name, value } = props;
 
   return (
     <StyledStack {...props}>
-      <ShotsTableHeaderStack firstRow={name} secondRow={name === 'Score' ? 'TOT | NET | GROSS' : ''} />
-      {
-        name === 'Score'
-          ? <Typography
-            fontWeight={'bold'}
-            sx={{
-              backgroundColor: !!underPar ? '#82b38b' : '#cf8484',
-              padding: '5px !important',
-              textAlign: 'center'
-            }}
-          >
-            {`${scoreValue?.score} | ${scoreValue?.overParNetString} | ${scoreValue?.overParGrossString}`}
-          </Typography>
-          :
-          <Typography
-            sx={{ padding: '5px !important', textAlign: 'center' }}
-          >
-            {value}
-          </Typography>
-      }
+      <ShotsTableHeaderStack firstRow={name} secondRow={''} />
+      <Typography sx={{ padding: '2px !important', textAlign: 'center', }}>
+        {value}
+      </Typography>
     </StyledStack>
   )
 };
