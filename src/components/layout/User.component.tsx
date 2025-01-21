@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const User = () => {
   const dispatch = useDispatch<any>();
-  const { user, isLoading } = useSelector((store: any) => store.user);
+  const { user } = useSelector((store: any) => store.user);
+  const { player, isLoading } = useSelector((store: any) => store.player);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -38,7 +39,7 @@ const User = () => {
   };
 
   return (
-    !!isLoading || _.isUndefined(user.photoURL)
+    !!isLoading || _.isUndefined(player.photoURL)
       ? <Skeleton variant="circular" width={40} height={40} />
       : <Box>
         <Tooltip title="Account settings">
@@ -51,9 +52,9 @@ const User = () => {
             aria-expanded={open ? 'true' : undefined}
           >
             {
-              user?.photoURL === '' || _.isUndefined(user.photoURL)
-                ? <Avatar alt={user.displayName}{...stringAvatar(user.displayName)} />
-                : <Avatar alt={user.displayName} src={user.photoURL} />
+              user?.photoURL === '' || _.isUndefined(player.photoURL)
+                ? <Avatar alt={player.displayName}{...stringAvatar(player.displayName)} />
+                : <Avatar alt={player.displayName} src={player.photoURL} />
             }
           </IconButton>
         </Tooltip>
@@ -97,7 +98,7 @@ const User = () => {
           <MenuItem onClick={handleClose}>
             <Stack sx={{ gap: 1, justifyContent: 'center', alignItems: 'center' }}>
               <Typography variant='headline2'>
-                {user?.displayName}
+                {player?.displayName}
               </Typography>
             </Stack>
           </MenuItem>

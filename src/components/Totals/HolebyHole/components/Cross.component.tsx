@@ -18,15 +18,15 @@ const Cross = ({ left, over, right, short, center, totals }: ICrossProps) => {
   return (
     <Grid container sx={{ width: '100%', justifyContent: 'space-between' }}>
       <GridCross item>
-        <CompositeTypography string='Left' value={formatPerc(divide(left, totals))} />
+        <CompositeTypography string='Left' value={formatPerc(Number(divide(left, totals)))} />
       </GridCross>
       <GridCross item>
-        <CompositeTypography string='Over' value={formatPerc(divide(over, totals))} />
-        <CompositeTypography string='CENTER' value={formatPerc(divide(center, totals))} sx={{ padding: '10px', color: 'white !important' }} center='green' />
-        <CompositeTypography string='Short' value={formatPerc(divide(short, totals))} />
+        <CompositeTypography string='Over' value={formatPerc(Number(divide(over, totals)))} />
+        <CompositeTypography string='CENTER' value={formatPerc(Number(divide(center, totals)))} sx={{ padding: '10px', color: 'white !important' }} center='green' />
+        <CompositeTypography string='Short' value={formatPerc(Number(divide(short, totals)))} />
       </GridCross>
       <GridCross item>
-        <CompositeTypography string='Right' value={formatPerc(divide(right, totals))} />
+        <CompositeTypography string='Right' value={formatPerc(Number(divide(right, totals)))} />
       </GridCross>
     </Grid>
   )

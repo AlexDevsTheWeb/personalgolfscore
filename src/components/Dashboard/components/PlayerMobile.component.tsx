@@ -15,7 +15,7 @@ const PlayerMobile = ({ player }: IPlayerProps) => {
     <Stack sx={{ gap: '10px', width: '100%' }}>
       <CompositeTypography string='Name' value={`${player.firstName} ${player.lastName}`} dir='row' />
       <CompositeTypography string='E-mail' value={`${player.email}`} dir='row' />
-      <CompositeTypography string='Handicap' value={`${player.firstName} ${player.HCP}`} dir='row' />
+      <CompositeTypography string='Handicap' value={`${player.HCP}`} dir='row' />
       <CompositeTypography string='Date of birth' value={player.DOB.seconds ? dayjs.unix(player.DOB.seconds).format('DD/MM/YYYY') : '-'} dir='row' />
     </Stack>
   )

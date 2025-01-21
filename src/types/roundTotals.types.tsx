@@ -30,7 +30,7 @@ export interface IRoundTotalsInitialState {
 
 export interface IRoundsTotalsInitialState {
   isLoading: boolean,
-  roundsTotals: IAllRoundsTotals
+  roundsTotals: IRoundTotals[]
 }
 
 export interface IRoundDistanceInitialState {

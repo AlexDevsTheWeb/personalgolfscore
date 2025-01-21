@@ -41,11 +41,11 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        puttsAverage: parseFloat(divide(object.numberPuttsInRange, object.puttsAttempts).toFixed(2)),
-        puttsSecondAverageLength: parseFloat(divide(object.distanceSecondPutt, object.numberSecondPutt).toFixed(2)),
-        puttsAverageDistance: parseFloat(divide(object.distanceFirstPutt, object.puttsAttempts).toFixed(2)),
-        putt1Perc: parseFloat(divide(object.puttsHoled, object.puttsAttempts).toFixed(2)),
-        putt3Perc: parseFloat(divide(object.putts3, object.puttsAttempts).toFixed(2)),
+        puttsAverage: parseFloat(divide(object.numberPuttsInRange, object.puttsAttempts)),
+        puttsSecondAverageLength: parseFloat(divide(object.distanceSecondPutt, object.numberSecondPutt)),
+        puttsAverageDistance: parseFloat(divide(object.distanceFirstPutt, object.puttsAttempts)),
+        putt1Perc: parseFloat(divide(object.puttsHoled, object.puttsAttempts)),
+        putt3Perc: parseFloat(divide(object.putts3, object.puttsAttempts)),
       }
     )
   }
@@ -72,8 +72,8 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        puttsInGIR: parseFloat(divide(object.totalPuttsInGIR, object.gir).toFixed(2)),
-        birdieConversion: parseFloat(divide(object.birdieBetter, object.gir).toFixed(2)),
+        puttsInGIR: parseFloat(divide(object.totalPuttsInGIR, object.gir)),
+        birdieConversion: parseFloat(divide(object.birdieBetter, object.gir)),
       }
     )
   }
@@ -125,10 +125,10 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        averageDistance: object.attempts !== 0 ? parseFloat(divide(object.totDistance, object.attempts).toFixed(2)) : 0,
-        fairwayCenterPCT: object.attempts !== 0 ? parseFloat(divide(object.fairwayHits, object.attempts).toFixed(2)) : 0,
-        fairwayLeftPCT: object.attempts !== 0 ? parseFloat(divide(object.missLeft, object.attempts).toFixed(2)) : 0,
-        fairwayRightPCT: object.attempts !== 0 ? parseFloat(divide(object.missRight, object.attempts).toFixed(2)) : 0,
+        averageDistance: object.attempts !== 0 ? parseFloat(divide(object.totDistance, object.attempts)) : 0,
+        fairwayCenterPCT: object.attempts !== 0 ? parseFloat(divide(object.fairwayHits, object.attempts)) : 0,
+        fairwayLeftPCT: object.attempts !== 0 ? parseFloat(divide(object.missLeft, object.attempts)) : 0,
+        fairwayRightPCT: object.attempts !== 0 ? parseFloat(divide(object.missRight, object.attempts)) : 0,
       }
     )
   }
@@ -193,8 +193,8 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
     return (
       {
         ...array,
-        averageShots: array.attempts !== 0 ? parseFloat(divide(array.totalsForAverageShots, array.attempts).toFixed(2)) : 0,
-        averageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsForAvgDistanceToHole, array.totalsDistanceNumber).toFixed(2)) : 0,
+        averageShots: array.attempts !== 0 ? parseFloat(divide(array.totalsForAverageShots, array.attempts)) : 0,
+        averageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsForAvgDistanceToHole, array.totalsDistanceNumber)) : 0,
       }
     )
   }
@@ -265,8 +265,8 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        averageShots: object.toGreen !== 0 ? parseFloat((((object.shotsPar4 - object.countShotsPar4) + (object.shotsPar5 - object.countShotsPar5 * 2)) / object.toGreen).toFixed(2)) : 0,
-        averageDistGIR: object.greenHits !== 0 ? parseFloat((object.totalDistGIR / object.greenHits).toFixed(2)) : 0,
+        averageShots: object.toGreen !== 0 ? parseFloat(divide(((object.shotsPar4 - object.countShotsPar4) + (object.shotsPar5 - object.countShotsPar5 * 2)), object.toGreen)) : 0,
+        averageDistGIR: object.greenHits !== 0 ? parseFloat(divide(object.totalDistGIR, object.greenHits)) : 0,
       }
     )
   }
@@ -338,8 +338,12 @@ export const calculateFWIrons = (shots: IShots[]) => {
     return (
       {
         ...object,
-        averageShots: object.attempts !== 0 ? parseFloat(((object.totalScorePar3 + object.totalScorePar4 - object.totalNumberPar4 + object.totalScorePar5 - object.totalNumberPar5 * 2) / object.attempts).toFixed(2)) : 0,
-        averageDistGIR: object.totalGirGir2Made !== 0 ? parseFloat((object.totalDistanceGIR / object.totalGirGir2Made).toFixed(2)) : 0,
+        averageShots: object.attempts !== 0
+          ? parseFloat(divide((object.totalScorePar3 + object.totalScorePar4 - object.totalNumberPar4 + object.totalScorePar5 - object.totalNumberPar5 * 2), object.attempts))
+          : 0,
+        averageDistGIR: object.totalGirGir2Made !== 0
+          ? parseFloat(divide(object.totalDistanceGIR, object.totalGirGir2Made))
+          : 0,
       }
     )
   }

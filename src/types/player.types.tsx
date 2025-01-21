@@ -13,6 +13,8 @@ export interface IPlayer {
 
 export type InitialStatePlayer = {
   isLoading: boolean;
+  error: string,
+  errorMessage: string,
   player: IPlayer;
 }
 

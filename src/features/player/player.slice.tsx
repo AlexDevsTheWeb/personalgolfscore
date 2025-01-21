@@ -5,6 +5,8 @@ import { getPlayerInfoThunk } from "./player.thunk";
 
 const initialState: InitialStatePlayer = {
   isLoading: false,
+  error: '',
+  errorMessage: '',
   player: {} as IPlayer,
 };
 
@@ -28,13 +30,14 @@ const playerSlice = createSlice({
       .addCase(getPlayerDetails.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getPlayerDetails.fulfilled, (state, { payload }: any) => {
-        // TODO: error in "any" payload type, RESOLVE IT
+      .addCase(getPlayerDetails.fulfilled, (state, { payload }: PayloadAction<{ data: IPlayer }>) => {
         state.isLoading = false;
-        state.player = payload;
+        state.player = payload.data;
       })
       .addCase(getPlayerDetails.rejected, (state, { payload }: any) => {
         state.isLoading = false;
+        state.error = payload.status;
+        state.errorMessage = payload.statusText;
       });
   },
 });

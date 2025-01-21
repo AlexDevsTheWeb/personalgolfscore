@@ -28,6 +28,11 @@ export interface IRounds {
   totals: any
 }
 
+export interface IRoundsState {
+  rounds: IRounds[],
+  uid: string,
+}
+
 interface IRoundGeneral {
   roundID: number,
   roundCourse: string,

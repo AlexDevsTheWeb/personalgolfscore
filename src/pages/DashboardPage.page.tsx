@@ -3,7 +3,7 @@ import Spinner from "@/components/spinner/Spinner.component";
 import { setIsLoading } from "@/features/app/controls.slice";
 import { getPlayerDetails } from "@/features/player/player.slice";
 import { getAllRounds } from "@/features/rounds/rounds.slice";
-import { getUserDetails } from "@/features/user/user.slice";
+import { getAllRoundsTotals } from "@/features/rounds/roundsTotals.slice";
 import { RootState } from "@/store/store";
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { getAuth } from "@firebase/auth";
@@ -23,10 +23,14 @@ const DashboardPage = () => {
     if (uid) {
       if (auth) {
         dispatch(setIsLoading(true));
-        dispatch(getUserDetails(uid));
+
+        //TODO: This is probably useless
+        // dispatch(getUserDetails(uid));
+        //TODO: This is probably useless
+
         dispatch(getPlayerDetails(uid));
         dispatch(getAllRounds(uid));
-        // dispatch(getAllRoundsTotals(uid));
+        dispatch(getAllRoundsTotals(uid));
         dispatch(setIsLoading(false));
       }
     }
