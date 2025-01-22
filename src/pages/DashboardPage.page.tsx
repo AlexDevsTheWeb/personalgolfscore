@@ -1,5 +1,5 @@
 import Dashboard from "@/components/Dashboard/Dashboard.component";
-import Spinner from "@/components/spinner/Spinner.component";
+import Spinner from "@/components/common/spinner/Spinner.component";
 import { setIsLoading } from "@/features/app/controls.slice";
 import { getPlayerDetails } from "@/features/player/player.slice";
 import { getAllRounds } from "@/features/rounds/rounds.slice";

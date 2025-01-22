@@ -23,10 +23,10 @@ export const getAllRoundsTotalsThunk = async (uid: string, thunkAPI: any) => {
   // return response.pop();
 
   // FIXME: this is just to avoid access online data and reduce read limits on firebase
-  // let roundDistanceURL = `/data/P2_ALESSANDROTORRI/allTotals.json`;
-  let allRoundsURL = `/data/P1_TIGERWOODS/allTotals.json`;
+  // let allRoundsTotalsURL = `/data/P2_ALESSANDROTORRI/allTotals.json`;
+  let allRoundsTotalsURL = `/data/P1_TIGERWOODS/allTotals.json`;
   try {
-    const response = await authFetch.get(allRoundsURL);
+    const response = await authFetch.get(allRoundsTotalsURL);
     const actualResponse: IRoundsTotals[] =
     {
       ...response.data

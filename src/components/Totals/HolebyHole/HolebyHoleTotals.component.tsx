@@ -1,4 +1,4 @@
-import Spinner from "@/components/spinner/Spinner.component";
+import Spinner from "@/components/common/spinner/Spinner.component";
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import { IRoundTotalsProps, TabPanelProps } from "@/types/props.types";
 import { Box, Tab, Tabs, useTheme } from "@mui/material";

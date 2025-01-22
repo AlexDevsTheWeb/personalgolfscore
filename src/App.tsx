@@ -12,7 +12,7 @@ import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-component
 import { LocalizationProvider } from '@mui/x-date-pickers';
 // import LoginForm from "./components/LoginForm/LoginForm.component";
 import SignupForm from "./components/LoginForm/SignupForm.component";
-import Spinner from "./components/spinner/Spinner.component";
+import Spinner from "./components/common/spinner/Spinner.component";
 import AddNewRound from './pages/AddNewRound.page';
 import ClubsPage from "./pages/Clubs.page";
 import DashboardPage from "./pages/DashboardPage.page";

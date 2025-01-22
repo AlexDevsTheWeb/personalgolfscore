@@ -3,8 +3,8 @@ import BoxBetween from '@/styles/box/BoxBetween.styles';
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import Spinner from '../common/spinner/Spinner.component';
 import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
-import Spinner from '../spinner/Spinner.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import RoundsDataHeader from './components/roundData/RoundsDataHeader.component';
 

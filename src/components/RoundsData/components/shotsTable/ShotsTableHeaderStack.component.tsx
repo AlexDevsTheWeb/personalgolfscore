@@ -22,9 +22,9 @@ const ShotsTableHeaderStack = ({ firstRow, secondRow }: IShotsTableHeaderStack) 
         backgroundColor: '#f0f0f0',
         color: 'black',
         fontWeight: 'bold',
-        fontSize: '13px',
+        fontSize: '12px',
         padding: '0px',
-        minHeight: '50px',
+        // minHeight: '50px',
         justifyContent: 'center',
 
         ...(useDeviceDetection().isMobile && {

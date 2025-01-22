@@ -1,3 +1,4 @@
+import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { RootState } from '@/store/store';
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
 import Button from '@mui/material/Button';
@@ -20,17 +21,33 @@ const RoundsTable = () => {
 
   return (
     <TableContainer component={Paper} sx={{ width: '100%' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <Table sx={{ minWidth: useDeviceDetection().isMobile ? 300 : 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <TableCell align='center' width={2}>Date</TableCell>
-            <TableCell align='left' width={3}>Course</TableCell>
-            <TableCell align='left'>Tee</TableCell>
-            <TableCell align='center'>Holes</TableCell>
-            <TableCell align='center'>Par</TableCell>
-            <TableCell align='center'>Playing HCP</TableCell>
-            <TableCell align='center'>Player shots</TableCell>
-            <TableCell align='right' width={1}>&nbsp;</TableCell>
+            {
+              useDeviceDetection().isMobile
+                ?
+                <>
+                  <TableCell align='center'>Date</TableCell>
+                  <TableCell align='left'>Course</TableCell>
+
+                  <TableCell align='center'>Par</TableCell>
+                  <TableCell align='center'>Shots</TableCell>
+                  <TableCell align='right'>&nbsp;</TableCell>
+                </>
+                :
+                <>
+                  <TableCell align='center' width={2}>Date</TableCell>
+                  <TableCell align='left' width={3}>Course</TableCell>
+                  <TableCell align='left'>Tee</TableCell>
+                  <TableCell align='center'>Holes</TableCell>
+                  <TableCell align='center'>Par</TableCell>
+                  <TableCell align='center'>Playing HCP</TableCell>
+                  <TableCell align='center'>Player shots</TableCell>
+                  <TableCell align='right' width={1}>&nbsp;</TableCell>
+                </>
+            }
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -38,20 +55,40 @@ const RoundsTable = () => {
             // const { roundID, roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundStrokes } = round;
             return (
               <TableRow key={round.general.roundID}>
-                <TableCell component="th" scope="row" align='center'>
-                  {/* {round.general.roundDate} */}
-                </TableCell>
-                <TableCell align='left'>{round.general.roundCourse}</TableCell>
-                <TableCell align='left'>{round.general.roundTee}</TableCell>
-                <TableCell align='center'>{round.holes.length}</TableCell>
-                <TableCell align='center'>{round.general.coursePar}</TableCell>
-                <TableCell align='center'>{round.general.playerHCP}</TableCell>
-                <TableCell align='center'>{round.totals.score.totals}</TableCell>
-                <TableCell align={'right'} width={1}>
-                  <Button onClick={() => handleClick(round.general.roundID.toString())}>
-                    <ArrowCircleRightRoundedIcon />
-                  </Button>
-                </TableCell>
+                {
+                  useDeviceDetection().isMobile
+                    ? <>
+                      <TableCell component="th" scope="row" align='center'>
+                        {round.general.roundDate.toString()}
+                      </TableCell>
+                      <TableCell align='left'>{round.general.roundCourse}</TableCell>
+
+                      <TableCell align='center'>{round.general.coursePar}</TableCell>
+                      <TableCell align='center'>{round.totals.score.totals}</TableCell>
+                      <TableCell align={'right'}>
+                        <Button onClick={() => handleClick(round.general.roundID.toString())}>
+                          <ArrowCircleRightRoundedIcon />
+                        </Button>
+                      </TableCell>
+                    </>
+                    : <>
+                      <TableCell component="th" scope="row" align='center'>
+                        {round.general.roundDate.toString()}
+                      </TableCell>
+                      <TableCell align='left'>{round.general.roundCourse}</TableCell>
+                      <TableCell align='left'>{round.general.roundTee}</TableCell>
+                      <TableCell align='center'>{round.holes.length}</TableCell>
+                      <TableCell align='center'>{round.general.coursePar}</TableCell>
+                      <TableCell align='center'>{round.general.playerHCP}</TableCell>
+                      <TableCell align='center'>{round.totals.score.totals}</TableCell>
+                      <TableCell align={'right'} width={1}>
+                        <Button onClick={() => handleClick(round.general.roundID.toString())}>
+                          <ArrowCircleRightRoundedIcon />
+                        </Button>
+                      </TableCell>
+                    </>
+                }
+
               </TableRow>
             )
           })}

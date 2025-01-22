@@ -32,6 +32,7 @@ export const getPlayerInfoThunk = async (uid: string, thunkAPI: any) => {
         uid: ''
       }
     ]
+    console.log("player: ", actualResponse)
     return actualResponse.pop();
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);

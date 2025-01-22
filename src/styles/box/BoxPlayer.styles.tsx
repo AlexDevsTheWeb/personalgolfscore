@@ -17,11 +17,11 @@ const StyledStack = styled(Stack)<StackProps>(() => (({
   flexDirection: useDeviceDetection().isMobile ? 'column' : 'row',
 })));
 
-const StackPlayer: React.FC<StackProps> = (props) => {
+const BoxPlayer: React.FC<StackProps> = (props) => {
   return (<StyledStack {...props}>
     {props.children}
   </StyledStack>)
 
 }
 
-export default StackPlayer;
+export default BoxPlayer;

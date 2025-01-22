@@ -4,7 +4,7 @@ import { allRoundsCalculator } from '@/utils/calculator/AllRoundsCalculator.util
 import { initialStateRoundTotals } from '@/utils/constant.utils';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Spinner from '../spinner/Spinner.component';
+import Spinner from '../common/spinner/Spinner.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 
 const StatisticsMain = () => {
