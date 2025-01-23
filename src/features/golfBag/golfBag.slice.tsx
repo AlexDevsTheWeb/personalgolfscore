@@ -1,6 +1,6 @@
 import { CLUBSSELECTION } from "@/enum/shots.enum";
-import { ClubPayload, InitialStateClubs } from "@/types/clubs.types";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { InitialStateClubs } from "@/types/clubs.types";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getClubsThunk } from "./golfBag.thunk";
 
 const initialState: InitialStateClubs = {
@@ -79,15 +79,19 @@ const golfBagSlice = createSlice({
       .addCase(getClubsDetails.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getClubsDetails.fulfilled, (state, { payload }: ClubPayload) => {
+      .addCase(getClubsDetails.fulfilled, (state, { payload }: PayloadAction<any>) => {
+
+        //const z = JSON.parse(payload.clubs);
+        console.log("payload SLICE: ", payload);
         state.isLoading = false;
-        state.clubs = payload;
-        state.totalClubs = payload.types.reduce(
-          (acc, curr) => acc + curr.details.length,
+        state.clubs = payload.clubs;
+
+        state.totalClubs = payload.clubs.types.reduce(
+          (acc: any, curr: any) => acc + curr.details.length,
           1
         );
-        state.selectedClubs = payload.types.reduce(
-          (acc, curr) => acc + curr.details.filter((detail) => detail.selected).length,
+        state.selectedClubs = payload.clubs.types.reduce(
+          (acc: any, curr: any) => acc + curr.details.filter((detail: any) => detail.selected).length,
           0
         );
       })

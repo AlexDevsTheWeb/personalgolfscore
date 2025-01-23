@@ -15,7 +15,7 @@ import SignupForm from "./components/LoginForm/SignupForm.component";
 import Spinner from "./components/common/spinner/Spinner.component";
 import AddNewRound from './pages/AddNewRound.page';
 import ClubsPage from "./pages/Clubs.page";
-import DashboardPage from "./pages/DashboardPage.page";
+import DashboardPage from "./pages/Dashboard.page";
 import RoundsData from './pages/RoundsData.page';
 import SharedLayout from './pages/SharedLayout.page';
 import Statistics from './pages/Statistics.page';

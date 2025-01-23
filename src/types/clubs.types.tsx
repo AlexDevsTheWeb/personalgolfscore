@@ -35,6 +35,7 @@ export type ClubPayload = {
   payload: IGolfBag;
 }
 
-interface ITeeClubProps {
-  teeClubs: string[];
+export type IClubsPayload = {
+  uid: string,
+  clubs: string,
 }
