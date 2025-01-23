@@ -1,9 +1,9 @@
 import { RootState } from '@/store/store';
 import BoxBetween from '@/styles/box/BoxBetween.styles';
-import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Spinner from '../common/spinner/Spinner.component';
+import EmptyRounds from '../Dashboard/components/EmptyRounds/EmptyRounds.component';
 import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import RoundsDataHeader from './components/roundData/RoundsDataHeader.component';
@@ -21,7 +21,7 @@ const RoundsDataMain = () => {
   }
 
   if (!round) {
-    return <Typography>No data to display...</Typography>
+    return <EmptyRounds />
   }
 
   return (

@@ -41,8 +41,6 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
 
       :
       <TableRow key={holeNumber}>
-
-
         <TableCell align='center' sx={{ padding: '0px' }}>{holeNumber}</TableCell>
         <TableCell align='center' sx={{ padding: '0px' }}>{par}</TableCell>
         <TableCell align='center' sx={{ padding: '0px' }}

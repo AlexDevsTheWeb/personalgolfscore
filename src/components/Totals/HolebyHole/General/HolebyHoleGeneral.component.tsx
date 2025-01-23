@@ -23,7 +23,7 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
       ?
       <TableContainer component={Paper}>
         <Table sx={{ width: '100%', overflow: 'hidden' }} aria-label="customized table">
-          <ShotsTableHeader firstLabel='Tot.' singleHole={false} firstColumn={false} dashboard={dashboard} />
+          <ShotsTableHeader firstLabel='Tot.' singleHole={false} firstColumn={false} dashboard={dashboard} viewPar={false} />
           <ShotsTableTotalsBody firstColumn={false} roundTotals={roundTotals} dashboard={dashboard} />
         </Table>
       </TableContainer>

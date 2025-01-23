@@ -6,10 +6,11 @@ interface IShotsTableHeaderProps {
   firstLabel: string;
   singleHole: boolean;
   firstColumn: boolean,
-  dashboard?: boolean
+  dashboard?: boolean,
+  viewPar?: boolean
 }
 
-const ShotsTableHeader = ({ firstColumn, singleHole, dashboard }: IShotsTableHeaderProps) => {
+const ShotsTableHeader = ({ firstColumn, singleHole, dashboard, viewPar }: IShotsTableHeaderProps) => {
   return (
     <TableHead>
       {
@@ -22,9 +23,13 @@ const ShotsTableHeader = ({ firstColumn, singleHole, dashboard }: IShotsTableHea
                 <ShotsTableHeaderStack firstRow='#' secondRow={!!singleHole ? '' : ''} />
               </TableCell>
             }
-            <TableCell align='center'>
-              <ShotsTableHeaderStack firstRow='Par' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
-            </TableCell>
+            {
+              viewPar &&
+              <TableCell align='center'>
+                <ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} />
+              </TableCell>
+            }
+
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='score' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
@@ -45,6 +50,13 @@ const ShotsTableHeader = ({ firstColumn, singleHole, dashboard }: IShotsTableHea
                 <ShotsTableHeaderStack firstRow='#' secondRow={!!singleHole ? '' : ''} />
               </TableCell>
             }
+            {
+              viewPar &&
+              <TableCell align='center'>
+                <ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} />
+              </TableCell>
+            }
+
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='score' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
