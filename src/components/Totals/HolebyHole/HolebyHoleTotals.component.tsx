@@ -78,11 +78,11 @@ const HolebyHoleTotals = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =>
       </TabPanel>
 
       <TabPanel value={value} index={1} dir={theme.direction}>
-        <HolebyHoleTeeShots roundTotals={roundTotals} />
+        <HolebyHoleTeeShots roundTotals={roundTotals} dashboard={dashboard} par={par} />
       </TabPanel>
 
       <TabPanel value={value} index={2} dir={theme.direction}>
-        <HolebyHoleFwAndIrons roundTotals={roundTotals} />
+        <HolebyHoleFwAndIrons roundTotals={roundTotals} dashboard={dashboard} par={par} />
       </TabPanel>
 
       <TabPanel value={value} index={3} dir={theme.direction}>

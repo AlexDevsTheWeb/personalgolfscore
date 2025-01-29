@@ -12,7 +12,7 @@ const StyledStack = styled(StackMui)<StackProps>(() => ({
   flexDirection: 'column',
   flexWrap: 'wrap',
   alignContent: 'center',
-  backgroundColor: '#f0f0f0',
+  // backgroundColor: '#f0f0f0',
   color: 'black',
   fontWeight: 'bold',
   fontSize: '12px',
