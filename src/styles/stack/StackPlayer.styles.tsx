@@ -18,7 +18,7 @@ const StyledStack = styled(StackMui)<StackProps>(() => ({
   alignContent: 'space-around',
   justifyContent: useDeviceDetection().isMobile ? 'space-between' : 'center',
   alignItems: 'center',
-  width: '100%'
+  width: '100%',
 }));
 
 const StackPlayer: React.FC<StackProps> = props => {

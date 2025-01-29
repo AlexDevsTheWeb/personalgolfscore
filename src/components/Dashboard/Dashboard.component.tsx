@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom"
 import Spinner from "../common/spinner/Spinner.component"
 import Rounds from "../Rounds/Rounds.component"
 import StatisticsMain from "../Statistics/StatisticsMain.component"
-import Player from "./components/Player/Player.component"
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -26,24 +25,7 @@ const Dashboard = () => {
   }
 
   return (
-    // <BoxBetween>
-    //   <Player />
-    //   {
-    //     rounds.length !== 0 && (
-    //       <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} gap={2}>
-    //         <Rounds />
-    //         <StatisticsMain />
-    //         <BoxBetween>
-    //           <Button variant='contained' onClick={handleAddNewRound}>Add new round</Button>
-    //           <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>
-    //         </BoxBetween>
-    //       </Box>
-    //     )
-    //   }
-    // </BoxBetween>
-
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} gap={2}>
-      <Player />
       {
         rounds.length !== 0 && (
           <>

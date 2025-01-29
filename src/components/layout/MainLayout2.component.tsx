@@ -107,7 +107,6 @@ export default function DrawerAppBar(props: Props) {
                           px: 2.5,
                         }}
                         href={link.link}
-
                       >
                         <ListItemIcon
                           sx={{
@@ -127,8 +126,6 @@ export default function DrawerAppBar(props: Props) {
                 })}
                 <User />
               </List>
-
-
             </Box>
           </Toolbar>
         </AppBar>

@@ -19,7 +19,7 @@ const TableDesktop = ({ roundTotals: { inside100Mt } }: IRoundTotalsProps) => {
             {
               categories.map((cat: string, index: number) => {
                 return (
-                  <TableCell align='center' key={index} variant='putt' sx={{ borderLeft: '1px solid #000' }}>
+                  <TableCell align='center' key={index} variant='putt' sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                     <ShotsTableHeaderStack firstRow={catConversion(cat)} secondRow={''} />
                   </TableCell>
                 )
@@ -33,7 +33,7 @@ const TableDesktop = ({ roundTotals: { inside100Mt } }: IRoundTotalsProps) => {
             {
               Object.entries(inside100Mt).map(([key, value], index: number) => {
                 return (
-                  <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
+                  <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                     <Stack>
                       <Cross left={value.missedLeft} right={value.missedRight} center={value.greenHits} short={value.missedShort} over={value.missedOver} totals={value.attempts} />
                       <Divider />

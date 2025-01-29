@@ -33,7 +33,7 @@ const TableDesktop = ({ roundTotals: { chipPitch } }: IRoundTotalsProps) => {
               {
                 Object.entries(chipPitch).map(([key, value], index: number) => {
                   return (
-                    <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
+                    <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                       <Stack >
                         <Grid container spacing={1}>
                           <GridPuttsStat item xs={4} string='U&D made' value={value.upDownMade} />

@@ -80,8 +80,8 @@ const TableMobile = ({ totalsPutts }: IHolebyHolePutts) => {
                     </Grid>
                     <Divider />
                     <Grid container spacing={1}>
-                      <GridPuttsStat item xs={4} string='Average distance' value={value[1].puttsAverageDistance !== 0 ? value[1].puttsAverageDistance : '-'} />
-                      <GridPuttsStat item xs={4} string='Second putt avg. length' value={Number(value[1].puttsSecondAverageLength) !== 0 ? Number(value[1].puttsSecondAverageLength) : '-'} />
+                      <GridPuttsStat item xs={4} string='Avg. distance' value={value[1].puttsAverageDistance !== 0 ? value[1].puttsAverageDistance : '-'} />
+                      <GridPuttsStat item xs={4} string='2° putt avg. length' value={Number(value[1].puttsSecondAverageLength) !== 0 ? Number(value[1].puttsSecondAverageLength) : '-'} />
                       <GridPuttsStat item xs={4} string='3 putts' value={value[1].putts3 !== 0 ? value[1].putts3 : '-'} />
                     </Grid >
                   </Stack>

@@ -28,23 +28,24 @@ const RoundsTable = () => {
               useDeviceDetection().isMobile
                 ?
                 <>
-                  <TableCell align='center'>Date</TableCell>
-                  <TableCell align='left'>Course</TableCell>
+                  <TableCell align='center' space='10px'>Date</TableCell>
+                  <TableCell align='left' space='10px' width={300} >Course</TableCell>
 
-                  <TableCell align='center'>Par</TableCell>
-                  <TableCell align='center'>Shots</TableCell>
-                  <TableCell align='right'>&nbsp;</TableCell>
+                  <TableCell align='center' space='10px'>Par</TableCell>
+                  <TableCell align='center' space='10px'>HCP</TableCell>
+                  <TableCell align='center' space='10px'>Shots</TableCell>
+                  <TableCell align='right' width={20}>&nbsp;</TableCell>
                 </>
                 :
                 <>
-                  <TableCell align='center' width={2}>Date</TableCell>
-                  <TableCell align='left' width={3}>Course</TableCell>
-                  <TableCell align='left'>Tee</TableCell>
-                  <TableCell align='center'>Holes</TableCell>
-                  <TableCell align='center'>Par</TableCell>
-                  <TableCell align='center'>Playing HCP</TableCell>
-                  <TableCell align='center'>Player shots</TableCell>
-                  <TableCell align='right' width={1}>&nbsp;</TableCell>
+                  <TableCell align='center' space='10px'>Date</TableCell>
+                  <TableCell align='left' width={500} space='10px'>Course</TableCell>
+                  <TableCell align='left' space='10px'>Tee</TableCell>
+                  <TableCell align='center' space='10px'>Holes</TableCell>
+                  <TableCell align='center' space='10px'>Par</TableCell>
+                  <TableCell align='center' space='10px'>HCP</TableCell>
+                  <TableCell align='center' space='10px'>Shots</TableCell>
+                  <TableCell align='right' width={50}>&nbsp;</TableCell>
                 </>
             }
 
@@ -64,6 +65,7 @@ const RoundsTable = () => {
                       <TableCell align='left'>{round.general.roundCourse}</TableCell>
 
                       <TableCell align='center'>{round.general.coursePar}</TableCell>
+                      <TableCell align='center'>{round.general.playerHCP}</TableCell>
                       <TableCell align='center'>{round.totals.score.totals}</TableCell>
                       <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>
@@ -81,7 +83,7 @@ const RoundsTable = () => {
                       <TableCell align='center'>{round.general.coursePar}</TableCell>
                       <TableCell align='center'>{round.general.playerHCP}</TableCell>
                       <TableCell align='center'>{round.totals.score.totals}</TableCell>
-                      <TableCell align={'right'} width={1}>
+                      <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>
                           <ArrowCircleRightRoundedIcon />
                         </Button>
@@ -94,7 +96,7 @@ const RoundsTable = () => {
           })}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer >
   );
 }
 

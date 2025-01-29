@@ -3,13 +3,13 @@ import ShotsTableHeader from "@/components/RoundsData/components/shotsTable/Shot
 import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 import ShotsTableTotalsBody from "@/components/RoundsData/components/shotsTable/ShotsTableTotalsBody.component";
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
+import AccordionSummary from "@/styles/accordion/AccordionSummary.styles";
+import GridAccordion from "@/styles/grid/GridAccordion.styles";
 import NewGridCellStats from "@/styles/grid/NewGridCellStats.style";
-import CompositeTypography from "@/styles/typography/CompositeTypography.styles";
 import { IRoundTotalsProps } from "@/types/props.types";
 import { formatPerc } from "@/utils/number/number.utils";
 import { correctVsParString } from "@/utils/shots/shots.utils";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid, Paper, Stack, Table, TableContainer, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, Box, Divider, Paper, Stack, Table, TableContainer, Typography } from "@mui/material";
 import _ from "lodash";
 
 
@@ -27,27 +27,14 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
           <ShotsTableTotalsBody firstColumn={false} roundTotals={roundTotals} dashboard={dashboard} />
         </Table>
       </TableContainer>
-      // <TableDesktop roundTotals = { roundTotals } dashboard = { dashboard } />
       :
-      // <TableMobile roundTotals={roundTotals} dashboard={dashboard} />
-      <Box key={_.uniqueId("fwIrons_")} sx={{ gap: '10px', border: '1px solid #ddd' }}>
-
+      <Box key={_.uniqueId("general_")} sx={{ gap: '10px' }}>
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='Score' secondRow={''} />
           </AccordionSummary>
           <AccordionDetails>
-            <CompositeTypography value={par?.toString() as string} string={'Par'} />
-            <Divider />
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion>
               <NewGridCellStats item xs={4}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>{'TOT'}</Typography>
@@ -69,24 +56,16 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography>{score.avgOUT}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='Points' secondRow={''} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion>
               <NewGridCellStats item xs={4}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>TOT</Typography>
@@ -108,24 +87,16 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography>{points.avgOUT}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='Fairways' secondRow={''} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion>
               <NewGridCellStats item xs={6}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>Center</Typography>
@@ -138,9 +109,9 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography fontWeight={'bold'}>{fairway.total}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
             <Divider />
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={4}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>Left</Typography>
@@ -159,8 +130,8 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography>{`${fairway.fairwayRight} (${formatPerc(fairway.fairwayRight / fairway.total)})`}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            </GridAccordion>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={4}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography fontWeight={'bold'}><ShotPosition position={4} /></Typography>
@@ -176,24 +147,16 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography fontWeight={'bold'}><ShotPosition position={6} /></Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='GIR' secondRow={''} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={4}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>TOT</Typography>
@@ -215,24 +178,16 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography>{gir.avgOUT}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='Putts/GIR' secondRow={''} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={4}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>TOT</Typography>
@@ -251,24 +206,16 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography fontWeight={'bold'}>{putts.puttsGirOut}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='GIR Bogey' secondRow={''} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={4}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>TOT</Typography>
@@ -291,24 +238,16 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography>{girBogey.avgOUT}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='Scramble' secondRow={'Par saved outside green'} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={6}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>Saved</Typography>
@@ -321,8 +260,8 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography fontWeight={'bold'}>{scramble.totals}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            </GridAccordion>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={12}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography fontWeight={'bold'}>
@@ -330,24 +269,16 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   </Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='Up & Down' secondRow={'Par saved without GIR'} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={6}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>Saved</Typography>
@@ -360,31 +291,23 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography fontWeight={'bold'}>{upDown.totals}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            </GridAccordion>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={12}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography fontWeight={'bold'}>{upDown.perc !== 0 && `${upDown.perc.toFixed(2)}%`}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='Putts' secondRow={'TOT IN OUT'} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={4}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>TOT</Typography>
@@ -407,24 +330,16 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography>{putts.avgOUT}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='Sand' secondRow={'saved made'} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={6}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>Saved</Typography>
@@ -439,31 +354,23 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   <Typography>{sand.avg}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
-            <Grid container spacing={1}>
+            </GridAccordion>
+            <GridAccordion container spacing={1}>
               <NewGridCellStats item xs={12}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>{sand.savedPerc !== 0 && `${sand.savedPerc}%`}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
         <Accordion>
-          <AccordionSummary
-            sx={{
-              backgroundColor: '#f0f0f0', borderRadius: 0
-              , boxShadow: 'none', border: 'none', height: '40px'
-            }}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
+          <AccordionSummary>
             <ShotsTableHeaderStack firstRow='Penalties' secondRow={''} />
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats item xs={4}>
                 <Typography>WATER</Typography>
                 <Stack sx={{ textAlign: 'center' }}>
@@ -498,9 +405,9 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   </Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
             <Divider />
-            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
 
               <NewGridCellStats item xs={4}>
                 <Stack sx={{ textAlign: 'center' }}>
@@ -535,11 +442,11 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
                   </Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid>
+            </GridAccordion>
           </AccordionDetails>
         </Accordion>
 
-      </Box >
+      </Box>
   )
 
 }

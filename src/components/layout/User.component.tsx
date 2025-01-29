@@ -1,9 +1,9 @@
 import { resetUser } from "@/features/user/user.slice";
-import { Typography } from "@/styles/index";
+import StackPlayerMenu from "@/styles/stack/StackPlayerMenu.styles";
 import { deleteUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { stringAvatar } from "@/utils/user/user.utils";
 import { Logout, Settings } from "@mui/icons-material";
-import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Stack, Tooltip } from "@mui/material";
+import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Tooltip } from "@mui/material";
 import { getAuth, signOut } from "firebase/auth";
 import _ from "lodash";
 import React, { useState } from "react";
@@ -23,6 +23,10 @@ const User = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleSettings = () => {
+    setAnchorEl(null);
+    //TODO: next go to player/user settings
+  }
 
   const handleLogout = () => {
     const auth = getAuth();
@@ -41,7 +45,7 @@ const User = () => {
   return (
     !!isLoading || _.isUndefined(player.photoURL)
       ? <Skeleton variant="circular" width={40} height={40} />
-      : <Box>
+      : <Box sx={{ display: 'flex' }}>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -96,23 +100,21 @@ const User = () => {
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
           <MenuItem onClick={handleClose}>
-            <Stack sx={{ gap: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Typography variant='headline2'>
-                {player?.displayName}
-              </Typography>
-            </Stack>
+            <StackPlayerMenu name={player?.displayName} value={player?.HCP} />
           </MenuItem>
 
           <Divider />
 
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
+          <MenuItem onClick={handleSettings}
+            sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
+            <ListItemIcon sx={{ marginLeft: '-10px' }}>
               <Settings fontSize="small" />
             </ListItemIcon>
             Settings
           </MenuItem>
-          <MenuItem onClick={handleLogout}>
-            <ListItemIcon>
+          <MenuItem onClick={handleLogout}
+            sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
+            <ListItemIcon sx={{ marginLeft: '-10px' }}>
               <Logout fontSize="small" />
             </ListItemIcon>
             Logout

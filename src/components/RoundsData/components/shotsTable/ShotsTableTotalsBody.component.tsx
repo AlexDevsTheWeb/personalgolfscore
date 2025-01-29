@@ -18,19 +18,22 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={4}>
               <Stack>
-                <Typography fontWeight={'bold'}>{`${score.totals} (${correctScore})`}</Typography>
+                <Typography fontWeight={'bold'}>{score.totals}</Typography>
+                <Typography>{`(${correctScore})`}</Typography>
                 <Typography>{score.avg}</Typography>
               </Stack>
             </NewGridCellStats>
             <NewGridCellStats item xs={4}>
               <Stack>
-                <Typography fontWeight={'bold'}>{`${score.scoreIN} (${correctScoreIN})`}</Typography>
+                <Typography fontWeight={'bold'}>{score.scoreIN}</Typography>
+                <Typography>{`(${correctScoreIN})`}</Typography>
                 <Typography>{score.avgIN}</Typography>
               </Stack>
             </NewGridCellStats>
             <NewGridCellStats item xs={4}>
               <Stack>
-                <Typography fontWeight={'bold'}>{`${score.scoreOUT} (${correctScoreOUT})`}</Typography>
+                <Typography fontWeight={'bold'}>{score.scoreOUT}</Typography>
+                <Typography>{`(${correctScoreOUT})`}</Typography>
                 <Typography>{score.avgOUT}</Typography>
               </Stack>
             </NewGridCellStats>
@@ -75,17 +78,20 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={4}>
               <Stack>
-                <Typography>{`${fairway.fairwayLeft} (${formatPerc(fairway.fairwayLeft / fairway.total)})`}</Typography>
+                <Typography>{fairway.fairwayLeft}</Typography>
+                <Typography>{`(${formatPerc(fairway.fairwayLeft / fairway.total)})`}</Typography>
               </Stack>
             </NewGridCellStats>
             <NewGridCellStats item xs={4}>
               <Stack>
-                <Typography>{`${fairway.fairwayCenter} (${formatPerc(fairway.fairwayCenter / fairway.total)})`}</Typography>
+                <Typography>{fairway.fairwayCenter}</Typography>
+                <Typography>{`(${formatPerc(fairway.fairwayCenter / fairway.total)})`}</Typography>
               </Stack>
             </NewGridCellStats>
             <NewGridCellStats item xs={4}>
               <Stack>
-                <Typography>{`${fairway.fairwayRight} (${formatPerc(fairway.fairwayRight / fairway.total)})`}</Typography>
+                <Typography>{fairway.fairwayRight}</Typography>
+                <Typography>{`(${formatPerc(fairway.fairwayRight / fairway.total)})`}</Typography>
               </Stack>
             </NewGridCellStats>
           </Grid>
@@ -109,19 +115,20 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
         </TableCell>
         <TableCell align='center'>
           <Grid container spacing={1}>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={12}>
               <Stack>
                 <Typography fontWeight={'bold'}>{gir.totals}</Typography>
                 <Typography>{gir.avg}</Typography>
+                <Divider />
               </Stack>
             </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={6}>
               <Stack>
                 <Typography fontWeight={'bold'}>{gir.totalsIN}</Typography>
                 <Typography>{gir.avgIN}</Typography>
               </Stack>
             </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={6}>
               <Stack>
                 <Typography fontWeight={'bold'}>{gir.totalsOUT}</Typography>
                 <Typography>{gir.avgOUT}</Typography>
@@ -131,39 +138,41 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
         </TableCell>
         <TableCell align='center'>
           <Grid container spacing={1}>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={12}>
               <Stack>
                 <Typography fontWeight={'bold'}>{putts.puttsGir}</Typography>
+                <Divider />
               </Stack>
             </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={6}>
               <Stack>
-                <Typography fontWeight={'bold'}>{putts.puttsGirIn}</Typography>
+                <Typography>{putts.puttsGirIn}</Typography>
               </Stack>
             </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={6}>
               <Stack>
-                <Typography fontWeight={'bold'}>{putts.puttsGirOut}</Typography>
+                <Typography>{putts.puttsGirOut}</Typography>
               </Stack>
             </NewGridCellStats>
           </Grid>
         </TableCell>
         <TableCell align='center'>
           <Grid container spacing={1}>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={12}>
               <Stack>
                 <Typography fontWeight={'bold'}>{girBogey.totals}</Typography>
                 <Typography>{girBogey.avg}</Typography>
+                <Divider />
               </Stack>
 
             </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={6}>
               <Stack>
                 <Typography fontWeight={'bold'}>{girBogey.totalsIN}</Typography>
                 <Typography>{girBogey.avgIN}</Typography>
               </Stack>
             </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={6}>
               <Stack>
                 <Typography fontWeight={'bold'}>{girBogey.totalsOUT}</Typography>
                 <Typography>{girBogey.avgOUT}</Typography>
@@ -187,7 +196,7 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={12}>
               <Stack>
-                <Typography fontWeight={'bold'}>
+                <Typography>
                   {scramble.perc !== 0 && `${scramble.perc.toFixed(2)}%`}
                 </Typography>
               </Stack>
@@ -210,7 +219,7 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
           <Grid container spacing={1}>
             <NewGridCellStats item xs={12}>
               <Stack>
-                <Typography fontWeight={'bold'}>{upDown.perc !== 0 && `${upDown.perc.toFixed(2)}%`}</Typography>
+                <Typography>{upDown.perc !== 0 && `${upDown.perc.toFixed(2)}%`}</Typography>
               </Stack>
             </NewGridCellStats>
           </Grid>
@@ -218,20 +227,21 @@ const ShotsTableTotalsBody = ({ firstColumn, roundTotals }: IShotsTableProps) =>
 
         <TableCell align='center'>
           <Grid container spacing={1}>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={12}>
               <Stack>
                 <Typography fontWeight={'bold'}>{putts.totals}</Typography>
                 <Typography>{putts.avg}</Typography>
+                <Divider />
               </Stack>
 
             </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={6}>
               <Stack>
                 <Typography fontWeight={'bold'}>{putts.totalsIN}</Typography>
                 <Typography>{putts.avgIN}</Typography>
               </Stack>
             </NewGridCellStats>
-            <NewGridCellStats item xs={4}>
+            <NewGridCellStats item xs={6}>
               <Stack>
                 <Typography fontWeight={'bold'}>{putts.totalsOUT}</Typography>
                 <Typography>{putts.avgOUT}</Typography>

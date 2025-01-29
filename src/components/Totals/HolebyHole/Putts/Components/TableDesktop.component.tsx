@@ -48,7 +48,7 @@ const TableDesktop = ({ totalsPutts }: IHolebyHolePutts) => {
             {
               puttsOverallValues.map(([key, value], index: number) => {
                 return (
-                  <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
+                  <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                     <Stack>
                       <Grid container spacing={1}>
                         <GridPuttsStat item xs={12} string='Putts' value={value.totalPutts !== 0 ? value.totalPutts : '-'} />
@@ -66,7 +66,7 @@ const TableDesktop = ({ totalsPutts }: IHolebyHolePutts) => {
             {
               puttsValues.map(([key, value], index: number) => {
                 return (
-                  <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #000' }}>
+                  <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                     <Stack>
                       <Grid container spacing={1}>
                         {/* <GridPuttsStat item xs={4} string='1 putt %' value={formatPerc(value.putt1Perc)} /> */}
@@ -82,8 +82,8 @@ const TableDesktop = ({ totalsPutts }: IHolebyHolePutts) => {
                       </Grid>
                       <Divider />
                       <Grid container spacing={1}>
-                        <GridPuttsStat item xs={4} string='Average distance' value={value.puttsAverageDistance !== 0 ? value.puttsAverageDistance : '-'} />
-                        <GridPuttsStat item xs={4} string='Second putt avg. length' value={Number(value.puttsSecondAverageLength) !== 0 ? Number(value.puttsSecondAverageLength) : '-'} />
+                        <GridPuttsStat item xs={4} string='Avg. distance' value={value.puttsAverageDistance !== 0 ? value.puttsAverageDistance : '-'} />
+                        <GridPuttsStat item xs={4} string='2° putt avg. length' value={Number(value.puttsSecondAverageLength) !== 0 ? Number(value.puttsSecondAverageLength) : '-'} />
                         <GridPuttsStat item xs={4} string='3 putts' value={value.putts3 !== 0 ? value.putts3 : '-'} />
                       </Grid >
                     </Stack >
