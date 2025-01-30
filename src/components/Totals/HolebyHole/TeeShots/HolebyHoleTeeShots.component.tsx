@@ -39,7 +39,7 @@ const HolebyHoleTeeShots = ({ roundTotals, dashboard, par }: IRoundTotalsProps) 
                   return (
                     <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                       <Stack>
-                        <Grid2 container spacing={1}>
+                        <Grid2 container spacing={1} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                           <GridPuttsStat item xs={4} string='Left %' value={formatPerc(value.fairwayLeftPCT)} />
                           <GridPuttsStat item xs={4} string='Center %' value={formatPerc(value.fairwayCenterPCT)} />
                           <GridPuttsStat item xs={4} string='Right %' value={formatPerc(value.fairwayRightPCT)} />

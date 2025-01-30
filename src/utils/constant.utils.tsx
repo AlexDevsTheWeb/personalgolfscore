@@ -956,19 +956,19 @@ export const catConversion = (string: string) => {
       result = '7i - 9i';
       break;
     case 'puttsU2M':
-      result = 'First putt under 2 mts.';
+      result = '1° putt under 2 mts.';
       break;
     case 'putts24M':
-      result = 'First putt from 2 to 4 mts.';
+      result = '1° putt from 2 to 4 mts.';
       break;
     case 'putts46M':
-      result = 'First putt from 4 to 6 mts.';
+      result = '1° putt from 4 to 6 mts.';
       break;
     case 'putts610M':
-      result = 'First putt from 6 to 10 mts.';
+      result = '1° putt from 6 to 10 mts.';
       break;
     case 'puttsO10M':
-      result = 'First putt over 10 Mts.';
+      result = '1° putt over 10 Mts.';
       break;
     case 'over100mt':
       result = 'Over 100 mts.';

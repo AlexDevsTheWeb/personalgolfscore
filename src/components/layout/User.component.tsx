@@ -39,12 +39,11 @@ const User = () => {
     }).catch((error) => {
       // An error happened.
     });
-
   };
 
   return (
     !!isLoading || _.isUndefined(player.photoURL)
-      ? <Skeleton variant="circular" width={40} height={40} />
+      ? <Skeleton variant="circular" width={40} height={40} sx={{ backgroundColor: 'transparent' }} />
       : <Box sx={{ display: 'flex' }}>
         <Tooltip title="Account settings">
           <IconButton

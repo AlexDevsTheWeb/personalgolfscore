@@ -1,8 +1,9 @@
 import { ShotPosition } from "@/components/common/shotPositions/ShotPosition.component";
 import { useGetVsPar } from "@/hooks/singleHoleCalculator.hook";
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
+import VsParTypography from "@/styles/typography/VsParTypography.styles";
 import { IShots } from "@/types/roundData.types";
-import { Box, Stack, TableCell, TableRow } from "@mui/material";
+import { Box, Stack, TableCell, TableRow, Typography } from "@mui/material";
 
 interface IShotsTableBody {
   shot: IShots,
@@ -45,11 +46,20 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
         <TableCell align='center' sx={{ padding: '0px' }}>{par}</TableCell>
         <TableCell align='center' sx={{ padding: '0px' }}
           variant={vspar.value.includes('-') ? 'green' : vspar.value.includes('+') ? 'red' : 'yellow'}>
-          <Stack>
-            <Box>
-              {`${strokes} (${vspar.value}) | ${vspar.string}`}
-            </Box>
-          </Stack>
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignContent: 'center',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginLeft: '5px',
+            marginRight: '5px'
+
+          }}>
+            <VsParTypography strokes={strokes} value={vspar.string} />
+            <Typography sx={{ fontSize: '14px' }}>({vspar.value})</Typography>
+          </Box>
         </TableCell>
         <TableCell align='center' sx={{ padding: '0px' }}
           variant={points && points >= 2 ? 'green' : points === 1 ? 'yellow' : 'red'}>
@@ -72,7 +82,7 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
         <TableCell align='center' sx={{ padding: '0px' }}>{sand}</TableCell>
         <TableCell align='center' sx={{ padding: '0px' }}>{`${water} | ${out}`}</TableCell>
 
-      </TableRow>
+      </TableRow >
 
 
 
