@@ -25,10 +25,10 @@ const StyledTypography = styled(TypographyMui)<TypographyProps>((props) => {
       fontSize: '18px',
       width: '30px',
       height: '30px',
-      border: createStrokesBorderThickness("BIRDIE"),
-      borderStyle: createStrokesBorder("BIRDIE"),
-      borderRadius: createStrokesBorderRoundness("BIRDIE"),
-      borderColor: createStrokesBorderColor("BIRDIE")
+      border: createStrokesBorderThickness(props.value),
+      borderStyle: createStrokesBorder(props.value),
+      borderRadius: createStrokesBorderRoundness(props.value),
+      borderColor: createStrokesBorderColor(props.value)
     })
 });
 
