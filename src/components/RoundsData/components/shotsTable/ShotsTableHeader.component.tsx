@@ -36,11 +36,15 @@ const ShotsTableHeader = ({ firstColumn, singleHole, dashboard, viewPar }: IShot
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='points' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
-
+            <TableCell align='center'>
+              <ShotsTableHeaderStack firstRow='fairways' secondRow={!!singleHole ? '' : 'center total'} />
+            </TableCell>
+            <TableCell align='center'>
+              <ShotsTableHeaderStack firstRow='gir' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
+            </TableCell>
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='putts' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
-
           </TableRow>
           :
           <TableRow>
@@ -60,6 +64,8 @@ const ShotsTableHeader = ({ firstColumn, singleHole, dashboard, viewPar }: IShot
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='score' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
+
+
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='points' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>

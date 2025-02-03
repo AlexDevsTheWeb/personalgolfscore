@@ -1,43 +1,60 @@
 import { createStrokesBorder, createStrokesBorderColor, createStrokesBorderRoundness, createStrokesBorderThickness } from "@/hooks/singleHoleCalculator.hook";
-import { Typography as TypographyMui, TypographyProps as TypographyPropsMui } from "@mui/material";
+import { Box, BoxProps, Typography, Typography as TypographyMui, TypographyProps as TypographyPropsMui } from "@mui/material";
 import * as React from "react";
 import styled from "styled-components";
 
 interface TypographyProps extends TypographyPropsMui {
   strokes: number,
   value: string,
+  vspar: string,
 }
 
-const StyledTypography = styled(TypographyMui)<TypographyProps>((props) => {
-
-
+const StyledBox = styled(Box)<BoxProps>((props) => {
   return (
     {
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
       alignContent: 'center',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
       alignItems: 'center',
-      lineHeight: '100%',
-      padding: 3,
-      margin: 3,
-      fontSize: '18px',
+    }
+  )
+})
+
+const VsParStyledBox = styled(Box)<TypographyProps>((props) => {
+  return (
+    {
       width: '30px',
       height: '30px',
       border: createStrokesBorderThickness(props.value),
       borderStyle: createStrokesBorder(props.value),
       borderRadius: createStrokesBorderRoundness(props.value),
       borderColor: createStrokesBorderColor(props.value)
+    }
+  )
+})
+const StyledTypography = styled(TypographyMui)<TypographyProps>((props) => {
+  return (
+    {
+      lineHeight: '100%',
+      fontSize: '18px',
     })
 });
 
-const VsParTypography: React.FC<TypographyProps> = props => {
-
+const VsParTypography: React.FC<TypographyProps> = (props) => {
   return (
-    <StyledTypography {...props} variant='headline2'>
-      {props.strokes}
-    </StyledTypography>
+    <StyledBox>
+      <VsParStyledBox {...props}>
+        <StyledTypography {...props} variant='headline2'>
+          {props.strokes}
+        </StyledTypography>
+      </VsParStyledBox>
+      <Typography {...props} variant='body'>
+        {props.vspar}
+      </Typography>
+    </StyledBox>
+
   )
 }
 

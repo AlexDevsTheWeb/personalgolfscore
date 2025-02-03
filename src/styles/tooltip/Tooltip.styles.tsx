@@ -12,7 +12,7 @@ const StyledTooltip = styled(TooltipMui) <TooltipProps>`
 
 const Tooltip: React.FC<TooltipProps> = (props) => {
   return (
-    <StyledTooltip {...props} placement="right">
+    <StyledTooltip {...props} placement="left">
       {props.children}
     </StyledTooltip>
   )

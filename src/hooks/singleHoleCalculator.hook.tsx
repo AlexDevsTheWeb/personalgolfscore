@@ -97,7 +97,7 @@ export const createStrokesBorderThickness = (value: string) => {
   let result = '';
   switch (value) {
     case 'PAR':
-      result = '1px solid';
+      result = '3px solid';
       break;
     case 'BOGEY':
       result = '1px solid';
