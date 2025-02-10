@@ -18,9 +18,9 @@ export type InitialStatePlayer = {
   player: IPlayer;
 }
 
-export type PlayerPayload = {
-  payload: PlayerResponse;
-};
+// export type PlayerPayload = {
+//   payload: PlayerResponse;
+// };
 
 type PlayerResponse = {
   playerID: string,

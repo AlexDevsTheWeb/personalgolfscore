@@ -49,9 +49,9 @@ export type InitialStateRounds = {
   rounds: IRounds[];
 }
 
-export type RoundPayload = {
-  payload: IState;
-};
+// export type RoundPayload = {
+//   payload: IState;
+// };
 
 export interface INewRound {
   roundID: string,

@@ -31,11 +31,11 @@ interface IErrorType {
   errorCode: number;
 }
 
-export type ClubPayload = {
-  payload: IGolfBag;
-}
+// export type ClubPayload = {
+//   payload: IGolfBag;
+// }
 
-export type IClubsPayload = {
-  uid: string,
-  clubs: string,
-}
+// export type IClubsPayload = {
+//   uid: string,
+//   clubs: string,
+// }
