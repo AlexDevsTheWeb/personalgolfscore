@@ -42,14 +42,14 @@ const HolebyHoleInside100 = ({ roundTotals }: IRoundTotalsProps) => {
                       <Stack>
                         <Cross left={value.missedLeft} right={value.missedRight} center={value.greenHits} short={value.missedShort} over={value.missedOver} totals={value.attempts} />
                         <Divider />
-                        <Grid2 container spacing={1}>
-                          <GridPuttsStat item xs={3} string='Greens hit' value={value.greenHits} />
+                        <Grid2 container spacing={1} sx={{ justifyContent: 'space-between' }}>
+                          <GridPuttsStat item xs={3} string='Greens hits' value={value.greenHits} />
                           <GridPuttsStat item xs={3} string='Attempts' value={value.attempts} />
                           <GridPuttsStat item xs={3} string='Avg. shots' value={value.averageShots} />
                           <GridPuttsStat item xs={3} string='Avg. dist. GIR' value={value.averageDistGIR} />
                         </Grid2>
                         <Divider />
-                        <Grid2 container spacing={1}>
+                        <Grid2 container spacing={1} sx={{ justifyContent: 'space-between' }}>
                           <GridPuttsStat item xs={3} string='Left' value={value.missedLeft} />
                           <GridPuttsStat item xs={3} string='Right' value={value.missedRight} />
                           <GridPuttsStat item xs={3} string='Short' value={value.missedShort} />

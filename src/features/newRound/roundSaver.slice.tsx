@@ -12,6 +12,7 @@ const roundSaverSlice = createSlice({
   initialState,
   reducers: {
     saveRound: (state, { payload }: PayloadAction<IRoundFinalData>) => {
+      console.log("round to save: ", payload);
       state.roundToSave = payload;
     },
     resetRoundSaver: () => initialState,

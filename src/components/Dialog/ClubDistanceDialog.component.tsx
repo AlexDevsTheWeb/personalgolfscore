@@ -78,18 +78,18 @@ const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
             <Select name='clubs' list={distanceClubs} onChange={(e: any) => setClub(e.target.value)} value={club} label='Club' />
             <TextField name='meters' label="Meters done" type='number' onChange={e => setMeters(Number(e.target.value))} value={meters === 0 ? '' : meters} />
             <Button variant='contained' onClick={saveDistance} sx={{ marginTop: '0px' }}>
-              {'Next hole'}
+              {'Add new distance'}
             </Button>
           </HoleCardContent>
         </HoleCard>
       </BoxNewHole>
 
       {
-        roundDistances.map(({ course, date, club, mt, avg }: IDistance, index: number) => {
+        roundDistances.map(({ club, mt, avg }: IDistance, index: number) => {
           return (
 
             <Box key={index}>
-              <Typography>{`${course} - ${date} - ${club} - ${mt} - AVG: ${avg}`}</Typography>
+              <Typography>{`${club} - ${mt} - AVG: ${avg}`}</Typography>
             </Box>
           )
         })

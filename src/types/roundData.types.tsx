@@ -61,9 +61,6 @@ export type InitialStateNewRoundDistances = {
 }
 
 export type IDistance = {
-  roundID: string,
-  course: string,
-  date: string,
   club: string,
   mt: number[],
   avg: number,

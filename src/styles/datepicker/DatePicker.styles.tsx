@@ -21,11 +21,9 @@ const StyledDatePicker = styled(DatePickerMui)<IDatepickerProps>(({ theme }) => 
     borderBottom: '1px solid black',
     backgroundColor: '#e9eaeb',
     height: '56px',
-    width: useDeviceDetection().isMobile ? '100%' : '200px'
+    width: useDeviceDetection().isMobile ? '180px' : '200px'
   }
 }));
-
-
 
 
 const DatePicker: React.FC<IDatepickerProps> = (props) => {

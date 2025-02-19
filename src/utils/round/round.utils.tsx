@@ -83,12 +83,12 @@ export const createDistanceObject = (value: IDistanceSingle) => {
   const existingIndex = roundDistances.findIndex((distance) => distance.club === club);
 
   if (existingIndex === -1) {
-    newDistance = [...roundDistances, { roundID: roundID, course: course, date: date, club: club, mt: [mt], avg: mt }];
+    newDistance = [...roundDistances, { club: club, mt: [mt], avg: mt }];
   }
   else {
     const newClubMt = [...roundDistances[existingIndex].mt, mt];
     const newAvg = calculateAvg(newClubMt);
-    newDistance = [...roundDistances, { roundID: roundID, course: course, date: date, club: club, mt: newClubMt, avg: newAvg }];
+    newDistance = [...roundDistances, { club: club, mt: newClubMt, avg: newAvg }];
     newDistance.splice(existingIndex, 1);
   }
   return newDistance;

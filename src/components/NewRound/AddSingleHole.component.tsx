@@ -10,17 +10,14 @@ import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HoleCard, HoleCardContent, HoleCardHeader } from '../../styles';
-import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
 import PuttsGenerator from './PuttsGenerator.component';
 import Select from './Select.component';
-import DistancesButton from './components/DistancesButton.component';
 import SaveRoundButton from './components/SaveRoundButton.component';
 
 const AddSingleHole = () => {
 
   const dispatch = useDispatch<any>();
 
-  const { showDistances } = useSelector((store: RootState) => store.controls);
   const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
@@ -111,14 +108,11 @@ const AddSingleHole = () => {
           </HoleCard>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-            <DistancesButton />
+
             <SaveRoundButton />
           </Box>
         </BoxNewHole>
-        {
-          !!showDistances &&
-          <ClubDistanceDialog open={showDistances} />
-        }
+
       </BoxSingleHoleInternal>
     </BoxSingleHoleContainer>
   )

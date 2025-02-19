@@ -17,7 +17,7 @@ const StyledTextField = styled(TextFieldMui)<TextFieldProps>((props) => ({
       ? `${props.width}px`
       : `${props.width}`}`
     : useDeviceDetection().isMobile
-      ? '48%'
+      ? '200px'
       : props.name === 'roundCourse'
         ? '300px'
         : '100px',
