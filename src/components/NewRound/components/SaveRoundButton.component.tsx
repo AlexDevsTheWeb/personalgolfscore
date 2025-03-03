@@ -30,12 +30,13 @@ const SaveRoundButton = () => {
       setHandleSave(false);
     }
     else {
-      // TODO: here we have to save the entire round
+      // TODO: is better to save one single roundFinalData object at time (4 DB call) or in a single DB call?
       setLabel("Save round");
       const roundFinalData = finalRoundGeneration(
         { round, holes, roundTotals, roundDistances }
       );
       dispatch(saveRound(roundFinalData));
+
     }
   };
 
