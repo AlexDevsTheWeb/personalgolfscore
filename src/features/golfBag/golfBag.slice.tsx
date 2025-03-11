@@ -80,9 +80,6 @@ const golfBagSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getClubsDetails.fulfilled, (state, { payload }: PayloadAction<any>) => {
-
-        //const z = JSON.parse(payload.clubs);
-        console.log("payload SLICE: ", payload);
         state.isLoading = false;
         state.clubs = payload.clubs;
 

@@ -49,12 +49,7 @@ export type InitialStateRounds = {
   rounds: IRounds[];
 }
 
-// export type RoundPayload = {
-//   payload: IState;
-// };
-
 export interface INewRound {
-  roundID: string,
   roundDate: any,
   roundCourse: string,
   roundHoles: number,
@@ -86,6 +81,6 @@ export interface IRoundFinalDataProps {
 }
 
 export interface IInitialStateRoundSave {
-  isLoading: false,
+  isLoading: boolean,
   roundToSave: IRoundFinalData
 }

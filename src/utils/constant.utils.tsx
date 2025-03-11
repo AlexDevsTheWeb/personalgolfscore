@@ -16,7 +16,6 @@ export const pieChartDimensions = {
 export const initialStateDistance: IDistance[] = [];
 
 export const initialStateRoundTotals: IRoundTotals = {
-  playerID: 'playerID',
   mainData: {
     roundCourse: '',
     roundDate: '',
@@ -1192,7 +1191,6 @@ export const initialFwAndIronsStatistics: IRoundFwAndIronsTotals = {
 
 export const roundToSave: IRoundFinalData = {
   roundMainData: {
-    roundID: '',
     roundDate: '',
     roundCourse: '',
     roundHoles: 0,

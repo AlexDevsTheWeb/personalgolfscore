@@ -69,7 +69,7 @@ const HolebyHoleInside100 = ({ roundTotals }: IRoundTotalsProps) => {
           Object.entries(inside100Mt).map(([key, value], index: number) => {
             return (
 
-              <Accordion>
+              <Accordion key={index}>
                 <AccordionSummary>
                   <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
                 </AccordionSummary>

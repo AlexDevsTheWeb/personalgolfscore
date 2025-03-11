@@ -67,7 +67,7 @@ const HolebyHoleFwAndIrons = ({ roundTotals }: IRoundTotalsProps) => {
         {
           Object.entries(fwAndIrons).map(([key, value], index: number) => {
             return (
-              <Accordion>
+              <Accordion key={index}>
                 <AccordionSummary>
                   <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
                 </AccordionSummary>

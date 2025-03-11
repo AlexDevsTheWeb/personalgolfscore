@@ -67,6 +67,13 @@ export const newRoundDisabledSelect = (name: string, tmpHole: IShots) => {
       else {
         return false;
       }
+    case CHIPCONDITION.TOGREENCLUB:
+      if (tmpHole.par === 3 && tmpHole.strokes <= 3 && tmpHole.putts <= 2) {
+        return true;
+      }
+      else {
+        return false;
+      }
     default:
       return false;
   }

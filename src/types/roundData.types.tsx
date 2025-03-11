@@ -87,7 +87,6 @@ export interface IRoundsDistanceInitialState {
 }
 
 export interface IRoundMainData {
-  playerID: string,
   roundID: number,
   roundDate: string,
   roundCourse: string,

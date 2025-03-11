@@ -7,7 +7,6 @@ const initialState: InitialStateNewRound = {
   playerID: '',
   setFirstHole: false,
   round: {
-    roundID: '',
     roundDate: '',
     roundCourse: '',
     roundHoles: 0,

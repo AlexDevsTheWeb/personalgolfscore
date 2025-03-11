@@ -105,7 +105,7 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
         {
           Object.entries(puttsOverallValues).map(([key, value], index: number) => {
             return (
-              <Accordion>
+              <Accordion key={index}>
                 <AccordionSummary>
                   <ShotsTableHeaderStack firstRow={catConversion(value[0])} secondRow={''} />
                 </AccordionSummary>

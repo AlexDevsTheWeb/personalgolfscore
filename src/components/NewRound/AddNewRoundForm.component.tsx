@@ -23,7 +23,6 @@ const AddNewRoundForm = () => {
     const { roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundNumber } = data;
     dispatch(setRoundMainData({
       newRound: {
-        roundID: '',
         roundDate: roundDate,
         roundCourse: roundCourse,
         roundHoles: roundHoles,
@@ -34,7 +33,6 @@ const AddNewRoundForm = () => {
       }
     }));
     const round: INewRound = {
-      roundID: '',
       roundCourse: roundCourse,
       roundDate: roundDate,
       roundNumber: roundNumber,
@@ -79,7 +77,7 @@ const AddNewRoundForm = () => {
         <TextField name='roundTee' label="Tee" variant="filled" onChange={e => handleChange(e)} width={80} />
         <TextField name='roundNumber' label="Round #" variant="filled" type='number' onChange={e => handleChange(e)} width={65} />
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', width: isMobile ? '100%' : 'auto', gap: '10px' }}>
+      <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', width: isMobile ? '100%' : 'auto', gap: '10px' }}>
         {
           !!showDistances &&
           <ClubDistanceDialog open={showDistances} />

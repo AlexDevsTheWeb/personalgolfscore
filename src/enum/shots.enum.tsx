@@ -21,7 +21,8 @@ export enum CHIPCONDITION {
   CHIP = 'chipClub',
   FAIRWAY = 'fairway',
   TEECLUB = 'teeClub',
-  DRIVEDISTANCE = 'driveDistance'
+  DRIVEDISTANCE = 'driveDistance',
+  TOGREENCLUB = 'toGreen'
 }
 
 export enum FAIRWAYSICONS {

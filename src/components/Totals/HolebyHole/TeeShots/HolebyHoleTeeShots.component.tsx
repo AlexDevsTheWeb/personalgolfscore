@@ -70,7 +70,7 @@ const HolebyHoleTeeShots = ({ roundTotals, dashboard, par }: IRoundTotalsProps) 
           Object.entries(teeShots).map(([key, value], index: number) => {
             return (
 
-              <Accordion>
+              <Accordion key={key}>
                 <AccordionSummary>
                   <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
                 </AccordionSummary>

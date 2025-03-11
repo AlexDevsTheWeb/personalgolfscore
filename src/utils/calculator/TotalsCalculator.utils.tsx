@@ -104,7 +104,6 @@ export const totalsCalculator = (shots: IShots[]) => {
 
   totals = {
     ...totals,
-    playerID: "playerID",
 
     mainData: {
       roundCourse: '',

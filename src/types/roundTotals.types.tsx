@@ -39,7 +39,6 @@ export interface IRoundDistanceInitialState {
 }
 
 export interface IRoundTotals {
-  playerID: string,
   mainData: IRoundTotalsMainData,
   score: IRoundScoreTotalsAvg,
   points: IRoundPointsTotalsAvg,
