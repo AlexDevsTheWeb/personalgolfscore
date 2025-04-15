@@ -4,7 +4,7 @@ import { TLinkSidebar } from '@/types/general.types';
 import links from '@/utils/links/links.utils';
 import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
-import { ListItemIcon, ListItemText } from '@mui/material';
+import { ListItemIcon, ListItemText, styled } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box, { BoxProps as BoxPropsMui } from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,7 +21,6 @@ import _ from 'lodash';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
 import Footer from './Footer.component';
 import User from './User.component';
 

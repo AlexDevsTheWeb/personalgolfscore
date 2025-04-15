@@ -1,8 +1,7 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { AccordionSummary as AccordionSummaryMui, AccordionSummaryProps as AccordionSummaryPropsMui } from "@mui/material";
+import { AccordionSummary as AccordionSummaryMui, AccordionSummaryProps as AccordionSummaryPropsMui, styled } from "@mui/material";
 import _ from 'lodash';
 import * as React from "react";
-import styled from "styled-components";
 
 type AccordionSummaryProps = AccordionSummaryPropsMui & {};
 

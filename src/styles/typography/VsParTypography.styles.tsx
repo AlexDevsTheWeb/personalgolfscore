@@ -1,7 +1,6 @@
 import { createStrokesBorder, createStrokesBorderColor, createStrokesBorderRoundness, createStrokesBorderThickness } from "@/hooks/singleHoleCalculator.hook";
-import { Box, BoxProps, Typography, Typography as TypographyMui, TypographyProps as TypographyPropsMui } from "@mui/material";
+import { Box, BoxProps, Typography, Typography as TypographyMui, TypographyProps as TypographyPropsMui, styled } from "@mui/material";
 import * as React from "react";
-import styled from "styled-components";
 
 interface TypographyProps extends TypographyPropsMui {
   strokes: number,

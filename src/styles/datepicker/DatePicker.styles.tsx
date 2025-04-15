@@ -1,10 +1,8 @@
+import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+import { styled } from '@mui/material';
 import { DatePicker as DatePickerMui } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
-
-import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import * as React from "react";
-import styled from "styled-components";
-
 interface IDatepickerProps {
   // value: dayjs.Dayjs | null;
   onChange: (value: dayjs.Dayjs | null) => void;

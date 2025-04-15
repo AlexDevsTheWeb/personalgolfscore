@@ -1,5 +1,4 @@
-import { Tooltip as TooltipMui, TooltipProps as TooltipPropsMui } from "@mui/material";
-import styled from "styled-components";
+import { Tooltip as TooltipMui, TooltipProps as TooltipPropsMui, styled } from "@mui/material";
 
 interface TooltipProps extends TooltipPropsMui { }
 

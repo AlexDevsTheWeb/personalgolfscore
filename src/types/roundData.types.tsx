@@ -68,7 +68,6 @@ export type IDistance = {
 
 export type IDistanceSingle = {
   roundDistances: IDistance[],
-  roundID: string,
   course: string,
   date: string,
   club: string,

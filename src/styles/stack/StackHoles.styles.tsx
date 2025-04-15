@@ -1,7 +1,6 @@
 import ShotsTableHeaderStack from '@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component';
-import { Stack as StackMui, StackProps as StackPropsMui, Typography } from '@mui/material';
+import { Stack as StackMui, StackProps as StackPropsMui, Typography, styled } from '@mui/material';
 import * as React from 'react';
-import styled from 'styled-components';
 
 type StackProps = StackPropsMui & {
   name: string,

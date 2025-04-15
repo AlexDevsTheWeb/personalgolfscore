@@ -1,10 +1,9 @@
-import { Grid as GridMui, GridProps as GridPropsMui } from '@mui/material';
-import styled from 'styled-components';
+import { Grid2 as Grid2Mui, Grid2Props as Grid2PropsMui, styled } from '@mui/material';
 import * as React from 'react';
 
-type GridProps = GridPropsMui
+type GridProps = Grid2PropsMui
 
-const StyledGrid = styled(GridMui)<GridProps>({})
+const StyledGrid = styled(Grid2Mui)<GridProps>({})
 
 const Grid: React.FC<GridProps> = props => {
   return (

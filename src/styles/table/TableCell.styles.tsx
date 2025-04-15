@@ -1,8 +1,6 @@
-import { TableCell as TableCellMui, TableCellProps as TableCellPropsMui } from "@mui/material";
+import { TableCell as TableCellMui, TableCellProps as TableCellPropsMui, styled } from "@mui/material";
 import { tableCellClasses } from '@mui/material/TableCell';
-
 import * as React from "react";
-import styled from "styled-components";
 
 type TableCellProps = TableCellPropsMui & {
   space?: string,

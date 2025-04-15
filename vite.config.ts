@@ -7,5 +7,9 @@ export default defineConfig({
 	resolve: {
 		alias: [{ find: '@', replacement: path.resolve(__dirname, '/src') }],
 	},
+	server: {
+		open: true,
+		// port: 3000,
+	},
 	plugins: [react()],
 });

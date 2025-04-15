@@ -42,17 +42,17 @@ const HolebyHoleFwAndIrons = ({ roundTotals }: IRoundTotalsProps) => {
                         <Cross left={value.missedLeft} right={value.missedRight} center={value.greenHits} short={value.missedShort} over={value.missedOver} totals={value.attempts} />
                         <Divider />
                         <Grid2 container spacing={1} sx={{ justifyContent: 'space-between' }}>
-                          <GridPuttsStat item xs={3} string='Greens hit' value={value.greenHits} />
-                          <GridPuttsStat item xs={3} string='Attempts' value={value.attempts} />
-                          <GridPuttsStat item xs={3} string='Avg. shots' value={value.averageShots} />
-                          <GridPuttsStat item xs={3} string='Avg. dist. GIR' value={value.averageDistGIR} />
+                          <GridPuttsStat size={{ xs: 3 }} string='Greens hit' value={value.greenHits} />
+                          <GridPuttsStat size={{ xs: 3 }} string='Attempts' value={value.attempts} />
+                          <GridPuttsStat size={{ xs: 3 }} string='Avg. shots' value={value.averageShots} />
+                          <GridPuttsStat size={{ xs: 3 }} string='Avg. dist. GIR' value={value.averageDistGIR} />
                         </Grid2>
                         <Divider />
                         <Grid2 container spacing={1} sx={{ justifyContent: 'space-between' }}>
-                          <GridPuttsStat item xs={3} string='Left' value={value.missedLeft} />
-                          <GridPuttsStat item xs={3} string='Right' value={value.missedRight} />
-                          <GridPuttsStat item xs={3} string='Short' value={value.missedShort} />
-                          <GridPuttsStat item xs={3} string='Long' value={value.missedOver} />
+                          <GridPuttsStat size={{ xs: 3 }} string='Left' value={value.missedLeft} />
+                          <GridPuttsStat size={{ xs: 3 }} string='Right' value={value.missedRight} />
+                          <GridPuttsStat size={{ xs: 3 }} string='Short' value={value.missedShort} />
+                          <GridPuttsStat size={{ xs: 3 }} string='Long' value={value.missedOver} />
                         </Grid2>
                       </Stack>
                     </TableCell>
@@ -76,17 +76,17 @@ const HolebyHoleFwAndIrons = ({ roundTotals }: IRoundTotalsProps) => {
                     <Cross left={value.missedLeft} right={value.missedRight} center={value.greenHits} short={value.missedShort} over={value.missedOver} totals={value.attempts} />
                     <Divider />
                     <GridAccordion>
-                      <GridPuttsStat item xs={3} string='Greens hit' value={value.greenHits} />
-                      <GridPuttsStat item xs={3} string='Attempts' value={value.attempts} />
-                      <GridPuttsStat item xs={3} string='Avg. shots' value={value.averageShots} />
-                      <GridPuttsStat item xs={3} string='Avg. dist. GIR' value={value.averageDistGIR} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Greens hit' value={value.greenHits} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Attempts' value={value.attempts} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Avg. shots' value={value.averageShots} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Avg. dist. GIR' value={value.averageDistGIR} />
                     </GridAccordion>
                     <Divider />
                     <GridAccordion>
-                      <GridPuttsStat item xs={3} string='Left' value={value.missedLeft} />
-                      <GridPuttsStat item xs={3} string='Right' value={value.missedRight} />
-                      <GridPuttsStat item xs={3} string='Short' value={value.missedShort} />
-                      <GridPuttsStat item xs={3} string='Long' value={value.missedOver} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Left' value={value.missedLeft} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Right' value={value.missedRight} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Short' value={value.missedShort} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Long' value={value.missedOver} />
                     </GridAccordion>
                   </Stack>
                 </AccordionDetails>

@@ -1,6 +1,6 @@
+import { styled } from '@mui/material';
 import Box, { BoxProps as BoxPropsMui } from '@mui/material/Box';
 import * as React from 'react';
-import styled from 'styled-components';
 
 interface BoxProps extends BoxPropsMui {
   direction?: string;

@@ -1,7 +1,6 @@
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { Divider, Stack as StackMui, StackProps as StackPropsMui } from '@mui/material';
+import { Divider, Stack as StackMui, StackProps as StackPropsMui, styled } from '@mui/material';
 import * as React from 'react';
-import styled from 'styled-components';
 
 type StackProps = StackPropsMui & {
   secondrow: string,

@@ -1,6 +1,5 @@
-import { BoxProps as BoxPropsMui } from '@mui/material/Box';
-import Box from '@mui/material/Box';
-import styled from 'styled-components';
+import { styled } from '@mui/material';
+import Box, { BoxProps as BoxPropsMui } from '@mui/material/Box';
 import * as React from 'react';
 
 type BoxProps = BoxPropsMui;

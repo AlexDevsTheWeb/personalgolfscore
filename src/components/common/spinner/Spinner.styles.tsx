@@ -1,13 +1,13 @@
-import styled from "styled-components";
+import { styled } from "@mui/material";
 
-export const SpinnerOverlay = styled.div`
+export const SpinnerOverlay = styled('div')`
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 
-export const SpinnerContainer = styled.div`
+export const SpinnerContainer = styled('div')`
 	display: inline-block;
 	width: 75px;
 	height: 75px;

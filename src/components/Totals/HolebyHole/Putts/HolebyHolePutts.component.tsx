@@ -58,13 +58,13 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                     <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                       <Stack>
                         <Grid2 container spacing={1}>
-                          <GridPuttsStat item xs={12} string='Putts' value={value.totalPutts !== 0 ? value.totalPutts : '-'} />
-                          <GridPuttsStat item xs={12} string='Putts/GIR' value={value.totalPuttsInGIR !== 0 ? value.totalPuttsInGIR : '-'} />
+                          <GridPuttsStat size={{ xs: 12 }} string='Putts' value={value.totalPutts !== 0 ? value.totalPutts : '-'} />
+                          <GridPuttsStat size={{ xs: 12 }} string='Putts/GIR' value={value.totalPuttsInGIR !== 0 ? value.totalPuttsInGIR : '-'} />
                         </Grid2>
                         <Divider />
                         <Grid2 container spacing={1}>
-                          <GridPuttsStat item xs={12} string='Birdie conv.' value={value.birdieConversion !== 0 ? value.birdieConversion : '-'} />
-                          <GridPuttsStat item xs={12} string='3 putts per round' value={value.threePutts !== 0 ? value.threePutts : '-'} />
+                          <GridPuttsStat size={{ xs: 12 }} string='Birdie conv.' value={value.birdieConversion !== 0 ? value.birdieConversion : '-'} />
+                          <GridPuttsStat size={{ xs: 12 }} string='3 putts per round' value={value.threePutts !== 0 ? value.threePutts : '-'} />
                         </Grid2>
                       </Stack>
                     </TableCell>
@@ -76,21 +76,21 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                     <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                       <Stack>
                         <Grid2 container spacing={1}>
-                          <GridPuttsStat item xs={4} string='1 putt %' value={value.putt1Perc} />
-                          <GridPuttsStat item xs={4} string='2 putt %' value={(value.putt1Perc === 0 && value.putt3Perc === 0) ? '-' : formatPerc(1 - value.putt1Perc - value.putt3Perc)} />
-                          <GridPuttsStat item xs={4} string='3 putt %' value={formatPerc(value.putt3Perc)} />
+                          <GridPuttsStat size={{ xs: 4 }} string='1 putt %' value={value.putt1Perc} />
+                          <GridPuttsStat size={{ xs: 4 }} string='2 putt %' value={(value.putt1Perc === 0 && value.putt3Perc === 0) ? '-' : formatPerc(1 - value.putt1Perc - value.putt3Perc)} />
+                          <GridPuttsStat size={{ xs: 4 }} string='3 putt %' value={formatPerc(value.putt3Perc)} />
                         </Grid2>
                         <Divider />
                         <Grid2 container spacing={1}>
-                          <GridPuttsStat item xs={4} string='Holed' value={value.puttsHoled !== 0 ? value.puttsHoled : '-'} />
-                          <GridPuttsStat item xs={4} string='Attempts' value={value.puttsAttempts !== 0 ? value.puttsAttempts : '-'} />
-                          <GridPuttsStat item xs={4} string='Average' value={value.puttsAverage !== 0 ? value.puttsAverage : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Holed' value={value.puttsHoled !== 0 ? value.puttsHoled : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Attempts' value={value.puttsAttempts !== 0 ? value.puttsAttempts : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Average' value={value.puttsAverage !== 0 ? value.puttsAverage : '-'} />
                         </Grid2>
                         <Divider />
                         <Grid2 container spacing={1}>
-                          <GridPuttsStat item xs={4} string='Avg. distance' value={value.puttsAverageDistance !== 0 ? value.puttsAverageDistance : '-'} />
-                          <GridPuttsStat item xs={4} string='2° putt avg. length' value={Number(value.puttsSecondAverageLength) !== 0 ? Number(value.puttsSecondAverageLength) : '-'} />
-                          <GridPuttsStat item xs={4} string='3 putts' value={value.putts3 !== 0 ? value.putts3 : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Avg. distance' value={value.puttsAverageDistance !== 0 ? value.puttsAverageDistance : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='2° putt avg. length' value={Number(value.puttsSecondAverageLength) !== 0 ? Number(value.puttsSecondAverageLength) : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='3 putts' value={value.putts3 !== 0 ? value.putts3 : '-'} />
                         </Grid2>
                       </Stack>
                     </TableCell>
@@ -112,10 +112,10 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                 <AccordionDetails>
                   <Stack>
                     <GridAccordion>
-                      <GridPuttsStat item xs={3} string='Putts' value={value[1].totalPutts !== 0 ? value[1].totalPutts : '-'} />
-                      <GridPuttsStat item xs={3} string='Putts/GIR' value={value[1].totalPuttsInGIR !== 0 ? value[1].totalPuttsInGIR : '-'} />
-                      <GridPuttsStat item xs={3} string='Birdie conv.' value={value[1].birdieConversion !== 0 ? value[1].birdieConversion : '-'} />
-                      <GridPuttsStat item xs={3} string='3 putts per round' value={value[1].threePutts !== 0 ? value[1].threePutts : '-'} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Putts' value={value[1].totalPutts !== 0 ? value[1].totalPutts : '-'} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Putts/GIR' value={value[1].totalPuttsInGIR !== 0 ? value[1].totalPuttsInGIR : '-'} />
+                      <GridPuttsStat size={{ xs: 3 }} string='Birdie conv.' value={value[1].birdieConversion !== 0 ? value[1].birdieConversion : '-'} />
+                      <GridPuttsStat size={{ xs: 3 }} string='3 putts per round' value={value[1].threePutts !== 0 ? value[1].threePutts : '-'} />
                     </GridAccordion>
                   </Stack>
                 </AccordionDetails>
@@ -132,21 +132,21 @@ const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
                 <AccordionDetails>
                   <Stack>
                     <GridAccordion>
-                      <GridPuttsStat item xs={4} string='1 putt %' value={formatPerc(value[1].putt1Perc)} />
-                      <GridPuttsStat item xs={4} string='2 putt %' value={(value[1].putt1Perc === 0 && value[1].putt3Perc === 0) ? '-' : formatPerc(1 - value[1].putt1Perc - value[1].putt3Perc)} />
-                      <GridPuttsStat item xs={4} string='3 putt %' value={formatPerc(value[1].putt3Perc)} />
+                      <GridPuttsStat size={{ xs: 4 }} string='1 putt %' value={formatPerc(value[1].putt1Perc)} />
+                      <GridPuttsStat size={{ xs: 4 }} string='2 putt %' value={(value[1].putt1Perc === 0 && value[1].putt3Perc === 0) ? '-' : formatPerc(1 - value[1].putt1Perc - value[1].putt3Perc)} />
+                      <GridPuttsStat size={{ xs: 4 }} string='3 putt %' value={formatPerc(value[1].putt3Perc)} />
                     </GridAccordion>
                     <Divider />
                     <GridAccordion>
-                      <GridPuttsStat item xs={4} string='Holed' value={value[1].puttsHoled !== 0 ? value[1].puttsHoled : '-'} />
-                      <GridPuttsStat item xs={4} string='Attempts' value={value[1].puttsAttempts !== 0 ? value[1].puttsAttempts : '-'} />
-                      <GridPuttsStat item xs={4} string='Average' value={value[1].puttsAverage !== 0 ? value[1].puttsAverage : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Holed' value={value[1].puttsHoled !== 0 ? value[1].puttsHoled : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Attempts' value={value[1].puttsAttempts !== 0 ? value[1].puttsAttempts : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Average' value={value[1].puttsAverage !== 0 ? value[1].puttsAverage : '-'} />
                     </GridAccordion>
                     <Divider />
                     <GridAccordion>
-                      <GridPuttsStat item xs={4} string='Avg. distance' value={value[1].puttsAverageDistance !== 0 ? value[1].puttsAverageDistance : '-'} />
-                      <GridPuttsStat item xs={4} string='2° putt avg. length' value={Number(value[1].puttsSecondAverageLength) !== 0 ? Number(value[1].puttsSecondAverageLength) : '-'} />
-                      <GridPuttsStat item xs={4} string='3 putts' value={value[1].putts3 !== 0 ? value[1].putts3 : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Avg. distance' value={value[1].puttsAverageDistance !== 0 ? value[1].puttsAverageDistance : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='2° putt avg. length' value={Number(value[1].puttsSecondAverageLength) !== 0 ? Number(value[1].puttsSecondAverageLength) : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='3 putts' value={value[1].putts3 !== 0 ? value[1].putts3 : '-'} />
                     </GridAccordion >
                   </Stack>
                 </AccordionDetails>

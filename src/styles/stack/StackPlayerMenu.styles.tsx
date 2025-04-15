@@ -1,12 +1,13 @@
-// import { Stack as StackMui, StackProps as StackPropsMui, Typography } from '@mui/material';
-import styled from 'styled-components';
-
-import { Box as BoxMui, BoxProps as BoxPropsMui, Typography } from '@mui/material';
+import { Box as BoxMui, BoxProps as BoxPropsMui, Typography, styled } from '@mui/material';
 
 type BoxProps = BoxPropsMui & {
-  name: string,
-  value: number | string,
+  name: string;
+  value: number | string;
 };
+
+interface ValueProps {
+  value: number | string;
+}
 
 const StyledBox = styled(BoxMui)<BoxProps>(() => ({
   gap: 5,
@@ -40,7 +41,7 @@ const StyledBoxHCP = styled(BoxMui)<BoxProps>((props) => ({
   alignItems: 'center'
 }));
 
-const StyledTypographyHCP = styled(Typography)<BoxProps>((props) => ({
+const StyledTypographyHCP = styled(Typography)<ValueProps>((props) => ({
   fontWeight: 'bold',
   fontSize: '40px',
   lineHeight: '40px',
@@ -49,10 +50,9 @@ const StyledTypographyHCP = styled(Typography)<BoxProps>((props) => ({
     : (Number(props.value) < 20 && Number(props.value) >= 10)
       ? '#494949'
       : 'white',
-
 }));
 
-const StyledTypographyLabelHCP = styled(Typography)<BoxProps>((props) => ({
+const StyledTypographyLabelHCP = styled(Typography)<ValueProps>((props) => ({
   fontSize: '16px',
   lineHeight: '16px',
   color: Number(props.value) >= 20
@@ -60,7 +60,7 @@ const StyledTypographyLabelHCP = styled(Typography)<BoxProps>((props) => ({
     : (Number(props.value) < 20 && Number(props.value) >= 10)
       ? '#494949'
       : 'white',
-}))
+}));
 
 const StackPlayerMenu: React.FC<BoxProps> = props => {
   const { name, value } = props;
@@ -70,12 +70,12 @@ const StackPlayerMenu: React.FC<BoxProps> = props => {
       <Typography>{name}</Typography>
 
       <StyledBoxHCP {...props}>
-        <StyledTypographyLabelHCP {...props}>{'HCP'}</StyledTypographyLabelHCP>
-        <StyledTypographyHCP {...props}>{value}</StyledTypographyHCP>
+        <StyledTypographyLabelHCP value={value}>{'HCP'}</StyledTypographyLabelHCP>
+        <StyledTypographyHCP value={value}>{value}</StyledTypographyHCP>
       </StyledBoxHCP>
 
     </StyledBox>
-  )
+  );
 };
 
 export default StackPlayerMenu;

@@ -1,7 +1,6 @@
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+import { styled } from '@mui/material';
 import Stack, { StackProps as StackPropsMui } from '@mui/material/Stack';
-import styled from 'styled-components';
-
 interface StackProps extends StackPropsMui {
   ismobile?: boolean;
 };

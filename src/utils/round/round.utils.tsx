@@ -81,10 +81,10 @@ export const newRoundDisabledSelect = (name: string, tmpHole: IShots) => {
 
 export const createDistanceObject = (value: IDistanceSingle) => {
   let newDistance: IDistance[] = [];
-  const { roundDistances, roundID, course, date, club, mt } = value;
+  const { roundDistances, course, date, club, mt } = value;
 
   if (roundDistances.length === 0) {
-    return [{ roundID, course, date, club, mt: [mt], avg: mt }];
+    return [{ course, date, club, mt: [mt], avg: mt }];
   }
 
   const existingIndex = roundDistances.findIndex((distance) => distance.club === club);

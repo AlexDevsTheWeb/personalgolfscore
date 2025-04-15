@@ -1,7 +1,6 @@
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { Grid2 as GridMui, Grid2Props as GridPropsMui } from '@mui/material';
+import { Grid2 as GridMui, Grid2Props as GridPropsMui, styled } from '@mui/material';
 import * as React from 'react';
-import styled from 'styled-components';
 
 type GridProps = GridPropsMui
 

@@ -1,5 +1,4 @@
-import { CardContent as CardContentMui, CardContentProps } from "@mui/material";
-import styled from "styled-components";
+import { CardContent as CardContentMui, CardContentProps, styled } from "@mui/material";
 
 interface IReactCardProps extends CardContentProps {
   direction?: string;

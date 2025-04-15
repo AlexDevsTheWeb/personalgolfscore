@@ -1,6 +1,5 @@
-import { Stack as StackMui, StackProps as StackPropsMui } from '@mui/material';
+import { Stack as StackMui, StackProps as StackPropsMui, styled } from '@mui/material';
 import * as React from 'react';
-import styled from 'styled-components';
 
 type StackProps = StackPropsMui;
 

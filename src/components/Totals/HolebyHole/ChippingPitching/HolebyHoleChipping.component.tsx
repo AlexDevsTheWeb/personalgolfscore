@@ -40,15 +40,15 @@ const HolebyHoleChipping = ({ roundTotals }: IRoundTotalsProps) => {
                     <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                       <Stack >
                         <Grid2 container spacing={1}>
-                          <GridPuttsStat item xs={4} string='U&D made' value={value.upDownMade} />
-                          <GridPuttsStat item xs={4} string='Attempts made' value={value.attempts} />
-                          <GridPuttsStat item xs={4} string='Shots holed' value={value.shotsHoled} />
+                          <GridPuttsStat size={{ xs: 4 }} string='U&D made' value={value.upDownMade} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Attempts made' value={value.attempts} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Shots holed' value={value.shotsHoled} />
                         </Grid2>
                         <Divider />
                         <Grid2 container spacing={1}>
-                          <GridPuttsStat item xs={4} string='Average shots' value={value.averageShots} />
-                          <GridPuttsStat item xs={4} string='Avg. distance' value={value.averageHoleDistanceShot} />
-                          <GridPuttsStat item xs={4} string='Green missed' value={value.greenMissed} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Average shots' value={value.averageShots} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Avg. distance' value={value.averageHoleDistanceShot} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greenMissed} />
                         </Grid2>
                       </Stack>
                     </TableCell>
@@ -72,15 +72,15 @@ const HolebyHoleChipping = ({ roundTotals }: IRoundTotalsProps) => {
                   <AccordionDetails>
                     <Stack>
                       <GridAccordion>
-                        <GridPuttsStat item xs={4} string='U&D made' value={value.upDownMade} />
-                        <GridPuttsStat item xs={4} string='Attempts made' value={value.attempts} />
-                        <GridPuttsStat item xs={4} string='Shots holed' value={value.shotsHoled} />
+                        <GridPuttsStat size={{ xs: 4 }} string='U&D made' value={value.upDownMade} />
+                        <GridPuttsStat size={{ xs: 4 }} string='Attempts made' value={value.attempts} />
+                        <GridPuttsStat size={{ xs: 4 }} string='Shots holed' value={value.shotsHoled} />
                       </GridAccordion>
                       <Divider />
                       <GridAccordion>
-                        <GridPuttsStat item xs={4} string='Avgerage shots' value={value.averageShots} />
-                        <GridPuttsStat item xs={4} string='Avg. distance' value={value.averageHoleDistanceShot} />
-                        <GridPuttsStat item xs={4} string='Green missed' value={value.greenMissed} />
+                        <GridPuttsStat size={{ xs: 4 }} string='Avgerage shots' value={value.averageShots} />
+                        <GridPuttsStat size={{ xs: 4 }} string='Avg. distance' value={value.averageHoleDistanceShot} />
+                        <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greenMissed} />
                       </GridAccordion>
                     </Stack>
                   </AccordionDetails>

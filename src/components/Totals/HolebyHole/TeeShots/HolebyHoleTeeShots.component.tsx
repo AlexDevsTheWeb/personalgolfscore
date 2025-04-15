@@ -40,21 +40,21 @@ const HolebyHoleTeeShots = ({ roundTotals, dashboard, par }: IRoundTotalsProps) 
                     <TableCell align='center' key={index} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}>
                       <Stack>
                         <Grid2 container spacing={1} sx={{ justifyContent: 'space-between' }}>
-                          <GridPuttsStat item xs={4} string='Left %' value={formatPerc(value.fairwayLeftPCT)} />
-                          <GridPuttsStat item xs={4} string='Center %' value={formatPerc(value.fairwayCenterPCT)} />
-                          <GridPuttsStat item xs={4} string='Right %' value={formatPerc(value.fairwayRightPCT)} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Left %' value={formatPerc(value.fairwayLeftPCT)} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Center %' value={formatPerc(value.fairwayCenterPCT)} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Right %' value={formatPerc(value.fairwayRightPCT)} />
                         </Grid2>
                         <Divider />
                         <Grid2 container spacing={1} sx={{ justifyContent: 'space-between' }}>
-                          <GridPuttsStat item xs={4} string='Fws hits' value={value.fairwayHits !== 0 ? value.fairwayHits : '-'} />
-                          <GridPuttsStat item xs={4} string='Attempts' value={value.attempts !== 0 ? value.attempts : '-'} />
-                          <GridPuttsStat item xs={4} string='Avg. dis.' value={value.averageDistance !== 0 ? value.averageDistance : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Fws hits' value={value.fairwayHits !== 0 ? value.fairwayHits : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Attempts' value={value.attempts !== 0 ? value.attempts : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Avg. dis.' value={value.averageDistance !== 0 ? value.averageDistance : '-'} />
                         </Grid2>
                         <Divider />
                         <Grid2 container spacing={1} sx={{ justifyContent: 'space-between' }}>
-                          <GridPuttsStat item xs={4} string='Missed L' value={value.missLeft !== 0 ? value.missLeft : '-'} />
-                          <GridPuttsStat item xs={4} string='Missed R' value={value.missRight !== 0 ? value.missRight : '-'} />
-                          <GridPuttsStat item xs={4} string='No green' value={value.noGreen !== 0 ? value.noGreen : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Missed L' value={value.missLeft !== 0 ? value.missLeft : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='Missed R' value={value.missRight !== 0 ? value.missRight : '-'} />
+                          <GridPuttsStat size={{ xs: 4 }} string='No green' value={value.noGreen !== 0 ? value.noGreen : '-'} />
                         </Grid2>
                       </Stack>
                     </TableCell>
@@ -77,21 +77,21 @@ const HolebyHoleTeeShots = ({ roundTotals, dashboard, par }: IRoundTotalsProps) 
                 <AccordionDetails>
                   <Stack>
                     <GridAccordion>
-                      <GridPuttsStat item xs={4} string='Left %' value={formatPerc(value.fairwayLeftPCT)} />
-                      <GridPuttsStat item xs={4} string='Center %' value={formatPerc(value.fairwayCenterPCT)} />
-                      <GridPuttsStat item xs={4} string='Right %' value={formatPerc(value.fairwayRightPCT)} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Left %' value={formatPerc(value.fairwayLeftPCT)} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Center %' value={formatPerc(value.fairwayCenterPCT)} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Right %' value={formatPerc(value.fairwayRightPCT)} />
                     </GridAccordion>
                     <Divider />
                     <GridAccordion container spacing={1}>
-                      <GridPuttsStat item xs={4} string='Fws hits' value={value.fairwayHits !== 0 ? value.fairwayHits : '-'} />
-                      <GridPuttsStat item xs={4} string='Attempts' value={value.attempts !== 0 ? value.attempts : '-'} />
-                      <GridPuttsStat item xs={4} string='Avg. dis.' value={value.averageDistance !== 0 ? value.averageDistance : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Fws hits' value={value.fairwayHits !== 0 ? value.fairwayHits : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Attempts' value={value.attempts !== 0 ? value.attempts : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Avg. dis.' value={value.averageDistance !== 0 ? value.averageDistance : '-'} />
                     </GridAccordion>
                     <Divider />
                     <GridAccordion container spacing={1}>
-                      <GridPuttsStat item xs={4} string='Missed L' value={value.missLeft !== 0 ? value.missLeft : '-'} />
-                      <GridPuttsStat item xs={4} string='Missed R' value={value.missRight !== 0 ? value.missRight : '-'} />
-                      <GridPuttsStat item xs={4} string='No green' value={value.noGreen !== 0 ? value.noGreen : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Missed L' value={value.missLeft !== 0 ? value.missLeft : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='Missed R' value={value.missRight !== 0 ? value.missRight : '-'} />
+                      <GridPuttsStat size={{ xs: 4 }} string='No green' value={value.noGreen !== 0 ? value.noGreen : '-'} />
                     </GridAccordion>
                   </Stack>
                 </AccordionDetails>

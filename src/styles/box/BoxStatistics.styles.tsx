@@ -1,5 +1,4 @@
-import { Box as BoxMui, BoxProps } from "@mui/material";
-import styled from "styled-components";
+import { Box as BoxMui, BoxProps, styled } from "@mui/material";
 
 interface IReactBoxProps extends BoxProps { }
 

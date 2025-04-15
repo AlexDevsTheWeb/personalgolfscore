@@ -22,9 +22,7 @@ const ClubsMain = () => {
             (clubs.types.map((club, index) => {
               return (
                 <Grid
-                  item
-                  sm={12}
-                  md={12}
+                  size={{ sm: 12, md: 12 }}
                   key={index}
                   sx={{ minWidth: "100%" }}
                 >

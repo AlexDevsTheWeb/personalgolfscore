@@ -1,8 +1,4 @@
-import { Card as CardMui } from '@mui/material';
-import styled from "styled-components";
-
-
-
+import { Card as CardMui, styled } from '@mui/material';
 const StyledCard = styled(CardMui)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
