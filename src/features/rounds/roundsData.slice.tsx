@@ -5,7 +5,6 @@ import { getAllRoundsDataThunk } from "./roundsData.thunk";
 const initialState: IRoundInitialState = {
   isLoading: false,
   mainData: {
-    playerID: "playerID",
     roundID: 0,
     roundDate: "",
     roundCourse: "",
@@ -37,7 +36,6 @@ const roundsDataSlice = createSlice({
       .addCase(getAllRoundsData.rejected, (state, { payload }: any) => {
         state.isLoading = false;
         state.mainData = {
-          playerID: "playerID",
           roundID: 0,
           roundDate: "",
           roundCourse: "",

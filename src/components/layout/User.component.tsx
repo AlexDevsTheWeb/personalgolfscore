@@ -1,18 +1,18 @@
 import { resetUser } from "@/features/user/user.slice";
-import { Typography } from "@/styles/index";
+import StackPlayerMenu from "@/styles/stack/StackPlayerMenu.styles";
 import { deleteUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { stringAvatar } from "@/utils/user/user.utils";
 import { Logout, Settings } from "@mui/icons-material";
-import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Stack, Tooltip } from "@mui/material";
+import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Tooltip } from "@mui/material";
 import { getAuth, signOut } from "firebase/auth";
+import _ from "lodash";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const User = () => {
   const dispatch = useDispatch<any>();
-  const { user, isLoading } = useSelector((store: any) => store.user);
-
-
+  const { user } = useSelector((store: any) => store.user);
+  const { player, isLoading } = useSelector((store: any) => store.player);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -23,6 +23,10 @@ const User = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleSettings = () => {
+    setAnchorEl(null);
+    //TODO: next go to player/user settings
+  }
 
   const handleLogout = () => {
     const auth = getAuth();
@@ -35,17 +39,12 @@ const User = () => {
     }).catch((error) => {
       // An error happened.
     });
-
   };
 
-
-
   return (
-    !!isLoading
-      ? <Skeleton variant="circular" width={40} height={40} />
-      :
-
-      <Box>
+    !!isLoading || _.isUndefined(player.photoURL)
+      ? <Skeleton variant="circular" width={40} height={40} sx={{ backgroundColor: 'transparent' }} />
+      : <Box sx={{ display: 'flex' }}>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -56,9 +55,9 @@ const User = () => {
             aria-expanded={open ? 'true' : undefined}
           >
             {
-              user?.photoURL === ''
-                ? <Avatar alt={user?.displayName}{...stringAvatar(user?.displayName)} />
-                : <Avatar alt={user?.displayName} src={user?.photoURL} />
+              user?.photoURL === '' || _.isUndefined(player.photoURL)
+                ? <Avatar alt={player.displayName}{...stringAvatar(player.displayName)} />
+                : <Avatar alt={player.displayName} src={player.photoURL} />
             }
           </IconButton>
         </Tooltip>
@@ -99,36 +98,28 @@ const User = () => {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-
           <MenuItem onClick={handleClose}>
-            <Stack sx={{ gap: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Typography variant='headline2'>
-                {user?.displayName}
-              </Typography>
-            </Stack>
-
-
+            <StackPlayerMenu name={player?.displayName} value={player?.HCP} />
           </MenuItem>
 
           <Divider />
 
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
+          <MenuItem onClick={handleSettings}
+            sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
+            <ListItemIcon sx={{ marginLeft: '-10px' }}>
               <Settings fontSize="small" />
             </ListItemIcon>
             Settings
           </MenuItem>
-
-
-          <MenuItem onClick={handleLogout}>
-            <ListItemIcon>
+          <MenuItem onClick={handleLogout}
+            sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
+            <ListItemIcon sx={{ marginLeft: '-10px' }}>
               <Logout fontSize="small" />
             </ListItemIcon>
             Logout
           </MenuItem>
         </Menu>
       </Box>
-
   )
 }
 

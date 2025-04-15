@@ -1,7 +1,6 @@
 import { registerUser } from "@/utils/firebase/firebaseSignup.utils";
 import { Copyright } from "@mui/icons-material";
-import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, TextField, Typography } from "@mui/material";
-import console from "console";
+import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid2, TextField, Typography } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { Link } from "react-router-dom";
 
@@ -45,8 +44,8 @@ export default function SignupForm() {
           Sign up
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+          <Grid2 container spacing={2}>
+            <Grid2 size={{ xs: 12, sm: 6 }}>
               <TextField
                 autoComplete="given-name"
                 name="firstName"
@@ -56,8 +55,8 @@ export default function SignupForm() {
                 label="First Name"
                 autoFocus
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Grid2>
+            <Grid2 size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -66,8 +65,8 @@ export default function SignupForm() {
                 name="lastName"
                 autoComplete="family-name"
               />
-            </Grid>
-            <Grid item xs={12}>
+            </Grid2>
+            <Grid2 size={{ xs: 12 }}>
               <TextField
                 required
                 fullWidth
@@ -76,8 +75,8 @@ export default function SignupForm() {
                 name="email"
                 autoComplete="email"
               />
-            </Grid>
-            <Grid item xs={12}>
+            </Grid2>
+            <Grid2 size={{ xs: 12 }}>
               <TextField
                 required
                 fullWidth
@@ -87,14 +86,14 @@ export default function SignupForm() {
                 id="password"
                 autoComplete="new-password"
               />
-            </Grid>
-            <Grid item xs={12}>
+            </Grid2>
+            <Grid2 size={{ xs: 12 }}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
           <Button
             type="submit"
             fullWidth
@@ -103,13 +102,13 @@ export default function SignupForm() {
           >
             Sign Up
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
+          <Grid2 container justifyContent="flex-end">
+            <Grid2>
               <Link to="/login">
                 Already have an account? Sign in
               </Link>
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </Box>
       </Box>
       <Copyright sx={{ mt: 5 }} />

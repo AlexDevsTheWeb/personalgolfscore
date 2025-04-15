@@ -9,6 +9,7 @@ import NorthWestIcon from '@mui/icons-material/NorthWest';
 import SouthEastIcon from '@mui/icons-material/SouthEast';
 import SouthWestIcon from '@mui/icons-material/SouthWest';
 import WestIcon from '@mui/icons-material/West';
+import { Typography } from '@mui/material';
 import { Tooltip } from '../../../styles';
 
 type Props = {
@@ -72,6 +73,8 @@ export const ShotPosition = ({ position }: Props) => {
         </Tooltip>
       )
     default:
-      return <></>
+      return <Tooltip title={capitalize(FAIRWAYSICONS.PAR3)}>
+        <Typography>-</Typography>
+      </Tooltip>
   }
 }

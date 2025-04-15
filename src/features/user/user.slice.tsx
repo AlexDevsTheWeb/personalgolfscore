@@ -29,9 +29,9 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserDetails.pending, (state) => { state.isLoading = true; })
-      .addCase(getUserDetails.fulfilled, (state, { payload }: any) => {
+      .addCase(getUserDetails.fulfilled, (state, { payload }: PayloadAction<{ data: IUser }>) => {
         state.isLoading = false;
-        state.user = payload;
+        state.user = payload.data;
       })
       .addCase(getUserDetails.rejected, (state, { payload }: any) => {
         state.isLoading = false;

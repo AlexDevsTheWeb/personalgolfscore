@@ -1,7 +1,6 @@
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+import { styled } from '@mui/material';
 import Stack, { StackProps as StackPropsMui } from '@mui/material/Stack';
-import styled from 'styled-components';
-
 interface StackProps extends StackPropsMui {
   ismobile?: boolean;
 };
@@ -17,11 +16,11 @@ const StyledStack = styled(Stack)<StackProps>(() => (({
   flexDirection: useDeviceDetection().isMobile ? 'column' : 'row',
 })));
 
-const StackPlayer: React.FC<StackProps> = (props) => {
+const BoxPlayer: React.FC<StackProps> = (props) => {
   return (<StyledStack {...props}>
     {props.children}
   </StyledStack>)
 
 }
 
-export default StackPlayer;
+export default BoxPlayer;

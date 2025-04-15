@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { Box } from '@mui/material';
 import { BoxOverflow } from '../../styles';
-import Spinner from '../spinner/Spinner.component';
+import Spinner from '../common/spinner/Spinner.component';
 import RoundsTable from './RoundsTable.component';
 
 const Rounds = () => {

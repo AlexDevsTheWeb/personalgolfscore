@@ -1,8 +1,10 @@
 import { ShotPosition } from "@/components/common/shotPositions/ShotPosition.component";
 import { useGetVsPar } from "@/hooks/singleHoleCalculator.hook";
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
+import TableCellHolebyHole from "@/styles/table/TableCellHolebyHole.styles";
+import TableRowHolebyHole from "@/styles/table/TableRowHolebyHole.styles";
+import VsParTypography from "@/styles/typography/VsParTypography.styles";
 import { IShots } from "@/types/roundData.types";
-import { Box, Stack, TableCell, TableRow } from "@mui/material";
 
 interface IShotsTableBody {
   shot: IShots,
@@ -18,63 +20,56 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
   return (
     useDeviceDetection().isMobile
       ?
-      <TableRow key={holeNumber}>
-
-
-        <TableCell align='center' sx={{ padding: '0px' }}>{holeNumber}</TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>{par}</TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}
-          variant={vspar.value.includes('-') ? 'green' : vspar.value.includes('+') ? 'red' : 'yellow'}>
-          <Stack>
-            <Box>
-              {`${strokes} (${vspar.value}) | ${vspar.string}`}
-            </Box>
-          </Stack>
-        </TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}
+      <TableRowHolebyHole key={holeNumber} value={holeNumber}>
+        <TableCellHolebyHole>{holeNumber}</TableCellHolebyHole>
+        <TableCellHolebyHole>{par}</TableCellHolebyHole>
+        <TableCellHolebyHole
+          variant={vspar.value.includes('-') ? 'green' : vspar.value.includes('+') ? 'red' : 'yellow'} width={80}>
+          <VsParTypography strokes={strokes} value={vspar.string} vspar={vspar.value} />
+        </TableCellHolebyHole>
+        <TableCellHolebyHole
           variant={points && points >= 2 ? 'green' : points === 1 ? 'yellow' : 'red'}>
           {points}
-        </TableCell>
-
-        <TableCell align='center' sx={{ padding: '0px' }}>{putts}</TableCell>
-      </TableRow>
-
+        </TableCellHolebyHole>
+        <TableCellHolebyHole>
+          <ShotPosition position={Number(fairway) ? Number(fairway) : 0} />
+        </TableCellHolebyHole>
+        <TableCellHolebyHole>{gir ? 'Yes' : 'No'}</TableCellHolebyHole>
+        <TableCellHolebyHole>{putts}</TableCellHolebyHole>
+      </TableRowHolebyHole>
       :
-      <TableRow key={holeNumber}>
+      <TableRowHolebyHole key={holeNumber} value={holeNumber}>
+        <TableCellHolebyHole>{holeNumber}</TableCellHolebyHole>
+        <TableCellHolebyHole>{par}</TableCellHolebyHole>
+        <TableCellHolebyHole
+          variant={vspar.value.includes('-') ? 'green' : vspar.value.includes('+') ? 'red' : 'yellow'} width={80}>
+          <VsParTypography strokes={strokes} value={vspar.string} vspar={vspar.value} />
+        </TableCellHolebyHole>
 
-
-        <TableCell align='center' sx={{ padding: '0px' }}>{holeNumber}</TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>{par}</TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}
-          variant={vspar.value.includes('-') ? 'green' : vspar.value.includes('+') ? 'red' : 'yellow'}>
-          <Stack>
-            <Box>
-              {`${strokes} (${vspar.value}) | ${vspar.string}`}
-            </Box>
-          </Stack>
-        </TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}
+        <TableCellHolebyHole
           variant={points && points >= 2 ? 'green' : points === 1 ? 'yellow' : 'red'}>
           {points}
-        </TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}><ShotPosition position={Number(fairway)} /></TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>{gir ? 'Yes' : 'No'}</TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>{girBogey ? 'Yes' : 'No'}</TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>
+        </TableCellHolebyHole>
+        <TableCellHolebyHole>
+          <ShotPosition position={Number(fairway) ? Number(fairway) : 0} />
+        </TableCellHolebyHole>
+        <TableCellHolebyHole>{gir ? 'Yes' : 'No'}</TableCellHolebyHole>
+        <TableCellHolebyHole>{girBogey ? 'Yes' : 'No'}</TableCellHolebyHole>
+        <TableCellHolebyHole>
           {
             scramble.attempts === 0 ? '-' : scramble.made === 1 ? 'Y' : 'N'
           }
-        </TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>
+        </TableCellHolebyHole>
+        <TableCellHolebyHole>
           {
             upDown.attempts === 0 ? '-' : upDown.made === 1 ? 'Y' : 'N'
           }
-        </TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>{putts}</TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>{sand}</TableCell>
-        <TableCell align='center' sx={{ padding: '0px' }}>{`${water} | ${out}`}</TableCell>
+        </TableCellHolebyHole>
+        <TableCellHolebyHole>{putts}</TableCellHolebyHole>
+        <TableCellHolebyHole>{sand}</TableCellHolebyHole>
+        <TableCellHolebyHole>{`${water} | ${out}`}</TableCellHolebyHole>
 
-      </TableRow>
+      </TableRowHolebyHole >
 
 
 

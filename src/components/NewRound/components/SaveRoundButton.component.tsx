@@ -1,6 +1,7 @@
 import { setHoleNumber } from "@/features/hole/holeTmp.slice";
 import { setHolesCompleted } from "@/features/newRound/newRoundHoles.slice";
-import { saveRound } from "@/features/newRound/roundSaver.slice";
+import { saveNewRound } from "@/features/newRound/roundSaver.slice";
+
 import { RootState } from "@/store/store";
 import { finalRoundGeneration } from "@/utils/round/round.utils";
 import { Button } from "@mui/material";
@@ -8,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const SaveRoundButton = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const { round } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
@@ -30,12 +31,14 @@ const SaveRoundButton = () => {
       setHandleSave(false);
     }
     else {
-      // TODO: here we have to save the entire round
+      // TODO: is better to save one single roundFinalData object at time (4 DB call) or in a single DB call?
       setLabel("Save round");
       const roundFinalData = finalRoundGeneration(
         { round, holes, roundTotals, roundDistances }
       );
-      dispatch(saveRound(roundFinalData));
+      // dispatch(saveRound(roundFinalData));
+      dispatch(saveNewRound(""));
+
     }
   };
 

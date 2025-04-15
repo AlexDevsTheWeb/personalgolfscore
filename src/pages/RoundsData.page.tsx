@@ -1,4 +1,4 @@
-import Spinner from '@/components/spinner/Spinner.component';
+import Spinner from '@/components/common/spinner/Spinner.component';
 import { getAllRounds } from '@/features/rounds/rounds.slice';
 import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import { useEffect } from 'react';

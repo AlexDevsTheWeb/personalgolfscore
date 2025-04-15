@@ -1,4 +1,3 @@
-import { IPlayer } from "./player.types";
 import { IRounds } from "./round.types";
 import { IAllRoundsTotals, IRoundTotals } from "./roundTotals.types";
 
@@ -11,6 +10,7 @@ export interface TabPanelProps {
 
 export interface IRoundTotalsProps {
   dashboard?: boolean,
+  par?: number,
   roundTotals: IRoundTotals;
 }
 interface IAllRoundsTotalsProps {
@@ -27,7 +27,7 @@ export interface IRoundMainDataProp {
   round: IRounds;
 }
 
-export interface IPlayerProps {
-  player: IPlayer,
-}
+// export interface IPlayerProps {
+//   player: IPlayer,
+// }
 

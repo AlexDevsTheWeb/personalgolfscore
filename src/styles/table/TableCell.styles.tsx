@@ -1,17 +1,19 @@
-import { TableCell as TableCellMui, TableCellProps as TableCellPropsMui } from "@mui/material";
+import { TableCell as TableCellMui, TableCellProps as TableCellPropsMui, styled } from "@mui/material";
 import { tableCellClasses } from '@mui/material/TableCell';
-
 import * as React from "react";
-import styled from "styled-components";
 
-type TableCellProps = TableCellPropsMui & {};
+type TableCellProps = TableCellPropsMui & {
+  space?: string,
+  width?: number,
+};
 
-const StyledTableCell = styled(TableCellMui)(({ theme }) => ({
+const StyledTableCell = styled(TableCellMui)<TableCellProps>((props) => ({
   border: "1px solid #999",
+  width: `${props.width}px`,
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-    border: "1px solid #fff"
+    backgroundColor: props.theme.palette.common.black,
+    color: props.theme.palette.common.white,
+    padding: !!props.space ? `${props.space} !important` : '0px !important',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 13,

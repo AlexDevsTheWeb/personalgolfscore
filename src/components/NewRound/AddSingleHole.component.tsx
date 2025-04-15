@@ -10,17 +10,14 @@ import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HoleCard, HoleCardContent, HoleCardHeader } from '../../styles';
-import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
 import PuttsGenerator from './PuttsGenerator.component';
 import Select from './Select.component';
-import DistancesButton from './components/DistancesButton.component';
 import SaveRoundButton from './components/SaveRoundButton.component';
 
 const AddSingleHole = () => {
 
   const dispatch = useDispatch<any>();
 
-  const { showDistances } = useSelector((store: RootState) => store.controls);
   const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
@@ -96,29 +93,55 @@ const AddSingleHole = () => {
               <Select name='teeClub' list={teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub} label='Tee club' />
               <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} label='Fairway position' />
               <TextField name='driveDistance' label='Distance' variant='filled' type='number' onChange={e => handleChange(e)}
-                value={tmpHole.driveDistance !== 0 ? tmpHole.driveDistance : ''} />
+                value={
+                  tmpHole.driveDistance !== 0
+                    ? tmpHole.driveDistance
+                    : (tmpHole.par === 3 && tmpHole.distance !== 0)
+                      ? tmpHole.distance
+                      : ''
+                }
+                disabled={tmpHole.par === 3 && tmpHole.distance !== 0}
+              />
             </HoleCardContent>
           </HoleCard>
 
           <HoleCard>
             <HoleCardHeader title='Pitch & Chip' />
             <HoleCardContent>
-              <TextField name='toGreenMeters' label="Mts. to green" type='number' onChange={e => handleChange(e)} value={tmpHole.toGreenMeters !== 0 ? tmpHole.toGreenMeters : ''} />
-              <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''} label='To green club' />
+              <TextField name='toGreenMeters' label="Mts. to green" type='number' onChange={e => handleChange(e)}
+                // value={tmpHole.driveDistance !== 0
+                //   ? tmpHole.distance - tmpHole.driveDistance
+                //   : (tmpHole.par === 3 && tmpHole.distance !== 0)
+                //     ? tmpHole.distance
+                //     : 0}
+                disabled={tmpHole.par === 3 && tmpHole.distance !== 0}
+              />
+              <Select name='toGreen' list={greenClubs} onChange={(e: any) => handleChange(e)}
+                value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''}
+                //   value={tmpHole.chipClub !== ''
+                //     ? tmpHole.chipClub
+                //     : (tmpHole.par === 3 && tmpHole.teeClub !== '')
+                //       ? tmpHole.teeClub
+                //       : ''
+                // }
+                label='To green club' />
               <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} label='Green side' />
-              <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.chipClub !== '' ? tmpHole.chipClub : ''} />
+              <Select name='chipClub' label='Chip club' list={chipClubs} onChange={(e: any) => handleChange(e)}
+                value={
+                  tmpHole.chipClub !== ''
+                    ? tmpHole.chipClub
+                    : ''
+                }
+              />
             </HoleCardContent>
           </HoleCard>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-            <DistancesButton />
+
             <SaveRoundButton />
           </Box>
         </BoxNewHole>
-        {
-          !!showDistances &&
-          <ClubDistanceDialog open={showDistances} />
-        }
+
       </BoxSingleHoleInternal>
     </BoxSingleHoleContainer>
   )

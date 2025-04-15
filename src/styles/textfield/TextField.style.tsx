@@ -1,9 +1,7 @@
-import { TextField as TextFieldMui, TextFieldProps as TextFieldPropsMui } from "@mui/material";
-
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
+import { TextField as TextFieldMui, TextFieldProps as TextFieldPropsMui, styled } from "@mui/material";
 import _ from "lodash";
 import * as React from "react";
-import styled from "styled-components";
 
 type TextFieldProps = TextFieldPropsMui & {
   error?: boolean;
@@ -17,7 +15,7 @@ const StyledTextField = styled(TextFieldMui)<TextFieldProps>((props) => ({
       ? `${props.width}px`
       : `${props.width}`}`
     : useDeviceDetection().isMobile
-      ? '48%'
+      ? '200px'
       : props.name === 'roundCourse'
         ? '300px'
         : '100px',

@@ -9,5 +9,5 @@ export interface IUser {
 export interface InitialStateUser {
   isLoading: boolean;
   user: IUser;
-  rounds: IUser;
+  rounds?: IUser;
 }

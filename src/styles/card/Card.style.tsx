@@ -1,6 +1,5 @@
-import { Card as CardMui, CardProps as CardPropsMui } from '@mui/material';
+import { Card as CardMui, CardProps as CardPropsMui, styled } from '@mui/material';
 import * as React from 'react';
-import styled from 'styled-components';
 import { breakpoints } from '../theme/Breakpoints.theme';
 
 interface ICardProps extends CardPropsMui { };

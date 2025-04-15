@@ -1,5 +1,5 @@
-import { InitialStateRounds } from "@/types/round.types";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { InitialStateRounds, IRoundsState } from "@/types/round.types";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getAllRoundsThunk } from "./rounds.thunk";
 
 
@@ -25,15 +25,10 @@ const roundsSlice = createSlice({
       .addCase(getAllRounds.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllRounds.fulfilled, (state, { payload }: any) => {
+      .addCase(getAllRounds.fulfilled, (state, { payload }: PayloadAction<IRoundsState>) => {
         state.isLoading = false;
         state.playerID = payload.uid;
-        const newPayload = {
-          rounds: payload.rounds.map((rt: any) => {
-            return JSON.parse(rt);
-          })
-        };
-        state.rounds = newPayload.rounds;
+        state.rounds = payload.rounds;
       })
       .addCase(getAllRounds.rejected, (state, { payload }: any) => {
         state.isLoading = false;

@@ -80,5 +80,5 @@ export const divide = (first: number, second: number) => {
     result = first / second;
   }
 
-  return result
+  return isNaN(result) ? "0.00" : result.toFixed(2);
 }

@@ -21,7 +21,8 @@ export enum CHIPCONDITION {
   CHIP = 'chipClub',
   FAIRWAY = 'fairway',
   TEECLUB = 'teeClub',
-  DRIVEDISTANCE = 'driveDistance'
+  DRIVEDISTANCE = 'driveDistance',
+  TOGREENCLUB = 'toGreen'
 }
 
 export enum FAIRWAYSICONS {
@@ -33,7 +34,8 @@ export enum FAIRWAYSICONS {
   MIDRIGHT = 'mid right',
   LONGLEFT = 'long left',
   LONGCENTER = 'long center',
-  LONGRIGHT = 'long right'
+  LONGRIGHT = 'long right',
+  PAR3 = 'par 3'
 }
 
 export enum CHIPPING {

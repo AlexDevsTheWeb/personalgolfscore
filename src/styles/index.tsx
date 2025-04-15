@@ -4,7 +4,7 @@ import Card from "./card/Card.style";
 import { HoleCard } from "./card/hole/HoleCard";
 import { HoleCardContent } from "./card/hole/HoleCardContent";
 import { HoleCardHeader } from "./card/hole/HoleCardHeader";
-import RowCard from "./card/RowCard.styles";
+// import RowCard from "./card/RowCard.styles";
 import Grid from "./grid/Grid.styles";
 import TableCell from "./table/TableCell.styles";
 import TableRow from "./table/TableRow.styles";
@@ -18,7 +18,11 @@ export {
   BoxPlayer,
   Card,
   ClubTypography,
-  Grid, HoleCard, HoleCardContent, HoleCardHeader, RowCard,
+  Grid,
+  HoleCard,
+  HoleCardContent,
+  HoleCardHeader,
+  // RowCard,
   TableCell,
   TableRow,
   Tooltip,

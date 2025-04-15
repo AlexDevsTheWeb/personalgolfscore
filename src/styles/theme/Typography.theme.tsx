@@ -38,6 +38,7 @@ declare module '@mui/material/styles' {
     bodyLinkTablet: React.CSSProperties;
     footer: React.CSSProperties;
     dateInfo: React.CSSProperties;
+    warning: React.CSSProperties;
   }
 
   interface TypographyVariantsOptions {
@@ -65,6 +66,7 @@ declare module '@mui/material/styles' {
     bodyLinkTablet: React.CSSProperties;
     footer: React.CSSProperties;
     dateInfo: React.CSSProperties;
+    warning: React.CSSProperties;
   }
 }
 
@@ -111,6 +113,7 @@ declare module '@mui/material/Typography' {
     body1: false;
     body2: false;
     overline: false;
+    warning: true;
   }
 }
 
@@ -208,6 +211,20 @@ export const typography = {
     letterSpacing: '0.2px',
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
       fontSize: '16px',
+    },
+  },
+  warning: {
+    ...allVariantsCss,
+    fontSize: '20px',
+    lineHeight: '160%',
+    fontFamily: fonts.regular,
+    fontStyle: 'normal',
+    fontWeight: 700,
+    color: '#840000b3',
+    textTransform: 'uppercase',
+    [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+      fontSize: '16px',
+      lineHeight: 'normal',
     },
   },
   clubsTypeName: {

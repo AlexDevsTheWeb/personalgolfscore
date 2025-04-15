@@ -4,7 +4,10 @@
 import axios from "axios";
 
 const authFetch = axios.create({
-  baseURL: `${import.meta.env.VITE_APP_URL}${import.meta.env.VITE_APP_PROJECT_ID}${import.meta.env.VITE_APP_DB_URL}`
+  baseURL: '',
+
+  // FIXME: to re-enable firebase connection remove line 7 and de-comment line 10
+  //baseURL: `${import.meta.env.VITE_APP_URL}${import.meta.env.VITE_APP_PROJECT_ID}${import.meta.env.VITE_APP_DB_URL}`
 });
 
 // authFetch.interceptors.request.use(

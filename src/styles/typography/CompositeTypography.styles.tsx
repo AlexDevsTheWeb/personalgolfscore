@@ -1,6 +1,5 @@
-import { Typography as TypographyMui, TypographyProps as TypographyPropsMui } from "@mui/material";
+import { Typography as TypographyMui, TypographyProps as TypographyPropsMui, styled } from "@mui/material";
 import React from "react";
-import styled from "styled-components";
 import BoxInternalColumn from "../box/BoxInternalColumn.styles";
 
 type TypographyProps = TypographyPropsMui

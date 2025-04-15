@@ -1,7 +1,10 @@
+import { setIsLoading } from '@/features/app/controls.slice';
+import { getPlayerDetails } from '@/features/player/player.slice';
 import { TLinkSidebar } from '@/types/general.types';
 import links from '@/utils/links/links.utils';
+import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
-import { ListItemIcon, ListItemText } from '@mui/material';
+import { ListItemIcon, ListItemText, styled } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box, { BoxProps as BoxPropsMui } from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,9 +16,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { getAuth } from 'firebase/auth';
+import _ from 'lodash';
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
 import Footer from './Footer.component';
 import User from './User.component';
 
@@ -29,11 +34,25 @@ interface Props {
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
+  const dispatch = useDispatch<any>();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const uid = readUserLocalStorage();
+  const auth = getAuth();
+  const { player } = useSelector((store: any) => store.player);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  React.useEffect(() => {
+    if (uid && (_.isUndefined(player) || _.isEmpty(player))) {
+      if (auth) {
+        dispatch(setIsLoading(true));
+        dispatch(getPlayerDetails(uid));
+        dispatch(setIsLoading(false));
+      }
+    }
+  }, []);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -107,7 +126,6 @@ export default function DrawerAppBar(props: Props) {
                           px: 2.5,
                         }}
                         href={link.link}
-
                       >
                         <ListItemIcon
                           sx={{
@@ -127,8 +145,6 @@ export default function DrawerAppBar(props: Props) {
                 })}
                 <User />
               </List>
-
-
             </Box>
           </Toolbar>
         </AppBar>

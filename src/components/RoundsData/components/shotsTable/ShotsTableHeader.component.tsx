@@ -6,10 +6,11 @@ interface IShotsTableHeaderProps {
   firstLabel: string;
   singleHole: boolean;
   firstColumn: boolean,
-  dashboard?: boolean
+  dashboard?: boolean,
+  viewPar?: boolean
 }
 
-const ShotsTableHeader = ({ firstColumn, singleHole, dashboard }: IShotsTableHeaderProps) => {
+const ShotsTableHeader = ({ firstColumn, singleHole, dashboard, viewPar }: IShotsTableHeaderProps) => {
   return (
     <TableHead>
       {
@@ -22,17 +23,28 @@ const ShotsTableHeader = ({ firstColumn, singleHole, dashboard }: IShotsTableHea
                 <ShotsTableHeaderStack firstRow='#' secondRow={!!singleHole ? '' : ''} />
               </TableCell>
             }
+            {
+              viewPar &&
+              <TableCell align='center'>
+                <ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} />
+              </TableCell>
+            }
+
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='score' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='points' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
-
+            <TableCell align='center'>
+              <ShotsTableHeaderStack firstRow='fairways' secondRow={!!singleHole ? '' : 'center total'} />
+            </TableCell>
+            <TableCell align='center'>
+              <ShotsTableHeaderStack firstRow='gir' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
+            </TableCell>
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='putts' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
-
           </TableRow>
           :
           <TableRow>
@@ -42,9 +54,18 @@ const ShotsTableHeader = ({ firstColumn, singleHole, dashboard }: IShotsTableHea
                 <ShotsTableHeaderStack firstRow='#' secondRow={!!singleHole ? '' : ''} />
               </TableCell>
             }
+            {
+              viewPar &&
+              <TableCell align='center'>
+                <ShotsTableHeaderStack firstRow='par' secondRow={!!singleHole ? '' : ''} />
+              </TableCell>
+            }
+
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='score' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>
+
+
             <TableCell align='center'>
               <ShotsTableHeaderStack firstRow='points' secondRow={!!singleHole ? '' : 'TOT IN OUT'} />
             </TableCell>

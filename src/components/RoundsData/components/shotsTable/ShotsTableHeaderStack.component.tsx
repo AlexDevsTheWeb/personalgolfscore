@@ -1,5 +1,5 @@
-import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
-import { Divider, Stack, Typography } from "@mui/material"
+import StackTable from "@/styles/stack/StackTable.styles"
+import { TypographyTablesFirstRow, TypographyTablesSecondRow } from "@/styles/typography/TypographyTable.styles"
 
 interface IShotsTableHeaderStack {
   firstRow: string,
@@ -8,33 +8,13 @@ interface IShotsTableHeaderStack {
 
 const ShotsTableHeaderStack = ({ firstRow, secondRow }: IShotsTableHeaderStack) => {
   return (
-    <Stack
-      divider={
-        secondRow !== '' ?
-          <Divider sx={{ margin: '2px' }} />
-          : <></>
+    <StackTable secondrow={secondRow !== '' ? secondRow : ''}>
+      <TypographyTablesFirstRow firstrow={firstRow} secondrow={secondRow} />
+      {
+        secondRow !== '' &&
+        <TypographyTablesSecondRow firstrow={firstRow} secondrow={secondRow} />
       }
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'wrap',
-        alignContent: 'center',
-        backgroundColor: '#f0f0f0',
-        color: 'black',
-        fontWeight: 'bold',
-        fontSize: '13px',
-        padding: '0px',
-        minHeight: '50px',
-        justifyContent: 'center',
-
-        ...(useDeviceDetection().isMobile && {
-          minHeight: '20px',
-        }),
-      }}
-    >
-      <Typography fontWeight={'bold'}>{firstRow}</Typography>
-      {secondRow !== '' && <Typography sx={{ fontSize: useDeviceDetection().isMobile ? '10px' : '12px' }}>{secondRow}</Typography>}
-    </Stack>
+    </StackTable>
   )
 }
 

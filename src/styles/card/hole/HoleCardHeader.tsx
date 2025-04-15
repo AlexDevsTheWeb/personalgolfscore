@@ -1,5 +1,4 @@
-import { CardHeader as CardHeaderMui, CardHeaderProps } from "@mui/material";
-import styled from "styled-components";
+import { CardHeader as CardHeaderMui, CardHeaderProps, styled } from "@mui/material";
 
 interface IReactCardHeaderProps extends CardHeaderProps { }
 

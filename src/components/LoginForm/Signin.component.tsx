@@ -13,7 +13,7 @@ import LoginForm from './components/LoginForm.component';
 // import ForgotPassword from './ForgotPassword';
 // import AppTheme from './theme/AppTheme';
 // import ColorModeSelect from './theme/ColorModeSelect';
-import Logo from '../../../public/icons8-golf-67.png';
+import Logo from '../../assets/icons8-golf-67.png';
 
 const SignIn = (props: { disableCustomTheme?: boolean }) => {
   // const [emailError, setEmailError] = React.useState(false);

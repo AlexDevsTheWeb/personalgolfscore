@@ -13,12 +13,14 @@ export interface IPlayer {
 
 export type InitialStatePlayer = {
   isLoading: boolean;
+  error: string,
+  errorMessage: string,
   player: IPlayer;
 }
 
-export type PlayerPayload = {
-  payload: PlayerResponse;
-};
+// export type PlayerPayload = {
+//   payload: PlayerResponse;
+// };
 
 type PlayerResponse = {
   playerID: string,

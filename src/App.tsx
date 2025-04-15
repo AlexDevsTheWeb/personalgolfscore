@@ -1,3 +1,4 @@
+import { ThemeProvider as StyledComponentsThemeProvider } from '@emotion/react';
 import { CssBaseline as MuiCssBaseline } from '@mui/material';
 import {
   ThemeProvider as MuiThemeProvider,
@@ -7,15 +8,14 @@ import { deepmerge } from '@mui/utils';
 import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 // import LoginForm from "./components/LoginForm/LoginForm.component";
 import SignupForm from "./components/LoginForm/SignupForm.component";
-import Spinner from "./components/spinner/Spinner.component";
+import Spinner from "./components/common/spinner/Spinner.component";
 import AddNewRound from './pages/AddNewRound.page';
 import ClubsPage from "./pages/Clubs.page";
-import DashboardPage from "./pages/DashboardPage.page";
+import DashboardPage from "./pages/Dashboard.page";
 import RoundsData from './pages/RoundsData.page';
 import SharedLayout from './pages/SharedLayout.page';
 import Statistics from './pages/Statistics.page';

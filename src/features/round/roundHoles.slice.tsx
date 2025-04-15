@@ -5,7 +5,6 @@ import { getSingleRoundHolesThunk } from "./roundHoles.thunk";
 const initialState: IRoundInitialState = {
   isLoading: false,
   mainData: {
-    playerID: "playerID",
     roundID: 0,
     roundDate: "",
     roundCourse: "",
@@ -36,7 +35,6 @@ const roundHolesSlice = createSlice({
       .addCase(getSingleRoundHoles.rejected, (state, { payload }: any) => {
         state.isLoading = false;
         state.mainData = {
-          playerID: "playerID",
           roundID: 0,
           roundDate: "",
           roundCourse: "",

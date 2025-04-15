@@ -1,4 +1,4 @@
-import Spinner from "@/components/spinner/Spinner.component";
+import Spinner from "@/components/common/spinner/Spinner.component";
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import { IRoundTotalsProps, TabPanelProps } from "@/types/props.types";
 import { Box, Tab, Tabs, useTheme } from "@mui/material";
@@ -39,7 +39,7 @@ function a11yProps(index: number) {
   };
 }
 
-const HolebyHoleTotals = ({ roundTotals, dashboard }: IRoundTotalsProps) => {
+const HolebyHoleTotals = ({ roundTotals, dashboard, par }: IRoundTotalsProps) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -74,15 +74,15 @@ const HolebyHoleTotals = ({ roundTotals, dashboard }: IRoundTotalsProps) => {
       </AppBar>
 
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <HolebyHoleGeneral roundTotals={roundTotals} dashboard={dashboard} />
+        <HolebyHoleGeneral roundTotals={roundTotals} dashboard={dashboard} par={par} />
       </TabPanel>
 
       <TabPanel value={value} index={1} dir={theme.direction}>
-        <HolebyHoleTeeShots roundTotals={roundTotals} />
+        <HolebyHoleTeeShots roundTotals={roundTotals} dashboard={dashboard} par={par} />
       </TabPanel>
 
       <TabPanel value={value} index={2} dir={theme.direction}>
-        <HolebyHoleFwAndIrons roundTotals={roundTotals} />
+        <HolebyHoleFwAndIrons roundTotals={roundTotals} dashboard={dashboard} par={par} />
       </TabPanel>
 
       <TabPanel value={value} index={3} dir={theme.direction}>

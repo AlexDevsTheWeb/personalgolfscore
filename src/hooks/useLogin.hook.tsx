@@ -25,3 +25,5 @@
 //     setError(error as Error);
 //   }
 // }
+
+export const useLogin = () => { }

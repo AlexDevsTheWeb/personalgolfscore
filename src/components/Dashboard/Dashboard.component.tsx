@@ -1,25 +1,17 @@
-import { getAllRounds } from "@/features/rounds/rounds.slice"
-import { getAllRoundsTotals } from "@/features/rounds/roundsTotals.slice"
-import useDeviceDetection from "@/hooks/useDeviceDetection.hook"
 import { RootState } from "@/store/store"
 import BoxBetween from "@/styles/box/BoxBetween.styles"
-import { readUserLocalStorage } from "@/utils/storage/localStorage.utils"
 import { Box, Button } from "@mui/material"
-import { getAuth } from "firebase/auth"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import Spinner from "../common/spinner/Spinner.component"
 import Rounds from "../Rounds/Rounds.component"
 import StatisticsMain from "../Statistics/StatisticsMain.component"
-import PlayerDesktop from "./components/PlayerDesktop.component"
-import PlayerMobile from "./components/PlayerMobile.component"
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<any>();
-  const { player } = useSelector((store: RootState) => store.player);
-  const uid = readUserLocalStorage();
-  const auth = getAuth();
+
+  const { rounds } = useSelector((store: RootState) => store.rounds);
+  const { isLoading } = useSelector((store: RootState) => store.controls);
 
   const handleClickStatistic = () => {
     navigate(`/statistics`);
@@ -27,33 +19,26 @@ const Dashboard = () => {
   const handleAddNewRound = () => {
     navigate('/addNewRound')
   }
-  useEffect(() => {
-    if (auth) {
-      // dispatch(getAllRoundsData(""))
-      dispatch(getAllRoundsTotals(uid))
-      dispatch(getAllRounds(uid));
-    }
-  }, [uid]);
 
+  if (!!isLoading) {
+    return <Spinner />
+  }
 
   return (
-    <BoxBetween>
+    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} gap={2}>
       {
-        !useDeviceDetection().isMobile ?
-          <PlayerDesktop player={player} />
-          :
-          <PlayerMobile player={player} />
+        rounds.length !== 0 && (
+          <>
+            <Rounds />
+            <StatisticsMain />
+            <BoxBetween>
+              <Button variant='contained' onClick={handleAddNewRound}>Add new round</Button>
+              <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>
+            </BoxBetween>
+          </>
+        )
       }
-      <Rounds />
-      <Box sx={{ width: '100%' }}>
-        <StatisticsMain />
-      </Box>
-
-      <BoxBetween>
-        <Button variant='contained' onClick={handleAddNewRound}>Add new round</Button>
-        <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>
-      </BoxBetween>
-    </BoxBetween>
+    </Box>
   )
 }
 

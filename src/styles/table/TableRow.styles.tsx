@@ -1,6 +1,5 @@
-import { TableRow as TableRowMui, TableRowProps as TableRowPropsMui } from "@mui/material";
+import { TableRow as TableRowMui, TableRowProps as TableRowPropsMui, styled } from "@mui/material";
 import * as React from "react";
-import styled from "styled-components";
 import palette from "../theme/Palette.theme";
 
 type TableRowProps = TableRowPropsMui & {};

@@ -1,5 +1,4 @@
-import { Tooltip as TooltipMui, TooltipProps as TooltipPropsMui } from "@mui/material";
-import styled from "styled-components";
+import { Tooltip as TooltipMui, TooltipProps as TooltipPropsMui, styled } from "@mui/material";
 
 interface TooltipProps extends TooltipPropsMui { }
 
@@ -12,7 +11,7 @@ const StyledTooltip = styled(TooltipMui) <TooltipProps>`
 
 const Tooltip: React.FC<TooltipProps> = (props) => {
   return (
-    <StyledTooltip {...props} placement="right">
+    <StyledTooltip {...props} placement="left">
       {props.children}
     </StyledTooltip>
   )

@@ -48,8 +48,6 @@ const GoogleLoginButton = () => {
           photoURL: photoURL as string,
           uid: docSnap.id,
         };
-
-        console.log("user -> ", user);
         dispatch(setLoginUser(user));
         navigate('/dashboard');
       }
