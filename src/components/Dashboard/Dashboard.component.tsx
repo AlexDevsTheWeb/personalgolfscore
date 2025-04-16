@@ -24,6 +24,8 @@ const Dashboard = () => {
     return <Spinner />
   }
 
+  console.log("rounds -> ", rounds);
+
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} gap={2}>
       {

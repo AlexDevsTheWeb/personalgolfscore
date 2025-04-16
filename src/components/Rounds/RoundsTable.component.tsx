@@ -54,6 +54,8 @@ const RoundsTable = () => {
         <TableBody>
           {rounds.map((round) => {
             // const { roundID, roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundStrokes } = round;
+            console.log("coursePar: ", round.general.roundPar);
+            console.log("roundPar: ", round.general.roundPar);
             return (
               <TableRow key={round.general.roundID}>
                 {
@@ -64,8 +66,8 @@ const RoundsTable = () => {
                       </TableCell>
                       <TableCell align='left'>{round.general.roundCourse}</TableCell>
 
-                      <TableCell align='center'>{round.general.coursePar}</TableCell>
-                      <TableCell align='center'>{round.general.playerHCP}</TableCell>
+                      <TableCell align='center'>{round.general.roundPar}</TableCell>
+                      <TableCell align='center'>{round.general.roundPlayingHCP}</TableCell>
                       <TableCell align='center'>{round.totals.score.totals}</TableCell>
                       <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>
@@ -80,8 +82,8 @@ const RoundsTable = () => {
                       <TableCell align='left'>{round.general.roundCourse}</TableCell>
                       <TableCell align='left'>{round.general.roundTee}</TableCell>
                       <TableCell align='center'>{round.holes.length}</TableCell>
-                      <TableCell align='center'>{round.general.coursePar}</TableCell>
-                      <TableCell align='center'>{round.general.playerHCP}</TableCell>
+                      <TableCell align='center'>{round.general.roundPar}</TableCell>
+                      <TableCell align='center'>{round.general.roundPlayingHCP}</TableCell>
                       <TableCell align='center'>{round.totals.score.totals}</TableCell>
                       <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>

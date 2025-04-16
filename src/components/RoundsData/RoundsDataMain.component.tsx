@@ -36,7 +36,7 @@ const RoundsDataMain = () => {
     <BoxBetween sx={{ width: '100%' }}>
       <RoundsDataHeader round={round} />
 
-      {round.holes.length > 0 && <HolebyHoleTotals roundTotals={round.totals} par={round.general.coursePar} />}
+      {round.holes.length > 0 && <HolebyHoleTotals roundTotals={round.totals} par={round.general.roundPar} />}
 
 
       <Button variant='link' onClick={handleClick}>{!!open ? 'Hide hole by hole statistics' : 'Show hole by hole statistics'} {!!open ? <KeyboardArrowUpIcon></KeyboardArrowUpIcon> : <KeyboardArrowDownIcon></KeyboardArrowDownIcon>}</Button>

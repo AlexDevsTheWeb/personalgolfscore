@@ -4,15 +4,15 @@ import { IRoundMainDataProp } from "@/types/props.types";
 import { Box, Grid2 } from "@mui/material";
 
 const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
-  const { general: { roundCourse, roundDate, coursePar, roundTee, playerHCP }, holes, totals } = round;
+  const { general: { roundCourse, roundDate, roundPar, roundTee, roundPlayingHCP }, holes, totals } = round;
 
   const roundStrokes = totals.score.totals;
   const score = roundStrokes;
-  const overParNet = roundStrokes - coursePar;
-  const overParGross = roundStrokes - (coursePar + playerHCP);
+  const overParNet = roundStrokes - roundPar;
+  const overParGross = roundStrokes - (roundPar + roundPlayingHCP);
   const overParNetString = overParNet > 0 ? `+${overParNet}` : `${overParNet}`;
   const overParGrossString = overParGross > 0 ? `+${overParGross}` : `${overParGross}`;
-  const underPar = roundStrokes <= coursePar + playerHCP;
+  const underPar = roundStrokes <= roundPar + roundPlayingHCP;
 
   return (
     <Box sx={{ width: '100%' }} flexGrow={1}>
@@ -30,10 +30,10 @@ const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
           <StackHoles name={'Holes'} value={holes.length} />
         </Grid2>
         <Grid2 size={{ xs: 2, md: 3, lg: 1 }}>
-          <StackHoles name={'Par'} value={coursePar} />
+          <StackHoles name={'Par'} value={roundPar} />
         </Grid2>
         <Grid2 size={{ xs: 2, md: 3, lg: 1 }}>
-          <StackHoles name={'HCP'} value={playerHCP} />
+          <StackHoles name={'HCP'} value={roundPlayingHCP} />
         </Grid2>
         <Grid2 size={{ xs: 6, md: 3, lg: 3 }}>
           <StackHolesPoints round={round} />

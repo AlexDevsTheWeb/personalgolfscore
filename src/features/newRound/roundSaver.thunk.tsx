@@ -8,13 +8,13 @@ export const saveNewRoundThunk = async (_: any, thunkAPI: any) => {
   // console.log("newRoundDistances: ", newRoundDistances.roundDistances);
 
 
-  const main = newRoundMain.round;
+  const general = newRoundMain.round;
   const holes = newRoundHoles.holes;
   const distances = newRoundDistances.roundDistances;
   const totals = newRoundTotals.roundTotals;
 
-  const newObj = { main, holes, distances, totals };
-  console.log("new obj: ", newObj)
+  const newObj = { general, holes, distances, totals };
+  console.log("new obj: ", JSON.stringify(newObj));
 
   try {
     return null

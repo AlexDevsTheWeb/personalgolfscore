@@ -30,7 +30,7 @@ const DashboardPage = () => {
 
         dispatch(getPlayerDetails(uid));
         dispatch(getAllRounds(uid));
-        dispatch(getAllRoundsTotals(uid));
+        dispatch(getAllRoundsTotals(uid));  // <-- TODO: Check if this is useless
         dispatch(setIsLoading(false));
       }
     }

@@ -35,21 +35,21 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
           </AccordionSummary>
           <AccordionDetails>
             <GridAccordion>
-              <NewGridCellStats size={{ xs: 4 }}>
-                <Stack sx={{ textAlign: 'center' }}>
+              <NewGridCellStats size={{ xs: 3 }}>
+                <Stack sx={{ textAlign: 'center', border: '2px solid #ff9900' }}>
                   <Typography>{'TOT'}</Typography>
                   <Typography fontWeight={'bold'}>{`${score.totals} (${correctScore})`}</Typography>
                   <Typography>{roundTotals.score.avg}</Typography>
                 </Stack>
               </NewGridCellStats>
-              <NewGridCellStats size={{ xs: 4 }}>
+              <NewGridCellStats size={{ xs: 3 }}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>{'IN'}</Typography>
                   <Typography fontWeight={'bold'}>{`${score.scoreIN} (${correctScoreIN})`}</Typography>
                   <Typography>{score.avgIN}</Typography>
                 </Stack>
               </NewGridCellStats>
-              <NewGridCellStats size={{ xs: 4 }}>
+              <NewGridCellStats size={{ xs: 3 }}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>{'OUT'}</Typography>
                   <Typography fontWeight={'bold'}>{`${score.scoreOUT} (${correctScoreOUT})`}</Typography>
@@ -66,21 +66,21 @@ const HolebyHoleGeneral = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =
           </AccordionSummary>
           <AccordionDetails>
             <GridAccordion>
-              <NewGridCellStats size={{ xs: 4 }}>
+              <NewGridCellStats size={{ xs: 3 }}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography>TOT</Typography>
                   <Typography fontWeight={'bold'}>{points.totals}</Typography>
                   <Typography>{points.avg}</Typography>
                 </Stack>
               </NewGridCellStats>
-              <NewGridCellStats size={{ xs: 4 }}>
+              <NewGridCellStats size={{ xs: 3 }}>
                 <Typography>IN</Typography>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography fontWeight={'bold'}>{points.pointsIN}</Typography>
                   <Typography>{points.avgIN}</Typography>
                 </Stack>
               </NewGridCellStats>
-              <NewGridCellStats size={{ xs: 4 }}>
+              <NewGridCellStats size={{ xs: 3 }}>
                 <Typography>OUT</Typography>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography fontWeight={'bold'}>{points.pointsOUT}</Typography>

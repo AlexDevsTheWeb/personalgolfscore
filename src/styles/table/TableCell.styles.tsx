@@ -15,6 +15,7 @@ const StyledTableCell = styled(TableCellMui)<TableCellProps>((props) => ({
     color: props.theme.palette.common.white,
     padding: !!props.space ? `${props.space} !important` : '0px !important',
   },
+  padding: '2px !important',
   [`&.${tableCellClasses.body}`]: {
     fontSize: 13,
   },

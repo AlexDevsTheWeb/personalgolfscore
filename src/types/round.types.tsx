@@ -39,8 +39,8 @@ interface IRoundGeneral {
   roundDate: Dayjs,
   roundNumber: number,
   roundTee: string,
-  coursePar: number,
-  playerHCP: number
+  roundPlayingHCP: number,
+  roundPar: number,
 }
 
 export type InitialStateRounds = {
