@@ -11,9 +11,6 @@ import roundDistanceReducer from '@/features/round/roundDistance.slice';
 import roundHolesReducer from '@/features/round/roundHoles.slice';
 import roundTotalsReducer from '@/features/round/roundTotals.slice';
 import roundsReducer from '@/features/rounds/rounds.slice';
-import roundsDataReducer from '@/features/rounds/roundsData.slice';
-import roundsDistanceReducer from '@/features/rounds/roundsDistance.slice';
-import roundsTotalsReducer from '@/features/rounds/roundsTotals.slice';
 import userReducer from '@/features/user/user.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
@@ -22,11 +19,11 @@ const rootReducer = {
   golfBag: golfBagReducer,
   player: playerReducer,
   rounds: roundsReducer,
-  roundsNumber: combineReducers({
-    roundsData: roundsDataReducer,
-    roundsTotals: roundsTotalsReducer,
-    roundsDistance: roundsDistanceReducer,
-  }),
+  // roundsNumber: combineReducers({
+  //   roundsData: roundsDataReducer,
+  //   roundsTotals: roundsTotalsReducer,
+  //   roundsDistance: roundsDistanceReducer,
+  // }),
   singleRound: combineReducers({
     roundHoles: roundHolesReducer,
     roundTotals: roundTotalsReducer,

@@ -1,7 +1,6 @@
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { RootState } from '@/store/store';
-import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
-import Button from '@mui/material/Button';
+import BoxRoundsTable from '@/styles/box/BoxRoundsTable.styles';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -33,8 +32,9 @@ const RoundsTable = () => {
 
                   <TableCell align='center' space='10px'>Par</TableCell>
                   <TableCell align='center' space='10px'>HCP</TableCell>
-                  <TableCell align='center' space='10px'>Shots</TableCell>
-                  <TableCell align='right' width={20}>&nbsp;</TableCell>
+                  <TableCell align='center' space='10px'>score</TableCell>
+                  <TableCell align='center' space='10px'>vs. Par</TableCell>
+                  {/* <TableCell align='right' width={20}>&nbsp;</TableCell> */}
                 </>
                 :
                 <>
@@ -44,8 +44,9 @@ const RoundsTable = () => {
                   <TableCell align='center' space='10px'>Holes</TableCell>
                   <TableCell align='center' space='10px'>Par</TableCell>
                   <TableCell align='center' space='10px'>HCP</TableCell>
-                  <TableCell align='center' space='10px'>Shots</TableCell>
-                  <TableCell align='right' width={50}>&nbsp;</TableCell>
+                  <TableCell align='center' space='10px'>score</TableCell>
+                  <TableCell align='center' space='10px'>vs. Par</TableCell>
+                  {/* <TableCell align='right' width={50}>&nbsp;</TableCell> */}
                 </>
             }
 
@@ -53,11 +54,11 @@ const RoundsTable = () => {
         </TableHead>
         <TableBody>
           {rounds.map((round) => {
-            // const { roundID, roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundStrokes } = round;
-            console.log("coursePar: ", round.general.roundPar);
-            console.log("roundPar: ", round.general.roundPar);
+
+            const netScore = round.totals.score.totals - round.general.roundPar;
+            const grossScore = round.totals.score.totals - (round.general.roundPar + round.general.roundPlayingHCP);
             return (
-              <TableRow key={round.general.roundID}>
+              <TableRow key={round.general.roundID} onClick={() => handleClick(round.general.roundID.toString())} sx={{ cursor: 'pointer' }}>
                 {
                   useDeviceDetection().isMobile
                     ? <>
@@ -69,11 +70,12 @@ const RoundsTable = () => {
                       <TableCell align='center'>{round.general.roundPar}</TableCell>
                       <TableCell align='center'>{round.general.roundPlayingHCP}</TableCell>
                       <TableCell align='center'>{round.totals.score.totals}</TableCell>
-                      <TableCell align={'right'}>
+                      <TableCell align='center'>{`${netScore} | ${grossScore}`}</TableCell>
+                      {/* <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>
                           <ArrowCircleRightRoundedIcon />
                         </Button>
-                      </TableCell>
+                      </TableCell> */}
                     </>
                     : <>
                       <TableCell component="th" scope="row" align='center'>
@@ -85,11 +87,14 @@ const RoundsTable = () => {
                       <TableCell align='center'>{round.general.roundPar}</TableCell>
                       <TableCell align='center'>{round.general.roundPlayingHCP}</TableCell>
                       <TableCell align='center'>{round.totals.score.totals}</TableCell>
-                      <TableCell align={'right'}>
+                      <TableCell align='center'>
+                        <BoxRoundsTable netScore={netScore} grossScore={grossScore} />
+                      </TableCell>
+                      {/* <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>
                           <ArrowCircleRightRoundedIcon />
                         </Button>
-                      </TableCell>
+                      </TableCell> */}
                     </>
                 }
 
@@ -97,7 +102,7 @@ const RoundsTable = () => {
             )
           })}
         </TableBody>
-      </Table>
+      </Table >
     </TableContainer >
   );
 }

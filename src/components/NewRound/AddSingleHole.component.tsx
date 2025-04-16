@@ -6,7 +6,7 @@ import BoxNewHole from '@/styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '@/styles/box/BoxSingleHoleInternal.styles';
 import TextField from '@/styles/textfield/TextField.style';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HoleCard, HoleCardContent, HoleCardHeader } from '../../styles';
@@ -58,11 +58,16 @@ const AddSingleHole = () => {
     dispatch(setTmpHoleData({ name: 'puttsLength', value: puttsLength, roundPlayingHCP, roundHoles, chipClubs } as any));
   }, [puttsLength, dispatch, roundPlayingHCP, roundHoles, chipClubs])
 
+  if (holeFinished > roundHoles) {
+    return (
+      <Typography>All holes saved!</Typography>
+    )
+  }
   return (
     <BoxSingleHoleContainer>
       <BoxSingleHoleInternal side='full'>
         <BoxNewHole>
-          <HoleCard sx={{ width: '100%' }}>
+          <HoleCard>
             <HoleCardHeader title={`Hole number: ${holeFinished === 0 ? 1 : holeFinished} - General Info`} />
             <HoleCardContent>
               <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} label='Hole HCP' />
