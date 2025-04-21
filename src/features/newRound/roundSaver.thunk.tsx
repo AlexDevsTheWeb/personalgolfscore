@@ -49,7 +49,6 @@ export const saveNewRoundThunk = async (_: any, thunkAPI: any) => {
     });
 
     await batch.commit();
-    console.log(`Round saved succesfully with ID: ${roundId}`);
     return { success: true, roundId: roundId };
 
   } catch (error: any) {

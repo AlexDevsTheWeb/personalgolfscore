@@ -1,11 +1,11 @@
 import { IInitialStateRoundSave } from "@/types/round.types";
-import { roundToSave } from "@/utils/constant.utils";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { saveNewRoundThunk } from "./roundSaver.thunk";
 
 const initialState: IInitialStateRoundSave = {
   isLoading: false,
-  roundToSave: roundToSave
+  roundId: '',
+  success: false,
 }
 
 export const saveNewRound = createAsyncThunk(
@@ -30,10 +30,13 @@ const roundSaverSlice = createSlice({
       })
       .addCase(saveNewRound.fulfilled, (state, { payload }: PayloadAction<any>) => {
         state.isLoading = false;
-        state.roundToSave = payload;
+        state.roundId = payload.roundId;
+        state.success = payload.success;
       })
       .addCase(saveNewRound.rejected, (state) => {
         state.isLoading = false;
+        state.roundId = '';
+        state.success = false;
       })
   }
 });
