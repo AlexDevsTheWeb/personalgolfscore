@@ -82,5 +82,6 @@ export interface IRoundFinalDataProps {
 
 export interface IInitialStateRoundSave {
   isLoading: boolean,
-  roundToSave: IRoundFinalData
+  roundId: string,
+  success: boolean
 }

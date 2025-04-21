@@ -6,7 +6,7 @@ import BoxNewHole from '@/styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '@/styles/box/BoxSingleHoleInternal.styles';
 import TextField from '@/styles/textfield/TextField.style';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HoleCard, HoleCardContent, HoleCardHeader } from '../../styles';
@@ -22,6 +22,7 @@ const AddSingleHole = () => {
   const { holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
   const { teeClubs, greenClubs, chipClubs } = useSelector((store: RootState) => store.golfBag);
+  const { roundId, success } = useSelector((store: RootState) => store.roundSaver);
 
   const [holeFinished, setHoleFinished] = useState<number>(0);
   const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
@@ -58,11 +59,12 @@ const AddSingleHole = () => {
     dispatch(setTmpHoleData({ name: 'puttsLength', value: puttsLength, roundPlayingHCP, roundHoles, chipClubs } as any));
   }, [puttsLength, dispatch, roundPlayingHCP, roundHoles, chipClubs])
 
-  // if (holeFinished > roundHoles) {
-  //   return (
-  //     <Typography>All holes saved!</Typography>
-  //   )
-  // }
+  if (roundId && success) {
+    return (
+      <Typography>All holes saved!</Typography>
+    )
+  }
+
   return (
     <BoxSingleHoleContainer>
       <BoxSingleHoleInternal side='full'>
