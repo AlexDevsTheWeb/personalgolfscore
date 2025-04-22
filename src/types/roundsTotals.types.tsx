@@ -4,7 +4,7 @@ export interface IRoundsTotals {
   "totalsPoints": IRoundsTotalsPoints,
   "totalsFairway": IRoundsTotalsFairways,
   "totalsTeeShots": IRoundsTotalsTeeShots,
-  "totalChipPitch": IRoundsTotalsChipPitch,
+  "totalsChipPitch": IRoundsTotalsChipPitch,
 }
 
 interface IRoundsTotalsStrokes {

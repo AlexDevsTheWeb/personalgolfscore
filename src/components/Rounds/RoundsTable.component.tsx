@@ -6,6 +6,7 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
+import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TableCell, TableRow } from '../../styles';
@@ -54,22 +55,31 @@ const RoundsTable = () => {
         </TableHead>
         <TableBody>
           {rounds.map((round) => {
+            const total = Number(round.totals.score.totals);
+            const par = Number(round.roundPar);
+            const roundPlayingHCP = Number(round.roundPlayingHCP);
 
-            const netScore = round.totals.score.totals - round.general.roundPar;
-            const grossScore = round.totals.score.totals - (round.general.roundPar + round.general.roundPlayingHCP);
+            const netScore = total - par;
+            const grossScore = total - (par + roundPlayingHCP);
+
+            const props = {
+              netScore,
+              grossScore
+            };
+
             return (
-              <TableRow key={round.general.roundID} onClick={() => handleClick(round.general.roundID.toString())} sx={{ cursor: 'pointer' }}>
+              <TableRow key={round.id} onClick={() => handleClick(round.id.toString())} sx={{ cursor: 'pointer' }}>
                 {
                   useDeviceDetection().isMobile
                     ? <>
                       <TableCell component="th" scope="row" align='center'>
-                        {round.general.roundDate.toString()}
+                        {dayjs(round.roundDate).format('DD/MM/YYYY')}
                       </TableCell>
-                      <TableCell align='left'>{round.general.roundCourse}</TableCell>
+                      <TableCell align='left'>{round.roundCourse}</TableCell>
 
-                      <TableCell align='center'>{round.general.roundPar}</TableCell>
-                      <TableCell align='center'>{round.general.roundPlayingHCP}</TableCell>
-                      <TableCell align='center'>{round.totals.score.totals}</TableCell>
+                      <TableCell align='center'>{total}</TableCell>
+                      <TableCell align='center'>{roundPlayingHCP}</TableCell>
+                      <TableCell align='center'>{total}</TableCell>
                       <TableCell align='center'>{`${netScore} | ${grossScore}`}</TableCell>
                       {/* <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>
@@ -79,16 +89,16 @@ const RoundsTable = () => {
                     </>
                     : <>
                       <TableCell component="th" scope="row" align='center'>
-                        {round.general.roundDate.toString()}
+                        {dayjs(round.roundDate).format('DD/MM/YYYY')}
                       </TableCell>
-                      <TableCell align='left'>{round.general.roundCourse}</TableCell>
-                      <TableCell align='left'>{round.general.roundTee}</TableCell>
+                      <TableCell align='left'>{round.roundCourse}</TableCell>
+                      <TableCell align='left'>{round.roundTee}</TableCell>
                       <TableCell align='center'>{round.holes.length}</TableCell>
-                      <TableCell align='center'>{round.general.roundPar}</TableCell>
-                      <TableCell align='center'>{round.general.roundPlayingHCP}</TableCell>
-                      <TableCell align='center'>{round.totals.score.totals}</TableCell>
+                      <TableCell align='center'>{total}</TableCell>
+                      <TableCell align='center'>{roundPlayingHCP}</TableCell>
+                      <TableCell align='center'>{total}</TableCell>
                       <TableCell align='center'>
-                        <BoxRoundsTable netScore={netScore} grossScore={grossScore} />
+                        <BoxRoundsTable props={props} />
                       </TableCell>
                       {/* <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>

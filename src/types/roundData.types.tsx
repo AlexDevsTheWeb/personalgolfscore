@@ -1,3 +1,5 @@
+import { IRoundTotals } from "./roundTotals.types";
+
 export interface IShots {
   holeNumber: number;
   chipClub: string;
@@ -134,4 +136,37 @@ export interface IRoundHoles {
   upDownE: number;
   scramble: { made: number, attempts: number };
   water: number;
+}
+
+export interface IRoundData {
+  createdAt: {
+    nanoseconds: number, seconds: number
+  },
+  roundCourse: string,
+  roundDate: {
+    nanoseconds: number, seconds: number
+  },
+  roundHoles: string,
+  roundNumber: string,
+  roundPar: string,
+  roundPlayingHCP: string,
+  roundTee: string,
+  userId: string,
+  totals: IRoundTotals
+}
+
+export interface IBasicRoundData {
+  id: string,
+  // roundData: DocumentData,
+  roundCourse?: string,
+  roundHoles?: string,
+  roundNumber?: string,
+  roundPar?: string,
+  roundPlayingHCP?: string,
+  roundTee?: string,
+  userId?: string
+  createdAt: number,
+  roundDate: number,
+  distances: IDistance[],
+  holes: IRoundHoles[],
 }

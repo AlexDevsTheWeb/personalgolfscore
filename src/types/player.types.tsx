@@ -15,7 +15,7 @@ export type InitialStatePlayer = {
   isLoading: boolean;
   error: string,
   errorMessage: string,
-  player: IPlayer;
+  player: IPlayerDetails;
 }
 
 // export type PlayerPayload = {
@@ -29,4 +29,32 @@ type PlayerResponse = {
   dob: string,
   hcp: number,
   email: string
+}
+
+
+export type IGolfBagData = IClubType[];
+interface IClubType {
+  typeName: string;
+  details: IClubDetail[];
+}
+interface IClubDetail {
+  name: string;
+  loft: number;
+  imageURL: string;
+  clubIdentifier: string;
+  selected: boolean;
+  clubNumber?: string | number; // Optional
+}
+export interface IPlayerDetails {
+  uid: string;
+  displayName: string | null;
+  email: string | null;
+  firstName?: string;
+  lastName?: string;
+  HCP?: number;
+  DOB?: number; // Assuming DOB is stored as timestamp milliseconds
+  photoURL?: string | null;
+  golfbag?: IGolfBagData; // Use the GolfBagData type
+  rounds?: any,
+  // ... other player fields
 }

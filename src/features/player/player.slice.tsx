@@ -1,18 +1,23 @@
-import { InitialStatePlayer, IPlayer } from "@/types/player.types";
+import { IGolfBagData, InitialStatePlayer, IPlayerDetails } from "@/types/player.types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getPlayerInfoThunk } from "./player.thunk";
+import { getPlayerInfoThunk, updatePlayerGolfBagThunk } from "./player.thunk";
 
 
 const initialState: InitialStatePlayer = {
   isLoading: false,
   error: '',
   errorMessage: '',
-  player: {} as IPlayer,
+  player: {} as IPlayerDetails,
 };
+
 
 export const getPlayerDetails = createAsyncThunk(
   "player/getPlayerDetails",
   getPlayerInfoThunk
+);
+export const updatePlayerGolfbag = createAsyncThunk(
+  "player/updatePlayerGolfbag",
+  updatePlayerGolfBagThunk
 );
 
 const playerSlice = createSlice({
@@ -30,14 +35,34 @@ const playerSlice = createSlice({
       .addCase(getPlayerDetails.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getPlayerDetails.fulfilled, (state, { payload }: PayloadAction<{ data: IPlayer }>) => {
+      .addCase(getPlayerDetails.fulfilled, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
-        state.player = payload.data;
+        if (action.payload && action.payload.player) {
+          state.player = action.payload.player;
+        }
+        else {
+          state.player = {} as Omit<IPlayerDetails, 'rounds'>;
+        }
       })
       .addCase(getPlayerDetails.rejected, (state, { payload }: any) => {
         state.isLoading = false;
         state.error = payload.status;
         state.errorMessage = payload.statusText;
+      })
+
+      .addCase(updatePlayerGolfbag.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(updatePlayerGolfbag.fulfilled, (state, action: PayloadAction<IGolfBagData>) => {
+        state.isLoading = false;
+        if (state.player) {
+          state.player.golfbag = action.payload;
+        }
+      })
+      .addCase(updatePlayerGolfbag.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string; // Store the error message
       });
   },
 });

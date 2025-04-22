@@ -42,10 +42,15 @@ const rootReducer = {
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: {
+        ignoredActionPaths: ['meta.arg', 'payload.timestamp', 'payload.datePlayed', 'payload.roundDate'],
+        ignoredPaths: ['player.player.DOB', 'rounds.rounds'],
+      },
     }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+

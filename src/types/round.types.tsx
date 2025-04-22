@@ -15,14 +15,15 @@ interface IState {
 }
 
 export interface IRounds {
-  // roundID: string,
-  // roundDate: string,
-  // roundCourse: string,
-  // roundHoles: number,
-  // roundTee: string,
-  // roundPar: number,
-  // roundPlayingHCP: number,
-  // roundStrokes: number
+  id: string,
+  roundID: string,
+  roundDate: string,
+  roundCourse: string,
+  roundHoles: number,
+  roundTee: string,
+  roundPar: number,
+  roundPlayingHCP: number,
+  roundStrokes: number
   general: IRoundGeneral,
   holes: any,
   totals: any

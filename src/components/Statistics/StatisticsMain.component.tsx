@@ -2,10 +2,11 @@ import { RootState } from '@/store/store';
 import { IRoundTotals } from '@/types/roundTotals.types';
 import { allRoundsCalculator } from '@/utils/calculator/AllRoundsCalculator.utils';
 import { initialStateRoundTotals } from '@/utils/constant.utils';
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Spinner from '../common/spinner/Spinner.component';
+import DistancesTotals from '../Totals/HolebyHole/DistancesTotals.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 
 const StatisticsMain = () => {
@@ -34,7 +35,11 @@ const StatisticsMain = () => {
   }
 
   return (
-    <HolebyHoleTotals roundTotals={calculatedAverages} dashboard={true} />
+    <Stack sx={{ gap: 2 }}>
+      <DistancesTotals />
+      <HolebyHoleTotals roundTotals={calculatedAverages} dashboard={true} />
+    </Stack>
+
   );
 }
 
