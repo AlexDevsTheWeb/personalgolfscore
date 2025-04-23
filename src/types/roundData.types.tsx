@@ -159,14 +159,14 @@ export interface IBasicRoundData {
   id: string,
   // roundData: DocumentData,
   roundCourse?: string,
+  roundDate: number,
   roundHoles?: string,
-  roundNumber?: string,
-  roundPar?: string,
-  roundPlayingHCP?: string,
   roundTee?: string,
+  roundPar?: string,
+  roundNumber?: string,
+  roundPlayingHCP?: string,
+  roundStrokes?: number,
   userId?: string
   createdAt: number,
-  roundDate: number,
-  distances: IDistance[],
-  holes: IRoundHoles[],
+  totals: IRoundTotals
 }

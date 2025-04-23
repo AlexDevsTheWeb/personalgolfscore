@@ -1,3 +1,6 @@
+import { IRounds } from "./round.types";
+import { IBasicRoundData, IDistance } from "./roundData.types";
+import { IRoundTotals } from "./roundTotals.types";
 
 export interface IPlayer {
   playerID: string,
@@ -15,12 +18,13 @@ export type InitialStatePlayer = {
   isLoading: boolean;
   error: string,
   errorMessage: string,
-  player: IPlayerDetails;
+  player: PlayerStateData;
 }
 
 // export type PlayerPayload = {
 //   payload: PlayerResponse;
 // };
+export type PlayerStateData = Omit<IPlayerDetails, 'rounds'>;
 
 type PlayerResponse = {
   playerID: string,
@@ -55,6 +59,13 @@ export interface IPlayerDetails {
   DOB?: number; // Assuming DOB is stored as timestamp milliseconds
   photoURL?: string | null;
   golfbag?: IGolfBagData; // Use the GolfBagData type
-  rounds?: any,
+  rounds?: IRounds[],
+  totals?: IRoundTotals,
+  distances?: IDistance,
   // ... other player fields
+}
+
+export interface IGetPlayerDetailsPayload {
+  player: Omit<IPlayerDetails, 'rounds'>,
+  rounds: IBasicRoundData[],
 }

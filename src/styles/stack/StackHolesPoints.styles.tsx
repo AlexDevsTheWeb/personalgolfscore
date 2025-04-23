@@ -12,7 +12,7 @@ const StyledStack = styled(StackMui)<StackProps>(() => ({
 
 const StackHolesPoints: React.FC<StackProps> = props => {
 
-  const { general: { coursePar, playerHCP }, totals } = props.round;
+  const { coursePar, playerHCP, totals } = props.round;
 
   const roundStrokes = totals.score.totals;
   const overParNet = roundStrokes - coursePar;

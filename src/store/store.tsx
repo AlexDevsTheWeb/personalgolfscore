@@ -7,6 +7,7 @@ import newRoundMainReducer from '@/features/newRound/newRoundMain.slice';
 import newRoundTotalsReducer from '@/features/newRound/newRoundTotals.slice';
 import roundSaverReducer from '@/features/newRound/roundSaver.slice';
 import playerReducer from '@/features/player/player.slice';
+import roundDetailsReducer from '@/features/round/roundDetails.slice';
 import roundDistanceReducer from '@/features/round/roundDistance.slice';
 import roundHolesReducer from '@/features/round/roundHoles.slice';
 import roundTotalsReducer from '@/features/round/roundTotals.slice';
@@ -24,6 +25,7 @@ const rootReducer = {
   //   roundsTotals: roundsTotalsReducer,
   //   roundsDistance: roundsDistanceReducer,
   // }),
+  roundDetails: roundDetailsReducer,
   singleRound: combineReducers({
     roundHoles: roundHolesReducer,
     roundTotals: roundTotalsReducer,

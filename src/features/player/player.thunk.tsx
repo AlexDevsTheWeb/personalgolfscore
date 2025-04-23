@@ -1,24 +1,9 @@
-import { IGolfBagData, IPlayerDetails } from "@/types/player.types";
-import { IBasicRoundData, IDistance, IRoundHoles } from "@/types/roundData.types";
+import { IGolfBagData } from "@/types/player.types";
+import { IBasicRoundData } from "@/types/roundData.types";
 import { db } from "@/utils/firebase/firebase.utils";
 import { collection, doc, DocumentData, DocumentReference, getDoc, getDocs, orderBy, query, Timestamp, updateDoc } from "firebase/firestore";
 
 export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any) => {
-
-  // const booksRef = collection(db, 'players')
-  // const q = query(booksRef, where(documentId(), '==', uid))
-
-  // const querySnapshot = await getDocs(q);
-  // const response = querySnapshot.docs.map((doc) => {
-  //   return {
-  //     ...doc.data(),
-  //     uid: doc.id
-  //   };
-  // }) as any;
-
-  // return response.pop();
-
-
   // FIXME: this is just to avoid access online data and reduce read limits on firebase
   // let playerURL = `/data/P2_ALESSANDROTORRI/player.json`;
   // let playerURL = `/data/P1_TIGERWOODS/player.json`;
@@ -36,6 +21,8 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any) 
   //   return rejectWithValue(error.message || 'Failed to fetch player details');
   // }
   // FIXME: remove it when everything is fine
+
+
   if (!uid) {
     console.error("getPlayerInfoThunk: UID is required.");
     return rejectWithValue('User ID not provided.');
@@ -51,56 +38,33 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any) 
     }
 
     const playerData = playerSnapshot.data();
-    const roundsCollectionRef = collection(db, 'players', uid, 'rounds');
-    const roundsQuery = query(roundsCollectionRef, orderBy('roundDate', 'desc'));
+
+    const roundsColRef = collection(db, 'players', uid, 'rounds');
+    const roundsQuery = query(roundsColRef, orderBy('roundDate', 'desc'));
     const roundsSnapshot = await getDocs(roundsQuery);
 
-    const roundsData: IBasicRoundData[] = await Promise.all(
-      roundsSnapshot.docs.map(async (roundDoc) => {
-        const roundId = roundDoc.id;
-        const roundData = roundDoc.data();
-
-        const distancesCollectionRef = collection(db, 'players', uid, 'rounds', roundId, 'distances');
-        const distancesSnapshot = await getDocs(distancesCollectionRef);
-        const distancesData: IDistance[] = distancesSnapshot.docs.map(distancesDoc => {
-          const data = distancesDoc.data();
-          return {
-            ...data,
-          } as IDistance;
-        });
-
-        const holesCollectionRef = collection(db, 'players', uid, 'rounds', roundId, 'holes');
-        const holesQuery = query(holesCollectionRef, orderBy('holeNumber', 'asc'));
-        const holesSnapshot = await getDocs(holesQuery);
-        const holesData: IRoundHoles[] = holesSnapshot.docs.map(holesDoc => ({
-          ...holesDoc.data(),
-        } as IRoundHoles
-        ));
-
-        return {
-          id: roundId,
-          ...roundData,
-          roundDate: roundData.roundDate instanceof Timestamp ? roundData.roundDate.toMillis() : roundData.roundDate,
-          createdAt: roundData.createdAt instanceof Timestamp ? roundData.createdAt.toMillis() : roundData.createdAt,
-          distances: distancesData,
-          holes: holesData,
-        } as IBasicRoundData;
-      })
-    );
-
-    // Serialize Timestamp if necessary (like DOB)
+    const roundsData: IBasicRoundData[] = roundsSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        roundDate: data.roundDate instanceof Timestamp ? data.roundDate.toMillis() : data.roundDate,
+        createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toMillis() : data.createdAt,
+      } as IBasicRoundData
+    });
     const serializedPlayerData = {
       ...playerData,
+      uid: uid,
       DOB: playerData.DOB instanceof Timestamp ? playerData.DOB.toMillis() : playerData.DOB,
-      // Ensure golfbag data is included if fetched here
-      golfbag: playerData.golfbag || [], // Default to empty array if not present
-    } as Omit<IPlayerDetails, 'rounds'>;
+      golfbag: playerData.golfbag || [],
+      totals: playerData.totals || {},
+      distances: playerData.distances || {},
+    }
 
     return {
       player: serializedPlayerData,
-      rounds: roundsData
-    };
-    // return { player: serializedPlayerData };
+      rounds: roundsData,
+    }
 
   } catch (error: any) {
     console.error("Error fetching player details:", error);

@@ -93,7 +93,7 @@ const RoundsTable = () => {
                       </TableCell>
                       <TableCell align='left'>{round.roundCourse}</TableCell>
                       <TableCell align='left'>{round.roundTee}</TableCell>
-                      <TableCell align='center'>{round.holes.length}</TableCell>
+                      <TableCell align='center'>{Number(round.roundHoles)}</TableCell>
                       <TableCell align='center'>{total}</TableCell>
                       <TableCell align='center'>{roundPlayingHCP}</TableCell>
                       <TableCell align='center'>{total}</TableCell>

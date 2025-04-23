@@ -1,5 +1,5 @@
 import { Dayjs } from "dayjs"
-import { IDistance, IShots } from "./roundData.types"
+import { IBasicRoundData, IDistance, IShots } from "./roundData.types"
 import { IRoundTotals } from "./roundTotals.types"
 
 export interface IPayloadActionNewHole {
@@ -30,7 +30,7 @@ export interface IRounds {
 }
 
 export interface IRoundsState {
-  rounds: IRounds[],
+  rounds: IBasicRoundData[],
   uid: string,
 }
 
@@ -47,7 +47,7 @@ interface IRoundGeneral {
 export type InitialStateRounds = {
   isLoading: boolean;
   playerID: string;
-  rounds: IRounds[];
+  rounds: IBasicRoundData[];
 }
 
 export interface INewRound {

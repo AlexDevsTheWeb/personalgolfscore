@@ -1,4 +1,4 @@
-import { IRounds } from "./round.types";
+import { IRoundDetails } from "./roundDetails.types";
 import { IAllRoundsTotals, IRoundTotals } from "./roundTotals.types";
 
 export interface TabPanelProps {
@@ -24,7 +24,7 @@ export interface IShotsTableProps {
 }
 
 export interface IRoundMainDataProp {
-  round: IRounds;
+  round: IRoundDetails;
 }
 
 // export interface IPlayerProps {
