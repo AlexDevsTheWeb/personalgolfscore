@@ -1,43 +1,93 @@
-import { RootState } from "@/store/store";
-import ClubsHeaderTypography from "@/styles/typography/ClubsHeaderTypography.styles";
-import { useSelector } from "react-redux";
-import { BoxPlayer, Grid, Typography } from "../../styles";
-import ClubsList from "./ClubsList.component";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 
-const ClubsMain = () => {
-  const { isLoading, clubs } = useSelector((store: RootState) => store.golfBag);
+import { AppDispatch, RootState } from "@/store/store";
+import ClubsHeaderTypography from "@/styles/typography/ClubsHeaderTypography.styles";
+import { IGolfBagData } from '@/types/player.types';
+import { BoxPlayer, Typography } from "../../styles";
+
+import { updatePlayerGolfbag } from '@/features/player/player.slice';
+import { Box, Button } from '@mui/material';
+import initialClubsData from '../../../public/data/P1_TIGERWOODS/clubs.json';
+interface ClubsMainProps {
+  golfBag: IGolfBagData | undefined;
+}
+
+const ClubsMain: React.FC<ClubsMainProps> = ({ golfBag }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { player, isLoading } = useSelector((store: RootState) => store.player);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const hasExistingBag = golfBag && golfBag.length > 0;
+  const dataToShow = hasExistingBag ? golfBag : (initialClubsData as IGolfBagData);
+
+  const handleSaveInitialBag = async () => {
+    if (!player?.uid) {
+      console.error("cannot save initial bag: player UID is missing");
+      return;
+    }
+    if (hasExistingBag) {
+      console.warn("Attemped to save initial bag, but an existing bag was found.");
+      return;
+    }
+    setIsSaving(true);
+    try {
+      await dispatch(updatePlayerGolfbag({
+        uid: player.uid,
+        golfBagData: initialClubsData as IGolfBagData
+      })).unwrap();
+    } catch (error) {
+      console.error("Failed to save initial golf bag:", error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  if (isLoading && !player) { // Show loading only if player data isn't available yet
+    return <Typography>Loading Player Data...</Typography>;
+  }
 
   return (
     <BoxPlayer>
       <ClubsHeaderTypography />
-      <Grid
+
+
+      {/* <Grid
         container
         spacing={{ xs: 1, md: 1 }}
         columns={12}
       >
-        {isLoading
-          ? (<Typography>Loading ...</Typography>)
-          : clubs.types.length > 0
-            ?
-            (clubs.types.map((club, index) => {
-              return (
-                <Grid
-                  size={{ sm: 12, md: 12 }}
-                  key={index}
-                  sx={{ minWidth: "100%" }}
-                >
-                  <ClubsList
-                    typeName={club.typeName}
-                    details={club.details}
-                  />
-                </Grid>
-              )
-            })
-            )
-            : (<Typography>No clubs found.</Typography>)
+        {dataToShow && dataToShow.length > 0
+          ? (dataToShow.map((clubType, index) => (
+            <Grid
+              size={12}
+              key={`${clubType.typeName}-${index}`}
+              sx={{ minWidth: "100%" }}
+            >
+              <ClubsList
+                typeName={clubType.typeName}
+                details={clubType.details}
+              />
+            </Grid>
+          ))
+          )
+          : (<Typography sx={{ padding: 2 }}>No clubs found.</Typography>)
         }
-      </Grid>
-    </BoxPlayer >
+      </Grid> */}
+
+      {!hasExistingBag && (
+        <Box sx={{ marginBottom: 2, display: 'flex', justifyContent: 'center' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSaveInitialBag}
+            disabled={isSaving || !player?.uid} // Disable if saving or no UID
+          >
+            {isSaving ? "Saving..." : "Save Default Bag"}
+          </Button>
+        </Box>
+      )}
+    </BoxPlayer>
   );
 };
 

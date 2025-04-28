@@ -1,5 +1,4 @@
 import controlsReducer from '@/features/app/controls.slice';
-import golfBagReducer from '@/features/golfBag/golfBag.slice';
 import holeTmpReducer from '@/features/hole/holeTmp.slice';
 import newroundDistanceReducer from '@/features/newRound/newRoundDistances.slice';
 import newRoundHolesReducer from '@/features/newRound/newRoundHoles.slice';
@@ -17,7 +16,6 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = {
   controls: controlsReducer,
-  golfBag: golfBagReducer,
   player: playerReducer,
   rounds: roundsReducer,
   // roundsNumber: combineReducers({

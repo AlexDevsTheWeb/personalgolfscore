@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 const DistancesTotals: React.FC = () => {
 
-  const { types } = useSelector((store: RootState) => store.golfBag.clubs);
+  const { player: { golfBag } } = useSelector((store: RootState) => store.player);
 
   return (
     <Stack sx={{ gap: 1 }}>

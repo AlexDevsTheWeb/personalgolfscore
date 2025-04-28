@@ -52,11 +52,13 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any) 
         createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toMillis() : data.createdAt,
       } as IBasicRoundData
     });
+
+
+
     const serializedPlayerData = {
       ...playerData,
       uid: uid,
       DOB: playerData.DOB instanceof Timestamp ? playerData.DOB.toMillis() : playerData.DOB,
-      golfbag: playerData.golfbag || [],
       totals: playerData.totals || {},
       distances: playerData.distances || {},
     }
@@ -72,42 +74,26 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any) 
   }
 };
 
-export const updatePlayerGolfBagThunk = async (payload: { uid: string, golfBagData: IGolfBagData }, { rejectWithValue }: any) => {
+interface IUpdateGolfBagPayload {
+  uid: string;
+  golfBagData: IGolfBagData; // Use the correct type for your golf bag structure
+}
+
+export const updatePlayerGolfBagThunk = async (payload: IUpdateGolfBagPayload, { rejectWithValue }: any) => {
   const { uid, golfBagData } = payload;
+
+  if (!uid) {
+    console.error("Player ID is required to update golf bag.");
+    throw new Error("Player ID is required."); // Or handle appropriately
+  }
+  if (!golfBagData || !Array.isArray(golfBagData)) {
+    console.error("Invalid golf bag data provided.");
+    throw new Error("Invalid golf bag data.");
+  }
   try {
-    if (!uid) {
-      console.error("Player ID is required to update golf bag.");
-      throw new Error("Player ID is required."); // Or handle appropriately
-    }
-    if (!golfBagData || !Array.isArray(golfBagData)) {
-      console.error("Invalid golf bag data provided.");
-      throw new Error("Invalid golf bag data.");
-    }
-
-    // Optional: Data cleaning step (Example: Remove clubNumber if desired)
-    const cleanedGolfBagData = golfBagData.map(type => ({
-      ...type,
-      details: type.details.map(({ clubNumber, ...rest }) => rest) // Removes clubNumber
-    }));
-
-
     const playerDocRef: DocumentReference<DocumentData> = doc(db, "players", uid);
-
-    try {
-      console.log(`Updating golfbag for player: ${uid}`);
-      // Use updateDoc to update only the 'golfbag' field.
-      // If the 'golfbag' field might not exist yet, setDoc with merge:true is safer.
-      // await setDoc(playerDocRef, { golfbag: cleanedGolfBagData }, { merge: true });
-      await updateDoc(playerDocRef, {
-        golfbag: cleanedGolfBagData // Use cleanedGolfBagData or golfBagData directly
-      });
-      console.log(`Successfully updated golfbag for player: ${uid}`);
-    } catch (error) {
-      console.error("Error updating player golf bag:", error);
-      // Re-throw or handle the error as needed for your UI
-      throw error;
-    }
-    return cleanedGolfBagData;
+    await updateDoc(playerDocRef, { golfBag: golfBagData });
+    return golfBagData;
   } catch (error: any) {
     console.error("Thunk error updating golf bag:", error);
     return rejectWithValue(error.message || 'Failed to update golf bag');

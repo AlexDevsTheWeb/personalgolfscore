@@ -2,13 +2,17 @@ import { IGetPlayerDetailsPayload, IGolfBagData, InitialStatePlayer, IPlayerDeta
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getPlayerInfoThunk, updatePlayerGolfBagThunk } from "./player.thunk";
 
+interface IUpdateGolfBagPayload {
+  uid: string;
+  golfBagData: IGolfBagData;
+}
+
 const initialState: InitialStatePlayer = {
   isLoading: false,
   error: '',
   errorMessage: '',
   player: {} as Omit<IPlayerDetails, 'rounds'>,
 };
-
 
 export const getPlayerDetails = createAsyncThunk<
   IGetPlayerDetailsPayload,
@@ -18,7 +22,7 @@ export const getPlayerDetails = createAsyncThunk<
   "player/getPlayerDetails",
   getPlayerInfoThunk
 );
-export const updatePlayerGolfbag = createAsyncThunk(
+export const updatePlayerGolfbag = createAsyncThunk<IGolfBagData, IUpdateGolfBagPayload, { rejectValue: string }>(
   "player/updatePlayerGolfbag",
   updatePlayerGolfBagThunk
 );
@@ -60,11 +64,15 @@ const playerSlice = createSlice({
       .addCase(updatePlayerGolfbag.pending, (state) => {
         state.isLoading = true;
         state.error = '';
+        state.errorMessage = '';
       })
       .addCase(updatePlayerGolfbag.fulfilled, (state, action: PayloadAction<IGolfBagData>) => {
         state.isLoading = false;
         if (state.player) {
-          state.player.golfbag = action.payload;
+          state.player.golfBag = action.payload;
+        }
+        else {
+          console.warn('updatePlayerGolfBag.fulfilled: Player state was null, cannot update golfbag');
         }
       })
       .addCase(updatePlayerGolfbag.rejected, (state, action) => {

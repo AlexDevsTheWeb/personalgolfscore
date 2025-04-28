@@ -55,6 +55,8 @@ const golfBagSlice = createSlice({
       }
     },
     updateTeeGreenClubs: (state, { payload }) => {
+
+      console.log("golf bag payload types: ", payload);
       switch (payload.type) {
         case CLUBSSELECTION.TEE:
           state.teeClubs = payload.updatedTeeClubs;
