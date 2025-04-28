@@ -14,6 +14,7 @@ interface ISelectProps {
   par?: number,
   value?: string,
   label?: string,
+  disabled?: boolean
 }
 
 const Select = (props: ISelectProps) => {

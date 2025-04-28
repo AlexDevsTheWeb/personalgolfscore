@@ -5,7 +5,9 @@ import { IRoundTotals } from "../../types/roundTotals.types";
 import { db } from '../../utils/firebase/firebase.utils';
 import {
   fetchExistingAverageDistances,
+  fetchOverallTotalsAvg,
   prepareAverageDistanceUpdateBatch,
+  prepareOverallTotalsUpdateBatch,
   prepareRoundSaveBatch
 } from '../../utils/round/round.utils';
 
@@ -15,6 +17,7 @@ export const saveNewRoundThunk = async (_: any, thunkAPI: any) => {
   const general: INewRound = newRoundMain.round;
   const holes: IShots[] = newRoundHoles.holes;
   const currentRoundDistances: IDistance[] = newRoundDistances.roundDistances;
+  const currentTotals: IRoundTotals = newRoundTotals.roundTotals;
   const totals: IRoundTotals = newRoundTotals.roundTotals;
 
   let userId: string | null = null;
@@ -32,13 +35,13 @@ export const saveNewRoundThunk = async (_: any, thunkAPI: any) => {
       batchSaveRound,
       userId,
       general,
-      totals,
+      currentTotals,
       currentRoundDistances,
       holes
     );
     await batchSaveRound.commit();
 
-    if (currentRoundDistances.length > 0 && userId && savedRoundId) {
+    if (currentRoundDistances.length > 0 && userId) {
       try {
         const existingAveragesMap = await fetchExistingAverageDistances(userId);
         const batchUpdateAverages = writeBatch(db);
@@ -59,6 +62,27 @@ export const saveNewRoundThunk = async (_: any, thunkAPI: any) => {
     else {
       console.log("No distances to update or missing userId/savedRoundId.");
     }
+
+    if (userId && currentTotals) {
+      try {
+        const existingTotalsAvg = await fetchOverallTotalsAvg(userId);
+        const batchUpdateTotals = writeBatch(db);
+        prepareOverallTotalsUpdateBatch(
+          batchUpdateTotals,
+          userId,
+          currentTotals,
+          existingTotalsAvg
+        );
+
+        await batchUpdateTotals.commit();
+      } catch (totalsError: any) {
+        console
+      }
+
+    } else {
+      console.log("Missing userId or current round totals for statistics update.");
+    }
+
     return { success: true, roundId: savedRoundId };
 
   } catch (error: any) {

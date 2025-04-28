@@ -8,11 +8,10 @@ import BoxSingleHoleInternal from '@/styles/box/BoxSingleHoleInternal.styles';
 import TextField from '@/styles/textfield/TextField.style';
 import { IAddSingleHoleProps } from '@/types/clubs.types';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HoleCard, HoleCardContent, HoleCardHeader } from '../../styles';
-import Spinner from '../common/spinner/Spinner.component';
 import PuttsGenerator from './PuttsGenerator.component';
 import Select from './Select.component';
 import SaveRoundButton from './components/SaveRoundButton.component';
@@ -23,7 +22,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
   const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
-  const { roundId, success, isLoading } = useSelector((store: RootState) => store.roundSaver);
+  const { isLoading } = useSelector((store: RootState) => store.roundSaver);
 
   const [puttsLength, setPuttsLength] = useState<number[]>([]);
   const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
@@ -61,17 +60,18 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
     });
   }, [tmpHole.putts]);
 
-  useEffect(() => {
-    dispatch(setTmpHoleData({
-      name: 'puttsLength',
-      value: puttsLength,
-      roundPlayingHCP,
-      roundHoles,
-      chipClubs: derivedClubs.chipClubs
-    } as any));
-  }, [puttsLength, dispatch, roundPlayingHCP, roundHoles, derivedClubs.chipClubs]);
+  // useEffect(() => {
+  //   dispatch(setTmpHoleData({
+  //     name: 'puttsLength',
+  //     value: puttsLength,
+  //     roundPlayingHCP,
+  //     roundHoles,
+  //     chipClubs: derivedClubs.chipClubs
+  //   } as any));
+  // }, [puttsLength, dispatch, roundPlayingHCP, roundHoles, derivedClubs.chipClubs]);
 
   const handleSaveHole = () => {
+
     const { teeClub, driveDistance, distance, par, fairway } = tmpHole;
     let actualTeeDistance = 0;
     if (par === 3) {
@@ -94,26 +94,9 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
     setPuttsNumber([]);
   };
 
-  useEffect(() => {
-    const numPutts = tmpHole.putts || 0;
-    setPuttsNumber(Array.from({ length: numPutts }, (_, i) => i + 1));
-    setPuttsLength(currentLengths => {
-      const newLengths = new Array(numPutts).fill(null);
-      for (let i = 0; i < Math.min(currentLengths.length, numPutts); i++) {
-        newLengths[i] = currentLengths[i];
-      }
-      return newLengths;
-    });
-  }, [tmpHole.putts]);
-
-  if (!!isLoading) {
-    return <Spinner />
-  }
-  if (roundId && success && holesCompleted >= roundHoles) {
-    return (
-      <Typography>All holes saved succesfully!</Typography>
-    )
-  }
+  const isSaveDisabled = () => {
+    return tmpHole.hcp === 0 || tmpHole.par === 0 || tmpHole.strokes === 0;
+  };
 
   return (
     <BoxSingleHoleContainer>
@@ -184,19 +167,20 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
                 // }
                 label='To green club' />
               <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} label='Green side' />
-              <Select name='chipClub' label='Chip club' list={derivedClubs.chipClubs} onChange={(e: any) => handleChange(e)}
-                value={
-                  tmpHole.chipClub !== ''
-                    ? tmpHole.chipClub
-                    : ''
-                }
+              <Select
+                name='chipClub'
+                label='Chip club'
+                list={derivedClubs.chipClubs}
+                onChange={(e: any) => handleChange(e)}
+                value={tmpHole.chipClub ?? ''}
+                disabled={tmpHole.gir}
               />
             </HoleCardContent>
           </HoleCard>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
 
-            <SaveRoundButton onSave={handleSaveHole} disabled={isLoading} />
+            <SaveRoundButton onSave={handleSaveHole} disabled={isSaveDisabled()} />
           </Box>
         </BoxNewHole>
 

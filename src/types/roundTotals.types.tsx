@@ -273,3 +273,171 @@ interface IPuttsBreakDownStatistics {
   puttsSecondAverageLength: number,
 }
 
+export interface ITotalRoundsAvg {
+  totalRoundsCount: number;
+  totalHolesPlayed: number;
+  totalHolesPlayedIN: number;
+  totalHolesPlayedOUT: number;
+  totalPar4_5_Holes: number;
+  score: {
+    sumTotals: number;
+    sumVsPar: number;
+    sumScoreIN: number;
+    sumScoreOUT: number;
+    sumVsParIN: number;
+    sumVsParOUT: number;
+    countPar3: number;
+    countPar4: number;
+    countPar5: number;
+    countScoreEagleBetter: number;
+    countScoreBirdie: number;
+    countScorePar: number;
+    countScoreBogey: number;
+    countScoreDoubleBogeyWorst: number;
+    sumScorePar3: number;
+    sumScorePar4: number;
+    sumScorePar5: number;
+  };
+  points: {
+    sumTotals: number;
+    sumPointsIN: number;
+    sumPointsOUT: number;
+  };
+  fairway: {
+    sumAttempts: number;
+    sumFairwayCenter: number;
+    sumFairwayLeft: number;
+    sumFairwayRight: number;
+  };
+  teeShots: {
+    [clubType: string]: {
+      sumAttempts: number;
+      sumFairwayHits: number;
+      sumPar4_5_Attempts: number;
+      sumDistance: number;
+      countShotsWithDistance: number;
+      sumMissLeft: number;
+      sumMissRight: number;
+      sumFirMiss: number;
+    }
+  },
+  fwAndIrons: {
+    [clubCategory: string]: {
+      sumAttempts: number;
+      sumGreenHits: number;
+      sumScorePar3: number;
+      countPar3Attempts: number;
+      sumScorePar4: number;
+      countPar4Attempts: number;
+      sumScorePar5: number;
+      countPar5Attempts: number;
+      sumDistanceToPinOnGIR: number;
+      countGirHits: number;
+      sumMissedLeft: number;
+      sumMissedRight: number;
+      sumMissedShort: number;
+      sumMissedLong: number;
+    },
+  },
+  inside100Mt: {
+    [range: string]: {
+      sumAttempts: number;
+      sumGreensHits: number;
+      sumScoreRelativeToPar: number;
+      sumDistanceToPinOnGIR: number;
+      countGirHits: number;
+      sumMissedLeft: number;
+      sumMissedRight: number;
+      sumMissedShort: number;
+      sumMissedLong: number;
+    };
+  };
+  chipPitch: {
+    [clubType: string]: {
+      sumAttempts: number;
+      sumUpDownMade: number;
+      sumScoreRelativeToPar: number;
+      sumDistanceToHole: number;
+      sumShotsHoled: number;
+    };
+  };
+  gir: {
+    sumGirMade: number;
+    sumGirMadeIN: number;
+    sumGirMadeOUT: number;
+    // sumGirAttempts is totalHolesPlayed
+    // sumGirAttemptsIN is totalHolesPlayedIN
+    // sumGirAttemptsOUT is totalHolesPlayedOUT
+  };
+
+  girBogey: {
+    sumGirBogeyMade: number;
+    sumGirBogeyMadeIN: number;
+    sumGirBogeyMadeOUT: number;
+    // sumGirBogeyAttempts is totalHolesPlayed
+  };
+  upDown: {
+    sumAttempts: number;
+    sumSaved: number;
+  };
+  scramble: {
+    sumAttempts: number;
+    sumSaved: number;
+  };
+  putts: {
+    sumTotals: number;
+    sumTotalsIN: number;
+    sumTotalsOUT: number;
+    sumPuttsGir: number;
+    sumPuttsGirIN: number;
+    sumPuttsGirOUT: number;
+    countPutts1: number;
+    countPutts2: number;
+    countPutts3OrMore: number;
+    sumDistanceFirstPuttGir: number;
+    statisticsByRange: {
+
+      [range: string]: {
+        sumAttempts: number;
+        sumHoled: number;
+        sumPuttsTaken: number;
+        sumDistanceFirstPutt: number;
+        sumDistanceSecondPutt: number;
+        countSecondPutts: number;
+        countPutts3OrMore: number;
+      };
+    };
+
+    overallStats: {
+      sumPuttsMadeForBirdieOrBetter: number;
+      countAttemptsForBirdieOrBetter: number;
+    }
+  };
+  sand: {
+    sumAttempts: number;
+    sumSaved: number;
+  };
+  water: {
+    countPenalties: number;
+    countPenaltiesIN: number;
+    countPenaltiesOUT: number;
+  };
+  out: {
+    countPenalties: number;
+    countPenaltiesIN: number;
+    countPenaltiesOUT: number;
+  };
+}
+
+export interface ICalculatedPlayerAverages {
+  avgScore: number;
+  avgVsPar: number;
+  avgPutts: number;
+  girPercentage: number;
+  fairwayHitPercentage: number;
+  upDownPercentage: number;
+  scramblePercentage: number;
+  sandSavePercentage: number;
+  avgPuttsPerGIR: number;
+  threePuttAvoidancePercentage: number;
+}
