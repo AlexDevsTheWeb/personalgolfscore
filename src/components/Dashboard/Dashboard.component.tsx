@@ -31,14 +31,25 @@ const Dashboard = () => {
           <>
             <Rounds />
             <StatisticsMain />
-            <BoxBetween>
-              <Button variant='contained' onClick={handleAddNewRound}>Add new round</Button>
-              <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>
-            </BoxBetween>
           </>
         )
       }
-    </Box>
+      <BoxBetween>
+        <Button
+          variant='contained'
+          onClick={handleAddNewRound}
+        >
+          Add new round
+        </Button>
+        <Button
+          variant='contained'
+          onClick={handleClickStatistic}
+          disabled={rounds.length === 0}
+        >
+          See statistics
+        </Button>
+      </BoxBetween>
+    </Box >
   )
 }
 

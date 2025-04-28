@@ -1,4 +1,3 @@
-import { IRoundFinalData } from "@/types/round.types";
 import { IDistance, IShots } from "../types/roundData.types";
 import { IPuttsStatistics, IRoundChipPitchTotals, IRoundFwAndIronsTotals, IRoundInside100MtTotals, IRoundTeeShotsTotals, IRoundTotals } from "../types/roundTotals.types";
 
@@ -1200,19 +1199,4 @@ export const initialFwAndIronsStatistics: IRoundFwAndIronsTotals = {
     averageShots: 0,
     averageDistGIR: 0,
   },
-}
-
-export const roundToSave: IRoundFinalData = {
-  roundMainData: {
-    roundDate: '',
-    roundCourse: '',
-    roundHoles: 0,
-    roundTee: '',
-    roundPar: 0,
-    roundPlayingHCP: 0,
-    roundNumber: 0
-  },
-  roundHolesData: [],
-  roundTotalsData: initialStateRoundTotals,
-  roundDistancesData: [],
 }

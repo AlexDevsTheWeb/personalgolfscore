@@ -14,26 +14,40 @@ const newRoundDistanceSlice = createSlice({
   reducers: {
     addTeeShotDistance: (state, action: PayloadAction<{ club: string; distance: number }>) => {
       const { club, distance } = action.payload;
-      if (!club || distance <= 0) {
+      if (!club || typeof club !== 'string' || club.trim() === '' || typeof distance !== 'number' || distance <= 0) {
         return;
       }
       const existingIndex = state.roundDistances.findIndex((d) => d.club === club);
       if (existingIndex !== -1) {
-        state.roundDistances = state.roundDistances.map((item, index) => {
-          if (index === existingIndex) {
-            const updatedMt = [...item.mt, distance];
-            const updatedAvg = calculateAvg(updatedMt);
-            return { ...item, mt: updatedMt, avg: updatedAvg };
-          }
-          return item;
-        });
+        state.roundDistances[existingIndex].mt.push(distance);
+        state.roundDistances[existingIndex].avg = calculateAvg(state.roundDistances[existingIndex].mt);
       } else {
         const newDistanceEntry: IDistance = {
           club: club,
           mt: [distance],
           avg: distance,
         };
-        state.roundDistances = [...state.roundDistances, newDistanceEntry];
+        state.roundDistances.push(newDistanceEntry);
+      }
+    },
+    addApproachShotDistance: (state, action: PayloadAction<{ club: string; distance: number }>) => {
+      const { club, distance } = action.payload;
+      if (!club || typeof club !== 'string' || club.trim() === '' || typeof distance !== 'number' || distance <= 0) {
+        console.warn('Invalid data provided to addApproachShotDistance:', action.payload);
+        return;
+      }
+      const existingIndex = state.roundDistances.findIndex((d) => d.club === club);
+
+      if (existingIndex !== -1) {
+        state.roundDistances[existingIndex].mt.push(distance);
+        state.roundDistances[existingIndex].avg = calculateAvg(state.roundDistances[existingIndex].mt);
+      } else {
+        const newDistanceEntry: IDistance = {
+          club: club,
+          mt: [distance],
+          avg: distance,
+        };
+        state.roundDistances.push(newDistanceEntry);
       }
     },
     addNewDistanceWithClub: (state, { payload }: PayloadAction<IDistance[]>) => {
@@ -44,5 +58,10 @@ const newRoundDistanceSlice = createSlice({
   extraReducers: () => { }
 });
 
-export const { addNewDistanceWithClub, resetNewHoleDistance, addTeeShotDistance } = newRoundDistanceSlice.actions;
+export const {
+  addNewDistanceWithClub,
+  resetNewHoleDistance,
+  addTeeShotDistance,
+  addApproachShotDistance
+} = newRoundDistanceSlice.actions;
 export default newRoundDistanceSlice.reducer;

@@ -1,5 +1,5 @@
 import { resetNewRoundHoleTmp, setTmpHoleData } from '@/features/hole/holeTmp.slice';
-import { addTeeShotDistance } from '@/features/newRound/newRoundDistances.slice';
+import { addApproachShotDistance, addTeeShotDistance } from '@/features/newRound/newRoundDistances.slice';
 import { setNewHole } from '@/features/newRound/newRoundHoles.slice';
 import { RootState } from '@/store/store';
 import BoxSingleHoleContainer from '@/styles/box/BosSingleHoleContainer.styles';
@@ -72,7 +72,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 
   const handleSaveHole = () => {
 
-    const { teeClub, driveDistance, distance, par, fairway } = tmpHole;
+    const { teeClub, driveDistance, distance, par, fairway, toGreen, toGreenMeters } = tmpHole;
     let actualTeeDistance = 0;
     if (par === 3) {
       actualTeeDistance = distance;
@@ -82,6 +82,10 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
     if (teeClub && actualTeeDistance > 0) {
       dispatch(addTeeShotDistance({ club: teeClub, distance: actualTeeDistance }));
     }
+    if (toGreen && typeof toGreenMeters === 'number' && toGreenMeters > 0) {
+      dispatch(addApproachShotDistance({ club: toGreen, distance: toGreenMeters }));
+    }
+
     const holeAdjusted = {
       ...tmpHole,
       holeNumber: holesCompleted + 1,

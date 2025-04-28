@@ -1,6 +1,6 @@
 import { CHIPCONDITION } from '@/enum/shots.enum';
 import { IClubDetail, IClubType, IGolfBagData } from '@/types/player.types';
-import { INewRound, IRoundFinalData, IRoundFinalDataProps } from '@/types/round.types';
+import { INewRound } from '@/types/round.types';
 import { IDistance, IDistanceSingle, IShots, ITotalDistanceAvg } from '@/types/roundData.types';
 import { IRoundTotals, ITotalRoundsAvg } from '@/types/roundTotals.types';
 import { db } from '@/utils/firebase/firebase.utils';
@@ -79,17 +79,6 @@ export const calculateAvg = (values: number[]): number => {
   }
   const sum = values.reduce((acc, curr) => acc + curr, 0);
   return Math.floor(sum / values.length);
-}
-
-export const finalRoundGeneration = ({ round, holes, roundTotals, roundDistances }: IRoundFinalDataProps) => {
-  const roundFinalData: IRoundFinalData = {
-    roundMainData: round,
-    roundHolesData: holes,
-    roundTotalsData: roundTotals,
-    roundDistancesData: roundDistances,
-  }
-
-  return roundFinalData;
 }
 
 export const prepareRoundSaveBatch = (

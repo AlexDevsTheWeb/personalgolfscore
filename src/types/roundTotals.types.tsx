@@ -28,11 +28,6 @@ export interface IRoundTotalsInitialState {
   roundTotals: IRoundTotals
 }
 
-export interface IRoundsTotalsInitialState {
-  isLoading: boolean,
-  roundsTotals: IRoundTotals[]
-}
-
 export interface IRoundDistanceInitialState {
   isLoading: boolean,
   roundDistance: IDistance[]
@@ -427,17 +422,4 @@ export interface ITotalRoundsAvg {
     countPenaltiesIN: number;
     countPenaltiesOUT: number;
   };
-}
-
-export interface ICalculatedPlayerAverages {
-  avgScore: number;
-  avgVsPar: number;
-  avgPutts: number;
-  girPercentage: number;
-  fairwayHitPercentage: number;
-  upDownPercentage: number;
-  scramblePercentage: number;
-  sandSavePercentage: number;
-  avgPuttsPerGIR: number;
-  threePuttAvoidancePercentage: number;
 }
