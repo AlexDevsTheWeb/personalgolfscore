@@ -196,7 +196,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
 
-            <SaveRoundButton />
+            <SaveRoundButton onSave={handleSaveHole} disabled={isLoading} />
           </Box>
         </BoxNewHole>
 

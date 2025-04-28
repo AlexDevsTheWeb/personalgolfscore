@@ -86,3 +86,8 @@ export interface IInitialStateRoundSave {
   roundId: string,
   success: boolean
 }
+
+export interface ISaveRoundButtonProps {
+  onSave: () => void;
+  disabled: boolean;
+}
