@@ -31,6 +31,14 @@ interface IErrorType {
   errorCode: number;
 }
 
+export interface IAddSingleHoleProps {
+  derivedClubs: {
+    teeClubs: string[];
+    distanceClubs: string[];
+    greenClubs: string[];
+    chipClubs: string[];
+  }
+}
 // export type ClubPayload = {
 //   payload: IGolfBag;
 // }

@@ -57,8 +57,6 @@ export type InitialStateNewRoundsData = {
 
 export type InitialStateNewRoundDistances = {
   isLoading: boolean;
-  playerID: string;
-  roundID: string;
   roundDistances: IDistance[];
 }
 
@@ -169,4 +167,11 @@ export interface IBasicRoundData {
   userId?: string
   createdAt: number,
   totals: IRoundTotals
+}
+
+export interface ITotalDistanceAvg {
+  club: string,
+  totalDistancesSum: number;
+  numberOfShots: number;
+  avg: number;
 }

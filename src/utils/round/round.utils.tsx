@@ -1,7 +1,10 @@
 import { CHIPCONDITION } from '@/enum/shots.enum';
 import { IClubDetail, IClubType, IGolfBagData } from '@/types/player.types';
-import { IRoundFinalData, IRoundFinalDataProps } from '@/types/round.types';
-import { IDistance, IDistanceSingle, IShots } from '@/types/roundData.types';
+import { INewRound, IRoundFinalData, IRoundFinalDataProps } from '@/types/round.types';
+import { IDistance, IDistanceSingle, IShots, ITotalDistanceAvg } from '@/types/roundData.types';
+import { IRoundTotals } from '@/types/roundTotals.types';
+import { db } from '@/utils/firebase/firebase.utils';
+import { collection, doc, getDocs, serverTimestamp, Timestamp, WriteBatch } from 'firebase/firestore';
 import { capitalize } from 'lodash';
 
 export const getClubsNames = (clubTypes: IGolfBagData): string[] => {
@@ -70,7 +73,7 @@ export const createDistanceObject = (value: IDistanceSingle): IDistance[] => {
   }
 }
 
-const calculateAvg = (values: number[]): number => {
+export const calculateAvg = (values: number[]): number => {
   if (!values || values.length === 0) {
     return 0;
   }
@@ -88,3 +91,83 @@ export const finalRoundGeneration = ({ round, holes, roundTotals, roundDistances
 
   return roundFinalData;
 }
+
+export const prepareRoundSaveBatch = (
+  batch: WriteBatch,
+  userId: string,
+  general: INewRound,
+  totals: IRoundTotals,
+  currentRoundDistances: IDistance[],
+  holes: IShots[]
+): string => {
+  const playerRoundsCollectionRef = collection(db, 'players', userId, 'rounds');
+  const roundRef = doc(playerRoundsCollectionRef);
+  const roundId = roundRef.id;
+
+  batch.set(roundRef, {
+    ...general,
+    totals: totals,
+    distances: currentRoundDistances,
+    userId: userId,
+    roundDate: general.roundDate ? Timestamp.fromDate(new Date(general.roundDate)) : serverTimestamp(),
+    createdAt: serverTimestamp(),
+  });
+  holes.forEach((holeData: IShots) => {
+    const holeDocId = holeData.holeNumber?.toString();
+    if (holeDocId && holeData.holeNumber > 0) {
+      const holeRef = doc(db, 'players', userId, 'rounds', roundId, 'holes', holeDocId);
+      batch.set(holeRef, holeData);
+    } else {
+      console.warn("Skipping hole due to missing/invalid holeNumber: ", holeData);
+    }
+  });
+  return roundId;
+};
+
+export const fetchExistingAverageDistances = async (userId: string): Promise<Map<string, ITotalDistanceAvg>> => {
+  const totalDistancesAvgCollectionRef = collection(db, 'players', userId, 'totalDistancesAVG');
+  const existingAveragesSnapshot = await getDocs(totalDistancesAvgCollectionRef);
+
+  const existingAveragesMap = new Map<string, ITotalDistanceAvg>();
+  existingAveragesSnapshot.forEach((doc) => {
+    existingAveragesMap.set(doc.id, doc.data() as ITotalDistanceAvg);
+  });
+  return existingAveragesMap;
+};
+
+export const prepareAverageDistanceUpdateBatch = (
+  batch: WriteBatch,
+  userId: string,
+  currentRoundDistances: IDistance[],
+  existingAveragesMap: Map<string, ITotalDistanceAvg>
+): void => {
+  currentRoundDistances.forEach((newDistanceEntry: IDistance) => {
+    const club = newDistanceEntry.club;
+    const shotsInNewRound = newDistanceEntry.mt;
+
+    if (!club || shotsInNewRound.length === 0) {
+      console.warn("Skipping distance update for entry with no club or no shots:", newDistanceEntry);
+      return;
+    }
+
+    const sumOfNewShots = shotsInNewRound.reduce((acc, dist) => acc + dist, 0);
+    const countOfNewShots = shotsInNewRound.length;
+
+    const existingAvgData = existingAveragesMap.get(club);
+
+    const newTotalSum = (existingAvgData?.totalDistancesSum || 0) + sumOfNewShots;
+    const newNumberOfShots = (existingAvgData?.numberOfShots || 0) + countOfNewShots;
+    const newAvg = newNumberOfShots > 0 ? Math.floor(newTotalSum / newNumberOfShots) : 0;
+
+    const updatedAvgData: ITotalDistanceAvg = {
+      club: club,
+      totalDistancesSum: newTotalSum,
+      numberOfShots: newNumberOfShots,
+      avg: newAvg,
+    };
+
+    const clubAvgDocRef = doc(db, 'players', userId, 'totalDistancesAVG', club);
+    batch.set(clubAvgDocRef, updatedAvgData, { merge: true });
+    console.log(`Prepared update for club: ${club}`, updatedAvgData);
+  });
+};

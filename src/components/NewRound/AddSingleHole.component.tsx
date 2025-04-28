@@ -1,10 +1,12 @@
 import { resetNewRoundHoleTmp, setTmpHoleData } from '@/features/hole/holeTmp.slice';
+import { addTeeShotDistance } from '@/features/newRound/newRoundDistances.slice';
 import { setNewHole } from '@/features/newRound/newRoundHoles.slice';
 import { RootState } from '@/store/store';
 import BoxSingleHoleContainer from '@/styles/box/BosSingleHoleContainer.styles';
 import BoxNewHole from '@/styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '@/styles/box/BoxSingleHoleInternal.styles';
 import TextField from '@/styles/textfield/TextField.style';
+import { IAddSingleHoleProps } from '@/types/clubs.types';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -15,17 +17,7 @@ import PuttsGenerator from './PuttsGenerator.component';
 import Select from './Select.component';
 import SaveRoundButton from './components/SaveRoundButton.component';
 
-interface AddSingleHoleProps {
-  derivedClubs: {
-    teeClubs: string[];
-    distanceClubs: string[];
-    greenClubs: string[];
-    chipClubs: string[];
-  }
-}
-
-const AddSingleHole = ({ derivedClubs }: AddSingleHoleProps) => {
-
+const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
   const dispatch = useDispatch<any>();
 
   const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
@@ -33,37 +25,37 @@ const AddSingleHole = ({ derivedClubs }: AddSingleHoleProps) => {
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
   const { roundId, success, isLoading } = useSelector((store: RootState) => store.roundSaver);
 
-  const [holeFinished, setHoleFinished] = useState<number>(0);
+  const [puttsLength, setPuttsLength] = useState<number[]>([]);
   const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
-  const [puttsLength, setPuttsLength] = useState<number[]>(() =>
-    Array.isArray(tmpHole.puttsLength) ? tmpHole.puttsLength : new Array(tmpHole.putts || 0).fill(null)
-  );
+  const [currentHoleNumber, setCurrentHoleNumber] = useState<number>(1);
+
+  useEffect(() => {
+    setCurrentHoleNumber(holesCompleted + 1);
+  }, [holesCompleted]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     dispatch(setTmpHoleData({ name, value, roundPlayingHCP, roundHoles, chipClubs: derivedClubs.chipClubs } as any));
-  }
+  };
 
   const handleChangePutts = (e: any, puttIndex: number) => {
-    const updatedPuttsLength = [...puttsLength];
-    while (updatedPuttsLength.length < puttIndex + 1) {
-      updatedPuttsLength.push(null as any);
+    const currentLength = puttsLength.length;
+    const requiredLength = Math.max(currentLength, puttIndex + 1);
+    const newPuttsLength = [...puttsLength];
+    while (newPuttsLength.length < requiredLength) {
+      newPuttsLength.push(0);
     }
-    updatedPuttsLength[puttIndex] = e.target.value === '' ? 0 : Number(e.target.value);
-    setPuttsLength(updatedPuttsLength);
-  }
-
-  useEffect(() => {
-    setHoleFinished(holesCompleted + 1);
-  }, [holesCompleted]);
+    newPuttsLength[puttIndex] = e.target.value === '' ? 0 : Number(e.target.value);
+    setPuttsLength(newPuttsLength);
+  };
 
   useEffect(() => {
     const numPutts = tmpHole.putts || 0;
     setPuttsNumber(Array.from({ length: numPutts }, (_, i) => i + 1));
     setPuttsLength(currentLengths => {
-      const newLengths = new Array(numPutts).fill(null);
+      const newLengths = new Array(numPutts).fill(0);
       for (let i = 0; i < Math.min(currentLengths.length, numPutts); i++) {
-        newLengths[i] = currentLengths[i];
+        newLengths[i] = currentLengths[i] ?? 0;
       }
       return newLengths;
     });
@@ -77,26 +69,42 @@ const AddSingleHole = ({ derivedClubs }: AddSingleHoleProps) => {
       roundHoles,
       chipClubs: derivedClubs.chipClubs
     } as any));
-  }, [puttsLength]);
+  }, [puttsLength, dispatch, roundPlayingHCP, roundHoles, derivedClubs.chipClubs]);
 
-  // FIXME: This effect seems intended to save the hole and reset state AFTER a hole is completed.
-  // It shouldn't run on initial render. Consider if tmpHole.holeNumber is the right trigger.
-  // Maybe trigger this from the SaveRoundButton click handler instead?
-  // Keeping it for now, but review its logic.
-  useEffect(() => {
-    if (tmpHole.holeNumber !== 0) { // This condition might need adjustment
-      console.log("Dispatching setNewHole for hole number:", tmpHole.holeNumber);
-      // Ensure fairway is a number if your type expects it
-      const holeAdjusted = { ...tmpHole, fairway: Number(tmpHole.fairway) };
-      dispatch(setNewHole({ holeAdjusted, roundPlayingHCP, roundHoles, holesCompleted }));
-      dispatch(resetNewRoundHoleTmp());
-      // Reset local state for the next hole
-      setPuttsLength([]);
-      setPuttsNumber([]);
-      setHoleFinished(holesCompleted + 2); // Anticipate next hole number
+  const handleSaveHole = () => {
+    const { teeClub, driveDistance, distance, par, fairway } = tmpHole;
+    let actualTeeDistance = 0;
+    if (par === 3) {
+      actualTeeDistance = distance;
+    } else {
+      actualTeeDistance = driveDistance > 0 ? driveDistance : 0;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [holesCompleted]); // Trigger based on holesCompleted changing seems more logical
+    if (teeClub && actualTeeDistance > 0) {
+      dispatch(addTeeShotDistance({ club: teeClub, distance: actualTeeDistance }));
+    }
+    const holeAdjusted = {
+      ...tmpHole,
+      holeNumber: holesCompleted + 1,
+      fairway: Number(fairway) || 0,
+      puttsLength: [...puttsLength]
+    };
+    dispatch(setNewHole({ holeAdjusted, roundPlayingHCP, roundHoles, holesCompleted }));
+    dispatch(resetNewRoundHoleTmp());
+    setPuttsLength([]);
+    setPuttsNumber([]);
+  };
+
+  useEffect(() => {
+    const numPutts = tmpHole.putts || 0;
+    setPuttsNumber(Array.from({ length: numPutts }, (_, i) => i + 1));
+    setPuttsLength(currentLengths => {
+      const newLengths = new Array(numPutts).fill(null);
+      for (let i = 0; i < Math.min(currentLengths.length, numPutts); i++) {
+        newLengths[i] = currentLengths[i];
+      }
+      return newLengths;
+    });
+  }, [tmpHole.putts]);
 
   if (!!isLoading) {
     return <Spinner />
@@ -112,7 +120,7 @@ const AddSingleHole = ({ derivedClubs }: AddSingleHoleProps) => {
       <BoxSingleHoleInternal side='full'>
         <BoxNewHole>
           <HoleCard>
-            <HoleCardHeader title={`Hole number: ${holeFinished === 0 ? 1 : holeFinished} - General Info`} />
+            <HoleCardHeader title={`Hole number: ${currentHoleNumber} - General Info`} />
             <HoleCardContent>
               <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} label='Hole HCP' />
               <Select name='par' list={parList} onChange={handleChange} value={tmpHole.par.toString()} label='Hole Par' />
