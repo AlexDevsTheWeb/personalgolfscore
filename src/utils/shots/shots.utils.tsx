@@ -1,6 +1,21 @@
 import { STABLEFORDPOINTS } from "@/enum/shots.enum";
 import { IGirProps, IScrambleProps, IStablefordPointsProps, IUDProps } from "@/types/point.types";
 import { IRoundScoreTotalsAvg } from "@/types/roundTotals.types";
+import { GREEN_APPROACH_THRESHOLDS, PUTT_LENGTH_THRESHOLDS } from "../constant.utils";
+interface PuttLengthCounts {
+  puttsUnder2: number;
+  putts2_4: number;
+  putts4_6: number;
+  putts6_10: number;
+  puttsOver10: number;
+}
+
+interface GreenApproachDistanceCounts {
+  toGreenMetersOver100: number;
+  toGreenMeters80_100: number;
+  toGreenMeters60_80: number;
+  toGreenMetersUnder60: number;
+}
 
 export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, roundPlayingHCP, roundHoles } = props;
@@ -201,3 +216,38 @@ export const correctVsParString = (score: IRoundScoreTotalsAvg) => {
     correctScoreOUT: correctScoreOUT,
   }
 }
+
+export const calculatePuttLengthCounts = (puttsLength: (string | number)[] = []): PuttLengthCounts => {
+  const counts: PuttLengthCounts = {
+    puttsUnder2: 0,
+    putts2_4: 0,
+    putts4_6: 0,
+    putts6_10: 0,
+    puttsOver10: 0,
+  };
+  puttsLength.forEach(len => {
+    const length = Number(len); // Consider adding error handling if len might not be numeric
+    if (isNaN(length)) return; // Skip non-numeric values
+
+    if (length <= PUTT_LENGTH_THRESHOLDS.SHORT) counts.puttsUnder2++;
+    else if (length <= PUTT_LENGTH_THRESHOLDS.MEDIUM) counts.putts2_4++;
+    else if (length <= PUTT_LENGTH_THRESHOLDS.LONG) counts.putts4_6++;
+    else if (length <= PUTT_LENGTH_THRESHOLDS.VERY_LONG) counts.putts6_10++;
+    else counts.puttsOver10++;
+  });
+  return counts;
+};
+
+export const calculateGreenApproachCounts = (toGreenMeters: number = 0): GreenApproachDistanceCounts => {
+  const counts: GreenApproachDistanceCounts = {
+    toGreenMetersOver100: 0,
+    toGreenMeters80_100: 0,
+    toGreenMeters60_80: 0,
+    toGreenMetersUnder60: 0,
+  };
+  if (toGreenMeters >= GREEN_APPROACH_THRESHOLDS.FAR) counts.toGreenMetersOver100++;
+  else if (toGreenMeters > GREEN_APPROACH_THRESHOLDS.MID) counts.toGreenMeters80_100++;
+  else if (toGreenMeters > GREEN_APPROACH_THRESHOLDS.NEAR) counts.toGreenMeters60_80++;
+  else if (toGreenMeters > 0) counts.toGreenMetersUnder60++; // Only count if > 0
+  return counts;
+};

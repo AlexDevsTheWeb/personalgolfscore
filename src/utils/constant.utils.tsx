@@ -8,6 +8,19 @@ export const hcpList9 = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 export const fairwayValues = ['4 - Left', '5 - Center', '6 - Right'];
 export const greenSideValues = ['S - Short', 'O - Over', 'L - Left', 'R - Right'];
 
+export const PUTT_LENGTH_THRESHOLDS = {
+  SHORT: 2,
+  MEDIUM: 4,
+  LONG: 6,
+  VERY_LONG: 10,
+};
+
+export const GREEN_APPROACH_THRESHOLDS = {
+  NEAR: 60,
+  MID: 80,
+  FAR: 100,
+};
+
 export const pieChartDimensions = {
   height: 200,
   width: 350,
