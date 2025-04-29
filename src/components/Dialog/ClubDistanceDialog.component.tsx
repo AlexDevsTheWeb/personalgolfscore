@@ -3,6 +3,7 @@ import { addNewDistanceWithClub } from '@/features/newRound/newRoundDistances.sl
 import { RootState } from '@/store/store';
 import BoxNewHole from '@/styles/box/BoxNewHole.styles';
 import { HoleCard, HoleCardContent } from '@/styles/index';
+import { IClubDistanceDialogProps } from '@/types/clubs.types';
 import { IDistance } from '@/types/roundData.types';
 import { createDistanceObject, getClubsNames, getDistanceClubs } from '@/utils/round/round.utils';
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,10 +13,6 @@ import { TransitionProps } from '@mui/material/transitions';
 import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from '../NewRound/components/Select.component';
-
-interface IClubDistanceDialogProps {
-  open: boolean,
-}
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

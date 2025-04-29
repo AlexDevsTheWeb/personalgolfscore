@@ -7,13 +7,11 @@ import { IGolfBagData } from '@/types/player.types';
 import { BoxPlayer, Typography } from "../../styles";
 
 import { updatePlayerGolfbag } from '@/features/player/player.slice';
+import { IClubsMainProps } from '@/types/clubs.types';
 import { Box, Button } from '@mui/material';
 import initialClubsData from '../../../public/data/P1_TIGERWOODS/clubs.json';
-interface ClubsMainProps {
-  golfBag: IGolfBagData | undefined;
-}
 
-const ClubsMain: React.FC<ClubsMainProps> = ({ golfBag }) => {
+const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { player, isLoading } = useSelector((store: RootState) => store.player);
   const [isSaving, setIsSaving] = useState(false);

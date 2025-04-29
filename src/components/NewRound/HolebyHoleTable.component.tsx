@@ -1,12 +1,9 @@
 import { BoxOverflow } from "@/styles/index";
+import { IHolebyHoleProps } from "@/types/props.types";
 import { IShots } from "@/types/roundData.types";
 import { Table, TableBody } from "@mui/material";
 import ShotsTableBody from "../RoundsData/components/shotsTable/ShotsTableBody.component";
 import ShotsTableHeader from "../RoundsData/components/shotsTable/ShotsTableHeader.component";
-
-interface IHolebyHoleProps {
-  holes: IShots[],
-}
 
 const HolebyHoleTable = ({ holes }: IHolebyHoleProps) => {
 

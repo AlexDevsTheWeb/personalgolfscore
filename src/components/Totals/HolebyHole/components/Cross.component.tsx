@@ -1,16 +1,9 @@
 import GridCross from "@/styles/grid/GridCross.styles";
 import CompositeTypography from "@/styles/typography/CompositeTypography.styles";
+import { ICrossProps } from "@/types/props.types";
 import { formatPerc } from "@/utils/number/number.utils";
 import { divide } from "@/utils/totals/totalsGenFunc.utils";
 import { Grid2 } from "@mui/material";
-interface ICrossProps {
-  left: number,
-  over: number,
-  right: number,
-  short: number,
-  center: number,
-  totals: number
-};
 
 const Cross = ({ left, over, right, short, center, totals }: ICrossProps) => {
 

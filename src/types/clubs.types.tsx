@@ -1,3 +1,5 @@
+import { IGolfBagData } from "./player.types";
+
 export interface IGolfBag {
   playerID: string,
   types: IClubs[],
@@ -39,11 +41,10 @@ export interface IAddSingleHoleProps {
     chipClubs: string[];
   }
 }
-// export type ClubPayload = {
-//   payload: IGolfBag;
-// }
+export interface IClubsMainProps {
+  golfBag: IGolfBagData | undefined;
+}
 
-// export type IClubsPayload = {
-//   uid: string,
-//   clubs: string,
-// }
+export interface IClubDistanceDialogProps {
+  open: boolean,
+}

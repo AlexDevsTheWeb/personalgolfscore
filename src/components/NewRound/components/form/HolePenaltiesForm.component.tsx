@@ -1,15 +1,9 @@
 import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
 import TextField from '@/styles/textfield/TextField.style';
-import { IShots } from '@/types/roundData.types';
-import { SelectChangeEvent } from '@mui/material';
+import { IHolePenaltiesFormProps } from '@/types/props.types';
 import React from 'react';
 
-interface HolePenaltiesFormProps {
-  holeData: Pick<IShots, 'water' | 'out'>;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
-}
-
-const HolePenaltiesForm: React.FC<HolePenaltiesFormProps> = ({
+const HolePenaltiesForm: React.FC<IHolePenaltiesFormProps> = ({
   holeData,
   onChange,
 }) => {

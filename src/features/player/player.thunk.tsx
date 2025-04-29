@@ -1,4 +1,4 @@
-import { IGetPlayerDetailsPayload, IGolfBagData, IPlayerStateData } from "@/types/player.types";
+import { IGetPlayerDetailsPayload, IPlayerStateData, IUpdateGolfBagPayload } from "@/types/player.types";
 import { IBasicRoundData, ITotalDistanceAvg } from "@/types/roundData.types";
 import { ITotalRoundsAvg } from "@/types/roundTotals.types";
 import { db } from "@/utils/firebase/firebase.utils";
@@ -73,10 +73,7 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any):
   }
 };
 
-interface IUpdateGolfBagPayload {
-  uid: string;
-  golfBagData: IGolfBagData; // Use the correct type for your golf bag structure
-}
+
 
 export const updatePlayerGolfBagThunk = async (payload: IUpdateGolfBagPayload, { rejectWithValue }: any) => {
   const { uid, golfBagData } = payload;

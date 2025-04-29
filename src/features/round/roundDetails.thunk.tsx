@@ -1,12 +1,8 @@
+import { IFetchParams } from "@/types/round.types";
 import { IShots } from "@/types/roundData.types";
 import { IRoundDetails } from "@/types/roundDetails.types";
 import { db } from "@/utils/firebase/firebase.utils";
 import { collection, doc, getDoc, getDocs, Timestamp } from "firebase/firestore";
-
-interface IFetchParams {
-  playerId: string,
-  roundId: string,
-}
 
 export const getRoundDetailsThunk = async (
   { playerId, roundId }: IFetchParams,

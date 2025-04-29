@@ -57,3 +57,8 @@ export interface IGetPlayerDetailsPayload {
   player: IPlayerStateData,
   rounds: IBasicRoundData[],
 }
+
+export interface IUpdateGolfBagPayload {
+  uid: string;
+  golfBagData: IGolfBagData;
+}

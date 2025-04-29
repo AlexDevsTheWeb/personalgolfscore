@@ -1,22 +1,13 @@
 import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
 import TextField from '@/styles/textfield/TextField.style';
-import { IShots } from '@/types/roundData.types';
-import { SelectChangeEvent } from '@mui/material';
+import { IHoleGeneralInfoFormProps } from '@/types/props.types';
 import React from 'react';
 import PuttsGenerator from '../../PuttsGenerator.component';
 import Select from '../Select.component';
 
-interface HoleGeneralInfoFormProps {
-  holeData: Pick<IShots, 'hcp' | 'par' | 'distance' | 'strokes' | 'putts'>;
-  hcpList: string[];
-  parList: string[];
-  puttsNumber: number[];
-  currentHoleNumber: number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
-  onChangePutts: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, puttIndex: number) => void;
-}
 
-const HoleGeneralForm: React.FC<HoleGeneralInfoFormProps> = ({
+
+const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
   holeData,
   hcpList,
   parList,

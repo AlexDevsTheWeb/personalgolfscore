@@ -1,19 +1,12 @@
 import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
-import { IShots } from '@/types/roundData.types';
-import { SelectChangeEvent, TextField } from "@mui/material";
+import { IHoleTeeShotFormProps } from '@/types/props.types';
+import { TextField } from "@mui/material";
 import React from "react";
 import Select from '../Select.component';
 
-interface HoleTeeShotFormProps {
-  holeData: Pick<IShots, 'teeClub' | 'fairway' | 'driveDistance' | 'par' | 'distance'>;
-  teeClubs: string[];
-  fairwayValues: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
-}
-const HoleTeeShotForm: React.FC<HoleTeeShotFormProps> = ({ holeData, teeClubs, fairwayValues, onChange }) => {
+const HoleTeeShotForm: React.FC<IHoleTeeShotFormProps> = ({ holeData, teeClubs, fairwayValues, onChange }) => {
   const isPar3 = holeData.par === 3;
   const driveDistanceValue = holeData.driveDistance !== 0 ? holeData.driveDistance : '';
-
 
   return (
     <HoleCard>

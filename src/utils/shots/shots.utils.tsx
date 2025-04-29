@@ -1,21 +1,8 @@
 import { STABLEFORDPOINTS } from "@/enum/shots.enum";
 import { IGirProps, IScrambleProps, IStablefordPointsProps, IUDProps } from "@/types/point.types";
+import { GreenApproachDistanceCounts, PuttLengthCounts } from "@/types/round.types";
 import { IRoundScoreTotalsAvg } from "@/types/roundTotals.types";
 import { GREEN_APPROACH_THRESHOLDS, PUTT_LENGTH_THRESHOLDS } from "../constant.utils";
-interface PuttLengthCounts {
-  puttsUnder2: number;
-  putts2_4: number;
-  putts4_6: number;
-  putts6_10: number;
-  puttsOver10: number;
-}
-
-interface GreenApproachDistanceCounts {
-  toGreenMetersOver100: number;
-  toGreenMeters80_100: number;
-  toGreenMeters60_80: number;
-  toGreenMetersUnder60: number;
-}
 
 export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, roundPlayingHCP, roundHoles } = props;

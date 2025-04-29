@@ -1,20 +1,10 @@
 import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
 import TextField from '@/styles/textfield/TextField.style';
-import { IShots } from '@/types/roundData.types';
-import { SelectChangeEvent } from '@mui/material';
+import { IHoleApproachFormProps } from '@/types/props.types';
 import React from 'react';
 import Select from '../Select.component';
 
-interface HoleApproachFormProps {
-  holeData: Pick<IShots, 'teeClub' | 'driveDistance' | 'toGreenMeters' | 'toGreen' | 'greenSide' | 'chipClub' | 'gir' | 'par' | 'distance' | 'strokes'>;
-  greenClubs: string[];
-  chipClubs: string[];
-  greenSideValues: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
-}
-
-
-const HoleApproachForm: React.FC<HoleApproachFormProps> = ({ holeData, greenClubs, chipClubs, greenSideValues, onChange }) => {
+const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClubs, chipClubs, greenSideValues, onChange }) => {
 
   const isPar3 = holeData.par === 3;
   const disableChipFields = holeData.gir;

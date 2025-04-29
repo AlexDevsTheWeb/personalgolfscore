@@ -1,10 +1,6 @@
 import StackTable from "@/styles/stack/StackTable.styles"
 import { TypographyTablesFirstRow, TypographyTablesSecondRow } from "@/styles/typography/TypographyTable.styles"
-
-interface IShotsTableHeaderStack {
-  firstRow: string,
-  secondRow: string,
-}
+import { IShotsTableHeaderStack } from "@/types/props.types"
 
 const ShotsTableHeaderStack = ({ firstRow, secondRow }: IShotsTableHeaderStack) => {
   return (

@@ -3,16 +3,11 @@ import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import AccordionSummary from "@/styles/accordion/AccordionSummary.styles";
 import GridAccordion from "@/styles/grid/GridAccordion.styles";
 import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
-import { IRoundTotalsPutts } from "@/types/roundTotals.types";
+import { IHolebyHolePutts } from "@/types/round.types";
 import { catConversion } from "@/utils/constant.utils";
 import { formatPerc } from "@/utils/number/number.utils";
 import { Accordion, AccordionDetails, Box, Divider, Grid2, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import _ from "lodash";
-
-
-interface IHolebyHolePutts {
-  totalsPutts: IRoundTotalsPutts
-}
 
 const HolebyHolePutts = ({ totalsPutts }: IHolebyHolePutts) => {
 

@@ -1,11 +1,6 @@
-import { IGetPlayerDetailsPayload, IGolfBagData, InitialStatePlayer, IPlayerStateData } from "@/types/player.types";
+import { IGetPlayerDetailsPayload, IGolfBagData, InitialStatePlayer, IPlayerStateData, IUpdateGolfBagPayload } from "@/types/player.types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getPlayerInfoThunk, updatePlayerGolfBagThunk } from "./player.thunk";
-
-interface IUpdateGolfBagPayload {
-  uid: string;
-  golfBagData: IGolfBagData;
-}
 
 const initialState: InitialStatePlayer = {
   isLoading: false,

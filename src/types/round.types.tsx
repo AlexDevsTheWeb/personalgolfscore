@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs"
 import { IBasicRoundData, IDistance, IShots } from "./roundData.types"
-import { IRoundTotals } from "./roundTotals.types"
+import { IRoundTotals, IRoundTotalsPutts } from "./roundTotals.types"
 
 export interface IPayloadActionNewHole {
   holeAdjusted: any,
@@ -90,4 +90,28 @@ export interface IInitialStateRoundSave {
 export interface ISaveRoundButtonProps {
   onSave: () => void;
   disabled: boolean;
+}
+
+export interface IHolebyHolePutts {
+  totalsPutts: IRoundTotalsPutts
+}
+
+export interface IFetchParams {
+  playerId: string,
+  roundId: string,
+}
+
+export interface PuttLengthCounts {
+  puttsUnder2: number;
+  putts2_4: number;
+  putts4_6: number;
+  putts6_10: number;
+  puttsOver10: number;
+}
+
+export interface GreenApproachDistanceCounts {
+  toGreenMetersOver100: number;
+  toGreenMeters80_100: number;
+  toGreenMeters60_80: number;
+  toGreenMetersUnder60: number;
 }
