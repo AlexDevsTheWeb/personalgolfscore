@@ -8,7 +8,6 @@ const RoundSave = () => {
   const { isLoading } = useSelector((store: RootState) => store.roundSaver);
 
   const handleClick = () => {
-    console.log("Dispatching saveNewRound thunk...");
     // Dispatch the action to save the entire round data
     dispatch(saveNewRound(null));
   };

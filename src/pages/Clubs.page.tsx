@@ -16,7 +16,6 @@ const ClubsPage = () => {
 
   useEffect(() => {
     if (uid && (!player || !golfBag || golfBag.length === 0)) {
-      console.log("ClubsPage: fetching player details...");
       dispatch(getPlayerDetails(uid));
     }
   }, [dispatch, uid, player]);

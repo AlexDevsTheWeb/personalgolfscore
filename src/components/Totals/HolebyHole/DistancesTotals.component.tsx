@@ -46,8 +46,6 @@ const DistancesTotals: React.FC = () => {
     return <Typography>Distance data not available.</Typography>;
   }
 
-  console.log("selectedClubNames -> ", selectedClubNames)
-
   return (
     <Stack>
       <Header title={'Distances'} onClick={handleToggleVisibility} />

@@ -2,12 +2,10 @@ import styled from '@emotion/styled';
 import { Box, BoxProps, Typography, TypographyProps } from '@mui/material';
 import React from 'react';
 
-interface IHeaderProps {
+interface IHeaderProps extends BoxProps {
   title: string;
   onClick?: () => void;
 }
-
-
 
 const BoxStyled = styled(Box)<BoxProps>((props) => (({
   display: 'flex',
@@ -25,10 +23,10 @@ const TypographyStyled = styled(Typography)<TypographyProps>((props) => (({
 })));
 
 
-const Header: React.FC<IHeaderProps> = ({ title, onClick }) => {
+const Header: React.FC<IHeaderProps> = (props: IHeaderProps) => {
   return (
-    <BoxStyled onClick={onClick}>
-      <TypographyStyled>{title}</TypographyStyled>
+    <BoxStyled onClick={props.onClick} {...props}>
+      <TypographyStyled>{props.title}</TypographyStyled>
     </BoxStyled>
   )
 }

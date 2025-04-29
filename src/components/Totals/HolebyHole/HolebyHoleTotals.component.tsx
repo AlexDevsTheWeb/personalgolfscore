@@ -54,7 +54,7 @@ const HolebyHoleTotals = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =>
 
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
-      <Header title={'statics'} />
+      <Header title={'statistics'} sx={{ marginBottom: '1px' }} />
       <AppBar position="static">
         <Tabs
           value={value}
