@@ -24,8 +24,6 @@ const Dashboard = () => {
     return <Spinner />
   }
 
-  console.log("rounds -> ", rounds);
-
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} gap={2}>
       {
@@ -33,14 +31,25 @@ const Dashboard = () => {
           <>
             <Rounds />
             <StatisticsMain />
-            <BoxBetween>
-              <Button variant='contained' onClick={handleAddNewRound}>Add new round</Button>
-              <Button variant='contained' onClick={handleClickStatistic}>See statistics</Button>
-            </BoxBetween>
           </>
         )
       }
-    </Box>
+      <BoxBetween>
+        <Button
+          variant='contained'
+          onClick={handleAddNewRound}
+        >
+          Add new round
+        </Button>
+        <Button
+          variant='contained'
+          onClick={handleClickStatistic}
+          disabled={rounds.length === 0}
+        >
+          See statistics
+        </Button>
+      </BoxBetween>
+    </Box >
   )
 }
 

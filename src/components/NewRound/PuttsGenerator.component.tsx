@@ -1,10 +1,6 @@
 import TextField from '@/styles/textfield/TextField.style';
+import { IPuttsProps } from '@/types/props.types';
 import { Box } from "@mui/material";
-
-interface IPuttsProps {
-  puttsNumber: number[],
-  setPuttDistance: any,
-}
 
 const PuttsGenerator = ({ puttsNumber, setPuttDistance }: IPuttsProps) => {
   return (

@@ -1,12 +1,8 @@
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+import { IStackProps } from '@/types/props.types';
 import { styled } from '@mui/material';
-import Stack, { StackProps as StackPropsMui } from '@mui/material/Stack';
+import Stack from '@mui/material/Stack';
 import * as React from 'react';
-
-interface IStackProps extends StackPropsMui {
-  isMobile?: boolean;
-}
-
 const StyledStack = styled(Stack)<IStackProps>(() => ({
   display: 'flex',
   flexDirection: useDeviceDetection().isMobileDevice ? 'column' : 'row',

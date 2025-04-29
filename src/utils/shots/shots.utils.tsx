@@ -1,6 +1,8 @@
 import { STABLEFORDPOINTS } from "@/enum/shots.enum";
 import { IGirProps, IScrambleProps, IStablefordPointsProps, IUDProps } from "@/types/point.types";
+import { GreenApproachDistanceCounts, PuttLengthCounts } from "@/types/round.types";
 import { IRoundScoreTotalsAvg } from "@/types/roundTotals.types";
+import { GREEN_APPROACH_THRESHOLDS, PUTT_LENGTH_THRESHOLDS } from "../constant.utils";
 
 export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, roundPlayingHCP, roundHoles } = props;
@@ -105,61 +107,62 @@ const calculatePoints = (par: number, strokes: number) => {
   }
 }
 
-export function calculation(completeHole: any) {
-  const { puttsLength } = completeHole;
-  let puttsUnder2 = 0;
-  let putts2_4 = 0;
-  let putts4_6 = 0;
-  let putts6_10 = 0;
-  let puttsOver10 = 0;
-  let upDownX = 0;
-  let upDownN = 0;
-  let upDownE = 0;
-  let greenMetersOver100 = 0;
-  let greenMeters80_100 = 0;
-  let greenMeters60_80 = 0;
-  let greenMetersUnder60 = 0;
-  let scramble = 0;
+// FIXME: this is NOT USED??
+// export function calculation(completeHole: any) {
+//   const { puttsLength } = completeHole;
+//   let puttsUnder2 = 0;
+//   let putts2_4 = 0;
+//   let putts4_6 = 0;
+//   let putts6_10 = 0;
+//   let puttsOver10 = 0;
+//   let upDownX = 0;
+//   let upDownN = 0;
+//   let upDownE = 0;
+//   let greenMetersOver100 = 0;
+//   let greenMeters80_100 = 0;
+//   let greenMeters60_80 = 0;
+//   let greenMetersUnder60 = 0;
+//   let scramble = 0;
 
-  // PUTTS
-  for (let i = 0; i < puttsLength.length; i++) {
-    (Number(puttsLength[i]) <= 2) && puttsUnder2++;
-    (Number(puttsLength[i]) > 2 && Number(puttsLength[i]) <= 4) && putts2_4++;
-    (Number(puttsLength[i]) > 4 && Number(puttsLength[i]) <= 6) && putts4_6++;
-    (Number(puttsLength[i]) > 6 && Number(puttsLength[i]) <= 10) && putts6_10++;
-    (Number(puttsLength[i]) > 10) && puttsOver10++;
-  };
+//   // PUTTS
+//   for (let i = 0; i < puttsLength.length; i++) {
+//     (Number(puttsLength[i]) <= 2) && puttsUnder2++;
+//     (Number(puttsLength[i]) > 2 && Number(puttsLength[i]) <= 4) && putts2_4++;
+//     (Number(puttsLength[i]) > 4 && Number(puttsLength[i]) <= 6) && putts4_6++;
+//     (Number(puttsLength[i]) > 6 && Number(puttsLength[i]) <= 10) && putts6_10++;
+//     (Number(puttsLength[i]) > 10) && puttsOver10++;
+//   };
 
-  //UP & DOWN
-  (completeHole.upDown === 'x') && upDownX++;
-  (completeHole.upDown === 'n') && upDownN++;
-  (completeHole.upDown === '') && upDownE++;
+//   //UP & DOWN
+//   (completeHole.upDown === 'x') && upDownX++;
+//   (completeHole.upDown === 'n') && upDownN++;
+//   (completeHole.upDown === '') && upDownE++;
 
-  scramble = completeHole.scramble;
+//   scramble = completeHole.scramble;
 
-  // GREEN METERS
-  (completeHole.toGreenMeters >= 100) && greenMetersOver100++;
-  (completeHole.toGreenMeters <= 100 && completeHole.toGreenMeters > 80) && greenMeters80_100++;
-  (completeHole.toGreenMeters <= 80 && completeHole.toGreenMeters > 60) && greenMeters60_80++;
-  (completeHole.toGreenMeters <= 60) && greenMetersUnder60++;
+//   // GREEN METERS
+//   (completeHole.toGreenMeters >= 100) && greenMetersOver100++;
+//   (completeHole.toGreenMeters <= 100 && completeHole.toGreenMeters > 80) && greenMeters80_100++;
+//   (completeHole.toGreenMeters <= 80 && completeHole.toGreenMeters > 60) && greenMeters60_80++;
+//   (completeHole.toGreenMeters <= 60) && greenMetersUnder60++;
 
-  const finalValues = {
-    puttsUnder2: puttsUnder2,
-    putts2_4: putts2_4,
-    putts4_6: putts4_6,
-    putts6_10: putts6_10,
-    puttsOver10: puttsOver10,
-    upDownX: upDownX,
-    upDownN: upDownN,
-    upDownE: upDownE,
-    greenMetersOver100: greenMetersOver100,
-    greenMeters80_100: greenMeters80_100,
-    greenMeters60_80: greenMeters60_80,
-    greenMetersUnder60: greenMetersUnder60,
-    scramble: scramble,
-  }
-  return finalValues;
-}
+//   const finalValues = {
+//     puttsUnder2: puttsUnder2,
+//     putts2_4: putts2_4,
+//     putts4_6: putts4_6,
+//     putts6_10: putts6_10,
+//     puttsOver10: puttsOver10,
+//     upDownX: upDownX,
+//     upDownN: upDownN,
+//     upDownE: upDownE,
+//     greenMetersOver100: greenMetersOver100,
+//     greenMeters80_100: greenMeters80_100,
+//     greenMeters60_80: greenMeters60_80,
+//     greenMetersUnder60: greenMetersUnder60,
+//     scramble: scramble,
+//   }
+//   return finalValues;
+// }
 
 export const correctVsParString = (score: IRoundScoreTotalsAvg) => {
 
@@ -201,3 +204,38 @@ export const correctVsParString = (score: IRoundScoreTotalsAvg) => {
     correctScoreOUT: correctScoreOUT,
   }
 }
+
+export const calculatePuttLengthCounts = (puttsLength: (string | number)[] = []): PuttLengthCounts => {
+  const counts: PuttLengthCounts = {
+    puttsUnder2: 0,
+    putts2_4: 0,
+    putts4_6: 0,
+    putts6_10: 0,
+    puttsOver10: 0,
+  };
+  puttsLength.forEach(len => {
+    const length = Number(len); // Consider adding error handling if len might not be numeric
+    if (isNaN(length)) return; // Skip non-numeric values
+
+    if (length <= PUTT_LENGTH_THRESHOLDS.SHORT) counts.puttsUnder2++;
+    else if (length <= PUTT_LENGTH_THRESHOLDS.MEDIUM) counts.putts2_4++;
+    else if (length <= PUTT_LENGTH_THRESHOLDS.LONG) counts.putts4_6++;
+    else if (length <= PUTT_LENGTH_THRESHOLDS.VERY_LONG) counts.putts6_10++;
+    else counts.puttsOver10++;
+  });
+  return counts;
+};
+
+export const calculateGreenApproachCounts = (toGreenMeters: number = 0): GreenApproachDistanceCounts => {
+  const counts: GreenApproachDistanceCounts = {
+    toGreenMetersOver100: 0,
+    toGreenMeters80_100: 0,
+    toGreenMeters60_80: 0,
+    toGreenMetersUnder60: 0,
+  };
+  if (toGreenMeters >= GREEN_APPROACH_THRESHOLDS.FAR) counts.toGreenMetersOver100++;
+  else if (toGreenMeters > GREEN_APPROACH_THRESHOLDS.MID) counts.toGreenMeters80_100++;
+  else if (toGreenMeters > GREEN_APPROACH_THRESHOLDS.NEAR) counts.toGreenMeters60_80++;
+  else if (toGreenMeters > 0) counts.toGreenMetersUnder60++; // Only count if > 0
+  return counts;
+};

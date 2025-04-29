@@ -1,27 +1,37 @@
-import { useDispatch, useSelector } from "react-redux";
-import ClubsMain from "../components/Clubs/ClubsMain.component"
+import Spinner from "@/components/common/spinner/Spinner.component";
+import { getPlayerDetails } from "@/features/player/player.slice";
+import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { useEffect } from "react";
-import { getClubsDetails } from "../features/golfBag/golfBag.slice";
+import { useDispatch, useSelector } from "react-redux";
+import ClubsMain from "../components/Clubs/ClubsMain.component";
 import { RootState } from "../store/store";
 import Typography from "../styles/typography/Typography.styles";
 
 const ClubsPage = () => {
   const dispatch = useDispatch<any>();
-  const { isLoading, error: { errorMessage } } = useSelector((store: RootState) => store.golfBag);
+  const { isLoading, error, errorMessage, player } = useSelector((store: RootState) => store.player);
+  const uid = readUserLocalStorage();
+
+  const golfBag = player?.golfBag;
 
   useEffect(() => {
-    dispatch(getClubsDetails(''));
-  }, [dispatch]);
+    if (uid && (!player || !golfBag || golfBag.length === 0)) {
+      dispatch(getPlayerDetails(uid));
+    }
+  }, [dispatch, uid, player]);
 
   if (isLoading) {
-    return <Typography variant="headline3">Loading...</Typography>;
+    return <Spinner />
   }
 
-  if (errorMessage) {
-    return <Typography variant="headline3">{errorMessage}</Typography>;
+  if (error || errorMessage) {
+    return <Typography variant="headline3">Error loading player data: {errorMessage || error}</Typography>;
+  }
+  if (!player || !player.golfBag || player.golfBag.length === 0) {
+    return <Typography variant="headline3">Golf bag data not found or is empty. Please check your profile.</Typography>;
   }
 
-  return <ClubsMain />;
+  return <ClubsMain golfBag={golfBag} />;
 };
 
 export default ClubsPage

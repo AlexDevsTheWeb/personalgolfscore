@@ -1,25 +1,36 @@
-import { InitialStatePlayer, IPlayer } from "@/types/player.types";
+import { IGetPlayerDetailsPayload, IGolfBagData, InitialStatePlayer, IPlayerStateData, IUpdateGolfBagPayload } from "@/types/player.types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getPlayerInfoThunk } from "./player.thunk";
-
+import { getPlayerInfoThunk, updatePlayerGolfBagThunk } from "./player.thunk";
 
 const initialState: InitialStatePlayer = {
   isLoading: false,
   error: '',
   errorMessage: '',
-  player: {} as IPlayer,
+  player: {} as IPlayerStateData,
 };
 
-export const getPlayerDetails = createAsyncThunk(
+export const getPlayerDetails = createAsyncThunk<
+  IGetPlayerDetailsPayload,
+  string,
+  { rejectValue: string }
+>(
   "player/getPlayerDetails",
   getPlayerInfoThunk
+);
+export const updatePlayerGolfbag = createAsyncThunk<
+  IGolfBagData,
+  IUpdateGolfBagPayload,
+  { rejectValue: string }
+>(
+  "player/updatePlayerGolfbag",
+  updatePlayerGolfBagThunk
 );
 
 const playerSlice = createSlice({
   name: "player",
   initialState,
   reducers: {
-    setPlayer: (state, { payload }: PayloadAction<any>) => {
+    setPlayer: (state, { payload }: PayloadAction<IPlayerStateData>) => {
       state.isLoading = false;
       state.player = payload;
     },
@@ -29,15 +40,44 @@ const playerSlice = createSlice({
     builder
       .addCase(getPlayerDetails.pending, (state) => {
         state.isLoading = true;
+        state.error = '';
+        state.errorMessage = '';
       })
-      .addCase(getPlayerDetails.fulfilled, (state, { payload }: PayloadAction<{ data: IPlayer }>) => {
+      .addCase(getPlayerDetails.fulfilled, (state, action: PayloadAction<IGetPlayerDetailsPayload>) => {
         state.isLoading = false;
-        state.player = payload.data;
+        if (action.payload && action.payload.player) {
+          state.player = action.payload.player;
+        }
+        else {
+          state.player = {} as IPlayerStateData;
+          console.warn("getPlayerDetails.fulfilled: Payload received, but no 'player' object found.");
+        }
       })
       .addCase(getPlayerDetails.rejected, (state, { payload }: any) => {
         state.isLoading = false;
-        state.error = payload.status;
-        state.errorMessage = payload.statusText;
+        state.error = payload?.status || 'Unknown Error';
+        state.errorMessage = payload.statusText || payload || 'Fauloed to fetch player';
+        state.player = {} as IPlayerStateData;
+      })
+
+      .addCase(updatePlayerGolfbag.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+        state.errorMessage = '';
+      })
+      .addCase(updatePlayerGolfbag.fulfilled, (state, action: PayloadAction<IGolfBagData>) => {
+        state.isLoading = false;
+        if (state.player) {
+          state.player.golfBag = action.payload;
+        }
+        else {
+          console.warn('updatePlayerGolfBag.fulfilled: Player state was null, cannot update golfbag');
+        }
+      })
+      .addCase(updatePlayerGolfbag.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = typeof action.payload === 'string' ? action.payload : 'Failed to update golf bag';
+        state.errorMessage = typeof action.payload === 'string' ? action.payload : 'Failed to update golf bag';
       });
   },
 });

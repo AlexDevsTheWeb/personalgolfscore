@@ -4,11 +4,7 @@ import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import TableCellHolebyHole from "@/styles/table/TableCellHolebyHole.styles";
 import TableRowHolebyHole from "@/styles/table/TableRowHolebyHole.styles";
 import VsParTypography from "@/styles/typography/VsParTypography.styles";
-import { IShots } from "@/types/roundData.types";
-
-interface IShotsTableBody {
-  shot: IShots,
-}
+import { IShotsTableBody } from "@/types/props.types";
 
 const ShotsTableBody = ({ shot }: IShotsTableBody) => {
 

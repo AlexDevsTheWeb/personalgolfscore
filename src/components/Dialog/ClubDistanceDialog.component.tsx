@@ -3,19 +3,16 @@ import { addNewDistanceWithClub } from '@/features/newRound/newRoundDistances.sl
 import { RootState } from '@/store/store';
 import BoxNewHole from '@/styles/box/BoxNewHole.styles';
 import { HoleCard, HoleCardContent } from '@/styles/index';
+import { IClubDistanceDialogProps } from '@/types/clubs.types';
 import { IDistance } from '@/types/roundData.types';
-import { createDistanceObject } from '@/utils/round/round.utils';
+import { createDistanceObject, getClubsNames, getDistanceClubs } from '@/utils/round/round.utils';
 import CloseIcon from '@mui/icons-material/Close';
-import { AppBar, Box, Button, Dialog, IconButton, TextField, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Dialog, IconButton, SelectChangeEvent, TextField, Toolbar, Typography } from "@mui/material";
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Select from '../NewRound/Select.component';
-
-interface IClubDistanceDialogProps {
-  open: boolean,
-}
+import Select from '../NewRound/components/Select.component';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -28,15 +25,33 @@ const Transition = React.forwardRef(function Transition(
 
 const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
   const dispatch = useDispatch<any>();
-  const { distanceClubs } = useSelector((store: RootState) => store.golfBag);
+  const { player } = useSelector((store: RootState) => store.player);
   const { round } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { roundDistances } = useSelector((store: RootState) => store.newRound.newRoundDistances);
+
+  const golfBag = player?.golfBag;
+  const distanceClubs = useMemo(() => {
+    if (!golfBag || golfBag.length === 0) {
+      return [];
+    }
+    try {
+      const allClubNames = getClubsNames(golfBag);
+      return getDistanceClubs(allClubNames);
+    } catch (error) {
+      console.error("Error deriving distance clubs:", error);
+      return [];
+    }
+  }, [golfBag]);
 
   const [club, setClub] = useState<string>('');
   const [meters, setMeters] = useState<number>(0);
 
-  const saveDistance = (e: any) => {
+  const saveDistance = () => {
     const { roundCourse, roundDate } = round;
+    if (!club || meters <= 0) {
+      console.warn("Please select a club and enter a valid distance > 0");
+      return;
+    }
     const items = createDistanceObject({ roundDistances, course: roundCourse, date: roundDate, club, mt: meters });
     dispatch(addNewDistanceWithClub(items));
     setClub('');
@@ -46,6 +61,10 @@ const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
   const handleClose = () => {
     dispatch(setShowDistances(false));
   }
+
+  const handleClubChange = (e: SelectChangeEvent) => {
+    setClub(e.target.value as string);
+  };
 
   return (
     <Dialog
@@ -84,16 +103,18 @@ const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
         </HoleCard>
       </BoxNewHole>
 
-      {
-        roundDistances.map(({ club, mt, avg }: IDistance, index: number) => {
-          return (
-
-            <Box key={index}>
-              <Typography>{`${club} - ${mt} - AVG: ${avg}`}</Typography>
+      {roundDistances.length > 0 && (
+        <Box sx={{ padding: 2 }}>
+          <Typography gutterBottom>Current Round Distances:</Typography>
+          {roundDistances.map(({ club, mt, avg }: IDistance, index: number) => (
+            <Box key={`${club}-${index}`} sx={{ mb: 1, borderBottom: '1px solid #eee', pb: 1 }}>
+              <Typography>
+                <strong>{club}:</strong> {mt.join(', ')}m (Avg: {avg}m)
+              </Typography>
             </Box>
-          )
-        })
-      }
+          ))}
+        </Box>
+      )}
 
     </Dialog>
   )

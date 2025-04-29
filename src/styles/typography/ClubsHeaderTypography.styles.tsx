@@ -1,6 +1,6 @@
 import { RootState } from "@/store/store";
 import { Paper, Typography as TypographyMui, TypographyProps as TypographyPropsMui, styled } from "@mui/material";
-import * as React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 interface TypographyProps extends TypographyPropsMui { }
@@ -8,12 +8,27 @@ interface TypographyProps extends TypographyPropsMui { }
 const StyledTypography = styled(TypographyMui)({})
 
 const ClubsHeaderTypography: React.FC<TypographyProps> = props => {
-  const { clubs: { playerID }, totalClubs, selectedClubs } = useSelector((store: RootState) => store.golfBag);
+  const { player } = useSelector((store: RootState) => store.player);
+
+  const { totalClubs, selectedClubs } = useMemo(() => {
+    if (!player?.golfBag) {
+      return { totalClubs: 0, selectedClubs: 0 };
+    }
+    let total = 0;
+    let selected = 0;
+    player.golfBag.forEach(clubType => {
+      total += clubType.details.length;
+      selected += clubType.details.filter(club => club.selected).length;
+    });
+    return { totalClubs: total, selectedClubs: selected };
+  }, [player?.golfBag]);
+
+  const playerName = player?.displayName ?? player?.uid ?? 'Player';
 
   return (
     <Paper variant='clubsHeader'>
       <StyledTypography {...props} variant='headline2'>
-        {playerID}
+        {playerName}'s Golf Bag
       </StyledTypography>
       <StyledTypography {...props} variant='subheadline1'>
         {`${selectedClubs} clubs selected / ${totalClubs} total clubs`}

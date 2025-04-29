@@ -1,3 +1,5 @@
+import { IRoundTotals } from "./roundTotals.types";
+
 export interface IShots {
   holeNumber: number;
   chipClub: string;
@@ -55,8 +57,6 @@ export type InitialStateNewRoundsData = {
 
 export type InitialStateNewRoundDistances = {
   isLoading: boolean;
-  playerID: string;
-  roundID: string;
   roundDistances: IDistance[];
 }
 
@@ -134,4 +134,45 @@ export interface IRoundHoles {
   upDownE: number;
   scramble: { made: number, attempts: number };
   water: number;
+}
+
+// FIXME: NOT USED?
+// export interface IRoundData {
+//   createdAt: {
+//     nanoseconds: number, seconds: number
+//   },
+//   roundCourse: string,
+//   roundDate: {
+//     nanoseconds: number, seconds: number
+//   },
+//   roundHoles: string,
+//   roundNumber: string,
+//   roundPar: string,
+//   roundPlayingHCP: string,
+//   roundTee: string,
+//   userId: string,
+//   totals: IRoundTotals
+// }
+
+export interface IBasicRoundData {
+  id: string,
+  // roundData: DocumentData,
+  roundCourse?: string,
+  roundDate: number,
+  roundHoles?: string,
+  roundTee?: string,
+  roundPar?: string,
+  roundNumber?: string,
+  roundPlayingHCP?: string,
+  roundStrokes?: number,
+  userId?: string
+  createdAt: number,
+  totals: IRoundTotals
+}
+
+export interface ITotalDistanceAvg {
+  club: string,
+  totalDistancesSum: number;
+  numberOfShots: number;
+  avg: number;
 }

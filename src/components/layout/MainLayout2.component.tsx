@@ -1,12 +1,13 @@
 import { setIsLoading } from '@/features/app/controls.slice';
 import { getPlayerDetails } from '@/features/player/player.slice';
 import { TLinkSidebar } from '@/types/general.types';
+import { IBoxProps, IMainLayoutProps } from '@/types/props.types';
 import links from '@/utils/links/links.utils';
 import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
 import { ListItemIcon, ListItemText, styled } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-import Box, { BoxProps as BoxPropsMui } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -24,15 +25,7 @@ import { Outlet } from 'react-router-dom';
 import Footer from './Footer.component';
 import User from './User.component';
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
-
-export default function DrawerAppBar(props: Props) {
+export default function DrawerAppBar(props: IMainLayoutProps) {
   const { window } = props;
   const dispatch = useDispatch<any>();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -177,15 +170,13 @@ export default function DrawerAppBar(props: Props) {
   );
 }
 
-interface BoxProps extends BoxPropsMui { };
-
-const StyledBox = styled(Box)<BoxProps>((props) => (({
+const StyledBox = styled(Box)<IBoxProps>((props) => (({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between', height: '100vh'
 })));
 
-const BoxFooter: React.FC<BoxProps> = props => {
+const BoxFooter: React.FC<IBoxProps> = props => {
   return (
     <StyledBox {...props}>{props.children}</StyledBox>
   )

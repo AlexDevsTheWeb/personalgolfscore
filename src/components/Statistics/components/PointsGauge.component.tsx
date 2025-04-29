@@ -6,17 +6,8 @@ import { BoxStatistics } from '@/styles/box/BoxStatistics.styles';
 import { Card } from '@/styles/card/statistics/Card.styles';
 import { CardContent } from '@/styles/card/statistics/CardContent.styles';
 import { CardHeader } from '@/styles/card/statistics/CardHeader.styles';
+import { IPointsGaugeValues } from '@/types/props.types';
 import { Gauge, gaugeClasses } from "@mui/x-charts";
-
-interface IPointsGauge {
-  name: string;
-  value: number;
-  holes: number;
-  percentage: boolean;
-}
-interface IPointsGaugeValues {
-  values: IPointsGauge;
-}
 
 export const PointsGauge = ({ values }: IPointsGaugeValues) => {
 

@@ -1,6 +1,7 @@
 import { IPayloadActionNewHole } from "@/types/round.types";
-import { InitialStateNewRoundsData } from "@/types/roundData.types";
-import { calculation } from "@/utils/shots/shots.utils";
+import { InitialStateNewRoundsData, IShots } from "@/types/roundData.types";
+import { initialStateTmpHole } from "@/utils/constant.utils";
+import { calculateGirValue, calculateGreenApproachCounts, calculatePuttLengthCounts, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from "@/utils/shots/shots.utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: InitialStateNewRoundsData = {
@@ -15,37 +16,68 @@ const newRoundHolesSlice = createSlice({
   name: 'newRoundHoles',
   initialState,
   reducers: {
-
-    setHolesCompleted: (state, { payload }: PayloadAction<{ newHoleNumber: number }>) => {
-      state.holesCompleted = payload.newHoleNumber;
-    },
     setNewHole: (state, { payload }: PayloadAction<IPayloadActionNewHole>) => {
-      const completeHole = { ...payload.holeAdjusted, holeNumber: payload.holesCompleted };
-
-      const newValues = calculation(completeHole);
-
-      const finalHole = {
-        ...completeHole,
-        puttsUnder2: newValues.puttsUnder2,
-        putts2_4: newValues.putts2_4,
-        putts4_6: newValues.putts4_6,
-        putts6_10: newValues.putts6_10,
-        puttsOver10: newValues.puttsOver10,
-        upDownX: newValues.upDownX,
-        upDownN: newValues.upDownN,
-        upDownE: newValues.upDownE,
-        toGreenMetersOver100: newValues.greenMetersOver100,
-        toGreenMeters80_100: newValues.greenMeters80_100,
-        toGreenMeters60_80: newValues.greenMeters60_80,
-        toGreenMetersUnder60: newValues.greenMetersUnder60,
+      const { holeAdjusted, roundPlayingHCP, roundHoles } = payload;
+      const currentHoleNum = state.holesCompleted + 1;
+      const baseHole: IShots = {
+        ...initialStateTmpHole,
+        ...holeAdjusted,
+        holeNumber: currentHoleNum,
       };
+      const calculatedPoints = calculateStablefordPoints({
+        hcp: baseHole.hcp,
+        par: baseHole.par,
+        strokes: baseHole.strokes,
+        roundPlayingHCP: roundPlayingHCP,
+        roundHoles: roundHoles,
+      }) || 0;
+      const calculatedGir = calculateGirValue({
+        par: baseHole.par,
+        putts: baseHole.putts,
+        strokes: baseHole.strokes,
+        bogey: false,
+      });
+      const calculatedGirBogey = calculateGirValue({
+        par: baseHole.par,
+        putts: baseHole.putts,
+        strokes: baseHole.strokes,
+        bogey: true,
+      });
+      const calculatedUpDown = calculateUDValue({
+        girValue: calculatedGir ? 1 : 0,
+        chipClub: baseHole.chipClub,
+        parValue: baseHole.par,
+        numberOfPutts: baseHole.putts,
+        strokesValue: baseHole.strokes,
+        chipClubs: holeAdjusted.chipClubs || [],
+      });
 
-      state.holes = [...state.holes, finalHole];
+      const calculatedScramble = calculateScrambleValue({
+        girValue: calculatedGir ? 1 : 0,
+        parValue: baseHole.par,
+        strokesValue: baseHole.strokes,
+      });
+
+      const puttCounts = calculatePuttLengthCounts(baseHole.puttsLength);
+      const greenApproachCounts = calculateGreenApproachCounts(baseHole.toGreenMeters);
+
+      const finalHole: IShots = {
+        ...baseHole,
+        points: calculatedPoints,
+        gir: calculatedGir,
+        girBogey: calculatedGirBogey,
+        upDown: calculatedUpDown,
+        scramble: calculatedScramble,
+        ...puttCounts,
+        ...greenApproachCounts,
+      };
+      state.holes.push(finalHole);
+      state.holesCompleted += 1;
     },
     resetNewRoundsHoles: () => initialState,
   },
   extraReducers: () => { }
 });
 
-export const { setHolesCompleted, setNewHole, resetNewRoundsHoles } = newRoundHolesSlice.actions;
+export const { setNewHole, resetNewRoundsHoles } = newRoundHolesSlice.actions;
 export default newRoundHolesSlice.reducer;

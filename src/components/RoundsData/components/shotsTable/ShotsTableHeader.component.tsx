@@ -1,14 +1,7 @@
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
+import { IShotsTableHeaderProps } from "@/types/props.types";
 import { TableCell, TableHead, TableRow } from "@mui/material";
 import ShotsTableHeaderStack from "./ShotsTableHeaderStack.component";
-
-interface IShotsTableHeaderProps {
-  firstLabel: string;
-  singleHole: boolean;
-  firstColumn: boolean,
-  dashboard?: boolean,
-  viewPar?: boolean
-}
 
 const ShotsTableHeader = ({ firstColumn, singleHole, dashboard, viewPar }: IShotsTableHeaderProps) => {
   return (

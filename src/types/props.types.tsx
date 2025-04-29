@@ -1,5 +1,7 @@
-import { IRounds } from "./round.types";
-import { IAllRoundsTotals, IRoundTotals } from "./roundTotals.types";
+import { BoxProps, SelectChangeEvent, StackProps } from "@mui/material";
+import { IShots } from "./roundData.types";
+import { IRoundDetails } from "./roundDetails.types";
+import { IAllRoundsTotals, INewTotals, IPuttsBreakDownStatistics, IPuttsStatistics, IRoundChipPitch, IRoundChipPitchTotals, IRoundFairwayTotals, IRoundFWAndIrons, IRoundFwAndIronsTotals, IRoundInside100Mt, IRoundPointsTotalsAvg, IRoundScoreTotalsAvg, IRoundTeeShotClubTotals, IRoundTeeShotsTotals, IRoundTotals, IRoundTotalsAvgINOUT, IRoundTotalsAvgSand, IRoundTotalsPutts, IRoundTotalsUpDown } from "./roundTotals.types";
 
 export interface TabPanelProps {
   children?: React.ReactNode;
@@ -24,10 +26,214 @@ export interface IShotsTableProps {
 }
 
 export interface IRoundMainDataProp {
-  round: IRounds;
+  round: IRoundDetails;
 }
 
-// export interface IPlayerProps {
-//   player: IPlayer,
-// }
+export interface IMainLayoutProps {
+  window?: () => Window;
+}
 
+export interface IBoxProps extends BoxProps { };
+
+export interface IHolebyHoleProps {
+  holes: IShots[],
+}
+export interface IPuttsProps {
+  puttsNumber: number[],
+  setPuttDistance: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, puttIndex: number) => void
+}
+
+export interface ISelectProps {
+  name: string,
+  list: string[],
+  onChange: any,
+  par?: number,
+  value?: string,
+  label?: string,
+  disabled?: boolean
+}
+
+export interface IHoleApproachFormProps {
+  holeData: Pick<IShots, 'teeClub' | 'driveDistance' | 'toGreenMeters' | 'toGreen' | 'greenSide' | 'chipClub' | 'gir' | 'par' | 'distance' | 'strokes'>;
+  greenClubs: string[];
+  chipClubs: string[];
+  greenSideValues: string[];
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
+}
+
+export interface IHoleGeneralInfoFormProps {
+  holeData: Pick<IShots, 'hcp' | 'par' | 'distance' | 'strokes' | 'putts'>;
+  hcpList: string[];
+  parList: string[];
+  puttsNumber: number[];
+  currentHoleNumber: number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
+  onChangePutts: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, puttIndex: number) => void;
+}
+
+export interface IHolePenaltiesFormProps {
+  holeData: Pick<IShots, 'water' | 'out'>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
+}
+
+export interface IHoleTeeShotFormProps {
+  holeData: Pick<IShots, 'teeClub' | 'fairway' | 'driveDistance' | 'par' | 'distance'>;
+  teeClubs: string[];
+  fairwayValues: string[];
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
+}
+
+export interface IShotsTableBody {
+  shot: IShots,
+}
+export interface IShotsTableHeaderProps {
+  firstLabel: string;
+  singleHole: boolean;
+  firstColumn: boolean,
+  dashboard?: boolean,
+  viewPar?: boolean
+}
+
+export interface IShotsTableHeaderStack {
+  firstRow: string,
+  secondRow: string,
+}
+
+export interface IPenaltiesPie {
+  name: string;
+  value: INewTotals;
+  holes: number;
+}
+export interface IPenaltiesPieValues {
+  values: IPenaltiesPie;
+}
+
+export interface IPointsGauge {
+  name: string;
+  value: number;
+  holes: number;
+  percentage: boolean;
+}
+export interface IPointsGaugeValues {
+  values: IPointsGauge;
+}
+
+
+export interface ICrossProps {
+  left: number,
+  over: number,
+  right: number,
+  short: number,
+  center: number,
+  totals: number
+};
+
+export interface IStackProps extends StackProps {
+  isMobile?: boolean;
+}
+
+export interface ICategoryStatsProps {
+  value: IRoundInside100Mt;
+}
+export interface IDesktopViewProps {
+  inside100Mt: IRoundTotalsProps['roundTotals']['inside100Mt'];
+}
+export interface IMobileViewProps {
+  inside100Mt: IRoundTotalsProps['roundTotals']['inside100Mt'];
+}
+
+export interface IChipCategoryStatsProps {
+  value: IRoundChipPitch;
+}
+export interface IChipDesktopViewProps {
+  chipPitch: IRoundChipPitchTotals;
+}
+
+
+
+export interface IChipMobileViewProps {
+  chipPitch: IRoundChipPitchTotals;
+}
+
+export interface IStatAccordionProps {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}
+
+export interface ISimpleStatDisplayProps {
+  title: string;
+  total: number | string;
+  avg?: number | string;
+  inTotal: number | string;
+  inAvg?: number | string;
+  outTotal: number | string;
+  outAvg?: number | string;
+  totalSuffix?: string;
+  inSuffix?: string;
+  outSuffix?: string;
+}
+
+export interface IPercentageStatDisplayProps {
+  saved: number;
+  total: number;
+  percentage: number;
+}
+
+export interface IGeneralDesktopViewProps {
+  roundTotals: IRoundTotalsProps['roundTotals'];
+  dashboard?: boolean;
+}
+
+export interface IGeneralMobileViewProps {
+  score: IRoundScoreTotalsAvg;
+  points: IRoundPointsTotalsAvg;
+  putts: IRoundTotalsPutts;
+  sand: IRoundTotalsAvgSand;
+  gir: IRoundTotalsAvgINOUT;
+  girBogey: IRoundTotalsAvgINOUT;
+  fairway: IRoundFairwayTotals;
+  upDown: IRoundTotalsUpDown;
+  scramble: IRoundTotalsUpDown;
+  water: IRoundTotalsAvgINOUT;
+  out: IRoundTotalsAvgINOUT;
+}
+
+export interface ITeeshotsCategoryStatsProps {
+  value: IRoundTeeShotClubTotals; // Use the specific type
+}
+
+export interface ITeeshotsDesktopViewProps {
+  teeShots: IRoundTeeShotsTotals;
+}
+
+export interface ITeeshotsMobileViewProps {
+  teeShots: IRoundTeeShotsTotals;
+}
+
+export interface IFwAndIronsCategoryStatsProps {
+  value: IRoundFWAndIrons; // Use the specific type
+}
+export interface IFwAndIronsDesktopViewProps {
+  fwAndIrons: IRoundFwAndIronsTotals;
+}
+
+export interface IFwAndIronsMobileViewProps {
+  fwAndIrons: IRoundFwAndIronsTotals;
+}
+
+export interface IPuttsOverallStatsProps {
+  value: IPuttsStatistics['_puttsOverall'];
+}
+
+export interface IPuttsRangeStatsProps {
+  value: IPuttsBreakDownStatistics;
+}
+
+export interface IPuttsDesktopViewProps {
+  puttsStatistics: IPuttsStatistics;
+}
+
+export interface IPuttsMobileViewProps {
+  puttsStatistics: IPuttsStatistics;
+}
