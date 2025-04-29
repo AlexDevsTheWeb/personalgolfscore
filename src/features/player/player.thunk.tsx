@@ -1,28 +1,10 @@
-import { IGolfBagData } from "@/types/player.types";
-import { IBasicRoundData } from "@/types/roundData.types";
+import { IGetPlayerDetailsPayload, IGolfBagData, IPlayerStateData } from "@/types/player.types";
+import { IBasicRoundData, ITotalDistanceAvg } from "@/types/roundData.types";
+import { ITotalRoundsAvg } from "@/types/roundTotals.types";
 import { db } from "@/utils/firebase/firebase.utils";
 import { collection, doc, DocumentData, DocumentReference, getDoc, getDocs, orderBy, query, Timestamp, updateDoc } from "firebase/firestore";
 
-export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any) => {
-  // FIXME: this is just to avoid access online data and reduce read limits on firebase
-  // let playerURL = `/data/P2_ALESSANDROTORRI/player.json`;
-  // let playerURL = `/data/P1_TIGERWOODS/player.json`;
-  // try {
-  //   const response = await authFetch.get(playerURL);
-
-  //   const actualResponse: IUser[] = [
-  //     {
-  //       ...response,
-  //       uid: uid
-  //     }
-  //   ]
-  //   return actualResponse.pop();
-  // } catch (error: any) {
-  //   return rejectWithValue(error.message || 'Failed to fetch player details');
-  // }
-  // FIXME: remove it when everything is fine
-
-
+export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any): Promise<IGetPlayerDetailsPayload | ReturnType<typeof rejectWithValue>> => {
   if (!uid) {
     console.error("getPlayerInfoThunk: UID is required.");
     return rejectWithValue('User ID not provided.');
@@ -53,18 +35,35 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any) 
       } as IBasicRoundData
     });
 
+    const totalDistancesAvgColRef = collection(db, 'players', uid, 'totalDistancesAVG');
+    const totalDistancesAvgSnapshot = await getDocs(totalDistancesAvgColRef);
+    const totalDistancesAvgData: ITotalDistanceAvg[] = totalDistancesAvgSnapshot.docs.map(doc => ({
+      ...doc.data()
+    } as ITotalDistanceAvg));
 
+    const totalsRoundsAvgDocRef = doc(db, 'players', uid, 'totalsRoundsAVG', 'overall');
+    const totalsRoundsAvgSnapshot = await getDoc(totalsRoundsAvgDocRef);
+    const totalsRoundsAvgData: ITotalRoundsAvg | null = totalsRoundsAvgSnapshot.exists()
+      ? totalsRoundsAvgSnapshot.data() as ITotalRoundsAvg
+      : null;
 
-    const serializedPlayerData = {
+    const finalPlayerData: IPlayerStateData = {
       ...playerData,
       uid: uid,
+      displayName: playerData.displayName ?? null,
+      email: playerData.email ?? null,
       DOB: playerData.DOB instanceof Timestamp ? playerData.DOB.toMillis() : playerData.DOB,
-      totals: playerData.totals || {},
-      distances: playerData.distances || {},
-    }
+      totalDistancesAVG: totalDistancesAvgData,
+      totalsRoundsAVG: totalsRoundsAvgData,
+      golfBag: playerData.golfBag || [],
+      firstName: playerData.firstName,
+      lastName: playerData.lastName,
+      HCP: playerData.HCP,
+      photoURL: playerData.photoURL,
+    };
 
     return {
-      player: serializedPlayerData,
+      player: finalPlayerData,
       rounds: roundsData,
     }
 

@@ -1,4 +1,4 @@
-import { IGetPlayerDetailsPayload, IGolfBagData, InitialStatePlayer, IPlayerDetails } from "@/types/player.types";
+import { IGetPlayerDetailsPayload, IGolfBagData, InitialStatePlayer, IPlayerStateData } from "@/types/player.types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getPlayerInfoThunk, updatePlayerGolfBagThunk } from "./player.thunk";
 
@@ -11,7 +11,7 @@ const initialState: InitialStatePlayer = {
   isLoading: false,
   error: '',
   errorMessage: '',
-  player: {} as Omit<IPlayerDetails, 'rounds'>,
+  player: {} as IPlayerStateData,
 };
 
 export const getPlayerDetails = createAsyncThunk<
@@ -22,7 +22,11 @@ export const getPlayerDetails = createAsyncThunk<
   "player/getPlayerDetails",
   getPlayerInfoThunk
 );
-export const updatePlayerGolfbag = createAsyncThunk<IGolfBagData, IUpdateGolfBagPayload, { rejectValue: string }>(
+export const updatePlayerGolfbag = createAsyncThunk<
+  IGolfBagData,
+  IUpdateGolfBagPayload,
+  { rejectValue: string }
+>(
   "player/updatePlayerGolfbag",
   updatePlayerGolfBagThunk
 );
@@ -31,7 +35,7 @@ const playerSlice = createSlice({
   name: "player",
   initialState,
   reducers: {
-    setPlayer: (state, { payload }: PayloadAction<Omit<IPlayerDetails, 'rounds'>>) => {
+    setPlayer: (state, { payload }: PayloadAction<IPlayerStateData>) => {
       state.isLoading = false;
       state.player = payload;
     },
@@ -50,7 +54,7 @@ const playerSlice = createSlice({
           state.player = action.payload.player;
         }
         else {
-          state.player = {} as Omit<IPlayerDetails, 'rounds'>;
+          state.player = {} as IPlayerStateData;
           console.warn("getPlayerDetails.fulfilled: Payload received, but no 'player' object found.");
         }
       })
@@ -58,7 +62,7 @@ const playerSlice = createSlice({
         state.isLoading = false;
         state.error = payload?.status || 'Unknown Error';
         state.errorMessage = payload.statusText || payload || 'Fauloed to fetch player';
-        state.player = {} as Omit<IPlayerDetails, 'rounds'>;
+        state.player = {} as IPlayerStateData;
       })
 
       .addCase(updatePlayerGolfbag.pending, (state) => {
@@ -77,7 +81,8 @@ const playerSlice = createSlice({
       })
       .addCase(updatePlayerGolfbag.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string; // Store the error message
+        state.error = typeof action.payload === 'string' ? action.payload : 'Failed to update golf bag';
+        state.errorMessage = typeof action.payload === 'string' ? action.payload : 'Failed to update golf bag';
       });
   },
 });

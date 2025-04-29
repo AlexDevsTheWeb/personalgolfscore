@@ -1,6 +1,5 @@
-import { IRounds } from "./round.types";
-import { IBasicRoundData, IDistance } from "./roundData.types";
-import { IRoundTotals } from "./roundTotals.types";
+import { IBasicRoundData, ITotalDistanceAvg } from "./roundData.types";
+import { ITotalRoundsAvg } from "./roundTotals.types";
 
 export interface IPlayer {
   playerID: string,
@@ -21,7 +20,10 @@ export type InitialStatePlayer = {
   player: IPlayerStateData;
 }
 
-export type IPlayerStateData = Omit<IPlayerDetails, 'rounds'>;
+export type IPlayerStateData = Omit<IPlayerDetails, 'rounds'> & {
+  totalDistancesAVG?: ITotalDistanceAvg[]; // Or Map<string, ITotalDistanceAvg>
+  totalsRoundsAVG?: ITotalRoundsAvg | null;
+};
 
 export type IGolfBagData = IClubType[];
 export interface IClubType {
@@ -43,16 +45,15 @@ export interface IPlayerDetails {
   firstName?: string;
   lastName?: string;
   HCP?: number;
-  DOB?: number; // Assuming DOB is stored as timestamp milliseconds
+  DOB?: number;
   photoURL?: string | null;
-  golfBag?: IGolfBagData; // Use the GolfBagData type
-  rounds?: IRounds[],
-  totals?: IRoundTotals,
-  distances?: IDistance,
-  // ... other player fields
+  golfBag?: IGolfBagData;
+  rounds?: IBasicRoundData[];
+  totalDistancesAVG?: ITotalDistanceAvg[];
+  totalsRoundsAVG?: ITotalRoundsAvg | null;
 }
 
 export interface IGetPlayerDetailsPayload {
-  player: Omit<IPlayerDetails, 'rounds'>,
+  player: IPlayerStateData,
   rounds: IBasicRoundData[],
 }
