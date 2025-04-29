@@ -31,7 +31,6 @@ export const DesktopView: React.FC<IDesktopViewProps> = ({ inside100Mt }) => {
         <TableBody>
           <TableRow>
             {entries.map(([key, value]) => {
-              console.log("key, value -> ", key, value)
               return (
                 <TableCell
                   align='center'
@@ -71,8 +70,6 @@ export const MobileView: React.FC<IMobileViewProps> = ({ inside100Mt }) => {
 };
 
 export const CategoryStats: React.FC<ICategoryStatsProps> = React.memo(({ value }) => {
-
-  console.log("value.greenHits -> ", value.greensHits);
   return (
     <Stack spacing={1}>
       <Cross

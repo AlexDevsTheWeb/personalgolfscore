@@ -162,8 +162,6 @@ export const calculateDisplayableAverages = (
 
   // --- Calculate TeeShots ---
   const teeShotCategories = ['teeDriver', 'teeFW', 'teeHY', 'teeIron'] as const;
-
-  console.log("DEBUG: totalsAvg.teeShots:", JSON.stringify(totalsAvg?.teeShots, null, 2));
   teeShotCategories.forEach(category => {
     const avgData = totalsAvg.teeShots?.[category];
     // Use type assertion here
@@ -181,12 +179,6 @@ export const calculateDisplayableAverages = (
       displayData.missLeftPCT = safePercentage(avgData.sumMissLeft, fairwayAttempts);
       displayData.missRightPCT = safePercentage(avgData.sumMissRight, fairwayAttempts);
       displayData.firMissPCT = safePercentage(avgData.sumFirMiss, fairwayAttempts);
-
-      if (category === "teeDriver") {
-        console.log("avgData.sumMissLeft -> ", avgData.sumMissLeft);
-        console.log("fairwayAttempts -> ", fairwayAttempts);
-        console.log("safe percentage -> ", safePercentage(avgData.sumMissLeft, fairwayAttempts));
-      }
     }
   });
 

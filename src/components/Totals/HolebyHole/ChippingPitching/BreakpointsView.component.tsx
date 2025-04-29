@@ -33,7 +33,6 @@ export const DesktopView: React.FC<IChipDesktopViewProps> = ({ chipPitch }) => {
         <TableBody>
           <TableRow>
             {entries.map(([key, value]) => {
-              console.log("key, value -> ", key, value)
               return (
                 <TableCell
                   align='center'

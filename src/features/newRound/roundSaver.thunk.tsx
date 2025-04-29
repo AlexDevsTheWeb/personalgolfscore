@@ -53,7 +53,6 @@ export const saveNewRoundThunk = async (_: any, thunkAPI: any) => {
         );
 
         await batchUpdateAverages.commit();
-        console.log("Overall player distances updated successfully.");
 
       } catch (avgError: any) {
         console.error("Error updating overall player distances:", avgError);

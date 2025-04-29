@@ -157,7 +157,6 @@ export const prepareAverageDistanceUpdateBatch = (
 
     const clubAvgDocRef = doc(db, 'players', userId, 'totalDistancesAVG', club);
     batch.set(clubAvgDocRef, updatedAvgData, { merge: true });
-    console.log(`Prepared update for club: ${club}`, updatedAvgData);
   });
 };
 
