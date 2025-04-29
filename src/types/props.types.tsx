@@ -1,7 +1,7 @@
 import { BoxProps, SelectChangeEvent, StackProps } from "@mui/material";
 import { IShots } from "./roundData.types";
 import { IRoundDetails } from "./roundDetails.types";
-import { IAllRoundsTotals, INewTotals, IRoundTotals } from "./roundTotals.types";
+import { IAllRoundsTotals, INewTotals, IPuttsBreakDownStatistics, IPuttsStatistics, IRoundChipPitch, IRoundChipPitchTotals, IRoundFairwayTotals, IRoundFWAndIrons, IRoundFwAndIronsTotals, IRoundInside100Mt, IRoundPointsTotalsAvg, IRoundScoreTotalsAvg, IRoundTeeShotClubTotals, IRoundTeeShotsTotals, IRoundTotals, IRoundTotalsAvgINOUT, IRoundTotalsAvgSand, IRoundTotalsPutts, IRoundTotalsUpDown } from "./roundTotals.types";
 
 export interface TabPanelProps {
   children?: React.ReactNode;
@@ -40,7 +40,7 @@ export interface IHolebyHoleProps {
 }
 export interface IPuttsProps {
   puttsNumber: number[],
-  setPuttDistance: any,
+  setPuttDistance: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, puttIndex: number) => void
 }
 
 export interface ISelectProps {
@@ -130,4 +130,110 @@ export interface ICrossProps {
 
 export interface IStackProps extends StackProps {
   isMobile?: boolean;
+}
+
+export interface ICategoryStatsProps {
+  value: IRoundInside100Mt;
+}
+export interface IDesktopViewProps {
+  inside100Mt: IRoundTotalsProps['roundTotals']['inside100Mt'];
+}
+export interface IMobileViewProps {
+  inside100Mt: IRoundTotalsProps['roundTotals']['inside100Mt'];
+}
+
+export interface IChipCategoryStatsProps {
+  value: IRoundChipPitch;
+}
+export interface IChipDesktopViewProps {
+  chipPitch: IRoundChipPitchTotals;
+}
+
+
+
+export interface IChipMobileViewProps {
+  chipPitch: IRoundChipPitchTotals;
+}
+
+export interface IStatAccordionProps {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}
+
+export interface ISimpleStatDisplayProps {
+  title: string;
+  total: number | string;
+  avg?: number | string;
+  inTotal: number | string;
+  inAvg?: number | string;
+  outTotal: number | string;
+  outAvg?: number | string;
+  totalSuffix?: string;
+  inSuffix?: string;
+  outSuffix?: string;
+}
+
+export interface IPercentageStatDisplayProps {
+  saved: number;
+  total: number;
+  percentage: number;
+}
+
+export interface IGeneralDesktopViewProps {
+  roundTotals: IRoundTotalsProps['roundTotals'];
+  dashboard?: boolean;
+}
+
+export interface IGeneralMobileViewProps {
+  score: IRoundScoreTotalsAvg;
+  points: IRoundPointsTotalsAvg;
+  putts: IRoundTotalsPutts;
+  sand: IRoundTotalsAvgSand;
+  gir: IRoundTotalsAvgINOUT;
+  girBogey: IRoundTotalsAvgINOUT;
+  fairway: IRoundFairwayTotals;
+  upDown: IRoundTotalsUpDown;
+  scramble: IRoundTotalsUpDown;
+  water: IRoundTotalsAvgINOUT;
+  out: IRoundTotalsAvgINOUT;
+}
+
+export interface ITeeshotsCategoryStatsProps {
+  value: IRoundTeeShotClubTotals; // Use the specific type
+}
+
+export interface ITeeshotsDesktopViewProps {
+  teeShots: IRoundTeeShotsTotals;
+}
+
+export interface ITeeshotsMobileViewProps {
+  teeShots: IRoundTeeShotsTotals;
+}
+
+export interface IFwAndIronsCategoryStatsProps {
+  value: IRoundFWAndIrons; // Use the specific type
+}
+export interface IFwAndIronsDesktopViewProps {
+  fwAndIrons: IRoundFwAndIronsTotals;
+}
+
+export interface IFwAndIronsMobileViewProps {
+  fwAndIrons: IRoundFwAndIronsTotals;
+}
+
+export interface IPuttsOverallStatsProps {
+  value: IPuttsStatistics['_puttsOverall'];
+}
+
+export interface IPuttsRangeStatsProps {
+  value: IPuttsBreakDownStatistics;
+}
+
+export interface IPuttsDesktopViewProps {
+  puttsStatistics: IPuttsStatistics;
+}
+
+export interface IPuttsMobileViewProps {
+  puttsStatistics: IPuttsStatistics;
 }

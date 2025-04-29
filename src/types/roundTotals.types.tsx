@@ -194,28 +194,28 @@ interface IRoundTotalsMainData {
   playerHCP: number
 }
 
-interface IRoundFairwayTotals {
+export interface IRoundFairwayTotals {
   total: number,
   fairwayCenter: number,
   fairwayLeft: number,
   fairwayRight: number,
 }
 
-interface IRoundTotalsAvg {
+export interface IRoundTotalsAvg {
   totals: number,
   avg: number,
 }
-interface IRoundTotalsUpDown {
+export interface IRoundTotalsUpDown {
   totals: number,
   saved: number,
   perc: number,
 }
-interface IRoundTotalsAvgSand extends IRoundTotalsAvg {
+export interface IRoundTotalsAvgSand extends IRoundTotalsAvg {
   saved: number,
   avgSaved: number,
   savedPerc: number,
 }
-interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
+export interface IRoundTotalsAvgINOUT extends IRoundTotalsAvg {
   totalsIN: number,
   avgIN: number,
   totalsOUT: number,
@@ -257,7 +257,7 @@ export interface IRoundScoreTotalsAvg extends IRoundTotalsAvg {
   scorePar5: number,
 }
 
-interface IRoundPointsTotalsAvg extends IRoundTotalsAvg {
+export interface IRoundPointsTotalsAvg extends IRoundTotalsAvg {
   pointsIN: number,
   pointsOUT: number,
   avgIN: number,
@@ -284,7 +284,7 @@ export interface IPuttsStatistics {
   }
 }
 
-interface IPuttsBreakDownStatistics {
+export interface IPuttsBreakDownStatistics {
   distanceFirstPutt: number;
   distanceSecondPutt: number;
   numberPuttsInRange: number;
