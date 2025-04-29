@@ -136,22 +136,23 @@ export interface IRoundHoles {
   water: number;
 }
 
-export interface IRoundData {
-  createdAt: {
-    nanoseconds: number, seconds: number
-  },
-  roundCourse: string,
-  roundDate: {
-    nanoseconds: number, seconds: number
-  },
-  roundHoles: string,
-  roundNumber: string,
-  roundPar: string,
-  roundPlayingHCP: string,
-  roundTee: string,
-  userId: string,
-  totals: IRoundTotals
-}
+// FIXME: NOT USED?
+// export interface IRoundData {
+//   createdAt: {
+//     nanoseconds: number, seconds: number
+//   },
+//   roundCourse: string,
+//   roundDate: {
+//     nanoseconds: number, seconds: number
+//   },
+//   roundHoles: string,
+//   roundNumber: string,
+//   roundPar: string,
+//   roundPlayingHCP: string,
+//   roundTee: string,
+//   userId: string,
+//   totals: IRoundTotals
+// }
 
 export interface IBasicRoundData {
   id: string,

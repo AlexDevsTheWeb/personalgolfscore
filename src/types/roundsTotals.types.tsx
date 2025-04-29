@@ -1,11 +1,11 @@
-// export interface IRoundsTotals {
-//   "roundNumber": number,
-//   "totalsStrokes": IRoundsTotalsStrokes,
-//   "totalsPoints": IRoundsTotalsPoints,
-//   "totalsFairway": IRoundsTotalsFairways,
-//   "totalsTeeShots": IRoundsTotalsTeeShots,
-//   "totalsChipPitch": IRoundsTotalsChipPitch,
-// }
+export interface IRoundsTotals {
+  "roundNumber": number,
+  "totalsStrokes": IRoundsTotalsStrokes,
+  "totalsPoints": IRoundsTotalsPoints,
+  "totalsFairway": IRoundsTotalsFairways,
+  "totalsTeeShots": IRoundsTotalsTeeShots,
+  "totalsChipPitch": IRoundsTotalsChipPitch,
+}
 
 interface IRoundsTotalsStrokes {
   "strokesTotal": number,

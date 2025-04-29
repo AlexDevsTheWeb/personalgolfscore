@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs"
-import { IBasicRoundData, IDistance, IShots } from "./roundData.types"
-import { IRoundTotals, IRoundTotalsPutts } from "./roundTotals.types"
+import { IBasicRoundData } from "./roundData.types"
+import { IRoundTotalsPutts } from "./roundTotals.types"
 
 export interface IPayloadActionNewHole {
   holeAdjusted: any,
@@ -9,25 +9,27 @@ export interface IPayloadActionNewHole {
   holesCompleted: number
 };
 
-interface IState {
-  playerID: string,
-  rounds: IRounds[]
-}
+// FIXME: NOT USED?
+// interface IState {
+//   playerID: string,
+//   rounds: IRounds[]
+// }
 
-export interface IRounds {
-  id: string,
-  roundID: string,
-  roundDate: string,
-  roundCourse: string,
-  roundHoles: number,
-  roundTee: string,
-  roundPar: number,
-  roundPlayingHCP: number,
-  roundStrokes: number
-  general: IRoundGeneral,
-  holes: any,
-  totals: any
-}
+// FIXME: NOT USED?
+// export interface IRounds {
+//   id: string,
+//   roundID: string,
+//   roundDate: string,
+//   roundCourse: string,
+//   roundHoles: number,
+//   roundTee: string,
+//   roundPar: number,
+//   roundPlayingHCP: number,
+//   roundStrokes: number
+//   general: IRoundGeneral,
+//   holes: any,
+//   totals: any
+// }
 
 export interface IRoundsState {
   rounds: IBasicRoundData[],
@@ -67,19 +69,20 @@ export type InitialStateNewRound = {
   round: INewRound;
 }
 
-export interface IRoundFinalData {
-  roundMainData: INewRound,
-  roundHolesData: IShots[],
-  roundTotalsData: IRoundTotals,
-  roundDistancesData: IDistance[],
-}
+// FIXME: NOT USED?
+// export interface IRoundFinalData {
+//   roundMainData: INewRound,
+//   roundHolesData: IShots[],
+//   roundTotalsData: IRoundTotals,
+//   roundDistancesData: IDistance[],
+// }
 
-export interface IRoundFinalDataProps {
-  round: INewRound,
-  holes: IShots[],
-  roundTotals: IRoundTotals,
-  roundDistances: IDistance[],
-}
+// export interface IRoundFinalDataProps {
+//   round: INewRound,
+//   holes: IShots[],
+//   roundTotals: IRoundTotals,
+//   roundDistances: IDistance[],
+// }
 
 export interface IInitialStateRoundSave {
   isLoading: boolean,

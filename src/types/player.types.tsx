@@ -1,17 +1,18 @@
 import { IBasicRoundData, ITotalDistanceAvg } from "./roundData.types";
 import { ITotalRoundsAvg } from "./roundTotals.types";
 
-export interface IPlayer {
-  playerID: string,
-  firstName: string,
-  lastName: string,
-  DOB: {
-    seconds: number,
-    nanoseconds: number,
-  },
-  HCP: number,
-  email: string
-}
+// FIXME: NOT USED?
+// export interface IPlayer {
+//   playerID: string,
+//   firstName: string,
+//   lastName: string,
+//   DOB: {
+//     seconds: number,
+//     nanoseconds: number,
+//   },
+//   HCP: number,
+//   email: string
+// }
 
 export type InitialStatePlayer = {
   isLoading: boolean;
@@ -38,6 +39,7 @@ export interface IClubDetail {
   selected: boolean;
   clubNumber?: string | number; // Optional
 }
+
 export interface IPlayerDetails {
   uid: string;
   displayName: string | null;

@@ -7,39 +7,29 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 
 const Player = () => {
+  const { player, isLoading } = useSelector((store: RootState) => store.player);
 
-  const { player } = useSelector((store: RootState) => store.player);
-
-  if (_.isEmpty(player)) {
+  if (isLoading || _.isEmpty(player) || !player.uid) {
     return <Spinner />
   }
+
+  const formattedDOB = player.DOB && typeof player.DOB === 'number' && player.DOB > 0
+    ? dayjs(player.DOB).format('DD/MM/YYYY')
+    : '-';
 
   return (
     <Grid container spacing={2}>
       <Grid size={3}>
-        <StackPlayer name={'Name'} value={`${player.firstName} ${player.lastName}`} />
-        {/* <Stack gap={2} width={'100%'} textAlign={'center'}>
-          <ShotsTableHeaderStack firstRow='Name' secondRow={''} />
-          <Typography>{`${player.firstName} ${player.lastName}`}</Typography>
-        </Stack> */}
+        <StackPlayer name={'Name'} value={`${player.firstName ?? ''} ${player.lastName ?? ''}`.trim()} />
       </Grid>
       <Grid size={3}>
-        <StackPlayer name={'E-mail'} value={player.email} />
-        {/* <Stack gap={2} width={'100%'} textAlign={'center'}>
-          <ShotsTableHeaderStack firstRow='email' secondRow={''} />
-          <Typography>{player.email}</Typography>
-        </Stack> */}
+        <StackPlayer name={'E-mail'} value={player.email ?? '-'} />
       </Grid>
       <Grid size={3}>
-        <StackPlayer name={'HCP'} value={player.HCP} />
-
+        <StackPlayer name={'HCP'} value={player.HCP ?? '-'} />
       </Grid>
       <Grid size={3}>
-        <StackPlayer name={'Date of birth'} value={player.DOB.seconds ? dayjs.unix(player.DOB.seconds).format('DD/MM/YYYY') : '-'} />
-        {/* <Stack gap={2} width={'100%'} textAlign={'center'}>
-          <ShotsTableHeaderStack firstRow='Date of birth' secondRow={''} />
-          <Typography>{player.DOB.seconds ? dayjs.unix(player.DOB.seconds).format('DD/MM/YYYY') : '-'}</Typography>
-        </Stack> */}
+        <StackPlayer name={'Date of birth'} value={formattedDOB} />
       </Grid>
     </Grid>
   )
