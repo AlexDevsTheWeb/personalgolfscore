@@ -1,3 +1,4 @@
+import Header from "@/components/common/header/Header.component";
 import Spinner from "@/components/common/spinner/Spinner.component";
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import { IRoundTotalsProps, TabPanelProps } from "@/types/props.types";
@@ -53,6 +54,7 @@ const HolebyHoleTotals = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =>
 
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
+      <Header title={'statics'} />
       <AppBar position="static">
         <Tabs
           value={value}

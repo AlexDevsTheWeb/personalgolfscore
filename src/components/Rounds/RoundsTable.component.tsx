@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TableCell, TableRow } from '../../styles';
+import Header from '../common/header/Header.component';
 
 const RoundsTable = () => {
   const navigate = useNavigate();
@@ -20,100 +21,103 @@ const RoundsTable = () => {
   }
 
   return (
-    <TableContainer component={Paper} sx={{ width: '100%' }}>
-      <Table sx={{ minWidth: useDeviceDetection().isMobile ? 300 : 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            {
-              useDeviceDetection().isMobile
-                ?
-                <>
-                  <TableCell align='center' space='10px'>Date</TableCell>
-                  <TableCell align='left' space='10px' width={300} >Course</TableCell>
+    <>
+      <Header title={'Rounds'} />
+      <TableContainer component={Paper} sx={{ width: '100%' }}>
+        <Table sx={{ minWidth: useDeviceDetection().isMobile ? 300 : 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              {
+                useDeviceDetection().isMobile
+                  ?
+                  <>
+                    <TableCell align='center' space='10px'>Date</TableCell>
+                    <TableCell align='left' space='10px' width={300} >Course</TableCell>
 
-                  <TableCell align='center' space='10px'>Par</TableCell>
-                  <TableCell align='center' space='10px'>HCP</TableCell>
-                  <TableCell align='center' space='10px'>score</TableCell>
-                  <TableCell align='center' space='10px'>vs. Par</TableCell>
-                  {/* <TableCell align='right' width={20}>&nbsp;</TableCell> */}
-                </>
-                :
-                <>
-                  <TableCell align='center' space='10px'>Date</TableCell>
-                  <TableCell align='left' width={500} space='10px'>Course</TableCell>
-                  <TableCell align='left' space='10px'>Tee</TableCell>
-                  <TableCell align='center' space='10px'>Holes</TableCell>
-                  <TableCell align='center' space='10px'>Par</TableCell>
-                  <TableCell align='center' space='10px'>HCP</TableCell>
-                  <TableCell align='center' space='10px'>score</TableCell>
-                  <TableCell align='center' space='10px'>vs. Par</TableCell>
-                  {/* <TableCell align='right' width={50}>&nbsp;</TableCell> */}
-                </>
-            }
+                    <TableCell align='center' space='10px'>Par</TableCell>
+                    <TableCell align='center' space='10px'>HCP</TableCell>
+                    <TableCell align='center' space='10px'>score</TableCell>
+                    <TableCell align='center' space='10px'>vs. Par</TableCell>
+                    {/* <TableCell align='right' width={20}>&nbsp;</TableCell> */}
+                  </>
+                  :
+                  <>
+                    <TableCell align='center' space='10px'>Date</TableCell>
+                    <TableCell align='left' width={500} space='10px'>Course</TableCell>
+                    <TableCell align='left' space='10px'>Tee</TableCell>
+                    <TableCell align='center' space='10px'>Holes</TableCell>
+                    <TableCell align='center' space='10px'>Par</TableCell>
+                    <TableCell align='center' space='10px'>HCP</TableCell>
+                    <TableCell align='center' space='10px'>score</TableCell>
+                    <TableCell align='center' space='10px'>vs. Par</TableCell>
+                    {/* <TableCell align='right' width={50}>&nbsp;</TableCell> */}
+                  </>
+              }
 
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rounds.map((round) => {
-            const total = Number(round.totals.score.totals);
-            const par = Number(round.roundPar);
-            const roundPlayingHCP = Number(round.roundPlayingHCP);
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rounds.map((round) => {
+              const total = Number(round.totals.score.totals);
+              const par = Number(round.roundPar);
+              const roundPlayingHCP = Number(round.roundPlayingHCP);
 
-            const netScore = total - par;
-            const grossScore = total - (par + roundPlayingHCP);
+              const netScore = total - par;
+              const grossScore = total - (par + roundPlayingHCP);
 
-            const props = {
-              netScore,
-              grossScore
-            };
+              const props = {
+                netScore,
+                grossScore
+              };
 
-            return (
-              <TableRow key={round.id} onClick={() => handleClick(round.id.toString())} sx={{ cursor: 'pointer' }}>
-                {
-                  useDeviceDetection().isMobile
-                    ? <>
-                      <TableCell component="th" scope="row" align='center'>
-                        {dayjs(round.roundDate).format('DD/MM/YYYY')}
-                      </TableCell>
-                      <TableCell align='left'>{round.roundCourse}</TableCell>
+              return (
+                <TableRow key={round.id} onClick={() => handleClick(round.id.toString())} sx={{ cursor: 'pointer' }}>
+                  {
+                    useDeviceDetection().isMobile
+                      ? <>
+                        <TableCell component="th" scope="row" align='center'>
+                          {dayjs(round.roundDate).format('DD/MM/YYYY')}
+                        </TableCell>
+                        <TableCell align='left'>{round.roundCourse}</TableCell>
 
-                      <TableCell align='center'>{total}</TableCell>
-                      <TableCell align='center'>{roundPlayingHCP}</TableCell>
-                      <TableCell align='center'>{total}</TableCell>
-                      <TableCell align='center'>{`${netScore} | ${grossScore}`}</TableCell>
-                      {/* <TableCell align={'right'}>
+                        <TableCell align='center'>{total}</TableCell>
+                        <TableCell align='center'>{roundPlayingHCP}</TableCell>
+                        <TableCell align='center'>{total}</TableCell>
+                        <TableCell align='center'>{`${netScore} | ${grossScore}`}</TableCell>
+                        {/* <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>
                           <ArrowCircleRightRoundedIcon />
                         </Button>
                       </TableCell> */}
-                    </>
-                    : <>
-                      <TableCell component="th" scope="row" align='center'>
-                        {dayjs(round.roundDate).format('DD/MM/YYYY')}
-                      </TableCell>
-                      <TableCell align='left'>{round.roundCourse}</TableCell>
-                      <TableCell align='left'>{round.roundTee}</TableCell>
-                      <TableCell align='center'>{Number(round.roundHoles)}</TableCell>
-                      <TableCell align='center'>{total}</TableCell>
-                      <TableCell align='center'>{roundPlayingHCP}</TableCell>
-                      <TableCell align='center'>{total}</TableCell>
-                      <TableCell align='center'>
-                        <BoxRoundsTable props={props} />
-                      </TableCell>
-                      {/* <TableCell align={'right'}>
+                      </>
+                      : <>
+                        <TableCell component="th" scope="row" align='center'>
+                          {dayjs(round.roundDate).format('DD/MM/YYYY')}
+                        </TableCell>
+                        <TableCell align='left'>{round.roundCourse}</TableCell>
+                        <TableCell align='left'>{round.roundTee}</TableCell>
+                        <TableCell align='center'>{Number(round.roundHoles)}</TableCell>
+                        <TableCell align='center'>{total}</TableCell>
+                        <TableCell align='center'>{roundPlayingHCP}</TableCell>
+                        <TableCell align='center'>{total}</TableCell>
+                        <TableCell align='center'>
+                          <BoxRoundsTable props={props} />
+                        </TableCell>
+                        {/* <TableCell align={'right'}>
                         <Button onClick={() => handleClick(round.general.roundID.toString())}>
                           <ArrowCircleRightRoundedIcon />
                         </Button>
                       </TableCell> */}
-                    </>
-                }
+                      </>
+                  }
 
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table >
-    </TableContainer >
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 

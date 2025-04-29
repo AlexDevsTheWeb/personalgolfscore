@@ -21,14 +21,7 @@ const DashboardPage = () => {
     if (uid) {
       if (auth) {
         dispatch(setIsLoading(true));
-
-        //TODO: This is probably useless
-        // dispatch(getUserDetails(uid));
-        //TODO: This is probably useless
-
         dispatch(getPlayerDetails(uid));
-        // dispatch(getAllRounds(uid));
-        // dispatch(getAllRoundsTotals(uid));  // <-- TODO: Check if this is useless
         dispatch(setIsLoading(false));
       }
     }
