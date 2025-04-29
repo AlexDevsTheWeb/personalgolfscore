@@ -1,11 +1,11 @@
-import { IHoleTmpState } from '@/features/hole/holeTmp.slice';
 import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
+import { IShots } from '@/types/roundData.types';
 import { SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
 import Select from '../Select.component';
 
 interface HoleTeeShotFormProps {
-  holeData: Pick<IHoleTmpState, 'teeClub' | 'fairway' | 'driveDistance' | 'par' | 'distance'>;
+  holeData: Pick<IShots, 'teeClub' | 'fairway' | 'driveDistance' | 'par' | 'distance'>;
   teeClubs: string[];
   fairwayValues: string[];
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;

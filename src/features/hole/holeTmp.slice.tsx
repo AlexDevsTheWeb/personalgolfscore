@@ -5,23 +5,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: IShots = initialStateTmpHole;
 
-export interface IHoleTmpState {
-  teeClub: string;
-  fairway: number;
-  driveDistance: number;
-  distance: number;
-  par: number;
-  strokes: number;
-  putts: number;
-  puttsLength: number[];
-  hcp: number;
-  water: number;
-  out: number;
-  score: number;
-  bounceBack: number;
-  points: number;
-}
-
 const holeTmpSlice = createSlice({
   name: 'holeTmp',
   initialState,

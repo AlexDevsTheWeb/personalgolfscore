@@ -5,16 +5,15 @@ import { RootState } from '@/store/store';
 import BoxSingleHoleContainer from '@/styles/box/BosSingleHoleContainer.styles';
 import BoxNewHole from '@/styles/box/BoxNewHole.styles';
 import BoxSingleHoleInternal from '@/styles/box/BoxSingleHoleInternal.styles';
-import TextField from '@/styles/textfield/TextField.style';
 import { IAddSingleHoleProps } from '@/types/clubs.types';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { HoleCard, HoleCardContent, HoleCardHeader } from '../../styles';
-import PuttsGenerator from './PuttsGenerator.component';
 import SaveRoundButton from './components/SaveRoundButton.component';
-import Select from './components/Select.component';
+import HoleApproachForm from './components/form/HoleApproachForm.component';
+import HoleGeneralForm from './components/form/HoleGeneralForm.component';
+import HolePenaltiesForm from './components/form/HolePenaltiesForm.component';
 import HoleTeeShotForm from './components/form/HoleTeeShotForm.component';
 
 const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
@@ -23,7 +22,6 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
   const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
-  const { isLoading } = useSelector((store: RootState) => store.roundSaver);
 
   const [puttsLength, setPuttsLength] = useState<number[]>([]);
   const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
@@ -91,34 +89,27 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 
   const isSaveDisabled = () => {
     return tmpHole.hcp === 0 || tmpHole.par === 0 || tmpHole.strokes === 0;
-  };
+  }
+
+  const hcpList = Number(roundHoles) === 18 ? hcpList18 : hcpList9;
 
   return (
     <BoxSingleHoleContainer>
       <BoxSingleHoleInternal side='full'>
         <BoxNewHole>
-          <HoleCard>
-            <HoleCardHeader title={`Hole number: ${currentHoleNumber} - General Info`} />
-            <HoleCardContent>
-              <Select name='hcp' list={Number(roundHoles) === 18 ? hcpList18 : hcpList9} onChange={handleChange} value={tmpHole.hcp.toString()} label='Hole HCP' />
-              <Select name='par' list={parList} onChange={handleChange} value={tmpHole.par.toString()} label='Hole Par' />
-              <TextField name='distance' label="Length" type='number' onChange={e => handleChange(e)} value={tmpHole.distance !== 0 ? tmpHole.distance : ''} />
-              <TextField name='strokes' label="Score" type='number' onChange={e => handleChange(e)} value={tmpHole.strokes !== 0 ? tmpHole.strokes : ''} />
-              <TextField name='putts' label="# of putts" type='number' onChange={e => handleChange(e)} value={tmpHole.putts !== 0 ? tmpHole.putts : ''} />
-              {
-                puttsNumber.length > 0
-                  ? <PuttsGenerator puttsNumber={puttsNumber} setPuttDistance={handleChangePutts} />
-                  : <></>
-              }
-            </HoleCardContent>
-          </HoleCard>
-          <HoleCard>
-            <HoleCardHeader title='Penalties' />
-            <HoleCardContent>
-              <TextField name='water' label="Water" type='number' onChange={e => handleChange(e)} value={tmpHole.water !== 0 ? tmpHole.water : ''} width={80} />
-              <TextField name='out' label="Out" type='number' onChange={e => handleChange(e)} value={tmpHole.out !== 0 ? tmpHole.out : ''} width={80} />
-            </HoleCardContent>
-          </HoleCard>
+          <HoleGeneralForm
+            holeData={tmpHole}
+            hcpList={hcpList}
+            parList={parList}
+            puttsNumber={puttsNumber}
+            currentHoleNumber={currentHoleNumber}
+            onChange={handleChange}
+            onChangePutts={handleChangePutts}
+          />
+          <HolePenaltiesForm
+            holeData={tmpHole}
+            onChange={handleChange}
+          />
         </BoxNewHole>
 
         <BoxNewHole>
@@ -128,56 +119,14 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
             fairwayValues={fairwayValues}
             onChange={handleChange}
           />
-          {/* <HoleCard>
-            <HoleCardHeader title='Tee shot' />
-            <HoleCardContent>
-              <Select name='teeClub' list={derivedClubs.teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub ?? ''} label='Tee club' />
 
-              <Select name='fairway' list={fairwayValues} onChange={(e: any) => handleChange(e)} value={tmpHole.fairway.toString()} par={tmpHole.par} label='Fairway position' />
-              <TextField name='driveDistance' label='Distance' variant='filled' type='number' onChange={e => handleChange(e)}
-                value={
-                  tmpHole.driveDistance !== 0
-                    ? tmpHole.driveDistance
-                    : (tmpHole.par === 3 && tmpHole.distance !== 0)
-                      ? tmpHole.distance
-                      : ''
-                }
-                disabled={tmpHole.par === 3 && tmpHole.distance !== 0}
-              />
-            </HoleCardContent>
-          </HoleCard> */}
-
-          <HoleCard>
-            <HoleCardHeader title='Pitch & Chip' />
-            <HoleCardContent>
-              <TextField name='toGreenMeters' label="Mts. to green" type='number' onChange={e => handleChange(e)}
-                // value={tmpHole.driveDistance !== 0
-                //   ? tmpHole.distance - tmpHole.driveDistance
-                //   : (tmpHole.par === 3 && tmpHole.distance !== 0)
-                //     ? tmpHole.distance
-                //     : 0}
-                disabled={tmpHole.par === 3 && tmpHole.distance !== 0}
-              />
-              <Select name='toGreen' list={derivedClubs.greenClubs} onChange={(e: any) => handleChange(e)}
-                value={tmpHole.toGreen !== '' ? tmpHole.toGreen : ''}
-                //   value={tmpHole.chipClub !== ''
-                //     ? tmpHole.chipClub
-                //     : (tmpHole.par === 3 && tmpHole.teeClub !== '')
-                //       ? tmpHole.teeClub
-                //       : ''
-                // }
-                label='To green club' />
-              <Select name='greenSide' list={greenSideValues} onChange={(e: any) => handleChange(e)} value={tmpHole.greenSide !== '' ? tmpHole.greenSide : ''} label='Green side' />
-              <Select
-                name='chipClub'
-                label='Chip club'
-                list={derivedClubs.chipClubs}
-                onChange={(e: any) => handleChange(e)}
-                value={tmpHole.chipClub ?? ''}
-                disabled={tmpHole.gir}
-              />
-            </HoleCardContent>
-          </HoleCard>
+          <HoleApproachForm
+            holeData={tmpHole}
+            greenClubs={derivedClubs.greenClubs}
+            chipClubs={derivedClubs.chipClubs}
+            greenSideValues={greenSideValues}
+            onChange={handleChange}
+          />
 
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
 
