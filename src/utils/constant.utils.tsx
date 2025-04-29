@@ -583,3 +583,20 @@ export const initialFwAndIronsStatistics: IRoundFwAndIronsTotals = {
   fwShortIron: createInitialFwAndIronsTotals(), // Changed key
   fwMidIron: createInitialFwAndIronsTotals(),
 };
+
+export const CLUB_SORT_ORDER = [
+  'DRIVER',
+  'FAIRWAY WOOD', // Or 'FW', '3W', etc. - match your data
+  'HYBRID',       // Or 'HY', '3H', etc. - match your data
+  'i4',           // Or '4i', 'IRON 4', etc. - match your data
+  'i5',
+  'i6',
+  'i7',
+  'i8',
+  'i9',
+  'PITCH WEDGE',  // Or 'PW' - match your data
+  'GAP WEDGE',    // Or 'GW', 'AW' - match your data
+  'SAND WEDGE',   // Or 'SW' - match your data
+  'LOB WEDGE'     // Or 'LW' - add if needed
+  // Add any other clubs in their desired order
+].map(club => club.toUpperCase());

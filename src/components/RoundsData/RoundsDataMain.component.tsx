@@ -1,9 +1,10 @@
 import { clearRoundDetails, getRoundDetails } from '@/features/round/roundDetails.slice';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { RootState } from '@/store/store';
+import { AppDispatch, RootState } from '@/store/store';
 import BoxBetween from '@/styles/box/BoxBetween.styles';
 import { TableCell } from '@/styles/index';
 import { IDistance } from '@/types/roundData.types';
+import { CLUB_SORT_ORDER } from '@/utils/constant.utils';
 import { getClubsNames } from '@/utils/round/round.utils';
 import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -19,26 +20,9 @@ import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import RoundsDataHeader from './components/roundData/RoundsDataHeader.component';
 
-const CLUB_SORT_ORDER = [
-  'DRIVER',
-  'FAIRWAY WOOD', // Or 'FW', '3W', etc. - match your data
-  'HYBRID',       // Or 'HY', '3H', etc. - match your data
-  'i4',           // Or '4i', 'IRON 4', etc. - match your data
-  'i5',
-  'i6',
-  'i7',
-  'i8',
-  'i9',
-  'PITCH WEDGE',  // Or 'PW' - match your data
-  'GAP WEDGE',    // Or 'GW', 'AW' - match your data
-  'SAND WEDGE',   // Or 'SW' - match your data
-  'LOB WEDGE'     // Or 'LW' - add if needed
-  // Add any other clubs in their desired order
-].map(club => club.toUpperCase());
-
 const RoundsDataMain = () => {
   const params = useParams<{ roundID: string }>();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const playerId = readUserLocalStorage();
   const isMobile = useDeviceDetection().isMobile;
 
@@ -47,7 +31,7 @@ const RoundsDataMain = () => {
   const golfBag = player?.golfBag;
 
   const [openHoleByHole, setOpenHoleByHole] = useState<boolean>(false);
-  const [openDistances, setOpenDistances] = useState<boolean>(true); // State for distances visibility
+  const [openDistances, setOpenDistances] = useState<boolean>(true);
 
   useEffect(() => {
     if (params.roundID && playerId) {
