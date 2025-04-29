@@ -13,8 +13,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HoleCard, HoleCardContent, HoleCardHeader } from '../../styles';
 import PuttsGenerator from './PuttsGenerator.component';
-import Select from './Select.component';
 import SaveRoundButton from './components/SaveRoundButton.component';
+import Select from './components/Select.component';
+import HoleTeeShotForm from './components/form/HoleTeeShotForm.component';
 
 const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
   const dispatch = useDispatch<any>();
@@ -59,16 +60,6 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
       return newLengths;
     });
   }, [tmpHole.putts]);
-
-  // useEffect(() => {
-  //   dispatch(setTmpHoleData({
-  //     name: 'puttsLength',
-  //     value: puttsLength,
-  //     roundPlayingHCP,
-  //     roundHoles,
-  //     chipClubs: derivedClubs.chipClubs
-  //   } as any));
-  // }, [puttsLength, dispatch, roundPlayingHCP, roundHoles, derivedClubs.chipClubs]);
 
   const handleSaveHole = () => {
 
@@ -131,7 +122,13 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
         </BoxNewHole>
 
         <BoxNewHole>
-          <HoleCard>
+          <HoleTeeShotForm
+            holeData={tmpHole}
+            teeClubs={derivedClubs.teeClubs}
+            fairwayValues={fairwayValues}
+            onChange={handleChange}
+          />
+          {/* <HoleCard>
             <HoleCardHeader title='Tee shot' />
             <HoleCardContent>
               <Select name='teeClub' list={derivedClubs.teeClubs} onChange={(e: any) => handleChange(e)} value={tmpHole.teeClub ?? ''} label='Tee club' />
@@ -148,7 +145,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
                 disabled={tmpHole.par === 3 && tmpHole.distance !== 0}
               />
             </HoleCardContent>
-          </HoleCard>
+          </HoleCard> */}
 
           <HoleCard>
             <HoleCardHeader title='Pitch & Chip' />

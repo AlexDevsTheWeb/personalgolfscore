@@ -11,7 +11,7 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Select from '../NewRound/Select.component';
+import Select from '../NewRound/components/Select.component';
 
 interface IClubDistanceDialogProps {
   open: boolean,
