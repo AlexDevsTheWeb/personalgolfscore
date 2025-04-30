@@ -94,7 +94,7 @@ export const MobileView: React.FC<IPuttsMobileViewProps> = ({ puttsStatistics })
   const rangeEntries = Object.entries(puttsStatistics).filter(([key]) => key !== '_puttsOverall') as [string, IPuttsBreakDownStatistics][];
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
       <Accordion key="accordion-overall">
         <AccordionSummary>
           <ShotsTableHeaderStack firstRow={catConversion('_puttsOverall')} secondRow={''} />

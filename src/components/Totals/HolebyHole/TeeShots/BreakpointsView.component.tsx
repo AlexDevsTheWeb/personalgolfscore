@@ -4,13 +4,12 @@ import { ITeeshotsCategoryStatsProps, ITeeshotsDesktopViewProps, ITeeshotsMobile
 import { catConversion } from "@/utils/constant.utils";
 import { formatPerc } from "@/utils/number/number.utils";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid2, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import _ from "lodash";
 import React from "react";
 
 export const CategoryStats: React.FC<ITeeshotsCategoryStatsProps> = React.memo(({ value }) => {
-  // Helper to display value or '-'
   const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : '-';
-  // Helper to display percentage or '-'
-  const displayPercentage = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? formatPerc(val / 100) : '-'; // Assuming PCT values are 0-100
+  const displayPercentage = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? formatPerc(val / 100) : '-';
 
   return (
     <Stack spacing={1}>
@@ -49,8 +48,8 @@ export const DesktopView: React.FC<ITeeshotsDesktopViewProps> = ({ teeShots }) =
             {categories.map((categoryKey) => (
               <TableCell
                 align='center'
-                key={`header-${categoryKey}`} // Use category key
-                variant='putt' // Assuming this variant exists or is custom
+                key={`header-${categoryKey}`}
+                variant='putt'
                 sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}
               >
                 <ShotsTableHeaderStack firstRow={catConversion(categoryKey)} secondRow={''} />
@@ -63,8 +62,8 @@ export const DesktopView: React.FC<ITeeshotsDesktopViewProps> = ({ teeShots }) =
             {entries.map(([key, value]) => (
               <TableCell
                 align='center'
-                key={`data-${key}`} // Use category key
-                sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5', verticalAlign: 'top', padding: 1 }} // Added padding
+                key={`data-${key}`}
+                sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5', verticalAlign: 'top', padding: 1 }}
               >
                 <CategoryStats value={value} />
               </TableCell>
@@ -82,12 +81,11 @@ export const MobileView: React.FC<ITeeshotsMobileViewProps> = ({ teeShots }) => 
   return (
     <Box sx={{ width: '100%' }}>
       {entries.map(([key, value]) => (
-        <Accordion key={`accordion-${key}`}> {/* Use category key */}
+        <Accordion key={_.uniqueId()}>
           <AccordionSummary>
             <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
           </AccordionSummary>
           <AccordionDetails>
-            {/* Use GridAccordion if needed for consistent styling, or just Stack */}
             <CategoryStats value={value} />
           </AccordionDetails>
         </Accordion>

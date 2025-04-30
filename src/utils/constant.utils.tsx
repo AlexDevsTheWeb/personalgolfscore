@@ -407,6 +407,10 @@ export const catConversion = (string: string) => {
     case 'range80_100': result = '100-80 mts.'; break; // Renamed key
     case 'range60_80': result = '80-60 mts.'; break; // Renamed key
     case 'under60': result = '< 60 mts.'; break; // Renamed key
+    case 'over100': result = '> 100 mts.'; break; // Renamed key
+    case 'inside10081': result = '100-80 mts.'; break; // Renamed key
+    case 'inside8061': result = '80-60 mts.'; break; // Renamed key
+    case 'inside60': result = '< 60 mts.'; break; // Renamed key
     case 'chipPutter': result = 'Putter Chip'; break; // Added
     case 'chipWedge': result = 'Wedge Chip'; break; // Added
     case 'chipIron': result = 'Iron Chip'; break; // Added

@@ -3,6 +3,7 @@ import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
 import { IFwAndIronsCategoryStatsProps, IFwAndIronsDesktopViewProps, IFwAndIronsMobileViewProps } from "@/types/props.types";
 import { catConversion } from "@/utils/constant.utils";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid2, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import _ from "lodash";
 import React from "react";
 import Cross from "../components/Cross.component";
 
@@ -95,12 +96,20 @@ export const MobileView: React.FC<IFwAndIronsMobileViewProps> = ({ fwAndIrons })
         // Handle potential undefined value for fwMidIron if it's optional
         if (!value) return null;
         return (
-          <Accordion key={`accordion-${key}`}> {/* Use category key */}
+          // <Accordion key={`accordion-${key}`}> {/* Use category key */}
+          //   <AccordionSummary>
+          //     <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
+          //   </AccordionSummary>
+          //   <AccordionDetails>
+          //     {/* Use GridAccordion if needed for consistent styling, or just Stack */}
+          //     <CategoryStats value={value} />
+          //   </AccordionDetails>
+          // </Accordion>
+          <Accordion key={_.uniqueId()}>
             <AccordionSummary>
               <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
             </AccordionSummary>
             <AccordionDetails>
-              {/* Use GridAccordion if needed for consistent styling, or just Stack */}
               <CategoryStats value={value} />
             </AccordionDetails>
           </Accordion>

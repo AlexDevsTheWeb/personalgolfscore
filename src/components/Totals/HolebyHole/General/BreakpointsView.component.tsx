@@ -1,14 +1,16 @@
 import { ShotPosition } from "@/components/common/shotPositions/ShotPosition.component";
 import ShotsTableHeader from "@/components/RoundsData/components/shotsTable/ShotsTableHeader.component";
+import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 import ShotsTableTotalsBody from "@/components/RoundsData/components/shotsTable/ShotsTableTotalsBody.component";
-import AccordionSummary from "@/styles/accordion/AccordionSummary.styles";
 import GridAccordion from "@/styles/grid/GridAccordion.styles";
 import NewGridCellStats from "@/styles/grid/NewGridCellStats.style";
-import { IGeneralDesktopViewProps, IGeneralMobileViewProps, IPercentageStatDisplayProps, ISimpleStatDisplayProps } from "@/types/props.types";
+import { IGeneralDesktopViewProps, IGeneralMobileViewProps, IPercentageStatDisplayProps, ISimpleStatDisplayProps, IStatAccordionProps } from "@/types/props.types";
 import { formatPerc } from "@/utils/number/number.utils";
 import { correctVsParString } from "@/utils/shots/shots.utils";
-import { Accordion, AccordionDetails, Box, Divider, Paper, Stack, Table, TableContainer, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Paper, Stack, Table, TableContainer, Typography } from "@mui/material";
+import _ from "lodash";
 import React from "react";
+
 
 const SimpleStatDisplay: React.FC<ISimpleStatDisplayProps> = React.memo(({
   title, total, avg, inTotal, inAvg, outTotal, outAvg, totalSuffix = '', inSuffix = '', outSuffix = ''
@@ -66,6 +68,15 @@ const PercentageStatDisplay: React.FC<IPercentageStatDisplayProps> = React.memo(
   </>
 ));
 
+const StatAccordion: React.FC<IStatAccordionProps> = React.memo(({ title, subtitle, children }) => (
+  <Accordion key={_.uniqueId()}>
+    <AccordionSummary>
+      <ShotsTableHeaderStack firstRow={title} secondRow={subtitle || ''} />
+    </AccordionSummary>
+    <AccordionDetails>{children}</AccordionDetails>
+  </Accordion>
+));
+
 export const DesktopView: React.FC<IGeneralDesktopViewProps> = ({ roundTotals, dashboard }) => (
   <TableContainer component={Paper}>
     <Table sx={{ width: '100%', overflow: 'hidden' }} aria-label="general statistics table">
@@ -82,208 +93,173 @@ export const MobileView: React.FC<IGeneralMobileViewProps> = ({
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Accordion>
-        <AccordionSummary>SCORE</AccordionSummary>
-        <AccordionDetails>
-          <SimpleStatDisplay
-            title="Score"
-            total={`${score.totals} (${correctScore})`}
-            avg={score.avg}
-            inTotal={`${score.scoreIN} (${correctScoreIN})`}
-            inAvg={score.avgIN}
-            outTotal={`${score.scoreOUT} (${correctScoreOUT})`}
-            outAvg={score.avgOUT}
-          />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary>POINTS</AccordionSummary>
-        <AccordionDetails>
-          <SimpleStatDisplay
-            title="Points"
-            total={points.totals}
-            avg={points.avg}
-            inTotal={points.pointsIN}
-            inAvg={points.avgIN}
-            outTotal={points.pointsOUT}
-            outAvg={points.avgOUT}
-          />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary>FAIRWAYS</AccordionSummary>
-        <AccordionDetails>
-          <GridAccordion>
-            <NewGridCellStats size={{ xs: 6 }}>
-              <Stack sx={{ textAlign: 'center' }}>
-                <Typography>Center</Typography>
-                <Typography fontWeight={'bold'}>{fairway.fairwayCenter}</Typography>
-              </Stack>
-            </NewGridCellStats>
-            <NewGridCellStats size={{ xs: 6 }}>
-              <Stack sx={{ textAlign: 'center' }}>
-                <Typography>Total</Typography>
-                <Typography fontWeight={'bold'}>{fairway.total}</Typography>
-              </Stack>
-            </NewGridCellStats>
-          </GridAccordion>
-          <Divider sx={{ my: 1 }} />
-          <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <NewGridCellStats size={{ xs: 4 }}>
-              <Stack sx={{ textAlign: 'center' }}>
-                <Typography>Left</Typography>
-                <Typography>{`${fairway.fairwayLeft} (${formatPerc(fairway.fairwayLeft / fairway.total)})`}</Typography>
-              </Stack>
-            </NewGridCellStats>
-            <NewGridCellStats size={{ xs: 4 }}>
-              <Stack sx={{ textAlign: 'center' }}>
-                <Typography>Center</Typography>
-                <Typography>{`${fairway.fairwayCenter} (${formatPerc(fairway.fairwayCenter / fairway.total)})`}</Typography>
-              </Stack>
-            </NewGridCellStats>
-            <NewGridCellStats size={{ xs: 4 }}>
-              <Stack sx={{ textAlign: 'center' }}>
-                <Typography>Right</Typography>
-                <Typography>{`${fairway.fairwayRight} (${formatPerc(fairway.fairwayRight / fairway.total)})`}</Typography>
-              </Stack>
-            </NewGridCellStats>
-          </GridAccordion>
-          <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around', mt: 0.5 }}>
-            <NewGridCellStats size={{ xs: 4 }}><Stack sx={{ textAlign: 'center' }}><ShotPosition position={4} /></Stack></NewGridCellStats>
-            <NewGridCellStats size={{ xs: 4 }}><Stack sx={{ textAlign: 'center' }}><ShotPosition position={5} /></Stack></NewGridCellStats>
-            <NewGridCellStats size={{ xs: 4 }}><Stack sx={{ textAlign: 'center' }}><ShotPosition position={6} /></Stack></NewGridCellStats>
-          </GridAccordion>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary>GIR</AccordionSummary>
-        <AccordionDetails>
-          <SimpleStatDisplay
-            title="GIR"
-            total={gir.totals}
-            avg={gir.avg}
-            inTotal={gir.totalsIN}
-            inAvg={gir.avgIN}
-            outTotal={gir.totalsOUT}
-            outAvg={gir.avgOUT}
-          />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary>Putts/GIR</AccordionSummary>
-        <AccordionDetails>
-          <SimpleStatDisplay
-            title="Putts/GIR"
-            total={putts.puttsGir.toFixed(2)}
-            inTotal={putts.puttsGirIn.toFixed(2)}
-            outTotal={putts.puttsGirOut.toFixed(2)}
-          />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary>GIR Bogey</AccordionSummary>
-        <AccordionDetails>
-          <SimpleStatDisplay
-            title="GIR Bogey"
-            total={girBogey.totals}
-            avg={girBogey.avg}
-            inTotal={girBogey.totalsIN}
-            inAvg={girBogey.avgIN}
-            outTotal={girBogey.totalsOUT}
-            outAvg={girBogey.avgOUT}
-          />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary>Scramble</AccordionSummary>
-        {/* FIXME: subtitle="Par saved outside green" */}
-        <AccordionDetails>
-          <SimpleStatDisplay
-            title="GIR Bogey"
-            total={girBogey.totals}
-            avg={girBogey.avg}
-            inTotal={girBogey.totalsIN}
-            inAvg={girBogey.avgIN}
-            outTotal={girBogey.totalsOUT}
-            outAvg={girBogey.avgOUT}
-          />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary>Up & Down</AccordionSummary>
-        {/* FIXME: subtitle="Par saved without GIR" */}
-        <AccordionDetails>
-          <PercentageStatDisplay saved={upDown.saved} total={upDown.totals} percentage={upDown.perc} />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        {/* FIXME: subtitle="TOT IN OUT"*/}
-        <AccordionSummary>Putts</AccordionSummary>
-        <AccordionDetails>
-          <SimpleStatDisplay
-            title="Putts"
-            total={putts.totals}
-            avg={putts.avg.toFixed(2)}
-            inTotal={putts.totalsIN}
-            inAvg={putts.avgIN.toFixed(2)}
-            outTotal={putts.totalsOUT}
-            outAvg={putts.avgOUT.toFixed(2)}
-          />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        {/* FIXME: subtitle="Saved made"*/}
-        <AccordionSummary>Sand</AccordionSummary>
-        <AccordionDetails>
-          <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <NewGridCellStats size={{ xs: 6 }}>
-              <Stack sx={{ textAlign: 'center' }}>
-                <Typography>Saved</Typography>
-                <Typography fontWeight={'bold'}>{sand.saved}</Typography>
-                <Typography>{sand.avgSaved.toFixed(2)}</Typography>
-              </Stack>
-            </NewGridCellStats>
-            <NewGridCellStats size={{ xs: 6 }}>
-              <Stack sx={{ textAlign: 'center' }}>
-                <Typography>Totals</Typography>
-                <Typography fontWeight={'bold'}>{sand.totals}</Typography>
-                <Typography>{sand.avg.toFixed(2)}</Typography>
-              </Stack>
-            </NewGridCellStats>
-          </GridAccordion>
-          <GridAccordion container spacing={1}>
-            <NewGridCellStats size={{ xs: 12 }}>
-              <Stack sx={{ textAlign: 'center' }}>
-                <Typography fontWeight={'bold'}>{sand.savedPerc !== 0 ? `${sand.savedPerc.toFixed(2)}%` : '-'}</Typography>
-              </Stack>
-            </NewGridCellStats>
-          </GridAccordion>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary>Penalties</AccordionSummary>
-        <AccordionDetails>
-          <SimpleStatDisplay
-            title="Water"
-            total={water.totals || 0}
-            avg={water.avg || '-'}
-            inTotal={water.totalsIN || 0}
-            inAvg={water.avgIN || '-'}
-            outTotal={water.totalsOUT || 0}
-            outAvg={water.avgOUT || '-'}
-          />
-          <Divider sx={{ my: 1 }} />
-          <SimpleStatDisplay
-            title="Out"
-            total={out.totals || 0}
-            avg={out.avg || '-'}
-            inTotal={out.totalsIN || 0}
-            inAvg={out.avgIN || '-'}
-            outTotal={out.totalsOUT || 0}
-            outAvg={out.avgOUT || '-'}
-          />
-        </AccordionDetails>
-      </Accordion>
-    </Box >
+      <StatAccordion title="Score">
+        <SimpleStatDisplay
+          title="Score"
+          total={`${score.totals} (${correctScore})`}
+          avg={score.avg}
+          inTotal={`${score.scoreIN} (${correctScoreIN})`}
+          inAvg={score.avgIN}
+          outTotal={`${score.scoreOUT} (${correctScoreOUT})`}
+          outAvg={score.avgOUT}
+        />
+      </StatAccordion>
+
+      <StatAccordion title="Points">
+        <SimpleStatDisplay
+          title="Points"
+          total={points.totals}
+          avg={points.avg}
+          inTotal={points.pointsIN}
+          inAvg={points.avgIN}
+          outTotal={points.pointsOUT}
+          outAvg={points.avgOUT}
+        />
+      </StatAccordion>
+
+      <StatAccordion title="Fairways">
+        <GridAccordion>
+          <NewGridCellStats size={{ xs: 6 }}>
+            <Stack sx={{ textAlign: 'center' }}>
+              <Typography>Center</Typography>
+              <Typography fontWeight={'bold'}>{fairway.fairwayCenter}</Typography>
+            </Stack>
+          </NewGridCellStats>
+          <NewGridCellStats size={{ xs: 6 }}>
+            <Stack sx={{ textAlign: 'center' }}>
+              <Typography>Total</Typography>
+              <Typography fontWeight={'bold'}>{fairway.total}</Typography>
+            </Stack>
+          </NewGridCellStats>
+        </GridAccordion>
+        <Divider sx={{ my: 1 }} />
+        <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+          <NewGridCellStats size={{ xs: 4 }}>
+            <Stack sx={{ textAlign: 'center' }}>
+              <Typography>Left</Typography>
+              <Typography>{`${fairway.fairwayLeft} (${formatPerc(fairway.fairwayLeft / fairway.total)})`}</Typography>
+            </Stack>
+          </NewGridCellStats>
+          <NewGridCellStats size={{ xs: 4 }}>
+            <Stack sx={{ textAlign: 'center' }}>
+              <Typography>Center</Typography>
+              <Typography>{`${fairway.fairwayCenter} (${formatPerc(fairway.fairwayCenter / fairway.total)})`}</Typography>
+            </Stack>
+          </NewGridCellStats>
+          <NewGridCellStats size={{ xs: 4 }}>
+            <Stack sx={{ textAlign: 'center' }}>
+              <Typography>Right</Typography>
+              <Typography>{`${fairway.fairwayRight} (${formatPerc(fairway.fairwayRight / fairway.total)})`}</Typography>
+            </Stack>
+          </NewGridCellStats>
+        </GridAccordion>
+        <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around', mt: 0.5 }}>
+          <NewGridCellStats size={{ xs: 4 }}><Stack sx={{ textAlign: 'center' }}><ShotPosition position={4} /></Stack></NewGridCellStats>
+          <NewGridCellStats size={{ xs: 4 }}><Stack sx={{ textAlign: 'center' }}><ShotPosition position={5} /></Stack></NewGridCellStats>
+          <NewGridCellStats size={{ xs: 4 }}><Stack sx={{ textAlign: 'center' }}><ShotPosition position={6} /></Stack></NewGridCellStats>
+        </GridAccordion>
+      </StatAccordion>
+
+      <StatAccordion title="GIR">
+        <SimpleStatDisplay
+          title="GIR"
+          total={gir.totals}
+          avg={gir.avg}
+          inTotal={gir.totalsIN}
+          inAvg={gir.avgIN}
+          outTotal={gir.totalsOUT}
+          outAvg={gir.avgOUT}
+        />
+      </StatAccordion>
+
+      <StatAccordion title="Putts/GIR">
+        <SimpleStatDisplay
+          title="Putts/GIR"
+          total={putts.puttsGir.toFixed(2)}
+          inTotal={putts.puttsGirIn.toFixed(2)}
+          outTotal={putts.puttsGirOut.toFixed(2)}
+        />
+      </StatAccordion>
+
+      <StatAccordion title="GIR Bogey">
+        <SimpleStatDisplay
+          title="GIR Bogey"
+          total={girBogey.totals}
+          avg={girBogey.avg}
+          inTotal={girBogey.totalsIN}
+          inAvg={girBogey.avgIN}
+          outTotal={girBogey.totalsOUT}
+          outAvg={girBogey.avgOUT}
+        />
+      </StatAccordion>
+
+      <StatAccordion title="Scramble" subtitle="Par saved outside green">
+        <PercentageStatDisplay saved={scramble.saved} total={scramble.totals} percentage={scramble.perc} />
+      </StatAccordion>
+
+      <StatAccordion title="Up & Down" subtitle="Par saved without GIR">
+        <PercentageStatDisplay saved={upDown.saved} total={upDown.totals} percentage={upDown.perc} />
+      </StatAccordion>
+
+      <StatAccordion title="Putts" subtitle="TOT IN OUT">
+        <SimpleStatDisplay
+          title="Putts"
+          total={putts.totals}
+          avg={putts.avg.toFixed(2)}
+          inTotal={putts.totalsIN}
+          inAvg={putts.avgIN.toFixed(2)}
+          outTotal={putts.totalsOUT}
+          outAvg={putts.avgOUT.toFixed(2)}
+        />
+      </StatAccordion>
+
+      <StatAccordion title="Sand" subtitle="saved made">
+        <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+          <NewGridCellStats size={{ xs: 6 }}>
+            <Stack sx={{ textAlign: 'center' }}>
+              <Typography>Saved</Typography>
+              <Typography fontWeight={'bold'}>{sand.saved}</Typography>
+              <Typography>{sand.avgSaved.toFixed(2)}</Typography>
+            </Stack>
+          </NewGridCellStats>
+          <NewGridCellStats size={{ xs: 6 }}>
+            <Stack sx={{ textAlign: 'center' }}>
+              <Typography>Totals</Typography>
+              <Typography fontWeight={'bold'}>{sand.totals}</Typography>
+              <Typography>{sand.avg.toFixed(2)}</Typography>
+            </Stack>
+          </NewGridCellStats>
+        </GridAccordion>
+        <GridAccordion container spacing={1}>
+          <NewGridCellStats size={{ xs: 12 }}>
+            <Stack sx={{ textAlign: 'center' }}>
+              <Typography fontWeight={'bold'}>{sand.savedPerc !== 0 ? `${sand.savedPerc.toFixed(2)}%` : '-'}</Typography>
+            </Stack>
+          </NewGridCellStats>
+        </GridAccordion>
+      </StatAccordion>
+
+      <StatAccordion title="Penalties">
+        <SimpleStatDisplay
+          title="Water"
+          total={water.totals || 0}
+          avg={water.avg || '-'}
+          inTotal={water.totalsIN || 0}
+          inAvg={water.avgIN || '-'}
+          outTotal={water.totalsOUT || 0}
+          outAvg={water.avgOUT || '-'}
+        />
+        <Divider sx={{ my: 1 }} />
+        <SimpleStatDisplay
+          title="Out"
+          total={out.totals || 0}
+          avg={out.avg || '-'}
+          inTotal={out.totalsIN || 0}
+          inAvg={out.avgIN || '-'}
+          outTotal={out.totalsOUT || 0}
+          outAvg={out.avgOUT || '-'}
+        />
+      </StatAccordion>
+    </Box>
   );
 };
