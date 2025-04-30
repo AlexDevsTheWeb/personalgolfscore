@@ -5,8 +5,10 @@ import TableCellHolebyHole from "@/styles/table/TableCellHolebyHole.styles";
 import TableRowHolebyHole from "@/styles/table/TableRowHolebyHole.styles";
 import VsParTypography from "@/styles/typography/VsParTypography.styles";
 import { IShotsTableBody } from "@/types/props.types";
+import EditIcon from '@mui/icons-material/Edit'; // Import Edit icon
+import { IconButton, TableCell } from "@mui/material"; // Import IconButton
 
-const ShotsTableBody = ({ shot }: IShotsTableBody) => {
+const ShotsTableBody = ({ shot, onEdit }: IShotsTableBody) => {
 
   const { holeNumber, par, strokes, points, fairway, gir, girBogey, upDown, putts, sand, scramble, out, water } = shot;
 
@@ -64,8 +66,14 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
         <TableCellHolebyHole>{putts}</TableCellHolebyHole>
         <TableCellHolebyHole>{sand}</TableCellHolebyHole>
         <TableCellHolebyHole>{`${water} | ${out}`}</TableCellHolebyHole>
-
-      </TableRowHolebyHole >
+        {onEdit && (
+          <TableCell align="center" sx={{ padding: '0 5px' }}>
+            <IconButton size="small" onClick={() => onEdit(holeNumber)} aria-label={`Edit hole ${holeNumber}`}>
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </TableCell>
+        )}
+      </TableRowHolebyHole>
 
 
 

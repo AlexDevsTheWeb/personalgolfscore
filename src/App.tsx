@@ -55,6 +55,7 @@ const App: React.FC = () => {
                     <Route path="/dashboard" element={<DashboardPage />} />
                     <Route path="/clubs" element={<ClubsPage />} />
                     <Route path="/round/:roundID" element={<RoundsData />} />
+                    <Route path="/round/:roundID/hole/:holeNumber/edit" element={<RoundsData />} />
                     <Route path='/addNewRound' element={<AddNewRound />} />
                     <Route path='/statistics' element={<Statistics />} />
                   </Route>

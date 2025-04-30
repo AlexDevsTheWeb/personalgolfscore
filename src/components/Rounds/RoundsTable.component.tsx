@@ -84,11 +84,7 @@ const RoundsTable = () => {
                         <TableCell align='center'>{roundPlayingHCP}</TableCell>
                         <TableCell align='center'>{total}</TableCell>
                         <TableCell align='center'>{`${netScore} | ${grossScore}`}</TableCell>
-                        {/* <TableCell align={'right'}>
-                        <Button onClick={() => handleClick(round.general.roundID.toString())}>
-                          <ArrowCircleRightRoundedIcon />
-                        </Button>
-                      </TableCell> */}
+
                       </>
                       : <>
                         <TableCell component="th" scope="row" align='center'>
@@ -103,11 +99,7 @@ const RoundsTable = () => {
                         <TableCell align='center'>
                           <BoxRoundsTable props={props} />
                         </TableCell>
-                        {/* <TableCell align={'right'}>
-                        <Button onClick={() => handleClick(round.general.roundID.toString())}>
-                          <ArrowCircleRightRoundedIcon />
-                        </Button>
-                      </TableCell> */}
+
                       </>
                   }
 

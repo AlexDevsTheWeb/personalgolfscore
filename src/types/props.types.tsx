@@ -85,6 +85,7 @@ export interface IHoleTeeShotFormProps {
 
 export interface IShotsTableBody {
   shot: IShots,
+  onEdit?: (holeNumber: number) => void;
 }
 export interface IShotsTableHeaderProps {
   firstLabel: string;
