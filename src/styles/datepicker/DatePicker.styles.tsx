@@ -4,9 +4,9 @@ import { DatePicker as DatePickerMui } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import * as React from "react";
 interface IDatepickerProps {
-  // value: dayjs.Dayjs | null;
+  value: dayjs.Dayjs | null;
   onChange: (value: dayjs.Dayjs | null) => void;
-  // label: string;
+  label: string;
   // name: string;
 };
 

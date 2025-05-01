@@ -13,16 +13,29 @@ import roundTotalsReducer from '@/features/round/roundTotals.slice';
 import roundsReducer from '@/features/rounds/rounds.slice';
 import userReducer from '@/features/user/user.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const rootReducer = {
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['newRound', 'singleRound']
+};
+
+const rootReducerObject = {
+
   controls: controlsReducer,
   player: playerReducer,
   rounds: roundsReducer,
-  // roundsNumber: combineReducers({
-  //   roundsData: roundsDataReducer,
-  //   roundsTotals: roundsTotalsReducer,
-  //   roundsDistance: roundsDistanceReducer,
-  // }),
   roundDetails: roundDetailsReducer,
   singleRound: combineReducers({
     roundHoles: roundHolesReducer,
@@ -38,18 +51,26 @@ const rootReducer = {
   }),
   roundSaver: roundSaverReducer,
   user: userReducer,
-};
+}
+
+const combinedRootReducer = combineReducers(rootReducerObject);
+
+const persistedReducer = persistReducer(persistConfig, combinedRootReducer);
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, 'newRoundsMain/setRoundDate',],
         ignoredActionPaths: ['meta.arg', 'payload.timestamp', 'payload.datePlayed', 'payload.roundDate'],
         ignoredPaths: ['player.player.DOB', 'rounds.rounds'],
       },
     }),
+  devTools: import.meta.env.NODE_ENV !== 'production',
 });
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

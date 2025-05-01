@@ -12,7 +12,7 @@ import RoundSave from './RoundSave.component';
 
 const AddNewRoundHoles = () => {
   const dispatch = useDispatch<any>();
-  const { round } = useSelector((store: RootState) => store.newRound.newRoundMain);
+  const { round, setFirstHole } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
   const { player, isLoading: isPlayerLoading } = useSelector((store: RootState) => store.player);
@@ -38,6 +38,9 @@ const AddNewRoundHoles = () => {
     }
   }, [holes, dispatch]);
 
+  if (!setFirstHole) {
+    return null;
+  }
   const moreHolesToPlay = holesCompleted < round.roundHoles;
   if (isPlayerLoading && !player) {
     return <Spinner />;

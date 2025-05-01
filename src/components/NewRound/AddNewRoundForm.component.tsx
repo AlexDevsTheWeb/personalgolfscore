@@ -1,61 +1,59 @@
-import { setRoundMainData } from '@/features/newRound/newRoundMain.slice';
+import {
+  setRoundCourse,
+  setRoundDate,
+  setRoundHoles,
+  setRoundMainData, // Keep if needed, e.g., for setting setFirstHole flag
+  setRoundNumber,
+  setRoundPar,
+  setRoundPlayingHCP,
+  setRoundTee
+} from '@/features/newRound/newRoundMain.slice';
 import { setTotalMainData } from '@/features/newRound/newRoundTotals.slice';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { RootState } from '@/store/store';
+import { AppDispatch, RootState } from '@/store/store';
 import BoxGeneralShadow from '@/styles/box/BoxGeneralShadow.styles';
 import DatePicker from '@/styles/datepicker/DatePicker.styles';
 import TextField from '@/styles/textfield/TextField.style';
 import { INewRound } from '@/types/round.types';
 import { Box, Button } from '@mui/material';
-import dayjs from 'dayjs';
-import { useState } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
 import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
 import DistancesButton from './components/DistancesButton.component';
 
 const AddNewRoundForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>(); // Use AppDispatch type
+  // Select individual properties from the store
+  const roundData = useSelector((state: RootState) => state.newRound.newRoundMain.round);
+  const roundDateString = useSelector((state: RootState) => state.newRound.newRoundMain.round.roundDate);
   const { showDistances } = useSelector((store: RootState) => store.controls);
+  const roundDateValue = roundDateString && dayjs(roundDateString).isValid() ? dayjs(roundDateString) : null;
 
-  const [data, setData] = useState({ roundDate: '', roundCourse: '', roundHoles: 0, roundTee: '', roundPar: 0, roundPlayingHCP: 0, roundNumber: 0 })
+  const handleDateChange = (newValue: Dayjs | null) => {
+    dispatch(setRoundDate(newValue));
+  };
+
   const isMobile = useDeviceDetection().isMobile;
-  const handleSubmit = () => {
-    const { roundDate, roundCourse, roundHoles, roundTee, roundPar, roundPlayingHCP, roundNumber } = data;
-    dispatch(setRoundMainData({
-      newRound: {
-        roundDate: roundDate,
-        roundCourse: roundCourse,
-        roundHoles: roundHoles,
-        roundTee: roundTee,
-        roundPar: roundPar,
-        roundPlayingHCP: roundPlayingHCP,
-        roundNumber: roundNumber,
-      }
-    }));
-    const round: INewRound = {
-      roundCourse: roundCourse,
-      roundDate: roundDate,
-      roundNumber: roundNumber,
-      roundTee: roundTee,
-      roundPar: roundPar,
-      roundPlayingHCP: roundPlayingHCP,
-      roundHoles: roundHoles,
-    }
-    dispatch(setTotalMainData({ round }))
-  }
 
-  const handleChange = (e: any) => {
-    setData((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
-    }));
-  }
-  const handleChangeDate = (e: any) => {
-    setData((prevData) => ({
-      ...prevData,
-      roundDate: dayjs(e).format('YYYY-MM-DD'),
-    }));
-  }
+  const handleSubmit = () => {
+    // Data is already in Redux store, read it from there
+    const currentRoundData = roundData; // Use the selector result
+
+    // Dispatch action to set the flag indicating the main form is submitted
+    // You could potentially pass the whole object if setRoundMainData still needs it
+    // Or just dispatch an action specifically for the flag if setRoundMainData isn't needed elsewhere
+    dispatch(setRoundMainData({})); // Assuming this sets the setFirstHole flag internally
+
+    // Dispatch action to update totals slice with the main data
+    // Ensure INewRound type matches the structure in Redux state
+    const roundForTotals: INewRound = {
+      ...currentRoundData,
+      // Ensure roundDate is a string if needed by setTotalMainData
+      roundDate: currentRoundData.roundDate || '', // Use the string from store
+    };
+    dispatch(setTotalMainData({ round: roundForTotals }));
+  };
+
 
   return (
 
@@ -67,15 +65,46 @@ const AddNewRoundForm = () => {
       }}>
 
         {/* TODO: Maybe we can use Autocomplete in some cases instead of TextField? */}
-        <TextField name='roundCourse' label="Round course" variant="filled" onChange={e => handleChange(e)} />
-        <DatePicker onChange={e => handleChangeDate(e)} />
+        <TextField
+          name='roundCourse'
+          label="Round course"
+          variant="filled"
+          value={roundData.roundCourse || ''} // Read from store
+          onChange={e => dispatch(setRoundCourse(e.target.value))} // Dispatch action
+        />
+        <DatePicker
+          label='Round Date' // Corrected label
+          value={roundDateValue}
+          onChange={handleDateChange} // Use the existing handler
+        />
 
-        <TextField name='roundHoles' label="Holes" variant="filled" type='number' onChange={e => handleChange(e)} width={65} />
-        <TextField name='roundPar' label="Par" variant="filled" type='number' onChange={e => handleChange(e)} width={65} />
-        <TextField name='roundPlayingHCP' label="HCP" variant="filled" type='number' onChange={e => handleChange(e)} width={65} />
+        <TextField
+          name='roundHoles'
+          label="Holes"
+          variant="filled"
+          type='number'
+          value={roundData.roundHoles || ''} // Read from store
+          onChange={e => dispatch(setRoundHoles(Number(e.target.value)))} // Dispatch action
+          width={65} />
+        <TextField
+          name='roundPar'
+          label="Par"
+          variant="filled"
+          type='number'
+          value={roundData.roundPar || ''} // Read from store
+          onChange={e => dispatch(setRoundPar(Number(e.target.value)))} // Dispatch action
+          width={65} />
+        <TextField
+          name='roundPlayingHCP'
+          label="HCP"
+          variant="filled"
+          type='number'
+          value={roundData.roundPlayingHCP || ''} // Read from store
+          onChange={e => dispatch(setRoundPlayingHCP(Number(e.target.value)))} // Dispatch action
+          width={65} />
 
-        <TextField name='roundTee' label="Tee" variant="filled" onChange={e => handleChange(e)} width={80} />
-        <TextField name='roundNumber' label="Round #" variant="filled" type='number' onChange={e => handleChange(e)} width={65} />
+        <TextField name='roundTee' label="Tee" variant="filled" value={roundData.roundTee || ''} onChange={e => dispatch(setRoundTee(e.target.value))} width={80} />
+        <TextField name='roundNumber' label="Round #" variant="filled" type='number' value={roundData.roundNumber || ''} onChange={e => dispatch(setRoundNumber(Number(e.target.value)))} width={65} />
       </Box>
       <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', width: isMobile ? '100%' : 'auto', gap: '10px' }}>
         {

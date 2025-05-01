@@ -53,7 +53,7 @@ export type InitialStateRounds = {
 }
 
 export interface INewRound {
-  roundDate: any,
+  roundDate: string,
   roundCourse: string,
   roundHoles: number,
   roundTee: string,
