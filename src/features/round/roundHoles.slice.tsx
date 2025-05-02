@@ -1,6 +1,5 @@
-import { IRoundHoles, IRoundInitialState } from "@/types/roundData.types";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getSingleRoundHolesThunk } from "./roundHoles.thunk";
+import { IRoundInitialState } from "@/types/roundData.types";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: IRoundInitialState = {
   isLoading: false,
@@ -12,10 +11,6 @@ const initialState: IRoundInitialState = {
   holes: []
 }
 
-export const getSingleRoundHoles = createAsyncThunk(
-  "roundHoles/getSingleRoundHoles",
-  getSingleRoundHolesThunk
-);
 
 const roundHolesSlice = createSlice({
   name: "roundHoles",
@@ -25,22 +20,6 @@ const roundHolesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getSingleRoundHoles.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getSingleRoundHoles.fulfilled, (state, { payload }: PayloadAction<IRoundHoles[]>) => {
-        state.isLoading = false;
-        state.holes = payload;
-      })
-      .addCase(getSingleRoundHoles.rejected, (state, { payload }: any) => {
-        state.isLoading = false;
-        state.mainData = {
-          roundID: 0,
-          roundDate: "",
-          roundCourse: "",
-        };
-        state.holes = [];
-      });
   },
 });
 

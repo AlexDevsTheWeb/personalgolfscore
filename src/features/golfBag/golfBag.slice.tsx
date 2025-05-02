@@ -1,7 +1,6 @@
 import { CLUBSSELECTION } from "@/enum/shots.enum";
 import { InitialStateClubs } from "@/types/clubs.types";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getClubsThunk } from "./golfBag.thunk";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: InitialStateClubs = {
   isLoading: false,
@@ -20,11 +19,6 @@ const initialState: InitialStateClubs = {
     errorMessage: "",
   }
 };
-
-export const getClubsDetails = createAsyncThunk(
-  "golfBag/getClubsDetails",
-  getClubsThunk
-);
 
 const golfBagSlice = createSlice({
   name: "golfBag",
@@ -76,28 +70,6 @@ const golfBagSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getClubsDetails.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getClubsDetails.fulfilled, (state, { payload }: PayloadAction<any>) => {
-        state.isLoading = false;
-        state.clubs = payload.clubs;
-
-        state.totalClubs = payload.clubs.types.reduce(
-          (acc: any, curr: any) => acc + curr.details.length,
-          1
-        );
-        state.selectedClubs = payload.clubs.types.reduce(
-          (acc: any, curr: any) => acc + curr.details.filter((detail: any) => detail.selected).length,
-          0
-        );
-      })
-      .addCase(getClubsDetails.rejected, (state, { payload }: any) => {
-        state.isLoading = false;
-        state.clubs = [] as never;
-        state.error.errorCode = 100;
-        state.error.errorMessage = "ERROR!"
-      });
   },
 });
 

@@ -9,7 +9,7 @@ import { BoxPlayer, Typography } from "../../styles";
 import { updatePlayerGolfbag } from '@/features/player/player.slice';
 import { IClubsMainProps } from '@/types/clubs.types';
 import { Box, Button } from '@mui/material';
-import initialClubsData from '../../../public/data/P1_TIGERWOODS/clubs.json';
+
 
 const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +17,7 @@ const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
   const [isSaving, setIsSaving] = useState(false);
 
   const hasExistingBag = golfBag && golfBag.length > 0;
-  const dataToShow = hasExistingBag ? golfBag : (initialClubsData as IGolfBagData);
+  const dataToShow = hasExistingBag ? golfBag : null;
 
   const handleSaveInitialBag = async () => {
     if (!player?.uid) {
@@ -32,7 +32,7 @@ const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
     try {
       await dispatch(updatePlayerGolfbag({
         uid: player.uid,
-        golfBagData: initialClubsData as IGolfBagData
+        golfBagData: dataToShow as IGolfBagData
       })).unwrap();
     } catch (error) {
       console.error("Failed to save initial golf bag:", error);

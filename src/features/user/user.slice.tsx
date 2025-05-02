@@ -1,19 +1,12 @@
 import { InitialStateUser, IUser } from "@/types/user.types";
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAllRounds } from "../rounds/rounds.slice";
-import { getUserDetailsThunk } from "./user.thunk";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: InitialStateUser = {
   isLoading: false,
   user: {},
   rounds: {}
 }
-
-export const getUserDetails = createAsyncThunk(
-  "user/getUserDetails",
-  getUserDetailsThunk
-);
 
 const userSlice = createSlice({
   name: "user",
@@ -28,26 +21,7 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUserDetails.pending, (state) => { state.isLoading = true; })
-      .addCase(getUserDetails.fulfilled, (state, { payload }: PayloadAction<{ data: IUser }>) => {
-        state.isLoading = false;
-        state.user = payload.data;
-      })
-      .addCase(getUserDetails.rejected, (state, { payload }: any) => {
-        state.isLoading = false;
-        state.user = {};
-      })
-      .addCase(getAllRounds.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getAllRounds.fulfilled, (state, { payload }: any) => {
-        state.isLoading = false;
-        state.rounds = payload;
-      })
-      .addCase(getAllRounds.rejected, (state, { payload }: any) => {
-        state.isLoading = false;
-        state.rounds = {};
-      });
+
   },
 });
 
