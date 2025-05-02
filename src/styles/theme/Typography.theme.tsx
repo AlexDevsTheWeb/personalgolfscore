@@ -1,6 +1,6 @@
+import { colors } from '@mui/material';
 import React from 'react';
 import { breakpoints } from './Breakpoints.theme';
-import { colors } from './Palette.theme';
 
 export const fonts = {
   bold: 'Open Sans',
@@ -126,17 +126,13 @@ const fontFamily = [
   'sans-serif',
 ].join(',');
 
-const colorFont = colors.primary1;
-
 const allVariantsCss = {
   fontFamily,
-  color: colorFont,
 };
 
 export const typography = {
   fontFamily,
   allVariants: {
-    color: colorFont,
   },
   headline1: {
     ...allVariantsCss,
@@ -245,7 +241,7 @@ export const typography = {
     lineHeight: '140%',
     fontFamily: fonts.regular,
     fontWeight: 700,
-    color: colors.grey4,
+    color: colors.grey,
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
       fontSize: '24px',
     },

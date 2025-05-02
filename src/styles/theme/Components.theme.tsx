@@ -4,7 +4,6 @@ import { Components, Theme } from '@mui/material';
 import { fonts } from './Typography.theme';
 
 import { breakpoints } from './Breakpoints.theme';
-import palette from './Palette.theme';
 
 const components: Components<Omit<Theme, 'components'>> = {
   MuiContainer: {
@@ -108,25 +107,26 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
       {
         props: { variant: 'outlined' },
-        style: {
+        // Make the entire style value a function
+        style: ({ theme }: { theme: Theme }) => ({
           backgroundColor: 'transparent',
           justifyContent: 'flex-start',
           padding: '13px 32px',
           height: '56px',
-          borderColor: palette.primary.main,
+          borderColor: theme.palette.primary.main, // Access theme directly
           '@media(hover: hover)': {
             '&:hover': {
-              backgroundColor: palette.primary.main,
-              color: palette.white.main,
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.white.main,
             },
           },
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
             height: '42px',
             padding: '13px 22px',
             minWidth: '100%',
-            width: '100%'
+            width: '100%',
           },
-        },
+        }),
       },
       {
         props: { variant: 'contained' },
@@ -136,69 +136,23 @@ const components: Components<Omit<Theme, 'components'>> = {
           lineHeight: 0,
           height: '50px',
           marginTop: '10px',
-          '@media(hover: hover)': {
+          '@media(hover: hover)': ({ theme }: { theme: Theme }) => ({
             '&:hover': {
-              backgroundColor: palette.primary2.main,
+              backgroundColor: theme.palette.primary2.main,
             },
-          },
+          }),
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
             height: '42px',
             padding: '13px 22px',
             lineHeight: 0,
             minWidth: '100%',
             width: '100%',
-
+            // Define hover styles correctly within this media query block
             '@media(hover: hover)': {
               '&:hover': {
-                backgroundColor: palette.primary2.main,
+                backgroundColor: (theme: Theme) => theme.palette.primary2.main,
               },
             },
-          },
-        },
-      },
-      {
-        props: { variant: 'outlinedDark' },
-        style: {
-          justifyContent: 'flex-start',
-          padding: '13px 32px',
-          lineHeight: 0,
-          height: '56px',
-          background: palette.grey6.main,
-          '@media(hover: hover)': {
-            '&:hover': {
-              backgroundColor: palette.grey6.main,
-            },
-          },
-          [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-            height: '42px',
-            padding: '13px 22px',
-            lineHeight: 0,
-            backgroundColor: palette.grey6.main,
-            '@media(hover: hover)': {
-              '&:hover': {
-                backgroundColor: palette.grey6.main,
-              },
-            },
-          },
-        },
-      },
-      {
-        props: { variant: 'upload' },
-        style: {
-          borderStyle: 'dashed',
-          color: `${palette.grey3.main}`,
-          borderWidth: '2px',
-          width: '14.375rem',
-          height: '14rem',
-          '@media(hover: hover)': {
-            '&:hover': {
-              backgroundColor: 'transparent',
-            },
-          },
-          [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-            height: '12.5rem',
-            width: '12.5rem',
-            padding: '13px 22px',
           },
         },
       },
@@ -247,562 +201,563 @@ const components: Components<Omit<Theme, 'components'>> = {
         fontWeight: '700',
         textTransform: 'uppercase',
         padding: '13px 32px',
-        '@media(hover: hover)': {
+        '@media(hover: hover)': ({ theme }: { theme: Theme }) => (
           '&:hover': {
-            backgroundColor: palette.primary.main,
-          },
-        },
-      },
-      startIcon: {
-        marginLeft: 0,
-        marginRight: 0,
-      },
-    },
-  },
-  MuiLink: {
-    styleOverrides: {
-      root: {
-        fontWeight: 700,
-        fontSize: '14px',
-        lineHeight: '17px',
-        fontFamily: fonts.bold,
-      },
-    },
-  },
-
-  MuiInputLabel: {
-    styleOverrides: {
-      root: ({ ownerState }) => ({
-        letterSpacing: '0.2px',
-        ...(ownerState.shrink
-          ? {
-            fontWeight: '400',
-            color: palette.grey2.main,
-            '&.Mui-focused': {
-              color: `${ownerState.error ? palette.error.main : palette.primary.main
-                }`,
-              borderColor: palette.primary.main,
-            },
+            backgroundColor: theme.palette.primary.main,
           }
-          : {
-            fontFamily: fonts.medium,
-            fontWeight: '600',
-            fontSize: '13px',
-            color: palette.primary.main,
-            transform: 'translate(12px, 19px)',
-          }),
-      }),
+        ),
+      },
+startIcon: {
+  marginLeft: 0,
+    marginRight: 0,
+      },
     },
   },
-  MuiFormHelperText: {
-    styleOverrides: {
-      root: () => ({
-        fontStyle: 'normal',
-        fontWeight: '400',
-        fontSize: '11px',
-        letterSpacing: '0.2px',
-        color: palette.primary.main,
-      }),
-    },
+MuiLink: {
+  styleOverrides: {
+    root: {
+      fontWeight: 700,
+        fontSize: '14px',
+          lineHeight: '17px',
+            fontFamily: fonts.bold,
+      },
   },
-  MuiRadio: {
-    styleOverrides: {
-      root: {
-        padding: '2px',
+},
+
+MuiInputLabel: {
+  styleOverrides: {
+    root: ({ ownerState }) => ({
+      letterSpacing: '0.2px',
+      ...(ownerState.shrink // Use theme object for colors here
+        ? {
+          fontWeight: '400',
+          color: (theme: Theme) => theme.palette.grey2.main,
+          '&.Mui-focused': ({ theme }: { theme: Theme }) => ({
+            color: `${ownerState.error ? theme.palette.error.main : theme.palette.primary.main
+              }`,
+            borderColor: theme.palette.primary.main,
+          },
+          }
+        : {
+          fontFamily: fonts.medium,
+          fontWeight: '600',
+          fontSize: '13px',
+          color: (theme: Theme) => theme.palette.primary.main,
+          transform: 'translate(12px, 19px)',
+        }),
+    }),
+    },
+},
+MuiFormHelperText: {
+  styleOverrides: {
+    root: () => ({
+      // Use theme object for color
+      fontStyle: 'normal',
+      fontWeight: '400',
+      fontSize: '11px',
+      letterSpacing: '0.2px',
+      color: (theme: Theme) => theme.palette.primary.main,
+    }),
+    },
+},
+MuiRadio: {
+  styleOverrides: {
+    root: {
+      padding: '2px',
         marginRight: '16px',
       },
-    },
   },
-  MuiPopover: {
-    styleOverrides: {
-      root: {
-        top: 5,
+},
+MuiPopover: {
+  styleOverrides: {
+    root: {
+      top: 5,
       },
-      paper: {
-        boxShadow: 'none',
-        border: '1px solid',
-        borderColor: palette.primary.main,
-        paddingTop: '8px',
-        paddingBottom: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        rowGap: '5px',
-      },
+    paper: ({ theme }: { theme: Theme }) => ({ // Use theme object for border color
+      boxShadow: 'none',
+      border: `1px solid ${theme.palette.primary.main}`,
+      borderColor: theme.palette.primary.main, // Also use theme here
+      paddingTop: '8px',
+      paddingBottom: '8px',
+      display: 'flex',
+      flexDirection: 'column',
+      rowGap: '5px',
     },
-  },
-  MuiMenu: {
-    styleOverrides: {
-      root: {
-        paddingTop: 0,
+    },
+},
+MuiMenu: {
+  styleOverrides: {
+    root: {
+      paddingTop: 0,
         paddingBottom: 0,
-        '@media(hover: hover)': {
-          '&:hover': {
-            background: '',
+          '@media(hover: hover)': {
+        '&:hover': {
+          background: '',
           },
-        },
       },
     },
   },
-  MuiMenuItem: {
-    styleOverrides: {
-      root: {
-        background: 'inherit',
+},
+MuiMenuItem: {
+  styleOverrides: {
+    root: {
+      background: 'inherit',
         '@media(hover: hover)': {
-          '&:hover': {
-            background: 'inherit',
+        '&:hover': {
+          background: 'inherit',
           },
-          '&.Mui-selected, &.Mui-selected:hover, &.Mui-selected:active': {
-            backgroundColor: 'inherit',
+        '&.Mui-selected, &.Mui-selected:hover, &.Mui-selected:active': {
+          backgroundColor: 'inherit',
           },
-        },
       },
     },
   },
-  MuiAccordion: {
-    styleOverrides: {
-      root: {
-        boxShadow: 'none',
-        border: '1px solid #ddd',
+},
+MuiAccordion: {
+  styleOverrides: {
+    root: {
+      // Use theme variable for border
+      boxShadow: 'none',
+        border: (theme: Theme) => `1px solid ${theme.palette.divider}`, // Use theme.palette.divider
       }
-    }
-  },
-  MuiAccordionSummary: {
-    styleOverrides: {
-      root: {
-        backgroundColor: '#f5f5f5'
-      }
-    }
-  },
-  MuiList: {
-    styleOverrides: {
-      root: {
-        paddingTop: 0,
+  }
+},
+MuiAccordionSummary: {
+  styleOverrides: {
+    // Use theme variable for background // Or another suitable grey
+    root: ({ theme }) => ({ backgroundColor: theme.palette.background.paper }) // Or another suitable grey
+  }
+},
+MuiList: {
+  styleOverrides: {
+    root: {
+      paddingTop: 0,
         paddingBottom: 0,
-        '&::-webkit-scrollbar': {
-          height: '8px',
+          '&::-webkit-scrollbar': {
+        height: '8px',
           width: '8px',
-          borderRadius: '6px',
-          border: 'none',
+            borderRadius: '6px',
+              border: 'none',
         },
-        '&::-webkit-scrollbar-track': {
-          backgroundColor: 'white',
+      '&::-webkit-scrollbar-track': {
+        backgroundColor: (theme: Theme) => theme.palette.background.default, // Use theme background
           borderRadius: '6px',
         },
-        '&::-webkit-scrollbar-thumb': {
-          borderRadius: '6px',
+      '&::-webkit-scrollbar-thumb': {
+        borderRadius: '6px',
           height: '8px',
-          width: '8px',
-          backgroundColor: palette.primary.main,
+            width: '8px',
+              backgroundColor: (theme: Theme) => theme.palette.primary.main, // Use theme primary
         },
-      },
     },
   },
-  MuiListItemIcon: {
-    styleOverrides: {
-      root: {
-        marginRight: 0,
+},
+MuiListItemIcon: {
+  styleOverrides: {
+    root: {
+      marginRight: 0,
         minWidth: 10,
-        justifyContent: 'center',
-        [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-          '& svg': {
-            width: 24,
+          justifyContent: 'center',
+            [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+        '& svg': {
+          width: 24,
             height: 24,
           },
-        },
       },
     },
   },
-  MuiListItemButton: {
-    styleOverrides: {
-      root: {
-        '@media(hover: hover)': {
-          ':hover': {
-            background: 'transparent',
+},
+MuiListItemButton: {
+  styleOverrides: {
+    root: {
+      '@media(hover: hover)': {
+        ':hover': {
+          background: 'transparent',
           },
-        },
       },
     },
   },
-  MuiListItemText: {
-    styleOverrides: {
-      root: {
-        marginTop: 0,
+},
+MuiListItemText: {
+  styleOverrides: {
+    root: {
+      marginTop: 0,
         marginBottom: 0,
       },
-    },
   },
-  MuiSelect: {
-    styleOverrides: {
-      select: {
-        '@media(hover: hover)': {
-          '& :hover': {
-            background: 'white',
+},
+MuiSelect: {
+  styleOverrides: {
+    select: {
+      '@media(hover: hover)': {
+        '& :hover': {
+          background: 'white',
           },
-        },
       },
     },
   },
-  MuiPaper: {
-    styleOverrides: {
-      root: {
-        '&::-webkit-scrollbar': {
-          height: '8px',
+},
+MuiPaper: {
+  styleOverrides: {
+    root: {
+      '&::-webkit-scrollbar': {
+        height: '8px',
           width: '8px',
-          borderRadius: '6px',
-          border: 'none',
+            borderRadius: '6px',
+              border: 'none',
         },
-        '&::-webkit-scrollbar-track': {
-          backgroundColor: 'white',
+      '&::-webkit-scrollbar-track': {
+        backgroundColor: (theme: Theme) => theme.palette.background.default, // Use theme background
           borderRadius: '6px',
         },
-        '&::-webkit-scrollbar-thumb': {
-          borderRadius: '6px',
+      '&::-webkit-scrollbar-thumb': {
+        borderRadius: '6px',
           height: '8px',
-          width: '8px',
-          backgroundColor: palette.primary.main,
+            width: '8px',
+              backgroundColor: (theme: Theme) => theme.palette.primary.main, // Use theme primary
         },
-      },
     },
-    variants: [
-      {
-        props: { variant: 'light' },
-        style: {
-          display: 'flex',
-          alignItems: 'center',
-          border: `1px solid ${palette.primary.main}`,
-          padding: '10px 12px',
-          background: 'inherit',
-          height: '56px',
-          marginTop: '41px',
-          [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-            height: '48px',
-            marginTop: '30px',
-            svg: {
-              width: '16px',
-              height: '16px',
-            },
-          },
-        },
-      },
-      {
-        props: { variant: 'clubsLoft' },
-        style: {
-          backgroundColor: 'transparent',
-          display: 'flex',
-          flexDirection: 'row',
-          alignContent: 'center',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }
-      },
-      {
-        props: { variant: 'clubs' },
-        style: {
-          display: 'flex',
-          flexDirection: 'column',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          alignContent: 'flex-start',
-          padding: 0,
-          backgroundColor: 'transparent',
-          border: 'none'
-        }
-      },
-      {
-        props: { variant: 'clubsHeader' },
-        style: {
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          alignContent: 'flex-start',
-          backgroundColor: 'transparent',
-          border: 'none',
-          marginTop: 10,
-          marginBottom: 10,
-        }
-      },
-      {
-        props: { variant: 'confirm' },
-        style: {
-          borderRadius: '0px',
-          minWidth: 668,
-          [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-            minWidth: 400,
-          },
-        },
-      },
-      {
-        props: { variant: 'dialog' },
-        style: {
-          borderRadius: '0px',
-          minWidth: 668,
-          [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-            minWidth: 520,
-          },
-        },
-      },
-      {
-        props: { variant: 'uploadFileDialog' },
-        style: {
-          borderRadius: '0px',
-          minWidth: 668,
-          [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-            width: 605,
-          },
-        },
-      },
-      {
-        props: { variant: 'service' },
-        style: {},
-      },
-      {
-        props: { variant: 'payment' },
-        style: {
-          padding: '30px',
-          paddingBottom: '0px',
-          paddingTop: '0px',
-          justifyContent: 'space-between',
-          display: 'flex',
-          borderRadius: '4px',
-        },
-      },
-    ],
   },
-  MuiDialogTitle: {
-    styleOverrides: {
-      root: {
-        display: 'flex',
+  variants: [
+    {
+      props: { variant: 'light' },
+      style: {
+        display: 'flex', // Use theme object
         alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: palette.grey6.main,
-        height: 88,
-        '&.MuiDialogContent': {
-          paddingTop: 32,
-        },
+        border: (theme) => `1px solid ${theme.palette.primary.main}`, // Use theme object
+        padding: '10px 12px',
+        background: 'inherit',
+        height: '56px',
+        marginTop: '41px',
         [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-          height: 54,
-          '&.MuiDialogContent': {
-            paddingTop: 32,
-          },
+          height: '48px',
+          marginTop: '30px',
           svg: {
-            width: 24,
-            height: 24,
+            width: '16px',
+            height: '16px',
           },
         },
       },
     },
-  },
-  MuiDialogContent: {
-    styleOverrides: {
-      root: {
-        margin: 32,
-        padding: 0,
-        [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-          margin: 25,
-        },
-      },
-    },
-  },
-  MuiDialogActions: {
-    styleOverrides: {
-      root: {
+    {
+      props: { variant: 'clubsLoft' },
+      style: {
+        backgroundColor: 'transparent',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        margin: '0px 32px 32px 32px',
-        padding: 0,
-        gap: 2,
-        [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-          margin: '0px 25px 25px 25px',
-        },
-      },
+        alignContent: 'center',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
     },
-  },
-  MuiOutlinedInput: {
-    styleOverrides: {
-      input: {
-        '&::placeholder': {
-          color: palette.primary.main,
-        },
-      },
-      root: {
-        '&.Mui-focused>.MuiOutlinedInput-notchedOutline': {
-          borderWidth: 1,
-        },
-        '.MuiOutlinedInput-notchedOutline': {
-          border: `1px solid ${palette.grey4.main}`,
-        },
-      },
-    },
-  },
-  MuiIconButton: {
-    styleOverrides: {
-      root: {
-        padding: 0,
-        marginRight: 0,
-      },
-    },
-
-    defaultProps: {
-      disableFocusRipple: true,
-    },
-  },
-  MuiDrawer: {
-    styleOverrides: {
-      paper: {
-        borderRight: 0,
-        borderTopRightRadius: 10,
-        borderBottomRightRadius: 10,
-        position: 'static',
-      },
-    },
-  },
-  MuiBreadcrumbs: {
-    styleOverrides: {
-      root: {
-        marginTop: 18,
-        marginBottom: 20,
-      },
-      separator: {
+    {
+      props: { variant: 'clubs' },
+      style: {
         display: 'flex',
-        alignItems: 'center',
-        marginLeft: 4.5,
-        marginRight: 4.5,
-        width: 10,
-        height: 10,
-        [`@media (min-width:${breakpoints.values.lg - 1}px)`]: {
-          marginLeft: 4.5,
-          marginRight: 4.5,
-          width: 24,
-          height: 24,
-        },
-      },
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        alignContent: 'flex-start',
+        padding: 0,
+        backgroundColor: 'transparent',
+        border: 'none'
+      }
     },
-  },
-
-
-  //#region Table
-  MuiTableContainer: {
-    styleOverrides: {
-      root: {
-        boxShadow: 'none',
-      },
-    },
-  },
-  MuiTableBody: {
-    styleOverrides: {
-      root: {
-        //boxShadow: '50px 10px 8px 0px rgba(0, 0, 0, 1)',
-      },
-    },
-  },
-  MuiTableRow: {
-    styleOverrides: {
-      root: {},
-    },
-  },
-  MuiTableHead: {
-    styleOverrides: {
-      root: {
-        backgroundColor: palette.grey6.main,
-        color: palette.primary1.main,
-      },
-    },
-  },
-  MuiTableCell: {
-    styleOverrides: {
-      root: {
-        padding: 10,
-
-        fontSize: 13,
-        border: 0,
-
-        [`&.MuiTableCell-head`]: {
-          textTransform: 'uppercase',
-          paddingTop: 0,
-          paddingRight: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-        },
-      },
-    },
-    variants: [
-      { props: { variant: 'red' }, style: { backgroundColor: '#cf8484', color: 'black', fontWeight: 500, fontSize: 16 } },
-      { props: { variant: 'yellow' }, style: { backgroundColor: '#faf099', color: 'black', fontWeight: 500, fontSize: 16 } },
-      { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 500, fontSize: 16 } },
-      { props: { variant: 'putt' }, style: { backgroundColor: '#f0f0f0', color: 'black', fontWeight: 500, fontSize: 16 } },
-    ]
-  },
-  MuiTableFooter: {
-    styleOverrides: {
-      root: {
+    {
+      props: { variant: 'clubsHeader' },
+      style: {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignContent: 'center',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-      },
-    },
-  },
-  MuiDivider: {
-    styleOverrides: {
-      root: {
+        justifyContent: 'space-between',
+        alignContent: 'flex-start',
+        backgroundColor: 'transparent',
+        border: 'none',
         marginTop: 10,
         marginBottom: 10,
-        backgroundColor: palette.grey5.main,
+      }
+    },
+    {
+      props: { variant: 'confirm' },
+      style: {
+        borderRadius: '0px',
+        minWidth: 668,
+        [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+          minWidth: 400,
+        },
       },
     },
-  },
-
-  //#endregion Table
-  MuiGrid: {
-    styleOverrides: {
-      container: {
-        marginTop: 0,
+    {
+      props: { variant: 'dialog' },
+      style: {
+        borderRadius: '0px',
+        minWidth: 668,
+        [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+          minWidth: 520,
+        },
       },
-      item: {
-        display: 'flex',
-        flexDirection: 'row',
-        rowGap: 2,
-        columnGap: 20,
-        flexWrap: 'wrap',
-        alignContent: 'space-between',
+    },
+    {
+      props: { variant: 'uploadFileDialog' },
+      style: {
+        borderRadius: '0px',
+        minWidth: 668,
+        [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+          width: 605,
+        },
+      },
+    },
+    {
+      props: { variant: 'service' },
+      style: {},
+    },
+    {
+      props: { variant: 'payment' },
+      style: {
+        padding: '30px',
+        paddingBottom: '0px',
+        paddingTop: '0px',
         justifyContent: 'space-between',
-      },
-      root: {
-        paddingTop: 0,
-      },
-    },
-  },
-  MuiGrid2: {
-    styleOverrides: {
-      root: ({ ownerState }) =>
-        ownerState.container === true && ({
-          flexWrap: 'nowrap',
-          gap: 5
-        })
-    }
-  },
-  MuiTooltip: {
-    styleOverrides: {
-      tooltip: {
         display: 'flex',
         borderRadius: '4px',
-        background: palette.grey5.main,
-        padding: '8px',
-        color: palette.primary.main,
-        textEdge: 'cap',
-        leadingTrim: 'both',
-        fontSize: '13px',
-        fontWeight: 600,
-        lineHeight: '15px',
-        letterSpacing: '0.2px',
+      },
+    },
+  ],
+  },
+MuiDialogTitle: {
+  styleOverrides: {
+    root: {
+      display: 'flex',
+        alignItems: 'center',
+          justifyContent: 'space-between',
+            backgroundColor: (theme: Theme) => theme.palette.grey6.main, // Use theme object
+              height: 88,
+                '&.MuiDialogContent': {
+        paddingTop: 32,
+        },
+      [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+        height: 54,
+          '&.MuiDialogContent': {
+          paddingTop: 32,
+          },
+        svg: {
+          width: 24,
+            height: 24,
+          },
       },
     },
   },
+},
+MuiDialogContent: {
+  styleOverrides: {
+    root: {
+      margin: 32,
+        padding: 0,
+          [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+        margin: 25,
+        },
+    },
+  },
+},
+MuiDialogActions: {
+  styleOverrides: {
+    root: {
+      display: 'flex',
+        flexDirection: 'row',
+          justifyContent: 'flex-end',
+            alignItems: 'center',
+              margin: '0px 32px 32px 32px',
+                padding: 0,
+                  gap: 2,
+                    [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
+        margin: '0px 25px 25px 25px',
+        },
+    },
+  },
+},
+MuiOutlinedInput: {
+  styleOverrides: {
+    input: {
+      '&::placeholder': {
+        color: (theme: Theme) => theme.palette.primary.main, // Use theme object
+        },
+    },
+    root: {
+      '&.Mui-focused>.MuiOutlinedInput-notchedOutline': {
+        borderWidth: 1,
+        },
+      '.MuiOutlinedInput-notchedOutline': ({ theme }: { theme: Theme }) => ({ // Use theme object
+        border: `1px solid ${theme.palette.grey4.main}`, // Use theme here
+      },
+      },
+  },
+},
+MuiIconButton: {
+  styleOverrides: {
+    root: {
+      padding: 0,
+        marginRight: 0,
+      },
+  },
+
+  defaultProps: {
+    disableFocusRipple: true,
+    },
+},
+MuiDrawer: {
+  styleOverrides: {
+    paper: {
+      borderRight: 0,
+        borderTopRightRadius: 10,
+          borderBottomRightRadius: 10,
+            position: 'static',
+      },
+  },
+},
+MuiBreadcrumbs: {
+  styleOverrides: {
+    root: {
+      marginTop: 18,
+        marginBottom: 20,
+      },
+    separator: {
+      display: 'flex',
+        alignItems: 'center',
+          marginLeft: 4.5,
+            marginRight: 4.5,
+              width: 10,
+                height: 10,
+                  [`@media (min-width:${breakpoints.values.lg - 1}px)`]: {
+        marginLeft: 4.5,
+          marginRight: 4.5,
+            width: 24,
+              height: 24,
+        },
+    },
+  },
+},
+
+
+//#region Table
+MuiTableContainer: {
+  styleOverrides: {
+    root: {
+      boxShadow: 'none',
+      },
+  },
+},
+MuiTableBody: {
+  styleOverrides: {
+    root: {
+      //boxShadow: '50px 10px 8px 0px rgba(0, 0, 0, 1)',
+    },
+  },
+},
+MuiTableRow: {
+  styleOverrides: {
+    root: { },
+  },
+},
+MuiTableHead: {
+  styleOverrides: {
+    root: {
+      backgroundColor: (theme: Theme) => theme.palette.grey6.main, // Use theme object
+        color: (theme: Theme) => theme.palette.primary1.main, // Use theme object
+      },
+  },
+},
+MuiTableCell: {
+  styleOverrides: {
+    root: {
+      padding: 10,
+
+        fontSize: 13,
+          border: 0,
+
+            [`&.MuiTableCell-head`]: {
+        textTransform: 'uppercase',
+          paddingTop: 0,
+            paddingRight: 0,
+              paddingBottom: 0,
+                paddingLeft: 0,
+        },
+    },
+  },
+  variants: [
+    { props: { variant: 'red' }, style: { backgroundColor: '#cf8484', color: 'black', fontWeight: 500, fontSize: 16 } },
+    { props: { variant: 'yellow' }, style: { backgroundColor: '#faf099', color: 'black', fontWeight: 500, fontSize: 16 } },
+    { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 500, fontSize: 16 } },
+    { props: { variant: 'putt' }, style: { backgroundColor: '#f0f0f0', color: 'black', fontWeight: 500, fontSize: 16 } },
+  ]
+},
+MuiTableFooter: {
+  styleOverrides: {
+    root: {
+      display: 'flex',
+        flexDirection: 'row',
+          flexWrap: 'wrap',
+            alignContent: 'center',
+              justifyContent: 'flex-start',
+                alignItems: 'center',
+      },
+  },
+},
+MuiDivider: {
+  styleOverrides: {
+    root: {
+      marginTop: 10,
+        marginBottom: 10,
+          backgroundColor: (theme: Theme) => theme.palette.grey5.main, // Use theme object
+      },
+  },
+},
+
+//#endregion Table
+MuiGrid: {
+  styleOverrides: {
+    container: {
+      marginTop: 0,
+      },
+    item: {
+      display: 'flex',
+        flexDirection: 'row',
+          rowGap: 2,
+            columnGap: 20,
+              flexWrap: 'wrap',
+                alignContent: 'space-between',
+                  justifyContent: 'space-between',
+      },
+    root: {
+      paddingTop: 0,
+      },
+  },
+},
+MuiGrid2: {
+  styleOverrides: {
+    root: ({ ownerState }) =>
+      ownerState.container === true && ({
+        flexWrap: 'nowrap',
+        gap: 5
+      })
+  }
+},
+MuiTooltip: {
+  styleOverrides: {
+    tooltip: {
+      display: 'flex',
+        borderRadius: '4px',
+          background: (theme: Theme) => theme.palette.grey5.main, // Use theme object
+            padding: '8px',
+              color: (theme: Theme) => theme.palette.primary.main, // Use theme object
+                textEdge: 'cap',
+                  leadingTrim: 'both',
+                    fontSize: '13px',
+                      fontWeight: 600,
+                        lineHeight: '15px',
+                          letterSpacing: '0.2px',
+      },
+  },
+},
 
 };
 
