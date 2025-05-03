@@ -8,7 +8,6 @@ import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
 import { ListItemIcon, ListItemText, styled } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
@@ -22,7 +21,6 @@ import _ from 'lodash';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import Footer from './Footer.component';
 import User from './User.component';
 
 export default function DrawerAppBar(props: IMainLayoutProps) {
@@ -63,19 +61,18 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
                   px: 2.5,
                 }}
                 href={link.link}
-
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
                     justifyContent: 'center',
-                    marginRight: '10px'
+                    marginRight: '10px',
+                    color: 'text.primary'
                   }}
                 >
                   <SvgIcon component={link.icon} inheritViewBox />
                 </ListItemIcon>
-                <ListItemText primary={link.name} />
-                {/* <Typography>{link.name}</Typography> */}
+                <ListItemText primary={link.name} sx={{ color: 'text.primary' }} /> {/* Use standard primary text color */}
 
               </ListItemButton>
             </ListItem>
@@ -90,7 +87,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   return (
     <BoxFooter sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh' }}>
       <Box>
-        <CssBaseline />
+        {/* CssBaseline is already applied in ThemeSetup, no need to repeat here */}
         <AppBar component="nav">
           <Toolbar sx={{ display: 'flex' }}>
             <IconButton
@@ -105,6 +102,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
             <Typography
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+              color="inherit" // Inherit color from AppBar (usually contrastText)
             >
               Personal Golf Score
             </Typography>
@@ -125,7 +123,8 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
                             minWidth: 0,
 
                             justifyContent: 'center',
-                            marginRight: '10px'
+                            marginRight: '10px',
+                            color: 'inherit'
                           }}
                         >
                           <SvgIcon component={link.icon} inheritViewBox />
@@ -148,7 +147,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
             open={mobileOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               display: { xs: 'block', sm: 'none' },
@@ -164,7 +163,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
         </Box>
       </Box>
       <Box>
-        <Footer />
+        {/* Footer is already rendered within SharedLayout, no need to repeat here if MainLayout is used by SharedLayout */}
       </Box>
     </BoxFooter>
   );

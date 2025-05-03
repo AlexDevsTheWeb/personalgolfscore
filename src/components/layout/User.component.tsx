@@ -1,9 +1,11 @@
-import { resetUser } from "@/features/user/user.slice";
+import { resetUser, selectCurrentUserThemePreference, updateUserThemePreference } from "@/features/user/user.slice";
+import { AppDispatch } from "@/store/store";
 import StackPlayerMenu from "@/styles/stack/StackPlayerMenu.styles";
+import { ThemeMode } from "@/types/user.types";
 import { deleteUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { stringAvatar } from "@/utils/user/user.utils";
 import { Logout, Settings } from "@mui/icons-material";
-import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Tooltip } from "@mui/material";
+import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Switch, Tooltip } from "@mui/material";
 import { getAuth, signOut } from "firebase/auth";
 import _ from "lodash";
 import React, { useState } from "react";
@@ -12,13 +14,17 @@ import { useNavigate } from "react-router-dom";
 
 
 const User = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { user } = useSelector((store: any) => store.user);
   const { player, isLoading } = useSelector((store: any) => store.player);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  // Theme switching logic
+  const currentThemeMode = useSelector(selectCurrentUserThemePreference);
+  const playerId = player?.uid; // Get player ID for the thunk
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -28,7 +34,7 @@ const User = () => {
   };
   const handleSettings = () => {
     setAnchorEl(null);
-    navigate('/settings');
+    navigate('/settings'); // Keep navigation to settings page
     //TODO: next go to player/user settings
   }
 
@@ -43,6 +49,17 @@ const User = () => {
     }).catch((error) => {
       // An error happened.
     });
+  };
+
+  const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newMode: ThemeMode = event.target.checked ? 'dark' : 'light';
+
+    if (playerId) {
+      dispatch(updateUserThemePreference({ playerId, theme: newMode }));
+    } else {
+      console.warn("Player ID not found, couldn't save theme preference to Firestore.");
+    }
+    // No need to close the menu here, allows seeing the change
   };
 
   return (
@@ -108,6 +125,19 @@ const User = () => {
 
           <Divider />
 
+          {/* Theme Switch MenuItem */}
+          <MenuItem onClick={(e) => e.stopPropagation()} sx={{ justifyContent: 'space-between' }}>
+            Theme
+            <Switch
+              size="small"
+              checked={currentThemeMode === 'dark'}
+              onChange={handleThemeChange}
+              disabled={!playerId}
+              onClick={(e) => e.stopPropagation()} // Prevent menu close on switch click
+            />
+          </MenuItem>
+
+          {/* Settings MenuItem */}
           <MenuItem onClick={handleSettings}
             sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
             <ListItemIcon sx={{ marginLeft: '-10px' }}>
@@ -115,6 +145,8 @@ const User = () => {
             </ListItemIcon>
             Settings
           </MenuItem>
+
+          {/* Logout MenuItem */}
           <MenuItem onClick={handleLogout}
             sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
             <ListItemIcon sx={{ marginLeft: '-10px' }}>

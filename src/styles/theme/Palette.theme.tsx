@@ -1,24 +1,5 @@
 
 export const lightColors = {
-  // menubar: '#000000',
-  // primary1: '#494949',
-  // primary2: '#091f5a',
-  // primary3: '#7888a5',
-  // black: '#111111',
-  // grey1: '#626262',
-  // grey2: '#979797',
-  // grey3: '#b4b4b4',
-  // grey4: '#dbdce0',
-  // grey5: '#e9eaed',
-  // grey6: '#f7f8f9',
-  // white: '#ffffff',
-  // success: '#55a63a',
-  // warning: '#da9d00',
-  // error: '#902727',
-  // notes: '#f0f5af',
-  // behaviours: '#cbe3ff',
-  // overMid: '#078800',
-  // underMid: '#f25448'
   menubar: '#0969da', // Correct GitHub Accent Blue
   primary1: '#1f2328', // GitHub Primary Text
   primary2: '#0969da', // Correct GitHub Accent Blue
@@ -41,25 +22,6 @@ export const lightColors = {
 }
 
 export const darkColors = {
-  // menubar: '#bbdefb', // Lighter blue for dark mode primary
-  // primary1: '#e0e0e0', // Light grey text for dark mode
-  // primary2: '#90caf9', // Lighter accent blue
-  // primary3: '#a6a6a6', // Lighter grey accent
-  // black: '#ffffff', // White becomes the "black" equivalent
-  // grey1: '#bdbdbd',
-  // grey2: '#9e9e9e',
-  // grey3: '#757575',
-  // grey4: '#424242', // Darker grey for borders/dividers
-  // grey5: '#303030', // Darker grey for backgrounds
-  // grey6: '#212121', // Very dark grey for main background
-  // white: '#121212', // Dark becomes the "white" equivalent
-  // success: '#81c784', // Lighter success green
-  // warning: '#ffb74d', // Lighter warning orange
-  // error: '#e57373', // Lighter error red
-  // notes: '#424242', // Darker notes background
-  // behaviours: '#1e88e5', // Adjust behavior color if needed
-  // overMid: '#a5d6a7', // Lighter green
-  // underMid: '#ef9a9a' // Lighter red
   menubar: '#58a6ff', // GitHub Dark Accent Blue
   primary1: '#e6edf3', // GitHub Dark Primary Text
   primary2: '#58a6ff', // GitHub Dark Accent Blue (can adjust)

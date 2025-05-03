@@ -130,31 +130,33 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
       {
         props: { variant: 'contained' },
-        style: {
+        // Make the style a function to access the theme
+        style: ({ theme }: { theme: Theme }) => ({
           justifyContent: 'center',
           padding: '13px 32px',
           lineHeight: 0,
           height: '50px',
           marginTop: '10px',
-          '@media(hover: hover)': ({ theme }: { theme: Theme }) => ({
+          // Set background based on theme mode
+          // Use primary.main for light, maybe a grey for dark? Example: grey[700] or a custom grey
+          backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main,
+          // Ensure text color contrasts well with the background
+          color: theme.palette.getContrastText(theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main),
+          '@media(hover: hover)': {
             '&:hover': {
-              backgroundColor: theme.palette.primary2.main,
+              // Adjust hover based on theme mode if needed
+              // Example: use grey3 for dark hover, primary2 for light hover
+              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey3.main : theme.palette.primary2.main,
             },
-          }),
+          },
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
             height: '42px',
             padding: '13px 22px',
             lineHeight: 0,
             minWidth: '100%',
             width: '100%',
-            // Define hover styles correctly within this media query block
-            '@media(hover: hover)': {
-              '&:hover': {
-                backgroundColor: (theme: Theme) => theme.palette.primary2.main,
-              },
-            },
           },
-        },
+        }),
       },
       {
         props: { variant: 'roundDetails' },
