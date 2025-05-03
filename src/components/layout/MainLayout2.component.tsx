@@ -49,7 +49,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography sx={{ my: 2 }}>
+      <Typography sx={{ my: 2, color: 'text.primary' }}>
         Personal Golf Scorer
       </Typography>
       <Divider />
@@ -104,7 +104,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
             </IconButton>
             <Typography
               component="div"
-              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: '#ffffff' }}
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
             >
               Personal Golf Score
             </Typography>
@@ -123,14 +123,14 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
                         <ListItemIcon
                           sx={{
                             minWidth: 0,
-                            color: '#ffffff !important',
+
                             justifyContent: 'center',
                             marginRight: '10px'
                           }}
                         >
                           <SvgIcon component={link.icon} inheritViewBox />
                         </ListItemIcon>
-                        <Typography sx={{ color: '#ffffff' }}>{link.name}</Typography>
+                        <Typography>{link.name}</Typography>
 
                       </ListItemButton>
                     </ListItem>

@@ -10,4 +10,7 @@ export interface InitialStateUser {
   isLoading: boolean;
   user: IUser;
   rounds?: IUser;
+  themePreference: ThemeMode;
 }
+
+export type ThemeMode = 'light' | 'dark';

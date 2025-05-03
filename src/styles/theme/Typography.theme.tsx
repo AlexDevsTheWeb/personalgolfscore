@@ -1,4 +1,4 @@
-import { colors } from '@mui/material';
+import { Theme } from '@mui/material/styles'; // Import Theme
 import React from 'react';
 import { breakpoints } from './Breakpoints.theme';
 
@@ -216,8 +216,9 @@ export const typography = {
     fontFamily: fonts.regular,
     fontStyle: 'normal',
     fontWeight: 700,
-    color: '#840000b3',
-    textTransform: 'uppercase',
+    // Color will be inherited from theme.palette.text.primary
+    // Use const assertion to explicitly type 'uppercase'
+    textTransform: 'uppercase' as const,
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
       fontSize: '16px',
       lineHeight: 'normal',
@@ -241,7 +242,7 @@ export const typography = {
     lineHeight: '140%',
     fontFamily: fonts.regular,
     fontWeight: 700,
-    color: colors.grey,
+    // color: colors.grey, // Remove this - let it inherit from theme.palette.text
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
       fontSize: '24px',
     },

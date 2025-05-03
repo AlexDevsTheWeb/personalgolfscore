@@ -16,7 +16,7 @@ interface ThemeProviderProps {
 
 export const ThemeModeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   // Initialize state, potentially reading from localStorage or system preference
-  const [mode, setMode] = useState<ThemeMode>('light'); // Default to light
+  const [mode, setMode] = useState<ThemeMode>('dark'); // Default to light
 
   const toggleTheme = () => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));

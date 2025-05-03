@@ -7,7 +7,6 @@ import {
 } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { ThemeModeProvider, useThemeMode } from 'context/Theme.context';
 import 'dayjs/locale/it';
 import deepmerge from 'deepmerge'; // Import deepmerge
 import React, { Suspense } from 'react';
@@ -28,10 +27,13 @@ import Statistics from './pages/Statistics.page';
 import { persistor, store } from './store/store';
 import { breakpoints } from './styles/theme/Breakpoints.theme';
 import components from './styles/theme/Components.theme';
-import { darkPalette, lightPalette } from './styles/theme/Palette.theme'; // Corrected import path if needed
+import { darkPalette, lightPalette } from './styles/theme/Palette.theme';
 import { OptionsDatepicker } from './styles/theme/ThemeStyle.theme';
 import { systemComponentOptions } from './styles/theme/ThemeSystem.theme';
 import { typography } from './styles/theme/Typography.theme';
+
+import { ThemeModeProvider, useThemeMode } from './context/Theme.context';
+import SettingsPage from './pages/Settings.page';
 
 const App: React.FC = () => {
   return (
@@ -59,6 +61,7 @@ const App: React.FC = () => {
                     <Route path="/round/:roundID" element={<RoundsData />} />
                     <Route path='/addNewRound' element={<AddNewRound />} />
                     <Route path='/statistics' element={<Statistics />} />
+                    <Route path='/settings' element={<SettingsPage />} />
                   </Route>
                   <Route path="*" element={<Error />} />
                   <Route path="/error" element={<Error />} />
@@ -83,7 +86,8 @@ const ThemeSetup: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         palette: mode === 'light' ? lightPalette : darkPalette,
         typography,
         breakpoints,
-        components: deepmerge(components, systemComponentOptions),
+        // Provide fallback empty objects to satisfy deepmerge types
+        components: deepmerge(components || {}, systemComponentOptions || {}),
         datepicker: OptionsDatepicker.Margin, // Ensure OptionsDatepicker is 
       }),
     [mode] // Recreate theme only when mode changes

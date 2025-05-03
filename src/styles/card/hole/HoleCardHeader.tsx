@@ -10,7 +10,7 @@ const StyledCardHeader = styled(CardHeaderMui)<IReactCardHeaderProps>(() => ({
 
 export const HoleCardHeader: React.FC<IReactCardHeaderProps> = props => {
   return (
-    <StyledCardHeader {...props} titleTypographyProps={{ fontSize: '14px', color: '#ffffff', textTransform: 'uppercase' }}>
+    <StyledCardHeader {...props} titleTypographyProps={{ fontSize: '14px', textTransform: 'uppercase' }}>
       {props.children}
     </StyledCardHeader>
   )

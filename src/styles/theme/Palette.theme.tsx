@@ -1,70 +1,84 @@
-// import { colors } from "@mui/material";
-
-
-// export const colors = {
-//   menubar: '#000000',
-//   primary1: '#494949',
-//   primary2: '#091f5a',
-//   primary3: '#7888a5',
-//   black: '#111111',
-//   grey1: '#626262',
-//   grey2: '#979797',
-//   grey3: '#b4b4b4',
-//   grey4: '#dbdce0',
-//   grey5: '#e9eaed',
-//   grey6: '#f7f8f9',
-//   white: '#ffffff',
-//   success: '#55a63a',
-//   warning: '#da9d00',
-//   error: '#902727',
-//   notes: '#f0f5af',
-//   behaviours: '#cbe3ff',
-//   overMid: '#078800',
-//   underMid: '#f25448'
-// };
 
 export const lightColors = {
-  menubar: '#000000',
-  primary1: '#494949',
-  primary2: '#091f5a',
-  primary3: '#7888a5',
-  black: '#111111',
-  grey1: '#626262',
-  grey2: '#979797',
-  grey3: '#b4b4b4',
-  grey4: '#dbdce0',
-  grey5: '#e9eaed',
-  grey6: '#f7f8f9',
-  white: '#ffffff',
-  success: '#55a63a',
-  warning: '#da9d00',
-  error: '#902727',
-  notes: '#f0f5af',
-  behaviours: '#cbe3ff',
-  overMid: '#078800',
-  underMid: '#f25448'
+  // menubar: '#000000',
+  // primary1: '#494949',
+  // primary2: '#091f5a',
+  // primary3: '#7888a5',
+  // black: '#111111',
+  // grey1: '#626262',
+  // grey2: '#979797',
+  // grey3: '#b4b4b4',
+  // grey4: '#dbdce0',
+  // grey5: '#e9eaed',
+  // grey6: '#f7f8f9',
+  // white: '#ffffff',
+  // success: '#55a63a',
+  // warning: '#da9d00',
+  // error: '#902727',
+  // notes: '#f0f5af',
+  // behaviours: '#cbe3ff',
+  // overMid: '#078800',
+  // underMid: '#f25448'
+  menubar: '#0969da', // Correct GitHub Accent Blue
+  primary1: '#1f2328', // GitHub Primary Text
+  primary2: '#0969da', // Correct GitHub Accent Blue
+  primary3: '#656d76', // GitHub Muted Text
+  black: '#1f2328', // GitHub Primary Text (as black equivalent)
+  grey1: '#656d76', // GitHub Muted Text
+  grey2: '#8c959f', // GitHub Intermediate Grey
+  grey3: '#d0d7de', // GitHub Border Grey (lighter)
+  grey4: '#d0d7de', // GitHub Border Grey
+  grey5: '#f6f8fa', // GitHub Subtle Background
+  grey6: '#ffffff', // GitHub Default Background
+  white: '#ffffff', // GitHub Default Background (as white equivalent)
+  success: '#1a7f37', // GitHub Success Green
+  warning: '#9a6700', // GitHub Attention Yellow/Orange
+  error: '#d1242f', // GitHub Danger Red
+  notes: '#fff8c5', // Light yellow - adjust as needed
+  behaviours: '#ddf4ff', // Light blue - adjust as needed
+  overMid: '#dafbe1', // Light green - adjust as needed
+  underMid: '#ffebe9', // Light red - adjust as needed
 }
 
 export const darkColors = {
-  menubar: '#bbdefb', // Lighter blue for dark mode primary
-  primary1: '#e0e0e0', // Light grey text for dark mode
-  primary2: '#90caf9', // Lighter accent blue
-  primary3: '#a6a6a6', // Lighter grey accent
-  black: '#ffffff', // White becomes the "black" equivalent
-  grey1: '#bdbdbd',
-  grey2: '#9e9e9e',
-  grey3: '#757575',
-  grey4: '#424242', // Darker grey for borders/dividers
-  grey5: '#303030', // Darker grey for backgrounds
-  grey6: '#212121', // Very dark grey for main background
-  white: '#121212', // Dark becomes the "white" equivalent
-  success: '#81c784', // Lighter success green
-  warning: '#ffb74d', // Lighter warning orange
-  error: '#e57373', // Lighter error red
-  notes: '#424242', // Darker notes background
-  behaviours: '#1e88e5', // Adjust behavior color if needed
-  overMid: '#a5d6a7', // Lighter green
-  underMid: '#ef9a9a' // Lighter red
+  // menubar: '#bbdefb', // Lighter blue for dark mode primary
+  // primary1: '#e0e0e0', // Light grey text for dark mode
+  // primary2: '#90caf9', // Lighter accent blue
+  // primary3: '#a6a6a6', // Lighter grey accent
+  // black: '#ffffff', // White becomes the "black" equivalent
+  // grey1: '#bdbdbd',
+  // grey2: '#9e9e9e',
+  // grey3: '#757575',
+  // grey4: '#424242', // Darker grey for borders/dividers
+  // grey5: '#303030', // Darker grey for backgrounds
+  // grey6: '#212121', // Very dark grey for main background
+  // white: '#121212', // Dark becomes the "white" equivalent
+  // success: '#81c784', // Lighter success green
+  // warning: '#ffb74d', // Lighter warning orange
+  // error: '#e57373', // Lighter error red
+  // notes: '#424242', // Darker notes background
+  // behaviours: '#1e88e5', // Adjust behavior color if needed
+  // overMid: '#a5d6a7', // Lighter green
+  // underMid: '#ef9a9a' // Lighter red
+  menubar: '#58a6ff', // GitHub Dark Accent Blue
+  primary1: '#e6edf3', // GitHub Dark Primary Text
+  primary2: '#58a6ff', // GitHub Dark Accent Blue (can adjust)
+  primary3: '#7d8590', // GitHub Dark Muted Text
+  black: '#e6edf3', // GitHub Dark Primary Text (as black equivalent)
+  grey1: '#7d8590', // GitHub Dark Muted Text
+  grey2: '#6e7681', // GitHub Dark Intermediate Grey
+  grey3: '#484f58', // GitHub Dark Border Grey (lighter)
+  grey4: '#30363d', // GitHub Dark Border Grey
+  grey5: '#161b22', // GitHub Dark Subtle Background
+  grey6: '#0d1117', // GitHub Dark Default Background
+  white: '#0d1117', // GitHub Dark Default Background (as white equivalent)
+  success: '#3fb950', // GitHub Dark Success Green
+  warning: '#d29922', // GitHub Dark Attention Yellow/Orange
+  error: '#f85149', // GitHub Dark Danger Red
+  notes: '#4d4400', // Dark yellow - adjust as needed
+  behaviours: '#103d60', // Dark blue - adjust as needed
+  overMid: '#104d20', // Dark green - adjust as needed
+  underMid: '#631710', // Dark red - adjust as needed
 };
 
 const defaultValues = {

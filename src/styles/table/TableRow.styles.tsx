@@ -1,12 +1,11 @@
 import { TableRow as TableRowMui, TableRowProps as TableRowPropsMui, styled } from "@mui/material";
 import * as React from "react";
-import palette from "../theme/Palette.theme";
 
 type TableRowProps = TableRowPropsMui & {};
 
 const StyledTableRow = styled(TableRowMui)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: palette.grey5.main,
+    backgroundColor: theme.palette.divider,
   },
   '&:last-child td, &:last-child th': {
   },

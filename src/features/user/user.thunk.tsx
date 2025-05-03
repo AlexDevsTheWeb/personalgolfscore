@@ -1,5 +1,8 @@
-import { IUser } from "@/types/user.types";
+import { IUser, ThemeMode } from "@/types/user.types";
 import authFetch, { checkForUnauthorizedResponse } from "@/utils/axios/axiox.utils";
+import { db } from '@/utils/firebase/firebase.utils';
+import { doc, updateDoc } from "firebase/firestore";
+
 // import { db } from "@/utils/firebase/firebase.utils";
 // import { collection, documentId, getDocs, query, where } from "firebase/firestore";
 
@@ -39,4 +42,18 @@ export const getUserDetailsThunk = async (uid: string, thunkAPI: any) => {
   // FIXME: remove it when everything is fine
 
 
+};
+
+// Modify to accept a single object argument
+export const updateUserThemePreferenceThunk = async (
+  { playerId, theme }: { playerId: string, theme: ThemeMode },
+  thunkAPI: any // Keep thunkAPI if needed for dispatching or accessing state
+): Promise<void> => {
+  if (!playerId) return; // Don't proceed if playerId is invalid
+  const playerDocRef = doc(db, 'players', playerId);
+  try {
+    await updateDoc(playerDocRef, { themePreference: theme });
+  } catch (error) {
+    console.error("Error updating theme preference in Firestore: ", error);
+  }
 };
