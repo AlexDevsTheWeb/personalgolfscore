@@ -4,9 +4,7 @@ import * as React from "react";
 type TableRowProps = TableRowPropsMui & {};
 
 const StyledTableRow = styled(TableRowMui)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.divider,
-  },
+  // Removed alternating background color for theme consistency
   '&:last-child td, &:last-child th': {
   },
 }));

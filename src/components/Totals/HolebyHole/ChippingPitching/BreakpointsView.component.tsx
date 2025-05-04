@@ -22,7 +22,9 @@ export const DesktopView: React.FC<IChipDesktopViewProps> = ({ chipPitch }) => {
                   align='center'
                   key={`header-${categoryKey}`}
                   variant='putt'
-                  sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}
+                  sx={(theme) => ({
+                    padding: '0px'
+                  })}
                 >
                   <ShotsTableHeaderStack firstRow={clubType as string} secondRow={''} />
                 </TableCell>
@@ -37,7 +39,11 @@ export const DesktopView: React.FC<IChipDesktopViewProps> = ({ chipPitch }) => {
                 <TableCell
                   align='center'
                   key={`data-${key}`}
-                  sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5', verticalAlign: 'top', padding: 1 }}
+                  sx={(theme) => ({
+                    borderLeft: `1px solid ${theme.palette.divider}`,
+                    borderBottom: `1px solid ${theme.palette.divider}`,
+                    verticalAlign: 'top', padding: 1
+                  })}
                 >
                   <CategoryStats value={value} />
                 </TableCell>

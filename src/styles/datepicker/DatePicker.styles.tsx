@@ -12,12 +12,13 @@ interface IDatepickerProps {
 
 const StyledDatePicker = styled(DatePickerMui)<IDatepickerProps>(({ theme }) => ({
   '.MuiInputBase-root': {
-    color: 'black',
+    color: theme.palette.text.primary, // Use theme text color
     borderRadius: '0px',
     borderWidth: '1px',
     border: 'none',
-    borderBottom: '1px solid black',
-    backgroundColor: '#e9eaeb',
+    // Use theme divider color for the bottom border
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    backgroundColor: theme.palette.grey5.main, // Use a theme grey for background
     height: '56px',
     width: useDeviceDetection().isMobile ? '180px' : '200px'
   }

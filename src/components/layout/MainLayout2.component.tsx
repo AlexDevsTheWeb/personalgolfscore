@@ -21,6 +21,7 @@ import _ from 'lodash';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import ThemeSwitcher from '../common/ThemeSwitcher.component'; // Import the new component
 import User from './User.component';
 
 export default function DrawerAppBar(props: IMainLayoutProps) {
@@ -101,8 +102,9 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
             </IconButton>
             <Typography
               component="div"
+              variant="mainAppTitle"
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-              color="inherit" // Inherit color from AppBar (usually contrastText)
+              color="inherit"
             >
               Personal Golf Score
             </Typography>
@@ -135,6 +137,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
                     </ListItem>
                   );
                 })}
+                <ThemeSwitcher /> {/* Add the ThemeSwitcher here */}
                 <User />
               </List>
             </Box>

@@ -1,8 +1,8 @@
 
 export const lightColors = {
-  menubar: '#0969da', // Correct GitHub Accent Blue
+  menubar: '#3c699e', // Correct GitHub Accent Blue
   primary1: '#1f2328', // GitHub Primary Text
-  primary2: '#0969da', // Correct GitHub Accent Blue
+  primary2: '#3c699e', // Correct GitHub Accent Blue
   primary3: '#656d76', // GitHub Muted Text
   black: '#1f2328', // GitHub Primary Text (as black equivalent)
   grey1: '#656d76', // GitHub Muted Text
@@ -22,7 +22,7 @@ export const lightColors = {
 }
 
 export const darkColors = {
-  menubar: '#58a6ff', // GitHub Dark Accent Blue
+  menubar: '#3b7dc9', // GitHub Dark Accent Blue
   primary1: '#e6edf3', // GitHub Dark Primary Text
   primary2: '#58a6ff', // GitHub Dark Accent Blue (can adjust)
   primary3: '#7d8590', // GitHub Dark Muted Text

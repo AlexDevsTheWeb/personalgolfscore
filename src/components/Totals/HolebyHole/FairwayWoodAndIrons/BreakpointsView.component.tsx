@@ -56,9 +56,11 @@ export const DesktopView: React.FC<IFwAndIronsDesktopViewProps> = ({ fwAndIrons 
             {categories.map((categoryKey) => (
               <TableCell
                 align='center'
-                key={`header-${categoryKey}`} // Use category key
-                variant='putt' // Assuming this variant exists or is custom
-                sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}
+                key={`header-${categoryKey}`}
+                variant='putt'
+                sx={(theme) => ({
+                  padding: '0px'
+                })}
               >
                 <ShotsTableHeaderStack firstRow={catConversion(categoryKey)} secondRow={''} />
               </TableCell>
@@ -68,13 +70,17 @@ export const DesktopView: React.FC<IFwAndIronsDesktopViewProps> = ({ fwAndIrons 
         <TableBody>
           <TableRow>
             {entries.map(([key, value]) => {
-              // Handle potential undefined value for fwMidIron if it's optional
               if (!value) return null;
               return (
                 <TableCell
                   align='center'
-                  key={`data-${key}`} // Use category key
-                  sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5', verticalAlign: 'top', padding: 1 }} // Added padding
+                  key={`data-${key}`}
+
+                  sx={(theme) => ({
+                    borderLeft: `1px solid ${theme.palette.divider}`,
+                    borderBottom: `1px solid ${theme.palette.divider}`,
+                    verticalAlign: 'top', padding: 1
+                  })}
                 >
                   <CategoryStats value={value} />
                 </TableCell>

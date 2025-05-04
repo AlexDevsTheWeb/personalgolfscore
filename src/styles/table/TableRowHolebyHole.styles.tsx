@@ -4,12 +4,11 @@ interface TableRowProps extends TableRowPropsMui {
   value: number,
 }
 
-const StyledTableRow = styled(TableRowMui)<TableRowProps>((props) => {
-  return (
-    {
-      backgroundColor: props.value % 2 ? 'transparent' : '#f7f7f7'
-    }
-  )
+const StyledTableRow = styled(TableRowMui)<TableRowProps>(({ theme, value }) => {
+  return ({
+    // Use a subtle theme color for alternating rows, works in light/dark
+    backgroundColor: value % 2 === 0 ? theme.palette.action.hover : 'transparent',
+  });
 });
 
 const TableRowHolebyHole: React.FC<TableRowProps> = props => {
