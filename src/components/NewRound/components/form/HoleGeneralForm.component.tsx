@@ -5,7 +5,6 @@ import { Autocomplete } from '@mui/material'; // Import Autocomplete
 import React from 'react';
 import PuttsGenerator from '../../PuttsGenerator.component';
 
-
 const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
   holeData,
   hcpList,
@@ -27,9 +26,8 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
       <HoleCardContent>
         <Autocomplete
           options={hcpList}
-          value={holeData.hcp ? holeData.hcp.toString() : null} // Use null for no selection
+          value={holeData.hcp ? holeData.hcp.toString() : null}
           onChange={(event, newValue) => {
-            // Convert back to number for the original onChange handler
             onChange({ target: { name: 'hcp', value: newValue ? Number(newValue) : 0 } } as any);
           }}
           renderInput={(params) => (

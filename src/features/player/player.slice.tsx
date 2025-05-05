@@ -19,9 +19,9 @@ export const getPlayerDetails = createAsyncThunk<
 );
 
 export const updatePlayerProfile = createAsyncThunk<
-  Partial<IPlayerStateData>, // Return type on success
-  IUpdatePlayerProfilePayload, // Payload type
-  { rejectValue: string } // Reject value type
+  Partial<IPlayerStateData>,
+  IUpdatePlayerProfilePayload,
+  { rejectValue: string }
 >(
   "player/updatePlayerProfile",
   updatePlayerProfileThunk
@@ -88,7 +88,6 @@ const playerSlice = createSlice({
         state.error = typeof action.payload === 'string' ? action.payload : 'Failed to update golf bag';
         state.errorMessage = typeof action.payload === 'string' ? action.payload : 'Failed to update golf bag';
       })
-      // Reducers for updatePlayerProfile
       .addCase(updatePlayerProfile.pending, (state) => {
         state.isLoading = true;
         state.error = '';
@@ -96,7 +95,6 @@ const playerSlice = createSlice({
       })
       .addCase(updatePlayerProfile.fulfilled, (state, action: PayloadAction<Partial<IPlayerStateData>>) => {
         state.isLoading = false;
-        // Merge the updated data into the existing player state
         state.player = { ...state.player, ...action.payload };
       })
       .addCase(updatePlayerProfile.rejected, (state, action) => {

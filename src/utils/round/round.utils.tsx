@@ -184,9 +184,7 @@ export const prepareOverallTotalsUpdateBatch = (
     return (existing || 0) + (current || 0);
   };
 
-  // --- General Counts ---
   const currentRoundHolesPlayed = safeAdd(safeAdd(currentTotals.score.par3, currentTotals.score.par4), currentTotals.score.par5);
-  // Assuming IN/OUT holes are always 9 if played
   const currentRoundHolesPlayedIN = currentTotals.score.scoreIN > 0 ? 9 : 0;
   const currentRoundHolesPlayedOUT = currentTotals.score.scoreOUT > 0 ? 9 : 0;
   const currentRoundPar4_5_Holes = safeAdd(currentTotals.score.par4, currentTotals.score.par5);

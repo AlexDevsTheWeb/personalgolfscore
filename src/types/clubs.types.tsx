@@ -53,3 +53,7 @@ export interface IClubSetupFormProps {
   initialGolfBag: IGolfBagData;
   onGolfBagChange: (newGolfBag: IGolfBagData) => void;
 }
+
+export interface IPlayerSetupProps {
+  handleHcpChange: () => void;
+}

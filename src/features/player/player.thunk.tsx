@@ -75,14 +75,12 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any):
   }
 };
 
-
-
 export const updatePlayerGolfBagThunk = async (payload: IUpdateGolfBagPayload, { rejectWithValue }: any) => {
   const { uid, golfBagData } = payload;
 
   if (!uid) {
     console.error("Player ID is required to update golf bag.");
-    throw new Error("Player ID is required."); // Or handle appropriately
+    throw new Error("Player ID is required.");
   }
   if (!golfBagData || !Array.isArray(golfBagData)) {
     console.error("Invalid golf bag data provided.");

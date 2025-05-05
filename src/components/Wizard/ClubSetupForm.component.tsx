@@ -10,6 +10,7 @@ import {
   Grid2,
   IconButton,
   Paper,
+  Stack,
   TextField,
   Typography
 } from '@mui/material';
@@ -99,92 +100,85 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
     onGolfBagChange(newGolfBag);
   }, [golfBag, onGolfBagChange]);
 
-  // --- Render Logic ---
   return (
     <Box>
       <Typography sx={{ mb: 2 }}>
         Add the clubs you currently carry in your bag. You can adjust this later in Settings.
       </Typography>
-
-      {/* Iterate through each club type (Driver, Woods, etc.) */}
       {golfBag.map((clubType, typeIndex) => (
         <Paper key={clubType.typeName} sx={{ p: 2, mb: 3 }} variant="outlined">
-          <Typography gutterBottom>{clubType.typeName}</Typography>
+          <Typography gutterBottom>{clubType.typeName.toUpperCase()}</Typography>
           {clubType.details.map((club, clubIndex) => (
-            // Using clubIdentifier for the key is more stable than index if items reorder
-            <Grid2 container spacing={1} key={club.clubIdentifier} sx={{ mb: 1, alignItems: 'center' }}>
-              {/* Field for Club Name/Number (maps to IClubDetail.name) */}
-              <Grid2 sx={{ sx: 12, sm: 4 }}>
-                <TextField
-                  label="Club Name/Number"
-                  size="small"
-                  fullWidth
-                  value={club.name}
-                  onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'name', e.target.value)}
-                />
+            <Stack sx={{ gap: 4 }}>
+              <Grid2 container spacing={2} key={club.clubIdentifier} size={12}>
+                <Grid2 size={12} gap={2}>
+                  <TextField
+                    label="Club Name/Number"
+                    size="small"
+                    fullWidth
+                    value={club.name}
+                    onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'name', e.target.value)}
+                  />
+                </Grid2>
+                <Grid2 size={12}>
+                  <TextField
+                    label="Image URL (Optional)"
+                    size="small"
+                    fullWidth
+                    type="url"
+                    value={club.imageURL || ''}
+                    onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'imageURL', e.target.value)}
+                  />
+                </Grid2>
+                <Grid2 size={4}>
+                  <FormControlLabel
+                    control={<Checkbox checked={club.selected} onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'selected', e.target.checked)} size="small" />}
+                    label="In Bag"
+                    sx={{ height: '100%', width: '100%', '& .MuiFormControlLabel-label': { fontSize: '0.875rem' }, justifyContent: 'end' }}
+                  />
+                </Grid2>
               </Grid2>
-              {/* Field for Image URL (maps to IClubDetail.imageURL) */}
-              <Grid2 sx={{ sx: 12, sm: 4 }}>
-                <TextField
-                  label="Image URL (Optional)"
-                  size="small"
-                  fullWidth
-                  type="url"
-                  value={club.imageURL || ''}
-                  onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'imageURL', e.target.value)}
-                />
+              <Grid2 container spacing={2} key={club.clubIdentifier} size={12}>
+                <Grid2 size={12}>
+                  <TextField
+                    label="Loft (°)"
+                    type="number"
+                    size="small"
+                    fullWidth
+                    value={club.loft}
+                    onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'loft', parseFloat(e.target.value) || 0)}
+                  />
+                </Grid2>
+                <Grid2 size={12}>
+                  <TextField
+                    label="Club #" // e.g., P, S, 7, 5W
+                    size="small"
+                    fullWidth
+                    value={club.clubNumber || ''}
+                    onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'clubNumber', e.target.value)}
+                  />
+                </Grid2>
+                <Grid2 size={4} sx={{ justifyContent: 'end' }}>
+                  <IconButton onClick={() => removeClub(typeIndex, clubIndex)} color="warning" size="small" aria-label={`Remove ${club.name || 'club'}`} sx={{ justifyContent: 'flex-end', width: '100%' }}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Grid2>
               </Grid2>
-              {/* Field for Loft (maps to IClubDetail.loft) */}
-              <Grid2 sx={{ sx: 6, sm: 2 }}>
-                <TextField
-                  label="Loft (°)"
-                  type="number"
-                  size="small"
-                  fullWidth
-                  value={club.loft}
-                  // Ensure value is stored as a number
-                  onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'loft', parseFloat(e.target.value) || 0)}
-                />
-              </Grid2>
-              {/* Field for Club Number (maps to IClubDetail.clubNumber) */}
-              <Grid2 sx={{ sx: 6, sm: 2 }}>
-                <TextField
-                  label="Club #" // e.g., P, S, 7, 5W
-                  size="small"
-                  fullWidth
-                  value={club.clubNumber || ''}
-                  onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'clubNumber', e.target.value)}
-                />
-              </Grid2>
-              {/* Control for Selected (maps to IClubDetail.selected) */}
-              <Grid2 sx={{ sx: 6, sm: 2 }}>
-                <FormControlLabel
-                  control={<Checkbox checked={club.selected} onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'selected', e.target.checked)} size="small" />}
-                  label="In Bag"
-                  sx={{ height: '100%', '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }} // Align and style label
-                />
-              </Grid2>
-              {/* Remove Button */}
-              <Grid2 sx={{ sx: 6, sm: 1, textAlign: 'right' }}>
-                <IconButton onClick={() => removeClub(typeIndex, clubIndex)} color="warning" size="small" aria-label={`Remove ${club.name || 'club'}`}>
-                  <DeleteIcon />
-                </IconButton>
-              </Grid2>
-            </Grid2>
-          ))}
-          {/* Button to add a new club of this type */}
+            </Stack>
+          ))
+          }
           <Button
             startIcon={<AddCircleOutlineIcon />}
             onClick={() => addClub(typeIndex)}
             size="small"
             variant="outlined"
           >
-            {/* Simple singularization for button text */}
             Add {clubType.typeName === 'Putter' ? 'Putter' : (clubType.typeName.endsWith('s') ? clubType.typeName.slice(0, -1) : clubType.typeName)} {/* Basic singularization */}
           </Button>
-        </Paper>
-      ))}
-    </Box>
+        </Paper >
+      ))
+      }
+    </Box >
   );
 }
 

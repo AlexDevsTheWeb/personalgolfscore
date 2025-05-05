@@ -8,7 +8,6 @@ import Rounds from "../Rounds/Rounds.component";
 import StatisticsMain from "../Statistics/StatisticsMain.component";
 import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
 
-
 const Dashboard = () => {
   const navigate = useNavigate();
 
@@ -30,12 +29,9 @@ const Dashboard = () => {
   console.log("player?.uid && !player.isSetupComplete: ", player?.uid, player.isSetupComplete)
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} gap={2}>
-      {/* Conditionally render the Setup Wizard Dialog when setup is NOT complete */}
       {player?.uid && !player.isSetupComplete && (
         <WizardSetupDialog open={!player.isSetupComplete} playerUid={player.uid} />
       )}
-
-      {/* Only show rounds/stats if setup is complete */}
       {
         rounds.length !== 0 && (
           <>

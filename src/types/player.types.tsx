@@ -24,7 +24,7 @@ export interface IClubDetail {
   imageURL: string;
   clubIdentifier: string;
   selected: boolean;
-  clubNumber?: string | number; // Optional
+  clubNumber?: string | number;
 }
 
 export interface IPlayerDetails {

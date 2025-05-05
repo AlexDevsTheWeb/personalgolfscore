@@ -2,7 +2,7 @@ import { setTotalsByHole } from '@/features/newRound/newRoundTotals.slice';
 import { RootState } from '@/store/store';
 import { getChipClubs, getClubsNames, getDistanceClubs, getGreenClubs } from '@/utils/round/round.utils';
 import { Typography } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../common/spinner/Spinner.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
@@ -17,7 +17,6 @@ const AddNewRoundHoles = () => {
   const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
   const { player, isLoading: isPlayerLoading } = useSelector((store: RootState) => store.player);
   const { isLoading: isSavingRound, success: isRoundSaved, roundId: savedRoundId } = useSelector((store: RootState) => store.roundSaver);
-  const [holeForm, setHoleForm] = useState<React.ReactNode | undefined>();
 
   const golfBag = player?.golfBag;
   const derivedClubs = useMemo(() => {
