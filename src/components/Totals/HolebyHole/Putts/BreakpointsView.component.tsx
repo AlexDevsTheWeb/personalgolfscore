@@ -62,11 +62,19 @@ export const DesktopView: React.FC<IPuttsDesktopViewProps> = ({ puttsStatistics 
       <Table sx={{ minWidth: 700 }} aria-label="putts statistics table">
         <TableHead>
           <TableRow>
-            <TableCell align='center' key="header-overall" variant='putt'>
+            <TableCell align='center' key="header-overall" variant='putt'
+              sx={(theme) => ({
+                padding: '0px'
+              })}
+            >
               <ShotsTableHeaderStack firstRow={catConversion('_puttsOverall')} secondRow={''} />
             </TableCell>
             {rangeKeys.map((rangeKey) => (
-              <TableCell align='center' key={`header-${rangeKey}`} variant='putt'>
+              <TableCell align='center' key={`header-${rangeKey}`} variant='putt'
+                sx={(theme) => ({
+                  padding: '0px'
+                })}
+              >
                 <ShotsTableHeaderStack firstRow={catConversion(rangeKey)} secondRow={''} />
               </TableCell>
             ))}
@@ -74,11 +82,20 @@ export const DesktopView: React.FC<IPuttsDesktopViewProps> = ({ puttsStatistics 
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell align='center' key="data-overall" sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5', verticalAlign: 'top', padding: 1 }}>
+            <TableCell align='center' key="data-overall"
+              sx={(theme) => ({
+                verticalAlign: 'top', padding: 1
+              })}>
+
               <OverallStats value={overallStats} />
             </TableCell>
             {rangeEntries.map(([key, value]) => (
-              <TableCell align='center' key={`data-${key}`} sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5', verticalAlign: 'top', padding: 1 }}>
+              <TableCell align='center' key={`data-${key}`} sx={(theme) => ({
+                verticalAlign: 'top',
+                padding: 1,
+                borderLeft: `1px solid ${theme.palette.divider}`,
+
+              })}>
                 <RangeStats value={value} />
               </TableCell>
             ))}
@@ -100,7 +117,6 @@ export const MobileView: React.FC<IPuttsMobileViewProps> = ({ puttsStatistics })
           <ShotsTableHeaderStack firstRow={catConversion('_puttsOverall')} secondRow={''} />
         </AccordionSummary>
         <AccordionDetails>
-          {/* Use GridAccordion if needed for consistent styling */}
           <OverallStats value={overallStats} />
         </AccordionDetails>
       </Accordion>
@@ -110,7 +126,6 @@ export const MobileView: React.FC<IPuttsMobileViewProps> = ({ puttsStatistics })
             <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
           </AccordionSummary>
           <AccordionDetails>
-            {/* Use GridAccordion if needed for consistent styling */}
             <RangeStats value={value} />
           </AccordionDetails>
         </Accordion>

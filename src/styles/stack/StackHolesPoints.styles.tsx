@@ -33,7 +33,7 @@ const StackHolesPoints: React.FC<StackHolesPointsProps> = React.memo((props) => 
       <Typography
         fontWeight={'bold'}
         sx={{
-          backgroundColor: underPar ? '#82b38b' : '#cf8484',
+          backgroundColor: theme => underPar ? theme.palette.success.main : theme.palette.error.main,
           padding: '2px !important',
           textAlign: 'center'
         }}

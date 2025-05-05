@@ -21,7 +21,10 @@ export const DesktopView: React.FC<IDesktopViewProps> = ({ inside100Mt }) => {
                 align='center'
                 key={`header-${categoryKey}`}
                 variant='putt'
-                sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}
+                sx={(theme) => ({
+                  padding: '0px'
+                })}
+
               >
                 <ShotsTableHeaderStack firstRow={catConversion(categoryKey)} secondRow={''} />
               </TableCell>
@@ -35,7 +38,12 @@ export const DesktopView: React.FC<IDesktopViewProps> = ({ inside100Mt }) => {
                 <TableCell
                   align='center'
                   key={`data-${key}`}
-                  sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5', verticalAlign: 'top' }}
+                  sx={(theme) => ({
+                    borderLeft: `1px solid ${theme.palette.divider}`,
+                    borderBottom: `1px solid ${theme.palette.divider}`,
+                    verticalAlign: 'top'
+                  })}
+
                 >
                   <CategoryStats value={value} />
                 </TableCell>

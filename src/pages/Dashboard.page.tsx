@@ -1,6 +1,7 @@
 import Dashboard from "@/components/Dashboard/Dashboard.component";
 import Spinner from "@/components/common/spinner/Spinner.component";
 import { getPlayerDetails } from "@/features/player/player.slice";
+import { fetchInitialTheme } from "@/features/user/user.slice"; // Import the new thunk
 import { RootState } from "@/store/store";
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { getAuth } from "@firebase/auth";
@@ -18,8 +19,10 @@ const DashboardPage = () => {
 
   useEffect(() => {
     if (uid) {
+      // Fetch initial theme preference
+      dispatch(fetchInitialTheme(uid));
       if (auth) {
-        dispatch(getPlayerDetails(uid));
+        dispatch(getPlayerDetails(uid)); // Fetch player details
       }
     }
   }, [uid]);

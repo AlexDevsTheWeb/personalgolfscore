@@ -17,24 +17,24 @@ const SimpleStatDisplay: React.FC<ISimpleStatDisplayProps> = React.memo(({
 }) => (
   <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
     <NewGridCellStats size={{ xs: 4 }}>
-      <Stack sx={{ textAlign: 'center' }}>
-        <Typography>TOT</Typography>
-        <Typography fontWeight={'bold'}>{`${total}${totalSuffix}`}</Typography>
-        {avg !== undefined && <Typography>{avg}</Typography>}
+      <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
+        <Typography color="text.secondary">TOT</Typography> {/* Use secondary for label */}
+        <Typography fontWeight={'bold'} color="text.primary">{`${total}${totalSuffix}`}</Typography>
+        {avg !== undefined && <Typography color="text.secondary">{avg}</Typography>}
       </Stack>
     </NewGridCellStats>
     <NewGridCellStats size={{ xs: 4 }}>
-      <Stack sx={{ textAlign: 'center' }}>
-        <Typography>IN</Typography>
-        <Typography fontWeight={'bold'}>{`${inTotal}${inSuffix}`}</Typography>
-        {inAvg !== undefined && <Typography>{inAvg}</Typography>}
+      <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
+        <Typography color="text.secondary">IN</Typography> {/* Use secondary for label */}
+        <Typography fontWeight={'bold'} color="text.primary">{`${inTotal}${inSuffix}`}</Typography>
+        {inAvg !== undefined && <Typography color="text.secondary">{inAvg}</Typography>}
       </Stack>
     </NewGridCellStats>
     <NewGridCellStats size={{ xs: 4 }}>
-      <Stack sx={{ textAlign: 'center' }}>
-        <Typography>OUT</Typography>
-        <Typography fontWeight={'bold'}>{`${outTotal}${outSuffix}`}</Typography>
-        {outAvg !== undefined && <Typography>{outAvg}</Typography>}
+      <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
+        <Typography color="text.secondary">OUT</Typography> {/* Use secondary for label */}
+        <Typography fontWeight={'bold'} color="text.primary">{`${outTotal}${outSuffix}`}</Typography>
+        {outAvg !== undefined && <Typography color="text.secondary">{outAvg}</Typography>}
       </Stack>
     </NewGridCellStats>
   </GridAccordion>
@@ -44,21 +44,21 @@ const PercentageStatDisplay: React.FC<IPercentageStatDisplayProps> = React.memo(
   <>
     <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
       <NewGridCellStats size={{ xs: 6 }}>
-        <Stack sx={{ textAlign: 'center' }}>
-          <Typography>Saved</Typography>
-          <Typography fontWeight={'bold'}>{saved}</Typography>
+        <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
+          <Typography color="text.secondary">Saved</Typography> {/* Use secondary for label */}
+          <Typography fontWeight={'bold'} color="text.primary">{saved}</Typography>
         </Stack>
       </NewGridCellStats>
       <NewGridCellStats size={{ xs: 6 }}>
-        <Stack sx={{ textAlign: 'center' }}>
-          <Typography>Totals</Typography>
-          <Typography fontWeight={'bold'}>{total}</Typography>
+        <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
+          <Typography color="text.secondary">Totals</Typography> {/* Use secondary for label */}
+          <Typography fontWeight={'bold'} color="text.primary">{total}</Typography>
         </Stack>
       </NewGridCellStats>
     </GridAccordion>
     <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
       <NewGridCellStats size={{ xs: 12 }}>
-        <Stack sx={{ textAlign: 'center' }}>
+        <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
           <Typography fontWeight={'bold'}>
             {percentage !== 0 ? `${percentage.toFixed(2)}%` : '-'}
           </Typography>
@@ -70,7 +70,7 @@ const PercentageStatDisplay: React.FC<IPercentageStatDisplayProps> = React.memo(
 
 const StatAccordion: React.FC<IStatAccordionProps> = React.memo(({ title, subtitle, children }) => (
   <Accordion key={_.uniqueId()}>
-    <AccordionSummary>
+    <AccordionSummary> {/* Background is handled by theme override */}
       <ShotsTableHeaderStack firstRow={title} secondRow={subtitle || ''} />
     </AccordionSummary>
     <AccordionDetails>{children}</AccordionDetails>
@@ -78,7 +78,7 @@ const StatAccordion: React.FC<IStatAccordionProps> = React.memo(({ title, subtit
 ));
 
 export const DesktopView: React.FC<IGeneralDesktopViewProps> = ({ roundTotals, dashboard }) => (
-  <TableContainer component={Paper}>
+  <TableContainer component={Paper}> {/* Paper uses theme background */}
     <Table sx={{ width: '100%', overflow: 'hidden' }} aria-label="general statistics table">
       <ShotsTableHeader firstLabel='Tot.' singleHole={false} firstColumn={false} dashboard={dashboard} viewPar={false} />
       <ShotsTableTotalsBody firstColumn={false} roundTotals={roundTotals} dashboard={dashboard} />
@@ -120,36 +120,36 @@ export const MobileView: React.FC<IGeneralMobileViewProps> = ({
       <StatAccordion title="Fairways">
         <GridAccordion>
           <NewGridCellStats size={{ xs: 6 }}>
-            <Stack sx={{ textAlign: 'center' }}>
-              <Typography>Center</Typography>
-              <Typography fontWeight={'bold'}>{fairway.fairwayCenter}</Typography>
+            <Stack sx={{ textAlign: 'center', color: 'text.primary' }}>
+              <Typography color="text.secondary">Center</Typography>
+              <Typography fontWeight={'bold'} color="text.primary">{fairway.fairwayCenter}</Typography>
             </Stack>
           </NewGridCellStats>
           <NewGridCellStats size={{ xs: 6 }}>
-            <Stack sx={{ textAlign: 'center' }}>
-              <Typography>Total</Typography>
-              <Typography fontWeight={'bold'}>{fairway.total}</Typography>
+            <Stack sx={{ textAlign: 'center', color: 'text.primary' }}>
+              <Typography color="text.secondary">Total</Typography>
+              <Typography fontWeight={'bold'} color="text.primary">{fairway.total}</Typography>
             </Stack>
           </NewGridCellStats>
         </GridAccordion>
         <Divider sx={{ my: 1 }} />
         <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
           <NewGridCellStats size={{ xs: 4 }}>
-            <Stack sx={{ textAlign: 'center' }}>
-              <Typography>Left</Typography>
-              <Typography>{`${fairway.fairwayLeft} (${formatPerc(fairway.fairwayLeft / fairway.total)})`}</Typography>
+            <Stack sx={{ textAlign: 'center', color: 'text.primary' }}>
+              <Typography color="text.secondary">Left</Typography>
+              <Typography color="text.primary">{`${fairway.fairwayLeft} (${formatPerc(fairway.fairwayLeft / fairway.total)})`}</Typography>
             </Stack>
           </NewGridCellStats>
           <NewGridCellStats size={{ xs: 4 }}>
-            <Stack sx={{ textAlign: 'center' }}>
-              <Typography>Center</Typography>
-              <Typography>{`${fairway.fairwayCenter} (${formatPerc(fairway.fairwayCenter / fairway.total)})`}</Typography>
+            <Stack sx={{ textAlign: 'center', color: 'text.primary' }}>
+              <Typography color="text.secondary">Center</Typography>
+              <Typography color="text.primary">{`${fairway.fairwayCenter} (${formatPerc(fairway.fairwayCenter / fairway.total)})`}</Typography>
             </Stack>
           </NewGridCellStats>
           <NewGridCellStats size={{ xs: 4 }}>
-            <Stack sx={{ textAlign: 'center' }}>
-              <Typography>Right</Typography>
-              <Typography>{`${fairway.fairwayRight} (${formatPerc(fairway.fairwayRight / fairway.total)})`}</Typography>
+            <Stack sx={{ textAlign: 'center', color: 'text.primary' }}>
+              <Typography color="text.secondary">Right</Typography>
+              <Typography color="text.primary">{`${fairway.fairwayRight} (${formatPerc(fairway.fairwayRight / fairway.total)})`}</Typography>
             </Stack>
           </NewGridCellStats>
         </GridAccordion>
@@ -216,23 +216,23 @@ export const MobileView: React.FC<IGeneralMobileViewProps> = ({
       <StatAccordion title="Sand" subtitle="saved made">
         <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
           <NewGridCellStats size={{ xs: 6 }}>
-            <Stack sx={{ textAlign: 'center' }}>
-              <Typography>Saved</Typography>
-              <Typography fontWeight={'bold'}>{sand.saved}</Typography>
-              <Typography>{sand.avgSaved.toFixed(2)}</Typography>
+            <Stack sx={{ textAlign: 'center', color: 'text.primary' }}>
+              <Typography color="text.secondary">Saved</Typography>
+              <Typography fontWeight={'bold'} color="text.primary">{sand.saved}</Typography>
+              <Typography color="text.secondary">{sand.avgSaved.toFixed(2)}</Typography>
             </Stack>
           </NewGridCellStats>
           <NewGridCellStats size={{ xs: 6 }}>
-            <Stack sx={{ textAlign: 'center' }}>
-              <Typography>Totals</Typography>
-              <Typography fontWeight={'bold'}>{sand.totals}</Typography>
-              <Typography>{sand.avg.toFixed(2)}</Typography>
+            <Stack sx={{ textAlign: 'center', color: 'text.primary' }}>
+              <Typography color="text.secondary">Totals</Typography>
+              <Typography fontWeight={'bold'} color="text.primary">{sand.totals}</Typography>
+              <Typography color="text.secondary">{sand.avg.toFixed(2)}</Typography>
             </Stack>
           </NewGridCellStats>
         </GridAccordion>
         <GridAccordion container spacing={1}>
           <NewGridCellStats size={{ xs: 12 }}>
-            <Stack sx={{ textAlign: 'center' }}>
+            <Stack sx={{ textAlign: 'center', color: 'text.primary' }}>
               <Typography fontWeight={'bold'}>{sand.savedPerc !== 0 ? `${sand.savedPerc.toFixed(2)}%` : '-'}</Typography>
             </Stack>
           </NewGridCellStats>

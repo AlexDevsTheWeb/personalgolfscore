@@ -7,13 +7,13 @@ type TableCellProps = TableCellPropsMui & {
   width?: number,
 };
 
-const StyledTableCell = styled(TableCellMui)<TableCellProps>((props) => ({
-  border: "1px solid #999",
+const StyledTableCell = styled(TableCellMui)<TableCellProps>(({ theme, ...props }) => ({
+  border: `1px solid ${theme.palette.divider}`, // Use theme divider color for border
   width: `${props.width}px`,
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: props.theme.palette.common.black,
-    color: props.theme.palette.common.white,
-    padding: !!props.space ? `${props.space} !important` : '0px !important',
+    backgroundColor: theme.palette.grey5.main, // Use a theme grey for header background
+    color: theme.palette.getContrastText(theme.palette.grey5.main), // Use contrast text for header
+    padding: props.space ? `${props.space} !important` : '0px !important', // Simplified padding check
   },
   padding: '2px !important',
   [`&.${tableCellClasses.body}`]: {

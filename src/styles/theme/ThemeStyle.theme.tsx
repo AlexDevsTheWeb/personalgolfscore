@@ -1,22 +1,11 @@
-import { createTheme } from '@mui/material';
-import { breakpoints } from './Breakpoints.theme';
-import components from './Components.theme';
-import palette from './Palette.theme';
+// This file should primarily contain module augmentations and shared theme constants/enums.
+// The actual theme creation is now handled dynamically in App.tsx.
 
-enum OptionsDatepicker {
+// Keep enums or constants if they are used elsewhere (like in App.tsx)
+export enum OptionsDatepicker {
   Margin = 'margin',
   Field = 'field',
 }
-
-export const theme = createTheme({
-  palette,
-  // typography,
-  breakpoints,
-  zIndex: {},
-  transitions: {},
-  components,
-  datepicker: OptionsDatepicker.Margin,
-});
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {

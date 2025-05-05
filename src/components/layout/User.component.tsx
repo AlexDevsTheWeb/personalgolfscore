@@ -1,4 +1,5 @@
 import { resetUser } from "@/features/user/user.slice";
+import { AppDispatch } from "@/store/store";
 import StackPlayerMenu from "@/styles/stack/StackPlayerMenu.styles";
 import { deleteUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { stringAvatar } from "@/utils/user/user.utils";
@@ -8,9 +9,12 @@ import { getAuth, signOut } from "firebase/auth";
 import _ from "lodash";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 const User = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { user } = useSelector((store: any) => store.user);
   const { player, isLoading } = useSelector((store: any) => store.player);
 
@@ -25,6 +29,7 @@ const User = () => {
   };
   const handleSettings = () => {
     setAnchorEl(null);
+    navigate('/settings'); // Keep navigation to settings page
     //TODO: next go to player/user settings
   }
 
@@ -104,6 +109,7 @@ const User = () => {
 
           <Divider />
 
+          {/* Settings MenuItem */}
           <MenuItem onClick={handleSettings}
             sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
             <ListItemIcon sx={{ marginLeft: '-10px' }}>
@@ -111,6 +117,8 @@ const User = () => {
             </ListItemIcon>
             Settings
           </MenuItem>
+
+          {/* Logout MenuItem */}
           <MenuItem onClick={handleLogout}
             sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
             <ListItemIcon sx={{ marginLeft: '-10px' }}>

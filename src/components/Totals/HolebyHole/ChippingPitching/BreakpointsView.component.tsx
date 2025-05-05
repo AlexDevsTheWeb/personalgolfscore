@@ -22,7 +22,9 @@ export const DesktopView: React.FC<IChipDesktopViewProps> = ({ chipPitch }) => {
                   align='center'
                   key={`header-${categoryKey}`}
                   variant='putt'
-                  sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}
+                  sx={(theme) => ({
+                    padding: '0px'
+                  })}
                 >
                   <ShotsTableHeaderStack firstRow={clubType as string} secondRow={''} />
                 </TableCell>
@@ -37,7 +39,11 @@ export const DesktopView: React.FC<IChipDesktopViewProps> = ({ chipPitch }) => {
                 <TableCell
                   align='center'
                   key={`data-${key}`}
-                  sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5', verticalAlign: 'top', padding: 1 }}
+                  sx={(theme) => ({
+                    borderLeft: `1px solid ${theme.palette.divider}`,
+                    borderBottom: `1px solid ${theme.palette.divider}`,
+                    verticalAlign: 'top', padding: 1
+                  })}
                 >
                   <CategoryStats value={value} />
                 </TableCell>
@@ -82,8 +88,14 @@ export const CategoryStats: React.FC<IChipCategoryStatsProps> = React.memo(({ va
       </Grid2>
       <Divider />
       <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 4 }} string='Average shots' value={value.averageShot.toFixed(2)} />
-        <GridPuttsStat size={{ xs: 4 }} string='Avg. distance' value={value.averageHoleDistance.toFixed(2)} />
+        <GridPuttsStat
+          size={{ xs: 4 }}
+          string='Average shots'
+          value={(typeof value.averageShot === 'number' ? value.averageShot : 0).toFixed(2)} />
+        <GridPuttsStat
+          size={{ xs: 4 }}
+          string='Avg. distance'
+          value={(typeof value.averageHoleDistance === 'number' ? value.averageHoleDistance : 0).toFixed(2)} />
         <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greensMissed} />
       </Grid2>
     </Stack>

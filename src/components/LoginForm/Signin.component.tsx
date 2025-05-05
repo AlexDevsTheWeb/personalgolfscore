@@ -41,7 +41,7 @@ const SignIn = (props: { disableCustomTheme?: boolean }) => {
           <Box
             sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'center' }}>
             <img src={Logo} style={{ width: '50px' }} />
-            <Typography>Personal Golf Score</Typography>
+            <Typography>PGS</Typography>
           </Box>
 
           <Typography

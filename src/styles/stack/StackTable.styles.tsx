@@ -6,13 +6,13 @@ type StackProps = StackPropsMui & {
   secondrow: string,
 };
 
-const StyledStack = styled(StackMui)<StackProps>(() => ({
+const StyledStack = styled(StackMui)<StackProps>(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   flexWrap: 'wrap',
   alignContent: 'center',
-  // backgroundColor: '#f0f0f0',
-  color: 'black',
+  color: theme.palette.text.primary,
+  backgroundColor: theme.palette.background.paper,
   fontWeight: 'bold',
   fontSize: '12px',
   padding: '0px',
@@ -30,7 +30,7 @@ const StackTable: React.FC<StackProps> = props => {
       {...props}
       divider={
         props.secondrow !== '' ?
-          <Divider sx={{ margin: '0px' }} />
+          <Divider sx={{ margin: '0px', borderColor: theme => theme.palette.divider }} />
           : <></>
       }
     >

@@ -1,23 +1,52 @@
-export const colors = {
-  menubar: '#000000',
-  primary1: '#494949',
-  primary2: '#091f5a',
-  primary3: '#7888a5',
-  black: '#111111',
-  grey1: '#626262',
-  grey2: '#979797',
-  grey3: '#b4b4b4',
-  grey4: '#dbdce0',
-  grey5: '#e9eaed',
-  grey6: '#f7f8f9',
-  white: '#ffffff',
-  success: '#55a63a',
-  warning: '#da9d00',
-  error: '#902727',
-  notes: '#f0f5af',
-  behaviours: '#cbe3ff',
-  overMid: '#078800',
-  underMid: '#f25448'
+
+export const lightColors = {
+  menubar: '#3c699e', // Correct GitHub Accent Blue
+  primary1: '#1f2328', // GitHub Primary Text
+  primary2: '#3c699e', // Correct GitHub Accent Blue
+  primary3: '#656d76', // GitHub Muted Text
+  black: '#1f2328', // GitHub Primary Text (as black equivalent)
+  grey1: '#656d76', // GitHub Muted Text
+  grey2: '#8c959f', // GitHub Intermediate Grey
+  grey3: '#d0d7de', // GitHub Border Grey (lighter)
+  grey4: '#d0d7de', // GitHub Border Grey
+  grey5: '#f6f8fa', // GitHub Subtle Background
+  grey6: '#ffffff', // GitHub Default Background
+  white: '#ffffff', // GitHub Default Background (as white equivalent)
+  success: '#1a7f37', // GitHub Success Green
+  warning: '#9a6700', // GitHub Attention Yellow/Orange
+  error: '#d1242f', // GitHub Danger Red
+  notes: '#fff8c5', // Light yellow - adjust as needed
+  behaviours: '#ddf4ff', // Light blue - adjust as needed
+  overMid: '#dafbe1', // Light green - adjust as needed
+  underMid: '#ffebe9', // Light red - adjust as needed
+}
+
+export const darkColors = {
+  menubar: '#3b7dc9', // GitHub Dark Accent Blue
+  primary1: '#e6edf3', // GitHub Dark Primary Text
+  primary2: '#58a6ff', // GitHub Dark Accent Blue (can adjust)
+  primary3: '#7d8590', // GitHub Dark Muted Text
+  black: '#e6edf3', // GitHub Dark Primary Text (as black equivalent)
+  grey1: '#7d8590', // GitHub Dark Muted Text
+  grey2: '#6e7681', // GitHub Dark Intermediate Grey
+  grey3: '#484f58', // GitHub Dark Border Grey (lighter)
+  grey4: '#30363d', // GitHub Dark Border Grey
+  grey5: '#161b22', // GitHub Dark Subtle Background
+  grey6: '#0d1117', // GitHub Dark Default Background
+  white: '#0d1117', // GitHub Dark Default Background (as white equivalent)
+  success: '#3fb950', // GitHub Dark Success Green
+  warning: '#d29922', // GitHub Dark Attention Yellow/Orange
+  error: '#f85149', // GitHub Dark Danger Red
+  notes: '#4d4400', // Dark yellow - adjust as needed
+  behaviours: '#103d60', // Dark blue - adjust as needed
+  overMid: '#104d20', // Dark green - adjust as needed
+  underMid: '#631710', // Dark red - adjust as needed
+};
+
+const defaultValues = {
+  light: '#ffffff',
+  dark: '#ffffff',
+  contrastText: '#ffffff',
 };
 
 declare module '@mui/material/styles' {
@@ -53,48 +82,84 @@ declare module '@mui/material/styles' {
     notes: Palette['secondary'];
     behaviours: Palette['secondary'];
   }
+
 }
 
-const defaultValues = {
-  light: '#ffffff',
-  dark: '#ffffff',
-  contrastText: '#ffffff',
-};
-
-const palette = {
+export const lightPalette = {
   primary: {
     ...defaultValues,
-    light: colors.primary1,
-    dark: colors.primary1,
-    contrastText: colors.white,
-    main: colors.menubar,
-    menubar: colors.menubar,
+    light: lightColors.primary1,
+    dark: lightColors.primary1,
+    contrastText: lightColors.white,
+    main: lightColors.menubar,
+    menubar: lightColors.menubar,
   },
-  primary1: { ...defaultValues, main: colors.primary1 },
-  primary2: { ...defaultValues, main: colors.primary2 },
-  primary3: { ...defaultValues, main: colors.primary3 },
-  black: { ...defaultValues, main: colors.black },
-  grey1: { ...defaultValues, main: colors.grey1 },
-  grey2: { ...defaultValues, main: colors.grey2 },
-  grey3: { ...defaultValues, main: colors.grey3 },
-  grey4: { ...defaultValues, main: colors.grey4 },
-  grey5: { ...defaultValues, main: colors.grey5 },
-  grey6: { ...defaultValues, main: colors.grey6 },
-  white: { ...defaultValues, main: colors.white },
-  success: { ...defaultValues, main: colors.success },
-  warning: { ...defaultValues, main: colors.warning },
-  error: { ...defaultValues, main: colors.error },
+  primary1: { ...defaultValues, main: lightColors.primary1 },
+  primary2: { ...defaultValues, main: lightColors.primary2 },
+  primary3: { ...defaultValues, main: lightColors.primary3 },
+  black: { ...defaultValues, main: lightColors.black },
+  grey1: { ...defaultValues, main: lightColors.grey1 },
+  grey2: { ...defaultValues, main: lightColors.grey2 },
+  grey3: { ...defaultValues, main: lightColors.grey3 },
+  grey4: { ...defaultValues, main: lightColors.grey4 },
+  grey5: { ...defaultValues, main: lightColors.grey5 },
+  grey6: { ...defaultValues, main: lightColors.grey6 },
+  white: { ...defaultValues, main: lightColors.white },
+  success: { ...defaultValues, main: lightColors.success },
+  warning: { ...defaultValues, main: lightColors.warning },
+  error: { ...defaultValues, main: lightColors.error },
   notes: {
     ...defaultValues,
-    main: colors.notes,
-    overMid: colors.overMid,
-    underMid: colors.underMid,
+    main: lightColors.notes,
+    overMid: lightColors.overMid,
+    underMid: lightColors.underMid,
   },
-  behaviours: { ...defaultValues, main: colors.behaviours },
+  behaviours: {
+    ...defaultValues,
+    main: lightColors.behaviours
+  },
 
   background: {
-    default: colors.grey6,
+    default: lightColors.grey6,
+    paper: lightColors.white,
+  },
+  text: {
+    primary: lightColors.primary1, // Main text
+    secondary: lightColors.grey1,  // Secondary text
+    disabled: lightColors.grey3, // Disabled text
+  },
+}
+export const darkPalette = {
+  primary: {
+    ...defaultValues,
+    light: darkColors.primary2,
+    dark: darkColors.primary2,
+    contrastText: darkColors.black, // Text on primary background
+    main: darkColors.menubar,
+  },
+  primary1: { ...defaultValues, main: darkColors.primary1 },
+  primary2: { ...defaultValues, main: darkColors.primary2 },
+  primary3: { ...defaultValues, main: darkColors.primary3 },
+  black: { ...defaultValues, main: darkColors.black },
+  grey1: { ...defaultValues, main: darkColors.grey1 },
+  grey2: { ...defaultValues, main: darkColors.grey2 },
+  grey3: { ...defaultValues, main: darkColors.grey3 },
+  grey4: { ...defaultValues, main: darkColors.grey4 },
+  grey5: { ...defaultValues, main: darkColors.grey5 },
+  grey6: { ...defaultValues, main: darkColors.grey6 },
+  white: { ...defaultValues, main: darkColors.white },
+  success: { ...defaultValues, main: darkColors.success },
+  warning: { ...defaultValues, main: darkColors.warning },
+  error: { ...defaultValues, main: darkColors.error },
+  notes: { ...defaultValues, main: darkColors.notes, overMid: darkColors.overMid, underMid: darkColors.underMid },
+  behaviours: { ...defaultValues, main: darkColors.behaviours },
+  background: {
+    default: darkColors.grey6, // Dark background
+    paper: darkColors.grey5,   // Paper background (slightly lighter)
+  },
+  text: {
+    primary: darkColors.primary1, // Main text (light)
+    secondary: darkColors.grey1,  // Secondary text (lighter grey)
+    disabled: darkColors.grey3, // Disabled text
   },
 };
-
-export default palette;
