@@ -76,10 +76,16 @@ export interface IHolePenaltiesFormProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
 }
 
+// Define the structure for fairway options used in Autocomplete
+type FairwayOption = {
+  label: string;
+  value: number;
+};
+
 export interface IHoleTeeShotFormProps {
   holeData: Pick<IShots, 'teeClub' | 'fairway' | 'driveDistance' | 'par' | 'distance'>;
   teeClubs: string[];
-  fairwayValues: string[];
+  fairwayValues: FairwayOption[]; // Update the type here
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
 }
 

@@ -55,6 +55,9 @@ const rootReducerObject = {
 
 const combinedRootReducer = combineReducers(rootReducerObject);
 
+// Define RootState based on the *unwrapped* combined reducer
+export type RootState = ReturnType<typeof combinedRootReducer>;
+
 const persistedReducer = persistReducer(persistConfig, combinedRootReducer);
 
 export const store = configureStore({
@@ -72,6 +75,5 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof store.getState>;
+// Define AppDispatch based on the store's dispatch type
 export type AppDispatch = typeof store.dispatch;
-

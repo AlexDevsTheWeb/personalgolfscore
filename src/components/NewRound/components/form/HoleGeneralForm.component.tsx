@@ -1,10 +1,9 @@
 import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
 import TextField from '@/styles/textfield/TextField.style';
 import { IHoleGeneralInfoFormProps } from '@/types/props.types';
+import { Autocomplete } from '@mui/material'; // Import Autocomplete
 import React from 'react';
 import PuttsGenerator from '../../PuttsGenerator.component';
-import Select from '../Select.component';
-
 
 
 const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
@@ -26,22 +25,45 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
     <HoleCard>
       <HoleCardHeader title={`Hole number: ${currentHoleNumber} - General Info`} />
       <HoleCardContent>
-        <Select
-          name='hcp'
-          list={hcpList}
-          onChange={onChange}
-          value={holeData.hcp.toString()}
-          label='Hole HCP'
+        <Autocomplete
+          options={hcpList}
+          value={holeData.hcp ? holeData.hcp.toString() : null} // Use null for no selection
+          onChange={(event, newValue) => {
+            // Convert back to number for the original onChange handler
+            onChange({ target: { name: 'hcp', value: newValue ? Number(newValue) : 0 } } as any);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Hole HCP"
+              name="hcp"
+              variant="filled"
+            />
+          )}
+          sx={{ width: 150 }} // Adjust width as needed
+          size="small" // Match size if needed
         />
-        <Select
-          name='par'
-          list={parList}
-          onChange={onChange}
-          value={holeData.par.toString()}
-          label='Hole Par'
+        <Autocomplete
+          options={parList}
+          value={holeData.par ? holeData.par.toString() : null} // Use null for no selection
+          onChange={(event, newValue) => {
+            // Convert back to number for the original onChange handler
+            onChange({ target: { name: 'par', value: newValue ? Number(newValue) : 0 } } as any);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Hole Par"
+              name="par"
+              variant="filled"
+            />
+          )}
+          sx={{ width: 150 }} // Adjust width as needed
+          size="small" // Match size if needed
         />
         <TextField
           name='distance'
+          size="small" // Match size if needed
           label="Length"
           type='number'
           onChange={onChange}
@@ -49,6 +71,7 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
         />
         <TextField
           name='strokes'
+          size="small" // Match size if needed
           label="Score"
           type='number'
           onChange={onChange}
@@ -56,6 +79,7 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
         />
         <TextField
           name='putts'
+          size="small" // Match size if needed
           label="# of putts"
           type='number'
           onChange={onChange}
