@@ -48,3 +48,8 @@ export interface IClubsMainProps {
 export interface IClubDistanceDialogProps {
   open: boolean,
 }
+
+export interface IClubSetupFormProps {
+  initialGolfBag: IGolfBagData;
+  onGolfBagChange: (newGolfBag: IGolfBagData) => void;
+}

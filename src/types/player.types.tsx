@@ -52,3 +52,8 @@ export interface IUpdateGolfBagPayload {
   uid: string;
   golfBagData: IGolfBagData;
 }
+
+export interface IUpdatePlayerProfilePayload {
+  uid: string;
+  data: Partial<Omit<IPlayerDetails, 'uid' | 'rounds' | 'totalDistancesAVG' | 'totalsRoundsAVG' | 'golfBag'>> & { isSetupComplete?: boolean };
+}

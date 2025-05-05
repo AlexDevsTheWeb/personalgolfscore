@@ -1,4 +1,5 @@
-import { IGetPlayerDetailsPayload, IPlayerStateData, IUpdateGolfBagPayload } from "@/types/player.types";
+import { IGetPlayerDetailsPayload, IPlayerStateData, IUpdateGolfBagPayload, IUpdatePlayerProfilePayload } from "@/types/player.types";
+
 import { IBasicRoundData, ITotalDistanceAvg } from "@/types/roundData.types";
 import { ITotalRoundsAvg } from "@/types/roundTotals.types";
 import { db } from "@/utils/firebase/firebase.utils";
@@ -96,3 +97,25 @@ export const updatePlayerGolfBagThunk = async (payload: IUpdateGolfBagPayload, {
     return rejectWithValue(error.message || 'Failed to update golf bag');
   }
 }
+
+export const updatePlayerProfileThunk = async (payload: IUpdatePlayerProfilePayload, { rejectWithValue }: any): Promise<Partial<IPlayerStateData> | ReturnType<typeof rejectWithValue>> => {
+  const { uid, data } = payload;
+
+  if (!uid) {
+    console.error("updatePlayerProfileThunk: UID is required.");
+    return rejectWithValue('User ID not provided.');
+  }
+  if (!data) {
+    console.error("updatePlayerProfileThunk: Data is required.");
+    return rejectWithValue('No profile data provided for update.');
+  }
+
+  try {
+    const playerDocRef: DocumentReference<DocumentData> = doc(db, 'players', uid);
+    await updateDoc(playerDocRef, data);
+    return data as Partial<IPlayerStateData>; // Return the updated data
+  } catch (error: any) {
+    console.error("Error updating player profile:", error);
+    return rejectWithValue(error.message || 'Failed to update player profile');
+  }
+};

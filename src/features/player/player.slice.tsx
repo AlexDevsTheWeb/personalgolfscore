@@ -1,6 +1,6 @@
-import { IGetPlayerDetailsPayload, IGolfBagData, InitialStatePlayer, IPlayerStateData, IUpdateGolfBagPayload } from "@/types/player.types";
+import { IGetPlayerDetailsPayload, IGolfBagData, InitialStatePlayer, IPlayerStateData, IUpdateGolfBagPayload, IUpdatePlayerProfilePayload } from "@/types/player.types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getPlayerInfoThunk, updatePlayerGolfBagThunk } from "./player.thunk";
+import { getPlayerInfoThunk, updatePlayerGolfBagThunk, updatePlayerProfileThunk } from "./player.thunk";
 
 const initialState: InitialStatePlayer = {
   isLoading: false,
@@ -16,6 +16,15 @@ export const getPlayerDetails = createAsyncThunk<
 >(
   "player/getPlayerDetails",
   getPlayerInfoThunk
+);
+
+export const updatePlayerProfile = createAsyncThunk<
+  Partial<IPlayerStateData>, // Return type on success
+  IUpdatePlayerProfilePayload, // Payload type
+  { rejectValue: string } // Reject value type
+>(
+  "player/updatePlayerProfile",
+  updatePlayerProfileThunk
 );
 export const updatePlayerGolfbag = createAsyncThunk<
   IGolfBagData,
@@ -78,6 +87,22 @@ const playerSlice = createSlice({
         state.isLoading = false;
         state.error = typeof action.payload === 'string' ? action.payload : 'Failed to update golf bag';
         state.errorMessage = typeof action.payload === 'string' ? action.payload : 'Failed to update golf bag';
+      })
+      // Reducers for updatePlayerProfile
+      .addCase(updatePlayerProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+        state.errorMessage = '';
+      })
+      .addCase(updatePlayerProfile.fulfilled, (state, action: PayloadAction<Partial<IPlayerStateData>>) => {
+        state.isLoading = false;
+        // Merge the updated data into the existing player state
+        state.player = { ...state.player, ...action.payload };
+      })
+      .addCase(updatePlayerProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = typeof action.payload === 'string' ? action.payload : 'Failed to update profile';
+        state.errorMessage = typeof action.payload === 'string' ? action.payload : 'Failed to update profile';
       });
   },
 });
