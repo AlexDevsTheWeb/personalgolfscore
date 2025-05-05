@@ -24,7 +24,7 @@ const StyledBox = styled(Box)<CustomBoxProps>(({ theme, direction }): CSSObject 
   boxShadow: theme.shadows[1], // Use theme shadows
   padding: '10px', // Re-added padding
   rowGap: '8px', // Re-added row-gap
-  borderRadius: '8px', // Re-added border-radius
+  borderRadius: '8px',
 }));
 
 // Use the renamed interface here as well

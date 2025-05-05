@@ -16,6 +16,6 @@ export const HoleCardHeader: React.FC<IReactCardHeaderProps> = props => {
 
     >
       {props.children}
-    </StyledCardHeader >
+    </StyledCardHeader>
   )
 }

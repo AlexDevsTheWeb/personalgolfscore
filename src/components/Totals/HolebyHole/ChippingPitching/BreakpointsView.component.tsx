@@ -88,8 +88,14 @@ export const CategoryStats: React.FC<IChipCategoryStatsProps> = React.memo(({ va
       </Grid2>
       <Divider />
       <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 4 }} string='Average shots' value={value.averageShot.toFixed(2)} />
-        <GridPuttsStat size={{ xs: 4 }} string='Avg. distance' value={value.averageHoleDistance.toFixed(2)} />
+        <GridPuttsStat
+          size={{ xs: 4 }}
+          string='Average shots'
+          value={(typeof value.averageShot === 'number' ? value.averageShot : 0).toFixed(2)} />
+        <GridPuttsStat
+          size={{ xs: 4 }}
+          string='Avg. distance'
+          value={(typeof value.averageHoleDistance === 'number' ? value.averageHoleDistance : 0).toFixed(2)} />
         <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greensMissed} />
       </Grid2>
     </Stack>

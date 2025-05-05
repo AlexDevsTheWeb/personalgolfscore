@@ -49,7 +49,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography sx={{ my: 2, color: 'text.primary' }}>
-        Personal Golf Scorer
+        PGS
       </Typography>
       <Divider />
       <List>
@@ -106,7 +106,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
               color="inherit"
             >
-              Personal Golf Score
+              PGS
             </Typography>
             <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
               <List sx={{ display: 'flex' }}>
