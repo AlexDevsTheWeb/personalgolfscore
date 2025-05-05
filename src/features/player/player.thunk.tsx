@@ -60,6 +60,7 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any):
       lastName: playerData.lastName,
       HCP: playerData.HCP,
       photoURL: playerData.photoURL,
+      isSetupComplete: playerData.isSetupComplete ?? false,
     };
 
     return {

@@ -1,19 +1,6 @@
 import { IBasicRoundData, ITotalDistanceAvg } from "./roundData.types";
 import { ITotalRoundsAvg } from "./roundTotals.types";
 
-// FIXME: NOT USED?
-// export interface IPlayer {
-//   playerID: string,
-//   firstName: string,
-//   lastName: string,
-//   DOB: {
-//     seconds: number,
-//     nanoseconds: number,
-//   },
-//   HCP: number,
-//   email: string
-// }
-
 export type InitialStatePlayer = {
   isLoading: boolean;
   error: string,
@@ -22,7 +9,7 @@ export type InitialStatePlayer = {
 }
 
 export type IPlayerStateData = Omit<IPlayerDetails, 'rounds'> & {
-  totalDistancesAVG?: ITotalDistanceAvg[]; // Or Map<string, ITotalDistanceAvg>
+  totalDistancesAVG?: ITotalDistanceAvg[];
   totalsRoundsAVG?: ITotalRoundsAvg | null;
 };
 
@@ -53,6 +40,7 @@ export interface IPlayerDetails {
   rounds?: IBasicRoundData[];
   totalDistancesAVG?: ITotalDistanceAvg[];
   totalsRoundsAVG?: ITotalRoundsAvg | null;
+  isSetupComplete: boolean;
 }
 
 export interface IGetPlayerDetailsPayload {
