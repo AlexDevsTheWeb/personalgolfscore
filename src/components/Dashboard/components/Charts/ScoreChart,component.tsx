@@ -203,12 +203,12 @@ const ScoreCharts: React.FC = () => {
   };
 
   return (
-    <Paper sx={{ p: 2, width: '100%' }} elevation={2}>
+    <Paper sx={{ p: 2, width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }} elevation={2}>
       <Typography component="h2" gutterBottom sx={{ textAlign: 'center' }}>
-        Last {displayableRecentRounds.length} Rounds Performance
+        Score (last {recentRounds.length} rounds)
       </Typography>
       {displayableRecentRounds.length > 0 && <CustomLegend />}
-      <Box sx={{ mt: 1, width: '100%' }}>
+      <Box sx={{ mt: 1, width: '100%', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <BarChart
 
           barLabel="value"
@@ -227,7 +227,7 @@ const ScoreCharts: React.FC = () => {
             }
           }]}
           series={chartSeries}
-          height={400}
+          height={300}
           skipAnimation
           margin={{ top: 30, right: 15, bottom: 30, left: 45 }}
           slotProps={{

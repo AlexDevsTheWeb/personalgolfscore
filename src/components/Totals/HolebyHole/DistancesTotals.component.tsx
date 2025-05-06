@@ -48,7 +48,7 @@ const DistancesTotals: React.FC = () => {
   }
 
   return (
-    <Paper sx={{ width: '40%' }}>
+    <Paper sx={{ width: '100%' }}>
       <Stack>
         <Header title={'Distances'} onClick={handleToggleVisibility} />
         {visible && (

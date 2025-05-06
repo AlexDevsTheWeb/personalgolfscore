@@ -76,11 +76,11 @@ const PointsChart: React.FC = () => {
   }];
 
   return (
-    <Paper sx={{ p: 1, width: '100%' }}>
+    <Paper sx={{ p: 1, width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Typography component="h2" gutterBottom sx={{ textAlign: 'center' }}>
-        Last {displayableRecentRounds.length} Rounds Points
+        Points (last {recentRounds.length} rounds)
       </Typography>
-      <Box sx={{ mt: 1, width: '100%' }}>
+      <Box sx={{ mt: 1, width: '100%', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <LineChart
           xAxis={[{ data: xAxisLabels, scaleType: 'point' }]}
           series={series.map(s => ({ // Map to ensure _tooltipData is correctly structured for each point

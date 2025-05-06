@@ -1,6 +1,7 @@
 import { RootState } from "@/store/store";
 import BoxBetween from "@/styles/box/BoxBetween.styles";
-import { Box, Button } from "@mui/material";
+import Grid from "@/styles/grid/Grid2.styles";
+import { Box, Button, Grid2 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../common/spinner/Spinner.component";
@@ -8,6 +9,8 @@ import Rounds from "../Rounds/Rounds.component";
 import StatisticsMain from "../Statistics/StatisticsMain.component";
 import DistancesTotals from "../Totals/HolebyHole/DistancesTotals.component";
 import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
+import FairwayHitsChart from "./components/Charts/FairwayChart.component";
+import GirPercentageChart from "./components/Charts/GirChart.component";
 import PointsChart from "./components/Charts/PointsChart.component";
 import ScoreCharts from "./components/Charts/ScoreChart,component";
 
@@ -40,12 +43,15 @@ const Dashboard = () => {
         rounds.length !== 0 && (
           <>
             <Rounds />
-            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
-              <ScoreCharts />
-              <PointsChart />
-              <DistancesTotals />
-            </Box>
-
+            <Grid2 container>
+              <Grid><ScoreCharts /></Grid>
+              <Grid><PointsChart /></Grid>
+            </Grid2>
+            <Grid2 container>
+              <Grid><FairwayHitsChart /></Grid>
+              <Grid><GirPercentageChart /></Grid>
+              <Grid><DistancesTotals /></Grid>
+            </Grid2>
             <StatisticsMain />
           </>
         )
