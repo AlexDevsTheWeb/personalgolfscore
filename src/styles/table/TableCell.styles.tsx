@@ -15,7 +15,7 @@ const StyledTableCell = styled(TableCellMui)<TableCellProps>(({ theme, ...props 
     color: theme.palette.getContrastText(theme.palette.grey5.main), // Use contrast text for header
     padding: props.space ? `${props.space} !important` : '0px !important', // Simplified padding check
   },
-  padding: '2px !important',
+  padding: '2px 10px !important',
   [`&.${tableCellClasses.body}`]: {
     fontSize: 13,
   },

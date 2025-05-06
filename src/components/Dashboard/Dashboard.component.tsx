@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "../common/spinner/Spinner.component";
 import Rounds from "../Rounds/Rounds.component";
 import StatisticsMain from "../Statistics/StatisticsMain.component";
+import DistancesTotals from "../Totals/HolebyHole/DistancesTotals.component";
 import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
+import PointsChart from "./components/Charts/PointsChart.component";
+import ScoreCharts from "./components/Charts/ScoreChart,component";
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -26,16 +30,22 @@ const Dashboard = () => {
     return <Spinner />
   }
 
-  console.log("player?.uid && !player.isSetupComplete: ", player?.uid, player.isSetupComplete)
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} gap={2}>
       {player?.uid && !player.isSetupComplete && (
         <WizardSetupDialog open={!player.isSetupComplete} playerUid={player.uid} />
       )}
       {
+        // Display these components only if there are rounds
         rounds.length !== 0 && (
           <>
             <Rounds />
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+              <ScoreCharts />
+              <PointsChart />
+              <DistancesTotals />
+            </Box>
+
             <StatisticsMain />
           </>
         )

@@ -4,7 +4,6 @@ import * as React from "react";
 type TypographyProps = TypographyPropsMui
 
 const StyledTypography = styled(TypographyMui)({
-  backgroundColor: '#ff9900',
   fontSize: '0.875rem',
   fontWeight: 'bold'
 

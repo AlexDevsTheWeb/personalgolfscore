@@ -3,7 +3,6 @@ import { RootState } from '@/store/store';
 import { Stack, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import Spinner from '../common/spinner/Spinner.component';
-import DistancesTotals from '../Totals/HolebyHole/DistancesTotals.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 
 const StatisticsMain = () => {
@@ -23,7 +22,7 @@ const StatisticsMain = () => {
 
   return (
     <Stack sx={{ gap: 2 }}>
-      <DistancesTotals />
+
       <HolebyHoleTotals roundTotals={displayableAverages} dashboard={true} />
     </Stack>
   );

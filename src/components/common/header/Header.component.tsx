@@ -7,13 +7,14 @@ interface IHeaderProps extends BoxProps {
   onClick?: () => void;
 }
 
-const BoxStyled = styled(Box)<BoxProps>(({ theme }: { theme: Theme }) => ({
+const BoxStyled = styled(Box)<IHeaderProps>(({ theme, onClick }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   padding: '10px',
   backgroundColor: theme.palette.grey4.main,
   width: '100%',
+  cursor: onClick ? 'pointer' : 'default',
 }));
 
 const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }: { theme: Theme }) => ({
