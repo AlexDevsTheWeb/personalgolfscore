@@ -1,7 +1,6 @@
 import { RootState } from "@/store/store";
 import BoxBetween from "@/styles/box/BoxBetween.styles";
-import Grid from "@/styles/grid/Grid2.styles";
-import { Box, Button, Grid2 } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../common/spinner/Spinner.component";
@@ -43,15 +42,25 @@ const Dashboard = () => {
         rounds.length !== 0 && (
           <>
             <Rounds />
-            <Grid2 container>
-              <Grid><ScoreCharts /></Grid>
-              <Grid><PointsChart /></Grid>
-            </Grid2>
-            <Grid2 container>
-              <Grid><FairwayHitsChart /></Grid>
-              <Grid><GirPercentageChart /></Grid>
-              <Grid><DistancesTotals /></Grid>
-            </Grid2>
+            <Grid container columnGap={5} rowGap={4}>
+              <Grid item xs={12} sm={6} md={4} lg={5}>
+                <ScoreCharts />
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={5}>
+                <PointsChart />
+              </Grid>
+            </Grid>
+            <Grid container columnGap={6} rowGap={3}>
+              <Grid item xs={12} sm={6} md={4} lg={4}>
+                <FairwayHitsChart />
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={4}>
+                <GirPercentageChart />
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <DistancesTotals />
+              </Grid>
+            </Grid>
             <StatisticsMain />
           </>
         )

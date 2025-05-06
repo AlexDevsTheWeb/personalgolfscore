@@ -168,7 +168,7 @@ export interface IStatAccordionProps {
 }
 
 export interface ISimpleStatDisplayProps {
-  title: string;
+  title?: string; // Made title optional
   total: number | string;
   avg?: number | string;
   inTotal: number | string;

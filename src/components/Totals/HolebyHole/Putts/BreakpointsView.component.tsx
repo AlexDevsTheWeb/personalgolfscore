@@ -1,10 +1,10 @@
-import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
-import { IPuttsDesktopViewProps, IPuttsMobileViewProps, IPuttsOverallStatsProps, IPuttsRangeStatsProps } from "@/types/props.types";
+import { IPuttsMobileViewProps, IPuttsOverallStatsProps, IPuttsRangeStatsProps } from "@/types/props.types";
 import { IPuttsBreakDownStatistics } from "@/types/roundTotals.types";
 import { catConversion } from "@/utils/constant.utils";
 import { formatPerc } from "@/utils/number/number.utils";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid2, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { Grid2Props } from "@mui/material/Grid2";
 import React from "react";
 
 const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : '-';
@@ -52,84 +52,57 @@ const RangeStats: React.FC<IPuttsRangeStatsProps> = React.memo(({ value }) => {
   );
 });
 
-export const DesktopView: React.FC<IPuttsDesktopViewProps> = ({ puttsStatistics }) => {
-  const overallStats = puttsStatistics._puttsOverall;
-  const rangeEntries = Object.entries(puttsStatistics).filter(([key]) => key !== '_puttsOverall') as [string, IPuttsBreakDownStatistics][];
-  const rangeKeys = rangeEntries.map(([key]) => key);
+interface StatBlockProps {
+  title: string;
+  children: React.ReactNode;
+  gridProps?: Grid2Props;
+}
 
-  return (
-    <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="putts statistics table">
-        <TableHead>
-          <TableRow>
-            <TableCell align='center' key="header-overall" variant='putt'
-              sx={(theme) => ({
-                padding: '0px'
-              })}
-            >
-              <ShotsTableHeaderStack firstRow={catConversion('_puttsOverall')} secondRow={''} />
-            </TableCell>
-            {rangeKeys.map((rangeKey) => (
-              <TableCell align='center' key={`header-${rangeKey}`} variant='putt'
-                sx={(theme) => ({
-                  padding: '0px'
-                })}
-              >
-                <ShotsTableHeaderStack firstRow={catConversion(rangeKey)} secondRow={''} />
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell align='center' key="data-overall"
-              sx={(theme) => ({
-                verticalAlign: 'top', padding: 1
-              })}>
+const StatBlock: React.FC<StatBlockProps> = ({ title, children, gridProps }) => (
+  <Grid2 {...gridProps}>
+    <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Typography component="h3" gutterBottom sx={{ textAlign: 'center' }}>
+        {title}
+      </Typography>
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        {children}
+      </Box>
+    </Paper>
+  </Grid2>
+);
 
-              <OverallStats value={overallStats} />
-            </TableCell>
-            {rangeEntries.map(([key, value]) => (
-              <TableCell align='center' key={`data-${key}`} sx={(theme) => ({
-                verticalAlign: 'top',
-                padding: 1,
-                borderLeft: `1px solid ${theme.palette.divider}`,
-
-              })}>
-                <RangeStats value={value} />
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-export const MobileView: React.FC<IPuttsMobileViewProps> = ({ puttsStatistics }) => {
+export const UnifiedPuttsView: React.FC<IPuttsMobileViewProps> = ({ puttsStatistics }) => {
   const overallStats = puttsStatistics._puttsOverall;
   const rangeEntries = Object.entries(puttsStatistics).filter(([key]) => key !== '_puttsOverall') as [string, IPuttsBreakDownStatistics][];
 
+  if (!overallStats && rangeEntries.length === 0) {
+    return <Typography sx={{ p: 2, textAlign: 'center' }}>No Putting data available.</Typography>;
+  }
+
   return (
-    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Accordion key="accordion-overall">
-        <AccordionSummary>
-          <ShotsTableHeaderStack firstRow={catConversion('_puttsOverall')} secondRow={''} />
-        </AccordionSummary>
-        <AccordionDetails>
+    <Grid2 container spacing={2} sx={{ p: 2 }}>
+      {overallStats && (
+        <StatBlock
+          title={catConversion('_puttsOverall')}
+          gridProps={{ size: { xs: 12, sm: 6, md: 4 } }}
+        >
           <OverallStats value={overallStats} />
-        </AccordionDetails>
-      </Accordion>
-      {rangeEntries.map(([key, value]) => (
-        <Accordion key={`accordion-${key}`}>
-          <AccordionSummary>
-            <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
-          </AccordionSummary>
-          <AccordionDetails>
+        </StatBlock>
+      )}
+      {rangeEntries.map(([key, value]) => {
+        // if (!value || value.puttsAttempts === 0) { // Assuming puttsAttempts indicates if there's data
+        //   return null;
+        // }
+        return (
+          <StatBlock
+            key={key}
+            title={catConversion(key)}
+            gridProps={{ size: { xs: 12, sm: 6, md: 4 } }}
+          >
             <RangeStats value={value} />
-          </AccordionDetails>
-        </Accordion>
-      ))}
-    </Box>
+          </StatBlock>
+        );
+      })}
+    </Grid2>
   );
 };

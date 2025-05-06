@@ -1,8 +1,8 @@
-import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
 import { ICategoryStatsProps, IDesktopViewProps, IMobileViewProps } from "@/types/props.types";
 import { catConversion } from "@/utils/constant.utils";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid2, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { Grid2Props } from "@mui/material/Grid2";
 import React from "react";
 import Cross from "../components/Cross.component";
 
@@ -12,68 +12,7 @@ export const DesktopView: React.FC<IDesktopViewProps> = ({ inside100Mt }) => {
   const entries = Object.entries(inside100Mt);
 
   return (
-    <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="inside 100mt statistics table">
-        <TableHead>
-          <TableRow>
-            {categories.map((categoryKey) => (
-              <TableCell
-                align='center'
-                key={`header-${categoryKey}`}
-                variant='putt'
-                sx={(theme) => ({
-                  padding: '0px'
-                })}
-
-              >
-                <ShotsTableHeaderStack firstRow={catConversion(categoryKey)} secondRow={''} />
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            {entries.map(([key, value]) => {
-              return (
-                <TableCell
-                  align='center'
-                  key={`data-${key}`}
-                  sx={(theme) => ({
-                    borderLeft: `1px solid ${theme.palette.divider}`,
-                    borderBottom: `1px solid ${theme.palette.divider}`,
-                    verticalAlign: 'top'
-                  })}
-
-                >
-                  <CategoryStats value={value} />
-                </TableCell>
-              )
-            })}
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-export const MobileView: React.FC<IMobileViewProps> = ({ inside100Mt }) => {
-  const entries = Object.entries(inside100Mt);
-
-  return (
-    <Box sx={{ width: '100%' }}>
-      {entries.map(([key, value]) => (
-        <Accordion key={`accordion-${key}`}>
-          <AccordionSummary>
-            {/* Ensure AccordionSummary expands on click */}
-            <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
-          </AccordionSummary>
-          <AccordionDetails>
-            {/* Removed redundant Box */}
-            <CategoryStats value={value} />
-          </AccordionDetails>
-        </Accordion>
-      ))}
-    </Box>
+    <UnifiedInside100View inside100Mt={inside100Mt} />
   );
 };
 
@@ -105,3 +44,50 @@ export const CategoryStats: React.FC<ICategoryStatsProps> = React.memo(({ value 
     </Stack>
   );
 });
+
+interface StatBlockProps {
+  title: string;
+  children: React.ReactNode;
+  gridProps?: Grid2Props;
+}
+
+const StatBlock: React.FC<StatBlockProps> = ({ title, children, gridProps }) => (
+  <Grid2 {...gridProps}>
+    <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Typography component="h3" gutterBottom sx={{ textAlign: 'center' }}>
+        {title}
+      </Typography>
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        {children}
+      </Box>
+    </Paper>
+  </Grid2>
+);
+
+export const UnifiedInside100View: React.FC<IMobileViewProps> = ({ inside100Mt }) => {
+  const entries = Object.entries(inside100Mt);
+
+  if (entries.length === 0) {
+    return <Typography sx={{ p: 2, textAlign: 'center' }}>No "Inside 100mt" data available.</Typography>;
+  }
+
+  return (
+    <Grid2 container spacing={2} sx={{ p: 2 }}>
+      {entries.map(([key, value]) => {
+        // Filter out categories if they have no attempts
+        // if (!value || value.attempts === 0) {
+        //   return null;
+        // }
+        return (
+          <StatBlock
+            key={key}
+            title={`${catConversion(key)}`} // Use catConversion for a user-friendly title
+            gridProps={{ size: { xs: 12, sm: 6, md: 3 } }} // Adjust for 2-4 items per row
+          >
+            <CategoryStats value={value} />
+          </StatBlock>
+        );
+      })}
+    </Grid2>
+  );
+};

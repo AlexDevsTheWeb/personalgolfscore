@@ -774,7 +774,7 @@ const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: ({ ownerState }) =>
         ownerState.container === true && ({
-          flexWrap: 'nowrap',
+          flexWrap: 'wrap', // Changed from 'nowrap' to allow wrapping
           gap: 5
         })
     }

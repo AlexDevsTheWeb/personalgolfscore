@@ -1,11 +1,11 @@
-import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
-import { ITeeshotsCategoryStatsProps, ITeeshotsDesktopViewProps, ITeeshotsMobileViewProps } from "@/types/props.types";
+import { ITeeshotsCategoryStatsProps, ITeeshotsMobileViewProps } from "@/types/props.types";
 import { catConversion } from "@/utils/constant.utils";
 import { formatPerc } from "@/utils/number/number.utils";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid2, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import _ from "lodash";
+import { Box, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { Grid2Props } from "@mui/material/Grid2";
 import React from "react";
+
 
 export const CategoryStats: React.FC<ITeeshotsCategoryStatsProps> = React.memo(({ value }) => {
   const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : '-';
@@ -36,67 +36,49 @@ export const CategoryStats: React.FC<ITeeshotsCategoryStatsProps> = React.memo((
   );
 });
 
-export const DesktopView: React.FC<ITeeshotsDesktopViewProps> = ({ teeShots }) => {
-  const categories = Object.keys(teeShots);
+interface StatBlockProps {
+  title: string;
+  children: React.ReactNode;
+  gridProps?: Grid2Props;
+}
+
+const StatBlock: React.FC<StatBlockProps> = ({ title, children, gridProps }) => (
+  <Grid2 {...gridProps}>
+    <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Typography component="h3" gutterBottom sx={{ textAlign: 'center' }}>
+        {title}
+      </Typography>
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        {children}
+      </Box>
+    </Paper>
+  </Grid2>
+);
+
+export const UnifiedTeeShotsView: React.FC<ITeeshotsMobileViewProps> = ({ teeShots }) => {
   const entries = Object.entries(teeShots);
 
-  return (
-    <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="tee shots statistics table">
-        <TableHead>
-          <TableRow>
-            {categories.map((categoryKey) => (
-              <TableCell
-                align='center'
-                key={`header-${categoryKey}`}
-                variant='putt'
-                sx={(theme) => ({
-                  padding: '0px'
-                })}
-              >
-                <ShotsTableHeaderStack firstRow={catConversion(categoryKey)} secondRow={''} />
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            {entries.map(([key, value]) => (
-              <TableCell
-                align='center'
-                key={`data-${key}`}
-                sx={(theme) => ({
-                  borderLeft: `1px solid ${theme.palette.divider}`,
-                  borderBottom: `1px solid ${theme.palette.divider}`,
-                  verticalAlign: 'top',
-                  padding: 1,
-                })}
-              >
-                <CategoryStats value={value} />
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-export const MobileView: React.FC<ITeeshotsMobileViewProps> = ({ teeShots }) => {
-  const entries = Object.entries(teeShots);
+  if (entries.length === 0) {
+    return <Typography sx={{ p: 2, textAlign: 'center' }}>No tee shot data available for these categories.</Typography>;
+  }
 
   return (
-    <Box sx={{ width: '100%' }}>
-      {entries.map(([key, value]) => (
-        <Accordion key={_.uniqueId()}>
-          <AccordionSummary>
-            <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
-          </AccordionSummary>
-          <AccordionDetails>
+    <Grid2 container spacing={2} sx={{ p: 2 }}>
+      {entries.map(([key, value]) => {
+        // Filter out categories if they have no attempts (or other relevant zero check)
+        // if (!value || value.attempts === 0) {
+        //   return null;
+        // }
+        return (
+          <StatBlock
+            key={key}
+            title={`${catConversion(key)} Tee Shots`}
+            gridProps={{ size: { xs: 12, sm: 6, md: 3, lg: 3 } }} // 1 on xs, 2 on sm, 4 on md/lg
+          >
             <CategoryStats value={value} />
-          </AccordionDetails>
-        </Accordion>
-      ))}
-    </Box>
+          </StatBlock>
+        );
+      })}
+    </Grid2>
   );
 };

@@ -1,82 +1,9 @@
-import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 import { CHIPPING } from "@/enum/shots.enum";
 import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
-import { IChipCategoryStatsProps, IChipDesktopViewProps, IChipMobileViewProps } from "@/types/props.types";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid2, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { IChipCategoryStatsProps, IChipMobileViewProps } from "@/types/props.types";
+import { Box, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { Grid2Props } from "@mui/material/Grid2";
 import React from "react";
-
-
-export const DesktopView: React.FC<IChipDesktopViewProps> = ({ chipPitch }) => {
-  const categories = Object.keys(chipPitch);
-  const entries = Object.entries(chipPitch);
-
-  return (
-    <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="chipping and pitching statistics table">
-        <TableHead>
-          <TableRow>
-            {categories.map((categoryKey) => {
-              const clubType = CHIPPING[categoryKey.toUpperCase() as keyof typeof CHIPPING] || categoryKey;
-              return (
-                <TableCell
-                  align='center'
-                  key={`header-${categoryKey}`}
-                  variant='putt'
-                  sx={(theme) => ({
-                    padding: '0px'
-                  })}
-                >
-                  <ShotsTableHeaderStack firstRow={clubType as string} secondRow={''} />
-                </TableCell>
-              );
-            })}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            {entries.map(([key, value]) => {
-              return (
-                <TableCell
-                  align='center'
-                  key={`data-${key}`}
-                  sx={(theme) => ({
-                    borderLeft: `1px solid ${theme.palette.divider}`,
-                    borderBottom: `1px solid ${theme.palette.divider}`,
-                    verticalAlign: 'top', padding: 1
-                  })}
-                >
-                  <CategoryStats value={value} />
-                </TableCell>
-              )
-            })}
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-export const MobileView: React.FC<IChipMobileViewProps> = ({ chipPitch }) => {
-  const entries = Object.entries(chipPitch);
-
-  return (
-    <Box sx={{ width: '100%' }}>
-      {entries.map(([key, value]) => {
-        const clubType = CHIPPING[key.toUpperCase() as keyof typeof CHIPPING] || key;
-        return (
-          <Accordion key={`accordion-${key}`}>
-            <AccordionSummary>
-              <ShotsTableHeaderStack firstRow={clubType as string} secondRow={''} />
-            </AccordionSummary>
-            <AccordionDetails>
-              <CategoryStats value={value} />
-            </AccordionDetails>
-          </Accordion>
-        );
-      })}
-    </Box>
-  );
-};
 
 export const CategoryStats: React.FC<IChipCategoryStatsProps> = React.memo(({ value }) => {
   return (
@@ -101,3 +28,51 @@ export const CategoryStats: React.FC<IChipCategoryStatsProps> = React.memo(({ va
     </Stack>
   );
 });
+
+interface StatBlockProps {
+  title: string;
+  children: React.ReactNode;
+  gridProps?: Grid2Props;
+}
+
+const StatBlock: React.FC<StatBlockProps> = ({ title, children, gridProps }) => (
+  <Grid2 {...gridProps}>
+    <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Typography component="h3" gutterBottom sx={{ textAlign: 'center' }}>
+        {title}
+      </Typography>
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        {children}
+      </Box>
+    </Paper>
+  </Grid2>
+);
+
+export const UnifiedChippingPitchingView: React.FC<IChipMobileViewProps> = ({ chipPitch }) => {
+  const entries = Object.entries(chipPitch);
+
+  if (entries.length === 0) {
+    return <Typography sx={{ p: 2, textAlign: 'center' }}>No Chipping & Pitching data available.</Typography>;
+  }
+
+  return (
+    <Grid2 container spacing={2} sx={{ p: 2 }}>
+      {entries.map(([key, value]) => {
+        // Filter out categories if they have no attempts or data
+        // if (!value || value.attempts === 0) {
+        //   return null;
+        // }
+        const clubType = CHIPPING[key.toUpperCase() as keyof typeof CHIPPING] || key;
+        return (
+          <StatBlock
+            key={key}
+            title={clubType as string}
+            gridProps={{ size: { xs: 12, sm: 6, md: 4 } }} // 1 on xs, 2 on sm, 3 on md/lg
+          >
+            <CategoryStats value={value} />
+          </StatBlock>
+        );
+      })}
+    </Grid2>
+  );
+};
