@@ -106,10 +106,10 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
         Add the clubs you currently carry in your bag. You can adjust this later in Settings.
       </Typography>
       {golfBag.map((clubType, typeIndex) => (
-        <Paper key={clubType.typeName} sx={{ p: 2, mb: 3 }} variant="outlined">
+        <Paper key={clubType.typeName} sx={{ p: 2, mb: 3, }} variant="outlined">
           <Typography gutterBottom>{clubType.typeName.toUpperCase()}</Typography>
           {clubType.details.map((club, clubIndex) => (
-            <Stack sx={{ gap: 4 }}>
+            <Stack sx={{ mb: 2, gap: 2 }}>
               <Grid2 container spacing={2} key={club.clubIdentifier} size={12}>
                 <Grid2 size={12} gap={2}>
                   <TextField
@@ -172,6 +172,9 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
             onClick={() => addClub(typeIndex)}
             size="small"
             variant="outlined"
+            disableFocusRipple
+            disableRipple
+            sx={{ mt: 2 }}
           >
             Add {clubType.typeName === 'Putter' ? 'Putter' : (clubType.typeName.endsWith('s') ? clubType.typeName.slice(0, -1) : clubType.typeName)} {/* Basic singularization */}
           </Button>
