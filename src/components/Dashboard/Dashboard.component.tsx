@@ -1,16 +1,18 @@
-import { RootState } from "@/store/store"
-import BoxBetween from "@/styles/box/BoxBetween.styles"
-import { Box, Button } from "@mui/material"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import Spinner from "../common/spinner/Spinner.component"
-import Rounds from "../Rounds/Rounds.component"
-import StatisticsMain from "../Statistics/StatisticsMain.component"
+import { RootState } from "@/store/store";
+import BoxBetween from "@/styles/box/BoxBetween.styles";
+import { Box, Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../common/spinner/Spinner.component";
+import Rounds from "../Rounds/Rounds.component";
+import StatisticsMain from "../Statistics/StatisticsMain.component";
+import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
   const { rounds } = useSelector((store: RootState) => store.rounds);
+  const { player } = useSelector((store: RootState) => store.player);
   const { isLoading } = useSelector((store: RootState) => store.controls);
 
   const handleClickStatistic = () => {
@@ -24,8 +26,12 @@ const Dashboard = () => {
     return <Spinner />
   }
 
+  console.log("player?.uid && !player.isSetupComplete: ", player?.uid, player.isSetupComplete)
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} gap={2}>
+      {player?.uid && !player.isSetupComplete && (
+        <WizardSetupDialog open={!player.isSetupComplete} playerUid={player.uid} />
+      )}
       {
         rounds.length !== 0 && (
           <>
