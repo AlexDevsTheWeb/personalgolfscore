@@ -667,6 +667,8 @@ const components: Components<Omit<Theme, 'components'>> = {
       }),
     },
   },
+
+  //  root: ({ theme }: { theme: Theme }) => ({
   MuiTableCell: {
     styleOverrides: {
       root: {
@@ -685,10 +687,46 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
     },
     variants: [
-      { props: { variant: 'red' }, style: { backgroundColor: '#cf8484', color: 'black', fontWeight: 500, fontSize: 16 } },
-      { props: { variant: 'yellow' }, style: { backgroundColor: '#faf099', color: 'black', fontWeight: 500, fontSize: 16 } },
-      { props: { variant: 'green' }, style: { backgroundColor: '#82b38b', color: 'black', fontWeight: 500, fontSize: 16 } },
-      { props: { variant: 'putt' }, style: { backgroundColor: '#f0f0f0', color: 'black', fontWeight: 500, fontSize: 16 } },
+      {
+        props: { variant: 'red' },
+        style: ({ theme }: { theme: Theme }) => ({
+          backgroundColor: theme.palette.redDim.main,
+          color: 'black',
+          fontWeight: 500,
+          fontSize: 16
+        }),
+      },
+      {
+        props: { variant: 'yellow' },
+        style: ({ theme }: { theme: Theme }) => ({
+          backgroundColor: theme.palette.yellowDim.main,
+          color: 'black',
+          fontWeight: 500,
+          fontSize: 16
+        }),
+      },
+      {
+        props: {
+          variant: 'green'
+        },
+        style: ({ theme }: { theme: Theme }) => ({
+          backgroundColor: theme.palette.greenDim.main,
+          color: 'black',
+          fontWeight: 500,
+          fontSize: 16
+        }),
+      },
+      {
+        props: {
+          variant: 'putt'
+        },
+        style: ({ theme }: { theme: Theme }) => ({
+          backgroundColor: theme.palette.whiteDim.main,
+          color: 'black',
+          fontWeight: 500,
+          fontSize: 16
+        })
+      },
     ]
   },
   MuiTableFooter: {

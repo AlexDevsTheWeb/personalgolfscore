@@ -1,7 +1,6 @@
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { Typography } from '@/styles/index';
 import FmdBadTwoToneIcon from '@mui/icons-material/FmdBadTwoTone';
-import { Box, BoxProps, Button, Stack, styled } from '@mui/material';
+import { Box, BoxProps, Button, Stack, styled, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const EmptyRounds = () => {

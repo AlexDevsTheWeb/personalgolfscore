@@ -1,8 +1,7 @@
 import ShotsTableHeaderStack from '@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { Stack as StackMui, StackProps as StackPropsMui, styled } from '@mui/material';
+import { Stack as StackMui, StackProps as StackPropsMui, styled, Typography } from '@mui/material';
 import * as React from 'react';
-import Typography from '../typography/Typography.styles';
 
 type StackProps = StackPropsMui & {
   name: string,

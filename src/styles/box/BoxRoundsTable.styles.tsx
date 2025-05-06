@@ -1,11 +1,10 @@
-import { Box, styled, Typography } from '@mui/material';
+import { Box, styled, Typography, useTheme } from '@mui/material';
 
 interface IBoxRoundTablesProps {
   props: {
     netScore: number,
     grossScore: number,
   }
-
 }
 
 const StyledBox = styled(Box)<IBoxRoundTablesProps>((props: IBoxRoundTablesProps) => ({
@@ -17,10 +16,11 @@ const StyledBox = styled(Box)<IBoxRoundTablesProps>((props: IBoxRoundTablesProps
 }));
 
 const BoxRoundsTable: React.FC<IBoxRoundTablesProps> = props => {
+  const theme = useTheme();
   const { netScore, grossScore } = props.props;
 
-  const netScoreBackground = netScore > 0 ? '#cf8484' : netScore === 0 ? 'transparent' : '#82b38b';
-  const grossScoreBackground = grossScore > 0 ? '#cf8484' : grossScore === 0 ? 'transparent' : '#82b38b';
+  const netScoreBackground = netScore > 0 ? theme.palette.redDim.main : netScore === 0 ? 'transparent' : theme.palette.greenDim.main;
+  const grossScoreBackground = grossScore > 0 ? theme.palette.redDim.main : grossScore === 0 ? 'transparent' : theme.palette.greenDim.main;
 
   return (
     <StyledBox {...props}>

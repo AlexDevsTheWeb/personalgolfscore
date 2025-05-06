@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import ClubsHeaderTypography from "@/styles/typography/ClubsHeaderTypography.styles";
 import { IGolfBagData } from '@/types/player.types';
-import { BoxPlayer, Typography } from "../../styles";
+import { BoxPlayer } from "../../styles";
 
 import { updatePlayerGolfbag } from '@/features/player/player.slice';
 import { IClubsMainProps } from '@/types/clubs.types';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 
 const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
