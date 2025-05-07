@@ -400,18 +400,17 @@ export const prepareOverallTotalsUpdateBatch = (
     sumTotals: safeAdd(existingTotalsAvg?.putts?.sumTotals, currentTotals.putts.totals),
     sumTotalsIN: safeAdd(existingTotalsAvg?.putts?.sumTotalsIN, currentTotals.putts.totalsIN),
     sumTotalsOUT: safeAdd(existingTotalsAvg?.putts?.sumTotalsOUT, currentTotals.putts.totalsOUT),
-    sumPuttsGir: safeAdd(existingTotalsAvg?.putts?.sumPuttsGir, currentTotals.putts.puttsGir), // Assuming puttsGir is SUM
-    sumPuttsGirIN: safeAdd(existingTotalsAvg?.putts?.sumPuttsGirIN, currentTotals.putts.puttsGirIn), // Assuming puttsGirIn is SUM
-    sumPuttsGirOUT: safeAdd(existingTotalsAvg?.putts?.sumPuttsGirOUT, currentTotals.putts.puttsGirOut), // Assuming puttsGirOut is SUM
+    sumPuttsGir: safeAdd(existingTotalsAvg?.putts?.sumPuttsGir, currentTotals.putts.puttsGir),
+    sumPuttsGirIN: safeAdd(existingTotalsAvg?.putts?.sumPuttsGirIN, currentTotals.putts.puttsGirIn),
+    sumPuttsGirOUT: safeAdd(existingTotalsAvg?.putts?.sumPuttsGirOUT, currentTotals.putts.puttsGirOut),
     countPutts1: safeAdd(existingTotalsAvg?.putts?.countPutts1, currentTotals.putts.putts1),
     countPutts2: safeAdd(existingTotalsAvg?.putts?.countPutts2, currentTotals.putts.putts2),
     countPutts3OrMore: safeAdd(existingTotalsAvg?.putts?.countPutts3OrMore, currentTotals.putts.putts3More),
-    sumDistanceFirstPuttGir: safeAdd(existingTotalsAvg?.putts?.sumDistanceFirstPuttGir, currentTotals.putts.puttsDistGir), // Assuming puttsDistGir is SUM
-    statisticsByRange: {}, // Initialize as empty object
-    overallStats: { // Aggregate overall stats
+    sumDistanceFirstPuttGir: safeAdd(existingTotalsAvg?.putts?.sumDistanceFirstPuttGir, currentTotals.putts.puttsDistGir),
+    statisticsByRange: {},
+    overallStats: {
       sumPuttsMadeForBirdieOrBetter: safeAdd(existingTotalsAvg?.putts?.overallStats?.sumPuttsMadeForBirdieOrBetter, currentTotals.putts.puttsStatistics._puttsOverall.birdieBetter),
-      // Need attempts for birdie conversion %
-      countAttemptsForBirdieOrBetter: safeAdd(existingTotalsAvg?.putts?.overallStats?.countAttemptsForBirdieOrBetter, currentTotals.putts.puttsStatistics._puttsOverall.birdieBetterAttempts), // Use attempts if calculated
+      countAttemptsForBirdieOrBetter: safeAdd(existingTotalsAvg?.putts?.overallStats?.countAttemptsForBirdieOrBetter, currentTotals.putts.puttsStatistics._puttsOverall.birdieBetterAttempts),
     }
   };
 
