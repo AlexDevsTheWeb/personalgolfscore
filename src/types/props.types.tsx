@@ -54,7 +54,7 @@ export interface ISelectProps {
 }
 
 export interface IHoleApproachFormProps {
-  holeData: Pick<IShots, 'teeClub' | 'driveDistance' | 'toGreenMeters' | 'toGreen' | 'greenSide' | 'chipClub' | 'gir' | 'par' | 'distance' | 'strokes'>;
+  holeData: Pick<IShots, 'teeClub' | 'driveDistance' | 'toGreenMeters' | 'toGreen' | 'greenSide' | 'chipClub' | 'gir' | 'par' | 'distance' | 'strokes' | 'putts'>;
   greenClubs: string[];
   chipClubs: string[];
   greenSideValues: string[];

@@ -12,6 +12,7 @@ const displayAverage = (val: number | undefined | null, precision: number = 2) =
 const displayPercentage = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? formatPerc(val) : '-';
 
 
+
 const OverallStats: React.FC<IPuttsOverallStatsProps> = React.memo(({ value }) => (
   <Stack spacing={1}>
     <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
@@ -78,6 +79,8 @@ export const UnifiedPuttsView: React.FC<IPuttsMobileViewProps> = ({ puttsStatist
   if (!overallStats && rangeEntries.length === 0) {
     return <Typography sx={{ p: 2, textAlign: 'center' }}>No Putting data available.</Typography>;
   }
+
+  console.log("overallStats: ", overallStats)
 
   return (
     <Grid2 container spacing={2} sx={{ p: 2 }}>
