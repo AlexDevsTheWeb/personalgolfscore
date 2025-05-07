@@ -3,7 +3,7 @@ import { IRoundTotals } from "@/types/roundTotals.types";
 import _ from "lodash";
 import { initialStateRoundTotals } from "../constant.utils";
 import { calculateChippingPitchingStatistics, calculateFWIrons, calculateInside100mtStatistics, calculatePuttsStatistics, calculateTeeShotsStatistics } from "../totals/totals.utils";
-import { divide } from "../totals/totalsGenFunc.utils";
+import { safeDivide, safePercentage } from "./math.utils";
 
 export const totalsCalculator = (shots: IShots[]) => {
   let totals: IRoundTotals = initialStateRoundTotals;
@@ -23,11 +23,11 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.par += curr.par;
     acc.score += curr.strokes;
     acc.points += curr.points;
-    acc.scoreEagleBetter += ((acc.score - acc.par) <= -2 ? 1 : 0);
-    acc.scoreBirdie += ((acc.score - acc.par) === -1 ? 1 : 0);
-    acc.scorePar += ((acc.score - acc.par) === 0 ? 1 : 0);
-    acc.scoreBogey += ((acc.score - acc.par) === 1 ? 1 : 0);
-    acc.scoreDoubleBogeyWorst += ((acc.score - acc.par) >= 2 ? 1 : 0);
+    acc.scoreEagleBetter += ((curr.strokes - curr.par) <= -2 ? 1 : 0);
+    acc.scoreBirdie += ((curr.strokes - curr.par) === -1 ? 1 : 0);
+    acc.scorePar += ((curr.strokes - curr.par) === 0 ? 1 : 0);
+    acc.scoreBogey += ((curr.strokes - curr.par) === 1 ? 1 : 0);
+    acc.scoreDoubleBogeyWorst += ((curr.strokes - curr.par) >= 2 ? 1 : 0);
     acc.scorePar3 += (curr.par === 3 ? curr.strokes : 0);
     acc.scorePar4 += (curr.par === 4 ? curr.strokes : 0);
     acc.scorePar5 += (curr.par === 5 ? curr.strokes : 0);
@@ -115,16 +115,16 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     score: {
       totals: totalALL.score,
-      avg: Number(divide(totalALL.score, holes)),
-      vsPar: getVsParTotals(totalALL.score, totalALL.par, true).value,
+      avg: safeDivide(totalALL.score, holes),
+      vsPar: totalALL.score - totalALL.par,
       scoreIN: totalIN.scoreIN,
       scoreOUT: totalOUT.scoreOUT,
-      vsParIN: getVsParTotals(totalIN.scoreIN, totalIN.parIN, true).value,
-      vsParOUT: getVsParTotals(totalOUT.scoreOUT, totalOUT.parOUT, true).value,
+      vsParIN: totalIN.scoreIN - totalIN.parIN,
+      vsParOUT: totalOUT.scoreOUT - totalOUT.parOUT,
       avgIN: totalIN.scoreIN && holesIN
-        ? Number(divide(totalIN.scoreIN, holesIN)) : 0,
+        ? safeDivide(totalIN.scoreIN, holesIN) : 0,
       avgOUT: totalOUT.scoreOUT && holesOUT
-        ? Number(divide(totalOUT.scoreOUT, holesOUT)) : 0,
+        ? safeDivide(totalOUT.scoreOUT, holesOUT) : 0,
       par3: par3,
       par4: par4,
       par5: par5,
@@ -139,11 +139,11 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     points: {
       totals: totalALL.points,
-      avg: totalALL.points && holes ? Number(divide(totalALL.points, holes)) : 0,
+      avg: safeDivide(totalALL.points, holes),
       pointsIN: totalIN.pointsIN,
       pointsOUT: totalOUT.pointsOUT,
-      avgIN: totalIN.pointsIN && holesIN ? Number(divide(totalIN.pointsIN, holesIN)) : 0,
-      avgOUT: totalOUT.pointsOUT && holesOUT ? Number(divide(totalOUT.pointsOUT, holesOUT)) : 0,
+      avgIN: safeDivide(totalIN.pointsIN, holesIN),
+      avgOUT: safeDivide(totalOUT.pointsOUT, holesOUT),
     },
     fairway: {
       total: fairwayTotal,
@@ -157,37 +157,37 @@ export const totalsCalculator = (shots: IShots[]) => {
     fwAndIrons: fairwayWoodAndIrons,
     gir: {
       totals: totalALL.gir,
-      avg: totalALL.gir && holes ? Number(divide(totalALL.gir, holes)) : 0,
+      avg: safeDivide(totalALL.gir, holes),
       totalsIN: totalIN.girIN,
-      avgIN: totalIN.girIN && holesIN ? Number(divide(totalIN.girIN, holesIN)) : 0,
+      avgIN: safeDivide(totalIN.girIN, holesIN),
       totalsOUT: totalOUT.girOUT,
-      avgOUT: totalOUT.girOUT && holesOUT ? Number(divide(totalOUT.girOUT, holesOUT)) : 0,
+      avgOUT: safeDivide(totalOUT.girOUT, holesOUT),
     },
     girBogey: {
       totals: totalALL.girBogey,
-      avg: totalALL.girBogey && holes ? Number(divide(totalALL.girBogey, holes)) : 0,
+      avg: safeDivide(totalALL.girBogey, holes),
       totalsIN: totalIN.girBogeyIN,
-      avgIN: totalIN.girBogeyIN && holesIN ? Number(divide(totalIN.girBogeyIN, holesIN)) : 0,
+      avgIN: safeDivide(totalIN.girBogeyIN, holesIN),
       totalsOUT: totalOUT.girBogeyOUT,
-      avgOUT: totalOUT.girBogeyOUT && holesOUT ? Number(divide(totalOUT.girBogeyOUT, holesOUT)) : 0,
+      avgOUT: safeDivide(totalOUT.girBogeyOUT, holesOUT),
     },
     scramble: {
       totals: totalALL.scrambleAttempts,
       saved: totalALL.scrambleMade,
-      perc: totalALL.scrambleMade && totalALL.scrambleAttempts ? (totalALL.scrambleMade / totalALL.scrambleAttempts) * 100 : 0,
+      perc: safePercentage(totalALL.scrambleMade, totalALL.scrambleAttempts),
     },
     upDown: {
       totals: totalALL.upDownAttempts,
       saved: totalALL.upDownMade,
-      perc: totalALL.upDownMade && totalALL.upDownAttempts ? (totalALL.upDownMade / totalALL.upDownAttempts) * 100 : 0,
+      perc: safePercentage(totalALL.upDownMade, totalALL.upDownAttempts),
     },
     putts: {
       totals: totalALL.putts,
-      avg: totalALL.putts && holes ? Number(divide(totalALL.putts, holes)) : 0,
+      avg: safeDivide(totalALL.putts, holes),
       totalsIN: totalIN.puttsIN,
-      avgIN: totalIN.puttsIN && holesIN ? Number(divide(totalIN.puttsIN, holesIN)) : 0,
+      avgIN: safeDivide(totalIN.puttsIN, holesIN),
       totalsOUT: totalOUT.puttsOUT,
-      avgOUT: totalOUT.puttsOUT && holesOUT ? Number(divide(totalOUT.puttsOUT, holesOUT)) : 0,
+      avgOUT: safeDivide(totalOUT.puttsOUT, holesOUT),
       puttsGir: totalALL.puttsGIR,
       puttsGirIn: totalIN.puttsGIRIN,
       puttsGirOut: totalOUT.puttsGIROUT,
@@ -200,33 +200,27 @@ export const totalsCalculator = (shots: IShots[]) => {
     },
     sand: {
       totals: totalALL.sand,
-      avg: totalALL.sand && holes ? Number(divide(totalALL.sand, holes)) : 0,
+      avg: safeDivide(totalALL.sand, holes),
       saved: totalALL.sandSaved,
-      avgSaved: totalALL.sandSaved && holes ? Number(divide(totalALL.sandSaved, holes)) : 0,
-      savedPerc: totalALL.sandSaved && totalALL.sand ? Number((totalALL.sandSaved / totalALL.sand) * 100) : 0,
+      avgSaved: safeDivide(totalALL.sandSaved, holes), // Avg saved per hole
+      savedPerc: safePercentage(totalALL.sandSaved, totalALL.sand),
     },
     water: {
       totals: totalALL.water,
-      avg: totalALL.water && holes ? Number(divide(totalALL.water, holes)) : 0,
+      avg: safeDivide(totalALL.water, holes),
       totalsIN: totalIN.waterIN,
-      avgIN: totalIN.waterIN && holesIN ? Number(divide(totalIN.waterIN, holesIN)) : 0,
+      avgIN: safeDivide(totalIN.waterIN, holesIN),
       totalsOUT: totalOUT.waterOUT,
-      avgOUT: totalOUT.waterOUT && holesOUT ? Number(divide(totalOUT.waterOUT, holesOUT)) : 0,
+      avgOUT: safeDivide(totalOUT.waterOUT, holesOUT),
     },
     out: {
       totals: totalALL.out,
-      avg: totalALL.out && holes ? Number(divide(totalALL.out, holes)) : 0,
+      avg: safeDivide(totalALL.out, holes),
       totalsIN: totalIN.outIN,
-      avgIN: totalIN.outIN && holesIN ? Number(divide(totalIN.outIN, holesIN)) : 0,
+      avgIN: safeDivide(totalIN.outIN, holesIN),
       totalsOUT: totalOUT.outOUT,
-      avgOUT: totalOUT.outOUT && holesOUT ? Number(divide(totalOUT.outOUT, holesOUT)) : 0,
+      avgOUT: safeDivide(totalOUT.outOUT, holesOUT),
     }
   }
   return totals;
-}
-
-const getVsParTotals = (strokes: number, par: number, total?: boolean) => {
-  const diff = strokes - par;
-  const result = { value: diff };
-  return result;
 }

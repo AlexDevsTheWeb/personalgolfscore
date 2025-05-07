@@ -1,4 +1,5 @@
 import { IShots } from "@/types/roundData.types";
+import { safeDivide, safePercentage } from "../calculator/math.utils";
 import {
   initialFwAndIronsStatistics,
   initialInside100MtStatistics,
@@ -6,7 +7,7 @@ import {
   initialPuttsStatistics,
   initialTeeShotsStatistics
 } from "../constant.utils";
-import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip, isTheRightClubFw } from "./totalsGenFunc.utils";
+import { iAmintheZone, isTheRightClub, isTheRightClubChip, isTheRightClubFw } from "./totalsGenFunc.utils";
 
 export const calculatePuttsStatistics = (shots: IShots[]) => {
 
@@ -47,11 +48,11 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        puttsAverage: parseFloat(divide(object.numberPuttsInRange, object.puttsAttempts)),
-        puttsSecondAverageLength: parseFloat(divide(object.distanceSecondPutt, object.numberSecondPutt)),
-        puttsAverageDistance: parseFloat(divide(object.distanceFirstPutt, object.puttsAttempts)),
-        putt1Perc: parseFloat(divide(object.puttsHoled, object.puttsAttempts)),
-        putt3Perc: parseFloat(divide(object.putts3, object.puttsAttempts)),
+        puttsAverage: safeDivide(object.numberPuttsInRange, object.puttsAttempts),
+        puttsSecondAverageLength: safeDivide(object.distanceSecondPutt, object.numberSecondPutt),
+        puttsAverageDistance: safeDivide(object.distanceFirstPutt, object.puttsAttempts),
+        putt1Perc: safePercentage(object.puttsHoled, object.puttsAttempts),
+        putt3Perc: safePercentage(object.putts3, object.puttsAttempts),
       }
     )
   }
@@ -78,8 +79,8 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        puttsInGIR: parseFloat(divide(object.totalPuttsInGIR, object.gir)),
-        birdieConversion: parseFloat(divide(object.birdieBetter, object.gir)),
+        puttsInGIR: safeDivide(object.totalPuttsInGIR, object.gir),
+        birdieConversion: safePercentage(object.birdieBetter, object.gir),
       }
     )
   }
@@ -131,10 +132,10 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        averageDistance: object.attempts !== 0 ? parseFloat(divide(object.totDistance, object.attempts)) : 0,
-        fairwayCenterPCT: object.attempts !== 0 ? parseFloat(divide(object.fairwayHits, object.attempts)) : 0,
-        fairwayLeftPCT: object.attempts !== 0 ? parseFloat(divide(object.missLeft, object.attempts)) : 0,
-        fairwayRightPCT: object.attempts !== 0 ? parseFloat(divide(object.missRight, object.attempts)) : 0,
+        averageDistance: safeDivide(object.totDistance, object.attempts),
+        fairwayCenterPCT: safePercentage(object.fairwayHits, object.attempts),
+        fairwayLeftPCT: safePercentage(object.missLeft, object.attempts),
+        fairwayRightPCT: safePercentage(object.missRight, object.attempts),
       }
     )
   }
@@ -199,8 +200,8 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
     return (
       {
         ...array,
-        averageShots: array.attempts !== 0 ? parseFloat(divide(array.totalsForAverageShots, array.attempts)) : 0,
-        averageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsForAvgDistanceToHole, array.totalsDistanceNumber)) : 0,
+        averageShots: safeDivide(array.totalsForAverageShots, array.attempts),
+        averageHoleDistanceShot: safeDivide(array.totalsForAvgDistanceToHole, array.totalsDistanceNumber),
       }
     )
   }
@@ -271,8 +272,8 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        averageShots: object.toGreen !== 0 ? parseFloat(divide(((object.shotsPar4 - object.countShotsPar4) + (object.shotsPar5 - object.countShotsPar5 * 2)), object.toGreen)) : 0,
-        averageDistGIR: object.greenHits !== 0 ? parseFloat(divide(object.totalDistGIR, object.greenHits)) : 0,
+        averageShots: safeDivide(((object.shotsPar4 - object.countShotsPar4) + (object.shotsPar5 - object.countShotsPar5 * 2)), object.toGreen),
+        averageDistGIR: safeDivide(object.totalDistGIR, object.greenHits),
       }
     )
   }
@@ -291,10 +292,9 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
 
 export const calculateFWIrons = (shots: IShots[]) => {
 
-  const calculateFWIrons = (start: string, finish: string) => {
+  const reduceFWIronsStatsByCategory = (clubCategoryIdentifier: string) => { // Renamed inner function
     return shots.reduce((acc, curr) => {
-
-      const isTheRightClub = isTheRightClubFw(start, curr.toGreen);
+      const isTheRightClub = isTheRightClubFw(clubCategoryIdentifier, curr.toGreen);
       // const gir2 = (curr.par + curr.putts - curr.strokes) < 3 ? true : false;
 
       acc.greenHits += (isTheRightClub && !!curr.gir) ? 1 : 0;
@@ -335,24 +335,22 @@ export const calculateFWIrons = (shots: IShots[]) => {
   };
 
   const results = [
-    calculateFWIrons('4w', 'hy'),
-    calculateFWIrons('i4', 'i6'),
-    calculateFWIrons('i7', 'i9'),
+    reduceFWIronsStatsByCategory('4w'), // '4w' could represent 'FAIRWAY WOOD' or 'HYBRID' based on isTheRightClubFw
+    reduceFWIronsStatsByCategory('i4'), // 'i4' could represent 'i4', 'i5', 'i6'
+    reduceFWIronsStatsByCategory('i7'), // 'i7' could represent 'i7', 'i8', 'i9'
   ];
 
   const createFinalObject = (object: any) => {
     return (
       {
         ...object,
-        averageShots: object.attempts !== 0
-          ? parseFloat(divide((object.totalScorePar3 + object.totalScorePar4 - object.totalNumberPar4 + object.totalScorePar5 - object.totalNumberPar5 * 2), object.attempts))
-          : 0,
-        averageDistGIR: object.totalGirGir2Made !== 0
-          ? parseFloat(divide(object.totalDistanceGIR, object.totalGirGir2Made))
-          : 0,
+        averageShots: safeDivide((object.totalScorePar3 + object.totalScorePar4 - object.totalNumberPar4 + object.totalScorePar5 - object.totalNumberPar5 * 2), object.attempts),
+        averageDistGIR: safeDivide(object.totalDistanceGIR, object.totalGirGir2Made),
       }
     )
   }
+  // Note: The keys in isTheRightClubFw ('4w', 'i4', 'i7') are used to group clubs.
+  // The finalResult keys (fwHy, longIrons, shortIrons) map to these groups.
 
   const finalResult = {
     ...initialFwAndIronsStatistics,

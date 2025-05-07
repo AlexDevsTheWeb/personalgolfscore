@@ -55,6 +55,14 @@ export const isTheRightClubChip = (wanted: string, chipClub: string) => {
   return isTheRightClub;
 }
 
+/**
+ * Checks if a value falls within a specific zone defined by two boundaries.
+ * The behavior depends on the boundary values:
+ * - boundary1=0, boundary2!=0: value > boundary2 (e.g., iAmintheZone(0, 10, val) -> val > 10)
+ * - boundary1!=0, boundary2=0: value <= boundary1 (e.g., iAmintheZone(2, 0, val) -> val <= 2)
+ * - boundary1!=0, boundary2!=0: value > Math.min(b1,b2) AND value <= Math.max(b1,b2) (e.g., iAmintheZone(2,4,val) -> val > 2 && val <= 4)
+ * - boundary1=0, boundary2=0: true (all values)
+ */
 export const iAmintheZone = (start: number, finish: number, shots: number) => {
   let iAmintheZone = false;
 
@@ -65,20 +73,12 @@ export const iAmintheZone = (start: number, finish: number, shots: number) => {
     iAmintheZone = shots <= start;
   }
   if (start !== 0 && finish !== 0) {
-    iAmintheZone = (shots > start) && (shots <= finish);
+    const min = Math.min(start, finish);
+    const max = Math.max(start, finish);
+    iAmintheZone = (shots > min) && (shots <= max);
   }
   if (start === 0 && finish === 0) {
     iAmintheZone = true;
   }
-
   return iAmintheZone;
-}
-
-export const divide = (first: number, second: number) => {
-  let result = 0;
-  if (first !== 0 && (second !== 0 || second !== 0.00)) {
-    result = first / second;
-  }
-
-  return isNaN(result) ? "0.00" : result.toFixed(2);
 }
