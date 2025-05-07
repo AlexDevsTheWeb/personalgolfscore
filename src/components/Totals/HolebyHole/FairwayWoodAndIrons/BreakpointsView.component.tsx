@@ -1,11 +1,10 @@
-import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
-import { IFwAndIronsCategoryStatsProps, IFwAndIronsDesktopViewProps, IFwAndIronsMobileViewProps } from "@/types/props.types";
+import { IFwAndIronsCategoryStatsProps, IFwAndIronsMobileViewProps } from "@/types/props.types";
 import { catConversion } from "@/utils/constant.utils";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid2, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import _ from "lodash";
+import { Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import Cross from "../components/Cross.component";
+import StatBlock from "../components/StackBlock.component";
 
 
 export const CategoryStats: React.FC<IFwAndIronsCategoryStatsProps> = React.memo(({ value }) => {
@@ -27,100 +26,48 @@ export const CategoryStats: React.FC<IFwAndIronsCategoryStatsProps> = React.memo
       />
       <Divider />
       {/* Use GridAccordion for consistency if desired, or Grid2 */}
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 3 }} string='Greens hit' value={displayValue(value.girHits)} />
         <GridPuttsStat size={{ xs: 3 }} string='Attempts' value={displayValue(value.attempts)} />
         <GridPuttsStat size={{ xs: 3 }} string='Avg. shots' value={displayAverage(value.averageShots)} />
         <GridPuttsStat size={{ xs: 3 }} string='Avg. dist. GIR' value={displayAverage(value.averageDistGIR)} />
-      </Grid2>
+      </Grid>
       <Divider />
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 3 }} string='Left' value={displayValue(value.missLeft)} />
         <GridPuttsStat size={{ xs: 3 }} string='Right' value={displayValue(value.missRight)} />
         <GridPuttsStat size={{ xs: 3 }} string='Short' value={displayValue(value.missShort)} />
         <GridPuttsStat size={{ xs: 3 }} string='Long' value={displayValue(value.missLong)} />
-      </Grid2>
+      </Grid>
     </Stack>
   );
 });
 
-export const DesktopView: React.FC<IFwAndIronsDesktopViewProps> = ({ fwAndIrons }) => {
-  const categories = Object.keys(fwAndIrons);
+export const UnifiedFwAndIronsView: React.FC<IFwAndIronsMobileViewProps> = ({ fwAndIrons }) => {
   const entries = Object.entries(fwAndIrons);
 
-  return (
-    <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="fairway wood and irons statistics table">
-        <TableHead>
-          <TableRow>
-            {categories.map((categoryKey) => (
-              <TableCell
-                align='center'
-                key={`header-${categoryKey}`}
-                variant='putt'
-                sx={(theme) => ({
-                  padding: '0px'
-                })}
-              >
-                <ShotsTableHeaderStack firstRow={catConversion(categoryKey)} secondRow={''} />
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            {entries.map(([key, value]) => {
-              if (!value) return null;
-              return (
-                <TableCell
-                  align='center'
-                  key={`data-${key}`}
-
-                  sx={(theme) => ({
-                    borderLeft: `1px solid ${theme.palette.divider}`,
-                    borderBottom: `1px solid ${theme.palette.divider}`,
-                    verticalAlign: 'top', padding: 1
-                  })}
-                >
-                  <CategoryStats value={value} />
-                </TableCell>
-              );
-            })}
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-export const MobileView: React.FC<IFwAndIronsMobileViewProps> = ({ fwAndIrons }) => {
-  const entries = Object.entries(fwAndIrons);
+  if (entries.length === 0) {
+    return <Typography sx={{ p: 2, textAlign: 'center' }}>No Fairway Wood & Irons data available.</Typography>;
+  }
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Grid container spacing={2} sx={{ p: 2 }}>
       {entries.map(([key, value]) => {
-        // Handle potential undefined value for fwMidIron if it's optional
-        if (!value) return null;
+        // Handle potential undefined value for a category (like fwMidIron if optional)
+        // or categories with no attempts
+        // if (!value || value.attempts === 0) {
+        //   return null;
+        // }
         return (
-          // <Accordion key={`accordion-${key}`}> {/* Use category key */}
-          //   <AccordionSummary>
-          //     <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
-          //   </AccordionSummary>
-          //   <AccordionDetails>
-          //     {/* Use GridAccordion if needed for consistent styling, or just Stack */}
-          //     <CategoryStats value={value} />
-          //   </AccordionDetails>
-          // </Accordion>
-          <Accordion key={_.uniqueId()}>
-            <AccordionSummary>
-              <ShotsTableHeaderStack firstRow={catConversion(key)} secondRow={''} />
-            </AccordionSummary>
-            <AccordionDetails>
-              <CategoryStats value={value} />
-            </AccordionDetails>
-          </Accordion>
+          <StatBlock
+            key={key}
+            title={`${catConversion(key)}`}
+            gridProps={{ size: { xs: 12, sm: 6, md: 4 } }} // Adjust for 2-3 items per row on larger screens
+          >
+            <CategoryStats value={value} />
+          </StatBlock>
         );
       })}
-    </Box>
+    </Grid>
   );
 };

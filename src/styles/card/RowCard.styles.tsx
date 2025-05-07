@@ -1,6 +1,7 @@
 import { capitalize } from "@/utils/strings/strings.utils";
+import { Typography } from "@mui/material";
 import * as React from "react";
-import { Card, Typography } from "../index";
+import { Card } from "../index";
 
 type RowCardProps = {
   label: string;

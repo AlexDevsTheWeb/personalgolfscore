@@ -1,3 +1,4 @@
+import { PaletteColor, PaletteColorOptions } from "@mui/material";
 
 export const lightColors = {
   menubar: '#3c699e', // Correct GitHub Accent Blue
@@ -43,123 +44,157 @@ export const darkColors = {
   underMid: '#631710', // Dark red - adjust as needed
 };
 
-const defaultValues = {
-  light: '#ffffff',
-  dark: '#ffffff',
-  contrastText: '#ffffff',
+// Store main hex codes for custom "dim" colors
+const DIM_COLORS_MAIN = {
+  greenDim: '#82b38b',
+  redDim: '#cf8484',
+  yellowDim: '#faf099',
+  whiteDim: '#f0f0f0'
+  // Removed generic light, dark, contrastText to avoid issues when spreading
 };
 
 declare module '@mui/material/styles' {
   interface Palette {
     primary: Palette['primary'];
-    primary1: Palette['primary'];
-    primary2: Palette['secondary'];
-    primary3: Palette['secondary'];
-    black: Palette['secondary'];
-    grey1: Palette['secondary'];
-    grey2: Palette['secondary'];
-    grey3: Palette['secondary'];
-    grey4: Palette['secondary'];
-    grey5: Palette['secondary'];
-    grey6: Palette['secondary'];
-    white: Palette['secondary'];
-    notes: Palette['secondary'];
-    behaviours: Palette['secondary'];
+    primary1: PaletteColor;
+    primary2: PaletteColor;
+    primary3: PaletteColor;
+    black: PaletteColor;
+    grey1: PaletteColor;
+    grey2: PaletteColor;
+    grey3: PaletteColor;
+    grey4: PaletteColor;
+    grey5: PaletteColor;
+    grey6: PaletteColor;
+    white: PaletteColor;
+    notes: PaletteColor;
+    behaviours: PaletteColor;
+    redDim: PaletteColor;
+    greenDim: PaletteColor;
+    yellowDim: PaletteColor;
+    whiteDim: PaletteColor;
   }
 
   interface PaletteOptions {
-    primary1: Palette['primary'];
-    primary2: Palette['secondary'];
-    primary3: Palette['secondary'];
-    black: Palette['secondary'];
-    grey1: Palette['secondary'];
-    grey2: Palette['secondary'];
-    grey3: Palette['secondary'];
-    grey4: Palette['secondary'];
-    grey5: Palette['secondary'];
-    grey6: Palette['secondary'];
-    white: Palette['secondary'];
-    notes: Palette['secondary'];
-    behaviours: Palette['secondary'];
+    primary1?: PaletteColorOptions;
+    primary2?: PaletteColorOptions;
+    primary3?: PaletteColorOptions;
+    black?: PaletteColorOptions;
+    grey1?: PaletteColorOptions;
+    grey2?: PaletteColorOptions;
+    grey3?: PaletteColorOptions;
+    grey4?: PaletteColorOptions;
+    grey5?: PaletteColorOptions;
+    grey6?: PaletteColorOptions;
+    white?: PaletteColorOptions;
+    notes?: PaletteColorOptions;
+    behaviours?: PaletteColorOptions;
+    redDim?: PaletteColorOptions;
+    greenDim?: PaletteColorOptions;
+    yellowDim?: PaletteColorOptions;
+    whiteDim?: PaletteColorOptions;
   }
 
 }
 
 export const lightPalette = {
   primary: {
-    ...defaultValues,
+    main: lightColors.menubar,
     light: lightColors.primary1,
     dark: lightColors.primary1,
     contrastText: lightColors.white,
-    main: lightColors.menubar,
-    menubar: lightColors.menubar,
   },
-  primary1: { ...defaultValues, main: lightColors.primary1 },
-  primary2: { ...defaultValues, main: lightColors.primary2 },
-  primary3: { ...defaultValues, main: lightColors.primary3 },
-  black: { ...defaultValues, main: lightColors.black },
-  grey1: { ...defaultValues, main: lightColors.grey1 },
-  grey2: { ...defaultValues, main: lightColors.grey2 },
-  grey3: { ...defaultValues, main: lightColors.grey3 },
-  grey4: { ...defaultValues, main: lightColors.grey4 },
-  grey5: { ...defaultValues, main: lightColors.grey5 },
-  grey6: { ...defaultValues, main: lightColors.grey6 },
-  white: { ...defaultValues, main: lightColors.white },
-  success: { ...defaultValues, main: lightColors.success },
-  warning: { ...defaultValues, main: lightColors.warning },
-  error: { ...defaultValues, main: lightColors.error },
+  primary1: { main: lightColors.primary1 },
+  primary2: { main: lightColors.primary2 },
+  primary3: { main: lightColors.primary3 },
+  black: { main: lightColors.black },
+  grey1: { main: lightColors.grey1 },
+  grey2: { main: lightColors.grey2 },
+  grey3: { main: lightColors.grey3 },
+  grey4: { main: lightColors.grey4 },
+  grey5: { main: lightColors.grey5 },
+  grey6: { main: lightColors.grey6 },
+  white: { main: lightColors.white },
+  success: { main: lightColors.success },
+  warning: { main: lightColors.warning },
+  error: { main: lightColors.error },
+  redDim: {
+    main: DIM_COLORS_MAIN.redDim,
+  },
+  greenDim: {
+    main: DIM_COLORS_MAIN.greenDim,
+  },
+  yellowDim: {
+    main: DIM_COLORS_MAIN.yellowDim,
+  },
+  whiteDim: {
+    main: DIM_COLORS_MAIN.whiteDim,
+  },
   notes: {
-    ...defaultValues,
     main: lightColors.notes,
-    overMid: lightColors.overMid,
-    underMid: lightColors.underMid,
+    // overMid and underMid are not standard PaletteColor properties.
+    // If needed, they should be accessed via a custom theme structure.
   },
   behaviours: {
-    ...defaultValues,
     main: lightColors.behaviours
   },
-
   background: {
     default: lightColors.grey6,
     paper: lightColors.white,
   },
   text: {
-    primary: lightColors.primary1, // Main text
-    secondary: lightColors.grey1,  // Secondary text
-    disabled: lightColors.grey3, // Disabled text
+    primary: lightColors.primary1,
+    secondary: lightColors.grey1,
+    disabled: lightColors.grey3,
   },
 }
 export const darkPalette = {
   primary: {
-    ...defaultValues,
+    main: darkColors.menubar,
     light: darkColors.primary2,
     dark: darkColors.primary2,
     contrastText: darkColors.black, // Text on primary background
-    main: darkColors.menubar,
   },
-  primary1: { ...defaultValues, main: darkColors.primary1 },
-  primary2: { ...defaultValues, main: darkColors.primary2 },
-  primary3: { ...defaultValues, main: darkColors.primary3 },
-  black: { ...defaultValues, main: darkColors.black },
-  grey1: { ...defaultValues, main: darkColors.grey1 },
-  grey2: { ...defaultValues, main: darkColors.grey2 },
-  grey3: { ...defaultValues, main: darkColors.grey3 },
-  grey4: { ...defaultValues, main: darkColors.grey4 },
-  grey5: { ...defaultValues, main: darkColors.grey5 },
-  grey6: { ...defaultValues, main: darkColors.grey6 },
-  white: { ...defaultValues, main: darkColors.white },
-  success: { ...defaultValues, main: darkColors.success },
-  warning: { ...defaultValues, main: darkColors.warning },
-  error: { ...defaultValues, main: darkColors.error },
-  notes: { ...defaultValues, main: darkColors.notes, overMid: darkColors.overMid, underMid: darkColors.underMid },
-  behaviours: { ...defaultValues, main: darkColors.behaviours },
+  primary1: { main: darkColors.primary1 },
+  primary2: { main: darkColors.primary2 },
+  primary3: { main: darkColors.primary3 },
+  black: { main: darkColors.black },
+  grey1: { main: darkColors.grey1 },
+  grey2: { main: darkColors.grey2 },
+  grey3: { main: darkColors.grey3 },
+  grey4: { main: darkColors.grey4 },
+  grey5: { main: darkColors.grey5 },
+  grey6: { main: darkColors.grey6 },
+  white: { main: darkColors.white },
+  success: { main: darkColors.success },
+  warning: { main: darkColors.warning },
+  error: { main: darkColors.error },
+  redDim: {
+    main: DIM_COLORS_MAIN.redDim,
+  },
+  greenDim: {
+    main: DIM_COLORS_MAIN.greenDim,
+  },
+  yellowDim: {
+    main: DIM_COLORS_MAIN.yellowDim,
+  },
+  whiteDim: {
+    main: DIM_COLORS_MAIN.whiteDim,
+  },
+  notes: {
+    main: darkColors.notes,
+    // overMid and underMid are not standard PaletteColor properties.
+  },
+  behaviours: {
+    main: darkColors.behaviours
+  },
   background: {
     default: darkColors.grey6, // Dark background
     paper: darkColors.grey5,   // Paper background (slightly lighter)
   },
   text: {
-    primary: darkColors.primary1, // Main text (light)
-    secondary: darkColors.grey1,  // Secondary text (lighter grey)
-    disabled: darkColors.grey3, // Disabled text
+    primary: darkColors.primary1,
+    secondary: darkColors.grey1,
+    disabled: darkColors.grey3,
   },
 };

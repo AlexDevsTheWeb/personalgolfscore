@@ -1,19 +1,20 @@
 import Header from '@/components/common/header/Header.component';
-import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { RootState } from '@/store/store';
 import { getClubsNames } from '@/utils/round/round.utils';
-import { Box, Paper, Stack, Table, TableBody, TableContainer, TableHead, Typography } from '@mui/material';
+import {
+  Box,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { TableCell, TableRow } from '../../../styles';
+// Custom TableCell and TableRow imports are no longer needed if only used for the table
 
 const DistancesTotals: React.FC = () => {
-
   const { player } = useSelector((store: RootState) => store.player);
   const { golfBag, totalDistancesAVG } = player || {};
-  const [visible, setVisible] = useState<boolean>(false);
-
-  const isMobile = useDeviceDetection().isMobile;
+  const [visible, setVisible] = useState<boolean>(true);
   const selectedClubNames = useMemo(() => {
     if (!golfBag || golfBag.length === 0) {
       return [];
@@ -29,7 +30,7 @@ const DistancesTotals: React.FC = () => {
   const distanceMap = useMemo(() => {
     const map = new Map<string, number>();
     if (totalDistancesAVG) {
-      totalDistancesAVG.forEach(distAvg => {
+      totalDistancesAVG.forEach((distAvg: { club: string; avg: number }) => {
         if (distAvg.club && typeof distAvg.avg === 'number') {
           map.set(distAvg.club, distAvg.avg);
         }
@@ -47,62 +48,39 @@ const DistancesTotals: React.FC = () => {
   }
 
   return (
-    <Stack>
-      <Header title={'Distances'} onClick={handleToggleVisibility} />
-      {isMobile ? (
-        <Paper sx={{ padding: 2, display: visible ? 'block' : 'none' }}>
-          <Stack spacing={1}>
-            {selectedClubNames.map((clubName) => {
-              const avgDistance = distanceMap.get(clubName);
-              const displayDistance = avgDistance !== undefined && avgDistance > 0 ? `${avgDistance} m.` : 'N.R.';
-              return (
-                <Box
-                  key={`mobile-dist-${clubName}`}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    borderBottom: '1px solid #eee',
-                    paddingBottom: 0.5,
-                    '&:last-child': { borderBottom: 'none' }
-                  }}
-                >
-                  <Typography fontWeight="medium">{clubName}:</Typography>
-                  <Typography>{`${displayDistance}`}</Typography>
-                </Box>
-              );
-            })}
-          </Stack>
-        </Paper>
-      ) : (
-        <TableContainer component={Paper} sx={{ width: '100%' }}>
-          <Table sx={{ width: '100%', overflow: 'hidden' }} aria-label='average distances table'>
-            <TableHead>
-              <TableRow>
-                {selectedClubNames.map((clubName) => (
-                  <TableCell align='center' space='10px' key={`header-${clubName}`}>
-                    {clubName}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                {selectedClubNames.map((clubName) => {
-                  const avgDistance = distanceMap.get(clubName);
-                  const displayDistance = avgDistance !== undefined && avgDistance > 0 ? `${avgDistance} m.` : 'N.R.';
-                  return (
-                    <TableCell align='center' key={`data-${clubName}`}>{displayDistance}</TableCell>
-                  );
-                })}
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-      )}
-    </Stack>
+    <Paper sx={{ width: '100%' }}>
+      <Stack>
+        <Header title={'Distances'} onClick={handleToggleVisibility} />
+        {visible && (
+          // Unified structure for all screen sizes
+          <Paper sx={{ padding: 2 }}>
+            <Stack spacing={1}>
+              {selectedClubNames.map((clubName) => {
+                const avgDistance = distanceMap.get(clubName);
+                const displayDistance = avgDistance !== undefined && avgDistance > 0 ? `${avgDistance} m.` : 'N.R.';
+                return (
+                  <Box
+                    key={`dist-${clubName}`} // Unified key
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      borderBottom: (theme) => `1px solid ${theme.palette.divider}`, // Use theme for border
+                      paddingBottom: 0.5,
+                      '&:last-child': { borderBottom: 'none' }
+                    }}
+                  >
+                    <Typography fontWeight="medium">{clubName}:</Typography>
+                    <Typography>{`${displayDistance}`}</Typography>
+                  </Box>
+                );
+              })}
+            </Stack>
+          </Paper>
+        )}
+      </Stack>
+    </Paper>
   )
 }
 
-export default DistancesTotals
+export default DistancesTotals;

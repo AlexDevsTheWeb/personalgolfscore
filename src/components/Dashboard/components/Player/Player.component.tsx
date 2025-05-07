@@ -1,6 +1,6 @@
 import Spinner from "@/components/common/spinner/Spinner.component";
 import { AppDispatch, RootState } from "@/store/store";
-import Grid from "@/styles/grid/Grid2.styles";
+import Grid from "@/styles/grid/Grid.styles";
 import StackPlayer from "@/styles/stack/StackPlayer.styles";
 import dayjs from "dayjs";
 import _ from "lodash";

@@ -7,28 +7,38 @@ import React from 'react';
 const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClubs, chipClubs, greenSideValues, onChange }) => {
 
   const isPar3 = holeData.par === 3;
-  const disableChipFields = holeData.gir;
+  const girHappened = holeData.gir; // Renamed for clarity, assuming holeData.gir means Green In Regulation
 
-  let calculatedToGreenMeters: number | null = null;
-  if (isPar3) {
-    if (holeData.distance > 0) {
-      calculatedToGreenMeters = holeData.distance;
-    }
+  // Determine the display value for 'Mts. to green'
+  // It should prioritize an existing holeData.toGreenMeters value (e.g., from user input).
+  // If holeData.toGreenMeters is not set or is zero, it suggests a calculated value.
+  let toGreenMetersDisplayValue: string | number;
+  const existingToGreenMeters = holeData.toGreenMeters;
+
+  if (typeof existingToGreenMeters === 'number' && existingToGreenMeters > 0) {
+    toGreenMetersDisplayValue = existingToGreenMeters;
   } else {
-    if (holeData.distance > 0 && holeData.driveDistance > 0) {
-      const result = holeData.distance - holeData.driveDistance;
-      calculatedToGreenMeters = result >= 0 ? result : 0; // Ensure it's not negative
+    let calculatedSuggestion: number | null = null;
+    if (isPar3) {
+      if (holeData.distance > 0) {
+        calculatedSuggestion = holeData.distance;
+      }
+    } else { // Not Par 3
+      if (holeData.distance > 0 && holeData.driveDistance > 0) {
+        const result = holeData.distance - holeData.driveDistance;
+        calculatedSuggestion = result >= 0 ? result : 0; // Ensure it's not negative
+      }
     }
-  }
-  let toGreenMetersDisplayValue: string | number = '';
-  if (calculatedToGreenMeters !== null) {
-    toGreenMetersDisplayValue = calculatedToGreenMeters === 0 ? '' : calculatedToGreenMeters;
-  } else {
-    toGreenMetersDisplayValue = holeData.toGreenMeters > 0 ? holeData.toGreenMeters : '';
+    toGreenMetersDisplayValue = (calculatedSuggestion !== null && calculatedSuggestion > 0) ? calculatedSuggestion : '';
   }
 
   const approachClubValue = isPar3 ? (holeData.teeClub ?? '') : (holeData.toGreen ?? '');
 
+  // New condition to disable the 'Mts. to green' field
+  const disableToGreenMetersField =
+    (typeof holeData.strokes === 'number' && holeData.strokes > 0 &&
+      typeof holeData.putts === 'number' && holeData.putts >= 0) &&
+    (holeData.strokes - (holeData.putts + 1)) <= 1;
 
   return (
     <HoleCard>
@@ -41,8 +51,8 @@ const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClu
           type='number'
           onChange={onChange}
           value={toGreenMetersDisplayValue}
-          disabled={isPar3}
-          slotProps={{ input: { readOnly: !isPar3 } }}
+          disabled={disableToGreenMetersField}
+          InputProps={{ readOnly: !isPar3 && disableToGreenMetersField }} // Field is readOnly if !isPar3 AND not disabled by the new rule
         />
         <Autocomplete
           options={greenClubs}
@@ -80,7 +90,7 @@ const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClu
               variant="filled"
             />
           )}
-          disabled={disableChipFields}
+          disabled={girHappened}
           sx={{ width: 150 }} // Adjust width as needed
           size="small" // Match size if needed
         />
@@ -95,7 +105,7 @@ const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClu
           renderInput={(params) => (
             <TextField {...params} label="Chip club" name="chipClub" variant="filled" />
           )}
-          disabled={disableChipFields}
+          disabled={girHappened}
           sx={{ width: 150 }} // Adjust width as needed
           size="small" // Match size if needed
         />

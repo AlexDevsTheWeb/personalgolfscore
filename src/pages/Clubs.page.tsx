@@ -1,11 +1,11 @@
 import Spinner from "@/components/common/spinner/Spinner.component";
 import { getPlayerDetails } from "@/features/player/player.slice";
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
+import { Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClubsMain from "../components/Clubs/ClubsMain.component";
 import { RootState } from "../store/store";
-import Typography from "../styles/typography/Typography.styles";
 
 const ClubsPage = () => {
   const dispatch = useDispatch<any>();

@@ -1,4 +1,4 @@
-import { Grid2 as Grid2Mui, Grid2Props as Grid2PropsMui, styled } from "@mui/material";
+import { Grid as Grid2Mui, GridProps as Grid2PropsMui, styled } from "@mui/material";
 import React from "react";
 
 type GridProps = Grid2PropsMui & {}

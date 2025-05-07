@@ -54,7 +54,7 @@ export interface ISelectProps {
 }
 
 export interface IHoleApproachFormProps {
-  holeData: Pick<IShots, 'teeClub' | 'driveDistance' | 'toGreenMeters' | 'toGreen' | 'greenSide' | 'chipClub' | 'gir' | 'par' | 'distance' | 'strokes'>;
+  holeData: Pick<IShots, 'teeClub' | 'driveDistance' | 'toGreenMeters' | 'toGreen' | 'greenSide' | 'chipClub' | 'gir' | 'par' | 'distance' | 'strokes' | 'putts'>;
   greenClubs: string[];
   chipClubs: string[];
   greenSideValues: string[];
@@ -114,6 +114,16 @@ export interface IPenaltiesPieValues {
   values: IPenaltiesPie;
 }
 
+export interface IFairwayPieData {
+  totFairwaysCenter?: number;
+  totFairwaysLeft?: number;
+  totFairwaysRight?: number;
+}
+export interface IFairwayPieChartProps {
+  values: { name: string; value: IFairwayPieData; holes: number; };
+}
+
+
 export interface IPointsGauge {
   name: string;
   value: number;
@@ -168,7 +178,7 @@ export interface IStatAccordionProps {
 }
 
 export interface ISimpleStatDisplayProps {
-  title: string;
+  title?: string; // Made title optional
   total: number | string;
   avg?: number | string;
   inTotal: number | string;
