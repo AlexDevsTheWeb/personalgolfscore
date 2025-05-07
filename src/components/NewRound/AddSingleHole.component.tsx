@@ -140,4 +140,3 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 }
 
 export default AddSingleHole
-

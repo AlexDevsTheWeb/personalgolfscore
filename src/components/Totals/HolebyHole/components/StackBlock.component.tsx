@@ -1,29 +1,35 @@
-import { Box, Grid, GridProps, Paper, Typography } from "@mui/material";
+import Header from "@/components/common/header/Header.component";
+import { Box, Grid, GridProps, Paper, Typography, useTheme } from "@mui/material";
 
 interface IStatBlockProps {
-  title: string;
+  title?: string;
   children: React.ReactNode;
   gridProps?: GridProps; // Use the specifically imported Grid2Props
   subtitle?: string;
 }
 
-const StatBlock: React.FC<IStatBlockProps> = ({ title, subtitle, children, gridProps }) => (
-  <Grid {...gridProps}>
-    <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Typography component="h3" gutterBottom sx={{ textAlign: 'center' }}>
-        {title}
-      </Typography>
-      {subtitle && (
-        <Typography variant="caption" display="block" color="text.secondary" sx={{ textAlign: 'center', mt: -1, mb: 1 }}>
-          {subtitle}
-        </Typography>
-      )}
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        {children}
-      </Box>
-    </Paper>
-  </Grid>
-);
+const StatBlock: React.FC<IStatBlockProps> = ({ title, subtitle, children, gridProps }) => {
+  const theme = useTheme();
+
+  return (
+    <Grid {...gridProps}>
+      <Paper sx={{ gap: 3, height: '100%', display: 'flex', flexDirection: 'column', pb: 2, boxShadow: '0px 0px 15px - 2px rgba(0, 0, 0, 0.46)', border: `1px solid ${theme.palette.divider}` }}>
+        <Header title={title as string} />
+        {subtitle && (
+          <Typography variant="caption" display="block" color="text.secondary" sx={{ textAlign: 'center', mb: 1 }}>
+            {subtitle}
+          </Typography>
+        )}
+        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          {children}
+        </Box>
+      </Paper>
+    </Grid>
+  )
+};
+
+// -webkit - box - shadow: 0px 0px 15px - 2px rgba(0, 0, 0, 0.46);
+// box - shadow: ;
 
 export default StatBlock;
 

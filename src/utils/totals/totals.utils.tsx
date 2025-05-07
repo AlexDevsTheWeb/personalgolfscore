@@ -59,7 +59,6 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
 
   const calculatePuttsOverall = (shots: IShots[]) => {
     return shots.reduce((acc, curr) => {
-
       acc.totalPutts += curr.puttsLength.length;
       acc.gir += curr.gir === true ? 1 : 0;
       acc.totalPuttsInGIR += curr.gir === true ? curr.puttsLength.length : 0;

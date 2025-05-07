@@ -16,26 +16,33 @@ const displayPercentage = (val: number | undefined | null) => (val !== undefined
 const OverallStats: React.FC<IPuttsOverallStatsProps> = React.memo(({ value }) => (
   <Stack spacing={1}>
     <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
-      <GridPuttsStat size={{ xs: 6, md: 12 }} string='Putts' value={displayValue(value.totalPutts)} />
-      <GridPuttsStat size={{ xs: 6, md: 12 }} string='Putts/GIR' value={displayAverage(value.puttsInGIR)} />
-    </Grid>
-    <Divider />
-    <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
-      <GridPuttsStat size={{ xs: 6, md: 12 }} string='Birdie conv.' value={displayPercentage(value.birdieConversion)} />
-      <GridPuttsStat size={{ xs: 6, md: 12 }} string='3 putts (tot)' value={displayValue(value.threePutts)} />
+      <GridPuttsStat size={{ xs: 6, md: 3 }} string='Putts' value={displayValue(value.totalPutts)} />
+      <GridPuttsStat size={{ xs: 6, md: 3 }} string='Putts/GIR' value={displayAverage(value.puttsInGIR)} />
+      <GridPuttsStat size={{ xs: 6, md: 3 }} string='Birdie conv.' value={displayPercentage(value.birdieConversion)} />
+      <GridPuttsStat size={{ xs: 6, md: 3 }} string='3 putts (tot)' value={displayValue(value.threePutts)} />
     </Grid>
   </Stack>
 ));
 
 const RangeStats: React.FC<IPuttsRangeStatsProps> = React.memo(({ value }) => {
-  const twoPuttPerc = (value.putt1Perc === 0 && value.putt3Perc === 0) ? 0 : 1 - value.putt1Perc - value.putt3Perc;
+  // value.putt1Perc and value.putt3Perc are already percentages (e.g., 50 for 50%)
+  // We calculate twoPuttPercentageValue also as a 0-100 scaled value.
+  let twoPuttPercentageValue = 0;
+  if (value.puttsAttempts && value.puttsAttempts > 0) {
+    twoPuttPercentageValue = 100 - (value.putt1Perc || 0) - (value.putt3Perc || 0);
+    // Ensure the value is clamped between 0 and 100,
+    // as sum of putt1Perc and putt3Perc might theoretically exceed 100 if data is unusual.
+    twoPuttPercentageValue = Math.max(0, Math.min(100, twoPuttPercentageValue));
+  }
+
+  // For displayPercentage (which uses formatPerc), we need to convert these 0-100 values to ratios (0-1).
 
   return (
     <Stack spacing={1}>
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 4 }} string='1 putt %' value={displayPercentage(value.putt1Perc)} />
-        <GridPuttsStat size={{ xs: 4 }} string='2 putt %' value={displayPercentage(twoPuttPerc)} />
-        <GridPuttsStat size={{ xs: 4 }} string='3 putt %' value={displayPercentage(value.putt3Perc)} />
+        <GridPuttsStat size={{ xs: 4 }} string='1 putt %' value={displayPercentage((value.putt1Perc || 0) / 100)} />
+        <GridPuttsStat size={{ xs: 4 }} string='2 putt %' value={displayPercentage(twoPuttPercentageValue / 100)} />
+        <GridPuttsStat size={{ xs: 4 }} string='3 putt %' value={displayPercentage((value.putt3Perc || 0) / 100)} />
       </Grid>
       <Divider />
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
@@ -60,12 +67,11 @@ export const UnifiedPuttsView: React.FC<IPuttsMobileViewProps> = ({ puttsStatist
   if (!overallStats && rangeEntries.length === 0) {
     return <Typography sx={{ p: 2, textAlign: 'center' }}>No Putting data available.</Typography>;
   }
-
-  console.log("overallStats: ", overallStats)
-
   return (
     <Grid container spacing={2} sx={{ p: 2 }}>
+
       {overallStats && (
+
         <StatBlock
           title={catConversion('_puttsOverall')}
           gridProps={{ size: { xs: 12, sm: 6, md: 4 } }}
