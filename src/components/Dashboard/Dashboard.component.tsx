@@ -1,6 +1,6 @@
 import { RootState } from "@/store/store";
 import BoxBetween from "@/styles/box/BoxBetween.styles";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../common/spinner/Spinner.component";
@@ -39,31 +39,38 @@ const Dashboard = () => {
       )}
       {
         // Display these components only if there are rounds
-        rounds.length !== 0 && (
-          <>
-            <Rounds />
-            <Grid container columnGap={5} rowGap={4}>
-              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 5 }}>
-                <ScoreCharts />
+        rounds.length !== 0
+          ? (
+            <>
+              <Rounds />
+              <Grid container columnGap={5} rowGap={4}>
+                <Grid size={{ xs: 12, sm: 6, md: 4, lg: 5 }}>
+                  <ScoreCharts />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 4, lg: 5 }}>
+                  <PointsChart />
+                </Grid>
               </Grid>
-              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 5 }}>
-                <PointsChart />
+              <Grid container columnGap={6} rowGap={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                  <FairwayHitsChart />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                  <GirPercentageChart />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                  <DistancesTotals />
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container columnGap={6} rowGap={3}>
-              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
-                <FairwayHitsChart />
-              </Grid>
-              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
-                <GirPercentageChart />
-              </Grid>
-              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                <DistancesTotals />
-              </Grid>
-            </Grid>
-            <StatisticsMain />
-          </>
-        )
+              <StatisticsMain />
+            </>
+          )
+          :
+          (
+            <Typography>
+              No rounds found. ADD a new round to see statistics.
+            </Typography>
+          )
       }
       <BoxBetween>
         <Button
