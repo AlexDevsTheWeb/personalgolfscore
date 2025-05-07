@@ -1,7 +1,6 @@
 import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
-import TextField from '@/styles/textfield/TextField.style';
 import { IHoleApproachFormProps } from '@/types/props.types';
-import { Autocomplete } from '@mui/material'; // Import Autocomplete
+import { Autocomplete, TextField } from '@mui/material'; // Import Autocomplete
 import React from 'react';
 // Removed Select import
 const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClubs, chipClubs, greenSideValues, onChange }) => {
@@ -45,7 +44,6 @@ const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClu
       <HoleCardHeader title='Approach & Short Game' />
       <HoleCardContent>
         <TextField
-          size="small" // Match size if needed
           name='toGreenMeters'
           label="Mts. to green"
           type='number'
@@ -53,6 +51,8 @@ const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClu
           value={toGreenMetersDisplayValue}
           disabled={disableToGreenMetersField}
           InputProps={{ readOnly: !isPar3 && disableToGreenMetersField }} // Field is readOnly if !isPar3 AND not disabled by the new rule
+          sx={{ width: 130 }}
+          variant='filled'
         />
         <Autocomplete
           options={greenClubs}
@@ -72,7 +72,6 @@ const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClu
           )}
           disabled={isPar3}
           sx={{ width: 150 }} // Adjust width as needed
-          size="small" // Match size if needed
         />
         <Autocomplete
           options={greenSideValues}
@@ -91,8 +90,7 @@ const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClu
             />
           )}
           disabled={girHappened}
-          sx={{ width: 150 }} // Adjust width as needed
-          size="small" // Match size if needed
+          sx={{ width: 150 }}
         />
         <Autocomplete
           options={chipClubs}
@@ -107,7 +105,6 @@ const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClu
           )}
           disabled={girHappened}
           sx={{ width: 150 }} // Adjust width as needed
-          size="small" // Match size if needed
         />
       </HoleCardContent>
     </HoleCard>

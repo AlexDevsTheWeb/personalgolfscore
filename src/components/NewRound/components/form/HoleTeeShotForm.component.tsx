@@ -1,7 +1,6 @@
 import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
-import CustomTextField from '@/styles/textfield/TextField.style';
 import { IHoleTeeShotFormProps } from '@/types/props.types';
-import { Autocomplete } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import React from "react";
 
 const HoleTeeShotForm: React.FC<IHoleTeeShotFormProps> = ({ holeData, teeClubs = [], fairwayValues = [], onChange }) => {
@@ -18,7 +17,7 @@ const HoleTeeShotForm: React.FC<IHoleTeeShotFormProps> = ({ holeData, teeClubs =
             onChange({ target: { name: 'teeClub', value: newValue || '' } } as any);
           }}
           renderInput={(params) => (
-            <CustomTextField
+            <TextField
               {...params}
               label="Tee club"
               name="teeClub"
@@ -26,10 +25,10 @@ const HoleTeeShotForm: React.FC<IHoleTeeShotFormProps> = ({ holeData, teeClubs =
             />
           )}
           sx={{ width: 150 }}
-          size="small"
         />
         <Autocomplete
           options={fairwayValues}
+          sx={{ width: 150 }}
           getOptionLabel={(option) => option.label || ''}
           value={fairwayValues.find(fv => fv.value === holeData.fairway) || null}
           onChange={(event, newValue) => {
@@ -37,20 +36,17 @@ const HoleTeeShotForm: React.FC<IHoleTeeShotFormProps> = ({ holeData, teeClubs =
           }}
           isOptionEqualToValue={(option, value) => option.value === value.value}
           renderInput={(params) => (
-            <CustomTextField
+            <TextField
               {...params}
-              label="Fairway position"
+              label="Position"
               name="fairway"
               variant="filled"
             />
           )}
           disabled={isPar3}
-          sx={{ width: 150 }}
-          size="small"
         />
-        <CustomTextField
-          width={100}
-          size="small"
+        <TextField
+          sx={{ width: 150 }}
           name='driveDistance'
           label='Distance'
           variant='filled'

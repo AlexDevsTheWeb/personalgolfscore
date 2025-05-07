@@ -2,14 +2,13 @@ import { resetNewRoundHoleTmp, setTmpHoleData } from '@/features/hole/holeTmp.sl
 import { addApproachShotDistance, addTeeShotDistance } from '@/features/newRound/newRoundDistances.slice';
 import { setNewHole } from '@/features/newRound/newRoundHoles.slice';
 import { RootState } from '@/store/store';
-import BoxSingleHoleContainer from '@/styles/box/BosSingleHoleContainer.styles';
-import BoxNewHole from '@/styles/box/BoxNewHole.styles';
-import BoxSingleHoleInternal from '@/styles/box/BoxSingleHoleInternal.styles';
 import { IAddSingleHoleProps } from '@/types/clubs.types';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils';
-import { Box } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
+import DistancesButton from './components/DistancesButton.component';
 import SaveRoundButton from './components/SaveRoundButton.component';
 import HoleApproachForm from './components/form/HoleApproachForm.component';
 import HoleGeneralForm from './components/form/HoleGeneralForm.component';
@@ -22,6 +21,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
   const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
+  const { showDistances } = useSelector((store: RootState) => store.controls);
 
   const [puttsLength, setPuttsLength] = useState<number[]>([]);
   const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
@@ -91,51 +91,68 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
     return tmpHole.hcp === 0 || tmpHole.par === 0 || tmpHole.strokes === 0;
   }
 
+
+
   const hcpList = Number(roundHoles) === 18 ? hcpList18 : hcpList9;
 
   return (
-    <BoxSingleHoleContainer>
-      <BoxSingleHoleInternal side='full'>
-        <BoxNewHole>
-          <HoleGeneralForm
-            holeData={tmpHole}
-            hcpList={hcpList}
-            parList={parList}
-            puttsNumber={puttsNumber}
-            currentHoleNumber={currentHoleNumber}
-            onChange={handleChange}
-            onChangePutts={handleChangePutts}
+
+    <Grid container spacing={1}>
+      <Grid size={{ lg: 10.99 }}>
+        <Grid container spacing={1}>
+          <Grid size={{ xs: 12, lg: 5.25 }}>
+            <HoleGeneralForm
+              holeData={tmpHole}
+              hcpList={hcpList}
+              parList={parList}
+              puttsNumber={puttsNumber}
+              currentHoleNumber={currentHoleNumber}
+              onChange={handleChange}
+              onChangePutts={handleChangePutts}
+            />
+
+          </Grid>
+          <Grid size={{ xs: 12, lg: 3.62 }}>
+            <HoleTeeShotForm
+              holeData={tmpHole}
+              teeClubs={derivedClubs.teeClubs}
+              fairwayValues={fairwayValues}
+              onChange={handleChange}
+            />
+
+          </Grid>
+          <Grid size={{ xs: 12, lg: 4.66 }}>
+            <HoleApproachForm
+              holeData={tmpHole}
+              greenClubs={derivedClubs.greenClubs}
+              chipClubs={derivedClubs.chipClubs}
+              greenSideValues={greenSideValues}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, lg: 1.7 }}>
+            <HolePenaltiesForm
+              holeData={tmpHole}
+              onChange={handleChange}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid>
+        <Stack gap={1}>
+          <SaveRoundButton
+            onSave={handleSaveHole}
+            disabled={isSaveDisabled()}
+
           />
-          <HolePenaltiesForm
-            holeData={tmpHole}
-            onChange={handleChange}
-          />
-        </BoxNewHole>
-
-        <BoxNewHole>
-          <HoleTeeShotForm
-            holeData={tmpHole}
-            teeClubs={derivedClubs.teeClubs}
-            fairwayValues={fairwayValues}
-            onChange={handleChange}
-          />
-
-          <HoleApproachForm
-            holeData={tmpHole}
-            greenClubs={derivedClubs.greenClubs}
-            chipClubs={derivedClubs.chipClubs}
-            greenSideValues={greenSideValues}
-            onChange={handleChange}
-          />
-
-          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-
-            <SaveRoundButton onSave={handleSaveHole} disabled={isSaveDisabled()} />
-          </Box>
-        </BoxNewHole>
-
-      </BoxSingleHoleInternal>
-    </BoxSingleHoleContainer>
+          {
+            !!showDistances &&
+            <ClubDistanceDialog open={showDistances} />
+          }
+          <DistancesButton />
+        </Stack>
+      </Grid>
+    </Grid>
   )
 }
 

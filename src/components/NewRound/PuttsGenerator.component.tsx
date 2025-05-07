@@ -1,6 +1,5 @@
-import TextField from '@/styles/textfield/TextField.style';
 import { IPuttsProps } from '@/types/props.types';
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 
 const PuttsGenerator = ({ puttsNumber, setPuttDistance }: IPuttsProps) => {
   return (
@@ -14,6 +13,7 @@ const PuttsGenerator = ({ puttsNumber, setPuttDistance }: IPuttsProps) => {
             variant="filled"
             type='number'
             onChange={e => setPuttDistance(e, index)} // Pass 0-based index
+            sx={{ width: 130 }}
           />
         );
       })}

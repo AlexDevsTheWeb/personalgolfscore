@@ -8,15 +8,15 @@ import StatBlock from "../components/StackBlock.component";
 
 
 export const CategoryStats: React.FC<ITeeshotsCategoryStatsProps> = React.memo(({ value }) => {
-  const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : '-';
-  const displayPercentage = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? formatPerc(val / 100) : '-';
+  const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : '0';
+  const displayPercentage = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? formatPerc(val / 100) : '0%';
 
   return (
     <Stack spacing={1}>
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 4 }} string='Left %' value={displayPercentage(value.missLeftPCT)} />
+        <GridPuttsStat size={{ xs: 4 }} string='Left %' value={displayPercentage(value.fairwayLeftPCT)} />
         <GridPuttsStat size={{ xs: 4 }} string='Center %' value={displayPercentage(value.fairwayCenterPCT)} />
-        <GridPuttsStat size={{ xs: 4 }} string='Right %' value={displayPercentage(value.missRightPCT)} />
+        <GridPuttsStat size={{ xs: 4 }} string='Right %' value={displayPercentage(value.fairwayRightPCT)} />
       </Grid>
       <Divider />
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
@@ -44,7 +44,7 @@ export const UnifiedTeeShotsView: React.FC<ITeeshotsMobileViewProps> = ({ teeSho
   }
 
   return (
-    <Grid container spacing={2} sx={{ p: 2 }}>
+    <Grid container spacing={1} sx={{ py: 1 }}>
       {entries.map(([key, value]) => {
         // Filter out categories if they have no attempts (or other relevant zero check)
         // if (!value || value.attempts === 0) {

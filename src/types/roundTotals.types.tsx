@@ -104,11 +104,10 @@ export interface IRoundInside100Mt {
 }
 
 export interface IRoundFwAndIronsTotals {
-  fwFW: IRoundFWAndIrons,
-  fwHY: IRoundFWAndIrons,
-  fwLongIron: IRoundFWAndIrons,
-  fwShortIron: IRoundFWAndIrons,
-  fwMidIron?: IRoundFWAndIrons;
+  fwFW: IRoundFWAndIrons;
+  fwHY: IRoundFWAndIrons;
+  fwLongIron: IRoundFWAndIrons;
+  fwMidIron: IRoundFWAndIrons;
 }
 
 export interface IRoundFWAndIrons {
@@ -175,15 +174,16 @@ export interface IRoundTeeShotClubTotals {
   averageDistance: number;
   missLeft: number;
   missRight: number;
-  noGreen: number; // Corresponds to firMiss in aggregation
+  noGreen: number;
   fairwayCenterPCT: number;
   missLeftPCT: number;
   missRightPCT: number;
   firMissPCT: number;
-  // --- Added missing properties ---
-  totalDistance?: number; // Sum of drive distances
-  countShotsWithDistance?: number; // Count of drives with distance > 0
-  par4_5_Attempts?: number; // Count of attempts on Par 4s and Par 5s
+  fairwayLeftPCT: number;
+  fairwayRightPCT: number;
+  totalDistance?: number;
+  countShotsWithDistance?: number;
+  par4_5_Attempts?: number;
 }
 interface IRoundTotalsMainData {
   roundCourse: string,
@@ -348,7 +348,7 @@ export interface ITotalRoundsAvg {
     fwHY?: ITotalRoundsAvgFwAndIronsClub;
     fwLongIron?: ITotalRoundsAvgFwAndIronsClub;
     fwMidIron?: ITotalRoundsAvgFwAndIronsClub;
-    fwShortIron?: ITotalRoundsAvgFwAndIronsClub;
+    // fwShortIron?: ITotalRoundsAvgFwAndIronsClub; // This will be replaced by fwMidIron
   };
   inside100Mt?: {
     // Use specific keys

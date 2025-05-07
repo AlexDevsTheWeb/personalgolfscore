@@ -37,7 +37,7 @@ export const UnifiedChippingPitchingView: React.FC<IChipMobileViewProps> = ({ ch
   }
 
   return (
-    <Grid container spacing={2} sx={{ p: 2 }}>
+    <Grid container spacing={1} sx={{ py: 1 }}>
       {entries.map(([key, value]) => {
         // Filter out categories if they have no attempts or data
         // if (!value || value.attempts === 0) {
@@ -48,7 +48,7 @@ export const UnifiedChippingPitchingView: React.FC<IChipMobileViewProps> = ({ ch
           <StatBlock
             key={key}
             title={clubType as string}
-            gridProps={{ size: { xs: 12, sm: 6, md: 4 } }} // 1 on xs, 2 on sm, 3 on md/lg
+            gridProps={{ size: { xs: 12, sm: 6, md: 3 } }} // 1 on xs, 2 on sm, 3 on md/lg
           >
             <CategoryStats value={value} />
           </StatBlock>

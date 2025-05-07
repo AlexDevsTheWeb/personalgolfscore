@@ -279,7 +279,7 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
 
   const finalResult = {
     ...initialInside100MtStatistics,
-    over100mt: createFinalObject(results[0]),
+    over100: createFinalObject(results[0]), // Changed key from over100mt to over100
     inside10081: createFinalObject(results[1]),
     inside8061: createFinalObject(results[2]),
     inside60: createFinalObject(results[3]),
@@ -334,9 +334,10 @@ export const calculateFWIrons = (shots: IShots[]) => {
   };
 
   const results = [
-    reduceFWIronsStatsByCategory('4w'), // '4w' could represent 'FAIRWAY WOOD' or 'HYBRID' based on isTheRightClubFw
-    reduceFWIronsStatsByCategory('i4'), // 'i4' could represent 'i4', 'i5', 'i6'
-    reduceFWIronsStatsByCategory('i7'), // 'i7' could represent 'i7', 'i8', 'i9'
+    reduceFWIronsStatsByCategory('FW'),         // For Fairway Woods
+    reduceFWIronsStatsByCategory('HY'),         // For Hybrids
+    reduceFWIronsStatsByCategory('LONG_IRON'),  // For Long Irons (4-6)
+    reduceFWIronsStatsByCategory('MID_IRON'),   // For Mid Irons (7-9)
   ];
 
   const createFinalObject = (object: any) => {
@@ -348,15 +349,13 @@ export const calculateFWIrons = (shots: IShots[]) => {
       }
     )
   }
-  // Note: The keys in isTheRightClubFw ('4w', 'i4', 'i7') are used to group clubs.
-  // The finalResult keys (fwHy, longIrons, shortIrons) map to these groups.
 
   const finalResult = {
     ...initialFwAndIronsStatistics,
-
-    fwHy: createFinalObject(results[0]),
-    longIrons: createFinalObject(results[1]),
-    shortIrons: createFinalObject(results[2]),
+    fwFW: createFinalObject(results[0]),
+    fwHY: createFinalObject(results[1]),
+    fwLongIron: createFinalObject(results[2]),
+    fwMidIron: createFinalObject(results[3]),
   }
 
   return finalResult;

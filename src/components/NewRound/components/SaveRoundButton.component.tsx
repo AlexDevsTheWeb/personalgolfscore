@@ -17,7 +17,6 @@ const SaveRoundButton: React.FC<ISaveRoundButtonProps> = ({ onSave, disabled }) 
       variant="contained"
       onClick={onSave}
       disabled={disabled}
-      sx={{ marginTop: '0px' }}
     >
       {label}
     </Button>

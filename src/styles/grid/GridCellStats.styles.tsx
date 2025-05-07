@@ -4,8 +4,8 @@ import CompositeTypography from '../typography/CompositeTypography.styles';
 
 type GridProps = GridPropsMui & {
   isMobile?: boolean,
-  string?: string | undefined,
-  value?: string | number | undefined,
+  string?: string,
+  value?: string | number,
 }
 
 const StyledGrid = styled(GridMui)<GridProps>({

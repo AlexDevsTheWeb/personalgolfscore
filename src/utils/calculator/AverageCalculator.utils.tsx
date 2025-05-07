@@ -176,7 +176,7 @@ export const calculateDisplayableAverages = (
   });
 
   // --- Calculate FwAndIrons ---
-  const fwAndIronsCategories: Array<keyof IRoundFwAndIronsTotals> = ['fwFW', 'fwHY', 'fwLongIron', 'fwMidIron', 'fwShortIron'];
+  const fwAndIronsCategories: Array<keyof IRoundFwAndIronsTotals> = ['fwFW', 'fwHY', 'fwLongIron', 'fwMidIron'];
   fwAndIronsCategories.forEach(category => {
     const avgData = totalsAvg.fwAndIrons?.[category];
     const displayData = displayTotals.fwAndIrons[category];

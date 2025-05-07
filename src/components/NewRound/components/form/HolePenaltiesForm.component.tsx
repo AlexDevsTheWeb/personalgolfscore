@@ -1,6 +1,6 @@
 import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
-import TextField from '@/styles/textfield/TextField.style';
 import { IHolePenaltiesFormProps } from '@/types/props.types';
+import { TextField } from "@mui/material";
 import React from 'react';
 
 const HolePenaltiesForm: React.FC<IHolePenaltiesFormProps> = ({
@@ -19,17 +19,19 @@ const HolePenaltiesForm: React.FC<IHolePenaltiesFormProps> = ({
           name='water'
           label="Water"
           type='number'
+          variant='filled'
           onChange={onChange}
           value={waterValue}
-          width={80}
+          sx={{ width: 100 }}
         />
         <TextField
           name='out'
           label="Out"
           type='number'
+          variant='filled'
           onChange={onChange}
           value={outValue}
-          width={80}
+          sx={{ width: 100 }}
         />
       </HoleCardContent>
     </HoleCard>

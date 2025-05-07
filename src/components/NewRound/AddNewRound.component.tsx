@@ -5,7 +5,7 @@ import AddNewRoundHoles from './AddNewRoundHoles.component';
 
 const NewRoundMain = () => {
   return (
-    <StackNewHole>
+    <StackNewHole gap={2} spacing={2}>
       <AddNewRoundForm />
       <AddNewRoundHoles />
     </StackNewHole>

@@ -55,8 +55,10 @@ export const createInitialTeeShotClubTotals = (): IRoundTeeShotClubTotals => ({
   missLeftPCT: 0,
   missRightPCT: 0,
   firMissPCT: 0,
-  // --- Initialize added properties ---
+  fairwayRightPCT: 0,
+  fairwayLeftPCT: 0,
   totalDistance: 0,
+  // --- Initialize added properties ---
   countShotsWithDistance: 0,
   par4_5_Attempts: 0,
 });
@@ -267,11 +269,10 @@ export const initialStateRoundTotals: IRoundTotals = {
   },
   fwAndIrons: {
     // Use the helper function
-    fwFW: createInitialFwAndIronsTotals(),
-    fwHY: createInitialFwAndIronsTotals(),
+    fwFW: createInitialFwAndIronsTotals(), // Fairway Woods
+    fwHY: createInitialFwAndIronsTotals(), // Hybrids
     fwLongIron: createInitialFwAndIronsTotals(), // Changed key
-    fwShortIron: createInitialFwAndIronsTotals(), // Changed key
-    fwMidIron: createInitialFwAndIronsTotals(),
+    fwMidIron: createInitialFwAndIronsTotals(), // Mid Irons (7-9)
   },
   inside100Mt: {
     // Use the helper function
@@ -399,20 +400,19 @@ export const catConversion = (string: string) => {
     case 'teeHY': result = 'Hybrid'; break;
     case 'teeIron': result = 'Irons'; break;
     case '_puttsOverall': result = 'Overall'; break;
-    case 'fwFW': result = 'Fairway Wood'; break; // Added fwFW
-    case 'fwHY': result = '4w - Hybrid'; break;
-    case 'fwLongIron': result = '4i - 6i'; break;
-    case 'fwShortIron': result = 'Mid Irons'; break; // Added fwMidIron
-    case 'shortIrons': result = '7i - 9i'; break;
+    case 'fwFW': result = 'Fairway Woods'; break;
+    case 'fwHY': result = 'Hybrids'; break;
+    case 'fwLongIron': result = 'Long Irons (4-6)'; break;
+    case 'fwMidIron': result = 'Mid Irons (7-9)'; break;
+    // case 'shortIrons': result = '7i - 9i'; break; // Old key, replaced by fwMidIron
     case 'puttsU2M': result = '1° putt < 2 mts.'; break; // Corrected label
     case 'putts24M': result = '1° putt 2-4 mts.'; break; // Corrected label
     case 'putts46M': result = '1° putt 4-6 mts.'; break; // Corrected label
     case 'putts610M': result = '1° putt 6-10 mts.'; break; // Corrected label
     case 'puttsO10M': result = '1° putt > 10 Mts.'; break; // Corrected label
-    case 'over100mt': result = '> 100 mts.'; break; // Renamed key
+    // case 'over100mt': result = '> 100 mts.'; break; // Removed redundant key
     case 'range80_100': result = '100-80 mts.'; break; // Renamed key
     case 'range60_80': result = '80-60 mts.'; break; // Renamed key
-    case 'under60': result = '< 60 mts.'; break; // Renamed key
     case 'over100': result = '> 100 mts.'; break; // Renamed key
     case 'inside10081': result = '100-80 mts.'; break; // Renamed key
     case 'inside8061': result = '80-60 mts.'; break; // Renamed key
@@ -587,11 +587,10 @@ export const initialInside100MtStatistics: IRoundInside100MtTotals = {
 }
 
 export const initialFwAndIronsStatistics: IRoundFwAndIronsTotals = {
-  fwFW: createInitialFwAndIronsTotals(),
-  fwHY: createInitialFwAndIronsTotals(),
+  fwFW: createInitialFwAndIronsTotals(), // Fairway Woods
+  fwHY: createInitialFwAndIronsTotals(), // Hybrids
   fwLongIron: createInitialFwAndIronsTotals(), // Changed key
-  fwShortIron: createInitialFwAndIronsTotals(), // Changed key
-  fwMidIron: createInitialFwAndIronsTotals(),
+  fwMidIron: createInitialFwAndIronsTotals(), // Mid Irons (7-9)
 };
 
 export const CLUB_SORT_ORDER = [

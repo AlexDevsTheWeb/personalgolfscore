@@ -68,7 +68,7 @@ export const UnifiedPuttsView: React.FC<IPuttsMobileViewProps> = ({ puttsStatist
     return <Typography sx={{ p: 2, textAlign: 'center' }}>No Putting data available.</Typography>;
   }
   return (
-    <Grid container spacing={2} sx={{ p: 2 }}>
+    <Grid container spacing={1} sx={{ py: 1 }}>
 
       {overallStats && (
 

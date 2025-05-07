@@ -53,7 +53,7 @@ export const UnifiedInside100View: React.FC<IMobileViewProps> = ({ inside100Mt }
   }
 
   return (
-    <Grid container spacing={2} sx={{ p: 2 }}>
+    <Grid container spacing={1} sx={{ py: 1 }}>
       {entries.map(([key, value]) => {
         // Filter out categories if they have no attempts
         // if (!value || value.attempts === 0) {

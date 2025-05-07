@@ -11,15 +11,11 @@ import {
 import { setTotalMainData } from '@/features/newRound/newRoundTotals.slice';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { AppDispatch, RootState } from '@/store/store';
-import BoxGeneralShadow from '@/styles/box/BoxGeneralShadow.styles';
-import DatePicker from '@/styles/datepicker/DatePicker.styles';
-import TextField from '@/styles/textfield/TextField.style';
 import { INewRound } from '@/types/round.types';
-import { Box, Button } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
+import { StaticDatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
-import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
-import DistancesButton from './components/DistancesButton.component';
 
 const AddNewRoundForm = () => {
   const dispatch = useDispatch<AppDispatch>(); // Use AppDispatch type
@@ -56,66 +52,101 @@ const AddNewRoundForm = () => {
 
 
   return (
-
-    <BoxGeneralShadow direction={'column'} sx={{ flexDirection: 'row !important', alignItems: 'center', flexWrap: 'wrap' }}>
-
-      <Box sx={{
-        display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: '5px', padding: '0px !important', alignContent: 'stretch',
-        alignItems: 'center'
-      }}>
-
-        {/* TODO: Maybe we can use Autocomplete in some cases instead of TextField? */}
-        <TextField
-          name='roundCourse'
-          label="Round course"
-          variant="filled"
-          value={roundData.roundCourse || ''} // Read from store
-          onChange={e => dispatch(setRoundCourse(e.target.value))} // Dispatch action
-        />
-        <DatePicker
-          label='Round Date' // Corrected label
+    <Grid container spacing={1}>
+      <Grid size={{ lg: 3.5 }} sx={{ border: '1px solid #ff9900' }}>
+        <StaticDatePicker
+          orientation="landscape" // Corrected label
           value={roundDateValue}
-          onChange={handleDateChange} // Use the existing handler
+          onChange={handleDateChange}
+          slotProps={{
+            actionBar: {
+              actions: ['today'],
+            },
+          }}
+
         />
+      </Grid>
+      <Grid size={{ lg: 8.5 }} sx={{ border: '1px solid #0099ff', justifyContent: 'space-between', display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
+        <Grid container spacing={3}>
+          <Grid size={6}>
+            <TextField
+              name='roundCourse'
+              label="Round course"
+              variant="filled"
+              fullWidth
+              value={roundData.roundCourse || ''} // Read from store
+              onChange={e => dispatch(setRoundCourse(e.target.value))} // Dispatch action
+            />
+          </Grid>
+          <Grid size={6}>
+            <TextField
+              name='roundHoles'
+              label="Holes"
+              variant="filled"
+              type='number'
+              fullWidth
+              value={roundData.roundHoles || ''} // Read from store
+              onChange={e => dispatch(setRoundHoles(Number(e.target.value)))}
+            />
+          </Grid>
+          <Grid size={6}>
+            <TextField
+              name='roundPar'
+              label="Par"
+              variant="filled"
+              type='number'
+              value={roundData.roundPar || ''} // Read from store
+              onChange={e => dispatch(setRoundPar(Number(e.target.value)))}
+              fullWidth
+            />
+          </Grid>
+          <Grid size={6}>
+            <TextField
+              name='roundPlayingHCP'
+              label="HCP"
+              variant="filled"
+              fullWidth
+              type='number'
+              value={roundData.roundPlayingHCP || ''} // Read from store
+              onChange={e => dispatch(setRoundPlayingHCP(Number(e.target.value)))}
+            />
+          </Grid>
+          <Grid size={6}>
+            <TextField
+              name='roundTee'
+              label="Tee"
+              variant="filled"
+              value={roundData.roundTee || ''}
+              onChange={e => dispatch(setRoundTee(e.target.value))}
+              fullWidth
+            />
+          </Grid>
+          <Grid size={6}>
+            <TextField
+              name='roundNumber'
+              label="Round #"
+              variant="filled"
+              type='number'
+              value={roundData.roundNumber || ''}
+              onChange={e => dispatch(setRoundNumber(Number(e.target.value)))}
+              fullWidth
+            />
+          </Grid>
 
-        <TextField
-          name='roundHoles'
-          label="Holes"
-          variant="filled"
-          type='number'
-          value={roundData.roundHoles || ''} // Read from store
-          onChange={e => dispatch(setRoundHoles(Number(e.target.value)))} // Dispatch action
-          width={65} />
-        <TextField
-          name='roundPar'
-          label="Par"
-          variant="filled"
-          type='number'
-          value={roundData.roundPar || ''} // Read from store
-          onChange={e => dispatch(setRoundPar(Number(e.target.value)))} // Dispatch action
-          width={65} />
-        <TextField
-          name='roundPlayingHCP'
-          label="HCP"
-          variant="filled"
-          type='number'
-          value={roundData.roundPlayingHCP || ''} // Read from store
-          onChange={e => dispatch(setRoundPlayingHCP(Number(e.target.value)))} // Dispatch action
-          width={65} />
 
-        <TextField name='roundTee' label="Tee" variant="filled" value={roundData.roundTee || ''} onChange={e => dispatch(setRoundTee(e.target.value))} width={80} />
-        <TextField name='roundNumber' label="Round #" variant="filled" type='number' value={roundData.roundNumber || ''} onChange={e => dispatch(setRoundNumber(Number(e.target.value)))} width={65} />
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', width: isMobile ? '100%' : 'auto', gap: '10px' }}>
-        {
-          !!showDistances &&
-          <ClubDistanceDialog open={showDistances} />
-        }
-        <DistancesButton />
-        <Button fullWidth={isMobile ? true : false} variant='contained' onClick={handleSubmit} sx={{ marginTop: '0px' }}>SUBMIT</Button>
-      </Box>
-    </BoxGeneralShadow>
 
+
+
+
+        </Grid>
+        <Grid size={{ lg: 2 }} sx={{
+          border: '1px solid #99ff00', justifyContent: 'end', alignItems: 'end', display: 'flex', flexDirection: 'column'
+        }}>
+          < Button fullWidth={isMobile ? true : false} variant='contained' onClick={handleSubmit} sx={{ marginTop: '0px' }}>SUBMIT</Button>
+        </Grid>
+      </Grid>
+
+    </Grid>
   )
 }
 

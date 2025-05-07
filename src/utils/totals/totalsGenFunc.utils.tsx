@@ -30,14 +30,25 @@ export const isTheRightClub = (wanted: string, teeClub: string) => {
   return isTheRightClub;
 }
 
-export const isTheRightClubFw = (start: string, toGreenClub: string) => {
-  const clubGroups = {
-    '4w': ['FAIRWAY WOOD', 'HYBRID'],
-    'i4': ['i4', 'i5', 'i6'],
-    'i7': ['i8', 'i8', 'i9'],
-  } as any;
+export const isTheRightClubFw = (clubCategoryIdentifier: string, toGreenClub: string): boolean => {
+  const upperToGreenClub = toGreenClub.toUpperCase(); // Normalize toGreenClub for case-insensitive matching
 
-  return clubGroups[start]?.includes(toGreenClub) ?? false;
+  switch (clubCategoryIdentifier) {
+    case 'FW':
+      // Matches '3W', '5W', 'FW', 'FAIRWAY WOOD', etc.
+      return ['3W', '4W', '5W', '7W', 'FW', 'FAIRWAY WOOD'].some(fw => upperToGreenClub.startsWith(fw));
+    case 'HY':
+      // Matches '3H', '4H', 'HY', 'HYBRID', etc.
+      return ['2H', '3H', '4H', '5H', 'HY', 'HYBRID'].some(hy => upperToGreenClub.startsWith(hy));
+    case 'LONG_IRON':
+      // Matches 'I4', 'I5', 'I6'
+      return ['I4', 'I5', 'I6'].includes(upperToGreenClub);
+    case 'MID_IRON':
+      // Matches 'I7', 'I8', 'I9'
+      return ['I7', 'I8', 'I9'].includes(upperToGreenClub);
+    default:
+      return false;
+  }
 };
 
 export const isTheRightClubChip = (wanted: string, chipClub: string) => {

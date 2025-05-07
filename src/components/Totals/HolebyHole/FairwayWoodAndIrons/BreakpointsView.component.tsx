@@ -51,7 +51,7 @@ export const UnifiedFwAndIronsView: React.FC<IFwAndIronsMobileViewProps> = ({ fw
   }
 
   return (
-    <Grid container spacing={2} sx={{ p: 2 }}>
+    <Grid container spacing={1} sx={{ py: 1 }}>
       {entries.map(([key, value]) => {
         // Handle potential undefined value for a category (like fwMidIron if optional)
         // or categories with no attempts
@@ -62,7 +62,7 @@ export const UnifiedFwAndIronsView: React.FC<IFwAndIronsMobileViewProps> = ({ fw
           <StatBlock
             key={key}
             title={`${catConversion(key)}`}
-            gridProps={{ size: { xs: 12, sm: 6, md: 4 } }} // Adjust for 2-3 items per row on larger screens
+            gridProps={{ size: { xs: 12, sm: 6, md: 3 } }} // Adjust for 2-3 items per row on larger screens
           >
             <CategoryStats value={value} />
           </StatBlock>
