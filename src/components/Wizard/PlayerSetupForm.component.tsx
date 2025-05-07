@@ -21,19 +21,19 @@ const PlayerSetupForm: React.FC<IPlayerSetupProps> = ({ handleHcpChange }) => {
         Please provide the following details to complete your profile setup.
       </Typography>
       <Grid container spacing={2} component="form" noValidate autoComplete="off" sx={{ mt: 1 }}>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             margin="dense" id="firstName" label="First Name" type="text" fullWidth
             value={firstName} onChange={(e) => setFirstName(e.target.value)} required
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             margin="dense" id="lastName" label="Last Name" type="text" fullWidth
             value={lastName} onChange={(e) => setLastName(e.target.value)} required
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Date of Birth *"
@@ -43,13 +43,13 @@ const PlayerSetupForm: React.FC<IPlayerSetupProps> = ({ handleHcpChange }) => {
             />
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             margin="dense" id="hcp" label="Handicap (HCP)" type="text" inputMode="decimal" fullWidth
             value={hcp} onChange={handleHcpChange} required sx={{ mt: { xs: 0, sm: 1 } }}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1, width: '100%' }}>
             <TextField
               margin="dense" id="photoURL" label="Photo URL (Optional)" type="url"

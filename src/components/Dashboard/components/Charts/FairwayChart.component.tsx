@@ -50,20 +50,19 @@ const FairwayHitsChart: React.FC = () => {
       <Typography component="h2" gutterBottom sx={{ textAlign: 'center' }}>
         Fairway hits distribution (last {recentRounds.length} rounds)
       </Typography>
-      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 1 }}>
+      <Box sx={{ height: 250, display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 1, width: '100%' }}>
         <PieChart
           series={[
             {
               data: pieChartData,
-              highlightScope: { faded: 'global', highlighted: 'item' },
+              // highlightScope: { faded: 'global', highlighted: 'item' },
               faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
               innerRadius: 40, // Donut chart
               outerRadius: 100,
             },
           ]}
-          height={250}
           slotProps={{
-            legend: { direction: 'row', position: { vertical: 'bottom', horizontal: 'middle' }, padding: 0 },
+            // legend: { direction: 'row', position: { vertical: 'bottom', horizontal: 'middle' }, padding: 0 },
           }}
         />
       </Box>

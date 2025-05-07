@@ -11,7 +11,7 @@ import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
 import FairwayHitsChart from "./components/Charts/FairwayChart.component";
 import GirPercentageChart from "./components/Charts/GirChart.component";
 import PointsChart from "./components/Charts/PointsChart.component";
-import ScoreCharts from "./components/Charts/ScoreChart,component";
+import ScoreCharts from "./components/Charts/ScoreChart.component";
 
 
 const Dashboard = () => {
@@ -43,21 +43,21 @@ const Dashboard = () => {
           <>
             <Rounds />
             <Grid container columnGap={5} rowGap={4}>
-              <Grid item xs={12} sm={6} md={4} lg={5}>
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 5 }}>
                 <ScoreCharts />
               </Grid>
-              <Grid item xs={12} sm={6} md={4} lg={5}>
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 5 }}>
                 <PointsChart />
               </Grid>
             </Grid>
             <Grid container columnGap={6} rowGap={3}>
-              <Grid item xs={12} sm={6} md={4} lg={4}>
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
                 <FairwayHitsChart />
               </Grid>
-              <Grid item xs={12} sm={6} md={4} lg={4}>
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
                 <GirPercentageChart />
               </Grid>
-              <Grid item xs={12} sm={6} md={4} lg={3}>
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
                 <DistancesTotals />
               </Grid>
             </Grid>

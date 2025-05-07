@@ -8,7 +8,7 @@ export interface IRecentRoundData {
 }
 export interface ICustomChartSeries {
   id: string;
-  type: 'bar';
+  type?: 'bar'; // Made optional, BarChart should infer or default this for its series
   data: (number | null)[];
   label: string;
   valueFormatter: (value: number | null) => string;

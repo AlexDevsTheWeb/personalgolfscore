@@ -7,7 +7,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  Grid2,
+  Grid,
   IconButton,
   Paper,
   Stack,
@@ -110,8 +110,8 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
           <Typography gutterBottom>{clubType.typeName.toUpperCase()}</Typography>
           {clubType.details.map((club, clubIndex) => (
             <Stack sx={{ mb: 2, gap: 2 }}>
-              <Grid2 container spacing={2} key={club.clubIdentifier} size={12}>
-                <Grid2 size={12} gap={2}>
+              <Grid container spacing={2} key={club.clubIdentifier} size={12}>
+                <Grid size={12} gap={2}>
                   <TextField
                     label="Club Name/Number"
                     size="small"
@@ -119,8 +119,8 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
                     value={club.name}
                     onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'name', e.target.value)}
                   />
-                </Grid2>
-                <Grid2 size={12}>
+                </Grid>
+                <Grid size={12}>
                   <TextField
                     label="Image URL (Optional)"
                     size="small"
@@ -129,17 +129,17 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
                     value={club.imageURL || ''}
                     onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'imageURL', e.target.value)}
                   />
-                </Grid2>
-                <Grid2 size={4}>
+                </Grid>
+                <Grid size={4}>
                   <FormControlLabel
                     control={<Checkbox checked={club.selected} onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'selected', e.target.checked)} size="small" />}
                     label="In Bag"
                     sx={{ height: '100%', width: '100%', '& .MuiFormControlLabel-label': { fontSize: '0.875rem' }, justifyContent: 'end' }}
                   />
-                </Grid2>
-              </Grid2>
-              <Grid2 container spacing={2} key={club.clubIdentifier} size={12}>
-                <Grid2 size={12}>
+                </Grid>
+              </Grid>
+              <Grid container spacing={2} key={club.clubIdentifier} size={12}>
+                <Grid size={12}>
                   <TextField
                     label="Loft (°)"
                     type="number"
@@ -148,8 +148,8 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
                     value={club.loft}
                     onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'loft', parseFloat(e.target.value) || 0)}
                   />
-                </Grid2>
-                <Grid2 size={12}>
+                </Grid>
+                <Grid size={12}>
                   <TextField
                     label="Club #" // e.g., P, S, 7, 5W
                     size="small"
@@ -157,13 +157,13 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
                     value={club.clubNumber || ''}
                     onChange={(e) => handleClubDetailChange(typeIndex, clubIndex, 'clubNumber', e.target.value)}
                   />
-                </Grid2>
-                <Grid2 size={4} sx={{ justifyContent: 'end' }}>
+                </Grid>
+                <Grid size={4} sx={{ justifyContent: 'end' }}>
                   <IconButton onClick={() => removeClub(typeIndex, clubIndex)} color="warning" size="small" aria-label={`Remove ${club.name || 'club'}`} sx={{ justifyContent: 'flex-end', width: '100%' }}>
                     <DeleteIcon />
                   </IconButton>
-                </Grid2>
-              </Grid2>
+                </Grid>
+              </Grid>
             </Stack>
           ))
           }

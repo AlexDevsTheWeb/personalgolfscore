@@ -4,7 +4,7 @@ import { getPlayerDetails } from "@/features/player/player.slice";
 import { fetchInitialTheme } from "@/features/user/user.slice"; // Import the new thunk
 import { RootState } from "@/store/store";
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
-import { getAuth } from "@firebase/auth";
+import { getAuth } from "firebase/auth";
 import _ from "lodash";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

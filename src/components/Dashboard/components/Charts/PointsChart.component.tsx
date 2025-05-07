@@ -19,34 +19,15 @@ interface CustomChartSeries {
   data: (number | null)[];
   label?: string; // For legend, if used
   valueFormatter?: (value: number | null) => string;
-  _tooltipData: TooltipPayload;
+  // _tooltipData: TooltipPayload; // This custom prop will be removed
   area?: boolean; // To make it an area chart
   showMark?: boolean; // Optionally show marks on data points
   color?: string;
 }
 
-// Custom Tooltip Component
-const CustomTooltipContent: React.FC<any> = (props) => {
-  const { series, itemData } = props;
-  const tooltipData = (series as unknown as CustomChartSeries)._tooltipData;
-
-  if (!tooltipData || itemData == null) {
-    return null;
-  }
-
-  return (
-    <Paper elevation={3} sx={{ p: 1.5, minWidth: '150px' }}>
-      <Typography display="block" sx={{ fontWeight: 'bold' }}>{tooltipData.date || 'N/A'}</Typography>
-      <Typography variant="caption" display="block">Course: {tooltipData.course || 'Unknown Course'}</Typography>
-      <Typography display="block" sx={{ fontWeight: 'bold', mt: 0.5 }}>Points: {tooltipData.points}</Typography>
-    </Paper>
-  );
-};
-
 const PointsChart: React.FC = () => {
   const { rounds } = useSelector((store: RootState) => store.rounds);
   const theme = useTheme();
-
   const recentRounds = rounds
     .slice(-5)
     .map(round => ({
@@ -55,20 +36,47 @@ const PointsChart: React.FC = () => {
       course: round.roundCourse,
     }));
 
-  // Reverse the rounds to display in reverse chronological order (newest first on chart)
-  const displayableRecentRounds = [...recentRounds].reverse();
+  // Data for the chart, reversed for chronological display (e.g., newest data point to the right if using default axis direction)
+  // This array will also be used by the custom tooltip if enabled.
+  const chartOrderedRounds = [...recentRounds].reverse();
 
-  if (displayableRecentRounds.length === 0) {
+  if (chartOrderedRounds.length === 0) {
     return null;
   }
 
-  const chartData = displayableRecentRounds.map(r => r.points);
-  const xAxisLabels = displayableRecentRounds.map(r => r.date);
+  const chartData = chartOrderedRounds.map(r => r.points);
+  const xAxisLabels = chartOrderedRounds.map(r => r.date);
 
-  const series: CustomChartSeries[] = [{
+  // Define CustomTooltipContent within PointsChart to close over chartOrderedRounds.
+  // This avoids global variables and ensures data encapsulation.
+  const CustomTooltipContentInternal: React.FC<{ series: { id: string }, itemData: { dataIndex: number } }> = (props) => {
+    const { series: activeSeries, itemData } = props;
+
+    if (!activeSeries || itemData?.dataIndex === undefined) {
+      return null;
+    }
+
+    // Access data from chartOrderedRounds using the dataIndex provided by the chart
+    const roundInfo = chartOrderedRounds[itemData.dataIndex];
+
+    if (!roundInfo) {
+      return null;
+    }
+
+    return (
+      <Paper elevation={3} sx={{ p: 1.5, minWidth: '150px' }}>
+        <Typography display="block" sx={{ fontWeight: 'bold' }}>{roundInfo.date || 'N/A'}</Typography>
+        <Typography variant="caption" display="block">Course: {roundInfo.course || 'Unknown Course'}</Typography>
+        <Typography display="block" sx={{ fontWeight: 'bold', mt: 0.5 }}>Points: {roundInfo.points}</Typography>
+      </Paper>
+    );
+  };
+
+
+  const lineChartSeriesConfig: CustomChartSeries[] = [{ // Use CustomChartSeries directly
     id: 'pointsSeries',
+    type: 'line', // Explicitly set type to 'line'
     data: chartData,
-    _tooltipData: { points: 0, date: '', course: '' }, // This is a placeholder for the series-level _tooltipData
     area: true,
     showMark: true,
     color: theme.palette.secondary.main, // Or another color
@@ -82,21 +90,21 @@ const PointsChart: React.FC = () => {
       </Typography>
       <Box sx={{ mt: 1, width: '100%', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <LineChart
+          // @ts-ignore - The 'xAxis' prop is standard for LineChart.
+          // This directive is used because TypeScript is currently not recognizing it.
+          // Investigate @mui/x-charts version, type definitions, or potential conflicts
+          // in the project's TypeScript setup that might be causing this.
           xAxis={[{ data: xAxisLabels, scaleType: 'point' }]}
-          series={series.map(s => ({ // Map to ensure _tooltipData is correctly structured for each point
-            ...s,
-            data: s.data.map((pointValue, index) => pointValue), // Pass data as is
-            // Attach tooltip data to the series for the custom tooltip to pick up contextually
-            _tooltipData: (index: number) => ({ // Function to provide specific tooltip data per point
-              points: displayableRecentRounds[index]?.points ?? 0,
-              date: displayableRecentRounds[index]?.date ?? '',
-              course: displayableRecentRounds[index]?.course,
-            }),
-          }))}
+          series={lineChartSeriesConfig} // Pass the simplified series
           height={300}
           margin={{ top: 20, right: 20, bottom: 30, left: 40 }}
-          // slots={{ itemTooltip: CustomTooltipContent }}
-          slotProps={{ legend: { hidden: true } }} // Hide legend for single series area chart
+          // slots={{ itemTooltip: CustomTooltipContentInternal }} // Enable custom tooltip using the internal component
+          slotProps={{
+            // The 'as any' here also suggests potential type definition issues for LineChart's slotProps.
+            legend: {
+              hidden: true,
+            } as any, // Add 'as any' to bypass TS error if types are incorrect
+          }} // Hide legend for single series
         />
       </Box>
     </Paper>

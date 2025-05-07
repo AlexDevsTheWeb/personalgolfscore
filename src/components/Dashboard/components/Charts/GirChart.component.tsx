@@ -93,15 +93,14 @@ const GirPercentageChart: React.FC = () => {
                 series={[
                   {
                     data: pieChartData,
-                    highlightScope: { faded: 'global', highlighted: 'item' },
+                    // highlightScope: { faded: 'global', highlighted: 'item' },
                     faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
                     innerRadius: 40, // Donut chart
                     outerRadius: 100,
                   },
                 ]}
-                height={200} // Adjusted height
                 slotProps={{
-                  legend: { direction: 'row', position: { vertical: 'bottom', horizontal: 'middle' }, padding: 0 },
+                  // legend: { direction: 'row', position: { vertical: 'bottom', horizontal: 'middle' }, padding: 0 },
                 }}
               />
             </Box>

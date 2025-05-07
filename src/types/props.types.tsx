@@ -114,6 +114,16 @@ export interface IPenaltiesPieValues {
   values: IPenaltiesPie;
 }
 
+export interface IFairwayPieData {
+  totFairwaysCenter?: number;
+  totFairwaysLeft?: number;
+  totFairwaysRight?: number;
+}
+export interface IFairwayPieChartProps {
+  values: { name: string; value: IFairwayPieData; holes: number; };
+}
+
+
 export interface IPointsGauge {
   name: string;
   value: number;

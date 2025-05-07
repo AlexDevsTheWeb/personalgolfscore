@@ -3,12 +3,12 @@ import CompositeTypography from "@/styles/typography/CompositeTypography.styles"
 import { ICrossProps } from "@/types/props.types";
 import { formatPerc } from "@/utils/number/number.utils";
 import { divide } from "@/utils/totals/totalsGenFunc.utils";
-import { Grid2 } from "@mui/material";
+import { Grid } from "@mui/material";
 
 const Cross = ({ left, over, right, short, center, totals }: ICrossProps) => {
 
   return (
-    <Grid2 container sx={{ width: '100%', justifyContent: 'space-between' }}>
+    <Grid container sx={{ width: '100%', justifyContent: 'space-between' }}>
       <GridCross>
         <CompositeTypography string='Left' value={formatPerc(Number(divide(left, totals)))} />
       </GridCross>
@@ -20,7 +20,7 @@ const Cross = ({ left, over, right, short, center, totals }: ICrossProps) => {
       <GridCross>
         <CompositeTypography string='Right' value={formatPerc(Number(divide(right, totals)))} />
       </GridCross>
-    </Grid2>
+    </Grid>
   )
 }
 

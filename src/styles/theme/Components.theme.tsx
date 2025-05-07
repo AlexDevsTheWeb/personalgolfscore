@@ -1,6 +1,8 @@
 import type { } from '@mui/x-date-pickers/themeAugmentation';
 
 import { Components, Theme } from '@mui/material';
+import { GridProps } from '@mui/material/Grid'; // Import GridProps
+import { InputLabelProps } from '@mui/material/InputLabel';
 import { fonts } from './Typography.theme';
 
 import { breakpoints } from './Breakpoints.theme';
@@ -228,7 +230,12 @@ const components: Components<Omit<Theme, 'components'>> = {
 
   MuiInputLabel: {
     styleOverrides: {
-      root: ({ ownerState, theme }: { ownerState: any, theme: Theme }) => ({
+      root: ({ ownerState, theme }: {
+        ownerState: InputLabelProps & {
+          // Add other specific state properties if needed, e.g., focused, error
+          shrink?: boolean; // shrink is commonly used
+        }; theme: Theme
+      }) => ({
         letterSpacing: '0.2px',
         ...(ownerState.shrink // Use theme object for colors here
           ? {
@@ -753,32 +760,17 @@ const components: Components<Omit<Theme, 'components'>> = {
 
   MuiGrid: {
     styleOverrides: {
-      container: {
-        marginTop: 0,
-      },
-      item: {
-        display: 'flex',
-        flexDirection: 'row',
-        rowGap: 2,
-        columnGap: 20,
-        flexWrap: 'wrap',
-        alignContent: 'space-between',
-        justifyContent: 'space-between',
-      },
-      root: {
-        paddingTop: 0,
-      },
+      root: ({ ownerState, theme }: { ownerState: GridProps; theme: Theme }) => ({
+        paddingTop: 0, // Base style for all MuiGrid roots
+        ...(ownerState.container && {
+          marginTop: 0,
+          // Add any other styles specific to container Grids here
+        }),
+
+      }),
     },
   },
-  MuiGrid2: {
-    styleOverrides: {
-      root: ({ ownerState }) =>
-        ownerState.container === true && ({
-          flexWrap: 'wrap', // Changed from 'nowrap' to allow wrapping
-          gap: 5
-        })
-    }
-  },
+
   MuiTooltip: {
     styleOverrides: {
       tooltip: ({ theme }: { theme: Theme }) => ({

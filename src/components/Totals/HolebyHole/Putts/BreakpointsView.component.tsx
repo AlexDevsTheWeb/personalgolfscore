@@ -3,9 +3,9 @@ import { IPuttsMobileViewProps, IPuttsOverallStatsProps, IPuttsRangeStatsProps }
 import { IPuttsBreakDownStatistics } from "@/types/roundTotals.types";
 import { catConversion } from "@/utils/constant.utils";
 import { formatPerc } from "@/utils/number/number.utils";
-import { Box, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
-import { Grid2Props } from "@mui/material/Grid2";
+import { Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
+import StatBlock from "../components/StackBlock.component";
 
 const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : '-';
 const displayAverage = (val: number | undefined | null, precision: number = 2) => (val !== undefined && val !== null && val !== 0) ? val.toFixed(precision) : '-';
@@ -15,15 +15,15 @@ const displayPercentage = (val: number | undefined | null) => (val !== undefined
 
 const OverallStats: React.FC<IPuttsOverallStatsProps> = React.memo(({ value }) => (
   <Stack spacing={1}>
-    <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+    <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
       <GridPuttsStat size={{ xs: 6, md: 12 }} string='Putts' value={displayValue(value.totalPutts)} />
       <GridPuttsStat size={{ xs: 6, md: 12 }} string='Putts/GIR' value={displayAverage(value.puttsInGIR)} />
-    </Grid2>
+    </Grid>
     <Divider />
-    <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+    <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
       <GridPuttsStat size={{ xs: 6, md: 12 }} string='Birdie conv.' value={displayPercentage(value.birdieConversion)} />
       <GridPuttsStat size={{ xs: 6, md: 12 }} string='3 putts (tot)' value={displayValue(value.threePutts)} />
-    </Grid2>
+    </Grid>
   </Stack>
 ));
 
@@ -32,45 +32,26 @@ const RangeStats: React.FC<IPuttsRangeStatsProps> = React.memo(({ value }) => {
 
   return (
     <Stack spacing={1}>
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 4 }} string='1 putt %' value={displayPercentage(value.putt1Perc)} />
         <GridPuttsStat size={{ xs: 4 }} string='2 putt %' value={displayPercentage(twoPuttPerc)} />
         <GridPuttsStat size={{ xs: 4 }} string='3 putt %' value={displayPercentage(value.putt3Perc)} />
-      </Grid2>
+      </Grid>
       <Divider />
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 4 }} string='Holed' value={displayValue(value.puttsHoled)} />
         <GridPuttsStat size={{ xs: 4 }} string='Attempts' value={displayValue(value.puttsAttempts)} />
         <GridPuttsStat size={{ xs: 4 }} string='Average' value={displayAverage(value.puttsAverage)} />
-      </Grid2>
+      </Grid>
       <Divider />
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 4 }} string='Avg. dist.' value={displayAverage(value.puttsAverageDistance)} />
         <GridPuttsStat size={{ xs: 4 }} string='2° putt avg.' value={displayAverage(value.puttsSecondAverageLength)} />
         <GridPuttsStat size={{ xs: 4 }} string='3 putts' value={displayValue(value.putts3)} />
-      </Grid2>
+      </Grid>
     </Stack>
   );
 });
-
-interface StatBlockProps {
-  title: string;
-  children: React.ReactNode;
-  gridProps?: Grid2Props;
-}
-
-const StatBlock: React.FC<StatBlockProps> = ({ title, children, gridProps }) => (
-  <Grid2 {...gridProps}>
-    <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Typography component="h3" gutterBottom sx={{ textAlign: 'center' }}>
-        {title}
-      </Typography>
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        {children}
-      </Box>
-    </Paper>
-  </Grid2>
-);
 
 export const UnifiedPuttsView: React.FC<IPuttsMobileViewProps> = ({ puttsStatistics }) => {
   const overallStats = puttsStatistics._puttsOverall;
@@ -83,7 +64,7 @@ export const UnifiedPuttsView: React.FC<IPuttsMobileViewProps> = ({ puttsStatist
   console.log("overallStats: ", overallStats)
 
   return (
-    <Grid2 container spacing={2} sx={{ p: 2 }}>
+    <Grid container spacing={2} sx={{ p: 2 }}>
       {overallStats && (
         <StatBlock
           title={catConversion('_puttsOverall')}
@@ -106,6 +87,6 @@ export const UnifiedPuttsView: React.FC<IPuttsMobileViewProps> = ({ puttsStatist
           </StatBlock>
         );
       })}
-    </Grid2>
+    </Grid>
   );
 };

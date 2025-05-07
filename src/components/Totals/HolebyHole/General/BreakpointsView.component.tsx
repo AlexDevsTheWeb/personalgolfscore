@@ -4,11 +4,10 @@ import NewGridCellStats from "@/styles/grid/NewGridCellStats.style";
 import { IGeneralMobileViewProps, IPercentageStatDisplayProps, ISimpleStatDisplayProps } from "@/types/props.types";
 import { formatPerc } from "@/utils/number/number.utils";
 import { correctVsParString } from "@/utils/shots/shots.utils";
-import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
-import { Grid2Props } from "@mui/material/Grid2"; // More specific import for Grid2Props
+import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
+import StatBlock from "../components/StackBlock.component";
 
-import { Grid2 } from "@mui/material";
 
 const SimpleStatDisplay: React.FC<ISimpleStatDisplayProps> = React.memo(({
   title, total, avg, inTotal, inAvg, outTotal, outAvg, totalSuffix = '', inSuffix = '', outSuffix = ''
@@ -67,30 +66,8 @@ const PercentageStatDisplay: React.FC<IPercentageStatDisplayProps> = React.memo(
   </>
 ));
 
-interface StatBlockProps {
-  title: string;
-  children: React.ReactNode;
-  gridProps?: Grid2Props; // Use the specifically imported Grid2Props
-  subtitle?: string;
-}
 
-const StatBlock: React.FC<StatBlockProps> = ({ title, subtitle, children, gridProps }) => (
-  <Grid2 {...gridProps}>
-    <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Typography component="h3" gutterBottom sx={{ textAlign: 'center' }}>
-        {title}
-      </Typography>
-      {subtitle && (
-        <Typography variant="caption" display="block" color="text.secondary" sx={{ textAlign: 'center', mt: -1, mb: 1 }}>
-          {subtitle}
-        </Typography>
-      )}
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        {children}
-      </Box>
-    </Paper>
-  </Grid2>
-);
+
 
 export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
   score, points, putts, sand, gir, girBogey, fairway, upDown, scramble, water, out
@@ -99,7 +76,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
 
   return (
     <Box sx={{ width: '100%', justifyContent: 'center' }}>
-      <Grid2 container spacing={10} sx={{ p: 2 }}>
+      <Grid container spacing={10} sx={{ p: 2 }}>
         <StatBlock title="Score" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <SimpleStatDisplay
             total={`${score.totals} (${correctScore})`}
@@ -124,7 +101,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
 
         <StatBlock title="Fairways" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <Stack spacing={1}>
-            <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+            <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
               <NewGridCellStats size={{ xs: 6 }}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography color="text.secondary" sx={{ fontSize: '0.8rem' }}>Center</Typography>
@@ -137,9 +114,9 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
                   <Typography fontWeight={'bold'}>{fairway.total}</Typography>
                 </Stack>
               </NewGridCellStats>
-            </Grid2>
+            </Grid>
             <Divider sx={{ my: 1 }} />
-            <Grid2 container spacing={1} sx={{ justifyContent: 'space-around', alignItems: 'center' }}>
+            <Grid container spacing={1} sx={{ justifyContent: 'space-around', alignItems: 'center' }}>
               <NewGridCellStats size={{ xs: 4 }}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography color="text.secondary" sx={{ fontSize: '0.8rem' }}>Left</Typography>
@@ -164,7 +141,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
                   <ShotPosition position={6} />
                 </Stack>
               </NewGridCellStats>
-            </Grid2>
+            </Grid>
           </Stack>
         </StatBlock>
 
@@ -271,7 +248,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
             </Box>
           </Stack>
         </StatBlock>
-      </Grid2>
+      </Grid>
     </Box>
   );
 };

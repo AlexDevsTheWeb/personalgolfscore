@@ -2,9 +2,9 @@ import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
 import { ITeeshotsCategoryStatsProps, ITeeshotsMobileViewProps } from "@/types/props.types";
 import { catConversion } from "@/utils/constant.utils";
 import { formatPerc } from "@/utils/number/number.utils";
-import { Box, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
-import { Grid2Props } from "@mui/material/Grid2";
+import { Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
+import StatBlock from "../components/StackBlock.component";
 
 
 export const CategoryStats: React.FC<ITeeshotsCategoryStatsProps> = React.memo(({ value }) => {
@@ -13,47 +13,28 @@ export const CategoryStats: React.FC<ITeeshotsCategoryStatsProps> = React.memo((
 
   return (
     <Stack spacing={1}>
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 4 }} string='Left %' value={displayPercentage(value.missLeftPCT)} />
         <GridPuttsStat size={{ xs: 4 }} string='Center %' value={displayPercentage(value.fairwayCenterPCT)} />
         <GridPuttsStat size={{ xs: 4 }} string='Right %' value={displayPercentage(value.missRightPCT)} />
-      </Grid2>
+      </Grid>
       <Divider />
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 4 }} string='Fws hits' value={displayValue(value.fairwayHits)} />
         <GridPuttsStat size={{ xs: 4 }} string='Attempts' value={displayValue(value.attempts)} />
         {/* Format average distance */}
         <GridPuttsStat size={{ xs: 4 }} string='Avg. dis.' value={value.averageDistance > 0 ? `${value.averageDistance.toFixed(1)}m` : '-'} />
-      </Grid2>
+      </Grid>
       <Divider />
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 4 }} string='Missed L' value={displayValue(value.missLeft)} />
         <GridPuttsStat size={{ xs: 4 }} string='Missed R' value={displayValue(value.missRight)} />
         {/* Assuming noGreen maps to FIR Miss */}
         <GridPuttsStat size={{ xs: 4 }} string='FIR Miss' value={displayValue(value.noGreen)} />
-      </Grid2>
+      </Grid>
     </Stack>
   );
 });
-
-interface StatBlockProps {
-  title: string;
-  children: React.ReactNode;
-  gridProps?: Grid2Props;
-}
-
-const StatBlock: React.FC<StatBlockProps> = ({ title, children, gridProps }) => (
-  <Grid2 {...gridProps}>
-    <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Typography component="h3" gutterBottom sx={{ textAlign: 'center' }}>
-        {title}
-      </Typography>
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        {children}
-      </Box>
-    </Paper>
-  </Grid2>
-);
 
 export const UnifiedTeeShotsView: React.FC<ITeeshotsMobileViewProps> = ({ teeShots }) => {
   const entries = Object.entries(teeShots);
@@ -63,7 +44,7 @@ export const UnifiedTeeShotsView: React.FC<ITeeshotsMobileViewProps> = ({ teeSho
   }
 
   return (
-    <Grid2 container spacing={2} sx={{ p: 2 }}>
+    <Grid container spacing={2} sx={{ p: 2 }}>
       {entries.map(([key, value]) => {
         // Filter out categories if they have no attempts (or other relevant zero check)
         // if (!value || value.attempts === 0) {
@@ -79,6 +60,6 @@ export const UnifiedTeeShotsView: React.FC<ITeeshotsMobileViewProps> = ({ teeSho
           </StatBlock>
         );
       })}
-    </Grid2>
+    </Grid>
   );
 };
