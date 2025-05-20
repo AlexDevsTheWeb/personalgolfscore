@@ -114,8 +114,9 @@ const components: Components<Omit<Theme, 'components'>> = {
           backgroundColor: 'transparent',
           justifyContent: 'flex-start',
           padding: '13px 32px',
-          height: '56px',
-          borderColor: theme.palette.primary.main, // Access theme directly
+          height: '50px',
+          marginTop: '10px',
+          borderColor: theme.palette.primary.main,
           '@media(hover: hover)': {
             '&:hover': {
               backgroundColor: theme.palette.primary.main,
@@ -139,15 +140,11 @@ const components: Components<Omit<Theme, 'components'>> = {
           lineHeight: 0,
           height: '50px',
           marginTop: '10px',
-          // Set background based on theme mode
-          // Use primary.main for light, maybe a grey for dark? Example: grey[700] or a custom grey
           backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main,
-          // Ensure text color contrasts well with the background
           color: theme.palette.getContrastText(theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main),
+          boxShadow: 'none',
           '@media(hover: hover)': {
             '&:hover': {
-              // Adjust hover based on theme mode if needed
-              // Example: use grey3 for dark hover, primary2 for light hover
               backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey3.main : theme.palette.primary2.main,
             },
           },

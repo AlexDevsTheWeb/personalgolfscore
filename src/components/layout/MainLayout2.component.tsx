@@ -5,7 +5,7 @@ import { IBoxProps, IMainLayoutProps } from '@/types/props.types';
 import links from '@/utils/links/links.utils';
 import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
-import { ListItemIcon, ListItemText, styled } from '@mui/material';
+import { ListItemIcon, ListItemText, styled, Typography } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -15,7 +15,6 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { getAuth } from 'firebase/auth';
 import _ from 'lodash';
 import * as React from 'react';
@@ -48,7 +47,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography sx={{ my: 2, color: 'text.primary' }}>
+      <Typography sx={{ color: 'text.primary' }}>
         PGS
       </Typography>
       <Divider />
@@ -137,7 +136,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
                     </ListItem>
                   );
                 })}
-                <ThemeSwitcher /> {/* Add the ThemeSwitcher here */}
+                <ThemeSwitcher />
                 <User />
               </List>
             </Box>

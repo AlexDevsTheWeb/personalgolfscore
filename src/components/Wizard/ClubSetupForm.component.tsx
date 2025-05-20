@@ -21,8 +21,6 @@ const DEFAULT_CLUB_TYPES = ["driver", "fairway wood", "hybrid", "iron", "wedge",
 const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBagChange }) => {
   const [golfBag, setGolfBag] = useState<IGolfBagData>([]);
   useEffect(() => {
-    console.log("ClubSetupForm useEffect triggered. initialGolfBag:", initialGolfBag);
-
     let structuredBag: IGolfBagData;
     if (!initialGolfBag || initialGolfBag.length === 0) {
       structuredBag = DEFAULT_CLUB_TYPES.map(typeName => ({
@@ -41,7 +39,6 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
     }
 
     if (JSON.stringify(structuredBag) !== JSON.stringify(golfBag)) {
-      console.log("Structuring golf bag state:", structuredBag); // Debugging log
       setGolfBag(structuredBag);
       onGolfBagChange(structuredBag);
     }

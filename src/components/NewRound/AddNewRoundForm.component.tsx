@@ -2,7 +2,7 @@ import {
   setRoundCourse,
   setRoundDate,
   setRoundHoles,
-  setRoundMainData, // Keep if needed, e.g., for setting setFirstHole flag
+  setRoundMainData,
   setRoundNumber,
   setRoundPar,
   setRoundPlayingHCP,
@@ -12,17 +12,27 @@ import { setTotalMainData } from '@/features/newRound/newRoundTotals.slice';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { AppDispatch, RootState } from '@/store/store';
 import { INewRound } from '@/types/round.types';
-import { Button, Grid, TextField } from '@mui/material';
-import { StaticDatePicker } from '@mui/x-date-pickers';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  TextField
+} from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Header from '../common/header/Header.component';
 
 const AddNewRoundForm = () => {
-  const dispatch = useDispatch<AppDispatch>(); // Use AppDispatch type
-  // Select individual properties from the store
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const roundData = useSelector((state: RootState) => state.newRound.newRoundMain.round);
+  const setFirstHole = useSelector((state: RootState) => state.newRound.newRoundMain.setFirstHole);
   const roundDateString = useSelector((state: RootState) => state.newRound.newRoundMain.round.roundDate);
-  const { showDistances } = useSelector((store: RootState) => store.controls);
   const roundDateValue = roundDateString && dayjs(roundDateString).isValid() ? dayjs(roundDateString) : null;
 
   const handleDateChange = (newValue: Dayjs | null) => {
@@ -32,121 +42,135 @@ const AddNewRoundForm = () => {
   const isMobile = useDeviceDetection().isMobile;
 
   const handleSubmit = () => {
-    // Data is already in Redux store, read it from there
-    const currentRoundData = roundData; // Use the selector result
+    const currentRoundData = roundData;
+    dispatch(setRoundMainData({}));
 
-    // Dispatch action to set the flag indicating the main form is submitted
-    // You could potentially pass the whole object if setRoundMainData still needs it
-    // Or just dispatch an action specifically for the flag if setRoundMainData isn't needed elsewhere
-    dispatch(setRoundMainData({})); // Assuming this sets the setFirstHole flag internally
-
-    // Dispatch action to update totals slice with the main data
-    // Ensure INewRound type matches the structure in Redux state
     const roundForTotals: INewRound = {
       ...currentRoundData,
-      // Ensure roundDate is a string if needed by setTotalMainData
-      roundDate: currentRoundData.roundDate || '', // Use the string from store
+      roundDate: currentRoundData.roundDate || '',
     };
     dispatch(setTotalMainData({ round: roundForTotals }));
   };
 
+  const handleCancel = () => {
+    dispatch(setRoundMainData({}));
+    navigate('/dashboard');
+  }
+
+  if (setFirstHole) {
+    return null;
+  }
 
   return (
-    <Grid container spacing={1}>
-      <Grid size={{ lg: 3.5 }} sx={{ border: '1px solid #ff9900' }}>
-        <StaticDatePicker
-          orientation="landscape" // Corrected label
-          value={roundDateValue}
-          onChange={handleDateChange}
-          slotProps={{
-            actionBar: {
-              actions: ['today'],
-            },
-          }}
+    <Dialog
+      open={!setFirstHole}
+      fullWidth
+      maxWidth="sm"
+      onClose={(event, reason) => {
+        if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+          return;
+        }
+      }}
+    >
 
-        />
-      </Grid>
-      <Grid size={{ lg: 8.5 }} sx={{ border: '1px solid #0099ff', justifyContent: 'space-between', display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
-        <Grid container spacing={3}>
-          <Grid size={6}>
+      <DialogTitle sx={{ height: 'auto', padding: '0px' }}>
+        <Header title='New round: basic info' />
+      </DialogTitle>
+      <DialogContent>
+        <Grid container spacing={2} sx={{ paddingTop: '10px' }}>
+          <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
             <TextField
               name='roundCourse'
               label="Round course"
-              variant="filled"
+              variant="outlined"
               fullWidth
-              value={roundData.roundCourse || ''} // Read from store
-              onChange={e => dispatch(setRoundCourse(e.target.value))} // Dispatch action
+              value={roundData.roundCourse || ''}
+              onChange={e => dispatch(setRoundCourse(e.target.value))}
             />
           </Grid>
-          <Grid size={6}>
+          <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+            <DatePicker
+              value={roundDateValue}
+              onChange={handleDateChange}
+              sx={{ width: '100%' }}
+              format="DD/MM/YYYY"
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ paddingTop: '10px' }}>
+          <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
             <TextField
               name='roundHoles'
               label="Holes"
-              variant="filled"
+              variant='outlined'
               type='number'
               fullWidth
-              value={roundData.roundHoles || ''} // Read from store
+              value={roundData.roundHoles || ''}
               onChange={e => dispatch(setRoundHoles(Number(e.target.value)))}
             />
           </Grid>
-          <Grid size={6}>
+          <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
             <TextField
               name='roundPar'
               label="Par"
-              variant="filled"
+              variant="outlined"
               type='number'
-              value={roundData.roundPar || ''} // Read from store
+              value={roundData.roundPar || ''}
               onChange={e => dispatch(setRoundPar(Number(e.target.value)))}
               fullWidth
             />
           </Grid>
-          <Grid size={6}>
+          <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
             <TextField
               name='roundPlayingHCP'
               label="HCP"
-              variant="filled"
+              variant="outlined"
               fullWidth
               type='number'
-              value={roundData.roundPlayingHCP || ''} // Read from store
+              value={roundData.roundPlayingHCP || ''}
               onChange={e => dispatch(setRoundPlayingHCP(Number(e.target.value)))}
             />
           </Grid>
-          <Grid size={6}>
+          <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
             <TextField
               name='roundTee'
               label="Tee"
-              variant="filled"
+              variant="outlined"
               value={roundData.roundTee || ''}
               onChange={e => dispatch(setRoundTee(e.target.value))}
               fullWidth
             />
           </Grid>
-          <Grid size={6}>
+          <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
             <TextField
               name='roundNumber'
               label="Round #"
-              variant="filled"
+              variant="outlined"
               type='number'
               value={roundData.roundNumber || ''}
               onChange={e => dispatch(setRoundNumber(Number(e.target.value)))}
               fullWidth
             />
           </Grid>
-
-
-
-
-
-
         </Grid>
-        <Grid size={{ lg: 2 }} sx={{
-          border: '1px solid #99ff00', justifyContent: 'end', alignItems: 'end', display: 'flex', flexDirection: 'column'
-        }}>
-          < Button fullWidth={isMobile ? true : false} variant='contained' onClick={handleSubmit} sx={{ marginTop: '0px' }}>SUBMIT</Button>
-        </Grid>
-      </Grid>
-
-    </Grid>
+      </DialogContent>
+      <DialogActions sx={{ padding: '0px' }}>
+        <Button
+          fullWidth={isMobile ? true : false}
+          variant='outlined'
+          onClick={handleCancel}
+        >
+          CANCEL
+        </Button>
+        <Button
+          fullWidth={isMobile ? true : false}
+          variant='contained'
+          onClick={handleSubmit}
+        >
+          SUBMIT
+        </Button>
+      </DialogActions>
+    </Dialog>
   )
 }
 

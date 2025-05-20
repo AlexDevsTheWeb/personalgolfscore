@@ -48,7 +48,16 @@ const User = () => {
 
   return (
     !!isLoading || _.isUndefined(player.photoURL)
-      ? <Skeleton variant="circular" width={40} height={40} sx={{ backgroundColor: 'transparent' }} />
+      ?
+      <Box sx={{ display: 'flex' }}>
+        <IconButton size="small"
+          sx={{ ml: 2 }}
+          aria-controls={open ? 'account-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}>
+          <Skeleton variant="circular" width={40} height={40} sx={{ backgroundColor: 'white' }} />
+        </IconButton>
+      </Box>
       : <Box sx={{ display: 'flex' }}>
         <Tooltip title="Account settings">
           <IconButton
@@ -60,6 +69,7 @@ const User = () => {
             aria-expanded={open ? 'true' : undefined}
           >
             {
+
               user?.photoURL === '' || _.isUndefined(player.photoURL)
                 ? <Avatar alt={player.displayName}{...stringAvatar(player.displayName)} />
                 : <Avatar alt={player.displayName} src={player.photoURL} />

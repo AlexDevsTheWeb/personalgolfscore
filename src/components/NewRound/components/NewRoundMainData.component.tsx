@@ -1,28 +1,14 @@
+import { RootState } from "@/store/store";
 import StackHoles from "@/styles/stack/StackHoles.styles";
-import StackHolesPoints from "@/styles/stack/StackHolesPoints.styles";
-import { IRoundMainDataProp } from "@/types/props.types";
 import { Box, Grid } from "@mui/material";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
 
+const NewRoundMainData = () => {
 
-const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
-  const {
-    roundCourse,
-    roundDate,
-    roundPar,
-    roundTee,
-    roundPlayingHCP,
-    holes,
-    totals,
-  } = round;
+  const roundData = useSelector((state: RootState) => state.newRound.newRoundMain.round);
+  const { roundCourse, roundDate, roundHoles, roundPar, roundPlayingHCP, roundTee } = roundData;
 
-  const par = Number(roundPar);
-  const playingHCP = Number(roundPlayingHCP);
-  const roundStrokes = totals?.score?.totals;
-
-  const score = roundStrokes ? Number(roundStrokes) : 0;
-  const overParNet = roundStrokes ? score - par : 0;
-  const overParGross = roundStrokes ? score - (par + playingHCP) : 0;
   const formattedDate = roundDate ? dayjs(roundDate).format('DD/MM/YYYY') : 'N/A';
 
   return (
@@ -39,20 +25,17 @@ const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
         </Grid>
         <Grid size={{ xs: 2, md: 3, lg: 1 }}>
           {/* Use holes array length */}
-          <StackHoles name={'Holes'} value={holes?.length || 0} />
+          <StackHoles name={'Holes'} value={roundHoles} />
         </Grid>
         <Grid size={{ xs: 2, md: 3, lg: 1 }}>
-          <StackHoles name={'Par'} value={par} />
+          <StackHoles name={'Par'} value={roundPar} />
         </Grid>
         <Grid size={{ xs: 2, md: 3, lg: 1 }}>
-          <StackHoles name={'HCP'} value={playingHCP} />
-        </Grid>
-        <Grid size={{ xs: 6, md: 3, lg: 3 }}>
-          <StackHolesPoints round={round} />
+          <StackHoles name={'HCP'} value={roundPlayingHCP} />
         </Grid>
       </Grid>
     </Box>
   )
 }
 
-export default RoundsDataHeader
+export default NewRoundMainData

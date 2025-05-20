@@ -1,7 +1,8 @@
+import { resetSetFirstHole } from "@/features/newRound/newRoundMain.slice";
 import { RootState } from "@/store/store";
 import BoxBetween from "@/styles/box/BoxBetween.styles";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../common/spinner/Spinner.component";
 import Rounds from "../Rounds/Rounds.component";
@@ -16,7 +17,7 @@ import ScoreCharts from "./components/Charts/ScoreChart.component";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const { rounds } = useSelector((store: RootState) => store.rounds);
   const { player } = useSelector((store: RootState) => store.player);
   const { isLoading } = useSelector((store: RootState) => store.controls);
@@ -25,6 +26,7 @@ const Dashboard = () => {
     navigate(`/statistics`);
   };
   const handleAddNewRound = () => {
+    dispatch(resetSetFirstHole());
     navigate('/addNewRound')
   }
 
