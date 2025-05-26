@@ -1,4 +1,4 @@
-import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
+import { HoleCard, HoleCardContent } from '@/styles/index';
 import { IHoleGeneralInfoFormProps } from '@/types/props.types';
 import { Autocomplete, TextField } from '@mui/material'; // Import Autocomplete
 import React from 'react';
@@ -21,7 +21,7 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 
   return (
     <HoleCard>
-      <HoleCardHeader title={`Hole number: ${currentHoleNumber} - General Info`} />
+      {/* <HoleCardHeader title={`Hole number: ${currentHoleNumber} - General Info`} /> */}
       <HoleCardContent>
         <Autocomplete
           options={hcpList}

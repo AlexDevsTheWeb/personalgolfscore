@@ -1,4 +1,4 @@
-import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
+import { HoleCard, HoleCardContent } from '@/styles/index';
 import { IHolePenaltiesFormProps } from '@/types/props.types';
 import { TextField } from "@mui/material";
 import React from 'react';
@@ -13,7 +13,7 @@ const HolePenaltiesForm: React.FC<IHolePenaltiesFormProps> = ({
 
   return (
     <HoleCard>
-      <HoleCardHeader title='Penalties' />
+      {/* <HoleCardHeader title='Penalties' /> */}
       <HoleCardContent>
         <TextField
           name='water'

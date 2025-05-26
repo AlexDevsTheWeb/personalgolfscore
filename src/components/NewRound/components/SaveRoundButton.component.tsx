@@ -10,7 +10,7 @@ const SaveRoundButton: React.FC<ISaveRoundButtonProps> = ({ onSave, disabled }) 
   const { roundHoles } = round;
 
   const howManyHolesToPlay = roundHoles - holes.length;
-  const label = howManyHolesToPlay <= 0 ? "Save Round" : "Next Hole";
+  const label = howManyHolesToPlay <= 0 ? "Save" : "Next";
 
   return (
     <Button

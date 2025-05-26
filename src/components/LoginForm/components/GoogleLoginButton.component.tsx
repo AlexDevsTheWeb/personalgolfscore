@@ -40,7 +40,6 @@ const GoogleLoginButton = () => {
           "photoURL": photoURL as string
         });
 
-        debugger;
         writeUserLocalStorage({ uid: docSnap.id })
         const user: IUser = {
           displayName: docSnap?.data().displayName,

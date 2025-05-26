@@ -3,8 +3,8 @@ import { addApproachShotDistance, addTeeShotDistance } from '@/features/newRound
 import { setNewHole } from '@/features/newRound/newRoundHoles.slice';
 import { RootState } from '@/store/store';
 import { IAddSingleHoleProps } from '@/types/clubs.types';
-import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils';
-import { Grid, Stack } from '@mui/material';
+import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils'; // prettier-ignore
+import { Box, Divider, Grid, Paper, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
@@ -96,62 +96,81 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
   const hcpList = Number(roundHoles) === 18 ? hcpList18 : hcpList9;
 
   return (
-
-    <Grid container spacing={1}>
-      <Grid size={{ lg: 10.99 }}>
-        <Grid container spacing={1}>
-          <Grid size={{ xs: 12, lg: 5.25 }}>
-            <HoleGeneralForm
-              holeData={tmpHole}
-              hcpList={hcpList}
-              parList={parList}
-              puttsNumber={puttsNumber}
-              currentHoleNumber={currentHoleNumber}
-              onChange={handleChange}
-              onChangePutts={handleChangePutts}
-            />
-
+    <Grid container spacing={2}>
+      <Grid size={{ xs: 12, md: 9, lg: 11 }}>
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <Paper elevation={2} sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2, height: '100%' }}>
+              <Box>
+                <Typography variant="headline6" gutterBottom component="div">
+                  Hole {currentHoleNumber}: General Info
+                </Typography>
+                <HoleGeneralForm
+                  holeData={tmpHole}
+                  hcpList={hcpList}
+                  parList={parList}
+                  puttsNumber={puttsNumber}
+                  currentHoleNumber={currentHoleNumber}
+                  onChange={handleChange}
+                  onChangePutts={handleChangePutts}
+                />
+              </Box>
+              <Divider />
+              <Box>
+                <Typography variant="headline6" gutterBottom component="div">
+                  Tee Shot
+                </Typography>
+                <HoleTeeShotForm
+                  holeData={tmpHole}
+                  teeClubs={derivedClubs.teeClubs}
+                  fairwayValues={fairwayValues}
+                  onChange={handleChange}
+                />
+              </Box>
+            </Paper>
           </Grid>
-          <Grid size={{ xs: 12, lg: 3.62 }}>
-            <HoleTeeShotForm
-              holeData={tmpHole}
-              teeClubs={derivedClubs.teeClubs}
-              fairwayValues={fairwayValues}
-              onChange={handleChange}
-            />
 
-          </Grid>
-          <Grid size={{ xs: 12, lg: 4.66 }}>
-            <HoleApproachForm
-              holeData={tmpHole}
-              greenClubs={derivedClubs.greenClubs}
-              chipClubs={derivedClubs.chipClubs}
-              greenSideValues={greenSideValues}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, lg: 1.7 }}>
-            <HolePenaltiesForm
-              holeData={tmpHole}
-              onChange={handleChange}
-            />
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <Paper elevation={2} sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2, height: '100%' }}>
+              <Box>
+                <Typography variant="headline6" gutterBottom component="div">
+                  Approach & Green
+                </Typography>
+                <HoleApproachForm
+                  holeData={tmpHole}
+                  greenClubs={derivedClubs.greenClubs}
+                  chipClubs={derivedClubs.chipClubs}
+                  greenSideValues={greenSideValues}
+                  onChange={handleChange}
+                />
+              </Box>
+              <Divider />
+              <Box>
+                <Typography variant="headline6" gutterBottom component="div">
+                  Penalties
+                </Typography>
+                <HolePenaltiesForm
+                  holeData={tmpHole}
+                  onChange={handleChange}
+                />
+              </Box>
+            </Paper>
           </Grid>
         </Grid>
       </Grid>
-      <Grid>
-        <Stack gap={1}>
-          <SaveRoundButton
-            onSave={handleSaveHole}
-            disabled={isSaveDisabled()}
 
-          />
-          {
-            !!showDistances &&
-            <ClubDistanceDialog open={showDistances} />
-          }
-          <DistancesButton />
-        </Stack>
+      <Grid size={{ xs: 12, md: 3, lg: 1 }}>
+        <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
+          <Typography variant="headline6" gutterBottom component="div" sx={{ mb: 2 }}>
+            Actions
+          </Typography>
+          <Stack gap={2}>
+            <SaveRoundButton onSave={handleSaveHole} disabled={isSaveDisabled()} />
+            <DistancesButton />
+          </Stack>
+        </Paper>
       </Grid>
+      {!!showDistances && <ClubDistanceDialog open={showDistances} />}
     </Grid>
   )
 }

@@ -1,4 +1,4 @@
-import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
+import { HoleCard, HoleCardContent } from '@/styles/index';
 import { IHoleApproachFormProps } from '@/types/props.types';
 import { Autocomplete, TextField } from '@mui/material'; // Import Autocomplete
 import React from 'react';
@@ -41,7 +41,7 @@ const HoleApproachForm: React.FC<IHoleApproachFormProps> = ({ holeData, greenClu
 
   return (
     <HoleCard>
-      <HoleCardHeader title='Approach & Short Game' />
+      {/* <HoleCardHeader title='Approach & Short Game' /> */}
       <HoleCardContent>
         <TextField
           name='toGreenMeters'

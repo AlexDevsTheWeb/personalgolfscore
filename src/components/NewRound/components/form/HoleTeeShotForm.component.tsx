@@ -1,4 +1,4 @@
-import { HoleCard, HoleCardContent, HoleCardHeader } from '@/styles/index';
+import { HoleCard, HoleCardContent } from '@/styles/index';
 import { IHoleTeeShotFormProps } from '@/types/props.types';
 import { Autocomplete, TextField } from "@mui/material";
 import React from "react";
@@ -9,7 +9,7 @@ const HoleTeeShotForm: React.FC<IHoleTeeShotFormProps> = ({ holeData, teeClubs =
 
   return (
     <HoleCard>
-      <HoleCardHeader title='Tee shot' />
+      {/* <HoleCardHeader title='Tee shot' /> */}
       <HoleCardContent>
         <Autocomplete
           options={teeClubs}
