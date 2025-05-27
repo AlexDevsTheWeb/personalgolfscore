@@ -92,7 +92,7 @@ declare module '@mui/material/styles' {
     notes?: PaletteColorOptions;
     behaviours?: PaletteColorOptions;
     redDim?: PaletteColorOptions;
-    red2Dim?: PaletteColor;
+    red2Dim?: PaletteColorOptions;
     greenDim?: PaletteColorOptions;
     yellowDim?: PaletteColorOptions;
     whiteDim?: PaletteColorOptions;
