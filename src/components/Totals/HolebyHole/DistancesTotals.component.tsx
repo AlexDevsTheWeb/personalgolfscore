@@ -37,6 +37,8 @@ const DistancesTotals: React.FC = () => {
     return map;
   }, [totalDistancesAVG]);
 
+  console.log("totalDistancesAVG: ", totalDistancesAVG)
+
   const chartGetCorrectClubName = (clubName: string) => {
     if (clubName.toLowerCase().includes('wedge')) {
       return clubName.split(' ')[0];

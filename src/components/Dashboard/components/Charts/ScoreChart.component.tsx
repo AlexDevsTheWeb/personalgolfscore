@@ -16,7 +16,8 @@ const ScoreCharts: React.FC = () => {
       round.totals?.score?.vsPar !== undefined &&
       round.roundPar !== undefined
     )
-    .slice(-5);
+    .slice(-5)
+    .toReversed();
 
   if (recentRoundsRaw.length === 0) {
     return (

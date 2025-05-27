@@ -52,7 +52,7 @@ const RoundsTable = () => {
               return (
                 <TableRow key={round.id} onClick={() => handleClick(round.id.toString())} sx={{ cursor: 'pointer' }}>
                   <TableCell component="th" scope="row" align='center'>
-                    {dayjs(round.roundDate).format('DD/MM/YY')}
+                    {dayjs(round.roundDate).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell
                     align='left'

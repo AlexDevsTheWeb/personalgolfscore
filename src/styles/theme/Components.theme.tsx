@@ -128,6 +128,8 @@ const components: Components<Omit<Theme, 'components'>> = {
             padding: '13px 22px',
             minWidth: '100%',
             width: '100%',
+            textAlign: 'center',
+            justifycontent: 'center'
           },
         }),
       },

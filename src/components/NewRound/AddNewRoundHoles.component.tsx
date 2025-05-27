@@ -1,9 +1,12 @@
+import { resetNewRoundHoleTmp } from '@/features/hole/holeTmp.slice';
+import { resetNewRoundsMain } from '@/features/newRound/newRoundMain.slice';
 import { setTotalsByHole } from '@/features/newRound/newRoundTotals.slice';
 import { RootState } from '@/store/store';
 import { getChipClubs, getClubsNames, getDistanceClubs, getGreenClubs } from '@/utils/round/round.utils';
 import { Typography } from '@mui/material';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Spinner from '../common/spinner/Spinner.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddSingleHole from './AddSingleHole.component';
@@ -13,6 +16,9 @@ import RoundSave from './RoundSave.component';
 const AddNewRoundHoles = () => {
   const dispatch = useDispatch<any>();
   const { round, setFirstHole } = useSelector((store: RootState) => store.newRound.newRoundMain);
+  // Assuming reset actions for these slices exist or should be created:
+  // import { resetNewRoundHoles } from '@/features/newRound/newRoundHoles.slice';
+  // import { resetNewRoundTotals } from '@/features/newRound/newRoundTotals.slice';
   const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
   const { player, isLoading: isPlayerLoading } = useSelector((store: RootState) => store.player);
@@ -20,6 +26,7 @@ const AddNewRoundHoles = () => {
 
   const golfBag = player?.golfBag;
   const derivedClubs = useMemo(() => {
+
     if (!golfBag || golfBag.length === 0) {
       return { teeClubs: [], distanceClubs: [], greenClubs: [], chipClubs: [] };
     }
@@ -31,11 +38,26 @@ const AddNewRoundHoles = () => {
     return { teeClubs: teeClubNames, distanceClubs, greenClubs, chipClubs };
   }, [golfBag]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (holes.length > 0) {
       dispatch(setTotalsByHole({ holes }));
     }
   }, [holes, dispatch]);
+
+  useEffect(() => {
+    if (isRoundSaved && savedRoundId) {
+      // 1. Reset the relevant parts of the Redux store for the new round form
+      dispatch(resetNewRoundsMain()); // Resets round date, course, par, etc.
+      dispatch(resetNewRoundHoleTmp());  // Resets temporary hole data
+      // dispatch(resetNewRoundHoles()); // Hypothetical: Resets the array of holes for the current new round
+      // dispatch(resetNewRoundTotals());// Hypothetical: Resets totals calculated for the current new round
+
+      // 2. Redirect the user
+      navigate(`/round/${savedRoundId}`); // Redirect to the newly saved round's detail page
+    }
+  }, [isRoundSaved, savedRoundId, dispatch, navigate]);
 
   if (!setFirstHole) {
     return null;
@@ -54,9 +76,10 @@ const AddNewRoundHoles = () => {
     return <Typography>No clubs found in your golf bag. Please add clubs first.</Typography>
   }
 
-  if (isRoundSaved && savedRoundId) {
-    return <Typography color="success.main" sx={{ textAlign: 'center', margin: 4 }}>Round saved successfully!</Typography>
-  }
+  // The "Round saved successfully!" message will be very brief due to immediate redirect.
+  // If you want to show it for longer, you'd need to delay the navigation.
+  // For now, the redirect handles the success feedback by taking the user to the new round.
+  // if (isRoundSaved && savedRoundId) { return <Typography>...</Typography>; }
 
   return (
     <>
@@ -75,4 +98,3 @@ const AddNewRoundHoles = () => {
 }
 
 export default AddNewRoundHoles
-

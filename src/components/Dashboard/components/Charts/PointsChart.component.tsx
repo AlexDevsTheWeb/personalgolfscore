@@ -20,7 +20,8 @@ const PointsChart: React.FC = () => {
 
   const recentRoundsRaw = rounds
     .filter(round => round.totals?.points?.totals !== undefined) // Ensure points data exists
-    .slice(-5); // Get the last 5 rounds
+    .slice(-5)
+    .toReversed(); // Get the last 5 rounds
 
   if (recentRoundsRaw.length < 1) { // Need at least 1 point to draw a line, ideally 2+
     return (

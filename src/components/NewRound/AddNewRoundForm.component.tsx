@@ -154,16 +154,26 @@ const AddNewRoundForm = () => {
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions sx={{ padding: '0px' }}>
+      <DialogActions
+        sx={{
+          padding: '0px',
+          flexDirection: isMobile ? 'column-reverse' : 'row', // Stack buttons on mobile, reverse order
+          '& > :not(style)': { // Apply margin to all direct children
+            m: isMobile ? 0.5 : 1, // Smaller margin on mobile
+            width: isMobile ? 'calc(100% - 16px)' : 'auto', // Full width on mobile, auto on desktop
+          },
+          pb: isMobile ? 1 : 0, // Add some padding bottom on mobile
+        }}
+      >
+
         <Button
-          fullWidth={isMobile ? true : false}
           variant='outlined'
           onClick={handleCancel}
+          sx={{ textAlign: 'center' }}
         >
           CANCEL
         </Button>
         <Button
-          fullWidth={isMobile ? true : false}
           variant='contained'
           onClick={handleSubmit}
         >
