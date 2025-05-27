@@ -1,5 +1,6 @@
 import { RootState } from '@/store/store';
-import { Box, Paper, Typography, useTheme } from '@mui/material';
+import Paper from '@/styles/paper/ChartPaper.styles';
+import { Box, Typography, useTheme } from '@mui/material';
 import { PieChart } from '@mui/x-charts/PieChart';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -24,13 +25,13 @@ const FairwayHitsChart: React.FC = () => {
       totalCenterHits += round.totals.fairway.fairwayCenter || 0;
       totalLeftHits += round.totals.fairway.fairwayLeft || 0;
       totalRightHits += round.totals.fairway.fairwayRight || 0;
-      totalFairwayHitsCategorized += round.totals.fairway.total || 0; // This is sum of center, left, right hits
+      totalFairwayHitsCategorized += round.totals.fairway.total || 0;
     }
   });
 
   if (totalFairwayHitsCategorized === 0) {
     return (
-      <Paper sx={{ p: 2, width: '100%', height: '100%', textAlign: 'center', minHeight: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <Paper>
         <Typography component="h2" gutterBottom>
           Fairway Hits (Last {recentRounds.length} Rounds)
         </Typography>
@@ -46,7 +47,7 @@ const FairwayHitsChart: React.FC = () => {
   ].filter(item => item.value > 0); // Filter out slices with zero value
 
   return (
-    <Paper sx={{ p: 2, width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Paper>
       <Typography component="h2" gutterBottom sx={{ textAlign: 'center' }}>
         Fairway hits distribution (last {recentRounds.length} rounds)
       </Typography>

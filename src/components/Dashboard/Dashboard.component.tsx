@@ -49,31 +49,22 @@ const Dashboard = () => {
                 Performance Overview
               </Typography>
               <Grid container spacing={3}>
-                <Grid size={{ xs: 12, md: 6 }}>
-                  <Paper sx={{ p: 2, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <ScoreCharts />
-                  </Paper>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <ScoreCharts />
                 </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
-                  <Paper sx={{ p: 2, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <PointsChart />
-                  </Paper>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <PointsChart />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                  <Paper sx={{ p: 2, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <FairwayHitsChart />
-                  </Paper>
+                <Grid size={{ xs: 12, sm: 8, md: 2 }}>
+                  <DistancesTotals />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                  <Paper sx={{ p: 2, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <GirPercentageChart />
-                  </Paper>
+                <Grid size={{ xs: 12, sm: 12, md: 5 }}>
+                  <FairwayHitsChart />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 4 }}> {/* Takes full sm width if others are 6 each, then 1/3 on md */}
-                  <Paper sx={{ p: 2, height: '100%' }}>
-                    <DistancesTotals />
-                  </Paper>
+                <Grid size={{ xs: 12, sm: 12, md: 5 }}>
+                  <GirPercentageChart />
                 </Grid>
+
               </Grid>
 
               <Typography variant="headline6" component="h2" gutterBottom sx={{ mt: 3, textAlign: 'center' }}>

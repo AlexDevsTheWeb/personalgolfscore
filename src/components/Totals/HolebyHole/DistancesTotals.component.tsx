@@ -1,9 +1,9 @@
 import Header from '@/components/common/header/Header.component';
 import { RootState } from '@/store/store';
+import Paper from '@/styles/paper/ChartPaper.styles';
 import { getClubsNames } from '@/utils/round/round.utils';
 import {
   Box,
-  Paper,
   Stack,
   Typography,
 } from '@mui/material';
@@ -48,9 +48,9 @@ const DistancesTotals: React.FC = () => {
   }
 
   return (
-    <Paper sx={{ width: '100%' }}>
+    <Paper>
       <Stack>
-        <Header title={'Distances'} onClick={handleToggleVisibility} />
+        <Header title={'Distances'} />
         {visible && (
           // Unified structure for all screen sizes
           <Paper sx={{ padding: 2 }}>

@@ -1,5 +1,6 @@
 import { RootState } from '@/store/store';
-import { Box, Divider, Paper, Stack, Typography, useTheme } from '@mui/material';
+import Paper from '@/styles/paper/ChartPaper.styles';
+import { Box, Divider, Stack, Typography, useTheme } from '@mui/material';
 import { PieChart } from '@mui/x-charts/PieChart';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -40,7 +41,7 @@ const GirPercentageChart: React.FC = () => {
   });
   if (actualPossibleGirs === 0 && roundsWithPuttData === 0) {
     return (
-      <Paper sx={{ p: 2, width: '100%', textAlign: 'center', minHeight: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <Paper>
         <Typography component="h2" gutterBottom>
           GIR % (Last {recentRounds.length} Rounds)
         </Typography>
@@ -61,7 +62,7 @@ const GirPercentageChart: React.FC = () => {
   ].filter(item => item.value > 0);
 
   return (
-    <Paper sx={{ p: 1, width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Paper>
       <Typography component="h2" gutterBottom sx={{ textAlign: 'center' }}>
         GIR Percentage (Last {recentRounds.length} Rounds)
       </Typography>
@@ -73,7 +74,7 @@ const GirPercentageChart: React.FC = () => {
           </Typography>
         )}
         {actualGirsMade > 0 && roundsWithPuttsOnGirData > 0 && avgPuttsPerGir > 0 ? (
-          <Typography >
+          <Typography>
             Avg. Putts per GIR: <strong>{avgPuttsPerGir.toFixed(2)}</strong>
           </Typography>
         ) : actualGirsMade > 0 && roundsWithPuttsOnGirData === 0 && (
