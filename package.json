@@ -1,6 +1,6 @@
 {
 	"name": "personalgolfscore",
-	"version": "2025.4.2",
+	"version": "2025.4.3",
 	"private": true,
 	"type": "module",
 	"dependencies": {
