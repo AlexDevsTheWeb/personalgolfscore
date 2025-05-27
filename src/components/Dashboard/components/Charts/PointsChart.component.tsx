@@ -89,10 +89,10 @@ const PointsChart: React.FC = () => {
       </Typography>
       <Box sx={{ flexGrow: 1, width: '100%', p: 1 }}>
         <LineChart
-          xAxis={[{ data: xAxisLabels, scaleType: 'point' }]}
+          // xAxis={[{ data: xAxisLabels, scaleType: 'point' }]}
           series={lineChartSeriesConfig}
-          height={300}
-          margin={{ top: 20, right: 25, bottom: 50, left: 45 }}
+          // height={300}
+          // margin={{ top: 20, right: 25, bottom: 50, left: 45 }}
           grid={{ vertical: true, horizontal: true }}
         // slots={{
         //   itemTooltip: CustomTooltipContent,

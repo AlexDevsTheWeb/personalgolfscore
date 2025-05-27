@@ -1,7 +1,7 @@
 import { RootState } from '@/store/store';
-import Paper from '@/styles/paper/ChartPaper.styles'; // Assuming this is your styled Paper
+import Paper from '@/styles/paper/ChartPaper.styles';
 import { IRecentRoundData } from '@/types/charts.types';
-import { Box, Paper as MuiPaper, Typography, useTheme } from '@mui/material'; // Import MuiPaper for tooltip
+import { Box, Paper as MuiPaper, Typography, useTheme } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
 import dayjs from 'dayjs';
 import React from 'react';
@@ -151,10 +151,10 @@ const ScoreCharts: React.FC = () => {
       </Typography>
       <Box sx={{ flexGrow: 1, width: '100%', p: 1 }}>
         <LineChart
-          xAxis={[{ data: xAxisLabels, scaleType: 'point' }]}
+          // xAxis={[{ data: xAxisLabels, scaleType: 'point' }]}
           series={series}
-          height={300} // Adjust height as needed, or make it responsive
-          margin={{ top: 20, right: 25, bottom: 50, left: 45 }} // Adjusted margins
+          // height={300} // Adjust height as needed, or make it responsive
+          // margin={{ top: 20, right: 25, bottom: 50, left: 45 }} // Adjusted margins
           grid={{ vertical: true, horizontal: true }} // Add grid lines for better readability
         // slotProps={{
         //   legend: {
