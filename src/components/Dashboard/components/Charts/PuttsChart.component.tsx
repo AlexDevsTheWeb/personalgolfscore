@@ -5,35 +5,25 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const GirPercentageChart: React.FC = () => {
+const PuttsChart: React.FC = () => {
   const { rounds } = useSelector((store: RootState) => store.rounds);
   const theme = useTheme();
 
   const recentRounds = rounds.slice(-5);
 
-  if (recentRounds.length === 0) {
-    return null;
-  }
-
-  let actualGirsMade = 0;
-  let actualPossibleGirs = 0;
   let sumTotalPutts = 0;
   let sumPuttsOnGir = 0;
   let roundsWithPuttData = 0;
   let roundsWithPuttsOnGirData = 0;
   let roundsWithGirData = 0;
-
   let total1Putts = 0;
   let total2Putts = 0;
   let total3PlusPutts = 0;
-  let totalRecordedPutts = 0; // Sum of 1, 2, 3+ putts
+  let totalRecordedPutts = 0;
 
   recentRounds.forEach(round => {
     let roundHasGirData = false;
     if (round.totals && round.totals.gir) {
-      // Assuming 'total' is count of GIRs made and 'possible' is count of opportunities
-      actualGirsMade += round.totals.gir.avg || 0;
-      actualPossibleGirs += round.totals.gir.totals || 0;
       if (round.totals.gir.totals && round.totals.gir.totals > 0) {
         roundsWithGirData++;
       }
@@ -55,39 +45,41 @@ const GirPercentageChart: React.FC = () => {
 
   totalRecordedPutts = total1Putts + total2Putts + total3PlusPutts;
 
-  if (actualPossibleGirs === 0 && totalRecordedPutts === 0) {
+  const avgPuttsPerRound = sumTotalPutts / recentRounds.length;
+
+
+  if (totalRecordedPutts === 0) {
     return (
       <Paper>
         <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', p: 2 }}>
-          GIR (Last {recentRounds.length} Rounds)
+          GIR & Putting (Last {recentRounds.length} Rounds)
         </Typography>
-        <Typography sx={{ textAlign: 'center', p: 2 }}>No GIR or Putting data available for the selected rounds.</Typography>
+        <Typography sx={{ textAlign: 'center', p: 2 }}>No Putting data available for the selected rounds.</Typography>
       </Paper>
     );
   }
 
-  const girPercentage = actualPossibleGirs > 0 ? (actualGirsMade / actualPossibleGirs) * 100 : 0;
-  const notGirPercentage = actualPossibleGirs > 0 ? 100 - girPercentage : 0;
-
-  const girPieData = [
-    { id: 'gir', value: actualGirsMade, label: `GIR (${girPercentage.toFixed(1)}%)`, color: theme.palette.greenDim.main },
-    { id: 'notGir', value: actualPossibleGirs - actualGirsMade, label: `Not GIR (${notGirPercentage.toFixed(1)}%)`, color: theme.palette.redDim.main },
+  const puttDistributionPieData = [
+    { id: '1putt', value: total1Putts, label: `1 Putt (${totalRecordedPutts > 0 ? ((total1Putts / totalRecordedPutts) * 100).toFixed(1) : 0}%)`, color: theme.palette.greenDim.main },
+    { id: '2putt', value: total2Putts, label: `2 Putts (${totalRecordedPutts > 0 ? ((total2Putts / totalRecordedPutts) * 100).toFixed(1) : 0}%)`, color: theme.palette.yellowDim.main },
+    { id: '3putt', value: total3PlusPutts, label: `3+ Putts (${totalRecordedPutts > 0 ? ((total3PlusPutts / totalRecordedPutts) * 100).toFixed(1) : 0}%)`, color: theme.palette.redDim.main },
   ].filter(item => item.value > 0);
 
   return (
     <Paper>
       <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', pt: 2, px: 2 }}>
-        GIR (Last {recentRounds.length} Rounds)
+        Putting (Last {recentRounds.length} Rounds)
       </Typography>
       <Typography component="h2" variant="subheadline2" gutterBottom sx={{ textAlign: 'center' }}>
-        {`${girPercentage.toFixed(2)}%`}
+        {avgPuttsPerRound.toFixed(2)}
       </Typography>
+
 
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300, width: '100%' }}>
         <PieChart
           series={[
             {
-              data: girPieData,
+              data: puttDistributionPieData,
               innerRadius: 80,
               outerRadius: 120,
               paddingAngle: 2,
@@ -100,18 +92,22 @@ const GirPercentageChart: React.FC = () => {
             },
           ]}
           height={250}
+
           slotProps={{
             legend: {
               direction: 'horizontal',
-              position:
-                { vertical: 'bottom', horizontal: 'center' },
-
+              position: {
+                vertical: 'bottom',
+                horizontal: 'center'
+              }
             },
           }}
         />
       </Box>
-    </Paper>
+
+    </Paper >
   );
 };
 
-export default GirPercentageChart;
+
+export default PuttsChart;

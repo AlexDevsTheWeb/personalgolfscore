@@ -1,12 +1,15 @@
 import { setIsLoading } from '@/features/app/controls.slice';
 import { getPlayerDetails } from '@/features/player/player.slice';
+import { resetUser } from '@/features/user/user.slice';
 import { TLinkSidebar } from '@/types/general.types';
 import { IBoxProps, IMainLayoutProps } from '@/types/props.types';
 import links from '@/utils/links/links.utils';
-import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
+import { deleteUserLocalStorage, readUserLocalStorage } from '@/utils/storage/localStorage.utils';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
 import { ListItemIcon, ListItemText, styled, Typography } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -15,11 +18,11 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Toolbar from '@mui/material/Toolbar';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import _ from 'lodash';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from '../common/ThemeSwitcher.component'; // Import the new component
 import User from './User.component';
 
@@ -30,6 +33,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   const uid = readUserLocalStorage();
   const auth = getAuth();
   const { player } = useSelector((store: any) => store.player);
+  const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -45,10 +49,21 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
     }
   }, []);
 
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      deleteUserLocalStorage();
+      dispatch(resetUser());
+      navigate('/login');
+    }).catch((error) => {
+      console.error("Logout error:", error);
+    });
+  };
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography sx={{ color: 'text.primary' }}>
-        PGS
+      {/* User Info in Drawer Header */}
+      <Typography variant="headline6" sx={{ my: 2, color: 'text.primary' }}>
+        {player?.displayName ? player.displayName.split(' ')[0] : 'Menu'}
       </Typography>
       <Divider />
       <List>
@@ -78,6 +93,24 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
             </ListItem>
           );
         })}
+        <Divider sx={{ my: 1 }} />
+        {/* User Profile Link/Display */}
+        <ListItem disablePadding>
+          <ListItemButton href="/settings"> {/* Or handle navigation via onClick */}
+            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
+              {player?.photoURL ? <Avatar src={player.photoURL} sx={{ width: 24, height: 24 }} /> : <AccountCircleIcon />}
+            </ListItemIcon>
+            <ListItemText primary="Profile" sx={{ color: 'text.primary' }} />
+          </ListItemButton>
+        </ListItem>
+        {/* Theme Switcher in Drawer */}
+        <ListItem sx={{ justifyContent: 'center', display: 'flex', py: 1 }}>
+          <ThemeSwitcher />
+        </ListItem>
+        <Divider sx={{ my: 1 }} />
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleLogout} sx={{ color: 'text.primary', justifyContent: 'center' }}>Logout</ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );

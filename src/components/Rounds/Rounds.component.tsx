@@ -30,7 +30,7 @@ const Rounds = () => {
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <BoxOverflow direction='horizontal' variant='table'>
         <RoundsTable />
-        <BoxBetween sx={{ mt: 3, px: 1 }}> {/* Added padding for buttons on smaller screens */}
+        <BoxBetween sx={{ mt: 0, gap: 0 }}> {/* Added padding for buttons on smaller screens */}
           <Button
             variant='contained'
             onClick={handleAddNewRound}

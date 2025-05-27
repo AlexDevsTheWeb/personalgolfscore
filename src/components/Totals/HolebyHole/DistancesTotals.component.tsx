@@ -2,19 +2,16 @@ import Header from '@/components/common/header/Header.component';
 import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
 import { getClubsNames } from '@/utils/round/round.utils';
-import {
-  Box,
-  Stack,
-  Typography,
-} from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import { Box, Typography, useTheme } from '@mui/material';
+import { BarChart } from '@mui/x-charts/BarChart';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-// Custom TableCell and TableRow imports are no longer needed if only used for the table
 
 const DistancesTotals: React.FC = () => {
   const { player } = useSelector((store: RootState) => store.player);
   const { golfBag, totalDistancesAVG } = player || {};
-  const [visible, setVisible] = useState<boolean>(true);
+  const theme = useTheme();
+
   const selectedClubNames = useMemo(() => {
     if (!golfBag || golfBag.length === 0) {
       return [];
@@ -27,6 +24,7 @@ const DistancesTotals: React.FC = () => {
       return [];
     }
   }, [golfBag]);
+
   const distanceMap = useMemo(() => {
     const map = new Map<string, number>();
     if (totalDistancesAVG) {
@@ -39,46 +37,69 @@ const DistancesTotals: React.FC = () => {
     return map;
   }, [totalDistancesAVG]);
 
-  const handleToggleVisibility = () => {
-    setVisible(!visible);
-  };
+  const chartGetCorrectClubName = (clubName: string) => {
+    if (clubName.toLowerCase().includes('wedge')) {
+      return clubName.split(' ')[0];
+    }
+    else {
+      if (clubName.toLowerCase().includes("wood")) {
+        return 'FW';
+      }
+      if (clubName.toLowerCase().includes("hybrid")) {
+        return 'HY';
+      }
+      return clubName;
+    }
+  }
 
-  if (selectedClubNames.length === 0) {
-    return <Typography>Distance data not available.</Typography>;
+  const chartData = useMemo(() => {
+    return selectedClubNames
+      .map(clubName => {
+        return ({
+          club: chartGetCorrectClubName(clubName),
+          distance: distanceMap.get(clubName) || 0,
+        })
+      })
+    // .filter(item => item.distance > 0) // Optionally filter out clubs with no recorded distance
+    // .sort((a, b) => b.distance - a.distance); // Sort by distance descending
+  }, [selectedClubNames, distanceMap]);
+
+
+
+  if (chartData.length === 0) {
+    return (
+      <Paper sx={{ p: 2, textAlign: 'center' }}>
+        <Header title={'Distances'} />
+        <Typography sx={{ mt: 2 }}>Distance data not available.</Typography>
+      </Paper>
+    );
   }
 
   return (
     <Paper>
-      <Stack>
-        <Header title={'Distances'} />
-        {visible && (
-          // Unified structure for all screen sizes
-          <Paper sx={{ padding: 2 }}>
-            <Stack spacing={1}>
-              {selectedClubNames.map((clubName) => {
-                const avgDistance = distanceMap.get(clubName);
-                const displayDistance = avgDistance !== undefined && avgDistance > 0 ? `${avgDistance} m.` : 'N.R.';
-                return (
-                  <Box
-                    key={`dist-${clubName}`} // Unified key
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      borderBottom: (theme) => `1px solid ${theme.palette.divider}`, // Use theme for border
-                      paddingBottom: 0.5,
-                      '&:last-child': { borderBottom: 'none' }
-                    }}
-                  >
-                    <Typography fontWeight="medium">{clubName}:</Typography>
-                    <Typography>{`${displayDistance}`}</Typography>
-                  </Box>
-                );
-              })}
-            </Stack>
-          </Paper>
-        )}
-      </Stack>
+      <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', pt: 2, px: 2 }}>
+        Average Club Distances
+      </Typography>
+      <Box sx={{ flexGrow: 1, width: '100%', p: { xs: 1, sm: 1 }, mt: 1 }}>
+        <BarChart
+          dataset={chartData}
+          xAxis={[{ scaleType: 'band', dataKey: 'club' }]} // Club names on X-axis
+          yAxis={[{ label: 'Avg. Distance (m)' }]}
+          series={[
+            {
+              dataKey: 'distance',
+              label: 'Avg. Distance (m)',
+              valueFormatter: (value: number | null) => (value !== null ? `${value} m` : 'N/A'),
+              color: theme.palette.primary.main,
+              id: 'avgDistance',
+            },
+          ]}
+          layout="vertical"
+          height={270}
+          margin={{ top: 0, right: 5, bottom: 0, left: 0 }} // Adjust margins for labels
+          grid={{ horizontal: true }}
+        />
+      </Box>
     </Paper>
   )
 }

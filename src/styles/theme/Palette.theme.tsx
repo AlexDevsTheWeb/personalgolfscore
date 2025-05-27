@@ -48,6 +48,7 @@ export const darkColors = {
 const DIM_COLORS_MAIN = {
   greenDim: '#82b38b',
   redDim: '#cf8484',
+  red2Dim: '#985353',
   yellowDim: '#faf099',
   whiteDim: '#f0f0f0'
   // Removed generic light, dark, contrastText to avoid issues when spreading
@@ -70,6 +71,7 @@ declare module '@mui/material/styles' {
     notes: PaletteColor;
     behaviours: PaletteColor;
     redDim: PaletteColor;
+    red2Dim: PaletteColor;
     greenDim: PaletteColor;
     yellowDim: PaletteColor;
     whiteDim: PaletteColor;
@@ -90,6 +92,7 @@ declare module '@mui/material/styles' {
     notes?: PaletteColorOptions;
     behaviours?: PaletteColorOptions;
     redDim?: PaletteColorOptions;
+    red2Dim?: PaletteColor;
     greenDim?: PaletteColorOptions;
     yellowDim?: PaletteColorOptions;
     whiteDim?: PaletteColorOptions;
@@ -120,6 +123,9 @@ export const lightPalette = {
   error: { main: lightColors.error },
   redDim: {
     main: DIM_COLORS_MAIN.redDim,
+  },
+  red2Dim: {
+    main: DIM_COLORS_MAIN.red2Dim,
   },
   greenDim: {
     main: DIM_COLORS_MAIN.greenDim,
@@ -171,6 +177,9 @@ export const darkPalette = {
   error: { main: darkColors.error },
   redDim: {
     main: DIM_COLORS_MAIN.redDim,
+  },
+  red2Dim: {
+    main: DIM_COLORS_MAIN.red2Dim,
   },
   greenDim: {
     main: DIM_COLORS_MAIN.greenDim,

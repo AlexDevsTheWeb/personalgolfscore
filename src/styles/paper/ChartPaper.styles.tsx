@@ -8,7 +8,9 @@ const StyledPaper = styled(PaperMui)<PaperProps>(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  boxShadow: '0px 0px 5rpx 0px rgba(100,100,100,0.2)'
+  boxShadow: '0px 0px 5px 0px rgba(100,100,100,0.2)',
+  // border: '1px dashed #ccc',
+  // borderRadius: '4px'
 }));
 
 const Paper: React.FC<PaperProps> = props => {

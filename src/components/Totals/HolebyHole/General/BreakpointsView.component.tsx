@@ -13,7 +13,7 @@ const SimpleStatDisplay: React.FC<ISimpleStatDisplayProps> = React.memo(({
   title, total, avg, inTotal, inAvg, outTotal, outAvg, totalSuffix = '', inSuffix = '', outSuffix = ''
 }) => (
   <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
-    <NewGridCellStats size={{ xs: 12, sm: 4 }}>
+    <NewGridCellStats size={{ xs: 3, sm: 4 }}>
       <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
         {title && <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase' }}>{title}</Typography>}
         <Typography color="text.secondary" sx={{ fontSize: '0.8rem' }}>TOTAL</Typography> {/* Use secondary for label */}
@@ -21,14 +21,14 @@ const SimpleStatDisplay: React.FC<ISimpleStatDisplayProps> = React.memo(({
         {avg !== undefined && <Typography variant="caption" color="text.secondary">{avg}</Typography>}
       </Stack>
     </NewGridCellStats>
-    <NewGridCellStats size={{ xs: 12, sm: 4 }}>
+    <NewGridCellStats size={{ xs: 3, sm: 4 }}>
       <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
         <Typography color="text.secondary" sx={{ fontSize: '0.8rem' }}>IN</Typography> {/* Use secondary for label */}
         <Typography fontWeight={'bold'} color="text.primary">{`${inTotal}${inSuffix}`}</Typography>
         {inAvg !== undefined && <Typography variant="caption" color="text.secondary">{inAvg}</Typography>}
       </Stack>
     </NewGridCellStats>
-    <NewGridCellStats size={{ xs: 12, sm: 4 }}>
+    <NewGridCellStats size={{ xs: 3, sm: 4 }}>
       <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
         <Typography color="text.secondary" sx={{ fontSize: '0.8rem' }}>OUT</Typography> {/* Use secondary for label */}
         <Typography fontWeight={'bold'} color="text.primary">{`${outTotal}${outSuffix}`}</Typography>
@@ -41,13 +41,13 @@ const SimpleStatDisplay: React.FC<ISimpleStatDisplayProps> = React.memo(({
 const PercentageStatDisplay: React.FC<IPercentageStatDisplayProps> = React.memo(({ saved, total, percentage }) => (
   <>
     <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
-      <NewGridCellStats size={{ xs: 12, sm: 6 }}>
+      <NewGridCellStats size={{ xs: 6, sm: 6 }}>
         <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
           <Typography color="text.secondary">Saved</Typography> {/* Use secondary for label */}
           <Typography fontWeight={'bold'} color="text.primary">{saved}</Typography>
         </Stack>
       </NewGridCellStats>
-      <NewGridCellStats size={{ xs: 12, sm: 6 }}>
+      <NewGridCellStats size={{ xs: 6, sm: 6 }}>
         <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
           <Typography color="text.secondary">Totals</Typography> {/* Use secondary for label */}
           <Typography fontWeight={'bold'} color="text.primary">{total}</Typography>
@@ -197,14 +197,14 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
         <StatBlock title="Sand Saves" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
           <Stack spacing={1}>
             <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
-              <NewGridCellStats size={{ xs: 12, sm: 6 }}>
+              <NewGridCellStats size={{ xs: 6, sm: 6 }}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography color="text.secondary" sx={{ fontSize: '0.8rem' }}>Saved</Typography>
                   <Typography fontWeight={'bold'}>{sand.saved}</Typography>
                   <Typography variant="caption" color="text.secondary">{sand.avgSaved.toFixed(2)}</Typography>
                 </Stack>
               </NewGridCellStats>
-              <NewGridCellStats size={{ xs: 12, sm: 6 }}>
+              <NewGridCellStats size={{ xs: 6, sm: 6 }}>
                 <Stack sx={{ textAlign: 'center' }}>
                   <Typography color="text.secondary" sx={{ fontSize: '0.8rem' }}>Attempts</Typography>
                   <Typography fontWeight={'bold'}>{sand.totals}</Typography>

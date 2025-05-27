@@ -12,8 +12,8 @@ import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
 import FairwayHitsChart from "./components/Charts/FairwayChart.component";
 import GirPercentageChart from "./components/Charts/GirChart.component";
 import PointsChart from "./components/Charts/PointsChart.component";
+import PuttsChart from "./components/Charts/PuttsChart.component";
 import ScoreCharts from "./components/Charts/ScoreChart.component";
-
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const Dashboard = () => {
   }
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', py: 2 }} gap={3}>
+    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', py: 1 }} gap={2}>
       {player?.uid && !player.isSetupComplete && (
         <WizardSetupDialog open={!player.isSetupComplete} playerUid={player.uid} />
       )}
@@ -48,21 +48,24 @@ const Dashboard = () => {
               <Typography variant="headline6" component="h2" gutterBottom sx={{ mt: 2, textAlign: 'center' }}>
                 Performance Overview
               </Typography>
-              <Grid container spacing={3}>
-                <Grid size={{ xs: 12, md: 4 }}>
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <ScoreCharts />
                 </Grid>
-                <Grid size={{ xs: 12, md: 4 }}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <PointsChart />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 8, md: 2 }}>
+                <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
                   <DistancesTotals />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 12, md: 5 }}>
+                <Grid size={{ xs: 12, sm: 12, md: 6, lg: 3 }}>
                   <FairwayHitsChart />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 12, md: 5 }}>
+                <Grid size={{ xs: 12, sm: 12, md: 6, lg: 2 }}>
                   <GirPercentageChart />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 6, lg: 3 }}>
+                  <PuttsChart />
                 </Grid>
 
               </Grid>
@@ -72,7 +75,7 @@ const Dashboard = () => {
               </Typography>
               <StatisticsMain />
 
-              <BoxBetween sx={{ mt: 3, px: 1 }}> {/* Added padding for buttons on smaller screens */}
+              <BoxBetween sx={{ gap: 0, mt: 0 }}>
                 <Button
                   variant='contained'
                   onClick={handleAddNewRound}

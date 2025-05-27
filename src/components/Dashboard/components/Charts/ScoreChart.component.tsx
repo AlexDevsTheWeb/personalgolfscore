@@ -1,8 +1,7 @@
 import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
-import { IRecentRoundData } from '@/types/charts.types';
-import { Box, Paper as MuiPaper, Typography, useTheme } from '@mui/material';
-import { LineChart } from '@mui/x-charts/LineChart';
+import { Box, Typography, useTheme } from "@mui/material";
+import { BarChart } from '@mui/x-charts/BarChart';
 import dayjs from 'dayjs';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -11,171 +10,83 @@ const ScoreCharts: React.FC = () => {
   const { rounds } = useSelector((store: RootState) => store.rounds);
   const theme = useTheme();
 
-  // 1. Data Preparation (similar to before, ensuring robustness)
-  const recentRoundsData: IRecentRoundData[] = rounds
-    .slice(-5) // Take the last 5 rounds
-    .map(round => {
-      // Robust parsing for scores, par, and HCP
-      const parseNumeric = (val: any): number | null => {
-        if (val === undefined || val === null || String(val).trim() === "") return null;
-        const num = Number(val);
-        return isNaN(num) ? null : num;
-      };
+  const recentRoundsRaw = rounds
+    .filter(round =>
+      round.totals?.score?.totals !== undefined &&
+      round.totals?.score?.vsPar !== undefined &&
+      round.roundPar !== undefined
+    )
+    .slice(-5);
 
-      const totalScore = parseNumeric(round.totals.score.totals);
-      const par = parseNumeric(round.roundPar);
-      const playingHCP = parseNumeric(round.roundPlayingHCP);
-
-      let netScore: number | null = null;
-      let grossScore: number | null = null;
-
-      if (totalScore !== null && par !== null) {
-        netScore = totalScore - par;
-        if (playingHCP !== null) {
-          grossScore = totalScore - (par + playingHCP);
-        }
-      }
-
-      return {
-        score: totalScore,
-        netScore: netScore,
-        grossScore: grossScore,
-        date: dayjs(round.roundDate).format('DD/MM/YYYY'), // Full date for tooltip
-        course: round.roundCourse,
-      };
-    });
-
-  // Reverse for chronological display on the chart (oldest to newest)
-  const chartOrderedRounds = [...recentRoundsData].reverse();
-
-  if (chartOrderedRounds.length === 0) {
+  if (recentRoundsRaw.length === 0) {
     return (
       <Paper>
         <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', p: 2 }}>
-          Score Trends
+          Player Score Chart
         </Typography>
         <Typography sx={{ textAlign: 'center', p: 2 }}>
-          Not enough round data to display score trends.
+          Not enough round data with scores and par information to display the chart.
         </Typography>
       </Paper>
     );
   }
 
-  const xAxisLabels = chartOrderedRounds.map(r => dayjs(r.date, 'DD/MM/YYYY').format('DD/MM'));
+  const processedRounds = recentRoundsRaw.map(round => {
+    const grossScore = round.totals!.score!.totals;
+    const roundPar = Number(round.roundPar!);
+    const playingHCP = round.roundPlayingHCP ? Number(round.roundPlayingHCP) : null;
 
-  // Prepare series data for the line chart
-  const series = [
-    {
-      id: 'totalScoreSeries',
-      data: chartOrderedRounds.map(r => r.score),
-      label: 'Total Score',
-      color: theme.palette.primary.main,
-      area: true,
-      showMark: true,
-      valueFormatter: (value: number | null) => (value === null ? 'N/A' : `${value}`),
-    },
-    {
-      id: 'netScoreSeries',
-      data: chartOrderedRounds.map(r => r.netScore),
-      label: 'Net Score',
-      color: theme.palette.secondary.main, // Example color
-      showMark: true,
-      valueFormatter: (value: number | null) => {
-        if (value === null) return 'N/A';
-        if (value === 0) return 'E';
-        return value > 0 ? `+${value}` : `${value}`;
-      },
-    },
-    {
-      id: 'grossScoreSeries',
-      data: chartOrderedRounds.map(r => r.grossScore),
-      label: 'Gross Score',
-      color: theme.palette.success.main, // Example color (greenDim might be too light for a line)
-      showMark: true,
-      valueFormatter: (value: number | null) => {
-        if (value === null) return 'N/A';
-        if (value === 0) return 'E';
-        return value > 0 ? `+${value}` : `${value}`;
-      },
-    },
-  ];
+    const grossVsParValue = round.totals!.score!.vsPar;
 
-  // Custom Tooltip Component
-  const CustomTooltipContent: React.FC<{
-    series?: Array<{ id: string; color: string; label?: string }>;
-    itemData?: { dataIndex: number };
-  }> = (props) => {
-    const { series: activeSeriesInfo, itemData } = props; // Renamed activeSeries to activeSeriesInfo for clarity
+    let netScoreValue: number | null = null;
+    let netVsParValue: number | null = null;
 
-    if (!activeSeriesInfo || !itemData || itemData.dataIndex === undefined) {
-      return null;
+    if (playingHCP !== null) {
+      netScoreValue = grossScore - playingHCP;
+      netVsParValue = netScoreValue - roundPar;
     }
 
-    const roundInfo = chartOrderedRounds[itemData.dataIndex];
-    if (!roundInfo) return null;
+    return {
+      date: dayjs(round.roundDate).format('DD/MM/YYYY'),
+      course: round.roundCourse,
+      grossScore,
+      grossVsPar: grossVsParValue,
+      netVsPar: netVsParValue,
+    };
+  });
 
-    return (
-      <MuiPaper sx={{ p: 1.5, boxShadow: theme.shadows[4], minWidth: '180px' }}>
-        <Typography variant="subheadline2" gutterBottom sx={{ fontWeight: 'bold' }}>
-          {roundInfo.date}
-        </Typography>
-        {roundInfo.course && (
-          <Typography variant="caption" display="block" sx={{ mb: 1 }}>
-            Course: {roundInfo.course}
-          </Typography>
-        )}
-        {series.map(sDef => {
-          const value = sDef.data[itemData.dataIndex];
-          return (
-            <Box key={sDef.id} sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-              {/* <Box sx={{ width: 10, height: 10, bgcolor: sDef.color, borderRadius: '50%', mr: 1 }} /> */}
-              <Typography variant="body" sx={{ flexGrow: 1 }}>
-                {sDef.label}:
-              </Typography>
-              <Typography variant="body" sx={{ fontWeight: 'medium' }}>
-                {sDef.valueFormatter(value)}
-              </Typography>
-              {/* </Typography> */}
-            </Box>
-          );
-        })
-        }
-      </MuiPaper >
-    );
-  };
+  const scoresData = processedRounds.map(r => r.grossScore);
+  const netVsParData = processedRounds.map(r => r.netVsPar);
+  const grossVsParData = processedRounds.map(r => r.grossVsPar);
+  const xLabels = processedRounds.map(r => `${r.date} - ${r.course}`);
+
+  const maxScore = Math.max(...scoresData, 0);
+  const maxPositiveVsPar = Math.max(...grossVsParData.map(v => v ?? 0), ...netVsParData.map(v => v ?? 0), 0);
+  const yAxisMax = Math.max(maxScore + 10, maxPositiveVsPar + 5, 20);
 
   return (
     <Paper>
       <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', pt: 2, px: 2 }}>
-        Score Trends (Last {chartOrderedRounds.length} Rounds)
+        Score Analysis (Last {processedRounds.length} Rounds)
       </Typography>
-      <Box sx={{ flexGrow: 1, width: '100%', p: 1 }}>
-        <LineChart
-          // xAxis={[{ data: xAxisLabels, scaleType: 'point' }]}
-          series={series}
-          // height={300} // Adjust height as needed, or make it responsive
-          // margin={{ top: 20, right: 25, bottom: 50, left: 45 }} // Adjusted margins
-          grid={{ vertical: true, horizontal: true }} // Add grid lines for better readability
-        // slotProps={{
-        //   legend: {
-        //     direction: 'row',
-        //     position: { vertical: 'bottom', horizontal: 'middle' },
-        //     padding: 0,
-        //     labelStyle: {
-        //       fontSize: '0.8rem',
-        //     }
-        //   },
-        // }}
-        // slots={{
-        //   itemTooltip: CustomTooltipContent,
-        // }}
-        // sx={{
-        //   // Example: Style marks if needed
-        //   [`.${lineElementClasses.mark}`]: {
-        //     // stroke: theme.palette.background.paper, // Add a border to marks
-        //     // strokeWidth: 1,
-        //   },
-        // }}
+      <Box sx={{ flexGrow: 1, width: '100%', p: { xs: 0.5, sm: 1 }, mt: 1, minHeight: 300 }}>
+        <BarChart
+          series={[
+            { data: scoresData, label: 'Gross Score', id: 'grossScore', color: theme.palette.primary.main },
+            { data: netVsParData, label: 'Net vs Par', id: 'netVsPar', color: theme.palette.redDim.main },
+            { data: grossVsParData, label: 'Gross vs Par', id: 'grossVsPar', color: theme.palette.greenDim.main },
+          ]}
+          xAxis={[{ data: xLabels, scaleType: 'band' }]}
+          yAxis={[{ label: 'Value', max: yAxisMax }]}
+          height={270}
+          margin={{ top: 0, right: 5, bottom: 0, left: 0 }} // Adjust margins for labels
+          grid={{ horizontal: true }}
+          slotProps={{
+            legend: {
+              direction: 'horizontal',
+              position: { vertical: 'bottom', horizontal: 'center' },
+            },
+          }}
         />
       </Box>
     </Paper>

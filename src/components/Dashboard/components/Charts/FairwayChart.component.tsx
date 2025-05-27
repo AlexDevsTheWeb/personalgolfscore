@@ -11,64 +11,79 @@ const FairwayHitsChart: React.FC = () => {
 
   const recentRounds = rounds.slice(-5);
 
-  if (recentRounds.length === 0) {
-    return null;
-  }
-
-  let totalCenterHits = 0;
-  let totalLeftHits = 0;
-  let totalRightHits = 0;
-  let totalFairwayHitsCategorized = 0;
+  let totalFairwayCenter = 0;
+  let totalFairwayLeft = 0;
+  let totalFairwayRight = 0;
+  let totalAttempts = 0; // Sum of center, left, right to get total fairway attempts
 
   recentRounds.forEach(round => {
     if (round.totals && round.totals.fairway) {
-      totalCenterHits += round.totals.fairway.fairwayCenter || 0;
-      totalLeftHits += round.totals.fairway.fairwayLeft || 0;
-      totalRightHits += round.totals.fairway.fairwayRight || 0;
-      totalFairwayHitsCategorized += round.totals.fairway.total || 0;
+      const { fairwayCenter = 0, fairwayLeft = 0, fairwayRight = 0 } = round.totals.fairway;
+      totalFairwayCenter += fairwayCenter;
+      totalFairwayLeft += fairwayLeft;
+      totalFairwayRight += fairwayRight;
+      totalAttempts += fairwayCenter + fairwayLeft + fairwayRight;
     }
   });
 
-  if (totalFairwayHitsCategorized === 0) {
+  if (totalAttempts === 0) {
     return (
       <Paper>
-        <Typography component="h2" gutterBottom>
-          Fairway Hits (Last {recentRounds.length} Rounds)
+        <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', p: 2 }}>
+          Fairway
         </Typography>
-        <Typography>No fairway hit data available for the selected rounds.</Typography>
+        <Typography sx={{ textAlign: 'center', p: 2 }}>
+          No fairway data available for the last {recentRounds.length} rounds.
+        </Typography>
       </Paper>
     );
   }
 
   const pieChartData = [
-    { id: 'center', value: totalCenterHits, label: `Center (${((totalCenterHits / totalFairwayHitsCategorized) * 100).toFixed(1)}%)`, color: theme.palette.greenDim.main },
-    { id: 'left', value: totalLeftHits, label: `Left (${((totalLeftHits / totalFairwayHitsCategorized) * 100).toFixed(1)}%)`, color: theme.palette.yellowDim.main },
-    { id: 'right', value: totalRightHits, label: `Right (${((totalRightHits / totalFairwayHitsCategorized) * 100).toFixed(1)}%)`, color: theme.palette.redDim.main },
-  ].filter(item => item.value > 0); // Filter out slices with zero value
+    { id: 'center', value: totalFairwayCenter, label: `Hit (${((totalFairwayCenter / totalAttempts) * 100).toFixed(2)}%)`, color: theme.palette.greenDim.main },
+    { id: 'left', value: totalFairwayLeft, label: `Left (${((totalFairwayLeft / totalAttempts) * 100).toFixed(2)}%)`, color: theme.palette.redDim.main },
+    { id: 'right', value: totalFairwayRight, label: `Right (${((totalFairwayRight / totalAttempts) * 100).toFixed(2)}%)`, color: theme.palette.red2Dim.main },
+  ].filter(item => item.value > 0);
 
   return (
     <Paper>
-      <Typography component="h2" gutterBottom sx={{ textAlign: 'center' }}>
-        Fairway hits distribution (last {recentRounds.length} rounds)
+      <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', pt: 2, px: 2 }}>
+        Fairway (Last {recentRounds.length} Rounds)
       </Typography>
-      <Box sx={{ height: 250, display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 1, width: '100%' }}>
+      <Typography component="h2" variant="subheadline2" gutterBottom sx={{ textAlign: 'center' }}>
+        {`${((totalFairwayCenter / totalAttempts) * 100).toFixed(2)}%`}
+      </Typography>
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300, width: '100%' }}>
         <PieChart
           series={[
             {
               data: pieChartData,
-              // highlightScope: { faded: 'global', highlighted: 'item' },
-              faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-              innerRadius: 40, // Donut chart
-              outerRadius: 100,
+              innerRadius: 80,
+              outerRadius: 120,
+              paddingAngle: 2,
+              cornerRadius: 5,
+              faded: {
+                innerRadius: 100,
+                additionalRadius: -50,
+                color: 'gray'
+              },
             },
           ]}
+          height={250}
+          // width prop can be omitted for responsive width, or set explicitly
           slotProps={{
-            // legend: { direction: 'row', position: { vertical: 'bottom', horizontal: 'middle' }, padding: 0 },
+            legend: {
+              direction: 'horizontal',
+              position: { vertical: 'bottom', horizontal: 'center' },
+            }
           }}
         />
       </Box>
+
     </Paper>
-  );
+  )
 };
+
 
 export default FairwayHitsChart;
