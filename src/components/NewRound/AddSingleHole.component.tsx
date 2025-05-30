@@ -65,6 +65,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
     derivedClubsChipClubs: derivedClubs.chipClubs,
     greenSideValuesConstant: greenSideValues,
     roundPlayingHCP,
+    puttsLength, // Pass puttsLength
     roundHoles,
   });
 
