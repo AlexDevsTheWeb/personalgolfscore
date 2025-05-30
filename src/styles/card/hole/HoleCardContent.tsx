@@ -6,14 +6,14 @@ interface IReactCardProps extends CardContentProps {
 
 const StyledCardContent = styled(CardContentMui)<IReactCardProps>((props) => ({
   display: 'flex',
-  //flexDirection: useDeviceDetection().isMobile ? 'column' : 'row',
   flexDirection: 'row',
   flexWrap: 'wrap',
   justifyContent: 'space-between',
-  gap: 10,
+  alignItems: 'center',
+  gap: 5,
   color: 'transparent',
   boxShadow: 'none',
-  padding: '5px !important'
+  padding: '0px !important',
 }));
 
 export const HoleCardContent: React.FC<IReactCardProps> = props => {

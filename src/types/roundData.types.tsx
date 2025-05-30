@@ -40,6 +40,7 @@ export interface IShots {
   upDown: IMadeAttempts;
   scramble: IMadeAttempts;
   water: number;
+  intermediateShots: IIntermediateShot[];
 }
 
 interface IMadeAttempts {
@@ -175,4 +176,10 @@ export interface ITotalDistanceAvg {
   totalDistancesSum: number;
   numberOfShots: number;
   avg: number;
+}
+
+export interface IIntermediateShot {
+  club: string;
+  distance: number;
+  fairway: number; // Using numeric codes consistent with fairwayValues (1: Left, 2: Center, 3: Right, 4: Short)
 }

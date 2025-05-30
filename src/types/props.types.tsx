@@ -40,6 +40,7 @@ export interface IHolebyHoleProps {
 }
 export interface IPuttsProps {
   puttsNumber: number[],
+  puttLengths?: number[], // Add this to pass current lengths for pre-filling
   setPuttDistance: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, puttIndex: number) => void
 }
 
@@ -53,22 +54,15 @@ export interface ISelectProps {
   disabled?: boolean
 }
 
-export interface IHoleApproachFormProps {
-  holeData: Pick<IShots, 'teeClub' | 'driveDistance' | 'toGreenMeters' | 'toGreen' | 'greenSide' | 'chipClub' | 'gir' | 'par' | 'distance' | 'strokes' | 'putts'>;
-  greenClubs: string[];
-  chipClubs: string[];
-  greenSideValues: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
-}
-
 export interface IHoleGeneralInfoFormProps {
-  holeData: Pick<IShots, 'hcp' | 'par' | 'distance' | 'strokes' | 'putts'>;
+  holeData: Pick<IShots, 'hcp' | 'par' | 'distance' | 'strokes' | 'putts' | 'water' | 'out' | 'teeClub' | 'toGreen'>;
   hcpList: string[];
   parList: string[];
-  puttsNumber: number[];
+  teeClubs: string[];
+  greenClubs: string[]; // Added for approach club selection
+  fairwayValues: FairwayOption[];
   currentHoleNumber: number;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
-  onChangePutts: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, puttIndex: number) => void;
 }
 
 export interface IHolePenaltiesFormProps {
@@ -77,13 +71,13 @@ export interface IHolePenaltiesFormProps {
 }
 
 // Define the structure for fairway options used in Autocomplete
-type FairwayOption = {
+export type FairwayOption = {
   label: string;
   value: number;
 };
 
 export interface IHoleTeeShotFormProps {
-  holeData: Pick<IShots, 'teeClub' | 'fairway' | 'driveDistance' | 'par' | 'distance'>;
+  holeData: Pick<IShots, 'teeClub' | 'par' | 'fairway' | 'driveDistance'>; // fairway & driveDistance needed for AddSingleHole to pass to dialog
   teeClubs: string[];
   fairwayValues: FairwayOption[]; // Update the type here
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
