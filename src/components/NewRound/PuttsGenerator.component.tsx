@@ -1,7 +1,11 @@
 import { IPuttsProps } from '@/types/props.types';
 import { Box, TextField } from "@mui/material";
 
-const PuttsGenerator = ({ puttsNumber, setPuttDistance }: IPuttsProps) => {
+const PuttsGenerator = ({
+  puttsNumber,
+  puttLengths, // New prop to receive current putt lengths
+  setPuttDistance
+}: IPuttsProps) => {
   return (
     <Box sx={{ gap: 1, display: 'flex' }}>
       {puttsNumber.slice(0, 3).map((puttValue: number, index: number) => {
@@ -13,6 +17,7 @@ const PuttsGenerator = ({ puttsNumber, setPuttDistance }: IPuttsProps) => {
             variant="filled"
             type='number'
             onChange={e => setPuttDistance(e, index)} // Pass 0-based index
+            value={puttLengths && puttLengths[index] !== undefined ? (puttLengths[index] === 0 ? '' : puttLengths[index]) : ''} // Pre-fill value
             sx={{ width: 130 }}
           />
         );

@@ -20,10 +20,7 @@ const holeTmpSlice = createSlice({
   initialState,
   reducers: {
     setTmpHoleData: (state: Draft<IShots>, action: PayloadAction<SetTmpHoleDataPayload>) => {
-
       const { name, value, roundPlayingHCP, roundHoles, chipClubs } = action.payload;
-
-      // Check the type of the *initial* state property to decide on conversion
       const initialValueType = typeof initialState[name];
 
       if (initialValueType === 'number') {

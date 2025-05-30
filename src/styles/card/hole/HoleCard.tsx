@@ -9,7 +9,7 @@ const StyledCard = styled(CardMui)<IReactCardProps>(({ theme }) => ({
   width: useDeviceDetection().isMobile ? '100%' : 'auto',
   boxShadow: 'none',
   backgroundColor: 'transparent', // Keep background transparent or use theme.palette.background.paper if needed
-  border: `1px solid ${theme.palette.divider}`, // Use theme divider color
+  // border: `1px solid ${theme.palette.divider}`, // Use theme divider color
   display: 'flex',
   flexDirection: 'column',
 }));

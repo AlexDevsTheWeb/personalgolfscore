@@ -390,6 +390,7 @@ export const initialStateTmpHole: IShots = {
   upDown: { made: 0, attempts: 0 },
   scramble: { made: 0, attempts: 0 },
   water: 0,
+  intermediateShots: []
 }
 
 export const catConversion = (string: string) => {

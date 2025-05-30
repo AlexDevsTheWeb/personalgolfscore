@@ -44,7 +44,7 @@ const PointsChart: React.FC = () => {
   }));
 
   const pointsData = processedRoundsData.map(r => r.points);
-  const xAxisLabels = processedRoundsData.map(r => `${r.date} ${r.course}`);
+  const xAxisLabels = processedRoundsData.map(r => `${r.date} \n ${r.course}`);
 
   return (
     <Paper>
@@ -57,7 +57,7 @@ const PointsChart: React.FC = () => {
           xAxis={[{ scaleType: 'point', data: xAxisLabels }]}
           yAxis={[{ label: 'Points' }]}
           height={270}
-          margin={{ top: 0, right: 5, bottom: 0, left: 0 }} // Adjust margins for labels
+          margin={{ top: 0, right: 20, bottom: 0, left: 10 }} // Adjust margins for labels
           grid={{ horizontal: true }}
           slotProps={{
             legend: {

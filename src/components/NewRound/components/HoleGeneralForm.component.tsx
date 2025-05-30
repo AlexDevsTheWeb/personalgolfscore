@@ -2,22 +2,26 @@ import { HoleCard, HoleCardContent } from '@/styles/index';
 import { IHoleGeneralInfoFormProps } from '@/types/props.types';
 import { Autocomplete, TextField } from '@mui/material'; // Import Autocomplete
 import React from 'react';
-import PuttsGenerator from '../../PuttsGenerator.component';
+import DistancesButton from './DistancesButton.component';
 
 const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
   holeData,
   hcpList,
   parList,
-  puttsNumber,
   currentHoleNumber,
+  teeClubs = [],
+  greenClubs = [], // Add greenClubs prop
+  fairwayValues = [],
   onChange,
-  onChangePutts,
 }) => {
 
   const distanceValue = holeData.distance !== 0 ? holeData.distance : '';
   const strokesValue = holeData.strokes !== 0 ? holeData.strokes : '';
+  // holeData.toGreen is used directly in Autocomplete value
   const puttsValue = holeData.putts !== 0 ? holeData.putts : '';
 
+  const waterValue = holeData.water !== 0 ? holeData.water : '';
+  const outValue = holeData.out !== 0 ? holeData.out : '';
 
   return (
     <HoleCard>
@@ -55,7 +59,6 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
             />
           )}
           sx={{ width: 130 }} // Adjust width as needed
-
         />
         <TextField
           name='distance'
@@ -85,9 +88,57 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
           sx={{ width: 130 }}
         />
 
-        {puttsNumber.length > 0 && (
-          <PuttsGenerator puttsNumber={puttsNumber} setPuttDistance={onChangePutts} />
-        )}
+        <Autocomplete
+          options={teeClubs}
+          value={holeData.teeClub || null} onChange={(event, newValue) => {
+            onChange({ target: { name: 'teeClub', value: newValue || '' } } as any);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Tee club"
+              name="teeClub"
+              variant="filled"
+            />
+          )}
+          sx={{ width: 200 }}
+        />
+        <Autocomplete
+          options={greenClubs} // Use greenClubs for options
+          value={holeData.toGreen || null} // Bind to holeData.toGreen
+          onChange={(event, newValue) => {
+            onChange({ target: { name: 'toGreen', value: newValue || '' } } as any);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Approach club"
+              name="toGreen" // Ensure name matches the state key
+              variant="filled"
+            />
+          )}
+          disabled={holeData.par === 3} // Disable if Par 3
+          sx={{ width: 200 }}
+        />
+        <TextField
+          name='water'
+          label="Water"
+          type='number'
+          variant='filled'
+          onChange={onChange}
+          value={waterValue}
+          sx={{ width: 100 }}
+        />
+        <TextField
+          name='out'
+          label="Out"
+          type='number'
+          variant='filled'
+          onChange={onChange}
+          value={outValue}
+          sx={{ width: 100 }}
+        />
+        <DistancesButton />
       </HoleCardContent>
     </HoleCard>
   )

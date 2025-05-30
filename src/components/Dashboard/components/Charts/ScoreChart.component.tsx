@@ -59,7 +59,7 @@ const ScoreCharts: React.FC = () => {
   const scoresData = processedRounds.map(r => r.grossScore);
   const netVsParData = processedRounds.map(r => r.netVsPar);
   const grossVsParData = processedRounds.map(r => r.grossVsPar);
-  const xLabels = processedRounds.map(r => `${r.date} - ${r.course}`);
+  const xLabels = processedRounds.map(r => `${r.date} \n ${r.course}`);
 
   const maxScore = Math.max(...scoresData, 0);
   const maxPositiveVsPar = Math.max(...grossVsParData.map(v => v ?? 0), ...netVsParData.map(v => v ?? 0), 0);
@@ -80,7 +80,7 @@ const ScoreCharts: React.FC = () => {
           xAxis={[{ data: xLabels, scaleType: 'band' }]}
           yAxis={[{ label: 'Value', max: yAxisMax }]}
           height={270}
-          margin={{ top: 0, right: 5, bottom: 0, left: 0 }} // Adjust margins for labels
+          margin={{ top: 0, right: 20, bottom: 0, left: 10 }} // Adjust margins for labels
           grid={{ horizontal: true }}
           slotProps={{
             legend: {
