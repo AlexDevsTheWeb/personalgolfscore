@@ -64,6 +64,7 @@ export const useHoleFormManager = ({
       puttsLength: [...puttsLength], // Use the puttsLength from props
       intermediateShots: intermediateShots,
     };
+
     dispatch(setNewHole({ holeAdjusted, roundPlayingHCP, roundHoles, holesCompleted }));
     dispatch(resetNewRoundHoleTmp());
     // setPuttsLength([]); // This should be handled by the parent component if it manages puttsLength

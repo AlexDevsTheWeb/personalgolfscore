@@ -3,7 +3,7 @@ import { IAddSingleHoleProps } from '@/types/clubs.types';
 import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils'; // prettier-ignore
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
 import MissingShotsDialog from '../Dialog/MissingShotsDialog.component';
 import PuttsInputDialog from '../Dialog/PuttsInputDialog.component'; // Import the new dialog
@@ -18,7 +18,6 @@ import HoleGeneralForm from './components/HoleGeneralForm.component';
 import SaveRoundButton from './components/SaveRoundButton.component';
 
 const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
-  const dispatch = useDispatch<any>();
   const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
   const { holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);

@@ -27,17 +27,17 @@ export const CategoryStats: React.FC<IFwAndIronsCategoryStatsProps> = React.memo
       <Divider />
       {/* Use GridAccordion for consistency if desired, or Grid2 */}
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 3 }} string='Greens hit' value={displayValue(value.girHits)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Attempts' value={displayValue(value.attempts)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Avg. shots' value={displayAverage(value.averageShots)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Avg. dist. GIR' value={displayAverage(value.averageDistGIR)} />
+        <GridPuttsStat size={{ xs: 3 }} string='GIR hit' value={displayValue(value.girHits ? value.girHits : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Attempts' value={displayValue(value.attempts ? value.attempts : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Avg. shots' value={displayAverage(value.averageShots ? value.averageShots : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Avg. dist. GIR' value={displayAverage(value.averageDistGIR ? value.averageDistGIR : 0)} />
       </Grid>
       <Divider />
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 3 }} string='Left' value={displayValue(value.missLeft)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Right' value={displayValue(value.missRight)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Short' value={displayValue(value.missShort)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Long' value={displayValue(value.missLong)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Left' value={displayValue(value.missLeft ? value.missLeft : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Right' value={displayValue(value.missRight ? value.missRight : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Short' value={displayValue(value.missShort ? value.missShort : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Long' value={displayValue(value.missLong ? value.missLong : 0)} />
       </Grid>
     </Stack>
   );

@@ -43,6 +43,7 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.fairwayRight += (curr.fairway === 6 ? 1 : 0);
     acc.gir += (!!curr.gir ? 1 : 0);
     acc.girBogey += (!!curr.girBogey ? 1 : 0);
+
     acc.upDownMade += (!!curr.upDown.made ? 1 : 0);
     acc.upDownAttempts += (!!curr.upDown.attempts ? 1 : 0);
     acc.putts += curr.putts;

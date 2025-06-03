@@ -36,13 +36,17 @@ const newRoundHolesSlice = createSlice({
         putts: baseHole.putts,
         strokes: baseHole.strokes,
         bogey: false,
+        intermediateShots: baseHole.intermediateShots.length,
       });
+
       const calculatedGirBogey = calculateGirValue({
         par: baseHole.par,
         putts: baseHole.putts,
         strokes: baseHole.strokes,
         bogey: true,
+        intermediateShots: baseHole.intermediateShots.length,
       });
+
       const calculatedUpDown = calculateUDValue({
         girValue: calculatedGir ? 1 : 0,
         chipClub: baseHole.chipClub,
@@ -50,7 +54,10 @@ const newRoundHolesSlice = createSlice({
         numberOfPutts: baseHole.putts,
         strokesValue: baseHole.strokes,
         chipClubs: holeAdjusted.chipClubs || [],
+        intermediateShots: baseHole.intermediateShots || [],
       });
+
+      console.log("[setNewHole] Result from calculateUDValue:", calculatedUpDown);
 
       const calculatedScramble = calculateScrambleValue({
         girValue: calculatedGir ? 1 : 0,

@@ -58,7 +58,7 @@ const PercentageStatDisplay: React.FC<IPercentageStatDisplayProps> = React.memo(
       <NewGridCellStats size={{ xs: 12 }}>
         <Stack sx={{ textAlign: 'center', color: 'text.primary' }}> {/* Set color on Stack */}
           <Typography fontWeight={'bold'}>
-            {percentage !== 0 ? `${percentage.toFixed(2)}%` : '-'}
+            {percentage !== 0 ? `${percentage.toFixed(2)}%` : '0,00%'}
           </Typography>
         </Stack>
       </NewGridCellStats>
@@ -77,7 +77,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
   return (
     <Box sx={{ width: '100%', justifyContent: 'center' }}>
       <Grid container spacing={1} sx={{ py: 1 }}>
-        <StatBlock title="Score" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Score" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <SimpleStatDisplay
             total={`${score.totals} (${correctScore})`}
             avg={score.avg}
@@ -88,7 +88,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="Points" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Points" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <SimpleStatDisplay
             total={points.totals}
             avg={points.avg}
@@ -99,7 +99,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="Fairways" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Fairways" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <Stack spacing={1}>
             <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
               <NewGridCellStats size={{ xs: 6 }}>
@@ -145,7 +145,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           </Stack>
         </StatBlock>
 
-        <StatBlock title="GIR" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="GIR" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <SimpleStatDisplay
             total={gir.totals}
             avg={gir.avg}
@@ -156,7 +156,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="Putts/GIR" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Putts/GIR" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <SimpleStatDisplay
             total={putts.puttsGir.toFixed(2)}
             inTotal={putts.puttsGirIn.toFixed(2)}
@@ -164,7 +164,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="GIR Bogey" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="GIR Bogey" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <SimpleStatDisplay
             total={girBogey.totals}
             avg={girBogey.avg}
@@ -175,15 +175,15 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="Scramble" subtitle="Par saved outside green" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Scramble" subtitle="Par saved outside green" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <PercentageStatDisplay saved={scramble.saved} total={scramble.totals} percentage={scramble.perc} />
         </StatBlock>
 
-        <StatBlock title="Up & Down" subtitle="Par saved without GIR" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Up & Down" subtitle="Par saved without GIR" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <PercentageStatDisplay saved={upDown.saved} total={upDown.totals} percentage={upDown.perc} />
         </StatBlock>
 
-        <StatBlock title="Putts" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Putts" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <SimpleStatDisplay
             total={putts.totals}
             avg={putts.avg.toFixed(2)}
@@ -194,7 +194,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="Sand Saves" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Sand Saves" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <Stack spacing={1}>
             <GridAccordion container spacing={1} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <NewGridCellStats size={{ xs: 6, sm: 6 }}>
@@ -215,14 +215,14 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
             <GridAccordion container spacing={1} sx={{ justifyContent: 'center' }}>
               <NewGridCellStats size={{ xs: 12 }}>
                 <Stack sx={{ textAlign: 'center' }}>
-                  <Typography fontWeight={'bold'} >{sand.savedPerc !== 0 ? `${sand.savedPerc.toFixed(1)}%` : '-'}</Typography>
+                  <Typography fontWeight={'bold'} >{sand.savedPerc !== 0 ? `${sand.savedPerc.toFixed(1)}%` : '0,00%'}</Typography>
                 </Stack>
               </NewGridCellStats>
             </GridAccordion>
           </Stack>
         </StatBlock>
 
-        <StatBlock title="Penalties" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Penalties" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
           <Stack spacing={2}>
             <Box>
               <Typography sx={{ textAlign: 'center', mb: 0.5, fontWeight: 'bold' }}>Water</Typography>

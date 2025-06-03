@@ -388,9 +388,10 @@ export const initialStateTmpHole: IShots = {
   toGreenMeters60_80: 0,
   toGreenMetersUnder60: 0,
   upDown: { made: 0, attempts: 0 },
+  chipClubs: [], // Explicitly initialize chipClubs as an empty array
   scramble: { made: 0, attempts: 0 },
   water: 0,
-  intermediateShots: []
+  intermediateShots: [],
 }
 
 export const catConversion = (string: string) => {

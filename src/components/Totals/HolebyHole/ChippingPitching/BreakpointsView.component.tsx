@@ -23,7 +23,7 @@ export const CategoryStats: React.FC<IChipCategoryStatsProps> = React.memo(({ va
           size={{ xs: 4 }}
           string='Avg. distance'
           value={(typeof value.averageHoleDistance === 'number' ? value.averageHoleDistance : 0).toFixed(2)} />
-        <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greensMissed} />
+        <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greensMissed ? value.greensMissed : 0} />
       </Grid>
     </Stack>
   );

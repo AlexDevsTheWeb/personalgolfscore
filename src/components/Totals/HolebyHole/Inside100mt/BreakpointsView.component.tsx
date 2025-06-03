@@ -29,7 +29,7 @@ export const CategoryStats: React.FC<ICategoryStatsProps> = React.memo(({ value 
       />
       <Divider />
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 3 }} string='Greens hit' value={value.greensHits} />
+        <GridPuttsStat size={{ xs: 3 }} string='Greens hit' value={value.greensHits ? value.greensHits : '0'} />
         <GridPuttsStat size={{ xs: 3 }} string='Attempts' value={value.attempts} />
         <GridPuttsStat size={{ xs: 3 }} string='Avg. shots' value={value.averageShots.toFixed(2)} />
         <GridPuttsStat size={{ xs: 3 }} string='Avg. dist. GIR' value={value.averageDistGIR.toFixed(2)} />

@@ -23,7 +23,7 @@ export const CategoryStats: React.FC<ITeeshotsCategoryStatsProps> = React.memo((
         <GridPuttsStat size={{ xs: 4 }} string='Fws hits' value={displayValue(value.fairwayHits)} />
         <GridPuttsStat size={{ xs: 4 }} string='Attempts' value={displayValue(value.attempts)} />
         {/* Format average distance */}
-        <GridPuttsStat size={{ xs: 4 }} string='Avg. dis.' value={value.averageDistance > 0 ? `${value.averageDistance.toFixed(1)}m` : '-'} />
+        <GridPuttsStat size={{ xs: 4 }} string='Avg. dis.' value={value.averageDistance > 0 ? `${value.averageDistance.toFixed(1)}m` : '0m'} />
       </Grid>
       <Divider />
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>

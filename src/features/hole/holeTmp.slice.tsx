@@ -23,6 +23,9 @@ const holeTmpSlice = createSlice({
       const { name, value, roundPlayingHCP, roundHoles, chipClubs } = action.payload;
       const initialValueType = typeof initialState[name];
 
+      if (chipClubs !== undefined) {
+        state.chipClubs = chipClubs;
+      }
       if (initialValueType === 'number') {
         // Ensure empty strings become 0 or handle as needed
         const numericValue = value === '' ? 0 : Number(value);
@@ -76,21 +79,32 @@ const holeTmpSlice = createSlice({
         par: Number(state.par),
         putts: Number(state.putts),
         strokes: Number(state.strokes), // Use state.strokes (already correct here, but good to double-check)
-        bogey: false
+        bogey: false,
+        intermediateShots: state.intermediateShots.length,
       });
+      // console.log('[holeTmp] GIR calc inputs:', { name, par: Number(state.par), putts: Number(state.putts), strokes: Number(state.strokes), bogey: false });
+      // console.log('[holeTmp] GIR calc result:', state.gir);
+
       state.girBogey = calculateGirValue({
         par: Number(state.par),
         putts: Number(state.putts),
         strokes: Number(state.strokes), // Use state.strokes (already correct here)
-        bogey: true
+        bogey: true,
+        intermediateShots: state.intermediateShots.length,
       });
+      if (name === 'strokes' || name === 'putts' || name === 'par') { // Log only when relevant inputs change
+        console.log('[holeTmp] GIR Bogey calc inputs:', { forField: name, par: Number(state.par), putts: Number(state.putts), strokes: Number(state.strokes), bogey: true });
+        console.log('[holeTmp] GIR Bogey calc result:', state.girBogey);
+      }
+
       state.upDown = calculateUDValue({
         girValue: Number(state.gir),
         chipClub: state.chipClub,
         parValue: Number(state.par),
         numberOfPutts: state.putts,
         strokesValue: Number(state.strokes), // Use state.strokes (already correct here)
-        chipClubs: chipClubs
+        chipClubs: state.chipClubs,
+        intermediateShots: state.intermediateShots,
       });
       if (name !== 'puttsLength') {
         state.scramble = calculateScrambleValue({

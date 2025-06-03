@@ -1,3 +1,5 @@
+import { IIntermediateShot } from "./roundData.types";
+
 export interface IStablefordPointsProps {
   hcp: number;
   par: number;
@@ -11,6 +13,7 @@ export interface IGirProps {
   putts: number;
   strokes: number;
   bogey: boolean;
+  intermediateShots: number;
 }
 
 export interface IUDProps {
@@ -20,6 +23,7 @@ export interface IUDProps {
   numberOfPutts: number;
   strokesValue: number;
   chipClubs: string[];
+  intermediateShots: IIntermediateShot[];
 }
 export interface IScrambleProps {
   girValue: number;
