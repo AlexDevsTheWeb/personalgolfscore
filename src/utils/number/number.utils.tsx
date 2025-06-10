@@ -7,3 +7,11 @@ export const formatPerc = (value: number) => {
   }
   return result
 }
+
+export const formatPercNoPer = (value: number) => {
+  let result = '-';
+  if (value !== 0 && !_.isNull(value)) {
+    result = `${(value).toFixed(2)}%`;
+  }
+  return result
+}

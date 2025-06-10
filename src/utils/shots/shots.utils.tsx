@@ -26,39 +26,61 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
 }
 
 export const calculateGirValue = (props: IGirProps) => {
-  const { par, putts, strokes, bogey } = props;
-  const girDiff = par + putts - strokes;
-  if (!bogey) {
-    return girDiff < 2 ? false : true;
+  const { par, strokes, putts, bogey } = props;
+
+  // GIR is determined by strokes taken to reach the green.
+  const strokesToGreen = strokes - putts;
+
+  // Standard GIR: on green in (par - 2) strokes or less.
+  // Bogey GIR (GIR+1): on green in (par - 1) strokes or less.
+  const girThreshold = bogey ? (par - 1) : (par - 2);
+
+  if (strokesToGreen <= girThreshold) {
+    return true;
+  } else {
+    return false;
   }
-  else {
-    return girDiff < 1 ? false : true;
-  }
-}
+};
 
-export const calculateUDValue = (props: IUDProps) => {
-  const { girValue, chipClub, parValue, numberOfPutts, strokesValue, chipClubs } = props;
-  let result = { made: 0, attempts: 0 };
-  if (chipClub !== '' && parValue !== 0 && strokesValue !== 0) {
+export const calculateUDValue = (props: IUDProps): { attempts: number; made: number } => {
+  const {
+    girValue,         // Value indicating if GIR was made (e.g., 0 for no, 1 for yes)
+    chipClub,         // The club used for the primary chip/pitch shot
+    chipClubs,        // Array of valid chipping club names
+    intermediateShots, // Array of any extra shots taken between chip and putts, or other recovery
+    numberOfPutts     // Number of putts taken on the green
+    // parValue and strokesValue are part of IUDProps but not strictly needed for this definition of Up&Down
+  } = props;
 
-    if (girValue !== 1) {
+  let attempts = 0;
+  let made = 0;
 
-      const validClub = chipClubs.filter((club: string) => club === chipClub);
+  // Determine if the provided chipClub is valid
+  const isChipClubValid = chipClub && chipClub.trim() !== '' && chipClubs && chipClubs.includes(chipClub);
 
-      if (validClub.length > 0) {
+  // An up-and-down attempt can only occur if:
+  // 1. Green was NOT hit in regulation (girValue is not 1, typically 0).
+  // 2. A designated chip/pitch shot was played from off the green.
+  if (girValue !== 1 && isChipClubValid) {
+    attempts = 1;
 
-        if (numberOfPutts > 1) {
-          result = { made: 0, attempts: 1 };
-        }
-        else {
-          result = { made: 1, attempts: 1 };
-        }
-      }
+    // Calculate the total number of strokes taken *after* the initial chipClub shot to hole out.
+    // This includes any intermediate shots and the putts on the green.
+    const strokesTakenAfterInitialChip = (intermediateShots ? intermediateShots.length : 0) + numberOfPutts;
 
+    // A successful up-and-down means the ball was holed in 2 strokes starting from the initial chip:
+    // Stroke 1: The chipClub shot itself.
+    // Stroke 2: The sum of intermediate shots and putts on the green.
+    // Therefore, strokesTakenAfterInitialChip must be 0 or 1.
+    // - If strokesTakenAfterInitialChip is 0: chip-in (1st shot went in).
+    // - If strokesTakenAfterInitialChip is 1: one more shot (either an intermediate shot holed, or one putt on green).
+    if (strokesTakenAfterInitialChip <= 1) {
+      made = 1;
     }
   }
-  return result;
-}
+
+  return { attempts, made };
+};
 
 export const calculateScrambleValue = (props: IScrambleProps) => {
   let result = { made: 0, attempts: 0 };

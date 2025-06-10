@@ -184,6 +184,22 @@ export interface ISimpleStatDisplayProps {
   outSuffix?: string;
 }
 
+export interface ISimpleParStatDisplayProps {
+  title?: string;
+  scorePar3: number;
+  scorePar4: number;
+  scorePar5: number;
+}
+
+export interface ISimpleScoreParStatDisplayProps {
+  title?: string;
+  scoreBirdie: number;
+  scoreBogey: number;
+  scoreDoubleBogeyWorst: number;
+  scoreEagleBetter: number;
+  scorePar: number;
+}
+
 export interface IPercentageStatDisplayProps {
   saved: number;
   total: number;

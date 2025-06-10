@@ -18,12 +18,12 @@ export const CategoryStats: React.FC<IChipCategoryStatsProps> = React.memo(({ va
         <GridPuttsStat
           size={{ xs: 4 }}
           string='Average shots'
-          value={(typeof value.averageShot === 'number' ? value.averageShot : 0).toFixed(2)} />
+          value={(typeof value.averageShots === 'number' ? value.averageShots : 0).toFixed(2)} />
         <GridPuttsStat
           size={{ xs: 4 }}
           string='Avg. distance'
-          value={(typeof value.averageHoleDistance === 'number' ? value.averageHoleDistance : 0).toFixed(2)} />
-        <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greensMissed} />
+          value={(typeof value.averageHoleDistanceShot === 'number' ? value.averageHoleDistanceShot : 0).toFixed(2)} />
+        <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greensMissed ? value.greensMissed : 0} />
       </Grid>
     </Stack>
   );
@@ -39,10 +39,6 @@ export const UnifiedChippingPitchingView: React.FC<IChipMobileViewProps> = ({ ch
   return (
     <Grid container spacing={1} sx={{ py: 1 }}>
       {entries.map(([key, value]) => {
-        // Filter out categories if they have no attempts or data
-        // if (!value || value.attempts === 0) {
-        //   return null;
-        // }
         const clubType = CHIPPING[key.toUpperCase() as keyof typeof CHIPPING] || key;
         return (
           <StatBlock

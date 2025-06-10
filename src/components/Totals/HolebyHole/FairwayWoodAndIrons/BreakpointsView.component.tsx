@@ -9,35 +9,35 @@ import StatBlock from "../components/StackBlock.component";
 
 export const CategoryStats: React.FC<IFwAndIronsCategoryStatsProps> = React.memo(({ value }) => {
   // Helper to display value or '-'
-  const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : '-';
+  const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : 0;
   // Helper to display formatted average or '-'
-  const displayAverage = (val: number | undefined | null, precision: number = 2) => (val !== undefined && val !== null && val !== 0) ? val.toFixed(precision) : '-';
+  const displayAverage = (val: number | undefined | null, precision: number = 2) => (val !== undefined && val !== null && val !== 0) ? val.toFixed(precision) : 0;
 
   return (
     <Stack spacing={1}>
       {/* Use missedLong from type */}
       <Cross
-        left={value.missLeft}
-        right={value.missRight}
+        left={value.missedLeft}
+        right={value.missedRight}
         center={value.girHits} // Use girHits from type
-        short={value.missShort}
-        over={value.missLong} // Changed from missedOver
+        short={value.missedShort}
+        over={value.missedLong} // Changed from missedOver
         totals={value.attempts}
       />
       <Divider />
       {/* Use GridAccordion for consistency if desired, or Grid2 */}
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 3 }} string='Greens hit' value={displayValue(value.girHits)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Attempts' value={displayValue(value.attempts)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Avg. shots' value={displayAverage(value.averageShots)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Avg. dist. GIR' value={displayAverage(value.averageDistGIR)} />
+        <GridPuttsStat size={{ xs: 3 }} string='GIR hit' value={displayValue(value.girHits ? value.girHits : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Attempts' value={displayValue(value.attempts ? value.attempts : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Avg. shots' value={displayAverage(value.averageShots ? value.averageShots : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Avg. dist. GIR' value={displayAverage(value.averageDistGIR ? value.averageDistGIR : 0)} />
       </Grid>
       <Divider />
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 3 }} string='Left' value={displayValue(value.missLeft)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Right' value={displayValue(value.missRight)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Short' value={displayValue(value.missShort)} />
-        <GridPuttsStat size={{ xs: 3 }} string='Long' value={displayValue(value.missLong)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Left' value={displayValue(value.missedLeft ? value.missedLeft : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Right' value={displayValue(value.missedRight ? value.missedRight : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Short' value={displayValue(value.missedShort ? value.missedShort : 0)} />
+        <GridPuttsStat size={{ xs: 3 }} string='Long' value={displayValue(value.missedLong ? value.missedLong : 0)} />
       </Grid>
     </Stack>
   );

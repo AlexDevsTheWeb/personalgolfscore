@@ -95,6 +95,7 @@ export interface IRoundInside100Mt {
   missedRight: number;
   missedShort: number;
   missedLong: number;
+  missedOver: number;
   girPCT?: number;
   totalDistGIR: number;
   totalShotsTaken: number;
@@ -117,6 +118,10 @@ export interface IRoundFWAndIrons {
   missRight: number;
   missShort: number;
   missLong: number;
+  missedLeft: number;
+  missedRight: number;
+  missedShort: number;
+  missedLong: number;
   attempts: number;
   totalScorePar3: number;
   totalScorePar4: number;
@@ -151,7 +156,9 @@ export interface IRoundChipPitch {
   upDownMade: number;
   attempts: number;
   averageShot: number;
+  averageShots: number;
   averageHoleDistance: number;
+  averageHoleDistanceShot: number;
   shotsHoled: number;
   greensMissed: number;
   upDownPCT?: number;

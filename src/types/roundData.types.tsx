@@ -41,6 +41,7 @@ export interface IShots {
   scramble: IMadeAttempts;
   water: number;
   intermediateShots: IIntermediateShot[];
+  chipClubs: string[];
 }
 
 interface IMadeAttempts {

@@ -103,21 +103,34 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
     return shots.reduce((acc, curr) => {
       const rightClub = isTheRightClub(club, curr.teeClub);
 
-      acc.fairwayHits += (rightClub && curr.fairway === 5 ? 1 : 0);
-      acc.attempts += (rightClub ? 1 : 0);
-      acc.totDistance += (rightClub ? curr.driveDistance : 0);
-      acc.missLeft += (rightClub && curr.fairway === 4 ? 1 : 0);
-      acc.missRight += (rightClub && curr.fairway === 6 ? 1 : 0);
-      acc.noGreen += (rightClub && curr.toGreen === 'NO' ? 1 : 0);
+      if (rightClub) {
+        acc.attempts += 1;
+
+        // Fairway and FIR stats are only relevant for Par 4s and 5s
+        if (curr.par !== 3) {
+          acc.par4_5_Attempts += 1;
+          if (curr.fairway === 5) {
+            acc.fairwayHits += 1;
+          } else if (curr.fairway === 4) {
+            acc.missLeft += 1;
+          } else if (curr.fairway === 6) {
+            acc.missRight += 1;
+          }
+          if (curr.toGreen === 'NO') { // Assuming 'NO' means missed the FIR
+            acc.noGreen += 1;
+          }
+        }
+
+        // Distance is recorded for any tee shot, but only count if > 0
+        if (curr.driveDistance > 0) {
+          acc.totalDistance += curr.driveDistance;
+          acc.countShotsWithDistance += 1;
+        }
+      }
 
       return acc;
     }, {
-      fairwayHits: 0,
-      attempts: 0,
-      totDistance: 0,
-      missLeft: 0,
-      missRight: 0,
-      noGreen: 0,
+      fairwayHits: 0, attempts: 0, totalDistance: 0, missLeft: 0, missRight: 0, noGreen: 0, countShotsWithDistance: 0, par4_5_Attempts: 0,
     });
   };
   const results = [
@@ -128,13 +141,24 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
   ];
 
   const createFinalObject = (object: any) => {
+    const fairwayAttempts = object.par4_5_Attempts;
     return (
       {
         ...object,
-        averageDistance: safeDivide(object.totDistance, object.attempts),
-        fairwayCenterPCT: safePercentage(object.fairwayHits, object.attempts),
-        fairwayLeftPCT: safePercentage(object.missLeft, object.attempts),
-        fairwayRightPCT: safePercentage(object.missRight, object.attempts),
+        averageDistance: safeDivide(object.totalDistance, object.countShotsWithDistance), // Use countShotsWithDistance
+        // Percentage calculations using par4_5_Attempts
+        fairwayCenterPCT: safePercentage(object.fairwayHits, fairwayAttempts),
+        fairwayLeftPCT: safePercentage(object.missLeft, fairwayAttempts),
+        fairwayRightPCT: safePercentage(object.missRight, fairwayAttempts),
+        missLeftPCT: safePercentage(object.missLeft, fairwayAttempts), // Keep for now, maybe used elsewhere? Or remove from type?
+        missRightPCT: safePercentage(object.missRight, fairwayAttempts), // Keep for now
+        firMissPCT: safePercentage(object.noGreen, fairwayAttempts), // FIR Miss percentage
+        // Ensure all properties from IRoundTeeShotClubTotals are present
+        fairwayHits: object.fairwayHits,
+        attempts: object.attempts,
+        missLeft: object.missLeft,
+        missRight: object.missRight,
+        noGreen: object.noGreen,
       }
     )
   }
