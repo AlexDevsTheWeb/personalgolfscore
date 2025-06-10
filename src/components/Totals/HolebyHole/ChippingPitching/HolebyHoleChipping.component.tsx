@@ -6,7 +6,6 @@ import { UnifiedChippingPitchingView } from "./BreakpointsView.component";
 const HolebyHoleChipping: React.FC<IRoundTotalsProps> = ({ roundTotals }) => {
   const { chipPitch } = roundTotals;
 
-  // Basic validation or loading state
   if (!chipPitch || Object.keys(chipPitch).length === 0) {
     return <Box>No Chipping/Pitching data available.</Box>; // Or a loading indicator
   }

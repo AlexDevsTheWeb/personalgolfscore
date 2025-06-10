@@ -7,9 +7,9 @@ import { Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import StatBlock from "../components/StackBlock.component";
 
-const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : '-';
-const displayAverage = (val: number | undefined | null, precision: number = 2) => (val !== undefined && val !== null && val !== 0) ? val.toFixed(precision) : '-';
-const displayPercentage = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? formatPerc(val) : '-';
+const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : 0;
+const displayAverage = (val: number | undefined | null, precision: number = 2) => (val !== undefined && val !== null && val !== 0) ? val.toFixed(precision) : 0;
+const displayPercentage = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? formatPerc(val) : 0;
 
 
 

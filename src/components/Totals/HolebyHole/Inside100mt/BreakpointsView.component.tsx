@@ -6,11 +6,7 @@ import React from "react";
 import Cross from "../components/Cross.component";
 import StatBlock from "../components/StackBlock.component";
 
-
 export const DesktopView: React.FC<IDesktopViewProps> = ({ inside100Mt }) => {
-  const categories = Object.keys(inside100Mt);
-  const entries = Object.entries(inside100Mt);
-
   return (
     <UnifiedInside100View inside100Mt={inside100Mt} />
   );
@@ -24,7 +20,7 @@ export const CategoryStats: React.FC<ICategoryStatsProps> = React.memo(({ value 
         right={value.missedRight}
         center={value.greensHits}
         short={value.missedShort}
-        over={value.missedLong}
+        over={value.missedOver}
         totals={value.attempts}
       />
       <Divider />
@@ -39,7 +35,7 @@ export const CategoryStats: React.FC<ICategoryStatsProps> = React.memo(({ value 
         <GridPuttsStat size={{ xs: 3 }} string='Left' value={value.missedLeft} />
         <GridPuttsStat size={{ xs: 3 }} string='Right' value={value.missedRight} />
         <GridPuttsStat size={{ xs: 3 }} string='Short' value={value.missedShort} />
-        <GridPuttsStat size={{ xs: 3 }} string='Long' value={value.missedLong} />
+        <GridPuttsStat size={{ xs: 3 }} string='Long' value={value.missedOver} />
       </Grid>
     </Stack>
   );

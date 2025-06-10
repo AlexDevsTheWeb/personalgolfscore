@@ -57,8 +57,6 @@ const newRoundHolesSlice = createSlice({
         intermediateShots: baseHole.intermediateShots || [],
       });
 
-      console.log("[setNewHole] Result from calculateUDValue:", calculatedUpDown);
-
       const calculatedScramble = calculateScrambleValue({
         girValue: calculatedGir ? 1 : 0,
         parValue: baseHole.par,

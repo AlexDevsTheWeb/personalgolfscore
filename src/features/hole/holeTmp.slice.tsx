@@ -82,8 +82,6 @@ const holeTmpSlice = createSlice({
         bogey: false,
         intermediateShots: state.intermediateShots.length,
       });
-      // console.log('[holeTmp] GIR calc inputs:', { name, par: Number(state.par), putts: Number(state.putts), strokes: Number(state.strokes), bogey: false });
-      // console.log('[holeTmp] GIR calc result:', state.gir);
 
       state.girBogey = calculateGirValue({
         par: Number(state.par),
@@ -92,10 +90,6 @@ const holeTmpSlice = createSlice({
         bogey: true,
         intermediateShots: state.intermediateShots.length,
       });
-      if (name === 'strokes' || name === 'putts' || name === 'par') { // Log only when relevant inputs change
-        console.log('[holeTmp] GIR Bogey calc inputs:', { forField: name, par: Number(state.par), putts: Number(state.putts), strokes: Number(state.strokes), bogey: true });
-        console.log('[holeTmp] GIR Bogey calc result:', state.girBogey);
-      }
 
       state.upDown = calculateUDValue({
         girValue: Number(state.gir),

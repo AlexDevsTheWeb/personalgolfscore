@@ -17,7 +17,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
   return (
     <Box sx={{ width: '100%', justifyContent: 'center' }}>
       <Grid container spacing={1} sx={{ py: 1 }}>
-        <StatBlock title="Score" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Score" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3, xl: 3 } }}>
           <SimpleStatDisplay
             total={`${score.totals} (${correctScore})`}
             avg={score.avg}
@@ -28,7 +28,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="Points" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Points" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3, xl: 2 } }}>
           <SimpleStatDisplay
             total={points.totals}
             avg={points.avg}
@@ -39,7 +39,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="Scoring Avg." gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 2 } }}>
+        <StatBlock title="Scoring Avg." gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3, xl: 2 } }}>
           <SimpleParStatDisplay
             scorePar3={score.scorePar3}
             scorePar4={score.scorePar4}
@@ -47,7 +47,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="Scoring" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
+        <StatBlock title="Scoring" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3, xl: 3 } }}>
           <SimpleScoreParStatDisplay
             scoreBirdie={score.scoreBirdie}
             scoreBogey={score.scoreBogey}
@@ -57,7 +57,7 @@ export const UnifiedGeneralStatsView: React.FC<IGeneralMobileViewProps> = ({
           />
         </StatBlock>
 
-        <StatBlock title="Fairways" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3 } }}>
+        <StatBlock title="Fairways" gridProps={{ size: { xs: 12, sm: 6, md: 4, lg: 3, xl: 2 } }}>
           <Stack spacing={1}>
             <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
               <NewGridCellStats size={{ xs: 6 }}>
