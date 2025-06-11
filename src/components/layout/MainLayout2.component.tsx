@@ -24,6 +24,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from '../common/ThemeSwitcher.component';
+import Footer from './Footer.component';
 import User from './User.component';
 
 export default function DrawerAppBar(props: IMainLayoutProps) {
@@ -118,7 +119,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <BoxFooter sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh' }}>
+    <BoxFooter>
       <Box>
         {/* CssBaseline is already applied in ThemeSetup, no need to repeat here */}
         <AppBar component="nav">
@@ -197,9 +198,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
           <Outlet />
         </Box>
       </Box>
-      <Box>
-        {/* Footer is already rendered within SharedLayout, no need to repeat here if MainLayout is used by SharedLayout */}
-      </Box>
+      <Footer />
     </BoxFooter>
   );
 }
