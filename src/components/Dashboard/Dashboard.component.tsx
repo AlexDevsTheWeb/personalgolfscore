@@ -47,7 +47,7 @@ const Dashboard = () => {
                   variant='contained'
                   onClick={handleAddNewRound}
                 >
-                  Add Another Round
+                  Add new Round
                 </Button>
                 <Button
                   variant='contained'
