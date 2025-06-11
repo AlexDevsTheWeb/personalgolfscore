@@ -4,9 +4,6 @@ import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel
 import { getAuth } from "firebase/auth";
 import { Link } from "react-router-dom";
 
-// TODO remove, this demo shouldn't need to reset the theme.
-// const defaultTheme = createTheme();
-
 export default function SignupForm() {
   const auth = getAuth();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

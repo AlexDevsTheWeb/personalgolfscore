@@ -51,15 +51,11 @@ export const UnifiedInside100View: React.FC<IMobileViewProps> = ({ inside100Mt }
   return (
     <Grid container spacing={1} sx={{ py: 1 }}>
       {entries.map(([key, value]) => {
-        // Filter out categories if they have no attempts
-        // if (!value || value.attempts === 0) {
-        //   return null;
-        // }
         return (
           <StatBlock
             key={key}
-            title={`${catConversion(key)}`} // Use catConversion for a user-friendly title
-            gridProps={{ size: { xs: 12, sm: 6, md: 3 } }} // Adjust for 2-4 items per row
+            title={`${catConversion(key)}`}
+            gridProps={{ size: { xs: 12, sm: 6, md: 3 } }}
           >
             <CategoryStats value={value} />
           </StatBlock>

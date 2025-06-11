@@ -1,10 +1,9 @@
 import { keyframes, styled } from "@mui/material";
 
-// Define keyframes using the helper
 const spinAnimation = keyframes`
   to {
     transform: rotate(360deg);
-    -webkit-transform: rotate(360deg); // Include vendor prefix if needed, though often handled automatically
+    -webkit-transform: rotate(360deg); 
   }
 `;
 
@@ -22,7 +21,6 @@ export const SpinnerContainer = styled('div')(({ theme }) => ({
 	border: `5px solid ${theme.palette.divider}`,
 	borderRadius: '50%',
 	borderTopColor: theme.palette.primary.main,
-	// Reference the keyframes animation
 	animation: `${spinAnimation} 1s ease-in-out infinite`,
-	WebkitAnimation: `${spinAnimation} 1s ease-in-out infinite`, // Apply to vendor-prefixed version too
+	WebkitAnimation: `${spinAnimation} 1s ease-in-out infinite`,
 }));

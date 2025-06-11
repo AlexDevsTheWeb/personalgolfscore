@@ -14,7 +14,7 @@ const FairwayHitsChart: React.FC = () => {
   let totalFairwayCenter = 0;
   let totalFairwayLeft = 0;
   let totalFairwayRight = 0;
-  let totalAttempts = 0; // Sum of center, left, right to get total fairway attempts
+  let totalAttempts = 0;
 
   recentRounds.forEach(round => {
     if (round.totals && round.totals.fairway) {
@@ -71,7 +71,6 @@ const FairwayHitsChart: React.FC = () => {
             },
           ]}
           height={250}
-          // width prop can be omitted for responsive width, or set explicitly
           slotProps={{
             legend: {
               direction: 'horizontal',

@@ -43,7 +43,6 @@ const MissingShotsDialog: React.FC<MissingShotsDialogProps> = ({
   };
 
   const handleSubmit = () => {
-    // Basic validation: ensure club is selected and distance is positive for all shots
     for (const shot of intermediateShotsData) {
       if (!shot.club || shot.distance <= 0) {
         alert('Please fill in all club and distance (must be > 0) for each missing shot.');

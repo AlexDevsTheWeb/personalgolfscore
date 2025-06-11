@@ -5,7 +5,7 @@ import PuttsGenerator from '../NewRound/PuttsGenerator.component';
 interface PuttsInputDialogProps {
   open: boolean;
   numberOfPutts: number;
-  initialPuttsLength: number[]; // To pre-fill if editing
+  initialPuttsLength: number[];
   onClose: () => void;
   onSubmit: (puttsLength: number[]) => void;
 }
@@ -22,10 +22,7 @@ const PuttsInputDialog: React.FC<PuttsInputDialogProps> = ({
 
   useEffect(() => {
     if (open) {
-      // Initialize puttsNumberArray based on numberOfPutts
       setPuttsNumberArray(Array.from({ length: numberOfPutts }, (_, i) => i + 1));
-
-      // Initialize currentPuttsLength, respecting initialPuttsLength
       const newLengths = new Array(numberOfPutts).fill(0);
       for (let i = 0; i < Math.min(initialPuttsLength.length, numberOfPutts); i++) {
         newLengths[i] = initialPuttsLength[i] ?? 0;
@@ -39,7 +36,6 @@ const PuttsInputDialog: React.FC<PuttsInputDialogProps> = ({
     puttIndex: number
   ) => {
     const newPuttsLength = [...currentPuttsLength];
-    // Ensure the array is long enough (should be by useEffect, but good practice)
     while (newPuttsLength.length <= puttIndex) {
       newPuttsLength.push(0);
     }
@@ -49,7 +45,7 @@ const PuttsInputDialog: React.FC<PuttsInputDialogProps> = ({
 
   const handleSubmit = () => {
     onSubmit(currentPuttsLength);
-    onClose(); // Close dialog on submit
+    onClose();
   };
 
   if (!open) return null;
@@ -64,7 +60,7 @@ const PuttsInputDialog: React.FC<PuttsInputDialogProps> = ({
         {puttsNumberArray.length > 0 && (
           <PuttsGenerator
             puttsNumber={puttsNumberArray}
-            puttLengths={currentPuttsLength} // Pass current lengths to prefill
+            puttLengths={currentPuttsLength}
             setPuttDistance={handleChangePuttLength}
           />
         )}

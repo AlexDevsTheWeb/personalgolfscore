@@ -29,7 +29,7 @@ const User = () => {
   };
   const handleSettings = () => {
     setAnchorEl(null);
-    navigate('/settings'); // Keep navigation to settings page
+    navigate('/settings');
     //TODO: next go to player/user settings
   }
 
@@ -40,9 +40,7 @@ const User = () => {
     signOut(auth).then(() => {
       deleteUserLocalStorage();
       dispatch(resetUser());
-      // Sign-out successful.
     }).catch((error) => {
-      // An error happened.
     });
   };
 

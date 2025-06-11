@@ -47,8 +47,8 @@ const ClubsList = (props: any) => {
                   ? <TextField
                     label="Name"
                     variant="outlined"
-                    value={clubDetail.name} // Assuming name is stored in clubDetail
-                    onChange={(event) => handleClubChange(clubDetail.name, "name", event.target.value)} // Update handler function
+                    value={clubDetail.name}
+                    onChange={(event) => handleClubChange(clubDetail.name, "name", event.target.value)}
                   />
                   : <ClubTypography typeName={typeName} details={clubDetail} />}
 

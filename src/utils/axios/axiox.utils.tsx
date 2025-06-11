@@ -1,59 +1,8 @@
-// import { getUserFromLocalStorage } from "./localStorage";
-// import _ from "lodash";
-
 import axios from "axios";
 
 const authFetch = axios.create({
   baseURL: '',
-
-  // FIXME: to re-enable firebase connection remove line 7 and de-comment line 10
-  //baseURL: `${import.meta.env.VITE_APP_URL}${import.meta.env.VITE_APP_PROJECT_ID}${import.meta.env.VITE_APP_DB_URL}`
 });
-
-// authFetch.interceptors.request.use(
-//   (config) => {
-//     const user = getUserFromLocalStorage();
-//     if (user) {
-//       config.headers!["Authorization"] = `Bearer ${user.jwt}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
-
-// authFetch.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   (error: AxiosError) => {
-//     let codeError = error.response?.status;
-//     let message = error.message;
-//     const data = error.response?.data as { errorCode: number; message: string };
-//     const { pathname } = window.location;
-
-//     if (pathname !== "/" && pathname !== "/login") {
-//       if (!_.isEmpty(data)) {
-//         codeError = data.errorCode;
-//         message = data.message;
-//       }
-//       localStorage.setItem(
-//         "error",
-//         JSON.stringify({
-//           codeError,
-//           pathname,
-//           message:
-//             codeError === 401 && pathname !== "/" && pathname !== "/login"
-//               ? "Token has expired, please Login again"
-//               : message,
-//         })
-//       );
-//       window.dispatchEvent(new Event("storage"));
-//     }
-//     return Promise.reject(error);
-//   }
-// );
 
 export const checkForUnauthorizedResponse = (error: any, thunkAPI: any) => {
   return thunkAPI.rejectWithValue(error.response);

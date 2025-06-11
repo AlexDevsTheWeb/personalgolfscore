@@ -26,12 +26,11 @@ const GirPercentageChart: React.FC = () => {
   let total1Putts = 0;
   let total2Putts = 0;
   let total3PlusPutts = 0;
-  let totalRecordedPutts = 0; // Sum of 1, 2, 3+ putts
+  let totalRecordedPutts = 0;
 
   recentRounds.forEach(round => {
     let roundHasGirData = false;
     if (round.totals && round.totals.gir) {
-      // Assuming 'total' is count of GIRs made and 'possible' is count of opportunities
       actualGirsMade += round.totals.gir.avg || 0;
       actualPossibleGirs += round.totals.gir.totals || 0;
       if (round.totals.gir.totals && round.totals.gir.totals > 0) {
@@ -43,7 +42,7 @@ const GirPercentageChart: React.FC = () => {
     }
     if (round.totals && round.totals.putts) {
       sumTotalPutts += round.totals.putts.totals || 0;
-      sumPuttsOnGir += round.totals.putts.puttsGir || 0; // Assumes puttsOnGir field exists
+      sumPuttsOnGir += round.totals.putts.puttsGir || 0;
       if (round.totals.putts.totals !== undefined) roundsWithPuttData++;
       if (round.totals.putts.puttsGir !== undefined && roundHasGirData) roundsWithPuttsOnGirData++;
 

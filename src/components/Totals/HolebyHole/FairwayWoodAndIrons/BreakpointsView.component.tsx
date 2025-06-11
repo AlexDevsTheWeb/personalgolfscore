@@ -8,9 +8,7 @@ import StatBlock from "../components/StackBlock.component";
 
 
 export const CategoryStats: React.FC<IFwAndIronsCategoryStatsProps> = React.memo(({ value }) => {
-  // Helper to display value or '-'
   const displayValue = (val: number | undefined | null) => (val !== undefined && val !== null && val !== 0) ? val : 0;
-  // Helper to display formatted average or '-'
   const displayAverage = (val: number | undefined | null, precision: number = 2) => (val !== undefined && val !== null && val !== 0) ? val.toFixed(precision) : 0;
 
   return (
@@ -19,13 +17,12 @@ export const CategoryStats: React.FC<IFwAndIronsCategoryStatsProps> = React.memo
       <Cross
         left={value.missedLeft}
         right={value.missedRight}
-        center={value.girHits} // Use girHits from type
+        center={value.girHits}
         short={value.missedShort}
-        over={value.missedLong} // Changed from missedOver
+        over={value.missedLong}
         totals={value.attempts}
       />
       <Divider />
-      {/* Use GridAccordion for consistency if desired, or Grid2 */}
       <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 3 }} string='GIR hit' value={displayValue(value.girHits ? value.girHits : 0)} />
         <GridPuttsStat size={{ xs: 3 }} string='Attempts' value={displayValue(value.attempts ? value.attempts : 0)} />
@@ -53,16 +50,11 @@ export const UnifiedFwAndIronsView: React.FC<IFwAndIronsMobileViewProps> = ({ fw
   return (
     <Grid container spacing={1} sx={{ py: 1 }}>
       {entries.map(([key, value]) => {
-        // Handle potential undefined value for a category (like fwMidIron if optional)
-        // or categories with no attempts
-        // if (!value || value.attempts === 0) {
-        //   return null;
-        // }
         return (
           <StatBlock
             key={key}
             title={`${catConversion(key)}`}
-            gridProps={{ size: { xs: 12, sm: 6, md: 3 } }} // Adjust for 2-3 items per row on larger screens
+            gridProps={{ size: { xs: 12, sm: 6, md: 3 } }}
           >
             <CategoryStats value={value} />
           </StatBlock>
