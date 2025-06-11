@@ -7,7 +7,7 @@ interface TeeShotDetailsDialogProps {
   isPar3: boolean;
   initialFairwayValue: number;
   initialDistanceValue: number;
-  fairwayValues: IHoleTeeShotFormProps['fairwayValues']; // Use the same type from props
+  fairwayValues: IHoleTeeShotFormProps['fairwayValues'];
   onClose: () => void;
   onSubmit: (details: { fairway: number; distance: number }) => void;
 }
@@ -40,18 +40,6 @@ const TeeShotDetailsDialog: React.FC<TeeShotDetailsDialogProps> = ({
   };
 
   const handleSubmit = () => {
-    // For non-Par 3, distance is required if fairway is selected, or fairway is required if distance is entered.
-    // Or simply, if it's not a Par 3, both should ideally be provided if one is.
-    // For this example, we'll allow submitting even if one is missing for non-par3,
-    // but you might want stricter validation.
-    if (!isPar3 && distance <= 0 && fairway !== 0) {
-      // alert('For non-Par 3 holes, please enter a valid distance if a fairway position is selected.');
-      // return;
-    }
-    if (!isPar3 && distance > 0 && fairway === 0) {
-      // alert('For non-Par 3 holes, please select a fairway position if a distance is entered.');
-      // return;
-    }
     onSubmit({ fairway, distance });
     onClose();
   };

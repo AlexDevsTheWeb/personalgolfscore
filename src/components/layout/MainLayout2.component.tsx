@@ -23,7 +23,7 @@ import _ from 'lodash';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
-import ThemeSwitcher from '../common/ThemeSwitcher.component'; // Import the new component
+import ThemeSwitcher from '../common/ThemeSwitcher.component';
 import User from './User.component';
 
 export default function DrawerAppBar(props: IMainLayoutProps) {

@@ -4,14 +4,13 @@ import React, { useEffect, useState } from 'react';
 
 interface ApproachDetailsDialogProps {
   open: boolean;
-  // Pass necessary parts of tmpHole for calculations and initial values
   initialHoleData: Pick<
     IShots,
     'par' | 'distance' | 'driveDistance' | 'toGreenMeters' | 'teeClub' |
     'toGreen' | 'greenSide' | 'chipClub' | 'strokes' | 'putts' | 'gir'
   >;
   chipClubs: string[];
-  greenSideValues: string[]; // Assuming this is string[] as per HoleApproachForm
+  greenSideValues: string[];
   onClose: () => void;
   onSubmit: (details: {
     toGreenMeters?: number;
@@ -39,7 +38,6 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
   const isPar3 = par === 3;
   const girHappened = gir;
 
-  // Calculate the current "ideal" suggestion for toGreenMeters
   let calculatedSuggestion: number | null = null;
   if (isPar3) {
     if (distance > 0) calculatedSuggestion = distance;
@@ -59,11 +57,10 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
       setToGreenMeters(initialHoleData.toGreenMeters || 0);
       setGreenSide(initialHoleData.greenSide || '');
       setChipClub(initialHoleData.chipClub || '');
-      setToGreenMetersManuallySet(false); // Reset manual flag when dialog opens/data changes
+      setToGreenMetersManuallySet(false);
     }
   }, [open]);
 
-  // Auto-suggestion for toGreenMeters
   useEffect(() => {
     if (open && !toGreenMetersManuallySet) {
       if (calculatedSuggestion !== null && calculatedSuggestion > 0) {
@@ -83,7 +80,7 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
 
   const handleSubmit = () => {
     onSubmit({
-      toGreenMeters: toGreenMeters > 0 ? toGreenMeters : undefined, // Send undefined if 0 to not overwrite with 0 unless intended
+      toGreenMeters: toGreenMeters > 0 ? toGreenMeters : undefined,
       greenSide: greenSide || undefined,
       chipClub: chipClub || undefined,
     });

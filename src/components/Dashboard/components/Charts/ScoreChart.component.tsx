@@ -80,7 +80,7 @@ const ScoreCharts: React.FC = () => {
           xAxis={[{ data: xLabels, scaleType: 'band' }]}
           yAxis={[{ label: 'Value', max: yAxisMax }]}
           height={270}
-          margin={{ top: 0, right: 20, bottom: 0, left: 10 }} // Adjust margins for labels
+          margin={{ top: 0, right: 20, bottom: 0, left: 10 }}
           grid={{ horizontal: true }}
           slotProps={{
             legend: {

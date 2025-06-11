@@ -1,15 +1,14 @@
 import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
-import { Box, Typography, useTheme } from '@mui/material'; // Import MuiPaper for tooltip
+import { Box, Typography, useTheme } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
 import dayjs from 'dayjs';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-// Interface for processed round data specific to this chart
 interface IProcessedRoundPointsData {
-  date: string; // Short format for x-axis (DD/MM)
-  fullDate: string; // Full format for tooltip (DD/MM/YYYY)
+  date: string;
+  fullDate: string;
   course?: string;
   points: number | null;
 }
@@ -19,11 +18,11 @@ const PointsChart: React.FC = () => {
   const theme = useTheme();
 
   const recentRoundsRaw = rounds
-    .filter(round => round.totals?.points?.totals !== undefined) // Ensure points data exists
+    .filter(round => round.totals?.points?.totals !== undefined)
     .slice(-5)
-    .reverse(); // Get the last 5 rounds
+    .reverse();
 
-  if (recentRoundsRaw.length < 1) { // Need at least 1 point to draw a line, ideally 2+
+  if (recentRoundsRaw.length < 1) {
     return (
       <Paper>
         <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', p: 2 }}>
@@ -57,7 +56,7 @@ const PointsChart: React.FC = () => {
           xAxis={[{ scaleType: 'point', data: xAxisLabels }]}
           yAxis={[{ label: 'Points' }]}
           height={270}
-          margin={{ top: 0, right: 20, bottom: 0, left: 10 }} // Adjust margins for labels
+          margin={{ top: 0, right: 20, bottom: 0, left: 10 }}
           grid={{ horizontal: true }}
           slotProps={{
             legend: {

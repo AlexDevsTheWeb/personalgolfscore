@@ -1,13 +1,12 @@
 import Spinner from "@/components/common/spinner/Spinner.component";
-import { AppDispatch, RootState } from "@/store/store";
+import { RootState } from "@/store/store";
 import Grid from "@/styles/grid/Grid.styles";
 import StackPlayer from "@/styles/stack/StackPlayer.styles";
 import dayjs from "dayjs";
 import _ from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Player = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const { player, isLoading } = useSelector((store: RootState) => store.player);
 
   if (isLoading || _.isEmpty(player) || !player.uid) {

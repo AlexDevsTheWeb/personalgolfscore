@@ -33,7 +33,7 @@ const PuttsChart: React.FC = () => {
     }
     if (round.totals && round.totals.putts) {
       sumTotalPutts += round.totals.putts.totals || 0;
-      sumPuttsOnGir += round.totals.putts.puttsGir || 0; // Assumes puttsOnGir field exists
+      sumPuttsOnGir += round.totals.putts.puttsGir || 0;
       if (round.totals.putts.totals !== undefined) roundsWithPuttData++;
       if (round.totals.putts.puttsGir !== undefined && roundHasGirData) roundsWithPuttsOnGirData++;
 

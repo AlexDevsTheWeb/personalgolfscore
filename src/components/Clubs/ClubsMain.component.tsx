@@ -41,7 +41,7 @@ const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
     }
   };
 
-  if (isLoading && !player) { // Show loading only if player data isn't available yet
+  if (isLoading && !player) {
     return <Typography>Loading Player Data...</Typography>;
   }
 
@@ -49,37 +49,13 @@ const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
     <BoxPlayer>
       <ClubsHeaderTypography />
 
-
-      {/* <Grid
-        container
-        spacing={{ xs: 1, md: 1 }}
-        columns={12}
-      >
-        {dataToShow && dataToShow.length > 0
-          ? (dataToShow.map((clubType, index) => (
-            <Grid
-              size={12}
-              key={`${clubType.typeName}-${index}`}
-              sx={{ minWidth: "100%" }}
-            >
-              <ClubsList
-                typeName={clubType.typeName}
-                details={clubType.details}
-              />
-            </Grid>
-          ))
-          )
-          : (<Typography sx={{ padding: 2 }}>No clubs found.</Typography>)
-        }
-      </Grid> */}
-
       {!hasExistingBag && (
         <Box sx={{ marginBottom: 2, display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="contained"
             color="primary"
             onClick={handleSaveInitialBag}
-            disabled={isSaving || !player?.uid} // Disable if saving or no UID
+            disabled={isSaving || !player?.uid}
           >
             {isSaving ? "Saving..." : "Save Default Bag"}
           </Button>

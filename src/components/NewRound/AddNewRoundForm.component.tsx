@@ -157,12 +157,12 @@ const AddNewRoundForm = () => {
       <DialogActions
         sx={{
           padding: '0px',
-          flexDirection: isMobile ? 'column-reverse' : 'row', // Stack buttons on mobile, reverse order
-          '& > :not(style)': { // Apply margin to all direct children
-            m: isMobile ? 0.5 : 1, // Smaller margin on mobile
-            width: isMobile ? 'calc(100% - 16px)' : 'auto', // Full width on mobile, auto on desktop
+          flexDirection: isMobile ? 'column-reverse' : 'row',
+          '& > :not(style)': {
+            m: isMobile ? 0.5 : 1,
+            width: isMobile ? 'calc(100% - 16px)' : 'auto',
           },
-          pb: isMobile ? 1 : 0, // Add some padding bottom on mobile
+          pb: isMobile ? 1 : 0,
         }}
       >
 
