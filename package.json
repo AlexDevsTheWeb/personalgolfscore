@@ -38,7 +38,9 @@
 	},
 	"scripts": {
 		"start": "vite",
-		"build": "tsc && vite build",
+		"build": "vite build",
+		"build:check": "NODE_OPTIONS='--max-old-space-size=8192' tsc --noEmit && vite build",
+		"type-check": "NODE_OPTIONS='--max-old-space-size=8192' tsc --noEmit",
 		"serve": "vite preview",
 		"release": "release-it"
 	},
