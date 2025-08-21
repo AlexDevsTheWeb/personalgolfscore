@@ -3,12 +3,12 @@ import React from 'react';
 import { breakpoints } from './Breakpoints.theme';
 
 export const fonts = {
-  bold: 'Open Sans',
-  heavy: 'Open Sans',
-  light: 'Open Sans',
-  medium: 'Open Sans',
-  semibold: 'Open Sans',
-  regular: 'Open Sans',
+  bold: 'system-ui',
+  heavy: 'system-ui',
+  light: 'system-ui',
+  medium: 'system-ui',
+  semibold: 'system-ui',
+  regular: 'system-ui',
 };
 
 declare module '@mui/material/styles' {
@@ -118,9 +118,11 @@ declare module '@mui/material/Typography' {
 }
 
 const fontFamily = [
-  fonts.regular,
   'system-ui',
   '-apple-system',
+  'BlinkMacSystemFont',
+  'Segoe UI',
+  'Roboto',
   'Helvetica Neue',
   'Arial',
   'sans-serif',

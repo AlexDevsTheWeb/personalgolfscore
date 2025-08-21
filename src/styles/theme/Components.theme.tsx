@@ -84,8 +84,8 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
       {
         props: { variant: 'home' },
-        style: {
-          background: 'white',
+        style: ({ theme }: { theme: Theme }) => ({
+          background: theme.palette.background.paper,
           justifyContent: 'flex-start',
           textDecoration: 'none',
           paddingLeft: '16px',
@@ -95,7 +95,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           height: '56px',
           '@media(hover: hover)': {
             '&:hover': {
-              background: 'white',
+              background: theme.palette.background.paper,
             },
           },
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
@@ -105,7 +105,7 @@ const components: Components<Omit<Theme, 'components'>> = {
               height: '24px',
             },
           },
-        },
+        }),
       },
       {
         props: { variant: 'outlined' },
@@ -116,11 +116,13 @@ const components: Components<Omit<Theme, 'components'>> = {
           padding: '13px 32px',
           height: '50px',
           marginTop: '10px',
-          borderColor: theme.palette.primary.main,
+          borderColor: theme.palette.mode === 'dark' ? theme.palette.grey2.main : theme.palette.primary.main,
+          color: theme.palette.mode === 'dark' ? theme.palette.grey1.main : theme.palette.primary.main,
           '@media(hover: hover)': {
             '&:hover': {
               backgroundColor: theme.palette.primary.main,
-              color: theme.palette.white.main,
+              color: theme.palette.mode === 'dark' ? theme.palette.black.main : theme.palette.white.main,
+              borderColor: theme.palette.primary.main,
             },
           },
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
@@ -396,11 +398,11 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiSelect: {
     styleOverrides: {
       select: {
-        '@media(hover: hover)': {
+        '@media(hover: hover)': ({ theme }: { theme: Theme }) => ({
           '& :hover': {
-            background: 'white',
+            background: theme.palette.background.paper,
           },
-        },
+        }),
       },
     },
   },
@@ -584,17 +586,21 @@ const components: Components<Omit<Theme, 'components'>> = {
   },
   MuiOutlinedInput: {
     styleOverrides: {
-      input: {
+      input: ({ theme }: { theme: Theme }) => ({
         '&::placeholder': {
-          color: (theme: Theme) => theme.palette.primary.main,
+          color: theme.palette.mode === 'dark' ? theme.palette.grey2.main : theme.palette.grey1.main,
+          opacity: 0.8,
         },
-      },
+      }),
       root: {
         '&.Mui-focused>.MuiOutlinedInput-notchedOutline': {
           borderWidth: 1,
         },
         '.MuiOutlinedInput-notchedOutline': ({ theme }: { theme: Theme }) => ({
-          border: `1px solid ${theme.palette.grey4.main}`,
+          border: `1px solid ${theme.palette.mode === 'dark' ? theme.palette.grey3.main : theme.palette.grey4.main}`,
+        }),
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': ({ theme }: { theme: Theme }) => ({
+          borderColor: theme.palette.primary.main,
         }),
       },
     },

@@ -1,47 +1,47 @@
 import { PaletteColor, PaletteColorOptions } from "@mui/material";
 
 export const lightColors = {
-  menubar: '#3c699e', // Correct GitHub Accent Blue
-  primary1: '#1f2328', // GitHub Primary Text
-  primary2: '#3c699e', // Correct GitHub Accent Blue
-  primary3: '#656d76', // GitHub Muted Text
-  black: '#1f2328', // GitHub Primary Text (as black equivalent)
-  grey1: '#656d76', // GitHub Muted Text
-  grey2: '#8c959f', // GitHub Intermediate Grey
-  grey3: '#d0d7de', // GitHub Border Grey (lighter)
-  grey4: '#d0d7de', // GitHub Border Grey
-  grey5: '#f6f8fa', // GitHub Subtle Background
-  grey6: '#ffffff', // GitHub Default Background
-  white: '#ffffff', // GitHub Default Background (as white equivalent)
-  success: '#1a7f37', // GitHub Success Green
-  warning: '#9a6700', // GitHub Attention Yellow/Orange
-  error: '#d1242f', // GitHub Danger Red
-  notes: '#fff8c5', // Light yellow - adjust as needed
-  behaviours: '#ddf4ff', // Light blue - adjust as needed
-  overMid: '#dafbe1', // Light green - adjust as needed
-  underMid: '#ffebe9', // Light red - adjust as needed
+  menubar: '#4a90a4', // Softer teal-blue to match dark theme's warmer approach
+  primary1: '#2d3748', // Warmer dark grey instead of harsh black
+  primary2: '#4a90a4', // Consistent with menubar color
+  primary3: '#718096', // Warmer muted text color
+  black: '#2d3748', // Warmer black equivalent
+  grey1: '#718096', // Warmer muted text
+  grey2: '#a0aec0', // Softer intermediate grey
+  grey3: '#e2e8f0', // Softer border grey
+  grey4: '#edf2f7', // Light border grey
+  grey5: '#f7fafc', // Very light background with warmth
+  grey6: '#ffffff', // Pure white for contrast where needed
+  white: '#f7fafc', // Soft off-white as default 'white'
+  success: '#38a169', // Warmer success green
+  warning: '#d69e2e', // Warmer amber warning
+  error: '#e53e3e', // Softer red error
+  notes: '#fefcbf', // Warmer light yellow
+  behaviours: '#bee3f8', // Softer light blue
+  overMid: '#c6f6d5', // Softer light green
+  underMid: '#fed7d7', // Softer light red
 }
 
 export const darkColors = {
-  menubar: '#3b7dc9', // GitHub Dark Accent Blue
-  primary1: '#e6edf3', // GitHub Dark Primary Text
-  primary2: '#58a6ff', // GitHub Dark Accent Blue (can adjust)
-  primary3: '#7d8590', // GitHub Dark Muted Text
-  black: '#e6edf3', // GitHub Dark Primary Text (as black equivalent)
-  grey1: '#7d8590', // GitHub Dark Muted Text
-  grey2: '#6e7681', // GitHub Dark Intermediate Grey
-  grey3: '#484f58', // GitHub Dark Border Grey (lighter)
-  grey4: '#30363d', // GitHub Dark Border Grey
-  grey5: '#161b22', // GitHub Dark Subtle Background
-  grey6: '#0d1117', // GitHub Dark Default Background
-  white: '#0d1117', // GitHub Dark Default Background (as white equivalent)
-  success: '#3fb950', // GitHub Dark Success Green
-  warning: '#d29922', // GitHub Dark Attention Yellow/Orange
-  error: '#f85149', // GitHub Dark Danger Red
-  notes: '#4d4400', // Dark yellow - adjust as needed
-  behaviours: '#103d60', // Dark blue - adjust as needed
-  overMid: '#104d20', // Dark green - adjust as needed
-  underMid: '#631710', // Dark red - adjust as needed
+  menubar: '#4a90a4', // Softer teal-blue, less harsh than pure blue
+  primary1: '#e8f4f8', // Softer white with slight blue tint
+  primary2: '#6bb6ff', // Brighter, friendlier blue with better contrast
+  primary3: '#9ca3af', // Warmer grey for muted text
+  black: '#e8f4f8', // Softer white equivalent
+  grey1: '#9ca3af', // Warmer muted text color
+  grey2: '#6b7280', // Medium grey with warmth
+  grey3: '#4b5563', // Darker grey with better contrast
+  grey4: '#374151', // Rich dark grey for borders
+  grey5: '#1f2937', // Warmer dark background (not pure black)
+  grey6: '#111827', // Main background - dark but not harsh
+  white: '#111827', // Dark background equivalent
+  success: '#10b981', // Modern emerald green
+  warning: '#f59e0b', // Warmer amber warning
+  error: '#ef4444', // Softer red, less aggressive
+  notes: '#92400e', // Warmer dark amber for notes
+  behaviours: '#1e40af', // Rich navy blue for behaviors
+  overMid: '#065f46', // Rich dark green
+  underMid: '#991b1b', // Rich dark red
 };
 
 // Store main hex codes for custom "dim" colors
@@ -145,8 +145,8 @@ export const lightPalette = {
     main: lightColors.behaviours
   },
   background: {
-    default: lightColors.grey6,
-    paper: lightColors.white,
+    default: lightColors.white, // Use soft off-white for main background
+    paper: lightColors.grey5,   // Use very light warm background for cards/papers
   },
   text: {
     primary: lightColors.primary1,

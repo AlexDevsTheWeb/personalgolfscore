@@ -4,6 +4,23 @@
 		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
 		"headers": [
 			{
+				"source": "/",
+				"headers": [
+					{
+						"key": "Cross-Origin-Embedder-Policy",
+						"value": "unsafe-none"
+					},
+					{
+						"key": "Cross-Origin-Opener-Policy",
+						"value": "same-origin-allow-popups"
+					},
+					{
+						"key": "Cross-Origin-Resource-Policy",
+						"value": "cross-origin"
+					}
+				]
+			},
+			{
 				"source": "**/*.@(js|css|map)",
 				"headers": [
 					{

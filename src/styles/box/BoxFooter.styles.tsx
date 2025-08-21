@@ -15,7 +15,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary,
   backgroundColor: theme.palette.background.paper,
   padding: '10px 0px',
-  borderTop: `1px solid %{theme.palette.divider}`,
+  borderTop: `1px solid ${theme.palette.divider}`,
   marginTop: '20px'
 }));
 
