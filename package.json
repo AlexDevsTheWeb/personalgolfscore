@@ -42,6 +42,13 @@
 		"build:check": "NODE_OPTIONS='--max-old-space-size=8192' tsc --noEmit && vite build",
 		"type-check": "NODE_OPTIONS='--max-old-space-size=8192' tsc --noEmit",
 		"serve": "vite preview",
+		"test": "vitest",
+		"test:watch": "vitest --watch",
+		"test:coverage": "vitest --coverage",
+		"test:calc": "tsx src/dev-tools/testRunner.ts",
+		"test:calc:quick": "tsx src/dev-tools/testRunner.ts quick",
+		"test:calc:edge": "tsx src/dev-tools/testRunner.ts edge",
+		"test:calc:all": "tsx src/dev-tools/testRunner.ts all",
 		"release": "release-it"
 	},
 	"eslintConfig": {
@@ -68,6 +75,7 @@
 		"@vitest/coverage-v8": "^3.1.4",
 		"jsdom": "^25.0.1",
 		"release-it": "^19.0.2",
+		"tsx": "^4.20.4",
 		"vitest": "^3.1.4"
 	}
 }
