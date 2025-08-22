@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 
+import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { RootState } from '@/store/store';
 import { IBasicRoundData } from '@/types/roundData.types';
 import { IRoundDetails } from '@/types/roundDetails.types';
@@ -14,6 +15,7 @@ interface IRoundsProps {
 
 const Rounds = ({ rounds }: IRoundsProps) => {
 
+
   const { isLoading } = useSelector((store: RootState) => store.rounds);
 
   if (!!isLoading) {
@@ -22,7 +24,7 @@ const Rounds = ({ rounds }: IRoundsProps) => {
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <Box display={'flex'} flexDirection={'row'} gap={'10px'}>
+      <Box display={'flex'} flexDirection={useDeviceDetection().isMobile ? 'column' : 'row'} gap={1}>
         {
           rounds.length > 0
             ? rounds.map((round, index) => {
@@ -33,7 +35,7 @@ const Rounds = ({ rounds }: IRoundsProps) => {
       </Box>
 
       <RoundsButtons />
-    </Box>
+    </Box >
 
   )
 }
