@@ -8,6 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Spinner from './components/common/spinner/Spinner.component';
 import SignupForm from './components/LoginForm/SignupForm.component';
 import AddNewRound from './pages/AddNewRound.page';
+import AllRounds from './pages/AllRounds.page';
 import ClubsPage from "./pages/Clubs.page";
 import DashboardPage from "./pages/Dashboard.page";
 import Error from './pages/Error.page';
@@ -42,6 +43,7 @@ const App: React.FC = () => {
                   <Route index element={<DashboardPage />} />
                   <Route path="/dashboard" element={<DashboardPage />} />
                   <Route path="/clubs" element={<ClubsPage />} />
+                  <Route path="/all-rounds" element={<AllRounds />} />
                   <Route path="/round/:roundID" element={<RoundsData />} />
                   <Route path='/addNewRound' element={<AddNewRound />} />
                   <Route path='/statistics' element={<Statistics />} />

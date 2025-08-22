@@ -9,6 +9,7 @@ type StackHolesPointsProps = StackPropsMui & {
 
 const StyledStack = styled(StackMui)<StackProps>(() => ({
   rowGap: 2,
+  minWidth: '120px'
 }));
 
 const formatScoreString = (score: number): string => {
@@ -29,7 +30,7 @@ const StackHolesPoints: React.FC<StackHolesPointsProps> = React.memo((props) => 
   const underPar = roundStrokes <= coursePar + playerHCP;
   return (
     <StyledStack {...restProps}>
-      <ShotsTableHeaderStack firstRow={'Score'} secondRow={'TOT | NET | GROSS'} />
+      <ShotsTableHeaderStack firstRow={''} secondRow={'TOT | NET | GROSS'} />
       <Typography
         fontWeight={'bold'}
         sx={{

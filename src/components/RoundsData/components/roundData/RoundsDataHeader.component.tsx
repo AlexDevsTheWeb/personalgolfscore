@@ -1,18 +1,19 @@
-import StackHoles from "@/styles/stack/StackHoles.styles";
 import StackHolesPoints from "@/styles/stack/StackHolesPoints.styles";
 import { IRoundMainDataProp } from "@/types/props.types";
-import { Box, Grid } from "@mui/material";
+import { Box, Card, CardActionArea, CardActions, CardContent, CardHeader, Stack, Typography } from "@mui/material";
 import dayjs from "dayjs";
-
+import { useNavigate } from "react-router-dom";
 
 const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
+  const navigate = useNavigate();
   const {
+    id,
     roundCourse,
     roundDate,
     roundPar,
     roundTee,
     roundPlayingHCP,
-    holes,
+    roundHoles,
     totals,
   } = round;
 
@@ -25,33 +26,36 @@ const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
   const overParGross = roundStrokes ? score - (par + playingHCP) : 0;
   const formattedDate = roundDate ? dayjs(roundDate).format('DD/MM/YYYY') : 'N/A';
 
+  const handleCardActionAreaClick = () => {
+    navigate(`/round/${id}`);
+  };
+
   return (
-    <Box sx={{ width: '100%' }} flexGrow={1}>
-      <Grid container spacing={2} sx={{ flexWrap: 'wrap', justifyContent: 'space-between' }}>
-        <Grid size={{ xs: 5, md: 5, lg: 3 }}>
-          <StackHoles name={'Course'} value={roundCourse || 'N/A'} />
-        </Grid>
-        <Grid size={{ xs: 4, md: 3, lg: 2 }}>
-          <StackHoles name={'Date'} value={formattedDate} />
-        </Grid>
-        <Grid size={{ xs: 3, md: 3, lg: 1 }}>
-          <StackHoles name={'Tees'} value={roundTee || 'N/A'} />
-        </Grid>
-        <Grid size={{ xs: 2, md: 3, lg: 1 }}>
-          {/* Use holes array length */}
-          <StackHoles name={'Holes'} value={holes?.length || 0} />
-        </Grid>
-        <Grid size={{ xs: 2, md: 3, lg: 1 }}>
-          <StackHoles name={'Par'} value={par} />
-        </Grid>
-        <Grid size={{ xs: 2, md: 3, lg: 1 }}>
-          <StackHoles name={'HCP'} value={playingHCP} />
-        </Grid>
-        <Grid size={{ xs: 6, md: 3, lg: 3 }}>
-          <StackHolesPoints round={round} />
-        </Grid>
-      </Grid>
-    </Box>
+
+    <Stack gap={3}>
+      <CardActionArea onClick={handleCardActionAreaClick}>
+        <Card>
+          <CardHeader title={`${roundCourse}`} />
+          <CardContent sx={{ py: 0 }}>
+            <Box sx={{ display: 'flex', gap: 4, flexDirection: 'row' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>{formattedDate}</Typography>
+                <Typography gutterBottom sx={{ color: 'text.primary', fontSize: 14 }}>
+                  {`Par: ${par} | HCP: ${playingHCP} | Holes: ${roundHoles}`}
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <StackHolesPoints round={round} />
+              </Box>
+            </Box>
+          </CardContent>
+          <CardActions>
+            {/* <Button size="small">Learn More</Button> */}
+          </CardActions>
+        </Card>
+      </CardActionArea>
+    </Stack>
+
   )
 }
 

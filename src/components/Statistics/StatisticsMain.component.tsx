@@ -22,9 +22,9 @@ const StatisticsMain = () => {
 
   return (
     <Stack sx={{ gap: 2 }}>
-      <Typography variant="headline6" component="h2" gutterBottom sx={{ mt: 3, textAlign: 'center' }}>
+      {/* <Typography variant="headline6" component="h2" gutterBottom sx={{ mt: 3, textAlign: 'center' }}>
         All Statistics
-      </Typography>
+      </Typography> */}
       <HolebyHoleTotals roundTotals={displayableAverages} dashboard={true} />
     </Stack>
   );

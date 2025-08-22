@@ -13,7 +13,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   width: '100%',
   color: theme.palette.text.secondary,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.grey6.dark,
   padding: '10px 0px',
   borderTop: `1px solid ${theme.palette.divider}`,
   marginTop: '20px'

@@ -1,12 +1,11 @@
 import { resetSetFirstHole } from "@/features/newRound/newRoundMain.slice";
 import { RootState } from "@/store/store";
-import BoxBetween from "@/styles/box/BoxBetween.styles";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../common/spinner/Spinner.component";
 import Rounds from "../Rounds/Rounds.component";
-import StatisticsMain from "../Statistics/StatisticsMain.component";
+import RoundsButtons from "../Rounds/RoundsButtons.component";
 import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
 import ChartsMain from "./components/Charts/ChartsMain.component";
 
@@ -17,9 +16,6 @@ const Dashboard = () => {
   const { player } = useSelector((store: RootState) => store.player);
   const { isLoading } = useSelector((store: RootState) => store.controls);
 
-  const handleClickStatistic = () => {
-    navigate(`/statistics`);
-  };
   const handleAddNewRound = () => {
     dispatch(resetSetFirstHole());
     navigate('/addNewRound')
@@ -38,24 +34,11 @@ const Dashboard = () => {
         rounds.length > 0
           ? (
             <>
-              <Rounds />
+              <Rounds rounds={rounds.slice(0, 5)} />
               <ChartsMain />
-              <StatisticsMain />
+              {/* <StatisticsMain /> */}
 
-              <BoxBetween sx={{ gap: 0, mt: 0 }}>
-                <Button
-                  variant='contained'
-                  onClick={handleAddNewRound}
-                >
-                  Add new Round
-                </Button>
-                <Button
-                  variant='contained'
-                  onClick={handleClickStatistic}
-                >
-                  View Full Statistics
-                </Button>
-              </BoxBetween>
+              <RoundsButtons />
             </>
           )
           :

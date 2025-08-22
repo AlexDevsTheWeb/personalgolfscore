@@ -19,17 +19,18 @@ const ChartsMain = () => {
         <Grid size={{ xs: 12, md: 6 }}>
           <PointsChart />
         </Grid>
-        <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
-          <DistancesTotals />
+        <Grid size={{ xs: 12, md: 4 }}>
+          <PuttsChart />
         </Grid>
-        <Grid size={{ xs: 12, sm: 12, md: 6, lg: 3 }}>
+
+        <Grid size={{ xs: 12, md: 3, lg: 4 }}>
           <FairwayHitsChart />
         </Grid>
-        <Grid size={{ xs: 12, sm: 12, md: 6, lg: 2 }}>
+        <Grid size={{ xs: 12, md: 3, lg: 4 }}>
           <GirPercentageChart />
         </Grid>
-        <Grid size={{ xs: 12, sm: 12, md: 6, lg: 3 }}>
-          <PuttsChart />
+        <Grid size={{ xs: 12 }}>
+          <DistancesTotals />
         </Grid>
       </Grid>
     </>

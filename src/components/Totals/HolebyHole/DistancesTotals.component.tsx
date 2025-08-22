@@ -1,16 +1,23 @@
 import Header from '@/components/common/header/Header.component';
 import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
+import { IDistance } from '@/types/roundData.types';
 import { getClubsNames } from '@/utils/round/round.utils';
 import { Box, Typography, useTheme } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-const DistancesTotals: React.FC = () => {
+interface IDistancesCharts {
+  distances?: IDistance[] | undefined
+
+}
+
+const DistancesTotals: React.FC<IDistancesCharts> = ({ distances }) => {
   const { player } = useSelector((store: RootState) => store.player);
   const { golfBag, totalDistancesAVG } = player || {};
   const theme = useTheme();
+  const internalDistanes = distances || totalDistancesAVG || [];
 
   const selectedClubNames = useMemo(() => {
     if (!golfBag || golfBag.length === 0) {
@@ -27,15 +34,15 @@ const DistancesTotals: React.FC = () => {
 
   const distanceMap = useMemo(() => {
     const map = new Map<string, number>();
-    if (totalDistancesAVG) {
-      totalDistancesAVG.forEach((distAvg: { club: string; avg: number }) => {
+    if (internalDistanes) {
+      internalDistanes.forEach((distAvg: { club: string; avg: number }) => {
         if (distAvg.club && typeof distAvg.avg === 'number') {
           map.set(distAvg.club, distAvg.avg);
         }
       });
     }
     return map;
-  }, [totalDistancesAVG]);
+  }, [internalDistanes]);
 
   const chartGetCorrectClubName = (clubName: string) => {
     if (clubName.toLowerCase().includes('wedge')) {
@@ -75,12 +82,13 @@ const DistancesTotals: React.FC = () => {
     );
   }
 
+  console.log("totalDistancesAVG", totalDistancesAVG);
   return (
-    <Paper>
+    <Paper sx={{ width: distances ? '50%' : '100%' }}>
       <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', pt: 2, px: 2 }}>
         Average Club Distances
       </Typography>
-      <Box sx={{ flexGrow: 1, width: '100%', p: { xs: 1, sm: 1 }, mt: 1 }}>
+      <Box sx={{ flexGrow: 1, width: 'auto', p: { xs: 1, sm: 1 }, mt: 1 }}>
         <BarChart
           dataset={chartData}
           xAxis={[{ scaleType: 'band', dataKey: 'club' }]} // Club names on X-axis

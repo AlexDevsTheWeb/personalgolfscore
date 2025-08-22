@@ -1,26 +1,20 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { resetSetFirstHole } from '@/features/newRound/newRoundMain.slice';
 import { RootState } from '@/store/store';
-import BoxBetween from '@/styles/box/BoxBetween.styles';
-import { Box, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { BoxOverflow } from '../../styles';
+import { IBasicRoundData } from '@/types/roundData.types';
+import { IRoundDetails } from '@/types/roundDetails.types';
+import { Box } from '@mui/material';
 import Spinner from '../common/spinner/Spinner.component';
-import RoundsTable from './RoundsTable.component';
+import RoundsDataHeader from '../RoundsData/components/roundData/RoundsDataHeader.component';
+import RoundsButtons from './RoundsButtons.component';
 
-const Rounds = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+interface IRoundsProps {
+  rounds: IBasicRoundData[];
+}
+
+const Rounds = ({ rounds }: IRoundsProps) => {
+
   const { isLoading } = useSelector((store: RootState) => store.rounds);
-
-  const handleClickStatistic = () => {
-    navigate(`/statistics`);
-  };
-  const handleAddNewRound = () => {
-    dispatch(resetSetFirstHole());
-    navigate('/addNewRound')
-  }
 
   if (!!isLoading) {
     return <Spinner />
@@ -28,23 +22,17 @@ const Rounds = () => {
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <BoxOverflow direction='horizontal' variant='table'>
-        <RoundsTable />
-        <BoxBetween sx={{ mt: 0, gap: 0 }}> {/* Added padding for buttons on smaller screens */}
-          <Button
-            variant='contained'
-            onClick={handleAddNewRound}
-          >
-            Add new Round
-          </Button>
-          <Button
-            variant='contained'
-            onClick={handleClickStatistic}
-          >
-            View Full Statistics
-          </Button>
-        </BoxBetween>
-      </BoxOverflow>
+      <Box display={'flex'} flexDirection={'row'} gap={'10px'}>
+        {
+          rounds.length > 0
+            ? rounds.map((round, index) => {
+              return <RoundsDataHeader round={round as IRoundDetails} key={index} />
+            })
+            : null
+        }
+      </Box>
+
+      <RoundsButtons />
     </Box>
 
   )

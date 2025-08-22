@@ -17,6 +17,7 @@ import Header from '../common/header/Header.component';
 import Spinner from '../common/spinner/Spinner.component';
 import EmptyRounds from '../Dashboard/components/EmptyRounds/EmptyRounds.component';
 import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
+import DistancesTotals from '../Totals/HolebyHole/DistancesTotals.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import RoundsDataHeader from './components/roundData/RoundsDataHeader.component';
 
@@ -32,6 +33,7 @@ const RoundsDataMain = () => {
 
   const [openHoleByHole, setOpenHoleByHole] = useState<boolean>(false);
   const [openDistances, setOpenDistances] = useState<boolean>(true);
+  console.log("round QUI: ", round?.distances);
 
   useEffect(() => {
     if (params.roundID && playerId) {
@@ -117,11 +119,14 @@ const RoundsDataMain = () => {
     return <EmptyRounds />
   }
 
-
   return (
     <BoxBetween sx={{ width: '100%', flexDirection: 'column', gap: 2 }}>
-      {/* Round Header */}
-      <RoundsDataHeader round={round} />
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, width: '100%', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <RoundsDataHeader round={round} />
+        {allClubNamesFromBag.length > 0 && (
+          <DistancesTotals distances={round.distances} />
+        )}
+      </Box>
 
       {/* Round Distances Section - Render if there are clubs in the bag */}
       {allClubNamesFromBag.length > 0 && (
