@@ -1,5 +1,4 @@
 import { CHIPCONDITION } from '@/enum/shots.enum';
-import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { RootState } from '@/store/store';
 import { ISelectProps } from '@/types/props.types';
 import { newRoundDisabledSelect } from '@/utils/round/round.utils';
@@ -23,7 +22,7 @@ const Select = (props: ISelectProps) => {
   }, [name, tmpHole]);
 
   return (
-    <FormControl variant='filled' sx={{ width: useDeviceDetection().isMobile ? '48%' : '170px' }}>
+    <FormControl variant='filled' sx={{ width: '100%' }}>
       <InputLabel id="newHole_select">{label}</InputLabel>
       <SelectMui
         value={value !== '0' ? value : ''}

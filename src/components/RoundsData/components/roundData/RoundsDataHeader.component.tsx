@@ -25,19 +25,24 @@ const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
   const overParNet = roundStrokes ? score - par : 0;
   const overParGross = roundStrokes ? score - (par + playingHCP) : 0;
   const formattedDate = roundDate ? dayjs(roundDate).format('DD/MM/YYYY') : 'N/A';
+  const location = window.location.pathname;
 
   const handleCardActionAreaClick = () => {
-    navigate(`/round/${id}`);
+    if (location === `dahsboard`) {
+      navigate(`/round/${id}`);
+    };
   };
 
   return (
 
-    <Stack gap={3}>
-      <CardActionArea onClick={handleCardActionAreaClick}>
+    <Stack gap={2}>
+      <CardActionArea onClick={handleCardActionAreaClick} sx={{
+        cursor: location === `/dashboard` ? 'pointer' : 'default',
+      }}>
         <Card>
           <CardHeader title={`${roundCourse}`} />
           <CardContent sx={{ py: 0 }}>
-            <Box sx={{ display: 'flex', gap: 4, flexDirection: 'row' }}>
+            <Box sx={{ display: 'flex', gap: 4, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center' }}>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>{formattedDate}</Typography>
                 <Typography gutterBottom sx={{ color: 'text.primary', fontSize: 14 }}>

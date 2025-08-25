@@ -63,6 +63,8 @@ export interface IHoleGeneralInfoFormProps {
   fairwayValues: FairwayOption[];
   currentHoleNumber: number;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
+  onSave: () => void;
+  isSaveDisabled: () => boolean;
 }
 
 export interface IHolePenaltiesFormProps {

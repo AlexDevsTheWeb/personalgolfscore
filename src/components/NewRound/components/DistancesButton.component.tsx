@@ -9,7 +9,7 @@ const DistancesButton = () => {
     dispatch(setShowDistances(true))
   }
   return (
-    <Button variant='contained' onClick={handleDistances} sx={{ marginTop: '0px' }}>
+    <Button variant='contained' onClick={handleDistances}>
       DISTANCES
     </Button>
   )

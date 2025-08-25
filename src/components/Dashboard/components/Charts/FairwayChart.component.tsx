@@ -16,7 +16,7 @@ const FairwayHitsChart: React.FC = () => {
   let totalFairwayRight = 0;
   let totalAttempts = 0;
 
-  recentRounds.forEach(round => {
+  recentRounds.forEach((round: any) => {
     if (round.totals && round.totals.fairway) {
       const { fairwayCenter = 0, fairwayLeft = 0, fairwayRight = 0 } = round.totals.fairway;
       totalFairwayCenter += fairwayCenter;

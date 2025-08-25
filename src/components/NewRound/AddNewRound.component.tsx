@@ -10,11 +10,15 @@ const NewRoundMain = () => {
   const setFirstHole = useSelector((state: RootState) => state.newRound.newRoundMain.setFirstHole);
 
   return (
-    <StackNewHole gap={2} spacing={2}>
+    <>
+      <StackNewHole>
+
+        {setFirstHole && <NewRoundMainData />}
+        {setFirstHole && <AddNewRoundHoles />}
+      </StackNewHole>
+
       <AddNewRoundForm />
-      {setFirstHole && <NewRoundMainData />}
-      {setFirstHole && <AddNewRoundHoles />}
-    </StackNewHole>
+    </>
   )
 }
 
