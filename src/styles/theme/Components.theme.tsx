@@ -139,6 +139,7 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'contained' },
         // Make the style a function to access the theme
         style: ({ theme }: { theme: Theme }) => ({
+
           justifyContent: 'center',
           padding: '13px 32px',
           lineHeight: 0,
@@ -147,6 +148,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main,
           color: theme.palette.getContrastText(theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main),
           boxShadow: 'none',
+          marginLeft: '0px',
           '@media(hover: hover)': {
             '&:hover': {
               backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey3.main : theme.palette.primary2.main,

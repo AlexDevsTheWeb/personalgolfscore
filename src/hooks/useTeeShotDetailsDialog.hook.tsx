@@ -5,53 +5,53 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 interface UseTeeShotDetailsDialogProps {
-  tmpHole: Pick<IShots, 'teeClub' | 'par' | 'fairway' | 'driveDistance'>;
-  fairwayValuesConstant: FairwayOption[];
-  // For dispatching actions
-  roundPlayingHCP: number;
-  roundHoles: number;
-  derivedClubsChipClubs: string[];
+	tmpHole: Pick<IShots, 'teeClub' | 'par' | 'fairway' | 'driveDistance'>;
+	fairwayValuesConstant: FairwayOption[];
+	teeClubs: string[];
+	// For dispatching actions
+	roundPlayingHCP: number;
+	roundHoles: number;
+	derivedClubsChipClubs: string[];
 }
 
 export const useTeeShotDetailsDialog = ({
-  tmpHole,
-  fairwayValuesConstant,
-  roundPlayingHCP,
-  roundHoles,
-  derivedClubsChipClubs,
+	tmpHole,
+	fairwayValuesConstant,
+	teeClubs,
+	roundPlayingHCP,
+	roundHoles,
+	derivedClubsChipClubs,
 }: UseTeeShotDetailsDialogProps) => {
-  const dispatch = useDispatch<any>();
-  const [isTeeShotDetailsDialogOpen, setIsTeeShotDetailsDialogOpen] = useState(false);
+	const dispatch = useDispatch<any>();
+	const [isTeeShotDetailsDialogOpen, setIsTeeShotDetailsDialogOpen] = useState(false);
 
-  useEffect(() => {
-    if (tmpHole.teeClub && tmpHole.par !== 3) {
-      setIsTeeShotDetailsDialogOpen(true);
-    } else {
-      setIsTeeShotDetailsDialogOpen(false);
-    }
-  }, [tmpHole.teeClub, tmpHole.par]);
+	const openDialog = () => {
+		setIsTeeShotDetailsDialogOpen(true);
+	};
 
-  const handleClose = () => {
-    setIsTeeShotDetailsDialogOpen(false);
-    // Optional: clear tmpHole.teeClub if cancel should reset selection
-    // dispatch(setTmpHoleData({ name: 'teeClub', value: '', roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
-  };
+	const handleClose = () => {
+		setIsTeeShotDetailsDialogOpen(false);
+	};
 
-  const handleSubmit = (details: { fairway: number; distance: number }) => {
-    dispatch(setTmpHoleData({ name: 'fairway', value: details.fairway, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
-    dispatch(setTmpHoleData({ name: 'driveDistance', value: details.distance, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
-    setIsTeeShotDetailsDialogOpen(false);
-  };
+	const handleSubmit = (details: { fairway: number; distance: number; teeClub: string }) => {
+		dispatch(setTmpHoleData({ name: 'teeClub', value: details.teeClub, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
+		dispatch(setTmpHoleData({ name: 'fairway', value: details.fairway, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
+		dispatch(setTmpHoleData({ name: 'driveDistance', value: details.distance, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
+		setIsTeeShotDetailsDialogOpen(false);
+	};
 
-  return {
-    teeShotDialogProps: {
-      open: isTeeShotDetailsDialogOpen,
-      isPar3: tmpHole.par === 3,
-      initialFairwayValue: tmpHole.fairway || 0,
-      initialDistanceValue: tmpHole.driveDistance || 0,
-      fairwayValues: fairwayValuesConstant,
-      onClose: handleClose,
-      onSubmit: handleSubmit,
-    },
-  };
+	return {
+		openTeeShotDialog: openDialog,
+		teeShotDialogProps: {
+			open: isTeeShotDetailsDialogOpen,
+			isPar3: tmpHole.par === 3,
+			initialFairwayValue: tmpHole.fairway || 0,
+			initialDistanceValue: tmpHole.driveDistance || 0,
+			initialTeeClubValue: tmpHole.teeClub || '',
+			fairwayValues: fairwayValuesConstant,
+			teeClubs: teeClubs,
+			onClose: handleClose,
+			onSubmit: handleSubmit,
+		},
+	};
 };

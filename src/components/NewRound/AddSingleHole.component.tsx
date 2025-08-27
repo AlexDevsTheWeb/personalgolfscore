@@ -18,83 +18,83 @@ import TeeShotDetailsDialog from '../Dialog/TeeShotsDialog.component'; // Assumi
 import HoleGeneralForm from './components/HoleGeneralForm.component';
 
 const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
-  const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
-  const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
-  const { showDistances } = useSelector((store: RootState) => store.controls);
+	const {
+		round: { roundPlayingHCP, roundHoles },
+	} = useSelector((store: RootState) => store.newRound.newRoundMain);
+	const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
+	const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
+	const { showDistances } = useSelector((store: RootState) => store.controls);
 
-  const [puttsLength, setPuttsLength] = useState<number[]>([]);
-  const [currentHoleNumber, setCurrentHoleNumber] = useState<number>(1);
+	const [puttsLength, setPuttsLength] = useState<number[]>([]);
+	const [currentHoleNumber, setCurrentHoleNumber] = useState<number>(1);
 
-  useEffect(() => {
-    setCurrentHoleNumber(holesCompleted + 1);
-  }, [holesCompleted]);
+	useEffect(() => {
+		setCurrentHoleNumber(holesCompleted + 1);
+	}, [holesCompleted]);
 
-  const {
-    handleChange,
-    handleSaveHole,
-    isSaveDisabled,
-    missingShotsDialogProps,
-  } = useHoleFormManager({
-    tmpHole,
-    derivedClubs,
-    roundPlayingHCP,
-    roundHoles,
-    holesCompleted,
-    puttsLength, // Pass current puttsLength
-    fairwayValuesConstant: fairwayValues,
-  });
+	const { handleChange, handleSaveHole, isSaveDisabled, missingShotsDialogProps } = useHoleFormManager({
+		tmpHole,
+		derivedClubs,
+		roundPlayingHCP,
+		roundHoles,
+		holesCompleted,
+		puttsLength, // Pass current puttsLength
+		fairwayValuesConstant: fairwayValues,
+	});
 
-  const { puttsDialogProps } = usePuttsInputDialog({
-    tmpHolePutts: tmpHole.putts || 0,
-    initialPuttsLength: puttsLength,
-    onPuttsLengthChange: setPuttsLength, // Callback to update parent state
-  });
+	const { puttsDialogProps } = usePuttsInputDialog({
+		tmpHolePutts: tmpHole.putts || 0,
+		initialPuttsLength: puttsLength,
+		onPuttsLengthChange: setPuttsLength, // Callback to update parent state
+	});
 
-  const { teeShotDialogProps } = useTeeShotDetailsDialog({
-    tmpHole,
-    fairwayValuesConstant: fairwayValues,
-    roundPlayingHCP,
-    roundHoles,
-    derivedClubsChipClubs: derivedClubs.chipClubs,
-  });
+	const { teeShotDialogProps, openTeeShotDialog } = useTeeShotDetailsDialog({
+		tmpHole,
+		fairwayValuesConstant: fairwayValues,
+		teeClubs: derivedClubs.teeClubs,
+		roundPlayingHCP,
+		roundHoles,
+		derivedClubsChipClubs: derivedClubs.chipClubs,
+	});
 
-  const { approachDialogProps } = useApproachDetailsDialog({
-    tmpHole,
-    derivedClubsChipClubs: derivedClubs.chipClubs,
-    greenSideValuesConstant: greenSideValues,
-    roundPlayingHCP,
-    puttsLength, // Pass puttsLength
-    roundHoles,
-  });
+	const { approachDialogProps } = useApproachDetailsDialog({
+		tmpHole,
+		derivedClubsChipClubs: derivedClubs.chipClubs,
+		greenSideValuesConstant: greenSideValues,
+		roundPlayingHCP,
+		puttsLength, // Pass puttsLength
+		roundHoles,
+	});
 
-  // Effect to reset puttsLength when a hole is successfully saved (tmpHole is reset)
-  useEffect(() => {
-    if (tmpHole.holeNumber === 0 && tmpHole.par === 0 && tmpHole.strokes === 0) { // Heuristic for reset
-      setPuttsLength([]);
-    }
-  }, [tmpHole.holeNumber, tmpHole.par, tmpHole.strokes]);
+	// Effect to reset puttsLength when a hole is successfully saved (tmpHole is reset)
+	useEffect(() => {
+		if (tmpHole.holeNumber === 0 && tmpHole.par === 0 && tmpHole.strokes === 0) {
+			// Heuristic for reset
+			setPuttsLength([]);
+		}
+	}, [tmpHole.holeNumber, tmpHole.par, tmpHole.strokes]);
 
-  const hcpList = Number(roundHoles) === 18 ? hcpList18 : hcpList9;
-  const usedHCPs = holes.map(hole => hole.hcp);
-  const newHCPList = hcpList.filter(hcp => !usedHCPs.includes(Number(hcp)));
+	const hcpList = Number(roundHoles) === 18 ? hcpList18 : hcpList9;
+	const usedHCPs = holes.map(hole => hole.hcp);
+	const newHCPList = hcpList.filter(hcp => !usedHCPs.includes(Number(hcp)));
 
-  return (
-    <Grid container spacing={2} sx={{ width: useDeviceDetection().isMobileDevice ? '100%' : '70%' }}>
-      <HoleGeneralForm
-        holeData={tmpHole}
-        hcpList={newHCPList}
-        parList={parList}
-        teeClubs={derivedClubs.teeClubs}
-        greenClubs={derivedClubs.greenClubs}
-        fairwayValues={fairwayValues}
-        currentHoleNumber={currentHoleNumber}
-        onChange={handleChange}
-        onSave={handleSaveHole}
-        isSaveDisabled={isSaveDisabled}
-      />
+	return (
+		<Grid container spacing={2} sx={{ width: useDeviceDetection().isMobileDevice ? '100%' : '70%' }}>
+			<HoleGeneralForm
+				holeData={tmpHole}
+				hcpList={newHCPList}
+				parList={parList}
+				teeClubs={derivedClubs.teeClubs}
+				greenClubs={derivedClubs.greenClubs}
+				fairwayValues={fairwayValues}
+				currentHoleNumber={currentHoleNumber}
+				onChange={handleChange}
+				onSave={handleSaveHole}
+				isSaveDisabled={isSaveDisabled}
+				onOpenTeeShotDialog={openTeeShotDialog}
+			/>
 
-      {/* <Grid size={{ xs: 12, md: 1, lg: 1 }}>
+			{/* <Grid size={{ xs: 12, md: 1, lg: 1 }}>
         <Paper elevation={1} sx={{ p: 2, height: '100%' }}>
           <Typography variant="headline6" gutterBottom component="div">
             Actions
@@ -103,13 +103,13 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
         </Paper>
       </Grid> */}
 
-      {!!showDistances && <ClubDistanceDialog open={showDistances} />}
-      <MissingShotsDialog {...missingShotsDialogProps} />
-      <PuttsInputDialog {...puttsDialogProps} />
-      <TeeShotDetailsDialog {...teeShotDialogProps} />
-      <ApproachDetailsDialog {...approachDialogProps} />
-    </Grid>
-  )
-}
+			{!!showDistances && <ClubDistanceDialog open={showDistances} />}
+			<MissingShotsDialog {...missingShotsDialogProps} />
+			<PuttsInputDialog {...puttsDialogProps} />
+			<TeeShotDetailsDialog {...teeShotDialogProps} />
+			<ApproachDetailsDialog {...approachDialogProps} />
+		</Grid>
+	);
+};
 
-export default AddSingleHole
+export default AddSingleHole;
