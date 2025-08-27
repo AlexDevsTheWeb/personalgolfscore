@@ -29,19 +29,28 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
   const waterValue = holeData.water !== 0 ? holeData.water : '';
   const outValue = holeData.out !== 0 ? holeData.out : '';
 
-  const [dialogOpen, setDialogOpen] = useState<"general" | "putts" | "tee" | "approach" | "penalties" | null>(null);
+  const [dialogOpen, setDialogOpen] = useState<"general" | "tee" | "putts" | "approach" | "penalties" | null>(null);
 
-  const newHoleItems = ["general", "putts", "tee", "approach", "penalties"];
-  console.log("dialog open:", dialogOpen)
+  const newHoleItems = ["general", "tee", "putts", "approach", "penalties"];
+
+  const handleGeneralFormData = (e: any) => {
+    onChange({ target: { name: e.target.name, value: e.target.value ? Number(e.target.value) : 0 } } as any);
+  }
+
   return (
     <>
       <Card sx={{ width: '100%' }}>
         <CardHeader title={`Hole ${currentHoleNumber} Informations`} />
         <CardContent>
           <Grid container spacing={1} columns={{ xs: 2, sm: 4, lg: 12 }}>
-            {newHoleItems.map((item: string, index: number) => (
-              <Grid key={index} size={{ xs: 2, sm: 4, lg: 2 }}>
-                <Button variant='contained' onClick={() => setDialogOpen(item as "general" | "putts" | "tee" | "approach" | "penalties")} sx={{ width: '100%' }}>{item}</Button>
+            <Grid size={{ xs: 2, sm: 4, lg: 2 }}>
+              <Button variant='contained' onClick={() => setDialogOpen("general")} sx={{ width: '100%' }}>
+                General
+              </Button>
+            </Grid>
+            {newHoleItems.filter(item => item !== "general").map((item: string, index: number) => (
+              <Grid key={index} size={{ xs: 1, sm: 4, lg: 2 }}>
+                <Button variant='contained' onClick={() => setDialogOpen(item as "general" | "tee" | "putts" | "approach" | "penalties")} sx={{ width: '100%' }}>{item}</Button>
               </Grid>
             ))}
             <Grid size={{ xs: 2, sm: 4, lg: 2 }}>
@@ -62,9 +71,7 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
             <Select
               name={'par'}
               list={parList}
-              onChange={(event: any, newValue: any) => {
-                onChange({ target: { name: 'par', value: newValue ? Number(newValue) : 0 } } as any);
-              }}
+              onChange={handleGeneralFormData}
               value={holeData.par ? holeData.par.toString() : ''}
               label='Hole Par'
             />
