@@ -6,12 +6,10 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
 import MissingShotsDialog from '../Dialog/MissingShotsDialog.component';
-import PuttsInputDialog from '../Dialog/PuttsInputDialog.component'; // Import the new dialog
 
 import { useApproachDetailsDialog } from '@/hooks/useApproachDetailsDialog.hook';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { useHoleFormManager } from '@/hooks/useHoleFormManager.component';
-import { usePuttsInputDialog } from '@/hooks/usePuttsInputDialog.hook';
 import { useTeeShotDetailsDialog } from '@/hooks/useTeeShotDetailsDialog.hook';
 import ApproachDetailsDialog from '../Dialog/ApproachDialog.component';
 import TeeShotDetailsDialog from '../Dialog/TeeShotsDialog.component'; // Assuming TeeShotsDialog is in the general Dialog folder
@@ -42,12 +40,6 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 		fairwayValuesConstant: fairwayValues,
 	});
 
-	const { puttsDialogProps } = usePuttsInputDialog({
-		tmpHolePutts: tmpHole.putts || 0,
-		initialPuttsLength: puttsLength,
-		onPuttsLengthChange: setPuttsLength, // Callback to update parent state
-	});
-
 	const { teeShotDialogProps, openTeeShotDialog } = useTeeShotDetailsDialog({
 		tmpHole,
 		fairwayValuesConstant: fairwayValues,
@@ -75,7 +67,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 	}, [tmpHole.holeNumber, tmpHole.par, tmpHole.strokes]);
 
 	const hcpList = Number(roundHoles) === 18 ? hcpList18 : hcpList9;
-	const usedHCPs = holes.map(hole => hole.hcp);
+	const usedHCPs = holes.map((hole: any) => hole.hcp);
 	const newHCPList = hcpList.filter(hcp => !usedHCPs.includes(Number(hcp)));
 
 	return (
@@ -94,18 +86,8 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 				onOpenTeeShotDialog={openTeeShotDialog}
 			/>
 
-			{/* <Grid size={{ xs: 12, md: 1, lg: 1 }}>
-        <Paper elevation={1} sx={{ p: 2, height: '100%' }}>
-          <Typography variant="headline6" gutterBottom component="div">
-            Actions
-          </Typography>
-          <SaveRoundButton onSave={handleSaveHole} disabled={isSaveDisabled()} />
-        </Paper>
-      </Grid> */}
-
 			{!!showDistances && <ClubDistanceDialog open={showDistances} />}
 			<MissingShotsDialog {...missingShotsDialogProps} />
-			<PuttsInputDialog {...puttsDialogProps} />
 			<TeeShotDetailsDialog {...teeShotDialogProps} />
 			<ApproachDetailsDialog {...approachDialogProps} />
 		</Grid>

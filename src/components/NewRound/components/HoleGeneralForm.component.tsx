@@ -1,12 +1,15 @@
+import { setTmpHoleData } from '@/features/hole/holeTmp.slice';
 import { Dialog } from '@/styles/dialog/Dialog.styles';
 import { IHoleGeneralInfoFormProps } from '@/types/props.types';
 import { Autocomplete, Button, Card, CardContent, CardHeader, Grid, TextField } from '@mui/material';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import PuttsInputDialog from '../../Dialog/PuttsInputDialog.component';
 import SaveRoundButton from './SaveRoundButton.component';
 import Select from './Select.component';
 
 const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
-	holeData,
+	holeData, // This holeData now includes puttsLength
 	hcpList,
 	parList,
 	currentHoleNumber,
@@ -17,15 +20,19 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 	onSave,
 	isSaveDisabled,
 	onOpenTeeShotDialog,
-}) => {
+}: IHoleGeneralInfoFormProps) => {
 	const distanceValue = holeData.distance !== 0 ? holeData.distance : '';
 	const strokesValue = holeData.strokes !== 0 ? holeData.strokes : '';
-	const puttsValue = holeData.putts !== 0 ? holeData.putts : '';
 
 	const waterValue = holeData.water !== 0 ? holeData.water : '';
 	const outValue = holeData.out !== 0 ? holeData.out : '';
 
 	const [dialogOpen, setDialogOpen] = useState<'general' | 'tee' | 'putts' | 'approach' | 'penalties' | null>(null);
+	const {
+		player: { roundPlayingHCP, chipClubs },
+		newRound: { newRoundHoles },
+	} = useSelector((state: any) => state);
+	const dispatch = useDispatch();
 
 	const newHoleItems = ['general', 'tee', 'putts', 'approach', 'penalties'];
 
@@ -35,6 +42,9 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 
 	const handleDialogButtonClick = (key: string) => {
 		switch (key) {
+			case "putts":
+				setDialogOpen(key as any);
+				break;
 			case "tee":
 				setDialogOpen(null);
 				onOpenTeeShotDialog?.();
@@ -45,14 +55,19 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 		}
 	}
 
+	const handlePuttsSubmit = (numberOfPutts: number, puttsLength: number[]) => {
+		dispatch(setTmpHoleData({ name: 'putts', value: numberOfPutts, roundPlayingHCP, roundHoles: newRoundHoles.length, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'puttsLength', value: puttsLength, roundPlayingHCP, roundHoles: newRoundHoles.length, chipClubs }));
+	};
+
 	return (
 		<>
 			<Card sx={{ width: '100%' }}>
 				<CardHeader title={`Hole ${currentHoleNumber} Informations`} />
-				<CardContent>
+				<CardContent sx={{ padding: '0px 16px' }}>
 					<Grid container spacing={1} columns={{ xs: 2, sm: 4, lg: 12 }}>
 						<Grid size={{ xs: 2, sm: 4, lg: 2 }}>
-							<Button variant="contained" onClick={() => setDialogOpen('general')} sx={{ width: '100%' }}>
+							<Button variant="contained" onClick={() => handleDialogButtonClick('general')} sx={{ width: '100%' }}>
 								General
 							</Button>
 						</Grid>
@@ -97,9 +112,11 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 				</Grid>
 			</Dialog>
 
-			<Dialog title="Add Putts shots details" open={dialogOpen === 'putts'} onClose={() => setDialogOpen(null)}>
-				<TextField name="putts" label="# of putts" type="number" onChange={onChange} value={puttsValue} variant="filled" sx={{ width: '100%' }} />
-			</Dialog>
+			<PuttsInputDialog
+				open={dialogOpen === 'putts'}
+				onClose={() => setDialogOpen(null)}
+				onSubmit={handlePuttsSubmit}
+			/>
 
 			<Dialog title="Add green approach" open={dialogOpen === 'approach'} onClose={() => setDialogOpen(null)} fullWidth maxWidth="sm">
 				<Autocomplete

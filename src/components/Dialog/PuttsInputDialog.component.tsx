@@ -1,35 +1,18 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Dialog } from '@/styles/dialog/Dialog.styles';
+import { PuttsInputDialogProps } from '@/types/props.types';
+import { TextField, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import PuttsGenerator from '../NewRound/PuttsGenerator.component';
-
-interface PuttsInputDialogProps {
-  open: boolean;
-  numberOfPutts: number;
-  initialPuttsLength: number[];
-  onClose: () => void;
-  onSubmit: (puttsLength: number[]) => void;
-}
 
 const PuttsInputDialog: React.FC<PuttsInputDialogProps> = ({
   open,
-  numberOfPutts,
-  initialPuttsLength,
   onClose,
   onSubmit,
 }) => {
+
   const [currentPuttsLength, setCurrentPuttsLength] = useState<number[]>([]);
   const [puttsNumberArray, setPuttsNumberArray] = useState<number[]>([]);
-
-  useEffect(() => {
-    if (open) {
-      setPuttsNumberArray(Array.from({ length: numberOfPutts }, (_, i) => i + 1));
-      const newLengths = new Array(numberOfPutts).fill(0);
-      for (let i = 0; i < Math.min(initialPuttsLength.length, numberOfPutts); i++) {
-        newLengths[i] = initialPuttsLength[i] ?? 0;
-      }
-      setCurrentPuttsLength(newLengths);
-    }
-  }, [open, numberOfPutts, initialPuttsLength]);
+  const [puttNumber, setPuttsNumber] = useState<number>(0);
 
   const handleChangePuttLength = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -43,32 +26,49 @@ const PuttsInputDialog: React.FC<PuttsInputDialogProps> = ({
     setCurrentPuttsLength(newPuttsLength);
   };
 
+  const handlePuttsNumberChange = (value: number) => {
+    setPuttsNumber(Number(value));
+    setPuttsNumberArray(Array.from({ length: value }, (_, i) => i + 1));
+  }
+
   const handleSubmit = () => {
-    onSubmit(currentPuttsLength);
+    onSubmit(puttNumber, currentPuttsLength);
     onClose();
   };
 
   if (!open) return null;
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Enter Putt Lengths</DialogTitle>
-      <DialogContent>
-        <Typography gutterBottom>
-          Please enter the length (in meters/feet) for each of your {numberOfPutts} putt(s).
-        </Typography>
-        {puttsNumberArray.length > 0 && (
-          <PuttsGenerator
-            puttsNumber={puttsNumberArray}
-            puttLengths={currentPuttsLength}
-            setPuttDistance={handleChangePuttLength}
-          />
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSubmit} variant="contained">Save Putts</Button>
-      </DialogActions>
+    <Dialog
+      title='Putts lengths'
+      open={open}
+      onClose={onClose}
+      onClick={handleSubmit}
+      onSubmit={handleSubmit}
+    >
+      <TextField
+        variant="filled"
+        name="putts"
+        label="# of putts"
+        type="number"
+        sx={{ width: '100%' }}
+        value={puttNumber}
+        onChange={(e) => handlePuttsNumberChange(Number(e.target.value))}
+      />
+      {puttNumber > 0 &&
+        <>
+          <Typography gutterBottom>
+            Please enter the length (in meters/feet) for each of your {puttNumber} putt(s).
+          </Typography>
+          {puttsNumberArray.length > 0 && (
+            <PuttsGenerator
+              puttsNumber={puttsNumberArray}
+              puttLengths={currentPuttsLength}
+              setPuttDistance={handleChangePuttLength}
+            />
+          )}
+        </>
+      }
     </Dialog>
   );
 };

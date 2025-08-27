@@ -6,6 +6,7 @@ interface IDialogProps extends DialogPropsMui {
   open: boolean;
   title: string
   onClose: () => void;
+  onSubmit?: () => void;
 }
 
 const StyledDialog = styled(DialogMui)(({ theme }) => ({}));
@@ -17,7 +18,7 @@ const StyledDialogActions = styled(DialogActionsMui)(({ theme }) => ({
   margin: '0px 20px 20px 20px'
 }));
 
-export const Dialog: React.FC<IDialogProps> = ({ children, open, onClose, title }) => {
+export const Dialog: React.FC<IDialogProps> = ({ children, open, onClose, title, onSubmit }) => {
   return (
     <StyledDialog
       open={open}
@@ -40,7 +41,7 @@ export const Dialog: React.FC<IDialogProps> = ({ children, open, onClose, title 
         sx={{ flexDirection: useDeviceDetection().isMobile ? 'column-reverse' : 'row', margin: 2.5 }}
       >
         <Button onClick={onClose}>Cancel</Button>
-        <Button variant="contained" onClick={onClose}>Save</Button>
+        <Button variant="contained" onClick={onSubmit}>Save</Button>
       </StyledDialogActions>
     </StyledDialog >
   )

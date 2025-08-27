@@ -14,6 +14,7 @@ export const usePuttsInputDialog = ({
   const [isPuttsInputDialogOpen, setIsPuttsInputDialogOpen] = useState(false);
   // This local state will be used by the dialog and synced with parent via onPuttsLengthChange
   const [currentDialogPuttsLength, setCurrentDialogPuttsLength] = useState<number[]>([]);
+  const [puttsNumber, setPuttsNumber] = useState<number>(0);
   const prevTmpHolePuttsRef = useRef<number>(); // Store previous value of tmpHolePutts
 
   useEffect(() => {
@@ -52,6 +53,9 @@ export const usePuttsInputDialog = ({
     onPuttsLengthChange(newPuttsLengthFromDialog);
     setIsPuttsInputDialogOpen(false);
   };
+  const handleChangeNumofPutts = (e: any) => {
+    setPuttsNumber(e.target.value);
+  }
 
   return {
     puttsDialogProps: {
@@ -60,6 +64,7 @@ export const usePuttsInputDialog = ({
       initialPuttsLength: currentDialogPuttsLength, // Pass the hook's managed lengths
       onClose: handleClose,
       onSubmit: handleSubmit,
+      onChange: handleChangeNumofPutts,
     },
   };
 };

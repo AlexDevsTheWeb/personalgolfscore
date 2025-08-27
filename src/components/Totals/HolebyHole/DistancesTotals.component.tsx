@@ -82,7 +82,6 @@ const DistancesTotals: React.FC<IDistancesCharts> = ({ distances }) => {
     );
   }
 
-  console.log("totalDistancesAVG", totalDistancesAVG);
   return (
     <Paper sx={{ width: distances ? '50%' : '100%' }}>
       <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', pt: 2, px: 2 }}>

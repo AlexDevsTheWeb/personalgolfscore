@@ -6,7 +6,7 @@ import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
 // Define the type for the payload of setTmpHoleData
 interface SetTmpHoleDataPayload {
   name: keyof IShots; // Use keyof IShots for type safety
-  value: string | number | boolean; // Adjust based on possible values
+  value: string | number | number[] | boolean; // Adjust based on possible values
   roundPlayingHCP: number;
   roundHoles: number;
   chipClubs: string[];
@@ -23,6 +23,7 @@ const holeTmpSlice = createSlice({
       const { name, value, roundPlayingHCP, roundHoles, chipClubs } = action.payload;
       const initialValueType = typeof initialState[name];
 
+      console.log(value)
       if (chipClubs !== undefined) {
         state.chipClubs = chipClubs;
       }
@@ -65,6 +66,8 @@ const holeTmpSlice = createSlice({
       } else if (initialValueType === 'boolean') {
         // Handle boolean values if any exist in IShots
         (state as any)[name] = Boolean(value);
+      } else if (initialValueType === 'object') {
+        (state as any)[name] = value;
       }
       state.bounceBack = state.strokes - state.par; // Use state.strokes
       // Ensure the result is always a number, defaulting to 0 if undefined

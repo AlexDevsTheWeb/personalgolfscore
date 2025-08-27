@@ -76,29 +76,34 @@ const TeeShotDetailsDialog: React.FC<TeeShotDetailsDialogProps> = ({
 						renderInput={params => <TextField {...params} label="Tee Club" variant="outlined" fullWidth />}
 					/>
 				</Grid>
-				<Grid size={{ xs: 12 }}>
-					<Autocomplete
-						options={fairwayValues}
-						getOptionLabel={option => option.label || ''}
-						value={fairwayValues.find(fv => fv.value === fairway) || null}
-						onChange={handleFairwayChange}
-						isOptionEqualToValue={(option, value) => option.value === value.value}
-						renderInput={params => <TextField {...params} label="Fairway Position" variant="outlined" fullWidth />}
-						disabled={isPar3}
-					/>
-				</Grid>
-				<Grid size={{ xs: 12 }}>
-					<TextField
-						label="Distance (meters)"
-						type="number"
-						variant="outlined"
-						fullWidth
-						value={distance || ''}
-						onChange={handleDistanceChange}
-						disabled={isPar3}
-						inputProps={{ min: 0 }}
-					/>
-				</Grid>
+
+				{teeClub && !isPar3 && (
+					<>
+						<Grid size={{ xs: 6 }}>
+							<Autocomplete
+								options={fairwayValues}
+								getOptionLabel={option => option.label || ''}
+								value={fairwayValues.find(fv => fv.value === fairway) || null}
+								onChange={handleFairwayChange}
+								isOptionEqualToValue={(option, value) => option.value === value.value}
+								renderInput={params => <TextField {...params} label="Fairway Position" variant="outlined" fullWidth />}
+								disabled={isPar3}
+							/>
+						</Grid>
+						<Grid size={{ xs: 6 }}>
+							<TextField
+								label="Distance (meters)"
+								type="number"
+								variant="outlined"
+								fullWidth
+								value={distance || ''}
+								onChange={handleDistanceChange}
+								disabled={isPar3}
+								inputProps={{ min: 0 }}
+							/>
+						</Grid>
+					</>
+				)}
 			</Grid>
 		</Dialog>
 	);

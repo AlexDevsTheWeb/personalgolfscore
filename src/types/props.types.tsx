@@ -53,7 +53,7 @@ export interface IMainLayoutProps {
 	window?: () => Window;
 }
 
-export interface IBoxProps extends BoxProps {}
+export interface IBoxProps extends BoxProps { }
 
 export interface IHolebyHoleProps {
 	holes: IShots[];
@@ -281,4 +281,10 @@ export interface IPuttsDesktopViewProps {
 
 export interface IPuttsMobileViewProps {
 	puttsStatistics: IPuttsStatistics;
+}
+
+export interface PuttsInputDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (numberOfPutts: number, puttsLength: number[]) => void;
 }
