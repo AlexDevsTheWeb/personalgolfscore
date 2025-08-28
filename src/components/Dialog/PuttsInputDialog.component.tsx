@@ -1,10 +1,10 @@
 import { Dialog } from '@/styles/dialog/Dialog.styles';
-import { PuttsInputDialogProps } from '@/types/props.types';
+import { IPuttsInputDialogProps } from '@/types/props.types';
 import { TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import PuttsGenerator from '../NewRound/PuttsGenerator.component';
 
-const PuttsInputDialog: React.FC<PuttsInputDialogProps> = ({
+const PuttsInputDialog: React.FC<IPuttsInputDialogProps> = ({
   open,
   onClose,
   onSubmit,

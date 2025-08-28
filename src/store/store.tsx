@@ -1,5 +1,6 @@
 import controlsReducer from '@/features/app/controls.slice';
 import holeTmpReducer from '@/features/hole/holeTmp.slice';
+import newRoundClubsReducer from '@/features/newRound/newRoundClubs.slice';
 import newroundDistanceReducer from '@/features/newRound/newRoundDistances.slice';
 import newRoundHolesReducer from '@/features/newRound/newRoundHoles.slice';
 import newRoundMainReducer from '@/features/newRound/newRoundMain.slice';
@@ -48,6 +49,7 @@ const rootReducerObject = {
     newRoundTotals: newRoundTotalsReducer,
     holeTmp: holeTmpReducer,
     newRoundDistances: newroundDistanceReducer,
+    newRoundClubs: newRoundClubsReducer,
   }),
   roundSaver: roundSaverReducer,
   user: userReducer,

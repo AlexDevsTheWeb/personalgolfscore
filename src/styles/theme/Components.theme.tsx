@@ -114,7 +114,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           backgroundColor: 'transparent',
           justifyContent: 'flex-start',
           padding: '13px 32px',
-          height: '50px',
+          height: '40px',
           marginTop: '10px',
           borderColor: theme.palette.mode === 'dark' ? theme.palette.grey2.main : theme.palette.primary.main,
           color: theme.palette.mode === 'dark' ? theme.palette.grey1.main : theme.palette.primary.main,
@@ -591,17 +591,17 @@ const components: Components<Omit<Theme, 'components'>> = {
           opacity: 0.8,
         },
       }),
-      root: {
-        '&.Mui-focused>.MuiOutlinedInput-notchedOutline': {
+      root: ({ theme }: { theme: Theme }) => ({
+        '&.Mui-focused > .MuiOutlinedInput-notchedOutline': {
           borderWidth: 1,
         },
-        '.MuiOutlinedInput-notchedOutline': ({ theme }: { theme: Theme }) => ({
+        '.MuiOutlinedInput-notchedOutline': {
           border: `1px solid ${theme.palette.mode === 'dark' ? theme.palette.grey3.main : theme.palette.grey4.main}`,
-        }),
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': ({ theme }: { theme: Theme }) => ({
+        },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
           borderColor: theme.palette.primary.main,
-        }),
-      },
+        },
+      }),
     },
   },
   MuiIconButton: {

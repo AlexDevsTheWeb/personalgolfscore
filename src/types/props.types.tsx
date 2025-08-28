@@ -1,5 +1,5 @@
 import { BoxProps, SelectChangeEvent, StackProps } from '@mui/material';
-import { IShots } from './roundData.types';
+import { IIntermediateShot, IShots } from './roundData.types';
 import { IRoundDetails } from './roundDetails.types';
 import {
 	IAllRoundsTotals,
@@ -283,8 +283,42 @@ export interface IPuttsMobileViewProps {
 	puttsStatistics: IPuttsStatistics;
 }
 
-export interface PuttsInputDialogProps {
+export interface IPuttsInputDialogProps {
 	open: boolean;
 	onClose: () => void;
 	onSubmit: (numberOfPutts: number, puttsLength: number[]) => void;
+}
+
+export interface ApproachDetailsDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (toGreenMeters: number, toGreen: string, greenSide: string, chipClub: string,
+	) => void;
+}
+
+export interface HoleDetailsDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (par: number, distance: number, hcp: number, strokes: number) => void;
+}
+
+export interface IMissingShotsDialogProps {
+	open: boolean;
+	numberOfShots: number;
+	allClubs: string[];
+	fairwayValues?: { value: number; label: string }[];
+	onClose: () => void;
+	onSubmit: (shots: IIntermediateShot[]) => void;
+}
+
+export interface IPenaltiesDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (water: number, out: number) => void;
+}
+
+export interface ITeeShotDetailsDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (fairway: number, distance: number, teeClub: string) => void;
 }

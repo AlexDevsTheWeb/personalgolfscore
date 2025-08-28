@@ -3,6 +3,7 @@ import HoleDetailsDialog from '@/components/Dialog/HoleDetailsDialog.component';
 import PenaltiesDialog from '@/components/Dialog/PenaltiesDialog.component';
 import TeeShotDetailsDialog from '@/components/Dialog/TeeShotsDialog.component';
 import { setTmpHoleData } from '@/features/hole/holeTmp.slice';
+import { RootState } from '@/store/store';
 import { IHoleGeneralInfoFormProps } from '@/types/props.types';
 import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material';
 import React, { useState } from 'react';
@@ -11,50 +12,22 @@ import PuttsInputDialog from '../../Dialog/PuttsInputDialog.component';
 import SaveRoundButton from './SaveRoundButton.component';
 
 const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
-	holeData, // This holeData now includes puttsLength
-	hcpList,
-	parList,
 	currentHoleNumber,
-	teeClubs = [],
-	greenClubs = [], // Add greenClubs prop
-	fairwayValues = [],
-	onChange,
 	onSave,
-	isSaveDisabled,
-	onOpenTeeShotDialog,
+	isSaveDisabled
 }: IHoleGeneralInfoFormProps) => {
-	const distanceValue = holeData.distance !== 0 ? holeData.distance : '';
-	const strokesValue = holeData.strokes !== 0 ? holeData.strokes : '';
-
-	const waterValue = holeData.water !== 0 ? holeData.water : '';
-	const outValue = holeData.out !== 0 ? holeData.out : '';
 
 	const [dialogOpen, setDialogOpen] = useState<'general' | 'tee' | 'putts' | 'approach' | 'penalties' | null>(null);
-	const {
-		player: { chipClubs },
-		newRound: { newRoundHoles, newRoundMain },
-	} = useSelector((state: any) => state);
+	const { chipClubs } = useSelector((state: RootState) => state.newRound.newRoundClubs);
+	const newRoundMain = useSelector((state: RootState) => state.newRound.newRoundMain);
 	const dispatch = useDispatch();
 
 	const newHoleItems = ['general', 'tee', 'putts', 'approach', 'penalties'];
 	const roundPlayingHCP = newRoundMain.round.roundPlayingHCP;
 	const roundHoles = newRoundMain.round.roundHoles;
 
-	const handleGeneralFormData = (e: any) => {
-		onChange({ target: { name: e.target.name, value: e.target.value ? Number(e.target.value) : 0 } } as any);
-	};
-
 	const handleDialogButtonClick = (key: string) => {
-		switch (key) {
-
-			case "tee":
-				setDialogOpen(key as any);
-				// onOpenTeeShotDialog?.();
-				break;
-			default:
-				setDialogOpen(key as any);
-				break;
-		}
+		setDialogOpen(key as any);
 	}
 
 	const handleGeneralSubmit = (par: number, distance: number, hcp: number, strokes: number) => {
@@ -145,30 +118,6 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 				onClose={() => setDialogOpen(null)}
 				onSubmit={handlePenaltiesSubmit}
 			/>
-
-			{/* <Dialog title="Add green approach" open={dialogOpen === 'approach'} onClose={() => setDialogOpen(null)} fullWidth maxWidth="sm">
-				<Autocomplete
-					options={greenClubs}
-					value={holeData.toGreen || null}
-					onChange={(event, newValue) => {
-						onChange({ target: { name: 'toGreen', value: newValue || '' } } as any);
-					}}
-					renderInput={params => <TextField {...params} label="Approach club" name="toGreen" variant="filled" />}
-					disabled={holeData.par === 3}
-					sx={{ width: '100%' }}
-				/>
-			</Dialog> */}
-
-			{/* <Dialog title="Add penalties" open={dialogOpen === 'penalties'} onClose={() => setDialogOpen(null)}>
-				<Grid container spacing={1} columns={{ xs: 2, sm: 6, lg: 12 }}>
-					<Grid size={{ xs: 1, sm: 6, lg: 6 }}>
-						<TextField name="water" label="Water" type="number" variant="filled" onChange={onChange} value={waterValue} sx={{ width: '100%' }} />
-					</Grid>
-					<Grid size={{ xs: 1, sm: 6, lg: 6 }}>
-						<TextField name="out" label="Out" type="number" variant="filled" onChange={onChange} value={outValue} sx={{ width: '100%' }} />
-					</Grid>
-				</Grid>
-			</Dialog> */}
 		</>
 	);
 };

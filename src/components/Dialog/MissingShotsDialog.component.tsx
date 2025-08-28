@@ -1,18 +1,10 @@
+import { IMissingShotsDialogProps } from '@/types/props.types';
 import { IIntermediateShot } from '@/types/roundData.types';
 import { fairwayValues as defaultFairwayValues } from '@/utils/constant.utils';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
-interface MissingShotsDialogProps {
-  open: boolean;
-  numberOfShots: number;
-  allClubs: string[];
-  fairwayValues?: { value: number; label: string }[];
-  onClose: () => void;
-  onSubmit: (shots: IIntermediateShot[]) => void;
-}
-
-const MissingShotsDialog: React.FC<MissingShotsDialogProps> = ({
+const MissingShotsDialog: React.FC<IMissingShotsDialogProps> = ({
   open,
   numberOfShots,
   allClubs,

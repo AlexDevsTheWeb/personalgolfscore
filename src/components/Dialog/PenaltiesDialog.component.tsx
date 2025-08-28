@@ -1,14 +1,9 @@
 import { Dialog } from '@/styles/dialog/Dialog.styles';
+import { IPenaltiesDialogProps } from '@/types/props.types';
 import { Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
-interface PenaltiesDialogProps {
-	open: boolean;
-	onClose: () => void;
-	onSubmit: (water: number, out: number) => void;
-}
-
-const PenaltiesDialog: React.FC<PenaltiesDialogProps> = ({ open, onClose, onSubmit }) => {
+const PenaltiesDialog: React.FC<IPenaltiesDialogProps> = ({ open, onClose, onSubmit }) => {
 	const [water, setWater] = useState<number>(0);
 	const [out, setOut] = useState<number>(0);
 
@@ -64,13 +59,6 @@ const PenaltiesDialog: React.FC<PenaltiesDialogProps> = ({ open, onClose, onSubm
 					/>
 				</Grid>
 			</Grid>
-			{/* </DialogContent>
-			<DialogActions>
-				<Button onClick={onClose}>Cancel</Button>
-				<Button onClick={handleSubmit} variant="contained">
-					Save Penalties
-				</Button>
-			</DialogActions> */}
 		</Dialog>
 	);
 };

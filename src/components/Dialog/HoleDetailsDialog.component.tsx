@@ -1,16 +1,11 @@
 import { RootState } from "@/store/store";
 import { Dialog } from "@/styles/dialog/Dialog.styles";
+import { HoleDetailsDialogProps } from "@/types/props.types";
 import { hcpList18, hcpList9, parList } from "@/utils/constant.utils";
 import { Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Select from "../NewRound/components/Select.component";
-
-interface HoleDetailsDialogProps {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (par: number, distance: number, hcp: number, strokes: number) => void;
-}
 
 const HoleDetailsDialog: React.FC<HoleDetailsDialogProps> = ({ open, onClose, onSubmit }) => {
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);

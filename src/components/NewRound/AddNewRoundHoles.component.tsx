@@ -1,4 +1,5 @@
 import { resetNewRoundHoleTmp } from '@/features/hole/holeTmp.slice';
+import { setNewRoundClubs } from '@/features/newRound/newRoundClubs.slice';
 import { resetNewRoundsMain } from '@/features/newRound/newRoundMain.slice';
 import { setTotalsByHole } from '@/features/newRound/newRoundTotals.slice';
 import { RootState } from '@/store/store';
@@ -34,6 +35,9 @@ const AddNewRoundHoles = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(setNewRoundClubs(derivedClubs));
+  }, [derivedClubs]);
   useEffect(() => {
     if (holes.length > 0) {
       dispatch(setTotalsByHole({ holes }));

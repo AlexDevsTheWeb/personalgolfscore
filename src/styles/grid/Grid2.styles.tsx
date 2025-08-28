@@ -1,23 +1,23 @@
-import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { Grid as GridMui, GridProps as GridPropsMui, styled } from '@mui/material';
-import * as React from 'react';
+// import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+// import { Grid as GridMui, GridProps as GridPropsMui, styled } from '@mui/material';
+// import * as React from 'react';
 
-type GridProps = GridPropsMui
+// type GridProps = GridPropsMui
 
-const StyledGrid = styled(GridMui)<GridProps>((props) => (({
-  display: 'flex',
-  flexDirection: useDeviceDetection().isMobile ? 'column' : 'row',
-  width: '100%',
-  justifyContent: useDeviceDetection().isMobile ? 'space-between' : 'center',
-  alignItems: 'center',
-  alignContent: 'center',
-  flexWrap: 'nowrap',
-})));
+// const StyledGrid = styled(GridMui)<GridProps>((props) => (({
+//   display: 'flex',
+//   flexDirection: useDeviceDetection().isMobile ? 'column' : 'row',
+//   width: '100%',
+//   justifyContent: useDeviceDetection().isMobile ? 'space-between' : 'center',
+//   alignItems: 'center',
+//   alignContent: 'center',
+//   flexWrap: 'nowrap',
+// })));
 
-const Grid: React.FC<GridProps> = props => {
-  return (
-    <StyledGrid {...props}>{props.children}</StyledGrid>
-  )
-};
+// const Grid: React.FC<GridProps> = props => {
+//   return (
+//     <StyledGrid {...props}>{props.children}</StyledGrid>
+//   )
+// };
 
-export default Grid;
+// export default Grid;

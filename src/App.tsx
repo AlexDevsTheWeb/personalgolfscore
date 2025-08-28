@@ -1,6 +1,7 @@
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/it';
 import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';

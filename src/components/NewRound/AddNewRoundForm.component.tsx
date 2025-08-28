@@ -9,15 +9,10 @@ import {
   setRoundTee
 } from '@/features/newRound/newRoundMain.slice';
 import { setTotalMainData } from '@/features/newRound/newRoundTotals.slice';
-import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { AppDispatch, RootState } from '@/store/store';
+import { Dialog } from '@/styles/dialog/Dialog.styles';
 import { INewRound } from '@/types/round.types';
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Grid,
   TextField
 } from '@mui/material';
@@ -26,7 +21,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Header from '../common/header/Header.component';
 import Select from './components/Select.component';
 
 const AddNewRoundForm = () => {
@@ -47,8 +41,6 @@ const AddNewRoundForm = () => {
     dispatch(setRoundDate(newValue));
   };
 
-  const isMobile = useDeviceDetection().isMobile;
-
   const handleSubmit = () => {
     const currentRoundData = roundData;
     dispatch(setRoundMainData({}));
@@ -65,129 +57,91 @@ const AddNewRoundForm = () => {
     navigate('/dashboard');
   }
 
-  if (setFirstHole) {
-    return null;
-  }
+  
 
   return (
     <Dialog
       open={!setFirstHole}
-      fullWidth
-      maxWidth="sm"
-      onClose={(event, reason) => {
-        if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
-          return;
-        }
-      }}
+      title='New round: basic info'
+      onClose={handleCancel}
+      onSubmit={handleSubmit}
+      onClick={handleSubmit}
     >
-
-      <DialogTitle sx={{ height: 'auto', padding: '0px' }}>
-        <Header title='New round: basic info' />
-      </DialogTitle>
-      <DialogContent>
-        <Grid container spacing={2} sx={{ paddingTop: '10px' }}>
-          <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
-            <TextField
-              name='roundCourse'
-              label="Round course"
-              variant="outlined"
-              fullWidth
-              value={roundData.roundCourse || ''}
-              onChange={e => dispatch(setRoundCourse(e.target.value))}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
-            <DatePicker
-              defaultValue={dayjs(new Date())}
-              value={roundDateValue}
-              onChange={handleDateChange}
-              sx={{ width: '100%' }}
-              format="DD/MM/YYYY"
-
-            />
-          </Grid>
+      <Grid container spacing={1}>
+        <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+          <TextField
+            name='roundCourse'
+            label="Round course"
+            variant="outlined"
+            fullWidth
+            value={roundData.roundCourse || ''}
+            onChange={e => dispatch(setRoundCourse(e.target.value))}
+          />
         </Grid>
-        <Grid container spacing={2} sx={{ paddingTop: '10px' }}>
-          <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
-            <TextField
-              name='roundHoles'
-              label="Holes"
-              variant='outlined'
-              type='number'
-              fullWidth
-              value={roundData.roundHoles || ''}
-              onChange={e => dispatch(setRoundHoles(Number(e.target.value)))}
-            />
-          </Grid>
-          <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
-            <TextField
-              name='roundPar'
-              label="Par"
-              variant="outlined"
-              type='number'
-              value={roundData.roundPar || ''}
-              onChange={e => dispatch(setRoundPar(Number(e.target.value)))}
-              fullWidth
-            />
-          </Grid>
-          <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
-            <TextField
-              name='roundPlayingHCP'
-              label="HCP"
-              variant="outlined"
-              fullWidth
-              type='number'
-              value={roundData.roundPlayingHCP || ''}
-              onChange={e => dispatch(setRoundPlayingHCP(Number(e.target.value)))}
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
-            <Select
-              name='roundTee'
-              label='Tee'
-              list={['White', 'Blue', 'Yellow', 'Red', 'Green', 'Orange']}
-              onChange={(e: any) => dispatch(setRoundTee(e.target.value))}
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
-            <TextField
-              name='roundNumber'
-              label="Round #"
-              variant="outlined"
-              type='number'
-              value={roundData.roundNumber || ''}
-              onChange={e => dispatch(setRoundNumber(Number(e.target.value)))}
-              fullWidth
-            />
-          </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions
-        sx={{
-          padding: '0px',
-          flexDirection: isMobile ? 'column-reverse' : 'row',
-          '& > :not(style)': {
-            m: isMobile ? 0.5 : 1,
-            width: isMobile ? 'calc(100% - 16px)' : 'auto',
-          },
-          pb: isMobile ? 1 : 0,
-        }}
-      >
+        <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+          <DatePicker
+            defaultValue={dayjs(new Date())}
+            value={roundDateValue}
+            onChange={handleDateChange}
+            sx={{ width: '100%' }}
+            format="DD/MM/YYYY"
 
-        <Button
-          variant='outlined'
-          onClick={handleCancel}
-          sx={{ textAlign: 'center' }}
-        >
-          CANCEL
-        </Button>
-        <Button
-          variant='contained'
-          onClick={handleSubmit}
-        >
-          SUBMIT
-        </Button>
-      </DialogActions>
+          />
+        </Grid>
+        <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
+          <TextField
+            name='roundHoles'
+            label="Holes"
+            variant='outlined'
+            type='number'
+            fullWidth
+            value={roundData.roundHoles || ''}
+            onChange={e => dispatch(setRoundHoles(Number(e.target.value)))}
+          />
+        </Grid>
+        <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
+          <TextField
+            name='roundPar'
+            label="Par"
+            variant="outlined"
+            type='number'
+            value={roundData.roundPar || ''}
+            onChange={e => dispatch(setRoundPar(Number(e.target.value)))}
+            fullWidth
+          />
+        </Grid>
+        <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
+          <TextField
+            name='roundPlayingHCP'
+            label="HCP"
+            variant="outlined"
+            fullWidth
+            type='number'
+            value={roundData.roundPlayingHCP || ''}
+            onChange={e => dispatch(setRoundPlayingHCP(Number(e.target.value)))}
+          />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
+          <Select
+            name='roundTee'
+            value={roundData.roundTee || ''}
+            label='Tee'
+            list={['White', 'Blue', 'Yellow', 'Red', 'Green', 'Orange']}
+            onChange={(e: any) => dispatch(setRoundTee(e.target.value))}
+          />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
+          <TextField
+            name='roundNumber'
+            label="Round #"
+            variant="outlined"
+            type='number'
+            value={roundData.roundNumber || ''}
+            onChange={e => dispatch(setRoundNumber(Number(e.target.value)))}
+            fullWidth
+          />
+        </Grid>
+      </Grid>
     </Dialog>
   )
 }

@@ -1,19 +1,12 @@
 import { RootState } from '@/store/store';
 import { Dialog } from '@/styles/dialog/Dialog.styles';
 import TextField from '@/styles/textfield/TextField.style';
+import { ApproachDetailsDialogProps } from '@/types/props.types';
 import { greenSideValues } from '@/utils/constant.utils';
-import { getChipClubs, getClubsNames, getDistanceClubs, getGreenClubs } from '@/utils/round/round.utils';
 import { Grid, Typography } from '@mui/material';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Select from '../NewRound/components/Select.component';
-
-interface ApproachDetailsDialogProps {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (toGreenMeters: number, toGreen: string, greenSide: string, chipClub: string,
-  ) => void;
-}
 
 const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
   open,
@@ -21,7 +14,7 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
   onSubmit,
 }) => {
   const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
-  const { player, isLoading: isPlayerLoading } = useSelector((store: RootState) => store.player);
+  const { greenClubs, chipClubs } = useSelector((store: RootState) => store.newRound.newRoundClubs);
 
   const [toGreenMeters, setToGreenMeters] = useState(tmpHole.toGreenMeters || 0);
   const [greenSide, setGreenSide] = useState(tmpHole.greenSide || '');
@@ -30,10 +23,9 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
 
   const [toGreenMetersManuallySet, setToGreenMetersManuallySet] = useState(false);
 
-  const { par, distance, driveDistance, teeClub, strokes, putts, gir } = tmpHole;
+  const { par, distance, driveDistance, strokes, putts, gir } = tmpHole;
   const isPar3 = par === 3;
   const girHappened = gir;
-  const golfBag = player?.golfBag;
 
   let calculatedSuggestion: number | null = null;
   if (isPar3) {
@@ -48,27 +40,6 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
   const disableToGreenMetersField =
     (typeof strokes === 'number' && strokes > 0 && typeof putts === 'number' && putts >= 0) &&
     (strokes - (putts + 1)) <= 1;
-
-  const derivedClubs = useMemo(() => {
-
-    if (!golfBag || golfBag.length === 0) {
-      return { teeClubs: [], distanceClubs: [], greenClubs: [], chipClubs: [] };
-    }
-    const teeClubNames = getClubsNames(golfBag);
-    const distanceClubs = getDistanceClubs(teeClubNames);
-    const greenClubs = getGreenClubs(teeClubNames);
-    const chipClubs = getChipClubs(teeClubNames);
-
-    return { teeClubs: teeClubNames, distanceClubs, greenClubs, chipClubs };
-  }, [golfBag]);
-  useEffect(() => {
-    if (open) {
-      setToGreenMeters(tmpHole.toGreenMeters || 0);
-      setGreenSide(tmpHole.greenSide || '');
-      setChipClub(tmpHole.chipClub || '');
-      setToGreenMetersManuallySet(false);
-    }
-  }, [open]);
 
   useEffect(() => {
     if (open && !toGreenMetersManuallySet) {
@@ -121,7 +92,7 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
         <Grid size={{ xs: 12, sm: 1 }}>
           <Select
             name='toGreen'
-            list={derivedClubs.greenClubs}
+            list={greenClubs}
             onChange={handleValueChange}
             label='Approach club'
           />
@@ -152,7 +123,7 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
             label="Chip club"
             disabled={girHappened}
             name='chipClub'
-            list={derivedClubs.chipClubs}
+            list={chipClubs}
             onChange={handleValueChange}
           />
         </Grid>
