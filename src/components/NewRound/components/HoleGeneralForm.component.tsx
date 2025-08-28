@@ -1,9 +1,10 @@
 import ApproachDetailsDialog from '@/components/Dialog/ApproachDialog.component';
 import HoleDetailsDialog from '@/components/Dialog/HoleDetailsDialog.component';
+import PenaltiesDialog from '@/components/Dialog/PenaltiesDialog.component';
+import TeeShotDetailsDialog from '@/components/Dialog/TeeShotsDialog.component';
 import { setTmpHoleData } from '@/features/hole/holeTmp.slice';
-import { Dialog } from '@/styles/dialog/Dialog.styles';
 import { IHoleGeneralInfoFormProps } from '@/types/props.types';
-import { Button, Card, CardContent, CardHeader, Grid, TextField } from '@mui/material';
+import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PuttsInputDialog from '../../Dialog/PuttsInputDialog.component';
@@ -47,19 +48,14 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 		switch (key) {
 
 			case "tee":
-				setDialogOpen(null);
-				onOpenTeeShotDialog?.();
+				setDialogOpen(key as any);
+				// onOpenTeeShotDialog?.();
 				break;
 			default:
 				setDialogOpen(key as any);
 				break;
 		}
 	}
-
-	const handlePuttsSubmit = (numberOfPutts: number, puttsLength: number[]) => {
-		dispatch(setTmpHoleData({ name: 'putts', value: numberOfPutts, roundPlayingHCP, roundHoles, chipClubs }));
-		dispatch(setTmpHoleData({ name: 'puttsLength', value: puttsLength, roundPlayingHCP, roundHoles, chipClubs }));
-	};
 
 	const handleGeneralSubmit = (par: number, distance: number, hcp: number, strokes: number) => {
 		dispatch(setTmpHoleData({ name: 'par', value: par, roundPlayingHCP, roundHoles, chipClubs }));
@@ -68,18 +64,34 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 		dispatch(setTmpHoleData({ name: 'strokes', value: strokes, roundPlayingHCP, roundHoles, chipClubs }));
 	};
 
+	const handleTeeshotSubmit = (fairway: number, distance: number, teeClub: string) => {
+		dispatch(setTmpHoleData({ name: 'fairway', value: fairway, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'driveDistance', value: distance, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'teeClub', value: teeClub, roundPlayingHCP, roundHoles, chipClubs }));
+	}
+	const handlePuttsSubmit = (numberOfPutts: number, puttsLength: number[]) => {
+		dispatch(setTmpHoleData({ name: 'putts', value: numberOfPutts, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'puttsLength', value: puttsLength, roundPlayingHCP, roundHoles, chipClubs }));
+	};
+
 	const handleApproachSubmit = (toGreenMeters: number, toGreen: string, greenSide: string, chipClub: string) => {
 		dispatch(setTmpHoleData({ name: 'toGreenMeters', value: toGreenMeters, roundPlayingHCP, roundHoles, chipClubs }));
 		dispatch(setTmpHoleData({ name: 'toGreen', value: toGreen, roundPlayingHCP, roundHoles, chipClubs }));
 		dispatch(setTmpHoleData({ name: 'greenSide', value: greenSide, roundPlayingHCP, roundHoles, chipClubs }));
 		dispatch(setTmpHoleData({ name: 'chipClub', value: chipClub, roundPlayingHCP, roundHoles, chipClubs }));
 	}
+	const handlePenaltiesSubmit = (water: number, out: number) => {
+		dispatch(setTmpHoleData({ name: 'water', value: water, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'out', value: out, roundPlayingHCP, roundHoles, chipClubs }));
+	}
+
 
 
 	return (
 		<>
 			<Card sx={{ width: '100%' }}>
 				<CardHeader title={`Hole ${currentHoleNumber} Informations`} />
+
 				<CardContent sx={{ padding: '0px 16px' }}>
 					<Grid container spacing={1} columns={{ xs: 2, sm: 4, lg: 12 }}>
 						<Grid size={{ xs: 2, sm: 4, lg: 2 }}>
@@ -90,13 +102,18 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 						{newHoleItems
 							.filter(item => item !== 'general')
 							.map((item: string, index: number) => (
-								<Grid key={index} size={{ xs: 1, sm: 4, lg: 2 }}>
+								<Grid key={index} size={{ xs: 1, sm: 4, lg: item === 'tee' || item === 'putts' ? 1 : 2 }}>
 									<Button variant="contained" onClick={() => handleDialogButtonClick(item as 'tee' | 'putts' | 'approach' | 'penalties')} sx={{ width: '100%' }}>
 										{item}
 									</Button>
 								</Grid>
 							))}
 						<Grid size={{ xs: 2, sm: 4, lg: 2 }}>
+							<Button variant="contained" onClick={() => onSave()} disabled={isSaveDisabled()}>
+								Distances
+							</Button>
+						</Grid>
+						<Grid size={{ xs: 2, sm: 4, lg: 2 }} display={'flex'} justifyContent={'flex-end'}>
 							<SaveRoundButton onSave={onSave} disabled={isSaveDisabled()} />
 						</Grid>
 					</Grid>
@@ -108,6 +125,11 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 				onClose={() => setDialogOpen(null)}
 				onSubmit={handleGeneralSubmit}
 			/>
+			<TeeShotDetailsDialog
+				open={dialogOpen === 'tee'}
+				onClose={() => setDialogOpen(null)}
+				onSubmit={handleTeeshotSubmit}
+			/>
 			<PuttsInputDialog
 				open={dialogOpen === 'putts'}
 				onClose={() => setDialogOpen(null)}
@@ -117,6 +139,11 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 				open={dialogOpen === 'approach'}
 				onClose={() => setDialogOpen(null)}
 				onSubmit={handleApproachSubmit}
+			/>
+			<PenaltiesDialog
+				open={dialogOpen === 'penalties'}
+				onClose={() => setDialogOpen(null)}
+				onSubmit={handlePenaltiesSubmit}
 			/>
 
 			{/* <Dialog title="Add green approach" open={dialogOpen === 'approach'} onClose={() => setDialogOpen(null)} fullWidth maxWidth="sm">
@@ -132,7 +159,7 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 				/>
 			</Dialog> */}
 
-			<Dialog title="Add penalties" open={dialogOpen === 'penalties'} onClose={() => setDialogOpen(null)}>
+			{/* <Dialog title="Add penalties" open={dialogOpen === 'penalties'} onClose={() => setDialogOpen(null)}>
 				<Grid container spacing={1} columns={{ xs: 2, sm: 6, lg: 12 }}>
 					<Grid size={{ xs: 1, sm: 6, lg: 6 }}>
 						<TextField name="water" label="Water" type="number" variant="filled" onChange={onChange} value={waterValue} sx={{ width: '100%' }} />
@@ -141,7 +168,7 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 						<TextField name="out" label="Out" type="number" variant="filled" onChange={onChange} value={outValue} sx={{ width: '100%' }} />
 					</Grid>
 				</Grid>
-			</Dialog>
+			</Dialog> */}
 		</>
 	);
 };

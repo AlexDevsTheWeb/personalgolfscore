@@ -1,7 +1,7 @@
 import { RootState } from "@/store/store";
 import { Dialog } from "@/styles/dialog/Dialog.styles";
 import { hcpList18, hcpList9, parList } from "@/utils/constant.utils";
-import { Grid, TextField } from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Select from "../NewRound/components/Select.component";
@@ -54,22 +54,25 @@ const HoleDetailsDialog: React.FC<HoleDetailsDialogProps> = ({ open, onClose, on
   return (
     <Dialog
       open={open}
-      title='Hole basic info'
+      title='Hole info'
       onClose={onClose}
       onClick={handleSubmit}
       onSubmit={handleSubmit}
     >
-      <Grid container spacing={1} columns={{ xs: 4, sm: 4, lg: 12 }}>
+      <Typography>
+        Please insert hole par, hole meters, hole HCP and strokes made.
+      </Typography>
+      <Grid container spacing={2} sx={{ mt: 1 }} columns={{ xs: 4, sm: 4, lg: 12 }}>
         <Grid size={{ xs: 2, sm: 4, lg: 3 }}>
           <Select name={'par'} list={parList} onChange={handleChange} value={tmpHole.par ? tmpHole.par.toString() : par.toString()} label="Hole Par" />
         </Grid>
         <Grid size={{ xs: 2, sm: 4, lg: 3 }}>
           <TextField name="distance" label="Length" type="number" onChange={handleChange} value={distance} variant="filled" sx={{ width: '100%' }} />
         </Grid>
-        <Grid size={{ xs: 1, sm: 4, lg: 3 }}>
+        <Grid size={{ xs: 2, sm: 4, lg: 3 }}>
           <Select name='hcp' list={newHCPList} onChange={handleChange} value={tmpHole.hcp ? tmpHole.hcp.toString() : hcp.toString()} label="Hole HCP" />
         </Grid>
-        <Grid size={{ xs: 1, sm: 4, lg: 3 }}>
+        <Grid size={{ xs: 2, sm: 4, lg: 3 }}>
           <TextField name="strokes" label="Score" type="number" onChange={handleChange} value={strokes.toString()} variant="filled" sx={{ width: '100%' }} />
         </Grid>
       </Grid>

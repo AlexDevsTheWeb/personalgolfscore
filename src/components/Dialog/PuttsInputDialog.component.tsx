@@ -46,6 +46,9 @@ const PuttsInputDialog: React.FC<PuttsInputDialogProps> = ({
       onClick={handleSubmit}
       onSubmit={handleSubmit}
     >
+      <Typography sx={{ mb: 1 }}>
+        Please insert number of putts made.
+      </Typography>
       <TextField
         variant="filled"
         name="putts"
@@ -57,7 +60,7 @@ const PuttsInputDialog: React.FC<PuttsInputDialogProps> = ({
       />
       {puttNumber > 0 &&
         <>
-          <Typography gutterBottom>
+          <Typography sx={{ mt: 1 }}>
             Please enter the length (in meters/feet) for each of your {puttNumber} putt(s).
           </Typography>
           {puttsNumberArray.length > 0 && (

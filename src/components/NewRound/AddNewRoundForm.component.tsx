@@ -23,9 +23,11 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Header from '../common/header/Header.component';
+import Select from './components/Select.component';
 
 const AddNewRoundForm = () => {
   const navigate = useNavigate();
@@ -33,7 +35,13 @@ const AddNewRoundForm = () => {
   const roundData = useSelector((state: RootState) => state.newRound.newRoundMain.round);
   const setFirstHole = useSelector((state: RootState) => state.newRound.newRoundMain.setFirstHole);
   const roundDateString = useSelector((state: RootState) => state.newRound.newRoundMain.round.roundDate);
-  const roundDateValue = roundDateString && dayjs(roundDateString).isValid() ? dayjs(roundDateString) : null;
+  const roundDateValue = roundDateString && dayjs(roundDateString).isValid() ? dayjs(roundDateString) : dayjs(new Date());
+
+  useEffect(() => {
+    if (!roundDateString) {
+      dispatch(setRoundDate(dayjs(new Date())));
+    }
+  }, [dispatch, roundDateString]);
 
   const handleDateChange = (newValue: Dayjs | null) => {
     dispatch(setRoundDate(newValue));
@@ -90,10 +98,12 @@ const AddNewRoundForm = () => {
           </Grid>
           <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
             <DatePicker
+              defaultValue={dayjs(new Date())}
               value={roundDateValue}
               onChange={handleDateChange}
               sx={{ width: '100%' }}
               format="DD/MM/YYYY"
+
             />
           </Grid>
         </Grid>
@@ -132,13 +142,11 @@ const AddNewRoundForm = () => {
             />
           </Grid>
           <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
-            <TextField
+            <Select
               name='roundTee'
-              label="Tee"
-              variant="outlined"
-              value={roundData.roundTee || ''}
-              onChange={e => dispatch(setRoundTee(e.target.value))}
-              fullWidth
+              label='Tee'
+              list={['White', 'Blue', 'Yellow', 'Red', 'Green', 'Orange']}
+              onChange={(e: any) => dispatch(setRoundTee(e.target.value))}
             />
           </Grid>
           <Grid size={{ xs: 6, sm: 3, lg: 3 }}>

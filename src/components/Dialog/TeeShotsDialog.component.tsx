@@ -1,42 +1,64 @@
+import { RootState } from '@/store/store';
 import { Dialog } from '@/styles/dialog/Dialog.styles';
-import { IHoleTeeShotFormProps } from '@/types/props.types';
+import { fairwayValues } from '@/utils/constant.utils';
+import { getChipClubs, getClubsNames, getDistanceClubs, getGreenClubs } from '@/utils/round/round.utils';
 import { Autocomplete, Grid, TextField, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 interface TeeShotDetailsDialogProps {
 	open: boolean;
-	isPar3: boolean;
-	initialFairwayValue: number;
-	initialDistanceValue: number;
-	initialTeeClubValue: string;
-	fairwayValues: IHoleTeeShotFormProps['fairwayValues'];
-	teeClubs: string[];
+	// isPar3: boolean;
+	// initialFairwayValue: number;
+	// initialDistanceValue: number;
+	// initialTeeClubValue: string;
+	// fairwayValues: IHoleTeeShotFormProps['fairwayValues'];
+	// teeClubs: string[];
 	onClose: () => void;
-	onSubmit: (details: { fairway: number; distance: number; teeClub: string }) => void;
+	onSubmit: (fairway: number, distance: number, teeClub: string) => void;
 }
 
 const TeeShotDetailsDialog: React.FC<TeeShotDetailsDialogProps> = ({
 	open,
-	isPar3,
-	initialFairwayValue,
-	initialDistanceValue,
-	initialTeeClubValue,
-	fairwayValues,
-	teeClubs,
+	// isPar3,
+	// initialFairwayValue,
+	// initialDistanceValue,
+	// initialTeeClubValue,
+	// fairwayValues,
+	// teeClubs,
 	onClose,
 	onSubmit,
 }) => {
+	const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
+	const { player } = useSelector((store: RootState) => store.player);
+
+
 	const [fairway, setFairway] = useState<number>(0);
 	const [distance, setDistance] = useState<number>(0);
 	const [teeClub, setTeeClub] = useState<string>('');
 
+	const golfBag = player?.golfBag;
+	const derivedClubs = useMemo(() => {
+
+
+		if (!golfBag || golfBag.length === 0) {
+			return { teeClubs: [], distanceClubs: [], greenClubs: [], chipClubs: [] };
+		}
+		const teeClubNames = getClubsNames(golfBag);
+		const distanceClubs = getDistanceClubs(teeClubNames);
+		const greenClubs = getGreenClubs(teeClubNames);
+		const chipClubs = getChipClubs(teeClubNames);
+
+		return { teeClubs: teeClubNames, distanceClubs, greenClubs, chipClubs };
+	}, [golfBag]);
+
 	useEffect(() => {
 		if (open) {
-			setFairway(initialFairwayValue);
-			setDistance(initialDistanceValue);
-			setTeeClub(initialTeeClubValue);
+			setFairway(tmpHole.fairway);
+			setDistance(tmpHole.driveDistance);
+			setTeeClub(tmpHole.teeClub);
 		}
-	}, [open, initialFairwayValue, initialDistanceValue, initialTeeClubValue]);
+	}, [open, tmpHole.fairway, tmpHole.driveDistance, tmpHole.teeClub]);
 
 	const handleFairwayChange = (event: any, newValue: { label: string; value: number } | null) => {
 		setFairway(newValue?.value ?? 0);
@@ -47,7 +69,7 @@ const TeeShotDetailsDialog: React.FC<TeeShotDetailsDialogProps> = ({
 	};
 
 	const handleSubmit = () => {
-		onSubmit({ fairway, distance, teeClub });
+		onSubmit(fairway, distance, teeClub);
 		onClose();
 	};
 
@@ -58,17 +80,18 @@ const TeeShotDetailsDialog: React.FC<TeeShotDetailsDialogProps> = ({
 			open={open}
 			onClose={onClose}
 			onClick={handleSubmit}
+			onSubmit={handleSubmit}
 			title='Tee shot'
 		>
-			<Typography gutterBottom>
-				{isPar3
+			<Typography>
+				{tmpHole.par === 3
 					? 'For Par 3s, select your tee club and distance (usually the hole length). Fairway position is not applicable.'
 					: 'Please select your tee club, fairway position and distance for your tee shot.'}
 			</Typography>
 			<Grid container spacing={2} sx={{ mt: 1 }}>
 				<Grid size={{ xs: 12 }}>
 					<Autocomplete
-						options={teeClubs}
+						options={derivedClubs.teeClubs}
 						value={teeClub || null}
 						onChange={(event, newValue) => {
 							setTeeClub(newValue || '');
@@ -77,7 +100,7 @@ const TeeShotDetailsDialog: React.FC<TeeShotDetailsDialogProps> = ({
 					/>
 				</Grid>
 
-				{teeClub && !isPar3 && (
+				{teeClub && !(tmpHole.par === 3) && (
 					<>
 						<Grid size={{ xs: 6 }}>
 							<Autocomplete
@@ -87,7 +110,7 @@ const TeeShotDetailsDialog: React.FC<TeeShotDetailsDialogProps> = ({
 								onChange={handleFairwayChange}
 								isOptionEqualToValue={(option, value) => option.value === value.value}
 								renderInput={params => <TextField {...params} label="Fairway Position" variant="outlined" fullWidth />}
-								disabled={isPar3}
+								disabled={tmpHole.par === 3}
 							/>
 						</Grid>
 						<Grid size={{ xs: 6 }}>
@@ -98,14 +121,14 @@ const TeeShotDetailsDialog: React.FC<TeeShotDetailsDialogProps> = ({
 								fullWidth
 								value={distance || ''}
 								onChange={handleDistanceChange}
-								disabled={isPar3}
+								disabled={tmpHole.par === 3}
 								inputProps={{ min: 0 }}
 							/>
 						</Grid>
 					</>
 				)}
 			</Grid>
-		</Dialog>
+		</Dialog >
 	);
 };
 

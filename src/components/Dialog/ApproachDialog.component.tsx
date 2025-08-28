@@ -3,7 +3,7 @@ import { Dialog } from '@/styles/dialog/Dialog.styles';
 import TextField from '@/styles/textfield/TextField.style';
 import { greenSideValues } from '@/utils/constant.utils';
 import { getChipClubs, getClubsNames, getDistanceClubs, getGreenClubs } from '@/utils/round/round.utils';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Select from '../NewRound/components/Select.component';
@@ -114,7 +114,10 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
       onSubmit={handleSubmit}
       title='Approach & Green details'
     >
-      <Grid container spacing={1} columns={{ xs: 1, sm: 4 }}>
+      <Typography>
+        Please insert approach to green clubs, meters, green side and chip club.
+      </Typography>
+      <Grid container spacing={1} columns={{ xs: 1, sm: 4 }} sx={{ mt: 1 }}>
         <Grid size={{ xs: 12, sm: 1 }}>
           <Select
             name='toGreen'

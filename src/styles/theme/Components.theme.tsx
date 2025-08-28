@@ -141,23 +141,20 @@ const components: Components<Omit<Theme, 'components'>> = {
         style: ({ theme }: { theme: Theme }) => ({
 
           justifyContent: 'center',
-          padding: '13px 32px',
+          padding: '10px 18px',
           lineHeight: 0,
-          height: '40px',
           margin: '0px',
+          height: '40px',
           backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main,
           color: theme.palette.getContrastText(theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main),
           boxShadow: 'none',
-          marginLeft: '0px',
+          marginLeft: '0px !important',
           '@media(hover: hover)': {
             '&:hover': {
               backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey3.main : theme.palette.primary2.main,
             },
           },
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
-            height: '40px',
-            padding: '10px 18px',
-            lineHeight: 0,
             minWidth: '100%',
             width: '100%',
           },

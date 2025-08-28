@@ -1,17 +1,14 @@
 import { RootState } from '@/store/store';
 import { IAddSingleHoleProps } from '@/types/clubs.types';
-import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils'; // prettier-ignore
+import { fairwayValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils'; // prettier-ignore
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
 import MissingShotsDialog from '../Dialog/MissingShotsDialog.component';
 
-import { useApproachDetailsDialog } from '@/hooks/useApproachDetailsDialog.hook';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { useHoleFormManager } from '@/hooks/useHoleFormManager.component';
-import { useTeeShotDetailsDialog } from '@/hooks/useTeeShotDetailsDialog.hook';
-import TeeShotDetailsDialog from '../Dialog/TeeShotsDialog.component'; // Assuming TeeShotsDialog is in the general Dialog folder
 import HoleGeneralForm from './components/HoleGeneralForm.component';
 
 const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
@@ -39,24 +36,6 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 		fairwayValuesConstant: fairwayValues,
 	});
 
-	const { teeShotDialogProps, openTeeShotDialog } = useTeeShotDetailsDialog({
-		tmpHole,
-		fairwayValuesConstant: fairwayValues,
-		teeClubs: derivedClubs.teeClubs,
-		roundPlayingHCP,
-		roundHoles,
-		derivedClubsChipClubs: derivedClubs.chipClubs,
-	});
-
-	const { approachDialogProps } = useApproachDetailsDialog({
-		tmpHole,
-		derivedClubsChipClubs: derivedClubs.chipClubs,
-		greenSideValuesConstant: greenSideValues,
-		roundPlayingHCP,
-		puttsLength, // Pass puttsLength
-		roundHoles,
-	});
-
 	// Effect to reset puttsLength when a hole is successfully saved (tmpHole is reset)
 	useEffect(() => {
 		if (tmpHole.holeNumber === 0 && tmpHole.par === 0 && tmpHole.strokes === 0) {
@@ -82,13 +61,10 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 				onChange={handleChange}
 				onSave={handleSaveHole}
 				isSaveDisabled={isSaveDisabled}
-				onOpenTeeShotDialog={openTeeShotDialog}
 			/>
 
 			{!!showDistances && <ClubDistanceDialog open={showDistances} />}
 			<MissingShotsDialog {...missingShotsDialogProps} />
-			<TeeShotDetailsDialog {...teeShotDialogProps} />
-			{/* <ApproachDetailsDialog {...approachDialogProps} /> */}
 		</Grid>
 	);
 };

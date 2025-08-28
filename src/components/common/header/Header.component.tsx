@@ -33,7 +33,7 @@ const Header: React.FC<IHeaderProps> = (props: IHeaderProps) => {
     <BoxStyled onClick={props.onClick} {...props}>
       <TypographyStyled>{props.title}</TypographyStyled>
       {props.subtitle && (
-        <Typography variant="caption" display='block' color="text.secondary" sx={{ textAlign: 'center' }}>
+        <Typography variant="caption" display='block' color="grey6" sx={{ textAlign: 'center' }}>
           {props.subtitle}
         </Typography>
       )}

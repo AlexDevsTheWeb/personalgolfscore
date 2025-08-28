@@ -8,19 +8,13 @@ import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../common/spinner/Spinner.component';
-import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddSingleHole from './AddSingleHole.component';
-import HolebyHoleTable from './HolebyHoleTable.component';
 import RoundSave from './RoundSave.component';
 
 const AddNewRoundHoles = () => {
   const dispatch = useDispatch<any>();
   const { round, setFirstHole } = useSelector((store: RootState) => store.newRound.newRoundMain);
-  // Assuming reset actions for these slices exist or should be created:
-  // import { resetNewRoundHoles } from '@/features/newRound/newRoundHoles.slice';
-  // import { resetNewRoundTotals } from '@/features/newRound/newRoundTotals.slice';
   const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
   const { player, isLoading: isPlayerLoading } = useSelector((store: RootState) => store.player);
   const { isLoading: isSavingRound, success: isRoundSaved, roundId: savedRoundId } = useSelector((store: RootState) => store.roundSaver);
 
@@ -88,11 +82,6 @@ const AddNewRoundHoles = () => {
       ) : (
         !isRoundSaved && <RoundSave />
       )}
-
-      {holes.length > 0 && roundTotals &&
-        <HolebyHoleTotals roundTotals={roundTotals} par={Number(round.roundPar)} />
-      }
-      {holes.length > 0 && <HolebyHoleTable holes={holes} />}
     </>
   )
 }

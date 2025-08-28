@@ -1,18 +1,18 @@
 import { PaletteColor, PaletteColorOptions } from "@mui/material";
 
 export const lightColors = {
-  menubar: '#4a90a4', // Softer teal-blue to match dark theme's warmer approach
+  menubar: '#28768b', // Softer teal-blue to match dark theme's warmer approach
   primary1: '#2d3748', // Warmer dark grey instead of harsh black
-  primary2: '#4a90a4', // Consistent with menubar color
+  primary2: '#28768b', // Consistent with menubar color
   primary3: '#718096', // Warmer muted text color
   black: '#2d3748', // Warmer black equivalent
-  grey1: '#718096', // Warmer muted text
+  grey1: '#28768b', // Warmer muted text
   grey2: '#a0aec0', // Softer intermediate grey
   grey3: '#e2e8f0', // Softer border grey
-  grey4: '#edf2f7', // Light border grey
+  grey4: '#28768b', // Light border grey
   grey5: '#f7fafc', // Very light background with warmth
-  grey6: '#ffffff', // Pure white for contrast where needed
-  white: '#f7fafc', // Soft off-white as default 'white'
+  grey6: '#f2f2f2', // Pure white for contrast where needed
+  white: '#d2d2d2', // Soft off-white as default 'white'
   success: '#38a169', // Warmer success green
   warning: '#d69e2e', // Warmer amber warning
   error: '#e53e3e', // Softer red error
