@@ -1,12 +1,13 @@
+import ApproachDetailsDialog from '@/components/Dialog/ApproachDialog.component';
+import HoleDetailsDialog from '@/components/Dialog/HoleDetailsDialog.component';
 import { setTmpHoleData } from '@/features/hole/holeTmp.slice';
 import { Dialog } from '@/styles/dialog/Dialog.styles';
 import { IHoleGeneralInfoFormProps } from '@/types/props.types';
-import { Autocomplete, Button, Card, CardContent, CardHeader, Grid, TextField } from '@mui/material';
+import { Button, Card, CardContent, CardHeader, Grid, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PuttsInputDialog from '../../Dialog/PuttsInputDialog.component';
 import SaveRoundButton from './SaveRoundButton.component';
-import Select from './Select.component';
 
 const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 	holeData, // This holeData now includes puttsLength
@@ -29,12 +30,14 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 
 	const [dialogOpen, setDialogOpen] = useState<'general' | 'tee' | 'putts' | 'approach' | 'penalties' | null>(null);
 	const {
-		player: { roundPlayingHCP, chipClubs },
-		newRound: { newRoundHoles },
+		player: { chipClubs },
+		newRound: { newRoundHoles, newRoundMain },
 	} = useSelector((state: any) => state);
 	const dispatch = useDispatch();
 
 	const newHoleItems = ['general', 'tee', 'putts', 'approach', 'penalties'];
+	const roundPlayingHCP = newRoundMain.round.roundPlayingHCP;
+	const roundHoles = newRoundMain.round.roundHoles;
 
 	const handleGeneralFormData = (e: any) => {
 		onChange({ target: { name: e.target.name, value: e.target.value ? Number(e.target.value) : 0 } } as any);
@@ -42,9 +45,7 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 
 	const handleDialogButtonClick = (key: string) => {
 		switch (key) {
-			case "putts":
-				setDialogOpen(key as any);
-				break;
+
 			case "tee":
 				setDialogOpen(null);
 				onOpenTeeShotDialog?.();
@@ -56,9 +57,24 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 	}
 
 	const handlePuttsSubmit = (numberOfPutts: number, puttsLength: number[]) => {
-		dispatch(setTmpHoleData({ name: 'putts', value: numberOfPutts, roundPlayingHCP, roundHoles: newRoundHoles.length, chipClubs }));
-		dispatch(setTmpHoleData({ name: 'puttsLength', value: puttsLength, roundPlayingHCP, roundHoles: newRoundHoles.length, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'putts', value: numberOfPutts, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'puttsLength', value: puttsLength, roundPlayingHCP, roundHoles, chipClubs }));
 	};
+
+	const handleGeneralSubmit = (par: number, distance: number, hcp: number, strokes: number) => {
+		dispatch(setTmpHoleData({ name: 'par', value: par, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'distance', value: distance, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'hcp', value: hcp, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'strokes', value: strokes, roundPlayingHCP, roundHoles, chipClubs }));
+	};
+
+	const handleApproachSubmit = (toGreenMeters: number, toGreen: string, greenSide: string, chipClub: string) => {
+		dispatch(setTmpHoleData({ name: 'toGreenMeters', value: toGreenMeters, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'toGreen', value: toGreen, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'greenSide', value: greenSide, roundPlayingHCP, roundHoles, chipClubs }));
+		dispatch(setTmpHoleData({ name: 'chipClub', value: chipClub, roundPlayingHCP, roundHoles, chipClubs }));
+	}
+
 
 	return (
 		<>
@@ -87,38 +103,23 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 				</CardContent>
 			</Card>
 
-			<Dialog title="Hole details" open={dialogOpen === 'general'} onClose={() => setDialogOpen(null)}>
-				<Grid container spacing={1} columns={{ xs: 2, sm: 4, lg: 12 }}>
-					<Grid size={{ xs: 1, sm: 4, lg: 3 }}>
-						<Select name={'par'} list={parList} onChange={handleGeneralFormData} value={holeData.par ? holeData.par.toString() : ''} label="Hole Par" />
-					</Grid>
-					<Grid size={{ xs: 1, sm: 4, lg: 3 }}>
-						<TextField name="distance" label="Length" type="number" onChange={onChange} value={distanceValue} variant="filled" sx={{ width: '100%' }} />
-					</Grid>
-					<Grid size={{ xs: 1, sm: 4, lg: 3 }}>
-						<Autocomplete
-							options={hcpList}
-							value={holeData.hcp ? holeData.hcp.toString() : null}
-							onChange={(event, newValue) => {
-								onChange({ target: { name: 'hcp', value: newValue ? Number(newValue) : 0 } } as any);
-							}}
-							renderInput={params => <TextField {...params} label="Hole HCP" name="hcp" variant="filled" />}
-							sx={{ width: '100%' }}
-						/>
-					</Grid>
-					<Grid size={{ xs: 1, sm: 4, lg: 3 }}>
-						<TextField name="strokes" label="Score" type="number" onChange={onChange} value={strokesValue} variant="filled" sx={{ width: '100%' }} />
-					</Grid>
-				</Grid>
-			</Dialog>
-
+			<HoleDetailsDialog
+				open={dialogOpen === 'general'}
+				onClose={() => setDialogOpen(null)}
+				onSubmit={handleGeneralSubmit}
+			/>
 			<PuttsInputDialog
 				open={dialogOpen === 'putts'}
 				onClose={() => setDialogOpen(null)}
 				onSubmit={handlePuttsSubmit}
 			/>
+			<ApproachDetailsDialog
+				open={dialogOpen === 'approach'}
+				onClose={() => setDialogOpen(null)}
+				onSubmit={handleApproachSubmit}
+			/>
 
-			<Dialog title="Add green approach" open={dialogOpen === 'approach'} onClose={() => setDialogOpen(null)} fullWidth maxWidth="sm">
+			{/* <Dialog title="Add green approach" open={dialogOpen === 'approach'} onClose={() => setDialogOpen(null)} fullWidth maxWidth="sm">
 				<Autocomplete
 					options={greenClubs}
 					value={holeData.toGreen || null}
@@ -129,7 +130,7 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 					disabled={holeData.par === 3}
 					sx={{ width: '100%' }}
 				/>
-			</Dialog>
+			</Dialog> */}
 
 			<Dialog title="Add penalties" open={dialogOpen === 'penalties'} onClose={() => setDialogOpen(null)}>
 				<Grid container spacing={1} columns={{ xs: 2, sm: 6, lg: 12 }}>

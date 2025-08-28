@@ -11,7 +11,6 @@ import { useApproachDetailsDialog } from '@/hooks/useApproachDetailsDialog.hook'
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { useHoleFormManager } from '@/hooks/useHoleFormManager.component';
 import { useTeeShotDetailsDialog } from '@/hooks/useTeeShotDetailsDialog.hook';
-import ApproachDetailsDialog from '../Dialog/ApproachDialog.component';
 import TeeShotDetailsDialog from '../Dialog/TeeShotsDialog.component'; // Assuming TeeShotsDialog is in the general Dialog folder
 import HoleGeneralForm from './components/HoleGeneralForm.component';
 
@@ -89,7 +88,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 			{!!showDistances && <ClubDistanceDialog open={showDistances} />}
 			<MissingShotsDialog {...missingShotsDialogProps} />
 			<TeeShotDetailsDialog {...teeShotDialogProps} />
-			<ApproachDetailsDialog {...approachDialogProps} />
+			{/* <ApproachDetailsDialog {...approachDialogProps} /> */}
 		</Grid>
 	);
 };

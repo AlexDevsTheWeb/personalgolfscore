@@ -1,42 +1,39 @@
-import { IShots } from '@/types/roundData.types';
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { RootState } from '@/store/store';
+import { Dialog } from '@/styles/dialog/Dialog.styles';
+import TextField from '@/styles/textfield/TextField.style';
+import { greenSideValues } from '@/utils/constant.utils';
+import { getChipClubs, getClubsNames, getDistanceClubs, getGreenClubs } from '@/utils/round/round.utils';
+import { Grid } from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import Select from '../NewRound/components/Select.component';
 
 interface ApproachDetailsDialogProps {
   open: boolean;
-  initialHoleData: Pick<
-    IShots,
-    'par' | 'distance' | 'driveDistance' | 'toGreenMeters' | 'teeClub' |
-    'toGreen' | 'greenSide' | 'chipClub' | 'strokes' | 'putts' | 'gir'
-  >;
-  chipClubs: string[];
-  greenSideValues: string[];
   onClose: () => void;
-  onSubmit: (details: {
-    toGreenMeters?: number;
-    toGreen?: string;
-    greenSide?: string;
-    chipClub?: string;
-  }) => void;
+  onSubmit: (toGreenMeters: number, toGreen: string, greenSide: string, chipClub: string,
+  ) => void;
 }
 
 const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
   open,
-  initialHoleData,
-  chipClubs,
-  greenSideValues,
   onClose,
   onSubmit,
 }) => {
-  const [toGreenMeters, setToGreenMeters] = useState(initialHoleData.toGreenMeters || 0);
-  const [greenSide, setGreenSide] = useState(initialHoleData.greenSide || '');
-  const [chipClub, setChipClub] = useState(initialHoleData.chipClub || '');
+  const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
+  const { player, isLoading: isPlayerLoading } = useSelector((store: RootState) => store.player);
+
+  const [toGreenMeters, setToGreenMeters] = useState(tmpHole.toGreenMeters || 0);
+  const [greenSide, setGreenSide] = useState(tmpHole.greenSide || '');
+  const [chipClub, setChipClub] = useState(tmpHole.chipClub || '');
+  const [toGreen, setToGreen] = useState(tmpHole.toGreen || '');
 
   const [toGreenMetersManuallySet, setToGreenMetersManuallySet] = useState(false);
 
-  const { par, distance, driveDistance, teeClub, strokes, putts, gir } = initialHoleData;
+  const { par, distance, driveDistance, teeClub, strokes, putts, gir } = tmpHole;
   const isPar3 = par === 3;
   const girHappened = gir;
+  const golfBag = player?.golfBag;
 
   let calculatedSuggestion: number | null = null;
   if (isPar3) {
@@ -52,11 +49,23 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
     (typeof strokes === 'number' && strokes > 0 && typeof putts === 'number' && putts >= 0) &&
     (strokes - (putts + 1)) <= 1;
 
+  const derivedClubs = useMemo(() => {
+
+    if (!golfBag || golfBag.length === 0) {
+      return { teeClubs: [], distanceClubs: [], greenClubs: [], chipClubs: [] };
+    }
+    const teeClubNames = getClubsNames(golfBag);
+    const distanceClubs = getDistanceClubs(teeClubNames);
+    const greenClubs = getGreenClubs(teeClubNames);
+    const chipClubs = getChipClubs(teeClubNames);
+
+    return { teeClubs: teeClubNames, distanceClubs, greenClubs, chipClubs };
+  }, [golfBag]);
   useEffect(() => {
     if (open) {
-      setToGreenMeters(initialHoleData.toGreenMeters || 0);
-      setGreenSide(initialHoleData.greenSide || '');
-      setChipClub(initialHoleData.chipClub || '');
+      setToGreenMeters(tmpHole.toGreenMeters || 0);
+      setGreenSide(tmpHole.greenSide || '');
+      setChipClub(tmpHole.chipClub || '');
       setToGreenMetersManuallySet(false);
     }
   }, [open]);
@@ -73,59 +82,78 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
     }
   }, [open, calculatedSuggestion, toGreenMeters, toGreenMetersManuallySet, isPar3, driveDistance]);
 
-  const handleToGreenMetersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setToGreenMeters(Number(e.target.value) || 0);
-    setToGreenMetersManuallySet(true);
-  };
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.name) {
+      case 'toGreen':
+        setToGreen(e.target.value);
+        break;
+      case 'toGreenMeters':
+        setToGreenMeters(Number(e.target.value));
+        break;
+      case 'greenSide':
+        setGreenSide(e.target.value);
+        break;
+      case 'chipClub':
+        setChipClub(e.target.value);
+        break;
+    }
+  }
 
   const handleSubmit = () => {
-    onSubmit({
-      toGreenMeters: toGreenMeters > 0 ? toGreenMeters : undefined,
-      greenSide: greenSide || undefined,
-      chipClub: chipClub || undefined,
-    });
+    onSubmit(toGreenMeters, toGreen, greenSide, chipClub);
     onClose();
   };
 
   if (!open) return null;
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Approach & Green Details</DialogTitle>
-      <DialogContent>
-        <Grid container spacing={2} sx={{ mt: 1 }}>
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <TextField
-              name='toGreenMeters' label="Mts. to green" type='number'
-              value={toGreenMeters || ''} onChange={handleToGreenMetersChange}
-              disabled={isPar3 || disableToGreenMetersField}
-              variant='outlined' fullWidth
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <Autocomplete
-              options={greenSideValues} value={greenSide}
-              getOptionLabel={(option) => String(option)}
-              onChange={(event, newValue) => setGreenSide(newValue || '')}
-              renderInput={(params) => <TextField {...params} label="Green side miss" variant="outlined" />}
-              disabled={girHappened} fullWidth
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <Autocomplete
-              options={chipClubs} value={chipClub}
-              getOptionLabel={(option) => String(option)}
-              onChange={(event, newValue) => setChipClub(newValue || '')}
-              renderInput={(params) => <TextField {...params} label="Chip club" variant="outlined" />}
-              disabled={girHappened} fullWidth
-            />
-          </Grid>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      onClick={handleSubmit}
+      onSubmit={handleSubmit}
+      title='Approach & Green details'
+    >
+      <Grid container spacing={1} columns={{ xs: 1, sm: 4 }}>
+        <Grid size={{ xs: 12, sm: 1 }}>
+          <Select
+            name='toGreen'
+            list={derivedClubs.greenClubs}
+            onChange={handleValueChange}
+            label='Approach club'
+          />
         </Grid>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSubmit} variant="contained">Save Approach Details</Button>
-      </DialogActions>
+        <Grid size={{ xs: 12, sm: 1 }}>
+          <TextField
+            name='toGreenMeters' label="Mts. to green" type='number'
+            value={toGreenMeters || ''} onChange={handleValueChange}
+            disabled={isPar3 || disableToGreenMetersField}
+            variant='outlined'
+            sx={{ width: '100%' }}
+          />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 1 }}>
+          <Select
+            value={greenSide}
+            label="Green side miss"
+            disabled={girHappened}
+            name='greenSide'
+            list={greenSideValues}
+            onChange={handleValueChange}
+          />
+
+        </Grid>
+        <Grid size={{ xs: 12, sm: 1 }}>
+          <Select
+            value={chipClub}
+            label="Chip club"
+            disabled={girHappened}
+            name='chipClub'
+            list={derivedClubs.chipClubs}
+            onChange={handleValueChange}
+          />
+        </Grid>
+      </Grid>
     </Dialog>
   );
 };

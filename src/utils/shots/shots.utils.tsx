@@ -8,6 +8,7 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, roundPlayingHCP, roundHoles } = props;
   let newPar = Number(par);
   const diff = roundPlayingHCP - roundHoles;
+
   if (diff === 0) {
     newPar = newPar + 1
   }

@@ -23,7 +23,6 @@ const holeTmpSlice = createSlice({
       const { name, value, roundPlayingHCP, roundHoles, chipClubs } = action.payload;
       const initialValueType = typeof initialState[name];
 
-      console.log(value)
       if (chipClubs !== undefined) {
         state.chipClubs = chipClubs;
       }
@@ -69,15 +68,17 @@ const holeTmpSlice = createSlice({
       } else if (initialValueType === 'object') {
         (state as any)[name] = value;
       }
-      state.bounceBack = state.strokes - state.par; // Use state.strokes
-      // Ensure the result is always a number, defaulting to 0 if undefined
-      state.points = calculateStablefordPoints({
-        hcp: Number(state.hcp),
-        par: Number(state.par),
-        strokes: Number(state.strokes),
-        roundPlayingHCP: Number(roundPlayingHCP),
-        roundHoles: Number(roundHoles)
-      }) ?? 0;
+      state.bounceBack = state.strokes - state.par;
+
+      if (state.par !== 0, state.hcp !== 0 && state.strokes !== 0 && Number(roundPlayingHCP) !== 0 && Number(roundHoles) !== 0) {
+        state.points = calculateStablefordPoints({
+          hcp: Number(state.hcp),
+          par: Number(state.par),
+          strokes: Number(state.strokes),
+          roundPlayingHCP: Number(roundPlayingHCP),
+          roundHoles: Number(roundHoles)
+        }) ?? 0;
+      }
       state.gir = calculateGirValue({
         par: Number(state.par),
         putts: Number(state.putts),
