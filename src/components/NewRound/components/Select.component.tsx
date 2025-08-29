@@ -44,7 +44,7 @@ const Select = (props: ISelectProps) => {
           })
         }
       </SelectMui>
-    </FormControl >
+    </FormControl>
   )
 }
 

@@ -62,7 +62,7 @@ const Dashboard = () => {
             </Paper>
           )
       }
-    </Box >
+    </Box>
   )
 }
 

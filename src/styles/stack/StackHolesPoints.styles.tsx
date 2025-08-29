@@ -30,7 +30,7 @@ const StackHolesPoints: React.FC<StackHolesPointsProps> = React.memo((props) => 
   const underPar = roundStrokes <= coursePar + playerHCP;
   return (
     <StyledStack {...restProps}>
-      <ShotsTableHeaderStack firstRow={''} secondRow={'TOT | NET | GROSS'} />
+      <ShotsTableHeaderStack firstRow={''} secondRow={'TOT | NET | GROSS | POINTS'} />
       <Typography
         fontWeight={'bold'}
         sx={{
@@ -39,7 +39,7 @@ const StackHolesPoints: React.FC<StackHolesPointsProps> = React.memo((props) => 
           textAlign: 'center'
         }}
       >
-        {`${roundStrokes} | ${overParNetString} | ${overParGrossString}`}
+        {`${roundStrokes} | ${overParNetString} | ${overParGrossString} | ${round.totals.points.totals}`}
       </Typography>
     </StyledStack>
   );

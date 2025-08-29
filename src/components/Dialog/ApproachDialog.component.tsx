@@ -60,6 +60,7 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
         break;
       case 'toGreenMeters':
         setToGreenMeters(Number(e.target.value));
+        setToGreenMetersManuallySet(true);
         break;
       case 'greenSide':
         setGreenSide(e.target.value);

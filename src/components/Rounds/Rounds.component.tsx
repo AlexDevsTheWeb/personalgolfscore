@@ -1,10 +1,9 @@
 import { useSelector } from 'react-redux';
 
-import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { RootState } from '@/store/store';
 import { IBasicRoundData } from '@/types/roundData.types';
 import { IRoundDetails } from '@/types/roundDetails.types';
-import { Box } from '@mui/material';
+import { Grid } from '@mui/material';
 import Spinner from '../common/spinner/Spinner.component';
 import RoundsDataHeader from '../RoundsData/components/roundData/RoundsDataHeader.component';
 import RoundsButtons from './RoundsButtons.component';
@@ -14,8 +13,6 @@ interface IRoundsProps {
 }
 
 const Rounds = ({ rounds }: IRoundsProps) => {
-
-
   const { isLoading } = useSelector((store: RootState) => store.rounds);
 
   if (!!isLoading) {
@@ -23,19 +20,20 @@ const Rounds = ({ rounds }: IRoundsProps) => {
   }
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <Box display={'flex'} flexDirection={useDeviceDetection().isMobile ? 'column' : 'row'} gap={1}>
+    <>
+      <Grid container spacing={1} columns={{ xs: 1, sm: 12 }}>
         {
           rounds.length > 0
             ? rounds.map((round, index) => {
-              return <RoundsDataHeader round={round as IRoundDetails} key={index} />
+              return (<Grid size={{ xs: 1, sm: 3, md: 4 }} spacing={1} key={index}>
+                <RoundsDataHeader round={round as IRoundDetails} />
+              </Grid>)
             })
             : null
         }
-      </Box>
-
+      </Grid>
       <RoundsButtons />
-    </Box >
+    </>
 
   )
 }

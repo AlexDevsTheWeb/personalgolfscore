@@ -57,7 +57,7 @@ const AddNewRoundForm = () => {
     navigate('/dashboard');
   }
 
-  
+
 
   return (
     <Dialog
@@ -67,7 +67,7 @@ const AddNewRoundForm = () => {
       onSubmit={handleSubmit}
       onClick={handleSubmit}
     >
-      <Grid container spacing={1}>
+      <Grid container spacing={1} sx={{ mt: 1 }} columns={{ xs: 12, sm: 12, lg: 12 }}>
         <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
           <TextField
             name='roundCourse'

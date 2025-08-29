@@ -22,26 +22,47 @@ export const lightColors = {
   underMid: '#fed7d7', // Softer light red
 }
 
+// export const darkColors = {
+//   menubar: '#4a90a4', // Softer teal-blue, less harsh than pure blue
+//   primary1: '#e8f4f8', // Softer white with slight blue tint
+//   primary2: '#6bb6ff', // Brighter, friendlier blue with better contrast
+//   primary3: '#9ca3af', // Warmer grey for muted text
+//   black: '#e8f4f8', // Softer white equivalent
+//   grey1: '#9ca3af', // Warmer muted text color
+//   grey2: '#6b7280', // Medium grey with warmth
+//   grey3: '#4b5563', // Darker grey with better contrast
+//   grey4: '#374151', // Rich dark grey for borders
+//   grey5: '#1f2937', // Warmer dark background (not pure black)
+//   grey6: '#111827', // Main background - dark but not harsh
+//   white: '#111827', // Dark background equivalent
+//   success: '#10b981', // Modern emerald green
+//   warning: '#f59e0b', // Warmer amber warning
+//   error: '#ef4444', // Softer red, less aggressive
+//   notes: '#92400e', // Warmer dark amber for notes
+//   behaviours: '#1e40af', // Rich navy blue for behaviors
+//   overMid: '#065f46', // Rich dark green
+//   underMid: '#991b1b', // Rich dark red
+// };
 export const darkColors = {
-  menubar: '#4a90a4', // Softer teal-blue, less harsh than pure blue
-  primary1: '#e8f4f8', // Softer white with slight blue tint
-  primary2: '#6bb6ff', // Brighter, friendlier blue with better contrast
-  primary3: '#9ca3af', // Warmer grey for muted text
-  black: '#e8f4f8', // Softer white equivalent
-  grey1: '#9ca3af', // Warmer muted text color
-  grey2: '#6b7280', // Medium grey with warmth
-  grey3: '#4b5563', // Darker grey with better contrast
-  grey4: '#374151', // Rich dark grey for borders
-  grey5: '#1f2937', // Warmer dark background (not pure black)
-  grey6: '#111827', // Main background - dark but not harsh
-  white: '#111827', // Dark background equivalent
-  success: '#10b981', // Modern emerald green
-  warning: '#f59e0b', // Warmer amber warning
-  error: '#ef4444', // Softer red, less aggressive
-  notes: '#92400e', // Warmer dark amber for notes
-  behaviours: '#1e40af', // Rich navy blue for behaviors
-  overMid: '#065f46', // Rich dark green
-  underMid: '#991b1b', // Rich dark red
+  menubar: '#38bdf8', // A brighter, more vibrant blue for accents
+  primary1: '#f8fafc', // A clean, near-white for primary text
+  primary2: '#0ea5e9', // A slightly darker blue for primary actions
+  primary3: '#94a3b8', // A lighter grey for secondary text
+  black: '#ffffff',     // Pure white for high contrast text on dark backgrounds
+  grey1: '#cbd5e1', // Lighter grey for text
+  grey2: '#94a3b8', // Medium grey for text and secondary elements
+  grey3: '#475569', // A darker grey for borders and dividers
+  grey4: '#334155', // A dark grey for UI elements like input backgrounds
+  grey5: '#1e293b', // The "paper" or card background color
+  grey6: '#0f172a', // The main, darkest background color
+  white: '#0f172a', // Should be the same as the main background
+  success: '#22c55e', // A vibrant green
+  warning: '#f59e0b', // A warm amber/orange
+  error: '#ef4444', // A clear but not overly harsh red
+  notes: '#a16207', // A darker yellow/brown for notes background
+  behaviours: '#3b82f6', // A solid blue for specific UI elements
+  overMid: '#166534', // A deep green
+  underMid: '#991b1b', // A deep red
 };
 
 // Store main hex codes for custom "dim" colors
