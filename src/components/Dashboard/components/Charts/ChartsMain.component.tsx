@@ -2,6 +2,7 @@ import DistancesTotals from "@/components/Totals/HolebyHole/DistancesTotals.comp
 import { Grid, Typography } from "@mui/material"
 import FairwayHitsChart from "./FairwayChart.component"
 import GirPercentageChart from "./GirChart.component"
+import ParAveragesChart from "./ParAveragesChart.component"
 import PointsChart from "./PointsChart.component"
 import PuttsChart from "./PuttsChart.component"
 import ScoreCharts from "./ScoreChart.component"
@@ -19,6 +20,8 @@ const ChartsMain = () => {
         <Grid size={{ xs: 12, md: 6 }}>
           <PointsChart />
         </Grid>
+
+
         <Grid size={{ xs: 12, md: 4 }}>
           <PuttsChart />
         </Grid>
@@ -29,7 +32,10 @@ const ChartsMain = () => {
         <Grid size={{ xs: 12, md: 3, lg: 4 }}>
           <GirPercentageChart />
         </Grid>
-        <Grid size={{ xs: 12 }}>
+        <Grid size={{ xs: 12, md: 4 }}>
+          <ParAveragesChart />
+        </Grid>
+        <Grid size={{ xs: 12, md: 8 }}>
           <DistancesTotals />
         </Grid>
       </Grid>

@@ -38,7 +38,7 @@ const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
         <CardContent sx={{ py: 0 }}>
 
           <Grid container spacing={1} columns={{ xs: 1, sm: 12 }} sx={{ mt: 1 }}>
-            <Grid size={{ xs: 12, sm: 12, md: 6 }} spacing={1}>
+            <Grid size={{ xs: 12, sm: 12, md: 6 }}>
               <Typography gutterBottom sx={{ color: 'text.primary', fontSize: 14 }}>
                 {`Par: ${par} | HCP: ${playingHCP} | Holes: ${roundHoles}`}
               </Typography>

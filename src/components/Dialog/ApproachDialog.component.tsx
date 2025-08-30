@@ -96,6 +96,8 @@ const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
             list={greenClubs}
             onChange={handleValueChange}
             label='Approach club'
+            value={toGreen}
+            disabled={girHappened}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 1 }}>

@@ -25,7 +25,7 @@ const Rounds = ({ rounds }: IRoundsProps) => {
         {
           rounds.length > 0
             ? rounds.map((round, index) => {
-              return (<Grid size={{ xs: 1, sm: 3, md: 4 }} spacing={1} key={index}>
+              return (<Grid size={{ xs: 1, sm: 3, md: 4 }} key={index}>
                 <RoundsDataHeader round={round as IRoundDetails} />
               </Grid>)
             })
