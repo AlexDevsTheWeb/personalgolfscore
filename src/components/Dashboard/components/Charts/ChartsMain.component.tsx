@@ -1,5 +1,7 @@
 import DistancesTotals from "@/components/Totals/HolebyHole/DistancesTotals.component"
+import { RootState } from "@/store/store"
 import { Grid, Typography } from "@mui/material"
+import { useSelector } from "react-redux"
 import FairwayHitsChart from "./FairwayChart.component"
 import GirPercentageChart from "./GirChart.component"
 import ParAveragesChart from "./ParAveragesChart.component"
@@ -8,6 +10,7 @@ import PuttsChart from "./PuttsChart.component"
 import ScoreCharts from "./ScoreChart.component"
 
 const ChartsMain = () => {
+  const { rounds } = useSelector((store: RootState) => store.rounds);
   return (
     <>
       <Typography variant="headline6" component="h2" gutterBottom sx={{ mt: 2, textAlign: 'center' }}>
@@ -15,25 +18,23 @@ const ChartsMain = () => {
       </Typography>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <ScoreCharts />
+          <ScoreCharts rounds={rounds} />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <PointsChart />
+          <PointsChart rounds={rounds} />
         </Grid>
-
-
         <Grid size={{ xs: 12, md: 4 }}>
-          <PuttsChart />
+          <PuttsChart rounds={rounds} />
         </Grid>
 
         <Grid size={{ xs: 12, md: 3, lg: 4 }}>
-          <FairwayHitsChart />
+          <FairwayHitsChart rounds={rounds} />
         </Grid>
         <Grid size={{ xs: 12, md: 3, lg: 4 }}>
-          <GirPercentageChart />
+          <GirPercentageChart rounds={rounds} />
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
-          <ParAveragesChart />
+          <ParAveragesChart rounds={rounds} />
         </Grid>
         <Grid size={{ xs: 12, md: 8 }}>
           <DistancesTotals />

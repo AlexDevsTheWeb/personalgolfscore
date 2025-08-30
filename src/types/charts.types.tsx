@@ -1,3 +1,4 @@
+import { IBasicRoundData } from "./roundData.types";
 
 export interface IRecentRoundData {
   score: number | null;
@@ -37,4 +38,8 @@ export interface ITooltipPayload {
   points: number;
   date: string;
   course: string | undefined;
+}
+
+export interface IRoundsCharts {
+  rounds: IBasicRoundData[];
 }

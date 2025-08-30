@@ -23,15 +23,16 @@ const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
   const location = window.location.pathname;
 
   const handleCardActionAreaClick = () => {
-    if (location === `/dashboard`) {
+    if (isDashboard) {
       navigate(`/round/${id}`);
     };
   };
+  const isDashboard = location === `/dashboard` || location === '/';
+
 
   return (
-
     <CardActionArea onClick={handleCardActionAreaClick} sx={{
-      cursor: location === `/dashboard` ? 'pointer' : 'default', widht: '100%'
+      cursor: isDashboard ? 'pointer' : 'default', widht: '100%'
     }}>
       <Card>
         <CardHeader title={`${roundCourse}`} subheader={`${formattedDate}`} />

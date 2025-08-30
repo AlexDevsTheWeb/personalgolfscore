@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 
 interface IDistancesCharts {
   distances?: IDistance[] | undefined
-
 }
 
 const DistancesTotals: React.FC<IDistancesCharts> = ({ distances }) => {
@@ -91,7 +90,7 @@ const DistancesTotals: React.FC<IDistancesCharts> = ({ distances }) => {
         <BarChart
           dataset={chartData}
           xAxis={[{ scaleType: 'band', dataKey: 'club' }]} // Club names on X-axis
-          yAxis={[{ label: 'Avg. Distance (m)' }]}
+          yAxis={[{}]}
           series={[
             {
               dataKey: 'distance',
@@ -103,8 +102,8 @@ const DistancesTotals: React.FC<IDistancesCharts> = ({ distances }) => {
           ]}
           layout="vertical"
           height={270}
-          margin={{ top: 0, right: 5, bottom: 0, left: 0 }} // Adjust margins for labels
-          grid={{ horizontal: true }}
+          margin={{ top: 0, right: 10, bottom: 0, left: -10 }} // Adjust margins for labels
+          grid={{ horizontal: true, vertical: true }}
         />
       </Box>
     </Paper>

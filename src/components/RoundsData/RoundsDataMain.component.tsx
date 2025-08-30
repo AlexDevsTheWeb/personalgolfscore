@@ -14,7 +14,6 @@ import { useParams } from 'react-router-dom';
 import Spinner from '../common/spinner/Spinner.component';
 import EmptyRounds from '../Dashboard/components/EmptyRounds/EmptyRounds.component';
 import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
-import DistancesTotals from '../Totals/HolebyHole/DistancesTotals.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import RoundsDataHeader from './components/roundData/RoundsDataHeader.component';
 
@@ -23,13 +22,14 @@ const RoundsDataMain = () => {
   const params = useParams<{ roundID: string }>();
   const playerId = readUserLocalStorage();
 
-  const { round, isLoading: isLoadingRound, error } = useSelector((store: RootState) => store.roundDetails);
+  const { round, isLoading: isLoadingRound, error, } = useSelector((store: RootState) => store.roundDetails);
   const { player, isLoading: isLoadingPlayer } = useSelector((store: RootState) => store.player);
   const golfBag = player?.golfBag;
 
   const [openHoleByHole, setOpenHoleByHole] = useState<boolean>(false);
   const [openFullStatistics, setOpenFullStatistics] = useState<boolean>(true);
 
+  console.log("totals: ", round?.totals);
   useEffect(() => {
     if (params.roundID && playerId) {
       dispatch(getRoundDetails({ playerId, roundId: params.roundID }));
@@ -37,7 +37,7 @@ const RoundsDataMain = () => {
     return () => {
       dispatch(clearRoundDetails());
     }
-  }, [dispatch, params.roundID, playerId]);
+  }, [params.roundID, playerId]);
 
   const allClubNamesFromBag = useMemo(() => {
     if (!golfBag || golfBag.length === 0) {
@@ -118,7 +118,9 @@ const RoundsDataMain = () => {
       <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, width: '100%', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <RoundsDataHeader round={round} />
         {allClubNamesFromBag.length > 0 && (
-          <DistancesTotals distances={round.distances} />
+          // <DistancesTotals distances={round.distances} />
+          // <ChartsMain />
+          <></>
         )}
       </Box>
 

@@ -1,13 +1,12 @@
-import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
+import { IRoundsCharts } from '@/types/charts.types';
 import { Box, Typography, useTheme } from "@mui/material";
 import { BarChart } from '@mui/x-charts/BarChart';
 import dayjs from 'dayjs';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-const ScoreCharts: React.FC = () => {
-  const { rounds } = useSelector((store: RootState) => store.rounds);
+const ScoreCharts: React.FC<IRoundsCharts> = ({ rounds }) => {
+  // const { rounds } = useSelector((store: RootState) => store.rounds);
   const theme = useTheme();
 
   const recentRoundsRaw = rounds
@@ -78,14 +77,14 @@ const ScoreCharts: React.FC = () => {
             { data: grossVsParData, label: 'Gross vs Par', id: 'grossVsPar', color: theme.palette.greenDim.main },
           ]}
           xAxis={[{ data: xLabels, scaleType: 'band' }]}
-          yAxis={[{ label: 'Value', max: yAxisMax }]}
+          yAxis={[{ max: yAxisMax }]}
           height={270}
           margin={{ top: 0, right: 20, bottom: 0, left: 10 }}
-          grid={{ horizontal: true }}
+          grid={{ vertical: true, horizontal: true }}
           slotProps={{
             legend: {
               direction: 'horizontal',
-              position: { vertical: 'bottom', horizontal: 'center' },
+              position: { vertical: 'top', horizontal: 'center' },
             },
           }}
         />

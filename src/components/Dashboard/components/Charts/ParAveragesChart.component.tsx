@@ -1,15 +1,16 @@
 import { getRoundDetails } from '@/features/round/roundDetails.slice';
 import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
+import { IRoundsCharts } from '@/types/charts.types';
 import { IShots } from '@/types/roundData.types';
 import { Box, Typography, useTheme } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const ParAveragesChart: React.FC = () => {
+const ParAveragesChart: React.FC<IRoundsCharts> = ({ rounds }) => {
   const dispatch = useDispatch();
-  const { rounds, playerID } = useSelector((store: RootState) => store.rounds);
+  const { playerID } = useSelector((store: RootState) => store.rounds);
   const theme = useTheme();
 
   const [allHoles, setAllHoles] = useState<IShots[]>([]);
@@ -109,8 +110,8 @@ const ParAveragesChart: React.FC = () => {
           xAxis={[{ scaleType: 'band', dataKey: 'par' }]}
           series={[{ dataKey: 'average', label: 'Average Strokes' }]}
           height={270}
-          margin={{ top: 10, right: 30, bottom: 20, left: 30 }}
-          grid={{ horizontal: true }}
+          margin={{ top: 10, right: 30, bottom: 20, left: 0 }}
+          grid={{ horizontal: true, vertical: true }}
           colors={barColors}
         />
       </Box>

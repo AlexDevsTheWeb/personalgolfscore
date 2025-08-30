@@ -1,12 +1,10 @@
-import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
+import { IRoundsCharts } from '@/types/charts.types';
 import { Box, Typography, useTheme } from '@mui/material';
 import { PieChart } from '@mui/x-charts/PieChart';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-const GirPercentageChart: React.FC = () => {
-  const { rounds } = useSelector((store: RootState) => store.rounds);
+const GirPercentageChart: React.FC<IRoundsCharts> = ({ rounds }) => {
   const theme = useTheme();
 
   const recentRounds = rounds.slice(-5);
@@ -76,10 +74,10 @@ const GirPercentageChart: React.FC = () => {
   return (
     <Paper>
       <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', pt: 2, px: 2 }}>
-        GIR (Last {recentRounds.length} Rounds)
+        GIR Hits (Last {recentRounds.length} Rounds): {`${girPercentage.toFixed(2)}%`}
       </Typography>
       <Typography component="h2" variant="subheadline2" gutterBottom sx={{ textAlign: 'center' }}>
-        {`${girPercentage.toFixed(2)}%`}
+
       </Typography>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300, width: '100%' }}>

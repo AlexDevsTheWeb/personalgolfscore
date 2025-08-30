@@ -1,10 +1,9 @@
-import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
+import { IRoundsCharts } from '@/types/charts.types';
 import { Box, Typography, useTheme } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
 import dayjs from 'dayjs';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 interface IProcessedRoundPointsData {
   date: string;
@@ -13,8 +12,7 @@ interface IProcessedRoundPointsData {
   points: number | null;
 }
 
-const PointsChart: React.FC = () => {
-  const { rounds } = useSelector((store: RootState) => store.rounds);
+const PointsChart: React.FC<IRoundsCharts> = ({ rounds }) => {
   const theme = useTheme();
 
   const recentRoundsRaw = rounds
@@ -54,15 +52,15 @@ const PointsChart: React.FC = () => {
         <LineChart
           series={[{ data: pointsData, label: 'Points', id: 'pointsId', color: theme.palette.primary.main, showMark: true }]}
           xAxis={[{ scaleType: 'point', data: xAxisLabels }]}
-          yAxis={[{ label: 'Points' }]}
+          yAxis={[{}]}
           height={270}
-          margin={{ top: 0, right: 20, bottom: 0, left: 10 }}
-          grid={{ horizontal: true }}
+          margin={{ top: 10, right: 40, bottom: 0, left: 10 }}
+          grid={{ horizontal: true, vertical: true }}
           slotProps={{
             legend: {
               direction: 'horizontal',
               position: {
-                vertical: 'bottom',
+                vertical: 'top',
                 horizontal: 'center',
               }
             }
