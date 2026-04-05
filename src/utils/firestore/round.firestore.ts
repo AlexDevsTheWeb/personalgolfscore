@@ -3,6 +3,10 @@ import { IDistance, IShots } from '@/types/roundData.types';
 import { writeBatch } from 'firebase/firestore';
 import { IRoundTotals } from "../../types/roundTotals.types";
 import { db } from '../../utils/firebase/firebase.utils';
+import { useAppStore } from '@/store/zustand';
+import { IFetchParams } from "@/types/round.types";
+import { IRoundDetails } from "@/types/roundDetails.types";
+import { collection, doc, getDoc, getDocs, Timestamp } from "firebase/firestore";
 import {
   fetchExistingAverageDistances,
   fetchOverallTotalsAvg,
@@ -11,23 +15,66 @@ import {
   prepareRoundSaveBatch
 } from '../../utils/round/round.utils';
 
-export const saveNewRoundThunk = async (_: any, thunkAPI: any) => {
-  const state = thunkAPI.getState();
-  const { newRoundMain, newRoundTotals, newRoundHoles, newRoundDistances } = state.newRound;
+export const getRoundDetails = async (
+  { playerId, roundId }: IFetchParams
+): Promise<IRoundDetails> => {
+
+  if (!playerId || !roundId) {
+    console.error('getRoundDetails: playerId and roundId are required');
+    throw new Error('Player ID and Round ID are required');
+  }
+
+  try {
+    const roundDocRef = doc(db, 'players', playerId, 'rounds', roundId);
+    const roundDoc = await getDoc(roundDocRef);
+
+    if (!roundDoc.exists()) {
+      console.warn(`Round details not found for player ${playerId}, round ${roundId}`);
+      throw new Error('Round not found');
+    }
+    const roundData = roundDoc.data();
+
+    const holesColRef = collection(roundDocRef, 'holes');
+    const holesDoc = await getDocs(holesColRef);
+    const holesData: IShots[] = holesDoc.docs.map(doc => ({
+      holeNumber: parseInt(doc.id, 10),
+      ...doc.data(),
+    } as IShots));
+
+    const detailedRoundData: IRoundDetails = {
+      id: roundDoc.id,
+      ...roundData,
+      roundDate: roundData.roundDate instanceof Timestamp ? roundData.roundDate.toMillis() : roundData.roundDate,
+      createdAt: roundData.createdAt instanceof Timestamp ? roundData.createdAt.toMillis() : roundData.createdAt,
+      holes: holesData,
+      totals: roundData.totals,
+      distances: roundData.distances,
+    }
+
+    return detailedRoundData;
+
+  } catch (error: any) {
+    console.error('Error fetching round details: ', error);
+    throw error;
+  }
+
+};
+
+export const saveNewRound = async (): Promise<{ success: boolean; roundId: string }> => {
+  const store = useAppStore.getState();
+  const { newRoundMain, newRoundTotals, newRoundHoles, newRoundDistances, player } = store;
   const general: INewRound = newRoundMain.round;
   const holes: IShots[] = newRoundHoles.holes;
   const currentRoundDistances: IDistance[] = newRoundDistances.roundDistances;
   const currentTotals: IRoundTotals = newRoundTotals.roundTotals;
-  const totals: IRoundTotals = newRoundTotals.roundTotals;
 
-  let userId: string | null = null;
+  let userId: string | null = player?.uid ?? null;
   let savedRoundId: string | null = null;
 
   try {
-    userId = state.player.player.uid;
     if (!userId) {
       console.error("Authentication Error: userId is missing.");
-      return thunkAPI.rejectWithValue('User not authenticated');
+      throw new Error('User not authenticated');
     }
 
     const batchSaveRound = writeBatch(db);
@@ -75,18 +122,18 @@ export const saveNewRoundThunk = async (_: any, thunkAPI: any) => {
 
         await batchUpdateTotals.commit();
       } catch (totalsError: any) {
-        console
+        console.error("Error updating totals:", totalsError);
       }
 
     } else {
       console.log("Missing userId or current round totals for statistics update.");
     }
 
-    return { success: true, roundId: savedRoundId };
+    return { success: true, roundId: savedRoundId ?? '' };
 
   } catch (error: any) {
     console.error("Error saving round to Firestore: ", error);
     const errorMessage = error instanceof Error ? error.message : "Failed to save round";
-    return thunkAPI.rejectWithValue(errorMessage);
+    throw new Error(errorMessage);
   }
 };

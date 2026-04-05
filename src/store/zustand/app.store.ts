@@ -18,10 +18,10 @@ import { INewRound, InitialStateNewRound, IInitialStateRoundSave } from '@/types
 import { InitialStateNewRoundsData, IShots, InitialStateNewRoundDistances } from '@/types/roundData.types';
 import { calculateGirValue, calculateGreenApproachCounts, calculatePuttLengthCounts, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from '@/utils/shots/shots.utils';
 import { totalsCalculator } from '@/utils/calculator/TotalsCalculator.utils';
-import { updateUserThemePreferenceThunk, fetchThemePreferenceThunk } from '@/features/user/user.thunk';
-import { getPlayerInfoThunk, updatePlayerGolfBagThunk, updatePlayerProfileThunk } from '@/features/player/player.thunk';
-import { getRoundDetailsThunk } from '@/features/round/roundDetails.thunk';
-import { saveNewRoundThunk } from '@/features/newRound/roundSaver.thunk';
+import { updateUserThemePreference, fetchThemePreference } from '@/utils/firestore/user.firestore';
+import { getPlayerInfo, updatePlayerGolfBag, updatePlayerProfile } from '@/utils/firestore/player.firestore';
+import { getRoundDetails } from '@/utils/firestore/round.firestore';
+import { saveNewRound } from '@/utils/firestore/round.firestore';
 import { calculateAvg } from '@/utils/round/round.utils';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -338,18 +338,18 @@ export const useAppStore = create<AppState>()(
         setThemePreference: (themePreference) => set({ themePreference }),
         updateUserThemePreference: async (playerId, theme) => {
           try {
-            const result = await updateUserThemePreferenceThunk({ playerId, theme }, null);
+            const result = await updateUserThemePreference({ playerId, theme });
             set({ themePreference: result });
           } catch (error) {
-            console.error('Theme thunk failed:', error);
+            console.error('Theme update failed:', error);
           }
         },
         fetchInitialTheme: async (playerId) => {
           try {
-            const result = await fetchThemePreferenceThunk(playerId, null);
+            const result = await fetchThemePreference(playerId);
             set({ themePreference: result });
           } catch (error) {
-            console.error('Theme thunk failed:', error);
+            console.error('Theme fetch failed:', error);
           }
         },
         resetUser: () => set({ isLoadingUser: false, user: {} as IUser, themePreference: 'light' as ThemeMode, userRounds: {} }),
@@ -362,11 +362,7 @@ export const useAppStore = create<AppState>()(
         getPlayerDetails: async (uid) => {
           set({ isLoadingPlayer: true, playerError: '', playerErrorMessage: '' });
           try {
-            const result = await getPlayerInfoThunk(uid, { rejectWithValue: (msg: string) => msg });
-            if (typeof result === 'string') {
-              set({ isLoadingPlayer: false, playerError: 'Unknown Error', playerErrorMessage: result });
-              return null;
-            }
+            const result = await getPlayerInfo(uid);
             set({ isLoadingPlayer: false, player: result.player });
             return result;
           } catch (error: unknown) {
@@ -383,11 +379,7 @@ export const useAppStore = create<AppState>()(
         updatePlayerGolfbag: async (payload) => {
           set({ isLoadingPlayer: true, playerError: '', playerErrorMessage: '' });
           try {
-            const result = await updatePlayerGolfBagThunk(payload, { rejectWithValue: (msg: string) => msg });
-            if (typeof result === 'string') {
-              set({ isLoadingPlayer: false, playerError: result, playerErrorMessage: result });
-              return null;
-            }
+            const result = await updatePlayerGolfBag(payload);
             set((state) => ({
               isLoadingPlayer: false,
               player: state.player ? { ...state.player, golfBag: result } : state.player,
@@ -402,11 +394,7 @@ export const useAppStore = create<AppState>()(
         updatePlayerProfile: async (payload) => {
           set({ isLoadingPlayer: true, playerError: '', playerErrorMessage: '' });
           try {
-            const result = await updatePlayerProfileThunk(payload, { rejectWithValue: (msg: string) => msg });
-            if (typeof result === 'string') {
-              set({ isLoadingPlayer: false, playerError: result, playerErrorMessage: result });
-              return null;
-            }
+            const result = await updatePlayerProfile(payload);
             set((state) => ({
               isLoadingPlayer: false,
               player: state.player ? { ...state.player, ...result } : state.player,
@@ -468,11 +456,7 @@ export const useAppStore = create<AppState>()(
         getRoundDetails: async (playerId, roundId) => {
           set({ isLoadingRoundDetails: true, roundDetailsError: null, roundDetailsData: null });
           try {
-            const result = await getRoundDetailsThunk({ playerId, roundId }, { rejectWithValue: (msg: string) => msg });
-            if (typeof result === 'string') {
-              set({ isLoadingRoundDetails: false, roundDetailsError: result });
-              return null;
-            }
+            const result = await getRoundDetails({ playerId, roundId });
             set({ isLoadingRoundDetails: false, roundDetailsData: result });
             return result;
           } catch (error: unknown) {
@@ -734,24 +718,12 @@ export const useAppStore = create<AppState>()(
         setNewRoundClubs: (clubs) => set({ newRoundClubs: clubs }),
         
         saveNewRound: async () => {
-          const current = get();
           set({ newRoundSaver: { isLoading: true, roundId: '', success: false } });
 
           try {
-            const result = await saveNewRoundThunk(null, {
-              getState: () => ({
-                newRound: {
-                  newRoundMain: current.newRoundMain,
-                  newRoundHoles: current.newRoundHoles,
-                  newRoundTotals: current.newRoundTotals,
-                  newRoundDistances: current.newRoundDistances,
-                },
-                player: { player: { uid: '' } },
-              }),
-              rejectWithValue: (msg: string) => msg,
-            });
+            const result = await saveNewRound();
 
-            if (typeof result === 'string') {
+            if (!result) {
               set({ newRoundSaver: { isLoading: false, roundId: '', success: false } });
               return null;
             }

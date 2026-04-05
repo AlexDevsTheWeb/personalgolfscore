@@ -1,14 +1,13 @@
 import { IGetPlayerDetailsPayload, IPlayerStateData, IUpdateGolfBagPayload, IUpdatePlayerProfilePayload } from "@/types/player.types";
-
 import { IBasicRoundData, ITotalDistanceAvg } from "@/types/roundData.types";
 import { ITotalRoundsAvg } from "@/types/roundTotals.types";
 import { db } from "@/utils/firebase/firebase.utils";
 import { collection, doc, DocumentData, DocumentReference, getDoc, getDocs, orderBy, query, Timestamp, updateDoc } from "firebase/firestore";
 
-export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any): Promise<IGetPlayerDetailsPayload | ReturnType<typeof rejectWithValue>> => {
+export const getPlayerInfo = async (uid: string): Promise<IGetPlayerDetailsPayload> => {
   if (!uid) {
-    console.error("getPlayerInfoThunk: UID is required.");
-    return rejectWithValue('User ID not provided.');
+    console.error("getPlayerInfo: UID is required.");
+    throw new Error('User ID not provided.');
   }
 
   try {
@@ -17,7 +16,7 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any):
 
     if (!playerSnapshot.exists()) {
       console.warn(`Player data not found for UID: ${uid}`);
-      return rejectWithValue('Player data not found.');
+      throw new Error('Player data not found.');
     }
 
     const playerData = playerSnapshot.data();
@@ -71,11 +70,11 @@ export const getPlayerInfoThunk = async (uid: string, { rejectWithValue }: any):
 
   } catch (error: any) {
     console.error("Error fetching player details:", error);
-    return rejectWithValue(error.message || 'Failed to fetch player details');
+    throw error;
   }
 };
 
-export const updatePlayerGolfBagThunk = async (payload: IUpdateGolfBagPayload, { rejectWithValue }: any) => {
+export const updatePlayerGolfBag = async (payload: IUpdateGolfBagPayload): Promise<any> => {
   const { uid, golfBagData } = payload;
 
   if (!uid) {
@@ -91,29 +90,29 @@ export const updatePlayerGolfBagThunk = async (payload: IUpdateGolfBagPayload, {
     await updateDoc(playerDocRef, { golfBag: golfBagData });
     return golfBagData;
   } catch (error: any) {
-    console.error("Thunk error updating golf bag:", error);
-    return rejectWithValue(error.message || 'Failed to update golf bag');
+    console.error("Error updating golf bag:", error);
+    throw error;
   }
 }
 
-export const updatePlayerProfileThunk = async (payload: IUpdatePlayerProfilePayload, { rejectWithValue }: any): Promise<Partial<IPlayerStateData> | ReturnType<typeof rejectWithValue>> => {
+export const updatePlayerProfile = async (payload: IUpdatePlayerProfilePayload): Promise<Partial<IPlayerStateData>> => {
   const { uid, data } = payload;
 
   if (!uid) {
-    console.error("updatePlayerProfileThunk: UID is required.");
-    return rejectWithValue('User ID not provided.');
+    console.error("updatePlayerProfile: UID is required.");
+    throw new Error('User ID not provided.');
   }
   if (!data) {
-    console.error("updatePlayerProfileThunk: Data is required.");
-    return rejectWithValue('No profile data provided for update.');
+    console.error("updatePlayerProfile: Data is required.");
+    throw new Error('No profile data provided for update.');
   }
 
   try {
     const playerDocRef: DocumentReference<DocumentData> = doc(db, 'players', uid);
     await updateDoc(playerDocRef, data);
-    return data as Partial<IPlayerStateData>; // Return the updated data
+    return data as Partial<IPlayerStateData>;
   } catch (error: any) {
     console.error("Error updating player profile:", error);
-    return rejectWithValue(error.message || 'Failed to update player profile');
+    throw error;
   }
 };
