@@ -2,15 +2,14 @@ import { ThemeMode } from '@/types/user.types';
 import { Box, FormControlLabel, Switch, Typography } from '@mui/material';
 import React from 'react';
 import Spinner from '../common/spinner/Spinner.component';
-import { usePlayerStore } from '@/store/zustand';
-import { useUserStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 const Settings = () => {
 
-  const { player, isLoading: isPlayerLoading } = usePlayerStore();
+  const { player, isLoadingPlayer: isPlayerLoading } = useAppStore();
   const playerId = player?.uid;
-  const currentThemeMode = useUserStore((state) => state.themePreference);
-  const updateUserThemePreference = useUserStore((state) => state.updateUserThemePreference);
+  const currentThemeMode = useAppStore((state) => state.themePreference);
+  const updateUserThemePreference = useAppStore((state) => state.updateUserThemePreference);
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newMode: ThemeMode = event.target.checked ? 'dark' : 'light';

@@ -1,10 +1,1 @@
-export { useControlsStore } from './controls.store';
-export { useUserStore } from './user.store';
-export { usePlayerStore } from './player.store';
-export { useGolfBagStore } from './golfBag.store';
-export { useRoundsStore } from './rounds.store';
-export { useRoundDetailsStore } from './roundDetails.store';
-export { useRoundHolesStore } from './roundHoles.store';
-export { useRoundTotalsStore } from './roundTotals.store';
-export { useRoundDistanceStore } from './roundDistance.store';
-export { useNewRoundStore } from './newRound.store';
+export { useAppStore } from './app.store';

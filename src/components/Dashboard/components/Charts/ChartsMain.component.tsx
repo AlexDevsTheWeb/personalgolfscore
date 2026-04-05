@@ -6,10 +6,10 @@ import ParAveragesChart from "./ParAveragesChart.component"
 import PointsChart from "./PointsChart.component"
 import PuttsChart from "./PuttsChart.component"
 import ScoreCharts from "./ScoreChart.component"
-import { useRoundsStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const ChartsMain = () => {
-  const rounds = useRoundsStore((state) => state.rounds);
+  const roundsList = useAppStore((state) => state.roundsList);
   return (
     <>
       <Typography variant="headline6" component="h2" gutterBottom sx={{ mt: 2, textAlign: 'center' }}>
@@ -17,23 +17,23 @@ const ChartsMain = () => {
       </Typography>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <ScoreCharts rounds={rounds} />
+          <ScoreCharts rounds={roundsList} />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <PointsChart rounds={rounds} />
+          <PointsChart rounds={roundsList} />
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
-          <PuttsChart rounds={rounds} />
+          <PuttsChart rounds={roundsList} />
         </Grid>
 
         <Grid size={{ xs: 12, md: 3, lg: 4 }}>
-          <FairwayHitsChart rounds={rounds} />
+          <FairwayHitsChart rounds={roundsList} />
         </Grid>
         <Grid size={{ xs: 12, md: 3, lg: 4 }}>
-          <GirPercentageChart rounds={rounds} />
+          <GirPercentageChart rounds={roundsList} />
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
-          <ParAveragesChart rounds={rounds} />
+          <ParAveragesChart rounds={roundsList} />
         </Grid>
         <Grid size={{ xs: 12, md: 8 }}>
           <DistancesTotals />

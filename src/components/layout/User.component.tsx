@@ -7,15 +7,14 @@ import { getAuth, signOut } from "firebase/auth";
 import _ from "lodash";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserStore } from "@/store/zustand";
-import { usePlayerStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 
 const User = () => {
   const navigate = useNavigate();
-  const user = useUserStore((state) => state.user);
-  const { player, isLoading } = usePlayerStore();
-  const resetUser = useUserStore((state) => state.resetUser);
+  const user = useAppStore((state) => state.user);
+  const { player, isLoadingPlayer: isLoading } = useAppStore();
+  const resetUser = useAppStore((state) => state.resetUser);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

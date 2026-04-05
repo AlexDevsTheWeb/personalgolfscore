@@ -1,4 +1,4 @@
-import { useUserStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 import { IUser } from "@/types/user.types";
 import { db } from "@/utils/firebase/firebase.utils";
 import { writeUserLocalStorage } from "@/utils/storage/localStorage.utils";
@@ -11,7 +11,7 @@ import { GoogleIcon } from "../../../assets/CustomIcons.assets";
 const GoogleLoginButton = () => {
 
   const navigate = useNavigate();
-  const setLoginUser = useUserStore((state) => state.setLoginUser);
+  const setLoginUser = useAppStore((state) => state.setLoginUser);
 
   const handleGoogleLogin = async () => {
 

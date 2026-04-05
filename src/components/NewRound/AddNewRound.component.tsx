@@ -9,14 +9,14 @@ import AddNewRoundForm from './AddNewRoundForm.component';
 import AddNewRoundHoles from './AddNewRoundHoles.component';
 import NewRoundMainData from './components/NewRoundMainData.component';
 import HolebyHoleTable from './HolebyHoleTable.component';
-import { useNewRoundStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 const NewRoundMain = () => {
-  const main = useNewRoundStore((state) => state.main);
-  const setFirstHole = main.setFirstHole;
-  const round = main.round;
-  const holes = useNewRoundStore((state) => state.holes.holes);
-  const roundTotals = useNewRoundStore((state) => state.totals.roundTotals);
+  const newRoundMain = useAppStore((state) => state.newRoundMain);
+  const setFirstHole = newRoundMain.setFirstHole;
+  const round = newRoundMain.round;
+  const holes = useAppStore((state) => state.newRoundHoles.holes);
+  const roundTotals = useAppStore((state) => state.newRoundTotals.roundTotals);
   const [roundTotalsOpen, setRoundTotalsOpen] = useState<boolean>(false);
 
 

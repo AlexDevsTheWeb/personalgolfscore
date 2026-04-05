@@ -5,12 +5,12 @@ import { BoxPlayer } from "../../styles";
 
 import { IClubsMainProps } from '@/types/clubs.types';
 import { Box, Button, Typography } from '@mui/material';
-import { usePlayerStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 
 const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
-  const { player, isLoading } = usePlayerStore();
-  const updatePlayerGolfbag = usePlayerStore((state) => state.updatePlayerGolfbag);
+  const { player, isLoadingPlayer: isLoading } = useAppStore();
+  const updatePlayerGolfbag = useAppStore((state) => state.updatePlayerGolfbag);
   const [isSaving, setIsSaving] = useState(false);
 
   const hasExistingBag = golfBag && golfBag.length > 0;

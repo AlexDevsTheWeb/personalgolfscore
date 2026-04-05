@@ -3,10 +3,10 @@ import Grid from "@/styles/grid/Grid.styles";
 import StackPlayer from "@/styles/stack/StackPlayer.styles";
 import dayjs from "dayjs";
 import _ from "lodash";
-import { usePlayerStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const Player = () => {
-  const { player, isLoading } = usePlayerStore();
+  const { player, isLoadingPlayer: isLoading } = useAppStore();
 
   if (isLoading || _.isEmpty(player) || !player.uid) {
     return <Spinner />

@@ -1,6 +1,6 @@
 import { IShots } from '@/types/roundData.types';
 import { useState } from 'react';
-import { useNewRoundStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 interface UsePenaltiesDialogProps {
 	tmpHole: Pick<IShots, 'water' | 'out'>;
@@ -10,7 +10,7 @@ interface UsePenaltiesDialogProps {
 }
 
 export const usePenaltiesDialog = ({ tmpHole, roundPlayingHCP, roundHoles, derivedClubsChipClubs }: UsePenaltiesDialogProps) => {
-	const setTmpHoleData = useNewRoundStore((state) => state.setTmpHoleData);
+	const setTmpHoleData = useAppStore((state) => state.setTmpHoleData);
 	const [isPenaltiesDialogOpen, setIsPenaltiesDialogOpen] = useState(false);
 
 	const handleOpen = () => {

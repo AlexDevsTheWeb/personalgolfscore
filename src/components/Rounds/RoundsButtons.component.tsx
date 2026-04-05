@@ -2,13 +2,13 @@ import BoxBetween from "@/styles/box/BoxBetween.styles";
 import { ActionTextButtons } from "@/styles/button/Buttons.styles";
 import { BoxOverflow } from "@/styles/index";
 import { useNavigate } from "react-router-dom";
-import { useNewRoundStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 
 const RoundsButtons = () => {
 
   const navigate = useNavigate();
-  const resetSetFirstHole = useNewRoundStore((state) => state.resetSetFirstHole);
+  const resetSetFirstHole = useAppStore((state) => state.resetSetFirstHole);
 
   const handleClickStatistic = () => {
     navigate(`/statistics`);

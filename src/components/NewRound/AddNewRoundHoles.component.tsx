@@ -5,23 +5,22 @@ import { useNavigate } from 'react-router-dom';
 import Spinner from '../common/spinner/Spinner.component';
 import AddSingleHole from './AddSingleHole.component';
 import RoundSave from './RoundSave.component';
-import { useNewRoundStore } from '@/store/zustand';
-import { usePlayerStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 const AddNewRoundHoles = () => {
-  const main = useNewRoundStore((state) => state.main);
-  const round = main.round;
-  const setFirstHole = main.setFirstHole;
-  const holes = useNewRoundStore((state) => state.holes.holes);
-  const holesCompleted = useNewRoundStore((state) => state.holes.holesCompleted);
-  const isSavingRound = useNewRoundStore((state) => state.saver.isLoading);
-  const isRoundSaved = useNewRoundStore((state) => state.saver.success);
-  const savedRoundId = useNewRoundStore((state) => state.saver.roundId);
-  const setNewRoundClubs = useNewRoundStore((state) => state.setNewRoundClubs);
-  const setTotalsByHole = useNewRoundStore((state) => state.setTotalsByHole);
-  const resetNewRound = useNewRoundStore((state) => state.resetNewRound);
+  const newRoundMain = useAppStore((state) => state.newRoundMain);
+  const round = newRoundMain.round;
+  const setFirstHole = newRoundMain.setFirstHole;
+  const holes = useAppStore((state) => state.newRoundHoles.holes);
+  const holesCompleted = useAppStore((state) => state.newRoundHoles.holesCompleted);
+  const isSavingRound = useAppStore((state) => state.newRoundSaver.isLoading);
+  const isRoundSaved = useAppStore((state) => state.newRoundSaver.success);
+  const savedRoundId = useAppStore((state) => state.newRoundSaver.roundId);
+  const setNewRoundClubs = useAppStore((state) => state.setNewRoundClubs);
+  const setTotalsByHole = useAppStore((state) => state.setTotalsByHole);
+  const resetNewRound = useAppStore((state) => state.resetNewRound);
   
-  const { player, isLoading: isPlayerLoading } = usePlayerStore();
+  const { player, isLoadingPlayer: isPlayerLoading } = useAppStore();
 
   const golfBag = player?.golfBag;
   const derivedClubs = useMemo(() => {

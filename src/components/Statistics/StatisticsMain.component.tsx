@@ -1,15 +1,14 @@
 import { Stack, Typography } from '@mui/material';
 import Spinner from '../common/spinner/Spinner.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
-import { useRoundsStore } from '@/store/zustand';
-import { usePlayerStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 import { useMemo } from 'react';
 import { calculateDisplayableAverages } from '@/utils/calculator/AverageCalculator.utils';
 
 const StatisticsMain = () => {
-  const isLoadingRounds = useRoundsStore((state) => state.isLoading);
-  const { player } = usePlayerStore();
-  const isLoadingPlayer = usePlayerStore((state) => state.isLoading);
+  const isLoadingRounds = useAppStore((state) => state.isLoadingRounds);
+  const { player } = useAppStore();
+  const isLoadingPlayer = useAppStore((state) => state.isLoadingPlayer);
 
   const displayableAverages = useMemo(() => {
     const rawTotalsAvg = player?.totalsRoundsAVG;

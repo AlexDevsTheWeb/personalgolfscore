@@ -4,11 +4,11 @@ import { IShots } from '@/types/roundData.types';
 import { Box, Typography, useTheme } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import React, { useEffect, useState } from 'react';
-import { useRoundsStore, useRoundDetailsStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 const ParAveragesChart: React.FC<IRoundsCharts> = ({ rounds }) => {
-  const playerID = useRoundsStore((state) => state.playerID);
-  const getRoundDetails = useRoundDetailsStore((state) => state.getRoundDetails);
+  const roundsPlayerID = useAppStore((state) => state.roundsPlayerID);
+  const getRoundDetails = useAppStore((state) => state.getRoundDetails);
   const theme = useTheme();
 
   const [allHoles, setAllHoles] = useState<IShots[]>([]);
@@ -17,7 +17,7 @@ const ParAveragesChart: React.FC<IRoundsCharts> = ({ rounds }) => {
     const fetchHoles = async () => {
       const holes: IShots[] = [];
       for (const r of rounds) {
-        const result = await getRoundDetails(playerID, r.id);
+        const result = await getRoundDetails(roundsPlayerID, r.id);
         if (result) {
           holes.push(...result.holes);
         }
@@ -25,10 +25,10 @@ const ParAveragesChart: React.FC<IRoundsCharts> = ({ rounds }) => {
       setAllHoles(holes);
     };
 
-    if (rounds.length > 0 && playerID) {
+    if (rounds.length > 0 && roundsPlayerID) {
       fetchHoles();
     }
-  }, [rounds, playerID, getRoundDetails]);
+  }, [rounds, roundsPlayerID, getRoundDetails]);
 
   const parData = {
     par3: { totalStrokes: 0, count: 0 },

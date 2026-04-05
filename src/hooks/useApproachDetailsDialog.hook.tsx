@@ -1,6 +1,6 @@
 import { IShots } from '@/types/roundData.types';
 import { useEffect, useState } from 'react';
-import { useNewRoundStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 interface UseApproachDetailsDialogProps {
   tmpHole: IShots; // Pass the whole tmpHole for initialData
@@ -19,7 +19,7 @@ export const useApproachDetailsDialog = ({
   puttsLength,
   roundHoles,
 }: UseApproachDetailsDialogProps) => {
-  const setTmpHoleData = useNewRoundStore((state) => state.setTmpHoleData);
+  const setTmpHoleData = useAppStore((state) => state.setTmpHoleData);
   const [isApproachDetailsDialogOpen, setIsApproachDetailsDialogOpen] = useState(false);
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import { FairwayOption } from '@/types/props.types'; // Ensure FairwayOption is 
 import { IIntermediateShot, IShots } from '@/types/roundData.types';
 import { fairwayValues as defaultFairwayValues } from '@/utils/constant.utils';
 import { useState } from 'react';
-import { useNewRoundStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 
 interface UseHoleFormManagerProps {
@@ -25,11 +25,11 @@ export const useHoleFormManager = ({
   puttsLength,
   fairwayValuesConstant = defaultFairwayValues,
 }: UseHoleFormManagerProps) => {
-  const setTmpHoleData = useNewRoundStore((state) => state.setTmpHoleData);
-  const addTeeShotDistance = useNewRoundStore((state) => state.addTeeShotDistance);
-  const addApproachShotDistance = useNewRoundStore((state) => state.addApproachShotDistance);
-  const setNewHole = useNewRoundStore((state) => state.setNewHole);
-  const resetNewRoundHoleTmp = useNewRoundStore((state) => state.resetNewRoundHoleTmp);
+  const setTmpHoleData = useAppStore((state) => state.setTmpHoleData);
+  const addTeeShotDistance = useAppStore((state) => state.addTeeShotDistance);
+  const addApproachShotDistance = useAppStore((state) => state.addApproachShotDistance);
+  const setNewHole = useAppStore((state) => state.setNewHole);
+  const resetNewRoundHoleTmp = useAppStore((state) => state.resetNewRoundHoleTmp);
   const [isMissingShotsDialogOpen, setIsMissingShotsDialogOpen] = useState(false);
   const [calculatedMissingShots, setCalculatedMissingShots] = useState(0);
 

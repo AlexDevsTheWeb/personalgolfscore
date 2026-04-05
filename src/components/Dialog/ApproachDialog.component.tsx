@@ -5,15 +5,15 @@ import { greenSideValues } from '@/utils/constant.utils';
 import { Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Select from '../NewRound/components/Select.component';
-import { useNewRoundStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
   open,
   onClose,
   onSubmit,
 }) => {
-  const holeTmp = useNewRoundStore((state) => state.holeTmp);
-  const clubs = useNewRoundStore((state) => state.clubs);
+  const holeTmp = useAppStore((state) => state.newRoundHoleTmp);
+  const clubs = useAppStore((state) => state.newRoundClubs);
   const { greenClubs, chipClubs } = clubs;
 
   const [toGreenMeters, setToGreenMeters] = useState(holeTmp.toGreenMeters || 0);

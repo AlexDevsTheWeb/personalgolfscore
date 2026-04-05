@@ -5,14 +5,14 @@ import { getClubsNames } from '@/utils/round/round.utils';
 import { Box, Typography, useTheme } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import React, { useMemo } from 'react';
-import { usePlayerStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 interface IDistancesCharts {
   distances?: IDistance[] | undefined
 }
 
 const DistancesTotals: React.FC<IDistancesCharts> = ({ distances }) => {
-  const player = usePlayerStore((state) => state.player);
+  const player = useAppStore((state) => state.player);
   const { golfBag, totalDistancesAVG } = player || {};
   const theme = useTheme();
   const internalDistanes = distances || totalDistancesAVG || [];

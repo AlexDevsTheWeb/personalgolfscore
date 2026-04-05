@@ -4,11 +4,11 @@ import { newRoundDisabledSelect } from '@/utils/round/round.utils';
 import { FormControl, InputLabel, MenuItem, SelectChangeEvent, Select as SelectMui } from '@mui/material';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { useNewRoundStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 const Select = (props: ISelectProps) => {
 
-  const holeTmp = useNewRoundStore((state) => state.holeTmp);
+  const holeTmp = useAppStore((state) => state.newRoundHoleTmp);
   const { name, list, onChange, value, label } = props;
   const [disabled, setDisabled] = useState<boolean>(false);
 

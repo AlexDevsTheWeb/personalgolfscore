@@ -9,16 +9,16 @@ import dayjs, { Dayjs } from 'dayjs';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from './components/Select.component';
-import { useNewRoundStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 const AddNewRoundForm = () => {
   const navigate = useNavigate();
-  const roundData = useNewRoundStore((state) => state.main.round);
-  const setFirstHole = useNewRoundStore((state) => state.main.setFirstHole);
-  const setRoundDate = useNewRoundStore((state) => state.setRoundDate);
-  const setRoundMainData = useNewRoundStore((state) => state.setRoundMainData);
-  const setTotalsByHole = useNewRoundStore((state) => state.setTotalsByHole);
-  const holes = useNewRoundStore((state) => state.holes.holes);
+  const roundData = useAppStore((state) => state.newRoundMain.round);
+  const setFirstHole = useAppStore((state) => state.newRoundMain.setFirstHole);
+  const setRoundDate = useAppStore((state) => state.setRoundDate);
+  const setRoundMainData = useAppStore((state) => state.setRoundMainData);
+  const setTotalsByHole = useAppStore((state) => state.setTotalsByHole);
+  const holes = useAppStore((state) => state.newRoundHoles.holes);
   
   const roundDateString = roundData.roundDate;
   const roundDateValue = roundDateString && dayjs(roundDateString).isValid() ? dayjs(roundDateString) : dayjs(new Date());
@@ -67,7 +67,7 @@ const AddNewRoundForm = () => {
             variant="outlined"
             fullWidth
             value={roundData.roundCourse || ''}
-            onChange={e => useNewRoundStore.getState().setRoundCourse(e.target.value)}
+            onChange={e => useAppStore.getState().setRoundCourse(e.target.value)}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
@@ -88,7 +88,7 @@ const AddNewRoundForm = () => {
             type='number'
             fullWidth
             value={roundData.roundHoles || ''}
-            onChange={e => useNewRoundStore.getState().setRoundHoles(Number(e.target.value))}
+            onChange={e => useAppStore.getState().setRoundHoles(Number(e.target.value))}
           />
         </Grid>
         <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
@@ -98,7 +98,7 @@ const AddNewRoundForm = () => {
             variant="outlined"
             type='number'
             value={roundData.roundPar || ''}
-            onChange={e => useNewRoundStore.getState().setRoundPar(Number(e.target.value))}
+            onChange={e => useAppStore.getState().setRoundPar(Number(e.target.value))}
             fullWidth
           />
         </Grid>
@@ -110,7 +110,7 @@ const AddNewRoundForm = () => {
             fullWidth
             type='number'
             value={roundData.roundPlayingHCP || ''}
-            onChange={e => useNewRoundStore.getState().setRoundPlayingHCP(Number(e.target.value))}
+            onChange={e => useAppStore.getState().setRoundPlayingHCP(Number(e.target.value))}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
@@ -119,7 +119,7 @@ const AddNewRoundForm = () => {
             value={roundData.roundTee || ''}
             label='Tee'
             list={['White', 'Blue', 'Yellow', 'Red', 'Green', 'Orange']}
-            onChange={(e: any) => useNewRoundStore.getState().setRoundTee(e.target.value)}
+            onChange={(e: any) => useAppStore.getState().setRoundTee(e.target.value)}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
@@ -129,7 +129,7 @@ const AddNewRoundForm = () => {
             variant="outlined"
             type='number'
             value={roundData.roundNumber || ''}
-            onChange={e => useNewRoundStore.getState().setRoundNumber(Number(e.target.value))}
+            onChange={e => useAppStore.getState().setRoundNumber(Number(e.target.value))}
             fullWidth
           />
         </Grid>

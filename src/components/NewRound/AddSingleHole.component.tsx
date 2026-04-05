@@ -8,17 +8,16 @@ import MissingShotsDialog from '../Dialog/MissingShotsDialog.component';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { useHoleFormManager } from '@/hooks/useHoleFormManager.component';
 import HoleGeneralForm from './components/HoleGeneralForm.component';
-import { useNewRoundStore } from "@/store/zustand";
-import { useControlsStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
-	const main = useNewRoundStore((state) => state.main);
-	const roundPlayingHCP = main.round.roundPlayingHCP;
-	const roundHoles = main.round.roundHoles;
-	const holes = useNewRoundStore((state) => state.holes.holes);
-	const holesCompleted = useNewRoundStore((state) => state.holes.holesCompleted);
-	const holeTmp = useNewRoundStore((state) => state.holeTmp);
-	const showDistances = useControlsStore((state) => state.showDistances);
+	const newRoundMain = useAppStore((state) => state.newRoundMain);
+	const roundPlayingHCP = newRoundMain.round.roundPlayingHCP;
+	const roundHoles = newRoundMain.round.roundHoles;
+	const holes = useAppStore((state) => state.newRoundHoles.holes);
+	const holesCompleted = useAppStore((state) => state.newRoundHoles.holesCompleted);
+	const holeTmp = useAppStore((state) => state.newRoundHoleTmp);
+	const showDistances = useAppStore((state) => state.showDistances);
 
 	const [puttsLength, setPuttsLength] = useState<number[]>([]);
 	const [currentHoleNumber, setCurrentHoleNumber] = useState<number>(1);
@@ -28,7 +27,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 	}, [holesCompleted]);
 
 	const { handleChange, handleSaveHole, isSaveDisabled, missingShotsDialogProps } = useHoleFormManager({
-		tmpHole,
+		tmpHole: holeTmp,
 		derivedClubs,
 		roundPlayingHCP,
 		roundHoles,

@@ -2,22 +2,21 @@ import Spinner from '@/components/common/spinner/Spinner.component';
 import RoundsDataMain from '@/components/RoundsData/RoundsDataMain.component';
 import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import { useEffect } from 'react';
-import { useRoundsStore } from '@/store/zustand';
-import { usePlayerStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 const RoundsData = () => {
 
-  const rounds = useRoundsStore((state) => state.rounds);
-  const getPlayerDetails = usePlayerStore((state) => state.getPlayerDetails);
+  const roundsList = useAppStore((state) => state.roundsList);
+  const getPlayerDetails = useAppStore((state) => state.getPlayerDetails);
   const uid = readUserLocalStorage();
 
   useEffect(() => {
-    if (rounds.length === 0 && uid) {
+    if (roundsList.length === 0 && uid) {
       getPlayerDetails(uid);
     }
-  }, [rounds, uid, getPlayerDetails]);
+  }, [roundsList, uid, getPlayerDetails]);
 
-  if (rounds.length === 0) {
+  if (roundsList.length === 0) {
     return <Spinner />
   }
 

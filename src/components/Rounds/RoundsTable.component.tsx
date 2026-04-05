@@ -8,11 +8,11 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import { TableCell, TableRow } from '../../styles';
 import Header from '../common/header/Header.component';
-import { useRoundsStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 const RoundsTable = () => {
   const navigate = useNavigate();
-  const rounds = useRoundsStore((state) => state.rounds);
+  const roundsList = useAppStore((state) => state.roundsList);
 
   const handleClick = (id: string) => {
     navigate(`/round/${id}`);
@@ -35,7 +35,7 @@ const RoundsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rounds.map((round) => {
+            {roundsList.map((round) => {
               const totalScore = Number(round.totals?.score?.totals || 0);
               const par = Number(round.roundPar);
               const roundPlayingHCP = Number(round.roundPlayingHCP);

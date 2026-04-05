@@ -11,10 +11,10 @@ import { darkPalette, lightPalette } from "./theme/Palette.theme";
 import { OptionsDatepicker } from "./theme/ThemeStyle.theme";
 import { systemComponentOptions } from "./theme/ThemeSystem.theme";
 import { typography } from "./theme/Typography.theme";
-import { useUserStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const ThemeSetup: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const currentThemeMode = useUserStore((state) => state.themePreference);
+  const currentThemeMode = useAppStore((state) => state.themePreference);
   const theme = React.useMemo(
     () => {
       const selectedPalette = currentThemeMode === 'light' ? lightPalette : darkPalette;

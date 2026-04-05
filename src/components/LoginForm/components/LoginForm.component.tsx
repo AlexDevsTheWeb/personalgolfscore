@@ -5,7 +5,7 @@ import { Box, Button, FormControl, FormLabel, TextField } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 interface LoginProps {
   onLoginSuccess: () => void;
@@ -13,7 +13,7 @@ interface LoginProps {
 
 const LoginForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
-  const setLoginUser = useUserStore((state) => state.setLoginUser);
+  const setLoginUser = useAppStore((state) => state.setLoginUser);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = React.useState(false);

@@ -4,16 +4,16 @@ import { Grid } from '@mui/material';
 import Spinner from '../common/spinner/Spinner.component';
 import RoundsDataHeader from '../RoundsData/components/roundData/RoundsDataHeader.component';
 import RoundsButtons from './RoundsButtons.component';
-import { useRoundsStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 interface IRoundsProps {
   rounds: IBasicRoundData[];
 }
 
 const Rounds = ({ rounds }: IRoundsProps) => {
-  const isLoading = useRoundsStore((state) => state.isLoading);
+  const isLoadingRounds = useAppStore((state) => state.isLoadingRounds);
 
-  if (!!isLoading) {
+  if (!!isLoadingRounds) {
     return <Spinner />
   }
 

@@ -22,19 +22,17 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from '../common/ThemeSwitcher.component';
 import Footer from './Footer.component';
 import User from './User.component';
-import { usePlayerStore } from '@/store/zustand';
-import { useControlsStore } from '@/store/zustand';
-import { useUserStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 export default function DrawerAppBar(props: IMainLayoutProps) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const uid = readUserLocalStorage();
   const auth = getAuth();
-  const player = usePlayerStore((state) => state.player);
-  const setIsLoading = useControlsStore((state) => state.setIsLoading);
-  const getPlayerDetails = usePlayerStore((state) => state.getPlayerDetails);
-  const resetUser = useUserStore((state) => state.resetUser);
+  const player = useAppStore((state) => state.player);
+  const setIsLoading = useAppStore((state) => state.setIsLoadingControls);
+  const getPlayerDetails = useAppStore((state) => state.getPlayerDetails);
+  const resetUser = useAppStore((state) => state.resetUser);
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {

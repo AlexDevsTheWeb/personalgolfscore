@@ -4,10 +4,10 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import dayjs, { Dayjs } from "dayjs"
 import React, { useState } from "react"
-import { usePlayerStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const PlayerSetupForm: React.FC<IPlayerSetupProps> = ({ handleHcpChange }) => {
-  const player = usePlayerStore((state) => state.player);
+  const player = useAppStore((state) => state.player);
   const [firstName, setFirstName] = useState(player?.firstName || '');
   const [lastName, setLastName] = useState(player?.lastName || '');
   const [dob, setDob] = useState<Dayjs | null>(player?.DOB ? dayjs(player.DOB) : null);

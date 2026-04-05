@@ -3,15 +3,14 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import { Box, Button, useTheme } from '@mui/material';
 import React from 'react';
-import { useUserStore } from '@/store/zustand';
-import { usePlayerStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 const ThemeSwitcher: React.FC = () => {
   const theme = useTheme();
-  const currentThemeMode = useUserStore((state) => state.themePreference);
-  const setThemePreference = useUserStore((state) => state.setThemePreference);
-  const updateUserThemePreference = useUserStore((state) => state.updateUserThemePreference);
-  const player = usePlayerStore((state) => state.player);
+  const currentThemeMode = useAppStore((state) => state.themePreference);
+  const setThemePreference = useAppStore((state) => state.setThemePreference);
+  const updateUserThemePreference = useAppStore((state) => state.updateUserThemePreference);
+  const player = useAppStore((state) => state.player);
   const playerId = player?.uid;
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

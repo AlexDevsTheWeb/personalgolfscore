@@ -15,7 +15,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import ClubSetupForm from './ClubSetupForm.component';
 import PlayerSetupForm from './PlayerSetupForm.component';
-import { usePlayerStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 interface SetupWizardDialogProps {
   open: boolean;
@@ -26,9 +26,9 @@ const steps = ['Profile Details', 'Golf Bag Setup'];
 
 const WizardSetupDialog: React.FC<SetupWizardDialogProps> = ({ open, playerUid }) => {
   const [step, setStep] = useState(1);
-  const { isLoading, error, errorMessage, player } = usePlayerStore();
-  const updatePlayerProfile = usePlayerStore((state) => state.updatePlayerProfile);
-  const updatePlayerGolfbag = usePlayerStore((state) => state.updatePlayerGolfbag);
+  const { isLoadingPlayer: isLoading, playerError: error, playerErrorMessage: errorMessage, player } = useAppStore();
+  const updatePlayerProfile = useAppStore((state) => state.updatePlayerProfile);
+  const updatePlayerGolfbag = useAppStore((state) => state.updatePlayerGolfbag);
 
   const [firstName, setFirstName] = useState(player?.firstName || '');
   const [lastName, setLastName] = useState(player?.lastName || '');

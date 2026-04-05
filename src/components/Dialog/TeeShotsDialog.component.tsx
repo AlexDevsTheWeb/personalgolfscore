@@ -3,15 +3,15 @@ import { ITeeShotDetailsDialogProps } from '@/types/props.types';
 import { fairwayValues } from '@/utils/constant.utils';
 import { Autocomplete, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useNewRoundStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const TeeShotDetailsDialog: React.FC<ITeeShotDetailsDialogProps> = ({
 	open,
 	onClose,
 	onSubmit,
 }) => {
-	const holeTmp = useNewRoundStore((state) => state.holeTmp);
-	const clubs = useNewRoundStore((state) => state.clubs);
+	const holeTmp = useAppStore((state) => state.newRoundHoleTmp);
+	const clubs = useAppStore((state) => state.newRoundClubs);
 	const { teeClubs } = clubs;
 
 	const [fairway, setFairway] = useState<number>(0);

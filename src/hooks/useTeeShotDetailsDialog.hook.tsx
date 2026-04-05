@@ -1,7 +1,7 @@
 import { FairwayOption } from '@/types/props.types'; // Assuming FairwayOption is exported
 import { IShots } from '@/types/roundData.types';
 import { useEffect, useState } from 'react';
-import { useNewRoundStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 
 interface UseTeeShotDetailsDialogProps {
 	tmpHole: Pick<IShots, 'teeClub' | 'par' | 'fairway' | 'driveDistance'>;
@@ -21,7 +21,7 @@ export const useTeeShotDetailsDialog = ({
 	roundHoles,
 	derivedClubsChipClubs,
 }: UseTeeShotDetailsDialogProps) => {
-	const setTmpHoleData = useNewRoundStore((state) => state.setTmpHoleData);
+	const setTmpHoleData = useAppStore((state) => state.setTmpHoleData);
 	const [isTeeShotDetailsDialogOpen, setIsTeeShotDetailsDialogOpen] = useState(false);
 
 	const openDialog = () => {

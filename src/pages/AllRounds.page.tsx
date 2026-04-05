@@ -1,11 +1,11 @@
 import Rounds from "@/components/Rounds/Rounds.component";
-import { useRoundsStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const AllRounds = () => {
-  const rounds = useRoundsStore((state) => state.rounds);
+  const roundsList = useAppStore((state) => state.roundsList);
 
   return (
-    <Rounds rounds={rounds} />
+    <Rounds rounds={roundsList} />
   )
 }
 

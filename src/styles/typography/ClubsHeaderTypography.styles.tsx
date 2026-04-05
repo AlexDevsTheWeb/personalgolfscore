@@ -1,13 +1,13 @@
 import { Paper, Typography as TypographyMui, TypographyProps as TypographyPropsMui, styled } from "@mui/material";
 import React, { useMemo } from "react";
-import { usePlayerStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 interface TypographyProps extends TypographyPropsMui { }
 
 const StyledTypography = styled(TypographyMui)({})
 
 const ClubsHeaderTypography: React.FC<TypographyProps> = props => {
-  const player = usePlayerStore((state) => state.player);
+  const player = useAppStore((state) => state.player);
 
   const { totalClubs, selectedClubs } = useMemo(() => {
     if (!player?.golfBag) {

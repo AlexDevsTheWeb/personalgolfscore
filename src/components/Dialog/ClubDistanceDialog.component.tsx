@@ -1,5 +1,4 @@
-import { useControlsStore } from '@/store/zustand';
-import { usePlayerStore, useNewRoundStore } from '@/store/zustand';
+import { useAppStore } from '@/store/zustand';
 import BoxNewHole from '@/styles/box/BoxNewHole.styles';
 import { HoleCard, HoleCardContent } from '@/styles/index';
 import { IClubDistanceDialogProps } from '@/types/clubs.types';
@@ -22,10 +21,10 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
-  const setShowDistances = useControlsStore((state) => state.setShowDistances);
-  const player = usePlayerStore((state) => state.player);
-  const round = useNewRoundStore((state) => state.main.round);
-  const roundDistances = useNewRoundStore((state) => state.distances.roundDistances);
+  const setShowDistances = useAppStore((state) => state.setShowDistances);
+  const player = useAppStore((state) => state.player);
+  const round = useAppStore((state) => state.newRoundMain.round);
+  const roundDistances = useAppStore((state) => state.newRoundDistances.roundDistances);
 
   const golfBag = player?.golfBag;
   const distanceClubs = useMemo(() => {
@@ -44,7 +43,7 @@ const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
   const [club, setClub] = useState<string>('');
   const [meters, setMeters] = useState<number>(0);
 
-  const addNewDistanceWithClub = useNewRoundStore((state) => state.addNewDistanceWithClub);
+  const addNewDistanceWithClub = useAppStore((state) => state.addNewDistanceWithClub);
 
   const saveDistance = () => {
     const { roundCourse, roundDate } = round;

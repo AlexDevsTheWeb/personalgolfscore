@@ -4,12 +4,12 @@ import { hcpList18, hcpList9, parList } from "@/utils/constant.utils";
 import { Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import Select from "../NewRound/components/Select.component";
-import { useNewRoundStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const HoleDetailsDialog: React.FC<HoleDetailsDialogProps> = ({ open, onClose, onSubmit }) => {
-  const holeTmp = useNewRoundStore((state) => state.holeTmp);
-  const roundHoles = useNewRoundStore((state) => state.main.round.roundHoles);
-  const holes = useNewRoundStore((state) => state.holes.holes);
+  const holeTmp = useAppStore((state) => state.newRoundHoleTmp);
+  const roundHoles = useAppStore((state) => state.newRoundMain.round.roundHoles);
+  const holes = useAppStore((state) => state.newRoundHoles.holes);
 
   const [par, setPar] = useState<number>(0);
   const [distance, setDistance] = useState<number>(0);

@@ -5,24 +5,21 @@ import Rounds from "../Rounds/Rounds.component";
 import RoundsButtons from "../Rounds/RoundsButtons.component";
 import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
 import ChartsMain from "./components/Charts/ChartsMain.component";
-import { useRoundsStore } from "@/store/zustand";
-import { usePlayerStore } from "@/store/zustand";
-import { useControlsStore } from "@/store/zustand";
-import { useNewRoundStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const rounds = useRoundsStore((state) => state.rounds);
-  const player = usePlayerStore((state) => state.player);
-  const isLoading = useControlsStore((state) => state.isLoading);
-  const resetSetFirstHole = useNewRoundStore((state) => state.resetSetFirstHole);
+  const roundsList = useAppStore((state) => state.roundsList);
+  const player = useAppStore((state) => state.player);
+  const isLoadingControls = useAppStore((state) => state.isLoadingControls);
+  const resetSetFirstHole = useAppStore((state) => state.resetSetFirstHole);
 
   const handleAddNewRound = () => {
     resetSetFirstHole();
     navigate('/addNewRound')
   }
 
-  if (!!isLoading) {
+  if (!!isLoadingControls) {
     return <Spinner />
   }
 
@@ -32,10 +29,10 @@ const Dashboard = () => {
         <WizardSetupDialog open={!player.isSetupComplete} playerUid={player.uid} />
       )}
       {
-        rounds.length > 0
+        roundsList.length > 0
           ? (
             <>
-              <Rounds rounds={rounds.slice(0, 5)} />
+              <Rounds rounds={roundsList.slice(0, 5)} />
               <ChartsMain />
               {/* <StatisticsMain /> */}
 

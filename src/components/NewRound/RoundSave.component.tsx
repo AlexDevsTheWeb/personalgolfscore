@@ -1,9 +1,9 @@
 import { Box, Button } from "@mui/material";
-import { useNewRoundStore } from "@/store/zustand";
+import { useAppStore } from "@/store/zustand";
 
 const RoundSave = () => {
-  const isLoading = useNewRoundStore((state) => state.saver.isLoading);
-  const saveNewRound = useNewRoundStore((state) => state.saveNewRound);
+  const isLoading = useAppStore((state) => state.newRoundSaver.isLoading);
+  const saveNewRound = useAppStore((state) => state.saveNewRound);
 
   const handleClick = () => {
     saveNewRound();
