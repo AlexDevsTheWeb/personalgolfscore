@@ -3,6 +3,7 @@ import { IBoxProps, IMainLayoutProps } from '@/types/props.types';
 import links from '@/utils/links/links.utils';
 import { deleteUserLocalStorage, readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -91,19 +92,66 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
     } else if (path === '/settings') {
       breadcrumbs.push({ label: 'Settings', path: '/settings' });
     } else if (path.startsWith('/round/')) {
+      // Check if roundDetailsData is already loaded
+      if (roundDetailsData?.roundCourse) {
+        breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
+        breadcrumbs.push({ label: roundDetailsData.roundCourse, path: path });
+      } else {
+        // If not loaded yet, show "All Rounds" and "Loading..."
+        breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
+        breadcrumbs.push({ label: 'Loading...', path: path });
+      }
+    }
+
+    return breadcrumbs;
+  };
+
+  const getMobileBreadcrumbs = () => {
+    const path = location.pathname;
+    
+    interface BreadcrumbItem {
+      label: string;
+      path: string;
+      icon?: React.ReactNode;
+    }
+
+    const breadcrumbs: BreadcrumbItem[] = [];
+
+    if (path === '/dashboard' || path === '/') {
+      return [];
+    }
+
+    // Always show Home icon first on mobile
+    breadcrumbs.push({ label: 'Home', path: '/dashboard', icon: <HomeIcon fontSize="small" /> });
+
+    if (path === '/clubs') {
+      breadcrumbs.push({ label: 'Clubs', path: '/clubs' });
+    } else if (path === '/all-rounds') {
       breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
-      const courseName = roundDetailsData?.roundCourse || 'Round Details';
-      breadcrumbs.push({ label: courseName, path: path });
+    } else if (path === '/addNewRound') {
+      breadcrumbs.push({ label: 'Add Round', path: '/addNewRound' });
+    } else if (path === '/statistics') {
+      breadcrumbs.push({ label: 'Statistics', path: '/statistics' });
+    } else if (path === '/settings') {
+      breadcrumbs.push({ label: 'Settings', path: '/settings' });
+    } else if (path.startsWith('/round/')) {
+      if (roundDetailsData?.roundCourse) {
+        breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
+        breadcrumbs.push({ label: roundDetailsData.roundCourse, path: path });
+      } else {
+        breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
+        breadcrumbs.push({ label: 'Loading...', path: path });
+      }
     }
 
     return breadcrumbs;
   };
 
   const breadcrumbs = getBreadcrumbs();
+  const mobileBreadcrumbs = getMobileBreadcrumbs();
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      {/* User Info in Drawer Header */}
       <Typography variant="headline6" sx={{ my: 2, color: 'text.primary' }}>
         {player?.displayName ? player.displayName.split(' ')[0] : 'Menu'}
       </Typography>
@@ -129,23 +177,37 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
                 >
                   <SvgIcon component={link.icon} inheritViewBox />
                 </ListItemIcon>
-                <ListItemText primary={link.name} sx={{ color: 'text.primary' }} /> {/* Use standard primary text color */}
-
+                <ListItemText primary={link.name} sx={{ color: 'text.primary' }} />
               </ListItemButton>
             </ListItem>
           );
         })}
         <Divider sx={{ my: 1 }} />
-        {/* User Profile Link/Display */}
         <ListItem disablePadding>
-          <ListItemButton href="/settings"> {/* Or handle navigation via onClick */}
+          <ListItemButton href="/settings">
             <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
               {player?.photoURL ? <Avatar src={player.photoURL} sx={{ width: 24, height: 24 }} /> : <AccountCircleIcon />}
             </ListItemIcon>
             <ListItemText primary="Profile" sx={{ color: 'text.primary' }} />
           </ListItemButton>
         </ListItem>
-        {/* Theme Switcher in Drawer */}
+        <ListItem disablePadding>
+          <ListItemButton href="/clubs">
+            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
+              <GolfCourseIcon />
+            </ListItemIcon>
+            <ListItemText primary="Clubs" sx={{ color: 'text.primary' }} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton href="/statistics">
+            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
+              <SvgIcon component={links.find(l => l.name === 'Statistics')?.icon || links[0].icon} inheritViewBox />
+            </ListItemIcon>
+            <ListItemText primary="Statistics" sx={{ color: 'text.primary' }} />
+          </ListItemButton>
+        </ListItem>
+        <Divider sx={{ my: 1 }} />
         <ListItem sx={{ justifyContent: 'center', display: 'flex', py: 1 }}>
           <ThemeSwitcher />
         </ListItem>
@@ -159,61 +221,90 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
+  const renderBreadcrumbs = (isMobile: boolean) => {
+    const crumbs = isMobile ? mobileBreadcrumbs : breadcrumbs;
+    
+    if (crumbs.length === 0) {
+      return null;
+    }
+
+    return (
+      <Breadcrumbs
+        separator={<NavigateNextIcon fontSize="small" />}
+        sx={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          '& .MuiBreadcrumbs-separator': { mx: 0.5 }
+        }}
+      >
+        {crumbs.map((crumb, index) => {
+          const isLast = index === crumbs.length - 1;
+          return isLast ? (
+            <Typography 
+              key={crumb.path} 
+              color="inherit" 
+              fontWeight="bold"
+              sx={{ 
+                fontSize: isMobile ? '0.875rem' : '0.875rem',
+                maxWidth: isMobile ? '120px' : 'none',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              {crumb.label}
+            </Typography>
+          ) : (
+            <Link
+              key={crumb.path}
+              component={RouterLink}
+              to={crumb.path}
+              color="inherit"
+              underline="hover"
+              sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                cursor: 'pointer',
+                fontSize: '0.875rem'
+              }}
+            >
+              {crumb.icon}
+            </Link>
+          );
+        })}
+      </Breadcrumbs>
+    );
+  };
+
   return (
     <BoxFooter>
       <Box>
-        {/* CssBaseline is already applied in ThemeSetup, no need to repeat here */}
         <AppBar component="nav">
-          <Toolbar sx={{ display: 'flex' }}>
+          <Toolbar sx={{ display: 'flex', flexWrap: 'nowrap' }}>
             <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ mr: 2, ml: '5px', display: { sm: 'none' } }}
+              sx={{ mr: 1 }}
             >
               <MenuIcon />
             </IconButton>
             <Typography
               component="div"
               variant="mainAppTitle"
-              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+              sx={{ flexGrow: 0, whiteSpace: 'nowrap' }}
               color="inherit"
             >
               PGS
             </Typography>
-            <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-              <List sx={{ display: 'flex' }}>
-                {links.map((link: TLinkSidebar, index: number) => {
-                  return (
-                    <ListItem key={index} disablePadding sx={{ display: 'flex' }}>
-                      <ListItemButton
-                        sx={{
-                          minHeight: 48,
-                          px: 2.5,
-                        }}
-                        href={link.link}
-                      >
-                        <ListItemIcon
-                          sx={{
-                            minWidth: 0,
-
-                            justifyContent: 'center',
-                            marginRight: '10px',
-                            color: 'inherit'
-                          }}
-                        >
-                          <SvgIcon component={link.icon} inheritViewBox />
-                        </ListItemIcon>
-                        <Typography>{link.name}</Typography>
-
-                      </ListItemButton>
-                    </ListItem>
-                  );
-                })}
-                <ThemeSwitcher />
-                <User />
-              </List>
+            
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', mx: 1, minWidth: 0 }}>
+              {renderBreadcrumbs(false)}
+            </Box>
+            
+            <Box sx={{ flexGrow: 0 }}>
+              <User />
             </Box>
           </Toolbar>
         </AppBar>
@@ -236,33 +327,9 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
         </nav>
         <Box component="main" sx={{ p: 1, width: '100%' }}>
           <Toolbar />
-          {breadcrumbs.length > 0 && (
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              sx={{ mb: 1, display: { xs: 'none', md: 'block' } }}
-            >
-              {breadcrumbs.map((crumb, index) => {
-                const isLast = index === breadcrumbs.length - 1;
-                return isLast ? (
-                  <Typography key={crumb.path} color="text.primary" fontWeight="bold">
-                    {crumb.label}
-                  </Typography>
-                ) : (
-                  <Link
-                    key={crumb.path}
-                    component={RouterLink}
-                    to={crumb.path}
-                    color="inherit"
-                    underline="hover"
-                    sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-                  >
-                    {crumb.icon}
-                    {crumb.label}
-                  </Link>
-                );
-              })}
-            </Breadcrumbs>
-          )}
+          <Box sx={{ display: { xs: 'block', sm: 'none' }, mb: 1 }}>
+            {renderBreadcrumbs(true)}
+          </Box>
           <Outlet />
         </Box>
       </Box>
