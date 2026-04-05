@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 import { INewRound, InitialStateNewRound, IInitialStateRoundSave } from '@/types/round.types';
 import { InitialStateNewRoundsData, IShots, InitialStateNewRoundDistances } from '@/types/roundData.types';
 import { IRoundTotalsInitialState } from '@/types/roundTotals.types';
@@ -103,8 +104,9 @@ const initialRoundSaver: IInitialStateRoundSave = {
 };
 
 export const useNewRoundStore = create<NewRoundState>()(
-  persist(
-    (set, get) => ({
+  devtools(
+    persist(
+      (set, get) => ({
       main: initialNewRoundMain,
       holes: initialNewRoundHoles,
       totals: initialNewRoundTotals,
@@ -411,5 +413,7 @@ export const useNewRoundStore = create<NewRoundState>()(
         clubs: state.clubs,
       }),
     }
+  ),
+  { name: 'NewRoundStore' }
   )
 );

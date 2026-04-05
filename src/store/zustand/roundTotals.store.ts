@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import { IRoundTotalsInitialState, IRoundTotals } from '@/types/roundTotals.types';
 import { initialStateRoundTotals } from '@/utils/constant.utils';
 
@@ -13,9 +14,12 @@ const initialTotals: IRoundTotalsInitialState = {
 };
 
 export const useRoundTotalsStore = create<RoundTotalsState>()(
-  (set) => ({
-    ...initialTotals,
-    setRoundTotals: (roundTotals) => set({ roundTotals }),
-    resetRounds: () => set(initialTotals),
-  })
+  devtools(
+    (set) => ({
+      ...initialTotals,
+      setRoundTotals: (roundTotals) => set({ roundTotals }),
+      resetRounds: () => set(initialTotals),
+    }),
+    { name: 'RoundTotalsStore' }
+  )
 );

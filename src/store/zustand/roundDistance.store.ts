@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import { IRoundDistanceInitialState } from '@/types/roundTotals.types';
 import { initialStateDistance } from '@/utils/constant.utils';
 
@@ -19,9 +20,12 @@ const initialDistance: IRoundDistanceInitialState = {
 };
 
 export const useRoundDistanceStore = create<RoundDistanceState>()(
-  (set) => ({
-    ...initialDistance,
-    setRoundDistance: (roundDistance) => set({ roundDistance }),
-    resetDistance: () => set(initialDistance),
-  })
+  devtools(
+    (set) => ({
+      ...initialDistance,
+      setRoundDistance: (roundDistance) => set({ roundDistance }),
+      resetDistance: () => set(initialDistance),
+    }),
+    { name: 'RoundDistanceStore' }
+  )
 );

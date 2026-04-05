@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 import { IUser, ThemeMode } from '@/types/user.types';
 import { updateUserThemePreferenceThunk, fetchThemePreferenceThunk } from '@/features/user/user.thunk';
 
@@ -23,35 +24,38 @@ const initialUser = {
 };
 
 export const useUserStore = create<UserState>()(
-  persist(
-    (set, get) => ({
-      ...initialUser,
-      setLoginUser: (user) => set({ isLoading: false, user }),
-      setThemePreference: (themePreference) => set({ themePreference }),
-      updateUserThemePreference: async (playerId, theme) => {
-        try {
-          const result = await updateUserThemePreferenceThunk({ playerId, theme }, null);
-          set({ themePreference: result });
-        } catch (error) {
-          console.error('Theme thunk failed:', error);
-        }
-      },
-      fetchInitialTheme: async (playerId) => {
-        try {
-          const result = await fetchThemePreferenceThunk(playerId, null);
-          set({ themePreference: result });
-        } catch (error) {
-          console.error('Theme thunk failed:', error);
-        }
-      },
-      resetUser: () => set(initialUser),
-    }),
-    {
-      name: 'user-storage',
-      storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({
-        themePreference: state.themePreference,
+  devtools(
+    persist(
+      (set, get) => ({
+        ...initialUser,
+        setLoginUser: (user) => set({ isLoading: false, user }),
+        setThemePreference: (themePreference) => set({ themePreference }),
+        updateUserThemePreference: async (playerId, theme) => {
+          try {
+            const result = await updateUserThemePreferenceThunk({ playerId, theme }, null);
+            set({ themePreference: result });
+          } catch (error) {
+            console.error('Theme thunk failed:', error);
+          }
+        },
+        fetchInitialTheme: async (playerId) => {
+          try {
+            const result = await fetchThemePreferenceThunk(playerId, null);
+            set({ themePreference: result });
+          } catch (error) {
+            console.error('Theme thunk failed:', error);
+          }
+        },
+        resetUser: () => set(initialUser),
       }),
-    }
+      {
+        name: 'user-storage',
+        storage: createJSONStorage(() => localStorage),
+        partialize: (state) => ({
+          themePreference: state.themePreference,
+        }),
+      }
+    ),
+    { name: 'UserStore' }
   )
 );

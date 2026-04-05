@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import { IRoundInitialState } from '@/types/roundData.types';
 
 interface RoundHolesState extends IRoundInitialState {
@@ -16,8 +17,11 @@ const initialRoundHoles: IRoundInitialState = {
 };
 
 export const useRoundHolesStore = create<RoundHolesState>()(
-  (set) => ({
-    ...initialRoundHoles,
-    resetRounds: () => set(initialRoundHoles),
-  })
+  devtools(
+    (set) => ({
+      ...initialRoundHoles,
+      resetRounds: () => set(initialRoundHoles),
+    }),
+    { name: 'RoundHolesStore' }
+  )
 );

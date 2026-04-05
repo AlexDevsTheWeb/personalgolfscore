@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import { IRoundDetails, IRoundDetailState } from '@/types/roundDetails.types';
 import { getRoundDetailsThunk } from '@/features/round/roundDetails.thunk';
 
@@ -14,27 +15,30 @@ const initialState: IRoundDetailState = {
 };
 
 export const useRoundDetailsStore = create<RoundDetailsState>()(
-  (set) => ({
-    ...initialState,
-    getRoundDetails: async (playerId, roundId) => {
-      set({ isLoading: true, error: null, round: null });
-      try {
-        const result = await getRoundDetailsThunk(
-          { playerId, roundId },
-          { rejectWithValue: (msg: string) => msg }
-        );
-        if (typeof result === 'string') {
-          set({ isLoading: false, error: result });
+  devtools(
+    (set) => ({
+      ...initialState,
+      getRoundDetails: async (playerId, roundId) => {
+        set({ isLoading: true, error: null, round: null });
+        try {
+          const result = await getRoundDetailsThunk(
+            { playerId, roundId },
+            { rejectWithValue: (msg: string) => msg }
+          );
+          if (typeof result === 'string') {
+            set({ isLoading: false, error: result });
+            return null;
+          }
+          set({ isLoading: false, round: result });
+          return result;
+        } catch (error: unknown) {
+          const errMsg = error instanceof Error ? error.message : 'Failed to fetch round details';
+          set({ isLoading: false, error: errMsg });
           return null;
         }
-        set({ isLoading: false, round: result });
-        return result;
-      } catch (error: unknown) {
-        const errMsg = error instanceof Error ? error.message : 'Failed to fetch round details';
-        set({ isLoading: false, error: errMsg });
-        return null;
-      }
-    },
-    clearRoundDetails: () => set({ round: null, isLoading: false, error: null }),
-  })
+      },
+      clearRoundDetails: () => set({ round: null, isLoading: false, error: null }),
+    }),
+    { name: 'RoundDetailsStore' }
+  )
 );

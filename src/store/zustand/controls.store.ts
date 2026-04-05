@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 import { IControls } from '@/types/controls.types';
 
 interface ControlsState extends IControls {
@@ -14,16 +15,19 @@ const initialControls: IControls = {
 };
 
 export const useControlsStore = create<ControlsState>()(
-  persist(
-    (set) => ({
-      ...initialControls,
-      setShowDistances: (showDistances) => set({ showDistances }),
-      setIsLoading: (isLoading) => set({ isLoading }),
-      resetControls: () => set(initialControls),
-    }),
-    {
-      name: 'controls-storage',
-      storage: createJSONStorage(() => localStorage),
-    }
+  devtools(
+    persist(
+      (set) => ({
+        ...initialControls,
+        setShowDistances: (showDistances) => set({ showDistances }),
+        setIsLoading: (isLoading) => set({ isLoading }),
+        resetControls: () => set(initialControls),
+      }),
+      {
+        name: 'controls-storage',
+        storage: createJSONStorage(() => localStorage),
+      }
+    ),
+    { name: 'ControlsStore' }
   )
 );
