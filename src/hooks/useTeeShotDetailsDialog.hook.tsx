@@ -1,8 +1,7 @@
-import { setTmpHoleData } from '@/features/hole/holeTmp.slice';
 import { FairwayOption } from '@/types/props.types'; // Assuming FairwayOption is exported
 import { IShots } from '@/types/roundData.types';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useNewRoundStore } from '@/store/zustand';
 
 interface UseTeeShotDetailsDialogProps {
 	tmpHole: Pick<IShots, 'teeClub' | 'par' | 'fairway' | 'driveDistance'>;
@@ -22,7 +21,7 @@ export const useTeeShotDetailsDialog = ({
 	roundHoles,
 	derivedClubsChipClubs,
 }: UseTeeShotDetailsDialogProps) => {
-	const dispatch = useDispatch<any>();
+	const setTmpHoleData = useNewRoundStore((state) => state.setTmpHoleData);
 	const [isTeeShotDetailsDialogOpen, setIsTeeShotDetailsDialogOpen] = useState(false);
 
 	const openDialog = () => {
@@ -34,9 +33,9 @@ export const useTeeShotDetailsDialog = ({
 	};
 
 	const handleSubmit = (details: { fairway: number; distance: number; teeClub: string }) => {
-		dispatch(setTmpHoleData({ name: 'teeClub', value: details.teeClub, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
-		dispatch(setTmpHoleData({ name: 'fairway', value: details.fairway, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
-		dispatch(setTmpHoleData({ name: 'driveDistance', value: details.distance, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
+		setTmpHoleData({ name: 'teeClub', value: details.teeClub, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs });
+		setTmpHoleData({ name: 'fairway', value: details.fairway, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs });
+		setTmpHoleData({ name: 'driveDistance', value: details.distance, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs });
 		setIsTeeShotDetailsDialogOpen(false);
 	};
 

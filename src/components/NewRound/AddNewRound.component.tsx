@@ -1,22 +1,22 @@
 
-import { RootState } from '@/store/store';
 import StackNewHole from '@/styles/stack/StackNewHole.styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { AppBar, Button, Dialog, Grid, IconButton, Slide, Toolbar, Typography } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddNewRoundForm from './AddNewRoundForm.component';
 import AddNewRoundHoles from './AddNewRoundHoles.component';
 import NewRoundMainData from './components/NewRoundMainData.component';
 import HolebyHoleTable from './HolebyHoleTable.component';
+import { useNewRoundStore } from '@/store/zustand';
 
 const NewRoundMain = () => {
-  const setFirstHole = useSelector((state: RootState) => state.newRound.newRoundMain.setFirstHole);
-  const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
-  const { round } = useSelector((store: RootState) => store.newRound.newRoundMain);
+  const main = useNewRoundStore((state) => state.main);
+  const setFirstHole = main.setFirstHole;
+  const round = main.round;
+  const holes = useNewRoundStore((state) => state.holes.holes);
+  const roundTotals = useNewRoundStore((state) => state.totals.roundTotals);
   const [roundTotalsOpen, setRoundTotalsOpen] = useState<boolean>(false);
 
 
@@ -57,11 +57,7 @@ const NewRoundMain = () => {
 
       <AddNewRoundForm />
 
-      <Dialog open={roundTotalsOpen} fullScreen onClose={() => setRoundTotalsOpen(false)}
-      // slots={{
-      // transition: Transition,
-      // }}
-      >
+      <Dialog open={roundTotalsOpen} fullScreen onClose={() => setRoundTotalsOpen(false)}>
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar sx={{ padding: '0px 20px' }}>
             <IconButton

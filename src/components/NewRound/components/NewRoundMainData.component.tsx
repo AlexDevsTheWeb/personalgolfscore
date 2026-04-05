@@ -1,14 +1,14 @@
 import RoundsDataHeader from "@/components/RoundsData/components/roundData/RoundsDataHeader.component";
 import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
-import { RootState } from "@/store/store";
 import { IRoundDetails } from "@/types/roundDetails.types";
 import { Box } from "@mui/material";
 import dayjs from "dayjs";
-import { useSelector } from "react-redux";
+import { useNewRoundStore } from "@/store/zustand";
 
 const NewRoundMainData = () => {
 
-  const roundData = useSelector((state: RootState) => state.newRound.newRoundMain.round);
+  const main = useNewRoundStore((state) => state.main);
+  const roundData = main.round;
   const { roundCourse, roundDate, roundHoles, roundPar, roundPlayingHCP, roundTee } = roundData;
 
   const newRoundData: IRoundDetails = {

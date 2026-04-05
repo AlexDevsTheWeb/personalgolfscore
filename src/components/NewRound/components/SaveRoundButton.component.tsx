@@ -1,12 +1,11 @@
 
-import { RootState } from "@/store/store";
 import { ISaveRoundButtonProps } from "@/types/round.types";
 import { Button } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useNewRoundStore } from "@/store/zustand";
 
 const SaveRoundButton: React.FC<ISaveRoundButtonProps> = ({ onSave, disabled }) => {
-  const { holes } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const { round } = useSelector((store: RootState) => store.newRound.newRoundMain);
+  const holes = useNewRoundStore((state) => state.holes.holes);
+  const round = useNewRoundStore((state) => state.main.round);
   const { roundHoles } = round;
 
   const howManyHolesToPlay = roundHoles - holes.length;

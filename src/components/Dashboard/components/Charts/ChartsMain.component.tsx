@@ -1,16 +1,15 @@
 import DistancesTotals from "@/components/Totals/HolebyHole/DistancesTotals.component"
-import { RootState } from "@/store/store"
 import { Grid, Typography } from "@mui/material"
-import { useSelector } from "react-redux"
 import FairwayHitsChart from "./FairwayChart.component"
 import GirPercentageChart from "./GirChart.component"
 import ParAveragesChart from "./ParAveragesChart.component"
 import PointsChart from "./PointsChart.component"
 import PuttsChart from "./PuttsChart.component"
 import ScoreCharts from "./ScoreChart.component"
+import { useRoundsStore } from "@/store/zustand";
 
 const ChartsMain = () => {
-  const { rounds } = useSelector((store: RootState) => store.rounds);
+  const rounds = useRoundsStore((state) => state.rounds);
   return (
     <>
       <Typography variant="headline6" component="h2" gutterBottom sx={{ mt: 2, textAlign: 'center' }}>

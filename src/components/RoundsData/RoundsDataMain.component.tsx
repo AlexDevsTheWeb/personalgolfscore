@@ -1,6 +1,4 @@
-import { clearRoundDetails, getRoundDetails } from '@/features/round/roundDetails.slice';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { AppDispatch, RootState } from '@/store/store';
 import BoxBetween from '@/styles/box/BoxBetween.styles';
 import { CLUB_SORT_ORDER } from '@/utils/constant.utils';
 import { getClubsNames } from '@/utils/round/round.utils';
@@ -9,33 +7,37 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Box, Button, Typography } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Spinner from '../common/spinner/Spinner.component';
 import EmptyRounds from '../Dashboard/components/EmptyRounds/EmptyRounds.component';
 import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import RoundsDataHeader from './components/roundData/RoundsDataHeader.component';
+import { useRoundDetailsStore } from '@/store/zustand';
+import { usePlayerStore } from '@/store/zustand';
 
 const RoundsDataMain = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const params = useParams<{ roundID: string }>();
   const playerId = readUserLocalStorage();
 
-  const { round, isLoading: isLoadingRound, error, } = useSelector((store: RootState) => store.roundDetails);
-  const { player, isLoading: isLoadingPlayer } = useSelector((store: RootState) => store.player);
+  const round = useRoundDetailsStore((state) => state.round);
+  const isLoadingRound = useRoundDetailsStore((state) => state.isLoading);
+  const error = useRoundDetailsStore((state) => state.error);
+  const getRoundDetails = useRoundDetailsStore((state) => state.getRoundDetails);
+  const clearRoundDetails = useRoundDetailsStore((state) => state.clearRoundDetails);
+  
+  const { player, isLoading: isLoadingPlayer } = usePlayerStore();
   const golfBag = player?.golfBag;
 
   const [openHoleByHole, setOpenHoleByHole] = useState<boolean>(false);
   const [openFullStatistics, setOpenFullStatistics] = useState<boolean>(true);
 
-  console.log("totals: ", round?.totals);
   useEffect(() => {
     if (params.roundID && playerId) {
-      dispatch(getRoundDetails({ playerId, roundId: params.roundID }));
+      getRoundDetails(playerId, params.roundID);
     }
     return () => {
-      dispatch(clearRoundDetails());
+      clearRoundDetails();
     }
   }, [params.roundID, playerId]);
 

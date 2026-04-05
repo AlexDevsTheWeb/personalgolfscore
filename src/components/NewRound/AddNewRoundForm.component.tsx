@@ -1,15 +1,3 @@
-import {
-  setRoundCourse,
-  setRoundDate,
-  setRoundHoles,
-  setRoundMainData,
-  setRoundNumber,
-  setRoundPar,
-  setRoundPlayingHCP,
-  setRoundTee
-} from '@/features/newRound/newRoundMain.slice';
-import { setTotalMainData } from '@/features/newRound/newRoundTotals.slice';
-import { AppDispatch, RootState } from '@/store/store';
 import { Dialog } from '@/styles/dialog/Dialog.styles';
 import { INewRound } from '@/types/round.types';
 import {
@@ -19,41 +7,45 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Select from './components/Select.component';
+import { useNewRoundStore } from '@/store/zustand';
 
 const AddNewRoundForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  const roundData = useSelector((state: RootState) => state.newRound.newRoundMain.round);
-  const setFirstHole = useSelector((state: RootState) => state.newRound.newRoundMain.setFirstHole);
-  const roundDateString = useSelector((state: RootState) => state.newRound.newRoundMain.round.roundDate);
+  const roundData = useNewRoundStore((state) => state.main.round);
+  const setFirstHole = useNewRoundStore((state) => state.main.setFirstHole);
+  const setRoundDate = useNewRoundStore((state) => state.setRoundDate);
+  const setRoundMainData = useNewRoundStore((state) => state.setRoundMainData);
+  const setTotalsByHole = useNewRoundStore((state) => state.setTotalsByHole);
+  const holes = useNewRoundStore((state) => state.holes.holes);
+  
+  const roundDateString = roundData.roundDate;
   const roundDateValue = roundDateString && dayjs(roundDateString).isValid() ? dayjs(roundDateString) : dayjs(new Date());
 
   useEffect(() => {
     if (!roundDateString) {
-      dispatch(setRoundDate(dayjs(new Date())));
+      setRoundDate(dayjs(new Date()));
     }
-  }, [dispatch, roundDateString]);
+  }, [roundDateString, setRoundDate]);
 
   const handleDateChange = (newValue: Dayjs | null) => {
-    dispatch(setRoundDate(newValue));
+    setRoundDate(newValue);
   };
 
   const handleSubmit = () => {
     const currentRoundData = roundData;
-    dispatch(setRoundMainData({}));
+    setRoundMainData({});
 
     const roundForTotals: INewRound = {
       ...currentRoundData,
       roundDate: currentRoundData.roundDate || '',
     };
-    dispatch(setTotalMainData({ round: roundForTotals }));
+    setTotalsByHole(holes);
   };
 
   const handleCancel = () => {
-    dispatch(setRoundMainData({}));
+    setRoundMainData({});
     navigate('/dashboard');
   }
 
@@ -75,7 +67,7 @@ const AddNewRoundForm = () => {
             variant="outlined"
             fullWidth
             value={roundData.roundCourse || ''}
-            onChange={e => dispatch(setRoundCourse(e.target.value))}
+            onChange={e => useNewRoundStore.getState().setRoundCourse(e.target.value)}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
@@ -96,7 +88,7 @@ const AddNewRoundForm = () => {
             type='number'
             fullWidth
             value={roundData.roundHoles || ''}
-            onChange={e => dispatch(setRoundHoles(Number(e.target.value)))}
+            onChange={e => useNewRoundStore.getState().setRoundHoles(Number(e.target.value))}
           />
         </Grid>
         <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
@@ -106,7 +98,7 @@ const AddNewRoundForm = () => {
             variant="outlined"
             type='number'
             value={roundData.roundPar || ''}
-            onChange={e => dispatch(setRoundPar(Number(e.target.value)))}
+            onChange={e => useNewRoundStore.getState().setRoundPar(Number(e.target.value))}
             fullWidth
           />
         </Grid>
@@ -118,7 +110,7 @@ const AddNewRoundForm = () => {
             fullWidth
             type='number'
             value={roundData.roundPlayingHCP || ''}
-            onChange={e => dispatch(setRoundPlayingHCP(Number(e.target.value)))}
+            onChange={e => useNewRoundStore.getState().setRoundPlayingHCP(Number(e.target.value))}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
@@ -127,7 +119,7 @@ const AddNewRoundForm = () => {
             value={roundData.roundTee || ''}
             label='Tee'
             list={['White', 'Blue', 'Yellow', 'Red', 'Green', 'Orange']}
-            onChange={(e: any) => dispatch(setRoundTee(e.target.value))}
+            onChange={(e: any) => useNewRoundStore.getState().setRoundTee(e.target.value)}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
@@ -137,7 +129,7 @@ const AddNewRoundForm = () => {
             variant="outlined"
             type='number'
             value={roundData.roundNumber || ''}
-            onChange={e => dispatch(setRoundNumber(Number(e.target.value)))}
+            onChange={e => useNewRoundStore.getState().setRoundNumber(Number(e.target.value))}
             fullWidth
           />
         </Grid>

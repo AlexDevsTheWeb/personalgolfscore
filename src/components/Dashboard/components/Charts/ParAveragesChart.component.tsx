@@ -1,16 +1,14 @@
-import { getRoundDetails } from '@/features/round/roundDetails.slice';
-import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
 import { IRoundsCharts } from '@/types/charts.types';
 import { IShots } from '@/types/roundData.types';
 import { Box, Typography, useTheme } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useRoundsStore, useRoundDetailsStore } from '@/store/zustand';
 
 const ParAveragesChart: React.FC<IRoundsCharts> = ({ rounds }) => {
-  const dispatch = useDispatch();
-  const { playerID } = useSelector((store: RootState) => store.rounds);
+  const playerID = useRoundsStore((state) => state.playerID);
+  const getRoundDetails = useRoundDetailsStore((state) => state.getRoundDetails);
   const theme = useTheme();
 
   const [allHoles, setAllHoles] = useState<IShots[]>([]);
@@ -19,10 +17,9 @@ const ParAveragesChart: React.FC<IRoundsCharts> = ({ rounds }) => {
     const fetchHoles = async () => {
       const holes: IShots[] = [];
       for (const r of rounds) {
-        // @ts-ignore
-        const action = await dispatch(getRoundDetails({ roundId: r.id, playerId: playerID }));
-        if (getRoundDetails.fulfilled.match(action)) {
-          holes.push(...action.payload.holes);
+        const result = await getRoundDetails(playerID, r.id);
+        if (result) {
+          holes.push(...result.holes);
         }
       }
       setAllHoles(holes);
@@ -31,7 +28,7 @@ const ParAveragesChart: React.FC<IRoundsCharts> = ({ rounds }) => {
     if (rounds.length > 0 && playerID) {
       fetchHoles();
     }
-  }, [rounds, playerID, dispatch]);
+  }, [rounds, playerID, getRoundDetails]);
 
   const parData = {
     par3: { totalStrokes: 0, count: 0 },

@@ -1,14 +1,13 @@
-import { RootState } from "@/store/store"
 import { IPlayerSetupProps } from "@/types/clubs.types"
 import { Avatar, Box, Grid, TextField, Typography } from "@mui/material"
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import dayjs, { Dayjs } from "dayjs"
 import React, { useState } from "react"
-import { useSelector } from "react-redux"
+import { usePlayerStore } from "@/store/zustand";
 
 const PlayerSetupForm: React.FC<IPlayerSetupProps> = ({ handleHcpChange }) => {
-  const { player } = useSelector((state: RootState) => state.player);
+  const player = usePlayerStore((state) => state.player);
   const [firstName, setFirstName] = useState(player?.firstName || '');
   const [lastName, setLastName] = useState(player?.lastName || '');
   const [dob, setDob] = useState<Dayjs | null>(player?.DOB ? dayjs(player.DOB) : null);

@@ -1,23 +1,24 @@
-import { RootState } from '@/store/store';
 import { IAddSingleHoleProps } from '@/types/clubs.types';
 import { fairwayValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils'; // prettier-ignore
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
 import MissingShotsDialog from '../Dialog/MissingShotsDialog.component';
 
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
 import { useHoleFormManager } from '@/hooks/useHoleFormManager.component';
 import HoleGeneralForm from './components/HoleGeneralForm.component';
+import { useNewRoundStore } from "@/store/zustand";
+import { useControlsStore } from "@/store/zustand";
 
 const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
-	const {
-		round: { roundPlayingHCP, roundHoles },
-	} = useSelector((store: RootState) => store.newRound.newRoundMain);
-	const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-	const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
-	const { showDistances } = useSelector((store: RootState) => store.controls);
+	const main = useNewRoundStore((state) => state.main);
+	const roundPlayingHCP = main.round.roundPlayingHCP;
+	const roundHoles = main.round.roundHoles;
+	const holes = useNewRoundStore((state) => state.holes.holes);
+	const holesCompleted = useNewRoundStore((state) => state.holes.holesCompleted);
+	const holeTmp = useNewRoundStore((state) => state.holeTmp);
+	const showDistances = useControlsStore((state) => state.showDistances);
 
 	const [puttsLength, setPuttsLength] = useState<number[]>([]);
 	const [currentHoleNumber, setCurrentHoleNumber] = useState<number>(1);
@@ -36,13 +37,13 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 		fairwayValuesConstant: fairwayValues,
 	});
 
-	// Effect to reset puttsLength when a hole is successfully saved (tmpHole is reset)
+	// Effect to reset puttsLength when a hole is successfully saved (holeTmp is reset)
 	useEffect(() => {
-		if (tmpHole.holeNumber === 0 && tmpHole.par === 0 && tmpHole.strokes === 0) {
+		if (holeTmp.holeNumber === 0 && holeTmp.par === 0 && holeTmp.strokes === 0) {
 			// Heuristic for reset
 			setPuttsLength([]);
 		}
-	}, [tmpHole.holeNumber, tmpHole.par, tmpHole.strokes]);
+	}, [holeTmp.holeNumber, holeTmp.par, holeTmp.strokes]);
 
 	const hcpList = Number(roundHoles) === 18 ? hcpList18 : hcpList9;
 	const usedHCPs = holes.map((hole: any) => hole.hcp);
@@ -51,7 +52,7 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 	return (
 		<Grid container spacing={2} sx={{ width: useDeviceDetection().isMobileDevice ? '100%' : '70%' }}>
 			<HoleGeneralForm
-				holeData={tmpHole}
+				holeData={holeTmp}
 				hcpList={newHCPList}
 				parList={parList}
 				teeClubs={derivedClubs.teeClubs}

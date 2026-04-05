@@ -1,24 +1,22 @@
 import Spinner from "@/components/common/spinner/Spinner.component";
-import { getPlayerDetails } from "@/features/player/player.slice";
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { Typography } from "@mui/material";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import ClubsMain from "../components/Clubs/ClubsMain.component";
-import { RootState } from "../store/store";
+import { usePlayerStore } from "@/store/zustand";
 
 const ClubsPage = () => {
-  const dispatch = useDispatch<any>();
-  const { isLoading, error, errorMessage, player } = useSelector((store: RootState) => store.player);
+  const { isLoading, error, errorMessage, player } = usePlayerStore();
+  const getPlayerDetails = usePlayerStore((state) => state.getPlayerDetails);
   const uid = readUserLocalStorage();
 
   const golfBag = player?.golfBag;
 
   useEffect(() => {
     if (uid && (!player || !golfBag || golfBag.length === 0)) {
-      dispatch(getPlayerDetails(uid));
+      getPlayerDetails(uid);
     }
-  }, [dispatch, uid, player]);
+  }, [uid, player]);
 
   if (isLoading) {
     return <Spinner />

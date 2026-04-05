@@ -1,9 +1,8 @@
 import Rounds from "@/components/Rounds/Rounds.component";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
+import { useRoundsStore } from "@/store/zustand";
 
 const AllRounds = () => {
-  const { rounds } = useSelector((store: RootState) => store.rounds);
+  const rounds = useRoundsStore((state) => state.rounds);
 
   return (
     <Rounds rounds={rounds} />

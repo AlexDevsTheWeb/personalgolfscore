@@ -1,29 +1,29 @@
-import { RootState } from '@/store/store';
 import { Dialog } from '@/styles/dialog/Dialog.styles';
 import TextField from '@/styles/textfield/TextField.style';
 import { ApproachDetailsDialogProps } from '@/types/props.types';
 import { greenSideValues } from '@/utils/constant.utils';
 import { Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import Select from '../NewRound/components/Select.component';
+import { useNewRoundStore } from "@/store/zustand";
 
 const ApproachDetailsDialog: React.FC<ApproachDetailsDialogProps> = ({
   open,
   onClose,
   onSubmit,
 }) => {
-  const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
-  const { greenClubs, chipClubs } = useSelector((store: RootState) => store.newRound.newRoundClubs);
+  const holeTmp = useNewRoundStore((state) => state.holeTmp);
+  const clubs = useNewRoundStore((state) => state.clubs);
+  const { greenClubs, chipClubs } = clubs;
 
-  const [toGreenMeters, setToGreenMeters] = useState(tmpHole.toGreenMeters || 0);
-  const [greenSide, setGreenSide] = useState(tmpHole.greenSide || '');
-  const [chipClub, setChipClub] = useState(tmpHole.chipClub || '');
-  const [toGreen, setToGreen] = useState(tmpHole.toGreen || '');
+  const [toGreenMeters, setToGreenMeters] = useState(holeTmp.toGreenMeters || 0);
+  const [greenSide, setGreenSide] = useState(holeTmp.greenSide || '');
+  const [chipClub, setChipClub] = useState(holeTmp.chipClub || '');
+  const [toGreen, setToGreen] = useState(holeTmp.toGreen || '');
 
   const [toGreenMetersManuallySet, setToGreenMetersManuallySet] = useState(false);
 
-  const { par, distance, driveDistance, strokes, putts, gir } = tmpHole;
+  const { par, distance, driveDistance, strokes, putts, gir } = holeTmp;
   const isPar3 = par === 3;
   const girHappened = gir;
 

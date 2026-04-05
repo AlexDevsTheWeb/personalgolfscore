@@ -1,20 +1,19 @@
-import { setLoginUser } from "@/features/user/user.slice";
 import { IUser } from "@/types/user.types";
 import { login } from "@/utils/firebase/firebaseLogin.utils";
 import { writeUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { Box, Button, FormControl, FormLabel, TextField } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/zustand";
 
 interface LoginProps {
   onLoginSuccess: () => void;
 }
 
 const LoginForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const setLoginUser = useUserStore((state) => state.setLoginUser);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = React.useState(false);
@@ -37,7 +36,7 @@ const LoginForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           photoURL: docSnap?.data().photoURL,
           uid: docSnap.id,
         };
-        dispatch(setLoginUser(user));
+        setLoginUser(user);
 
       }
       navigate('/dashboard');
@@ -120,10 +119,6 @@ const LoginForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           color={passwordError ? 'error' : 'primary'}
         />
       </FormControl>
-      {/* <FormControlLabel
-        control={<Checkbox value="remember" color="primary" />}
-        label="Remember me"
-      /> */}
       <Button
         type="submit"
         fullWidth
@@ -132,15 +127,6 @@ const LoginForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       >
         Sign in
       </Button>
-      {/* <Link
-        component="button"
-        type="button"
-        onClick={handleClickOpen}
-        variant="body2"
-        sx={{ alignSelf: 'center' }}
-      >
-        Forgot your password?
-      </Link> */}
 
     </Box>
   );

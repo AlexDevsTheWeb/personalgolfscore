@@ -1,23 +1,24 @@
-import { resetSetFirstHole } from "@/features/newRound/newRoundMain.slice";
-import { RootState } from "@/store/store";
 import { Box, Button, Paper, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../common/spinner/Spinner.component";
 import Rounds from "../Rounds/Rounds.component";
 import RoundsButtons from "../Rounds/RoundsButtons.component";
 import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
 import ChartsMain from "./components/Charts/ChartsMain.component";
+import { useRoundsStore } from "@/store/zustand";
+import { usePlayerStore } from "@/store/zustand";
+import { useControlsStore } from "@/store/zustand";
+import { useNewRoundStore } from "@/store/zustand";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { rounds } = useSelector((store: RootState) => store.rounds);
-  const { player } = useSelector((store: RootState) => store.player);
-  const { isLoading } = useSelector((store: RootState) => store.controls);
+  const rounds = useRoundsStore((state) => state.rounds);
+  const player = usePlayerStore((state) => state.player);
+  const isLoading = useControlsStore((state) => state.isLoading);
+  const resetSetFirstHole = useNewRoundStore((state) => state.resetSetFirstHole);
 
   const handleAddNewRound = () => {
-    dispatch(resetSetFirstHole());
+    resetSetFirstHole();
     navigate('/addNewRound')
   }
 

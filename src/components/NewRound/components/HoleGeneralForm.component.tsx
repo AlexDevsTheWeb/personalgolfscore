@@ -2,14 +2,12 @@ import ApproachDetailsDialog from '@/components/Dialog/ApproachDialog.component'
 import HoleDetailsDialog from '@/components/Dialog/HoleDetailsDialog.component';
 import PenaltiesDialog from '@/components/Dialog/PenaltiesDialog.component';
 import TeeShotDetailsDialog from '@/components/Dialog/TeeShotsDialog.component';
-import { setTmpHoleData } from '@/features/hole/holeTmp.slice';
-import { RootState } from '@/store/store';
 import { IHoleGeneralInfoFormProps } from '@/types/props.types';
 import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import PuttsInputDialog from '../../Dialog/PuttsInputDialog.component';
 import SaveRoundButton from './SaveRoundButton.component';
+import { useNewRoundStore } from '@/store/zustand';
 
 const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 	currentHoleNumber,
@@ -18,9 +16,11 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 }: IHoleGeneralInfoFormProps) => {
 
 	const [dialogOpen, setDialogOpen] = useState<'general' | 'tee' | 'putts' | 'approach' | 'penalties' | null>(null);
-	const { chipClubs } = useSelector((state: RootState) => state.newRound.newRoundClubs);
-	const newRoundMain = useSelector((state: RootState) => state.newRound.newRoundMain);
-	const dispatch = useDispatch();
+	const clubs = useNewRoundStore((state) => state.clubs);
+	const chipClubs = clubs.chipClubs;
+	const main = useNewRoundStore((state) => state.main);
+	const newRoundMain = main;
+	const setTmpHoleData = useNewRoundStore((state) => state.setTmpHoleData);
 
 	const newHoleItems = ['general', 'tee', 'putts', 'approach', 'penalties'];
 	const roundPlayingHCP = newRoundMain.round.roundPlayingHCP;
@@ -31,10 +31,10 @@ const HoleGeneralForm: React.FC<IHoleGeneralInfoFormProps> = ({
 	}
 
 	const handleGeneralSubmit = (par: number, distance: number, hcp: number, strokes: number) => {
-		dispatch(setTmpHoleData({ name: 'par', value: par, roundPlayingHCP, roundHoles, chipClubs }));
-		dispatch(setTmpHoleData({ name: 'distance', value: distance, roundPlayingHCP, roundHoles, chipClubs }));
-		dispatch(setTmpHoleData({ name: 'hcp', value: hcp, roundPlayingHCP, roundHoles, chipClubs }));
-		dispatch(setTmpHoleData({ name: 'strokes', value: strokes, roundPlayingHCP, roundHoles, chipClubs }));
+		setTmpHoleData({ name: 'par', value: par, roundPlayingHCP, roundHoles, chipClubs });
+		setTmpHoleData({ name: 'distance', value: distance, roundPlayingHCP, roundHoles, chipClubs });
+		setTmpHoleData({ name: 'hcp', value: hcp, roundPlayingHCP, roundHoles, chipClubs });
+		setTmpHoleData({ name: 'strokes', value: strokes, roundPlayingHCP, roundHoles, chipClubs });
 	};
 
 	const handleTeeshotSubmit = (fairway: number, distance: number, teeClub: string) => {

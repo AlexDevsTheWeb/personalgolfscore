@@ -1,5 +1,3 @@
-import { resetUser } from "@/features/user/user.slice";
-import { AppDispatch } from "@/store/store";
 import StackPlayerMenu from "@/styles/stack/StackPlayerMenu.styles";
 import { deleteUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { stringAvatar } from "@/utils/user/user.utils";
@@ -8,15 +6,16 @@ import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleto
 import { getAuth, signOut } from "firebase/auth";
 import _ from "lodash";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/zustand";
+import { usePlayerStore } from "@/store/zustand";
 
 
 const User = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { user } = useSelector((store: any) => store.user);
-  const { player, isLoading } = useSelector((store: any) => store.player);
+  const user = useUserStore((state) => state.user);
+  const { player, isLoading } = usePlayerStore();
+  const resetUser = useUserStore((state) => state.resetUser);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -30,7 +29,6 @@ const User = () => {
   const handleSettings = () => {
     setAnchorEl(null);
     navigate('/settings');
-    //TODO: next go to player/user settings
   }
 
   const handleLogout = () => {
@@ -39,7 +37,7 @@ const User = () => {
     setAnchorEl(null);
     signOut(auth).then(() => {
       deleteUserLocalStorage();
-      dispatch(resetUser());
+      resetUser();
     }).catch((error) => {
     });
   };

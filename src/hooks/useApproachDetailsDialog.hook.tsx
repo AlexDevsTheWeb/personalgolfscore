@@ -1,7 +1,6 @@
-import { setTmpHoleData } from '@/features/hole/holeTmp.slice';
 import { IShots } from '@/types/roundData.types';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useNewRoundStore } from '@/store/zustand';
 
 interface UseApproachDetailsDialogProps {
   tmpHole: IShots; // Pass the whole tmpHole for initialData
@@ -20,7 +19,7 @@ export const useApproachDetailsDialog = ({
   puttsLength,
   roundHoles,
 }: UseApproachDetailsDialogProps) => {
-  const dispatch = useDispatch<any>();
+  const setTmpHoleData = useNewRoundStore((state) => state.setTmpHoleData);
   const [isApproachDetailsDialogOpen, setIsApproachDetailsDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -47,7 +46,6 @@ export const useApproachDetailsDialog = ({
     } else {
       setIsApproachDetailsDialogOpen(false);
     }
-    // Update dependencies
   }, [tmpHole.toGreen, tmpHole.par, tmpHole.strokes, tmpHole.putts, tmpHole.teeClub, puttsLength]);
 
   const handleClose = () => {
@@ -59,9 +57,9 @@ export const useApproachDetailsDialog = ({
     greenSide?: string;
     chipClub?: string;
   }) => {
-    if (details.toGreenMeters !== undefined) dispatch(setTmpHoleData({ name: 'toGreenMeters', value: details.toGreenMeters, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
-    if (details.greenSide !== undefined) dispatch(setTmpHoleData({ name: 'greenSide', value: details.greenSide, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
-    if (details.chipClub !== undefined) dispatch(setTmpHoleData({ name: 'chipClub', value: details.chipClub, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs }));
+    if (details.toGreenMeters !== undefined) setTmpHoleData({ name: 'toGreenMeters', value: details.toGreenMeters, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs });
+    if (details.greenSide !== undefined) setTmpHoleData({ name: 'greenSide', value: details.greenSide, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs });
+    if (details.chipClub !== undefined) setTmpHoleData({ name: 'chipClub', value: details.chipClub, roundPlayingHCP, roundHoles, chipClubs: derivedClubsChipClubs });
     setIsApproachDetailsDialogOpen(false);
   };
 

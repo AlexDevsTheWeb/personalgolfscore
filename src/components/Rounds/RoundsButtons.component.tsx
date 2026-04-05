@@ -1,15 +1,14 @@
-import { resetSetFirstHole } from "@/features/newRound/newRoundMain.slice";
 import BoxBetween from "@/styles/box/BoxBetween.styles";
 import { ActionTextButtons } from "@/styles/button/Buttons.styles";
 import { BoxOverflow } from "@/styles/index";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useNewRoundStore } from "@/store/zustand";
 
 
 const RoundsButtons = () => {
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const resetSetFirstHole = useNewRoundStore((state) => state.resetSetFirstHole);
 
   const handleClickStatistic = () => {
     navigate(`/statistics`);
@@ -18,7 +17,7 @@ const RoundsButtons = () => {
     navigate(`/all-rounds`);
   };
   const handleAddNewRound = () => {
-    dispatch(resetSetFirstHole());
+    resetSetFirstHole();
     navigate('/addNewRound')
   }
 
@@ -30,36 +29,6 @@ const RoundsButtons = () => {
         {window.location.pathname !== '/all-rounds' &&
           <ActionTextButtons text={'View All Rounds'} onClick={handleClickAllRounds} />
         }
-        {/* <Button
-          variant='text'
-          onClick={handleAddNewRound}
-          startIcon={<KeyboardArrowRightIcon />}
-          sx={{
-            '&:hover': {
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              textDecoration: 'underline',
-              textUnderlineOffset: '6px'
-            },
-          }}
-        >
-          Add new Round
-        </Button> */}
-        {/* <Button
-          variant='text'
-          onClick={handleClickStatistic}
-        >
-          View Full Statistics
-          <KeyboardArrowRightIcon />
-        </Button> */}
-        {/* {window.location.pathname !== '/all-rounds' &&
-          <Button
-            variant='text'
-            onClick={handleClickAllRounds}
-          >
-            View All Rounds
-            <KeyboardArrowRightIcon />
-          </Button>
-        } */}
       </BoxBetween>
     </BoxOverflow>
   )

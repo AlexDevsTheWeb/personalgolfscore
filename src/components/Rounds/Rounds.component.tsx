@@ -1,19 +1,17 @@
-import { useSelector } from 'react-redux';
-
-import { RootState } from '@/store/store';
 import { IBasicRoundData } from '@/types/roundData.types';
 import { IRoundDetails } from '@/types/roundDetails.types';
 import { Grid } from '@mui/material';
 import Spinner from '../common/spinner/Spinner.component';
 import RoundsDataHeader from '../RoundsData/components/roundData/RoundsDataHeader.component';
 import RoundsButtons from './RoundsButtons.component';
+import { useRoundsStore } from '@/store/zustand';
 
 interface IRoundsProps {
   rounds: IBasicRoundData[];
 }
 
 const Rounds = ({ rounds }: IRoundsProps) => {
-  const { isLoading } = useSelector((store: RootState) => store.rounds);
+  const isLoading = useRoundsStore((state) => state.isLoading);
 
   if (!!isLoading) {
     return <Spinner />

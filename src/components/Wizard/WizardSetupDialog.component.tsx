@@ -1,5 +1,3 @@
-import { updatePlayerGolfbag, updatePlayerProfile } from '@/features/player/player.slice';
-import { AppDispatch, RootState } from '@/store/store';
 import { IGolfBagData, IUpdateGolfBagPayload, IUpdatePlayerProfilePayload } from '@/types/player.types';
 import {
   Button,
@@ -15,9 +13,9 @@ import {
 } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import ClubSetupForm from './ClubSetupForm.component';
 import PlayerSetupForm from './PlayerSetupForm.component';
+import { usePlayerStore } from '@/store/zustand';
 
 interface SetupWizardDialogProps {
   open: boolean;
@@ -28,8 +26,9 @@ const steps = ['Profile Details', 'Golf Bag Setup'];
 
 const WizardSetupDialog: React.FC<SetupWizardDialogProps> = ({ open, playerUid }) => {
   const [step, setStep] = useState(1);
-  const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, error, errorMessage, player } = useSelector((state: RootState) => state.player);
+  const { isLoading, error, errorMessage, player } = usePlayerStore();
+  const updatePlayerProfile = usePlayerStore((state) => state.updatePlayerProfile);
+  const updatePlayerGolfbag = usePlayerStore((state) => state.updatePlayerGolfbag);
 
   const [firstName, setFirstName] = useState(player?.firstName || '');
   const [lastName, setLastName] = useState(player?.lastName || '');
@@ -62,10 +61,10 @@ const WizardSetupDialog: React.FC<SetupWizardDialogProps> = ({ open, playerUid }
       setFormError('First Name, Last Name, Date of Birth, and HCP are required.');
       return false;
     }
-    const hcpNumber = parseFloat(hcp as string); // Convert HCP string to a number
+    const hcpNumber = parseFloat(hcp as string);
     if (isNaN(hcpNumber)) {
       setFormError('HCP must be a valid number.');
-      return false; // Stop submission if HCP is not a valid number
+      return false;
     }
     return true;
   };
@@ -100,8 +99,8 @@ const WizardSetupDialog: React.FC<SetupWizardDialogProps> = ({ open, playerUid }
     };
 
     try {
-      await dispatch(updatePlayerProfile(profileData)).unwrap();
-      await dispatch(updatePlayerGolfbag(golfBagPayload)).unwrap();
+      await updatePlayerProfile(profileData);
+      await updatePlayerGolfbag(golfBagPayload);
     } catch (rejectedValueOrSerializedError) {
       console.error("Error saving setup wizard data:", rejectedValueOrSerializedError);
       const message = (rejectedValueOrSerializedError as any)?.message ||
@@ -132,45 +131,36 @@ const WizardSetupDialog: React.FC<SetupWizardDialogProps> = ({ open, playerUid }
           </Step>
         ))}
       </Stepper>
-      <DialogContent>
+
+      <DialogContent sx={{ pb: 0 }}>
+        {isLoading && <CircularProgress />}
+        {error || errorMessage ? <Typography color="error">{errorMessage || error}</Typography> : null}
+
         {step === 1 && (
-          <PlayerSetupForm handleHcpChange={() => handleHcpChange} />
-        )
-        }
-        {
-          step === 2 && (
-            <ClubSetupForm initialGolfBag={golfBag} onGolfBagChange={handleGolfBagChange} />
-          )
-        }
-        {
-          (formError || error) && (
-            <Typography color="error" sx={{ mt: 2 }}>
-              {formError || errorMessage || 'An error occurred.'}
-            </Typography>
-          )
-        }
+          <PlayerSetupForm handleHcpChange={handleHcpChange} />
+        )}
+
+        {step === 2 && (
+          <ClubSetupForm golfBag={golfBag} onGolfBagChange={handleGolfBagChange} />
+        )}
+
+        {formError && <Typography color="error" sx={{ mt: 2 }}>{formError}</Typography>}
       </DialogContent>
 
-      <DialogActions sx={{
-        padding: '16px 0px',
-        justifyContent: step === 1 ? 'flex-end' : 'space-between'
-      }}>
-        {
-          step === 2 && (
-            <Button onClick={handleBack} disabled={isLoading}>Back</Button>
-          )
-        }
-        {
-          step === 1 && (
-            <Button onClick={handleNext} variant="contained" disabled={isLoading}>Next</Button>
-          )
-        }
-        {
-          step === 2 && (
-            <Button onClick={handleSave} variant="contained" disabled={isLoading}>
-              {isLoading ? <CircularProgress size={24} /> : 'Finish Setup'}
-            </Button>)
-        }
+      <DialogActions>
+        {step > 1 && (
+          <Button onClick={handleBack}>
+            Back
+          </Button>
+        )}
+        <Button onClick={handleNext} disabled={step === 1 ? false : true}>
+          Next
+        </Button>
+        {step === 2 && (
+          <Button onClick={handleSave} disabled={isLoading}>
+            Save
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );
