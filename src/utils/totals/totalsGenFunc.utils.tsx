@@ -4,6 +4,10 @@ export const isTheRightClub = (wanted: string, teeClub: string) => {
   let correctClub = '';
   let isTheRightClub = false;
 
+  if (!teeClub) {
+    return false;
+  }
+
   switch (teeClub) {
     case 'i1':
     case 'i2':
@@ -31,6 +35,9 @@ export const isTheRightClub = (wanted: string, teeClub: string) => {
 }
 
 export const isTheRightClubFw = (clubCategoryIdentifier: string, toGreenClub: string): boolean => {
+  if (!toGreenClub) {
+    return false;
+  }
   const upperToGreenClub = toGreenClub.toUpperCase(); // Normalize toGreenClub for case-insensitive matching
 
   switch (clubCategoryIdentifier) {
@@ -53,6 +60,10 @@ export const isTheRightClubFw = (clubCategoryIdentifier: string, toGreenClub: st
 
 export const isTheRightClubChip = (wanted: string, chipClub: string) => {
   let isTheRightClub = false;
+
+  if (!chipClub) {
+    return false;
+  }
 
   switch (wanted) {
     case 'B':

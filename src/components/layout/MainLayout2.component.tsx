@@ -4,7 +4,9 @@ import links from '@/utils/links/links.utils';
 import { deleteUserLocalStorage, readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
-import { ListItemIcon, ListItemText, styled, Typography } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { ListItemIcon, ListItemText, styled, Typography, Breadcrumbs, Link } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -18,7 +20,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { getAuth, signOut } from 'firebase/auth';
 import _ from 'lodash';
 import * as React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation, Link as RouterLink } from 'react-router-dom';
 import ThemeSwitcher from '../common/ThemeSwitcher.component';
 import Footer from './Footer.component';
 import User from './User.component';
@@ -34,6 +36,8 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   const getPlayerDetails = useAppStore((state) => state.getPlayerDetails);
   const resetUser = useAppStore((state) => state.resetUser);
   const navigate = useNavigate();
+  const location = useLocation();
+  const roundDetailsData = useAppStore((state) => state.roundDetailsData);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -58,6 +62,44 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
       console.error("Logout error:", error);
     });
   };
+
+  const getBreadcrumbs = () => {
+    const path = location.pathname;
+    
+    interface BreadcrumbItem {
+      label: string;
+      path: string;
+      icon?: React.ReactNode;
+    }
+
+    const breadcrumbs: BreadcrumbItem[] = [
+      { label: 'Home', path: '/dashboard', icon: <HomeIcon fontSize="small" /> }
+    ];
+
+    if (path === '/dashboard' || path === '/') {
+      return [];
+    }
+
+    if (path === '/clubs') {
+      breadcrumbs.push({ label: 'Clubs', path: '/clubs' });
+    } else if (path === '/all-rounds') {
+      breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
+    } else if (path === '/addNewRound') {
+      breadcrumbs.push({ label: 'Add Round', path: '/addNewRound' });
+    } else if (path === '/statistics') {
+      breadcrumbs.push({ label: 'Statistics', path: '/statistics' });
+    } else if (path === '/settings') {
+      breadcrumbs.push({ label: 'Settings', path: '/settings' });
+    } else if (path.startsWith('/round/')) {
+      breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
+      const courseName = roundDetailsData?.roundCourse || 'Round Details';
+      breadcrumbs.push({ label: courseName, path: path });
+    }
+
+    return breadcrumbs;
+  };
+
+  const breadcrumbs = getBreadcrumbs();
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -194,6 +236,33 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
         </nav>
         <Box component="main" sx={{ p: 1, width: '100%' }}>
           <Toolbar />
+          {breadcrumbs.length > 0 && (
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              sx={{ mb: 1, display: { xs: 'none', md: 'block' } }}
+            >
+              {breadcrumbs.map((crumb, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                return isLast ? (
+                  <Typography key={crumb.path} color="text.primary" fontWeight="bold">
+                    {crumb.label}
+                  </Typography>
+                ) : (
+                  <Link
+                    key={crumb.path}
+                    component={RouterLink}
+                    to={crumb.path}
+                    color="inherit"
+                    underline="hover"
+                    sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                  >
+                    {crumb.icon}
+                    {crumb.label}
+                  </Link>
+                );
+              })}
+            </Breadcrumbs>
+          )}
           <Outlet />
         </Box>
       </Box>

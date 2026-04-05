@@ -1,6 +1,6 @@
 import ShotsTableHeaderStack from '@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component';
 import { IBasicRoundData } from '@/types/roundData.types';
-import { Stack as StackMui, StackProps, StackProps as StackPropsMui, Typography, styled } from '@mui/material';
+import { Box, Stack as StackMui, StackProps, StackProps as StackPropsMui, Typography, styled } from '@mui/material';
 import * as React from 'react';
 
 type StackHolesPointsProps = StackPropsMui & {
@@ -21,6 +21,10 @@ const StackHolesPoints: React.FC<StackHolesPointsProps> = React.memo((props) => 
   const coursePar = Number(round?.roundPar || 0);
   const playerHCP = Number(round?.roundPlayingHCP || 0);
   const roundStrokes = round?.totals?.score?.totals || 0;
+  
+  const pointsIN = round?.totals?.points?.pointsIN || 0;
+  const pointsOUT = round?.totals?.points?.pointsOUT || 0;
+  const totalPoints = pointsIN + pointsOUT;
 
   // Calculations
   const overParNet = roundStrokes - coursePar;
@@ -28,22 +32,36 @@ const StackHolesPoints: React.FC<StackHolesPointsProps> = React.memo((props) => 
   const overParNetString = formatScoreString(overParNet);
   const overParGrossString = formatScoreString(overParGross);
   const underPar = roundStrokes <= coursePar + playerHCP;
+  const isGoodPoints = totalPoints >= 36;
 
   return (
     <StyledStack {...restProps}>
       <ShotsTableHeaderStack firstRow={''} secondRow={'TOT | NET | GROSS'} />
-      <Typography
-        fontWeight={'bold'}
-        sx={{
-          backgroundColor: theme => underPar ? theme.palette.success.main : theme.palette.error.main,
-          padding: '2px !important',
-          textAlign: 'center'
-        }}
-      >
-        {`${roundStrokes} | ${overParNetString} | ${overParGrossString}`}
-
-
-      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+        <Typography
+          fontWeight={'bold'}
+          sx={{
+            backgroundColor: theme => underPar ? theme.palette.success.main : theme.palette.error.main,
+            padding: '2px !important',
+            textAlign: 'center',
+            color: 'white'
+          }}
+        >
+          {`${roundStrokes} | ${overParNetString} | ${overParGrossString}`}
+        </Typography>
+        
+        <Typography
+          fontWeight={'bold'}
+          sx={{
+            backgroundColor: theme => isGoodPoints ? theme.palette.success.main : theme.palette.error.main,
+            padding: '2px !important',
+            textAlign: 'center',
+            color: 'white'
+          }}
+        >
+          {`${totalPoints} pts`}
+        </Typography>
+      </Box>
     </StyledStack>
   );
 });

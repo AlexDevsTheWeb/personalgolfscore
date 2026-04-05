@@ -33,9 +33,9 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.scorePar5 += (curr.par === 5 ? curr.strokes : 0);
 
     acc.teeDriver += (curr.teeClub === 'DRIVER' ? 1 : 0);
-    acc.teeFW += (curr.teeClub.includes('w') ? 1 : 0);
-    acc.teeHY += (curr.teeClub.includes('y') ? 1 : 0);
-    acc.teeIron += (curr.teeClub.includes('i') ? 1 : 0);
+    acc.teeFW += (curr.teeClub && curr.teeClub.includes('w') ? 1 : 0);
+    acc.teeHY += (curr.teeClub && curr.teeClub.includes('y') ? 1 : 0);
+    acc.teeIron += (curr.teeClub && curr.teeClub.includes('i') ? 1 : 0);
     acc.noGreen += (curr.toGreen === 'NO' ? 1 : 0);
 
     acc.fairwayCenter += (curr.fairway === 5 ? 1 : 0);
@@ -44,19 +44,19 @@ export const totalsCalculator = (shots: IShots[]) => {
     acc.gir += (!!curr.gir ? 1 : 0);
     acc.girBogey += (!!curr.girBogey ? 1 : 0);
 
-    acc.upDownMade += (!!curr.upDown.made ? 1 : 0);
-    acc.upDownAttempts += (!!curr.upDown.attempts ? 1 : 0);
+    acc.upDownMade += (curr.upDown?.made ? 1 : 0);
+    acc.upDownAttempts += (curr.upDown?.attempts ? 1 : 0);
     acc.putts += curr.putts;
-    acc.scrambleMade += (!!curr.scramble.made ? 1 : 0);
-    acc.scrambleAttempts += (!!curr.scramble.attempts ? 1 : 0);
+    acc.scrambleMade += (curr.scramble?.made ? 1 : 0);
+    acc.scrambleAttempts += (curr.scramble?.attempts ? 1 : 0);
     acc.puttsGIR += (!!curr.gir ? 1 : 0);
     acc.puttsThree += (curr.putts === 3 ? 1 : 0);
-    acc.putts1 += (curr.puttsLength.length === 1 ? 1 : 0);
-    acc.putts2 += (curr.puttsLength.length === 2 ? 1 : 0);
-    acc.putts3More += (curr.puttsLength.length > 2 ? 1 : 0);
-    acc.puttsDistGir += (!!curr.gir ? Number(curr.puttsLength[0]) : 0);
+    acc.putts1 += (curr.puttsLength?.length === 1 ? 1 : 0);
+    acc.putts2 += (curr.puttsLength?.length === 2 ? 1 : 0);
+    acc.putts3More += ((curr.puttsLength?.length || 0) > 2 ? 1 : 0);
+    acc.puttsDistGir += (!!curr.gir ? Number(curr.puttsLength?.[0] || 0) : 0);
     acc.sand += (curr.chipClub === 'Bunker' ? 1 : 0);
-    acc.sandSaved += ((curr.chipClub === 'Bunker' && curr.upDown.made === 1 && curr.strokes === curr.par) ? 1 : 0);
+    acc.sandSaved += ((curr.chipClub === 'Bunker' && curr.upDown?.made === 1 && curr.strokes === curr.par) ? 1 : 0);
     acc.water += curr.water;
     acc.out += curr.out;
 
