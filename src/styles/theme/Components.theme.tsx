@@ -1,10 +1,9 @@
 import type { } from '@mui/x-date-pickers/themeAugmentation';
 
 import { Components, Theme } from '@mui/material';
-import { GridProps } from '@mui/material/Grid'; // Import GridProps
+import { GridProps } from '@mui/material/Grid';
 import { InputLabelProps } from '@mui/material/InputLabel';
 import { fonts } from './Typography.theme';
-
 import { breakpoints } from './Breakpoints.theme';
 
 const components: Components<Omit<Theme, 'components'>> = {
@@ -28,6 +27,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           webkitTextDecoration: 'none',
           textDecoration: 'none',
           backgroundColor: 'transparent',
+          borderRadius: '4px',
           '@media(hover: hover)': {
             '&:hover': {
               backgroundColor: 'transparent',
@@ -46,7 +46,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           padding: 5,
           margin: 5,
           backgroundColor: 'transparent',
-
+          borderRadius: '4px',
           '@media(hover: hover)': {
             '&:hover': {
               backgroundColor: 'transparent',
@@ -66,6 +66,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           textDecoration: 'underline',
           textUnderlineOffset: '5px',
           backgroundColor: 'transparent',
+          borderRadius: '4px',
           '@media(hover: hover)': {
             '&:hover': {
               backgroundColor: 'transparent',
@@ -93,6 +94,8 @@ const components: Components<Omit<Theme, 'components'>> = {
           textTransform: 'none',
           gap: '12px',
           height: '56px',
+          borderRadius: '4px',
+          boxShadow: 'none',
           '@media(hover: hover)': {
             '&:hover': {
               background: theme.palette.background.paper,
@@ -109,19 +112,18 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
       {
         props: { variant: 'outlined' },
-        // Make the entire style value a function
         style: ({ theme }: { theme: Theme }) => ({
           backgroundColor: 'transparent',
           justifyContent: 'flex-start',
           padding: '13px 32px',
           height: '40px',
           marginTop: '10px',
-          borderColor: theme.palette.mode === 'dark' ? theme.palette.grey2.main : theme.palette.primary.main,
-          color: theme.palette.mode === 'dark' ? theme.palette.grey1.main : theme.palette.primary.main,
+          borderRadius: '4px',
+          borderColor: theme.palette.mode === 'dark' ? theme.palette.grey3.main : theme.palette.grey4.main,
+          color: theme.palette.primary.main,
           '@media(hover: hover)': {
             '&:hover': {
-              backgroundColor: theme.palette.primary.main,
-              color: theme.palette.mode === 'dark' ? theme.palette.black.main : theme.palette.white.main,
+              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.grey3.main,
               borderColor: theme.palette.primary.main,
             },
           },
@@ -137,21 +139,21 @@ const components: Components<Omit<Theme, 'components'>> = {
       },
       {
         props: { variant: 'contained' },
-        // Make the style a function to access the theme
         style: ({ theme }: { theme: Theme }) => ({
-
           justifyContent: 'center',
           padding: '10px 18px',
           lineHeight: 0,
           margin: '0px',
           height: '40px',
-          backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main,
-          color: theme.palette.getContrastText(theme.palette.mode === 'dark' ? theme.palette.grey4.main : theme.palette.primary.main),
-          boxShadow: 'none',
+          borderRadius: '4px',
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+          boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
           marginLeft: '0px !important',
           '@media(hover: hover)': {
             '&:hover': {
-              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey3.main : theme.palette.primary2.main,
+              backgroundColor: theme.palette.primary.dark,
+              boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
             },
           },
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
@@ -163,7 +165,8 @@ const components: Components<Omit<Theme, 'components'>> = {
       {
         props: { variant: 'roundDetails' },
         style: {
-          color: '#000'
+          color: '#000',
+          borderRadius: '4px',
         }
       },
       {
@@ -175,6 +178,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           textDecoration: 'underline',
           textUnderlineOffset: 5,
           background: 'transparent',
+          borderRadius: '4px',
           '@media(hover: hover)': {
             '&:hover': {
               backgroundColor: 'transparent',
@@ -199,12 +203,11 @@ const components: Components<Omit<Theme, 'components'>> = {
         justifyContent: 'center',
         alignItems: 'center',
         gap: '12px',
-        fontSize: '13px',
-        letterSpacing: 0.2,
+        fontSize: '14px',
         fontFamily: fonts.bold,
-        fontWeight: '700',
-        textTransform: 'uppercase',
-        padding: '13px 32px',
+        fontWeight: '500',
+        padding: '10px 20px',
+        borderRadius: '4px',
         '@media(hover: hover)': ({ theme }: { theme: Theme }) => ({
           '&:hover': {
             backgroundColor: theme.palette.primary.main,
@@ -220,7 +223,7 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiLink: {
     styleOverrides: {
       root: {
-        fontWeight: 700,
+        fontWeight: '500',
         fontSize: '14px',
         lineHeight: '17px',
         fontFamily: fonts.bold,
@@ -232,29 +235,27 @@ const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: ({ ownerState, theme }: {
         ownerState: InputLabelProps & {
-          // Add other specific state properties if needed, e.g., focused, error
-          shrink?: boolean; // shrink is commonly used
+          shrink?: boolean;
         }; theme: Theme
       }) => ({
-        letterSpacing: '0.2px',
-        ...(ownerState.shrink // Use theme object for colors here
+        letterSpacing: '0',
+        ...(ownerState.shrink
           ? {
             fontWeight: '400',
-            color: theme.palette.grey2.main, // Use theme from outer scope
+            color: theme.palette.grey2.main,
             '&.Mui-focused': {
               color: `${ownerState.error ? theme.palette.error.main : theme.palette.primary.main}`,
             },
             borderColor: theme.palette.primary.main,
-          } // End of shrink styles object
+          }
           : {
-            // Styles when not shrunk
             fontFamily: fonts.medium,
-            fontWeight: '600',
-            fontSize: '13px',
-            color: theme.palette.primary.main,
+            fontWeight: '500',
+            fontSize: '14px',
+            color: theme.palette.text.secondary,
             transform: 'translate(12px, 19px)',
-          }), // End of ternary operator spread
-      }), // End of root style object
+          }),
+      }),
     },
   },
   MuiFormHelperText: {
@@ -262,17 +263,17 @@ const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }: { theme: Theme }) => ({
         fontStyle: 'normal',
         fontWeight: '400',
-        fontSize: '11px',
-        letterSpacing: '0.2px',
-        color: theme.palette.primary.main,
+        fontSize: '12px',
+        letterSpacing: '0',
+        color: theme.palette.text.secondary,
       }),
     },
   },
   MuiRadio: {
     styleOverrides: {
       root: {
-        padding: '2px',
-        marginRight: '16px',
+        padding: '4px',
+        marginRight: '12px',
       },
     },
   },
@@ -282,16 +283,15 @@ const components: Components<Omit<Theme, 'components'>> = {
         top: 5,
       },
       paper: ({ theme }: { theme: Theme }) => ({
-        boxShadow: 'none',
-        border: `1px solid ${theme.palette.primary.main}`,
-        borderColor: theme.palette.primary.main, // Also use theme here
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        border: `1px solid ${theme.palette.grey3.main}`,
+        borderRadius: '4px',
         paddingTop: '8px',
         paddingBottom: '8px',
         display: 'flex',
         flexDirection: 'column',
         rowGap: '5px',
       }),
-
     },
   },
   MuiMenu: {
@@ -299,24 +299,20 @@ const components: Components<Omit<Theme, 'components'>> = {
       root: {
         paddingTop: 0,
         paddingBottom: 0,
-        '@media(hover: hover)': {
-          '&:hover': {
-            background: '',
-          },
-        },
       },
     },
   },
   MuiMenuItem: {
     styleOverrides: {
       root: {
-        background: 'inherit',
+        borderRadius: '4px',
+        margin: '2px 4px',
         '@media(hover: hover)': {
           '&:hover': {
-            background: 'inherit',
+            backgroundColor: 'transparent',
           },
           '&.Mui-selected, &.Mui-selected:hover, &.Mui-selected:active': {
-            backgroundColor: 'inherit',
+            backgroundColor: 'transparent',
           },
         },
       },
@@ -326,14 +322,17 @@ const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: ({ theme }: { theme: Theme }) => ({
         boxShadow: 'none',
-        border: `1px solid ${theme.palette.divider}`,
+        border: `1px solid ${theme.palette.grey3.main}`,
+        borderRadius: '4px',
       }),
     }
   },
   MuiAccordionSummary: {
     styleOverrides: {
-      // Use theme variable for background // Or another suitable grey
-      root: ({ theme }) => ({ backgroundColor: theme.palette.background.paper }) // Or another suitable grey
+      root: ({ theme }) => ({ 
+        backgroundColor: theme.palette.background.paper,
+        borderRadius: '4px',
+      })
     }
   },
   MuiList: {
@@ -342,20 +341,20 @@ const components: Components<Omit<Theme, 'components'>> = {
         paddingTop: 0,
         paddingBottom: 0,
         '&::-webkit-scrollbar': {
-          height: '8px',
-          width: '8px',
-          borderRadius: '6px',
+          height: '6px',
+          width: '6px',
+          borderRadius: '4px',
           border: 'none',
         },
         '&::-webkit-scrollbar-track': {
-          backgroundColor: (theme: Theme) => theme.palette.background.default, // Use theme background
-          borderRadius: '6px',
+          backgroundColor: (theme: Theme) => theme.palette.background.default,
+          borderRadius: '4px',
         },
         '&::-webkit-scrollbar-thumb': {
-          borderRadius: '6px',
-          height: '8px',
-          width: '8px',
-          backgroundColor: (theme: Theme) => theme.palette.primary.main, // Use theme primary
+          borderRadius: '4px',
+          height: '6px',
+          width: '6px',
+          backgroundColor: (theme: Theme) => theme.palette.grey3.main,
         },
       },
     },
@@ -378,8 +377,9 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiListItemButton: {
     styleOverrides: {
       root: {
+        borderRadius: '4px',
         '@media(hover: hover)': {
-          ':hover': {
+          '&:hover': {
             background: 'transparent',
           },
         },
@@ -397,8 +397,9 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiSelect: {
     styleOverrides: {
       select: {
+        borderRadius: '4px',
         '@media(hover: hover)': ({ theme }: { theme: Theme }) => ({
-          '& :hover': {
+          '&:hover': {
             background: theme.palette.background.paper,
           },
         }),
@@ -409,20 +410,20 @@ const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: ({ theme }: { theme: Theme }) => ({
         '&::-webkit-scrollbar': {
-          height: '8px',
-          width: '8px',
-          borderRadius: '6px',
+          height: '6px',
+          width: '6px',
+          borderRadius: '4px',
           border: 'none',
         },
         '&::-webkit-scrollbar-track': {
-          backgroundColor: theme.palette.background.default, // Use theme background
-          borderRadius: '6px',
+          backgroundColor: theme.palette.background.default,
+          borderRadius: '4px',
         },
         '&::-webkit-scrollbar-thumb': {
-          borderRadius: '6px',
-          height: '8px',
-          width: '8px',
-          backgroundColor: theme.palette.primary.main, // Use theme primary
+          borderRadius: '4px',
+          height: '6px',
+          width: '6px',
+          backgroundColor: theme.palette.grey3.main,
         },
       }),
     },
@@ -432,11 +433,13 @@ const components: Components<Omit<Theme, 'components'>> = {
         style: ({ theme }: { theme: Theme }) => ({
           display: 'flex',
           alignItems: 'center',
-          border: `1px solid ${theme.palette.primary.main}`,
+          border: `1px solid ${theme.palette.grey3.main}`,
+          borderRadius: '4px',
           padding: '10px 12px',
           background: 'inherit',
           height: '56px',
           marginTop: '41px',
+          boxShadow: 'none',
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
             height: '48px',
             marginTop: '30px',
@@ -468,7 +471,8 @@ const components: Components<Omit<Theme, 'components'>> = {
           alignContent: 'flex-start',
           padding: 0,
           backgroundColor: 'transparent',
-          border: 'none'
+          border: 'none',
+          boxShadow: 'none',
         }
       },
       {
@@ -481,6 +485,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           alignContent: 'flex-start',
           backgroundColor: 'transparent',
           border: 'none',
+          boxShadow: 'none',
           marginTop: 10,
           marginBottom: 10,
         }
@@ -488,7 +493,7 @@ const components: Components<Omit<Theme, 'components'>> = {
       {
         props: { variant: 'confirm' },
         style: {
-          borderRadius: '0px',
+          borderRadius: '4px',
           minWidth: 668,
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
             minWidth: 400,
@@ -498,7 +503,7 @@ const components: Components<Omit<Theme, 'components'>> = {
       {
         props: { variant: 'dialog' },
         style: {
-          borderRadius: '0px',
+          borderRadius: '4px',
           minWidth: 668,
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
             minWidth: 520,
@@ -508,7 +513,7 @@ const components: Components<Omit<Theme, 'components'>> = {
       {
         props: { variant: 'uploadFileDialog' },
         style: {
-          borderRadius: '0px',
+          borderRadius: '4px',
           minWidth: 668,
           [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
             width: 605,
@@ -538,8 +543,9 @@ const components: Components<Omit<Theme, 'components'>> = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: theme.palette.grey6.main,
+        backgroundColor: theme.palette.background.paper,
         height: 88,
+        borderRadius: '4px 4px 0 0',
         '&.MuiDialogContent': {
           paddingTop: 32,
         },
@@ -561,6 +567,7 @@ const components: Components<Omit<Theme, 'components'>> = {
       root: {
         margin: 32,
         padding: 0,
+        borderRadius: '4px',
         [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
           margin: 25,
         },
@@ -577,6 +584,7 @@ const components: Components<Omit<Theme, 'components'>> = {
         margin: '0px 32px 32px 32px',
         padding: 0,
         gap: 2,
+        borderRadius: '0 0 4px 4px',
         [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
           margin: '0px 25px 25px 25px',
         },
@@ -587,16 +595,17 @@ const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       input: ({ theme }: { theme: Theme }) => ({
         '&::placeholder': {
-          color: theme.palette.mode === 'dark' ? theme.palette.grey2.main : theme.palette.grey1.main,
-          opacity: 0.8,
+          color: theme.palette.text.secondary,
+          opacity: 0.7,
         },
       }),
       root: ({ theme }: { theme: Theme }) => ({
+        borderRadius: '4px',
         '&.Mui-focused > .MuiOutlinedInput-notchedOutline': {
           borderWidth: 1,
         },
         '.MuiOutlinedInput-notchedOutline': {
-          border: `1px solid ${theme.palette.mode === 'dark' ? theme.palette.grey3.main : theme.palette.grey4.main}`,
+          border: `1px solid ${theme.palette.grey3.main}`,
         },
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
           borderColor: theme.palette.primary.main,
@@ -607,11 +616,11 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiIconButton: {
     styleOverrides: {
       root: {
-        padding: 0,
+        padding: 4,
         marginRight: 0,
+        borderRadius: '4px',
       },
     },
-
     defaultProps: {
       disableFocusRipple: true,
     },
@@ -620,49 +629,42 @@ const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       paper: {
         borderRight: 0,
-        borderTopRightRadius: 10,
-        borderBottomRightRadius: 10,
+        borderTopRightRadius: '4px',
+        borderBottomRightRadius: '4px',
         position: 'static',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
       },
     },
   },
   MuiBreadcrumbs: {
     styleOverrides: {
       root: {
-        marginTop: 18,
-        marginBottom: 20,
+        marginTop: 8,
+        marginBottom: 8,
       },
       separator: {
         display: 'flex',
         alignItems: 'center',
-        marginLeft: 4.5,
-        marginRight: 4.5,
-        width: 10,
-        height: 10,
-        [`@media (min-width:${breakpoints.values.lg - 1}px)`]: {
-          marginLeft: 4.5,
-          marginRight: 4.5,
-          width: 24,
-          height: 24,
-        },
+        marginLeft: 4,
+        marginRight: 4,
+        color: 'inherit',
       },
     },
   },
 
-
-  //#region Table
   MuiTableContainer: {
     styleOverrides: {
       root: {
         boxShadow: 'none',
+        borderRadius: '4px',
+        border: `1px solid`,
+        borderColor: 'grey.300',
       },
     },
   },
   MuiTableBody: {
     styleOverrides: {
-      root: {
-        //boxShadow: '50px 10px 8px 0px rgba(0, 0, 0, 1)',
-      },
+      root: {},
     },
   },
   MuiTableRow: {
@@ -673,27 +675,29 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiTableHead: {
     styleOverrides: {
       root: ({ theme }: { theme: Theme }) => ({
-        backgroundColor: theme.palette.grey6.main,
-        color: theme.palette.primary1.main,
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
       }),
     },
   },
 
-  //  root: ({ theme }: { theme: Theme }) => ({
   MuiTableCell: {
     styleOverrides: {
       root: {
-        padding: 10,
-
+        padding: 8,
         fontSize: 13,
         border: 0,
+        borderBottom: '1px solid',
+        borderColor: 'grey.200',
+        borderRadius: '4px',
 
         [`&.MuiTableCell-head`]: {
-          textTransform: 'uppercase',
-          paddingTop: 0,
-          paddingRight: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
+          textTransform: 'none',
+          fontWeight: 600,
+          paddingTop: 6,
+          paddingRight: 8,
+          paddingBottom: 6,
+          paddingLeft: 8,
         },
       },
     },
@@ -702,40 +706,40 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'red' },
         style: ({ theme }: { theme: Theme }) => ({
           backgroundColor: theme.palette.redDim.main,
-          color: 'black',
+          color: theme.palette.text.primary,
           fontWeight: 500,
-          fontSize: 16
+          fontSize: 14,
+          borderRadius: '4px',
         }),
       },
       {
         props: { variant: 'yellow' },
         style: ({ theme }: { theme: Theme }) => ({
           backgroundColor: theme.palette.yellowDim.main,
-          color: 'black',
+          color: theme.palette.text.primary,
           fontWeight: 500,
-          fontSize: 16
+          fontSize: 14,
+          borderRadius: '4px',
         }),
       },
       {
-        props: {
-          variant: 'green'
-        },
+        props: { variant: 'green' },
         style: ({ theme }: { theme: Theme }) => ({
           backgroundColor: theme.palette.greenDim.main,
-          color: 'black',
+          color: theme.palette.text.primary,
           fontWeight: 500,
-          fontSize: 16
+          fontSize: 14,
+          borderRadius: '4px',
         }),
       },
       {
-        props: {
-          variant: 'putt'
-        },
+        props: { variant: 'putt' },
         style: ({ theme }: { theme: Theme }) => ({
           backgroundColor: theme.palette.whiteDim.main,
-          color: 'black',
+          color: theme.palette.text.primary,
           fontWeight: 500,
-          fontSize: 16
+          fontSize: 14,
+          borderRadius: '4px',
         })
       },
     ]
@@ -757,7 +761,7 @@ const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }: { theme: Theme }) => ({
         marginTop: 10,
         marginBottom: 10,
-        backgroundColor: theme.palette.grey5.main,
+        backgroundColor: theme.palette.grey3.main,
       }),
     },
   },
@@ -765,12 +769,10 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiGrid: {
     styleOverrides: {
       root: ({ ownerState, theme }: { ownerState: GridProps; theme: Theme }) => ({
-        paddingTop: 0, // Base style for all MuiGrid roots
+        paddingTop: 0,
         ...(ownerState.container && {
           marginTop: 0,
-          // Add any other styles specific to container Grids here
         }),
-
       }),
     },
   },
@@ -780,15 +782,24 @@ const components: Components<Omit<Theme, 'components'>> = {
       tooltip: ({ theme }: { theme: Theme }) => ({
         display: 'flex',
         borderRadius: '4px',
-        background: theme.palette.grey5.main,
-        padding: '8px',
-        color: theme.palette.primary.main,
-        textEdge: 'cap',
-        leadingTrim: 'both',
-        fontSize: '13px',
-        fontWeight: 600,
-        lineHeight: '15px',
-        letterSpacing: '0.2px',
+        backgroundColor: theme.palette.grey5.main,
+        padding: '6px 10px',
+        color: theme.palette.text.primary,
+        fontSize: '12px',
+        fontWeight: 500,
+        lineHeight: '14px',
+        letterSpacing: '0',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+      }),
+    },
+  },
+
+  MuiAppBar: {
+    styleOverrides: {
+      root: ({ theme }: { theme: Theme }) => ({
+        backgroundColor: theme.palette.grey5.main,
+        color: theme.palette.text.primary,
+        boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
       }),
     },
   },
