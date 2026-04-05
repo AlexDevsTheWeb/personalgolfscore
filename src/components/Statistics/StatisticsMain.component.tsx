@@ -1,14 +1,19 @@
-import { selectDisplayableOverallTotals } from '@/features/player/player.selectors';
-import { RootState } from '@/store/store';
 import { Stack, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
 import Spinner from '../common/spinner/Spinner.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
+import { useAppStore } from '@/store/zustand';
+import { useMemo } from 'react';
+import { calculateDisplayableAverages } from '@/utils/calculator/AverageCalculator.utils';
 
 const StatisticsMain = () => {
-  const { isLoading: isLoadingRounds } = useSelector((store: RootState) => store.rounds);
-  const displayableAverages = useSelector(selectDisplayableOverallTotals);
-  const { isLoading: isLoadingPlayer, player } = useSelector((store: RootState) => store.player);
+  const isLoadingRounds = useAppStore((state) => state.isLoadingRounds);
+  const { player } = useAppStore();
+  const isLoadingPlayer = useAppStore((state) => state.isLoadingPlayer);
+
+  const displayableAverages = useMemo(() => {
+    const rawTotalsAvg = player?.totalsRoundsAVG;
+    return calculateDisplayableAverages(rawTotalsAvg);
+  }, [player?.totalsRoundsAVG]);
 
   if (isLoadingRounds || isLoadingPlayer) {
     return <Spinner />;
@@ -22,9 +27,6 @@ const StatisticsMain = () => {
 
   return (
     <Stack sx={{ gap: 2 }}>
-      {/* <Typography variant="headline6" component="h2" gutterBottom sx={{ mt: 3, textAlign: 'center' }}>
-        All Statistics
-      </Typography> */}
       <HolebyHoleTotals roundTotals={displayableAverages} dashboard={true} />
     </Stack>
   );

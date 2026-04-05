@@ -1,15 +1,14 @@
 import { CHIPCONDITION } from '@/enum/shots.enum';
-import { RootState } from '@/store/store';
 import { ISelectProps } from '@/types/props.types';
 import { newRoundDisabledSelect } from '@/utils/round/round.utils';
 import { FormControl, InputLabel, MenuItem, SelectChangeEvent, Select as SelectMui } from '@mui/material';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppStore } from '@/store/zustand';
 
 const Select = (props: ISelectProps) => {
 
-  const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
+  const holeTmp = useAppStore((state) => state.newRoundHoleTmp);
   const { name, list, onChange, value, label } = props;
   const [disabled, setDisabled] = useState<boolean>(false);
 
@@ -18,8 +17,8 @@ const Select = (props: ISelectProps) => {
   }
 
   useEffect(() => {
-    setDisabled(newRoundDisabledSelect(name, tmpHole));
-  }, [name, tmpHole]);
+    setDisabled(newRoundDisabledSelect(name, holeTmp));
+  }, [name, holeTmp]);
 
   return (
     <FormControl variant='filled' sx={{ width: '100%' }}>

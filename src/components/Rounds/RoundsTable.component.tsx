@@ -1,4 +1,3 @@
-import { RootState } from '@/store/store';
 import BoxRoundsTable from '@/styles/box/BoxRoundsTable.styles';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -6,14 +5,14 @@ import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import dayjs from 'dayjs';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TableCell, TableRow } from '../../styles';
 import Header from '../common/header/Header.component';
+import { useAppStore } from '@/store/zustand';
 
 const RoundsTable = () => {
   const navigate = useNavigate();
-  const { rounds } = useSelector((store: RootState) => store.rounds);
+  const roundsList = useAppStore((state) => state.roundsList);
 
   const handleClick = (id: string) => {
     navigate(`/round/${id}`);
@@ -36,8 +35,8 @@ const RoundsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rounds.map((round) => {
-              const totalScore = Number(round.totals.score.totals);
+            {roundsList.map((round) => {
+              const totalScore = Number(round.totals?.score?.totals || 0);
               const par = Number(round.roundPar);
               const roundPlayingHCP = Number(round.roundPlayingHCP);
 
@@ -57,18 +56,18 @@ const RoundsTable = () => {
                   <TableCell
                     align='left'
                     sx={{
-                      maxWidth: '150px', // Adjust as needed, or use a percentage
+                      maxWidth: '150px',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }}
-                    title={round.roundCourse} // Show full name on hover
+                    title={round.roundCourse}
                   >
                     {round.roundCourse}
                   </TableCell>
                   <TableCell align='center' space='10px'>{round.roundPar}</TableCell>
                   <TableCell align='center' space='10px'>{round.roundPlayingHCP}</TableCell>
-                  <TableCell align='center' sx={{ fontWeight: 'bold' }}>{round.totals.points.totals}</TableCell>
+                  <TableCell align='center' sx={{ fontWeight: 'bold' }}>{round.totals?.points?.totals}</TableCell>
                   <TableCell align='center' sx={{ fontWeight: 'bold' }}>{totalScore}</TableCell>
                   <TableCell align='center'>
                     <BoxRoundsTable props={props} />

@@ -1,14 +1,13 @@
-import { RootState } from "@/store/store";
 import { Paper, Typography as TypographyMui, TypographyProps as TypographyPropsMui, styled } from "@mui/material";
 import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useAppStore } from "@/store/zustand";
 
 interface TypographyProps extends TypographyPropsMui { }
 
 const StyledTypography = styled(TypographyMui)({})
 
 const ClubsHeaderTypography: React.FC<TypographyProps> = props => {
-  const { player } = useSelector((store: RootState) => store.player);
+  const player = useAppStore((state) => state.player);
 
   const { totalClubs, selectedClubs } = useMemo(() => {
     if (!player?.golfBag) {

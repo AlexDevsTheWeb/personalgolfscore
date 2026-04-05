@@ -1,19 +1,18 @@
 import Header from '@/components/common/header/Header.component';
-import { RootState } from '@/store/store';
 import Paper from '@/styles/paper/ChartPaper.styles';
 import { IDistance } from '@/types/roundData.types';
 import { getClubsNames } from '@/utils/round/round.utils';
 import { Box, Typography, useTheme } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppStore } from '@/store/zustand';
 
 interface IDistancesCharts {
   distances?: IDistance[] | undefined
 }
 
 const DistancesTotals: React.FC<IDistancesCharts> = ({ distances }) => {
-  const { player } = useSelector((store: RootState) => store.player);
+  const player = useAppStore((state) => state.player);
   const { golfBag, totalDistancesAVG } = player || {};
   const theme = useTheme();
   const internalDistanes = distances || totalDistancesAVG || [];
@@ -66,8 +65,6 @@ const DistancesTotals: React.FC<IDistancesCharts> = ({ distances }) => {
           distance: distanceMap.get(clubName) || 0,
         })
       })
-    // .filter(item => item.distance > 0) // Optionally filter out clubs with no recorded distance
-    // .sort((a, b) => b.distance - a.distance); // Sort by distance descending
   }, [selectedClubNames, distanceMap]);
 
 

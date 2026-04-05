@@ -1,6 +1,3 @@
-import { setIsLoading } from '@/features/app/controls.slice';
-import { getPlayerDetails } from '@/features/player/player.slice';
-import { resetUser } from '@/features/user/user.slice';
 import { TLinkSidebar } from '@/types/general.types';
 import { IBoxProps, IMainLayoutProps } from '@/types/props.types';
 import links from '@/utils/links/links.utils';
@@ -21,19 +18,21 @@ import Toolbar from '@mui/material/Toolbar';
 import { getAuth, signOut } from 'firebase/auth';
 import _ from 'lodash';
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from '../common/ThemeSwitcher.component';
 import Footer from './Footer.component';
 import User from './User.component';
+import { useAppStore } from '@/store/zustand';
 
 export default function DrawerAppBar(props: IMainLayoutProps) {
   const { window } = props;
-  const dispatch = useDispatch<any>();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const uid = readUserLocalStorage();
   const auth = getAuth();
-  const { player } = useSelector((store: any) => store.player);
+  const player = useAppStore((state) => state.player);
+  const setIsLoading = useAppStore((state) => state.setIsLoadingControls);
+  const getPlayerDetails = useAppStore((state) => state.getPlayerDetails);
+  const resetUser = useAppStore((state) => state.resetUser);
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
@@ -43,9 +42,9 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   React.useEffect(() => {
     if (uid && (_.isUndefined(player) || _.isEmpty(player))) {
       if (auth) {
-        dispatch(setIsLoading(true));
-        dispatch(getPlayerDetails(uid));
-        dispatch(setIsLoading(false));
+        setIsLoading(true);
+        getPlayerDetails(uid);
+        setIsLoading(false);
       }
     }
   }, []);
@@ -53,7 +52,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   const handleLogout = () => {
     signOut(auth).then(() => {
       deleteUserLocalStorage();
-      dispatch(resetUser());
+      resetUser();
       navigate('/login');
     }).catch((error) => {
       console.error("Logout error:", error);

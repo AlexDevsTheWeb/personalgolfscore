@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-
-import { AppDispatch, RootState } from "@/store/store";
 import ClubsHeaderTypography from "@/styles/typography/ClubsHeaderTypography.styles";
 import { IGolfBagData } from '@/types/player.types';
 import { BoxPlayer } from "../../styles";
 
-import { updatePlayerGolfbag } from '@/features/player/player.slice';
 import { IClubsMainProps } from '@/types/clubs.types';
 import { Box, Button, Typography } from '@mui/material';
+import { useAppStore } from '@/store/zustand';
 
 
 const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { player, isLoading } = useSelector((store: RootState) => store.player);
+  const { player, isLoadingPlayer: isLoading } = useAppStore();
+  const updatePlayerGolfbag = useAppStore((state) => state.updatePlayerGolfbag);
   const [isSaving, setIsSaving] = useState(false);
 
   const hasExistingBag = golfBag && golfBag.length > 0;
@@ -30,10 +27,10 @@ const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
     }
     setIsSaving(true);
     try {
-      await dispatch(updatePlayerGolfbag({
+      await updatePlayerGolfbag({
         uid: player.uid,
         golfBagData: dataToShow as IGolfBagData
-      })).unwrap();
+      });
     } catch (error) {
       console.error("Failed to save initial golf bag:", error);
     } finally {

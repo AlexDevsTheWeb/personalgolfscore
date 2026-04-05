@@ -24,26 +24,52 @@ import {
   REGISTER,
   REHYDRATE
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
-
+const webStorage = typeof window !== 'undefined' ?
+  require('redux-persist/lib/storage').default :
+  null;
 // const ONE_DAY_IN_MS = 6 * 1000;
 
-const clearStorageIfOld = async () => {
+// const clearStorageIfOld = async () => {
+//   try {
+//     const lastVisit = await storage.getItem('lastVisit');
+//     if (lastVisit) {
+//       const lastVisitTime = new Date(JSON.parse(lastVisit)).getTime();
+//       if (Date.now() - lastVisitTime > ONE_DAY_IN_MS) {
+//         // Clear only the persisted state, not all of localStorage
+//         await storage.removeItem('persist:root');
+//       }
+//     }
+//     else {
+//       await storage.setItem('lastVisit', JSON.stringify(new Date()));
+//     }
+
+//   } catch (error) {
+//     console.error("Error handling persisted state:", error);
+//   }
+// };
+const clearStorageIfOld = () => {
+  if (typeof window === 'undefined') return;
+
   try {
-    const lastVisit = await storage.getItem('lastVisit');
+    const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+    const lastVisit = localStorage.getItem('lastVisit');
+    const now = new Date().toISOString();
+
     if (lastVisit) {
       const lastVisitTime = new Date(JSON.parse(lastVisit)).getTime();
-      if (Date.now() - lastVisitTime > ONE_DAY_IN_MS) {
-        // Clear only the persisted state, not all of localStorage
-        await storage.removeItem('persist:root');
-      }
-    }
-    else {
-      await storage.setItem('lastVisit', JSON.stringify(new Date()));
-    }
 
+      if (Date.now() - lastVisitTime > ONE_DAY_IN_MS) {
+        // Puliamo la persistenza
+        localStorage.removeItem('persist:root');
+        // IMPORTANTISSIMO: aggiorniamo lastVisit dopo il wipe
+        localStorage.setItem('lastVisit', JSON.stringify(now));
+        console.log("Storage scaduto: persistenza resettata.");
+      }
+    } else {
+      localStorage.setItem('lastVisit', JSON.stringify(now));
+    }
   } catch (error) {
     console.error("Error handling persisted state:", error);
   }
@@ -53,7 +79,12 @@ clearStorageIfOld();
 
 const persistConfig = {
   key: 'root',
-  storage,
+  // Creiamo un wrapper esplicito. Se 'storage' fallisce, usiamo localStorage.
+  storage: {
+    getItem: (key: string) => Promise.resolve(localStorage.getItem(key)),
+    setItem: (key: string, value: string) => Promise.resolve(localStorage.setItem(key, value)),
+    removeItem: (key: string) => Promise.resolve(localStorage.removeItem(key)),
+  },
   whitelist: ['newRound', 'singleRound']
 };
 

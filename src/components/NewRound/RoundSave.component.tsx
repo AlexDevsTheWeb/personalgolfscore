@@ -1,15 +1,12 @@
-import { saveNewRound } from "@/features/newRound/roundSaver.slice";
-import { AppDispatch, RootState } from "@/store/store";
 import { Box, Button } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppStore } from "@/store/zustand";
 
 const RoundSave = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isLoading } = useSelector((store: RootState) => store.roundSaver);
+  const isLoading = useAppStore((state) => state.newRoundSaver.isLoading);
+  const saveNewRound = useAppStore((state) => state.saveNewRound);
 
   const handleClick = () => {
-    // Dispatch the action to save the entire round data
-    dispatch(saveNewRound(null));
+    saveNewRound();
   };
 
   return (

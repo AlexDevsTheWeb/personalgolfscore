@@ -1,13 +1,12 @@
 import Spinner from '@/components/common/spinner/Spinner.component';
-import { RootState } from '@/store/store';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import NewRoundMain from '../components/NewRound/AddNewRound.component';
+import { useAppStore } from '@/store/zustand';
 
 const AddNewRound = () => {
   const navigate = useNavigate();
-  const { player, isLoading } = useSelector((state: RootState) => state.player);
+  const { player, isLoadingPlayer: isLoading } = useAppStore();
 
   useEffect(() => {
     if (player?.uid && !player.isSetupComplete) {

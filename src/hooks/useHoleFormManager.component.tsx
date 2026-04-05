@@ -1,12 +1,9 @@
-import { resetNewRoundHoleTmp, setTmpHoleData } from '@/features/hole/holeTmp.slice';
-import { addApproachShotDistance, addTeeShotDistance } from '@/features/newRound/newRoundDistances.slice';
-import { setNewHole } from '@/features/newRound/newRoundHoles.slice';
 import { IAddSingleHoleProps } from '@/types/clubs.types';
 import { FairwayOption } from '@/types/props.types'; // Ensure FairwayOption is exported
 import { IIntermediateShot, IShots } from '@/types/roundData.types';
 import { fairwayValues as defaultFairwayValues } from '@/utils/constant.utils';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppStore } from '@/store/zustand';
 
 
 interface UseHoleFormManagerProps {
@@ -28,13 +25,17 @@ export const useHoleFormManager = ({
   puttsLength,
   fairwayValuesConstant = defaultFairwayValues,
 }: UseHoleFormManagerProps) => {
-  const dispatch = useDispatch<any>();
+  const setTmpHoleData = useAppStore((state) => state.setTmpHoleData);
+  const addTeeShotDistance = useAppStore((state) => state.addTeeShotDistance);
+  const addApproachShotDistance = useAppStore((state) => state.addApproachShotDistance);
+  const setNewHole = useAppStore((state) => state.setNewHole);
+  const resetNewRoundHoleTmp = useAppStore((state) => state.resetNewRoundHoleTmp);
   const [isMissingShotsDialogOpen, setIsMissingShotsDialogOpen] = useState(false);
   const [calculatedMissingShots, setCalculatedMissingShots] = useState(0);
 
   const handleChange = (e: any) => { // Consider more specific type for e
     const { name, value } = e.target;
-    dispatch(setTmpHoleData({ name, value, roundPlayingHCP, roundHoles, chipClubs: derivedClubs.chipClubs }));
+    setTmpHoleData({ name, value, roundPlayingHCP, roundHoles, chipClubs: derivedClubs.chipClubs });
   };
 
   const finalizeHoleSave = (intermediateShots: IIntermediateShot[] = []) => {
@@ -46,14 +47,14 @@ export const useHoleFormManager = ({
       actualTeeDistance = driveDistance > 0 ? driveDistance : 0;
     }
     if (teeClub && actualTeeDistance > 0) {
-      dispatch(addTeeShotDistance({ club: teeClub, distance: actualTeeDistance }));
+      addTeeShotDistance(teeClub, actualTeeDistance);
     }
     if (toGreen && typeof toGreenMeters === 'number' && toGreenMeters > 0) {
-      dispatch(addApproachShotDistance({ club: toGreen, distance: toGreenMeters }));
+      addApproachShotDistance(toGreen, toGreenMeters);
     }
     intermediateShots.forEach(shot => {
       if (shot.club && shot.distance > 0) {
-        dispatch(addApproachShotDistance({ club: shot.club, distance: shot.distance }));
+        addApproachShotDistance(shot.club, shot.distance);
       }
     });
 
@@ -64,8 +65,8 @@ export const useHoleFormManager = ({
       puttsLength: [...puttsLength], // Use the puttsLength from props
       intermediateShots: intermediateShots,
     };
-    dispatch(setNewHole({ holeAdjusted, roundPlayingHCP, roundHoles, holesCompleted }));
-    dispatch(resetNewRoundHoleTmp());
+    setNewHole(holeAdjusted, roundPlayingHCP, roundHoles);
+    resetNewRoundHoleTmp();
   };
 
   const handleSaveHole = () => {

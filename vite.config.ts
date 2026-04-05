@@ -17,7 +17,7 @@ export default defineConfig({
 		}
 	},
 	build: {
-		target: ['es2015', 'safari11'], // Ensure iOS Safari compatibility
+		target: 'es2020',
 		outDir: 'dist',
 		sourcemap: false,
 		minify: 'esbuild'

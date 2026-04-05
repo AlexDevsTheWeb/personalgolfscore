@@ -1,6 +1,4 @@
-import { clearRoundDetails, getRoundDetails } from '@/features/round/roundDetails.slice';
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { AppDispatch, RootState } from '@/store/store';
 import BoxBetween from '@/styles/box/BoxBetween.styles';
 import { CLUB_SORT_ORDER } from '@/utils/constant.utils';
 import { getClubsNames } from '@/utils/round/round.utils';
@@ -9,33 +7,36 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Box, Button, Typography } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Spinner from '../common/spinner/Spinner.component';
 import EmptyRounds from '../Dashboard/components/EmptyRounds/EmptyRounds.component';
 import HolebyHoleTable from '../NewRound/HolebyHoleTable.component';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import RoundsDataHeader from './components/roundData/RoundsDataHeader.component';
+import { useAppStore } from '@/store/zustand';
 
 const RoundsDataMain = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const params = useParams<{ roundID: string }>();
   const playerId = readUserLocalStorage();
 
-  const { round, isLoading: isLoadingRound, error, } = useSelector((store: RootState) => store.roundDetails);
-  const { player, isLoading: isLoadingPlayer } = useSelector((store: RootState) => store.player);
+  const roundDetailsData = useAppStore((state) => state.roundDetailsData);
+  const isLoadingRoundDetails = useAppStore((state) => state.isLoadingRoundDetails);
+  const roundDetailsError = useAppStore((state) => state.roundDetailsError);
+  const getRoundDetails = useAppStore((state) => state.getRoundDetails);
+  const clearRoundDetails = useAppStore((state) => state.clearRoundDetails);
+  
+  const { player, isLoadingPlayer } = useAppStore();
   const golfBag = player?.golfBag;
 
   const [openHoleByHole, setOpenHoleByHole] = useState<boolean>(false);
   const [openFullStatistics, setOpenFullStatistics] = useState<boolean>(true);
 
-  console.log("totals: ", round?.totals);
   useEffect(() => {
     if (params.roundID && playerId) {
-      dispatch(getRoundDetails({ playerId, roundId: params.roundID }));
+      getRoundDetails(playerId, params.roundID);
     }
     return () => {
-      dispatch(clearRoundDetails());
+      clearRoundDetails();
     }
   }, [params.roundID, playerId]);
 
@@ -52,19 +53,15 @@ const RoundsDataMain = () => {
         const indexA = CLUB_SORT_ORDER.indexOf(upperA);
         const indexB = CLUB_SORT_ORDER.indexOf(upperB);
 
-        // If both clubs are in the defined order, sort by that order
         if (indexA !== -1 && indexB !== -1) {
           return indexA - indexB;
         }
-        // If only A is in the order, it comes first
         if (indexA !== -1) {
           return -1;
         }
-        // If only B is in the order, it comes first
         if (indexB !== -1) {
           return 1;
         }
-        // If neither is in the order, sort them alphabetically relative to each other
         return upperA.localeCompare(upperB);
       };
       return allSelectedNames.sort(customSort);
@@ -92,16 +89,16 @@ const RoundsDataMain = () => {
     }
   }
 
-  const isLoading = isLoadingRound || isLoadingPlayer;
+  const isLoading = isLoadingRoundDetails || isLoadingPlayer;
   const { isMobile } = useDeviceDetection();
 
   if (!!isLoading) {
     return <Spinner />
   }
 
-  if (error) {
+  if (roundDetailsError) {
     return <Typography color='error'>
-      Error loading round details: {error}
+      Error loading round details: {roundDetailsError}
     </Typography>
   }
 
@@ -109,17 +106,15 @@ const RoundsDataMain = () => {
     return <Typography>Loading player data or golf bag missing...</Typography>;
   }
 
-  if (!round) {
+  if (!roundDetailsData) {
     return <EmptyRounds />
   }
 
   return (
     <BoxBetween sx={{ width: '100%', flexDirection: 'column', gap: 2 }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, width: '100%', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <RoundsDataHeader round={round} />
+        <RoundsDataHeader round={roundDetailsData} />
         {allClubNamesFromBag.length > 0 && (
-          // <DistancesTotals distances={round.distances} />
-          // <ChartsMain />
           <></>
         )}
       </Box>
@@ -135,9 +130,9 @@ const RoundsDataMain = () => {
         </Button>
       </Box>
 
-      {round.totals && openFullStatistics && <HolebyHoleTotals roundTotals={round.totals} par={Number(round.roundPar)} />}
+      {roundDetailsData.totals && openFullStatistics && <HolebyHoleTotals roundTotals={roundDetailsData.totals} par={Number(roundDetailsData.roundPar)} />}
 
-      {round.holes && round.holes.length > 0 && openHoleByHole && <HolebyHoleTable holes={round.holes} />}
+      {roundDetailsData.holes && roundDetailsData.holes.length > 0 && openHoleByHole && <HolebyHoleTable holes={roundDetailsData.holes} />}
     </BoxBetween >
   )
 }

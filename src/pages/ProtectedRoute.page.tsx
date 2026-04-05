@@ -1,13 +1,14 @@
 import { readUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import _ from "lodash";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useAppStore } from "@/store/zustand";
 
 const ProtectedRoute = ({ children }: any) => {
   const navigate = useNavigate();
   const uid = readUserLocalStorage();
-  const { user, isLoading } = useSelector((store: any) => store.user);
+  const user = useAppStore((state) => state.user);
+  const isLoading = useAppStore((state) => state.isLoadingUser);
 
   useEffect(() => {
     if (_.isEmpty(user) && !isLoading && !uid) {
