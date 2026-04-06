@@ -7,9 +7,20 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Select from './components/Select.component';
 import { useAppStore } from '@/store/zustand';
+
+interface FormValues {
+  roundCourse: string;
+  roundHoles: number;
+  roundPar: number;
+  roundPlayingHCP: number;
+  roundTee: string;
+  roundNumber: number;
+  roundDate: Dayjs | null;
+}
 
 const AddNewRoundForm = () => {
   const navigate = useNavigate();
@@ -17,11 +28,28 @@ const AddNewRoundForm = () => {
   const setFirstHole = useAppStore((state) => state.newRoundMain.setFirstHole);
   const setRoundDate = useAppStore((state) => state.setRoundDate);
   const setRoundMainData = useAppStore((state) => state.setRoundMainData);
-  const setTotalsByHole = useAppStore((state) => state.setTotalsByHole);
+  const setRoundCourse = useAppStore((state) => state.setRoundCourse);
+  const setRoundHoles = useAppStore((state) => state.setRoundHoles);
+  const setRoundPar = useAppStore((state) => state.setRoundPar);
+  const setRoundPlayingHCP = useAppStore((state) => state.setRoundPlayingHCP);
+  const setRoundTee = useAppStore((state) => state.setRoundTee);
+  const setRoundNumber = useAppStore((state) => state.setRoundNumber);
   const holes = useAppStore((state) => state.newRoundHoles.holes);
   
   const roundDateString = roundData.roundDate;
   const roundDateValue = roundDateString && dayjs(roundDateString).isValid() ? dayjs(roundDateString) : dayjs(new Date());
+
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<FormValues>({
+    defaultValues: {
+      roundCourse: roundData.roundCourse || '',
+      roundHoles: roundData.roundHoles || 18,
+      roundPar: roundData.roundPar || 72,
+      roundPlayingHCP: roundData.roundPlayingHCP || 0,
+      roundTee: roundData.roundTee || 'White',
+      roundNumber: roundData.roundNumber || 1,
+      roundDate: roundDateValue,
+    }
+  });
 
   useEffect(() => {
     if (!roundDateString) {
@@ -31,17 +59,22 @@ const AddNewRoundForm = () => {
 
   const handleDateChange = (newValue: Dayjs | null) => {
     setRoundDate(newValue);
+    setValue('roundDate', newValue);
   };
 
-  const handleSubmit = () => {
-    const currentRoundData = roundData;
-    setRoundMainData({});
-
+  const onSubmit = (data: FormValues) => {
+    setRoundCourse(data.roundCourse);
+    setRoundHoles(data.roundHoles);
+    setRoundPar(data.roundPar);
+    setRoundPlayingHCP(data.roundPlayingHCP);
+    setRoundTee(data.roundTee);
+    setRoundNumber(data.roundNumber);
+    
     const roundForTotals: INewRound = {
-      ...currentRoundData,
-      roundDate: currentRoundData.roundDate || '',
+      ...data,
+      roundDate: data.roundDate?.toString() || '',
     };
-    setTotalsByHole(holes);
+    setRoundMainData({});
   };
 
   const handleCancel = () => {
@@ -49,88 +82,101 @@ const AddNewRoundForm = () => {
     navigate('/dashboard');
   }
 
-
-
   return (
     <Dialog
       open={!setFirstHole}
       title='New round: basic info'
       onClose={handleCancel}
-      onSubmit={handleSubmit}
-      onClick={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
+      onClick={handleSubmit(onSubmit)}
     >
       <Grid container spacing={1} sx={{ mt: 1 }} columns={{ xs: 12, sm: 12, lg: 12 }}>
         <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
           <TextField
-            name='roundCourse'
+            {...register('roundCourse', { required: 'Course name is required' })}
             label="Round course"
             variant="outlined"
             fullWidth
-            value={roundData.roundCourse || ''}
-            onChange={e => useAppStore.getState().setRoundCourse(e.target.value)}
+            error={!!errors.roundCourse}
+            helperText={errors.roundCourse?.message}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
           <DatePicker
-            defaultValue={dayjs(new Date())}
             value={roundDateValue}
             onChange={handleDateChange}
             sx={{ width: '100%' }}
             format="DD/MM/YYYY"
-
           />
         </Grid>
         <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
           <TextField
-            name='roundHoles'
+            {...register('roundHoles', { 
+              required: 'Required',
+              min: { value: 1, message: 'Min 1' },
+              max: { value: 18, message: 'Max 18' },
+              valueAsNumber: true 
+            })}
             label="Holes"
             variant='outlined'
             type='number'
             fullWidth
-            value={roundData.roundHoles || ''}
-            onChange={e => useAppStore.getState().setRoundHoles(Number(e.target.value))}
+            error={!!errors.roundHoles}
+            helperText={errors.roundHoles?.message}
           />
         </Grid>
         <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
           <TextField
-            name='roundPar'
+            {...register('roundPar', { 
+              required: 'Required',
+              min: { value: 18, message: 'Min 18' },
+              max: { value: 99, message: 'Max 99' },
+              valueAsNumber: true 
+            })}
             label="Par"
             variant="outlined"
             type='number'
-            value={roundData.roundPar || ''}
-            onChange={e => useAppStore.getState().setRoundPar(Number(e.target.value))}
             fullWidth
+            error={!!errors.roundPar}
+            helperText={errors.roundPar?.message}
           />
         </Grid>
         <Grid size={{ xs: 4, sm: 2, lg: 2 }}>
           <TextField
-            name='roundPlayingHCP'
+            {...register('roundPlayingHCP', { 
+              valueAsNumber: true,
+              min: { value: 0, message: 'Min 0' },
+              max: { value: 54, message: 'Max 54' }
+            })}
             label="HCP"
             variant="outlined"
             fullWidth
             type='number'
-            value={roundData.roundPlayingHCP || ''}
-            onChange={e => useAppStore.getState().setRoundPlayingHCP(Number(e.target.value))}
+            error={!!errors.roundPlayingHCP}
+            helperText={errors.roundPlayingHCP?.message}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
           <Select
             name='roundTee'
-            value={roundData.roundTee || ''}
+            value={watch('roundTee') || ''}
             label='Tee'
             list={['White', 'Blue', 'Yellow', 'Red', 'Green', 'Orange']}
-            onChange={(e: any) => useAppStore.getState().setRoundTee(e.target.value)}
+            onChange={(e: any) => setValue('roundTee', e.target.value)}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 3, lg: 3 }}>
           <TextField
-            name='roundNumber'
+            {...register('roundNumber', { 
+              valueAsNumber: true,
+              min: { value: 1, message: 'Min 1' }
+            })}
             label="Round #"
             variant="outlined"
             type='number'
-            value={roundData.roundNumber || ''}
-            onChange={e => useAppStore.getState().setRoundNumber(Number(e.target.value))}
             fullWidth
+            error={!!errors.roundNumber}
+            helperText={errors.roundNumber?.message}
           />
         </Grid>
       </Grid>
