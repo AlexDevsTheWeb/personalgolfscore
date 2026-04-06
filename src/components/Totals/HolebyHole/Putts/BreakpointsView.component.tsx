@@ -67,6 +67,8 @@ export const UnifiedPuttsView: React.FC<IPuttsMobileViewProps> = ({ puttsStatist
   if (!overallStats && rangeEntries.length === 0) {
     return <Typography sx={{ p: 2, textAlign: 'center' }}>No Putting data available.</Typography>;
   }
+
+  console.log("puttsStatistics: ", puttsStatistics);
   return (
     <Grid container spacing={1} sx={{ py: 1 }}>
 

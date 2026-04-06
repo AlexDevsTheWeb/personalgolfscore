@@ -41,11 +41,6 @@ const AddNewRoundHoles = () => {
   useEffect(() => {
     setNewRoundClubs(derivedClubs);
   }, [derivedClubs, setNewRoundClubs]);
-  useEffect(() => {
-    if (holes.length > 0) {
-      setTotalsByHole(holes);
-    }
-  }, [holes, setTotalsByHole]);
 
   useEffect(() => {
     if (isRoundSaved && savedRoundId) {

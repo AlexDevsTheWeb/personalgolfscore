@@ -1,6 +1,5 @@
-import StackHolesPoints from "@/styles/stack/StackHolesPoints.styles";
 import { IRoundMainDataProp } from "@/types/props.types";
-import { Box, Card, CardActionArea, CardContent, CardHeader, Grid, Typography, styled } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, CardHeader, Stack, Typography, styled } from "@mui/material";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
@@ -32,6 +31,9 @@ const ScoreChip = styled(Typography)<{ $isGood: boolean }>(({ theme, $isGood }) 
   borderRadius: '8px',
   fontWeight: 'bold',
   color: 'white',
+  fontSize: '1.25rem',
+  display: 'flex',
+  alignItems: 'center',
   backgroundColor: $isGood ? theme.palette.success.main : theme.palette.error.main,
 }));
 
@@ -40,6 +42,8 @@ const PointsChip = styled(Typography)<{ $isGood: boolean }>(({ theme, $isGood })
   borderRadius: '8px',
   fontWeight: 'bold',
   color: 'white',
+  display: 'flex',
+  alignItems: 'center',
   backgroundColor: $isGood ? theme.palette.success.main : theme.palette.error.main,
 }));
 
@@ -50,7 +54,6 @@ const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
     roundCourse,
     roundDate,
     roundPar,
-    roundTee,
     roundPlayingHCP,
     roundHoles,
     totals,
@@ -83,51 +86,31 @@ const RoundsDataHeader = ({ round }: IRoundMainDataProp) => {
       cursor: isDashboard ? 'pointer' : 'default', width: '100%'
     }}>
       <Card>
-        <CardHeader 
-          title={<Typography fontWeight="bold">{roundCourse}</Typography>} 
+        <CardHeader
+          title={<Typography fontWeight="bold">{roundCourse}</Typography>}
           subheader={<Typography color="text.secondary">{formattedDate}</Typography>}
         />
         <CardContent sx={{ py: 1 }}>
-          <Grid container spacing={2}>
-            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                <StatBox>
-                  <StatValue>{roundHoles}</StatValue>
-                  <StatLabel>Holes</StatLabel>
-                </StatBox>
-                <StatBox>
-                  <StatValue>{par}</StatValue>
-                  <StatLabel>Par</StatLabel>
-                </StatBox>
-                <StatBox>
-                  <StatValue>{playingHCP}</StatValue>
-                  <StatLabel>HCP</StatLabel>
-                </StatBox>
-              </Box>
-            </Grid>
-
-            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: { xs: 'flex-start', md: 'center' } }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <StatLabel>STROKES</StatLabel>
-                  <ScoreChip $isGood={underPar}>
-                    {roundStrokes} ({overParString})
-                  </ScoreChip>
-                </Box>
-              </Box>
-            </Grid>
-
-            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: { xs: 'flex-start', md: 'center' } }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <StatLabel>POINTS</StatLabel>
-                  <PointsChip $isGood={isGoodPoints}>
-                    {totalPoints} pts
-                  </PointsChip>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
+          <Stack direction="row" spacing={1} sx={{ justifyContent: 'space-between' }}>
+            <StatBox>
+              <StatValue>{roundHoles}</StatValue>
+              <StatLabel>Holes</StatLabel>
+            </StatBox>
+            <StatBox>
+              <StatValue>{par}</StatValue>
+              <StatLabel>Par</StatLabel>
+            </StatBox>
+            <StatBox>
+              <StatValue>{playingHCP}</StatValue>
+              <StatLabel>HCP</StatLabel>
+            </StatBox>
+            <ScoreChip $isGood={underPar}>
+              {roundStrokes} ({overParString})
+            </ScoreChip>
+            <PointsChip $isGood={isGoodPoints}>
+              {totalPoints} pts
+            </PointsChip>
+          </Stack>
         </CardContent>
       </Card>
     </CardActionArea>

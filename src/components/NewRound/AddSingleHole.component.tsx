@@ -26,6 +26,13 @@ const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
 		setCurrentHoleNumber(holesCompleted + 1);
 	}, [holesCompleted]);
 
+	// Sync puttsLength from Zustand store when it changes
+	useEffect(() => {
+		if (holeTmp.puttsLength && holeTmp.puttsLength.length > 0) {
+			setPuttsLength(holeTmp.puttsLength);
+		}
+	}, [holeTmp.puttsLength]);
+
 	const { handleChange, handleSaveHole, isSaveDisabled, missingShotsDialogProps } = useHoleFormManager({
 		tmpHole: holeTmp,
 		derivedClubs,

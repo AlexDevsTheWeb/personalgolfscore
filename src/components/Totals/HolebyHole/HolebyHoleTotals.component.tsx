@@ -52,6 +52,7 @@ const HolebyHoleTotals = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =>
     return <Spinner />
   }
 
+  console.log("roundTotals: ", roundTotals);
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%', padding: '10px' }}>
       <Header title={'statistics'} sx={{ marginBottom: '1px' }} />

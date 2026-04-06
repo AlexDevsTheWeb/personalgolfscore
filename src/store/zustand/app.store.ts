@@ -566,13 +566,20 @@ export const useAppStore = create<AppState>()(
             ...greenApproachCounts,
           };
 
-          set((state) => ({
-            newRoundHoles: {
-              ...state.newRoundHoles,
-              holes: [...state.newRoundHoles.holes, finalHole],
-              holesCompleted: state.newRoundHoles.holesCompleted + 1,
-            },
-          }));
+          set((state) => {
+            const updatedHoles = [...state.newRoundHoles.holes, finalHole];
+            return {
+              newRoundHoles: {
+                ...state.newRoundHoles,
+                holes: updatedHoles,
+                holesCompleted: state.newRoundHoles.holesCompleted + 1,
+              },
+              newRoundTotals: {
+                isLoading: false,
+                roundTotals: totalsCalculator(updatedHoles),
+              },
+            };
+          });
         },
         
         setTotalsByHole: (holes) => {
@@ -622,13 +629,11 @@ export const useAppStore = create<AppState>()(
           } else if (initialValueType === 'object') {
             (newHoleTmp as any)[name] = value;
           } else {
-            if (typeof value === 'number') {
-              (newHoleTmp as any)[name] = value;
-            } else if (typeof value === 'string') {
-              (newHoleTmp as any)[name] = value;
-            } else if (typeof value === 'boolean') {
-              (newHoleTmp as any)[name] = value;
+            if (Array.isArray(value)) {
+              (newHoleTmp as any)[name] = JSON.parse(JSON.stringify(value));
             } else if (typeof value === 'object' && value !== null) {
+              (newHoleTmp as any)[name] = { ...(value as object) };
+            } else {
               (newHoleTmp as any)[name] = value;
             }
           }

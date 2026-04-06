@@ -6,7 +6,7 @@ import { calculateChippingPitchingStatistics, calculateFWIrons, calculateInside1
 import { safeDivide, safePercentage } from "./math.utils";
 
 export const totalsCalculator = (shots: IShots[]) => {
-  let totals: IRoundTotals = initialStateRoundTotals;
+  let totals: IRoundTotals = _.cloneDeep(initialStateRoundTotals);
   const holes = shots.length;
   const shotsIN = _.slice(shots, 0, 9);
   const shotsOUT = _.slice(shots, 9, 18);

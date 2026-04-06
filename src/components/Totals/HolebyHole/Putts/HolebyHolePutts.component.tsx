@@ -11,6 +11,7 @@ const HolebyHolePutts: React.FC<IHolebyHolePutts> = ({ totalsPutts }) => {
     return <Box>No Putting data available.</Box>; // Or a loading indicator
   }
 
+  console.log("totalsPutts: ", totalsPutts);
   return <UnifiedPuttsView puttsStatistics={puttsStatistics} />;
 };
 
