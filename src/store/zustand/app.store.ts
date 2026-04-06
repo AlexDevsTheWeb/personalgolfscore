@@ -621,6 +621,16 @@ export const useAppStore = create<AppState>()(
             (newHoleTmp as any)[name] = Boolean(value);
           } else if (initialValueType === 'object') {
             (newHoleTmp as any)[name] = value;
+          } else {
+            if (typeof value === 'number') {
+              (newHoleTmp as any)[name] = value;
+            } else if (typeof value === 'string') {
+              (newHoleTmp as any)[name] = value;
+            } else if (typeof value === 'boolean') {
+              (newHoleTmp as any)[name] = value;
+            } else if (typeof value === 'object' && value !== null) {
+              (newHoleTmp as any)[name] = value;
+            }
           }
 
           newHoleTmp.bounceBack = newHoleTmp.strokes - newHoleTmp.par;

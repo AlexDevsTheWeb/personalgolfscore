@@ -11,6 +11,8 @@ const NewRoundMainData = () => {
   const roundData = newRoundMain.round;
   const { roundCourse, roundDate, roundHoles, roundPar, roundPlayingHCP, roundTee } = roundData;
 
+  const newRoundTotals = useAppStore((state) => state.newRoundTotals);
+
   const newRoundData: IRoundDetails = {
     id: '0',
     roundCourse: roundCourse || 'N/A',
@@ -19,8 +21,8 @@ const NewRoundMainData = () => {
     roundPar: roundPar.toString(),
     roundPlayingHCP: roundPlayingHCP.toString(),
     roundTee: roundTee || 'N/A',
-    totals: {} as IRoundDetails['totals'],
-    holes: [] as IRoundDetails['holes'],
+    totals: newRoundTotals.roundTotals,
+    holes: [],
     createdAt: new Date().valueOf(),
   }
 

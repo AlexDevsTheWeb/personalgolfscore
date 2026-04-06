@@ -30,6 +30,7 @@ export const useHoleFormManager = ({
   const addApproachShotDistance = useAppStore((state) => state.addApproachShotDistance);
   const setNewHole = useAppStore((state) => state.setNewHole);
   const resetNewRoundHoleTmp = useAppStore((state) => state.resetNewRoundHoleTmp);
+  const setTotalsByHole = useAppStore((state) => state.setTotalsByHole);
   const [isMissingShotsDialogOpen, setIsMissingShotsDialogOpen] = useState(false);
   const [calculatedMissingShots, setCalculatedMissingShots] = useState(0);
 
@@ -66,6 +67,8 @@ export const useHoleFormManager = ({
       intermediateShots: intermediateShots,
     };
     setNewHole(holeAdjusted, roundPlayingHCP, roundHoles);
+    const { newRoundHoles } = useAppStore.getState();
+    setTotalsByHole(newRoundHoles.holes);
     resetNewRoundHoleTmp();
   };
 
