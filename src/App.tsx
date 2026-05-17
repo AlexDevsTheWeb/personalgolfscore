@@ -26,7 +26,7 @@ const App: React.FC = () => {
         <ThemeSetup>
           <Routes>
             {["/login"].map((path) => (
-              <Route key={path} path={path} element={<LoginPage />} />
+              <Route path={path} element={<LoginPage />} />
             ))}
             <Route
               path="/"
