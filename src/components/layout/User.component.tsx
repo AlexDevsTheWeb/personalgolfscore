@@ -66,8 +66,8 @@ const User = () => {
             {
 
               user?.photoURL === '' || _.isUndefined(player.photoURL)
-                ? <Avatar alt={player.displayName}{...stringAvatar(player.displayName)} />
-                : <Avatar alt={player.displayName} src={player.photoURL} />
+                ? <Avatar alt={player.displayName ?? ''}{...stringAvatar(player.displayName ?? '')} />
+                : <Avatar alt={player.displayName ?? ''} src={player.photoURL ?? undefined} />
             }
           </IconButton>
         </Tooltip>
@@ -109,7 +109,7 @@ const User = () => {
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
           <MenuItem onClick={handleClose}>
-            <StackPlayerMenu name={player?.displayName} value={player?.HCP} />
+            <StackPlayerMenu name={player?.displayName ?? ''} value={player?.HCP ?? 0} />
           </MenuItem>
 
           <Divider />

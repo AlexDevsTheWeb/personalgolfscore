@@ -4,8 +4,9 @@ import { Box, Grid, GridProps, Paper, useTheme } from "@mui/material";
 interface IStatBlockProps {
   title?: string;
   children: React.ReactNode;
-  gridProps?: GridProps; // Use the specifically imported Grid2Props
+  gridProps?: GridProps;
   subtitle?: string;
+  key?: string | number;
 }
 
 const StatBlock: React.FC<IStatBlockProps> = ({ title, subtitle, children, gridProps }) => {

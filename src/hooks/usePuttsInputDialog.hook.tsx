@@ -15,7 +15,7 @@ export const usePuttsInputDialog = ({
   // This local state will be used by the dialog and synced with parent via onPuttsLengthChange
   const [currentDialogPuttsLength, setCurrentDialogPuttsLength] = useState<number[]>([]);
   const [puttsNumber, setPuttsNumber] = useState<number>(0);
-  const prevTmpHolePuttsRef = useRef<number>(); // Store previous value of tmpHolePutts
+  const prevTmpHolePuttsRef = useRef<number | undefined>(undefined); // Store previous value of tmpHolePutts
 
   useEffect(() => {
     // Open dialog only if tmpHolePutts changes to a positive value,

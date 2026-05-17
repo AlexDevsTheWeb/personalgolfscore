@@ -40,16 +40,16 @@ describe('Golf Calculation Tests', () => {
 
     it('should calculate GIR correctly', () => {
       // Par 4 scenarios
-      expect(calculateGirValue({ par: 4, strokes: 4, putts: 2, bogey: false })).toBe(true); // 2 shots to green
-      expect(calculateGirValue({ par: 4, strokes: 5, putts: 2, bogey: false })).toBe(false); // 3 shots to green
-      
+      expect(calculateGirValue({ par: 4, strokes: 4, putts: 2, bogey: false, intermediateShots: 1 })).toBe(true); // 2 shots to green
+      expect(calculateGirValue({ par: 4, strokes: 5, putts: 2, bogey: false, intermediateShots: 2 })).toBe(false); // 3 shots to green
+
       // Par 3 scenarios
-      expect(calculateGirValue({ par: 3, strokes: 3, putts: 2, bogey: false })).toBe(true); // 1 shot to green
-      expect(calculateGirValue({ par: 3, strokes: 4, putts: 2, bogey: false })).toBe(false); // 2 shots to green
-      
+      expect(calculateGirValue({ par: 3, strokes: 3, putts: 2, bogey: false, intermediateShots: 0 })).toBe(true); // 1 shot to green
+      expect(calculateGirValue({ par: 3, strokes: 4, putts: 2, bogey: false, intermediateShots: 1 })).toBe(false); // 2 shots to green
+
       // Par 5 scenarios
-      expect(calculateGirValue({ par: 5, strokes: 5, putts: 2, bogey: false })).toBe(true); // 3 shots to green
-      expect(calculateGirValue({ par: 5, strokes: 6, putts: 2, bogey: false })).toBe(false); // 4 shots to green
+      expect(calculateGirValue({ par: 5, strokes: 5, putts: 2, bogey: false, intermediateShots: 2 })).toBe(true); // 3 shots to green
+      expect(calculateGirValue({ par: 5, strokes: 6, putts: 2, bogey: false, intermediateShots: 3 })).toBe(false); // 4 shots to green
     });
 
     it('should calculate up & down correctly', () => {

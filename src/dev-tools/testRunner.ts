@@ -3,7 +3,7 @@
 import { TestDataGenerator } from './testDataGenerator';
 import { StepByStepTester, runQuickTest, formatTestResults } from './stepByStepTester';
 import { EdgeCaseTests, knownIssueTests } from './edgeCaseTests';
-import { createFirestoreTestUtils } from './firestoreInspector';
+// import { createFirestoreTestUtils } from './firestoreInspector'; // File doesn't exist
 import { calculateStablefordPoints, calculateGirValue, calculateUDValue } from '../utils/shots/shots.utils';
 
 /**

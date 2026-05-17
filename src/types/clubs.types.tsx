@@ -50,10 +50,10 @@ export interface IClubDistanceDialogProps {
 }
 
 export interface IClubSetupFormProps {
-  initialGolfBag: IGolfBagData;
+  golfBag: IGolfBagData;
   onGolfBagChange: (newGolfBag: IGolfBagData) => void;
 }
 
 export interface IPlayerSetupProps {
-  handleHcpChange: () => void;
+  handleHcpChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

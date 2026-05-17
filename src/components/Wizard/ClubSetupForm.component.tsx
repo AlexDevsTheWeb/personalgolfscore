@@ -18,7 +18,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 const DEFAULT_CLUB_TYPES = ["driver", "fairway wood", "hybrid", "iron", "wedge", "putter"];
 
-const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBagChange }) => {
+const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ golfBag: initialGolfBag, onGolfBagChange }) => {
   const [golfBag, setGolfBag] = useState<IGolfBagData>([]);
   useEffect(() => {
     let structuredBag: IGolfBagData;
@@ -29,7 +29,7 @@ const ClubSetupForm: React.FC<IClubSetupFormProps> = ({ initialGolfBag, onGolfBa
       }));
     } else {
       structuredBag = [...initialGolfBag];
-      const currentTypes = new Set(initialGolfBag.map(t => t.typeName));
+      const currentTypes = new Set(initialGolfBag.map((t: { typeName: string }) => t.typeName));
       DEFAULT_CLUB_TYPES.forEach(defaultType => {
         if (!currentTypes.has(defaultType)) {
           structuredBag.push({ typeName: defaultType, details: [] });

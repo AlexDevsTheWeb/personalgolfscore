@@ -150,7 +150,7 @@ export class StepByStepTester {
         water: hole.water,
         out: hole.out,
         sand: hole.sand,
-      } as Partial<IShots>,
+      } as IShots,
       calculated: {
         points: hole.points,
         gir: hole.gir,
