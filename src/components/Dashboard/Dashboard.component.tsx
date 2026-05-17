@@ -1,3 +1,4 @@
+import { useAppStore } from "@/store/zustand";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../common/spinner/Spinner.component";
@@ -5,7 +6,6 @@ import Rounds from "../Rounds/Rounds.component";
 import RoundsButtons from "../Rounds/RoundsButtons.component";
 import WizardSetupDialog from "../Wizard/WizardSetupDialog.component";
 import ChartsMain from "./components/Charts/ChartsMain.component";
-import { useAppStore } from "@/store/zustand";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -47,7 +47,6 @@ const Dashboard = () => {
               </Typography>
               <Typography variant="body" color="text.secondary" sx={{ mb: 2 }}>
                 It looks like you haven't recorded any rounds yet.
-                <br />
                 Add your first round to start tracking your performance and unlock detailed statistics.
               </Typography>
               <Button

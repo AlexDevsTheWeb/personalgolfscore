@@ -2,12 +2,12 @@ import { PaletteColor, PaletteColorOptions } from "@mui/material";
 
 // Professional monochrome light theme - neutral gray with subtle blue accent
 export const lightColors = {
-  menubar: '#5c6b7a', // Muted blue-gray for AppBar
+  menubar: '#8399af', // Muted blue-gray for AppBar
   primary1: '#1a1a1a', // Near black for primary text
-  primary2: '#5c6b7a', // Subtle blue-gray for primary actions
+  primary2: '#8399af', // Subtle blue-gray for primary actions
   primary3: '#666666', // Neutral gray for secondary text
   black: '#1a1a1a', // Near black
-  grey1: '#5c6b7a', // Muted text
+  grey1: '#8399af', // Muted text
   grey2: '#999999', // Medium gray for text
   grey3: '#e0e0e0', // Light gray for borders
   grey4: '#cccccc', // Lighter border
