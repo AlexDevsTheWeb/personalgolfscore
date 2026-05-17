@@ -319,7 +319,7 @@ export class EdgeCaseTests {
             driveDistance: 260,
             toGreen: '3W',
             toGreenMeters: 200,
-            intermediateShots: [{ club: 'SW', distance: 60 }], // 4 shots to green
+            intermediateShots: [{ club: 'SW', distance: 60, fairway: 2 }], // 4 shots to green (2 = Center)
             expectedGIR: false, // 4 shots to green = over regulation for par 5
           },
         ],

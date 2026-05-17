@@ -108,6 +108,7 @@ export interface IHoleTeeShotFormProps {
 
 export interface IShotsTableBody {
 	shot: IShots;
+	key?: number;
 }
 export interface IShotsTableHeaderProps {
 	firstLabel: string;

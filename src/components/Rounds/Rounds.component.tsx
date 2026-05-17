@@ -51,7 +51,7 @@ const PointsChip = styled(Typography)<{ $isGood: boolean }>(({ theme, $isGood })
   textAlign: 'center',
 }));
 
-const RoundsCompactCard = ({ round }: { round: IRoundDetails }) => {
+const RoundsCompactCard = ({ round }: { round: IRoundDetails; key?: number }) => {
   const navigate = useNavigate();
 
   const coursePar = Number(round.roundPar || 0);
