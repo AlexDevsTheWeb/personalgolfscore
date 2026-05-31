@@ -26,6 +26,7 @@ import ThemeSwitcher from '../common/ThemeSwitcher.component';
 import Footer from './Footer.component';
 import User from './User.component';
 import { useAppStore } from '@/store/zustand';
+import { SnackbarProvider } from '@/components/Admin/SnackbarProvider.component';
 
 export default function DrawerAppBar(props: IMainLayoutProps) {
   const { window } = props;
@@ -277,6 +278,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   };
 
   return (
+    <SnackbarProvider>
     <BoxFooter>
       <Box>
         <AppBar component="nav">
@@ -335,6 +337,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
       </Box>
       <Footer />
     </BoxFooter>
+    </SnackbarProvider>
   );
 }
 
