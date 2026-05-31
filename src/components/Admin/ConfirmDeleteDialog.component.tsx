@@ -12,6 +12,7 @@ interface ConfirmDeleteDialogProps {
 	onConfirm: () => void;
 	title: string;
 	message: string;
+	confirmText?: string;
 	isDeleting?: boolean;
 }
 
@@ -21,6 +22,7 @@ const ConfirmDeleteDialog: React.FC<ConfirmDeleteDialogProps> = ({
 	onConfirm,
 	title,
 	message,
+	confirmText = 'Delete',
 	isDeleting = false,
 }) => {
 	if (!open) return null;
@@ -53,7 +55,7 @@ const ConfirmDeleteDialog: React.FC<ConfirmDeleteDialogProps> = ({
 					disabled={isDeleting}
 					sx={{ bgcolor: '#c94040', '&:hover': { bgcolor: '#a83333' } }}
 				>
-					Delete
+					{confirmText}
 				</Button>
 			</DialogActions>
 		</Dialog>
