@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+	match /databases/{database}/documents {
+
+		// Golf courses collection — public read, authenticated create, admin-only update/delete
+		match /golf_courses/{docId} {
+			allow read: if true;
+			allow create: if request.auth != null;
+			allow update, delete: if request.auth != null
+				&& request.auth.uid != null
+				&& get(/databases/$(database)/documents/players/$(request.auth.uid)).data.isAdmin == true;
+		}
+
+		// Players collection — user owns their own document
+		match /players/{uid} {
+			allow read: if request.auth != null && request.auth.uid == uid;
+			allow create: if request.auth != null && request.auth.uid == uid;
+			allow delete: if request.auth != null && request.auth.uid == uid;
+
+			// Self-update allowed for non-isAdmin fields.
+			// Changing isAdmin requires the requester to already be an admin.
+			allow update: if request.auth != null
+				&& request.auth.uid == uid
+				&& (
+					!request.resource.data.diff(resource.data).affectedKeys().hasAny(['isAdmin'])
+					|| get(/databases/$(database)/documents/players/$(request.auth.uid)).data.isAdmin == true
+				);
+
+			match /rounds/{roundId} {
+				allow read, write: if request.auth != null && request.auth.uid == uid;
+			}
+
+			match /totalDistancesAVG/{distanceId} {
+				allow read, write: if request.auth != null && request.auth.uid == uid;
+			}
+
+			match /totalsRoundsAVG/{avgId} {
+				allow read, write: if request.auth != null && request.auth.uid == uid;
+			}
+		}
+	}
+}
