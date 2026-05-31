@@ -40,7 +40,8 @@ export interface IPlayerDetails {
   rounds?: IBasicRoundData[];
   totalDistancesAVG?: ITotalDistanceAvg[];
   totalsRoundsAVG?: ITotalRoundsAvg | null;
-  isSetupComplete: boolean;
+	isSetupComplete: boolean;
+	isAdmin?: boolean;
 }
 
 export interface IGetPlayerDetailsPayload {
