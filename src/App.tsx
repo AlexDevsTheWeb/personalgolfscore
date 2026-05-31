@@ -8,6 +8,9 @@ import Spinner from './components/common/spinner/Spinner.component';
 import SignupForm from './components/LoginForm/SignupForm.component';
 import AddNewRound from './pages/AddNewRound.page';
 import AllRounds from './pages/AllRounds.page';
+import AdminRoute from './pages/AdminRoute.page';
+import AdminCoursesPage from './pages/AdminCourses.page';
+import AdminUsersPage from './pages/AdminUsers.page';
 import ClubsPage from "./pages/Clubs.page";
 import DashboardPage from "./pages/Dashboard.page";
 import Error from './pages/Error.page';
@@ -44,6 +47,8 @@ const App: React.FC = () => {
               <Route path='/addNewRound' element={<AddNewRound />} />
               <Route path='/statistics' element={<Statistics />} />
               <Route path='/settings' element={<SettingsPage />} />
+              <Route path="/admin/courses" element={<AdminRoute><AdminCoursesPage /></AdminRoute>} />
+              <Route path="/admin/users" element={<AdminRoute><AdminUsersPage /></AdminRoute>} />
             </Route>
             <Route path="*" element={<Error />} />
             <Route path="/error" element={<Error />} />

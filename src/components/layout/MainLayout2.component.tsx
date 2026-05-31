@@ -4,6 +4,7 @@ import links from '@/utils/links/links.utils';
 import { deleteUserLocalStorage, readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import GolfCourseIcon from '@mui/icons-material/GolfCourse';
+import PeopleIcon from '@mui/icons-material/People';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -102,6 +103,10 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
         breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
         breadcrumbs.push({ label: 'Loading...', path: path });
       }
+    } else if (path === '/admin/courses') {
+      breadcrumbs.push({ label: 'Admin', path: '/admin/courses' });
+    } else if (path === '/admin/users') {
+      breadcrumbs.push({ label: 'Admin', path: '/admin/users' });
     }
 
     return breadcrumbs;
@@ -143,6 +148,10 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
         breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
         breadcrumbs.push({ label: 'Loading...', path: path });
       }
+    } else if (path === '/admin/courses') {
+      breadcrumbs.push({ label: 'Admin', path: '/admin/courses' });
+    } else if (path === '/admin/users') {
+      breadcrumbs.push({ label: 'Admin', path: '/admin/users' });
     }
 
     return breadcrumbs;
@@ -183,6 +192,32 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
             </ListItem>
           );
         })}
+        {player?.isAdmin && (
+          <>
+            <Divider sx={{ my: 1 }} />
+            <ListItem disablePadding sx={{ px: 2.5, py: 0.5 }}>
+              <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Admin
+              </Typography>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton sx={{ minHeight: 48, px: 2.5 }} href="/admin/courses">
+                <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
+                  <SvgIcon component={GolfCourseIcon} inheritViewBox />
+                </ListItemIcon>
+                <ListItemText primary="Courses" sx={{ color: 'text.primary' }} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton sx={{ minHeight: 48, px: 2.5 }} href="/admin/users">
+                <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
+                  <SvgIcon component={PeopleIcon} inheritViewBox />
+                </ListItemIcon>
+                <ListItemText primary="Users" sx={{ color: 'text.primary' }} />
+              </ListItemButton>
+            </ListItem>
+          </>
+        )}
         <Divider sx={{ my: 1 }} />
         <ListItem disablePadding>
           <ListItemButton href="/settings">
