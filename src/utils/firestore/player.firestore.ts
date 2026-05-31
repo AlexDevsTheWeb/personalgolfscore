@@ -1,4 +1,4 @@
-import { IGetPlayerDetailsPayload, IPlayerStateData, IUpdateGolfBagPayload, IUpdatePlayerProfilePayload } from "@/types/player.types";
+import { IGetPlayerDetailsPayload, IPlayerDetails, IPlayerStateData, IUpdateGolfBagPayload, IUpdatePlayerProfilePayload } from "@/types/player.types";
 import { IBasicRoundData, ITotalDistanceAvg } from "@/types/roundData.types";
 import { ITotalRoundsAvg } from "@/types/roundTotals.types";
 import { db } from "@/utils/firebase/firebase.utils";
@@ -111,8 +111,30 @@ export const updatePlayerProfile = async (payload: IUpdatePlayerProfilePayload):
     const playerDocRef: DocumentReference<DocumentData> = doc(db, 'players', uid);
     await updateDoc(playerDocRef, data);
     return data as Partial<IPlayerStateData>;
-  } catch (error: any) {
+	} catch (error: any) {
     console.error("Error updating player profile:", error);
+    throw error;
+  }
+};
+
+export const getAllPlayers = async (): Promise<IPlayerDetails[]> => {
+  try {
+    const playersRef = collection(db, 'players');
+    const playersQuery = query(playersRef, orderBy('displayName', 'asc'));
+    const snapshot = await getDocs(playersQuery);
+
+    return snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        ...data,
+        uid: doc.id,
+        displayName: data.displayName ?? null,
+        email: data.email ?? null,
+        DOB: data.DOB instanceof Timestamp ? data.DOB.toMillis() : data.DOB,
+      } as IPlayerDetails;
+    });
+  } catch (error: any) {
+    console.error("Error fetching all players:", error);
     throw error;
   }
 };
