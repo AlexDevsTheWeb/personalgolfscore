@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAppStore } from '@/store/zustand';
 import Spinner from '@/components/common/spinner/Spinner.component';
@@ -13,12 +13,17 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
 	const isLoadingPlayer = useAppStore((state) => state.isLoadingPlayer);
 	const { showSnackbar } = useSnackbar();
 
+	useEffect(() => {
+		if (!isLoadingPlayer && !player?.isAdmin) {
+			showSnackbar('Admin access required', 'warning');
+		}
+	}, [isLoadingPlayer, player, showSnackbar]);
+
 	if (isLoadingPlayer) {
 		return <Spinner />;
 	}
 
 	if (!player?.isAdmin) {
-		showSnackbar('Admin access required', 'warning');
 		return <Navigate to="/dashboard" />;
 	}
 
