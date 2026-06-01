@@ -77,37 +77,31 @@ export function parseImportText(text: string): IParsedRound[] {
     };
 
     try {
-      if (cells.length < 16) {
+      if (cells.length < 15) {
         results.push(parsed);
         continue;
       }
 
-      const rawDate = cells[1]?.trim() || '';
+      const rawDate = cells[0]?.trim() || '';
       const parsedDate = dayjs(rawDate, 'DD/MM/YYYY');
       parsed.roundDate = parsedDate.isValid() ? parsedDate.toISOString() : '';
-      parsed.roundCourse = (cells[3]?.trim() || '').toUpperCase();
-      parsed.roundFormat = cells[5]?.trim() || '';
-      parsed.roundHoles = parseInt(cells[6]?.trim(), 10) || 18;
-      parsed.roundValid = cells[7]?.trim().toUpperCase() === 'S';
-      parsed.roundPlayingHCP = parseItalianDecimal(cells[8] || '0');
-      parsed.roundPar = parseInt(cells[9]?.trim(), 10) || 72;
-      parsed.roundCR = parseItalianDecimal(cells[10] || '0');
-      parsed.roundSR = parseInt(cells[11]?.trim(), 10) || 0;
+      parsed.roundCourse = (cells[2]?.trim() || '').toUpperCase();
+      parsed.roundFormat = cells[4]?.trim() || '';
+      parsed.roundHoles = parseInt(cells[5]?.trim(), 10) || 18;
+      parsed.roundValid = cells[6]?.trim().toUpperCase() === 'S';
+      parsed.roundPlayingHCP = parseItalianDecimal(cells[7] || '0');
+      parsed.roundPar = parseInt(cells[8]?.trim(), 10) || 72;
+      parsed.roundCR = parseItalianDecimal(cells[9] || '0');
+      parsed.roundSR = parseInt(cells[10]?.trim(), 10) || 0;
 
-      const stblStr = cells[12]?.trim() || '';
+      const stblStr = cells[11]?.trim() || '';
       parsed.stablefordPoints = stblStr ? parseInt(stblStr, 10) : 0;
 
-      const agsStr = cells[13]?.trim() || '';
+      const agsStr = cells[12]?.trim() || '';
       parsed.roundStrokes = agsStr ? parseInt(agsStr, 10) : 0;
 
-      const sdStr = cells[15]?.trim() || '';
+      const sdStr = cells[14]?.trim() || '';
       parsed.scoreDifferential = sdStr ? parseItalianDecimal(sdStr) : null;
-
-      const idxVecchioStr = cells[19]?.trim() || '';
-      parsed.indexVecchio = idxVecchioStr ? parseItalianDecimal(idxVecchioStr) : null;
-
-      const idxNuovoStr = cells[20]?.trim() || '';
-      parsed.indexNuovo = idxNuovoStr ? parseItalianDecimal(idxNuovoStr) : null;
 
       parsed.parsedSuccessfully = true;
     } catch {

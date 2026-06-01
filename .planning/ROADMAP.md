@@ -9,7 +9,7 @@ This roadmap delivers WHS (World Handicap System) handicap calculation, a shared
 - [x] **Phase 1: Course Database & Admin Foundation** - Admin authentication, route protection, golf course CRUD, and the public `golf_courses` collection (completed 2026-05-31)
 - [x] **Phase 2: WHS Engine & Handicap Simulator** - WHS Score Differential and Handicap Index calculation engine plus a dedicated Simulator with course/teebox selection and projected HI display (completed 2026-06-01)
 - [x] **Phase 3: Navigation & Sidebar Reorg** - Move Avatar menu (HCP, settings, logout) to sidebar; fix admin link visibility; make sidebar responsive across all screen sizes (completed 2026-06-01)
-- [ ] **Phase 4: Import Rounds Verification** - Import Federgolf competition results via clipboard paste, match courses, save as real rounds in Firestore for handicap verification (pending)
+- [x] **Phase 4: Import Rounds Verification** - Import Federgolf competition results via clipboard paste, match courses, save as real rounds in Firestore for handicap verification (pending) (completed 2026-06-01)
 
 ## Phase Details
 
@@ -113,7 +113,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 04-02-PLAN.md — Import Rounds page UI: paste form, preview table, import result summary, route, nav link (Wave 2)
+- [x] 04-02-PLAN.md — Import Rounds page UI: paste form, preview table, import result summary, route, nav link (Wave 2)
 
 ## Progress
 

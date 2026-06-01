@@ -32,7 +32,10 @@ export default function ImportForm({ onParse, isLoading, error }: ImportFormProp
         fullWidth
         minRows={8}
         maxRows={20}
-        placeholder={`Data\tGara\tCampo\tGiro\tFormula\tBuche\tValida\tPlaying HCP\tPar\tCR\tSR\tStbl\tAGS\tPCC\tSD`}
+        placeholder={`Paste your Federgolf rows here...
+
+Example:
+09/05/2026\tMuratory Wine\tBARLASSINA\t1\tSPM\t18\tS\t30,00\t72,00\t71,00\t132,00\t33,00\t105,00\t0,00\t29,1`}
         value={text}
         onChange={(e) => setText(e.target.value)}
         sx={{ fontFamily: 'monospace', mb: 2 }}
