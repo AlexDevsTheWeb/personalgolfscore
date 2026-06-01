@@ -33,7 +33,8 @@ import { calculateHandicapIndex, calculateProjectedHandicapIndex } from '@/utils
  * based on available rounds count (WHS Rule 5.2a scaling).
  */
 const getScalingCount = (count: number): number => {
-	if (count < 3) return 0;
+	if (count <= 0) return 0;
+	if (count <= 2) return 1;
 	if (count <= 5) return 1;
 	if (count <= 8) return 2;
 	if (count <= 11) return 3;
@@ -171,7 +172,7 @@ const Simulator = () => {
 		const sds = roundsList
 			.filter((r) => r.scoreDifferential != null)
 			.map((r) => r.scoreDifferential as number);
-		if (sds.length < 3) return [];
+		if (sds.length === 0) return [];
 		const count = Math.min(sds.length, 20);
 		const toUse = getScalingCount(count);
 		const sorted = [...sds.slice(0, count)].sort((a, b) => a - b);
@@ -186,7 +187,7 @@ const Simulator = () => {
 			.map((r) => r.scoreDifferential as number);
 		const virtual = [simulatedResult.scoreDifferential, ...sds.slice(0, 19)];
 		const count = Math.min(virtual.length, 20);
-		if (count < 3) return [];
+		if (count === 0) return [];
 		const toUse = getScalingCount(count);
 		const sorted = [...virtual.slice(0, count)].sort((a, b) => a - b);
 		return sorted.slice(0, toUse);
@@ -228,7 +229,6 @@ const Simulator = () => {
 	// --- Edge case checks ---
 
 	const hasNoRounds = !isLoadingRounds && roundsList.length === 0;
-	const hasFewRounds = !isLoadingRounds && roundsList.length > 0 && roundsList.length < 3;
 	const hasNoCourses = !loading && courses.length === 0 && !courseError;
 
 	// --- Rendering ---
@@ -271,13 +271,6 @@ const Simulator = () => {
 			{hasNoRounds && (
 				<Alert severity="info" sx={{ mb: 2 }}>
 					No rounds recorded yet. Play some rounds first!
-				</Alert>
-			)}
-
-			{hasFewRounds && (
-				<Alert severity="info" sx={{ mb: 2 }}>
-					Need at least 3 rounds to calculate a Handicap Index. You currently have{' '}
-					{roundsList.length} round{roundsList.length !== 1 ? 's' : ''}.
 				</Alert>
 			)}
 
@@ -409,7 +402,7 @@ const Simulator = () => {
 									<Typography variant="title4">
 										{currentHI != null
 											? currentHI.toFixed(1)
-											: '\u2014 (need at least 3 rounds)'}
+											: '\u2014'}
 									</Typography>
 								</Box>
 
