@@ -10,6 +10,8 @@ import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { ListItemIcon, ListItemText, styled, Typography, Breadcrumbs, Link } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import { SidebarHCP } from '@/styles/stack/StackPlayerMenu.styles';
 import Box from '@mui/material/Box';
@@ -32,7 +34,9 @@ import { SnackbarProvider } from '@/components/Admin/SnackbarProvider.component'
 
 export default function DrawerAppBar(props: IMainLayoutProps) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const uid = readUserLocalStorage();
   const auth = getAuth();
   const player = useAppStore((state) => state.player);
@@ -44,7 +48,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   const roundDetailsData = useAppStore((state) => state.roundDetailsData);
 
   const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+    setDrawerOpen((prevState) => !prevState);
   };
 
   React.useEffect(() => {
@@ -166,7 +170,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   const mobileBreadcrumbs = getMobileBreadcrumbs();
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box onClick={!isDesktop ? handleDrawerToggle : undefined} sx={{ textAlign: 'center' }}>
       <Typography variant="headline6" sx={{ my: 2, color: 'text.primary' }}>
         {player?.displayName ? player.displayName.split(' ')[0] : 'Menu'}
       </Typography>
@@ -346,21 +350,28 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
         <nav>
           <Drawer
             container={container}
-            variant="temporary"
-            open={mobileOpen}
+            variant={isDesktop ? 'persistent' : 'temporary'}
+            open={drawerOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
               keepMounted: true,
             }}
             sx={{
-              display: { xs: 'block', sm: 'none' },
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
             }}
           >
             {drawer}
           </Drawer>
         </nav>
-        <Box component="main" sx={{ p: 1, width: '100%' }}>
+        <Box component="main" sx={{
+          p: 1,
+          width: '100%',
+          transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+          ml: isDesktop && drawerOpen ? '240px' : 0,
+        }}>
           <Toolbar />
           <Box sx={{ display: { xs: 'block', sm: 'none' }, mb: 1 }}>
             {renderBreadcrumbs(true)}
