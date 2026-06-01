@@ -909,6 +909,16 @@ export const useAppStore = create<AppState>()(
       }),
       {
         name: 'app-storage',
+        version: 1,
+        migrate: (persisted) => {
+          const state = persisted as Record<string, unknown>;
+          delete state.parsedRounds;
+          delete state.courseMatches;
+          delete state.importResults;
+          delete state.isLoadingImport;
+          delete state.importError;
+          return state;
+        },
         storage: createJSONStorage(() => localStorage),
         partialize: (state) => ({
           themePreference: state.themePreference,
@@ -931,7 +941,6 @@ export const useAppStore = create<AppState>()(
           newRoundTotals: state.newRoundTotals,
           newRoundDistances: state.newRoundDistances,
           newRoundClubs: state.newRoundClubs,
-          parsedRounds: state.parsedRounds,
         }),
       }
     ),
