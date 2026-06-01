@@ -20,6 +20,7 @@ import RoundsData from './pages/RoundsData.page';
 import SettingsPage from './pages/Settings.page';
 import SharedLayout from './pages/SharedLayout.page';
 import SimulatorPage from './pages/Simulator.page';
+import HandicapHistoryPage from './pages/HandicapHistory.page';
 import Statistics from './pages/Statistics.page';
 import ThemeSetup from './styles/ThemeSetup.styles';
 
@@ -48,6 +49,7 @@ const App: React.FC = () => {
               <Route path='/addNewRound' element={<AddNewRound />} />
               <Route path='/statistics' element={<Statistics />} />
               <Route path='/simulator' element={<SimulatorPage />} />
+              <Route path='/handicap-history' element={<HandicapHistoryPage />} />
               <Route path='/settings' element={<SettingsPage />} />
               <Route path="/admin/courses" element={<AdminRoute><AdminCoursesPage /></AdminRoute>} />
               <Route path="/admin/users" element={<AdminRoute><AdminUsersPage /></AdminRoute>} />

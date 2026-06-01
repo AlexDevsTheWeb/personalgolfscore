@@ -4,10 +4,8 @@ import {
 	CardContent,
 	Typography,
 	TextField,
-	Select,
 	MenuItem,
-	FormControl,
-	InputLabel,
+	Autocomplete,
 	Grid,
 	Box,
 	Divider,
@@ -33,7 +31,8 @@ import { calculateHandicapIndex, calculateProjectedHandicapIndex } from '@/utils
  * based on available rounds count (WHS Rule 5.2a scaling).
  */
 const getScalingCount = (count: number): number => {
-	if (count < 3) return 0;
+	if (count <= 0) return 0;
+	if (count <= 2) return 1;
 	if (count <= 5) return 1;
 	if (count <= 8) return 2;
 	if (count <= 11) return 3;
@@ -109,8 +108,8 @@ const Simulator = () => {
 
 	// Validate Stableford input
 	const isStablefordValid = useMemo(() => {
-		if (stablefordPoints < 0 || stablefordPoints > 36) {
-			if (!stablefordError) setStablefordError('Stableford points must be between 0 and 36');
+		if (stablefordPoints < 0) {
+			if (!stablefordError) setStablefordError('Stableford points must be a positive number');
 			return false;
 		}
 		if (stablefordError) setStablefordError(null);
@@ -124,6 +123,13 @@ const Simulator = () => {
 			(t) => t.name === selectedTeebox.name
 		);
 	}, [selectedCourse, selectedTeebox]);
+
+	// Pre-fill Playing Handicap field when auto value is available
+	useEffect(() => {
+		if (autoPlayingHCP != null && manualPlayingHCP === '') {
+			setManualPlayingHCP(String(autoPlayingHCP));
+		}
+	}, [autoPlayingHCP, manualPlayingHCP === '']);
 
 	// Simulated Score Differential
 	const simulatedResult = useMemo(() => {
@@ -171,7 +177,7 @@ const Simulator = () => {
 		const sds = roundsList
 			.filter((r) => r.scoreDifferential != null)
 			.map((r) => r.scoreDifferential as number);
-		if (sds.length < 3) return [];
+		if (sds.length === 0) return [];
 		const count = Math.min(sds.length, 20);
 		const toUse = getScalingCount(count);
 		const sorted = [...sds.slice(0, count)].sort((a, b) => a - b);
@@ -186,7 +192,7 @@ const Simulator = () => {
 			.map((r) => r.scoreDifferential as number);
 		const virtual = [simulatedResult.scoreDifferential, ...sds.slice(0, 19)];
 		const count = Math.min(virtual.length, 20);
-		if (count < 3) return [];
+		if (count === 0) return [];
 		const toUse = getScalingCount(count);
 		const sorted = [...virtual.slice(0, count)].sort((a, b) => a - b);
 		return sorted.slice(0, toUse);
@@ -228,7 +234,6 @@ const Simulator = () => {
 	// --- Edge case checks ---
 
 	const hasNoRounds = !isLoadingRounds && roundsList.length === 0;
-	const hasFewRounds = !isLoadingRounds && roundsList.length > 0 && roundsList.length < 3;
 	const hasNoCourses = !loading && courses.length === 0 && !courseError;
 
 	// --- Rendering ---
@@ -260,7 +265,7 @@ const Simulator = () => {
 	}
 
 	return (
-		<Box sx={{ p: 2 }}>
+		<Box>
 			{/* Header */}
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
 				<AutoGraphIcon sx={{ fontSize: 32 }} />
@@ -274,13 +279,6 @@ const Simulator = () => {
 				</Alert>
 			)}
 
-			{hasFewRounds && (
-				<Alert severity="info" sx={{ mb: 2 }}>
-					Need at least 3 rounds to calculate a Handicap Index. You currently have{' '}
-					{roundsList.length} round{roundsList.length !== 1 ? 's' : ''}.
-				</Alert>
-			)}
-
 			<Grid container spacing={3}>
 				{/* Left column: Course Selection + Score Input */}
 				<Grid size={{ xs: 12, md: 7 }}>
@@ -291,23 +289,31 @@ const Simulator = () => {
 								Course Selection
 							</Typography>
 
-							{/* Course dropdown */}
-							<FormControl fullWidth sx={{ mb: 2 }}>
-								<InputLabel id="course-label">Course</InputLabel>
-								<Select
-									labelId="course-label"
-									value={selectedCourse?.id ?? ''}
-									label="Course"
-									onChange={(e) => handleCourseChange(e.target.value)}
-								>
-									{courses.map((course) => (
-										<MenuItem key={course.id} value={course.id}>
-											{course.name}
-											{course.city ? ` (${course.city})` : ''}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
+							{/* Course autocomplete */}
+							<Autocomplete
+								fullWidth
+								options={courses}
+								getOptionLabel={(course) =>
+									course.city
+										? `${course.name} (${course.city})`
+										: course.name
+								}
+								isOptionEqualToValue={(option, value) =>
+									option.id === value.id
+								}
+								value={selectedCourse}
+								onChange={(_, newValue) => {
+									handleCourseChange(newValue?.id ?? '');
+								}}
+								renderInput={(params) => (
+									<TextField
+										{...params}
+										label="Course"
+										sx={{ mb: 2 }}
+									/>
+								)}
+								sx={{ mb: 2 }}
+							/>
 
 							{/* Teebox dropdown */}
 							{selectedCourse && selectedCourse.teeboxes.length === 0 && (
@@ -316,25 +322,24 @@ const Simulator = () => {
 								</Alert>
 							)}
 
-							<FormControl
+							<TextField
 								fullWidth
-								disabled={!selectedCourse || selectedCourse.teeboxes.length === 0}
+								select
+								label="Teebox"
+								value={selectedTeebox?.name ?? ''}
+								onChange={(e) => handleTeeboxChange(e.target.value)}
+								disabled={
+									!selectedCourse ||
+									selectedCourse.teeboxes.length === 0
+								}
 							>
-								<InputLabel id="teebox-label">Teebox</InputLabel>
-								<Select
-									labelId="teebox-label"
-									value={selectedTeebox?.name ?? ''}
-									label="Teebox"
-									onChange={(e) => handleTeeboxChange(e.target.value)}
-								>
-									{selectedCourse?.teeboxes.map((teebox) => (
-										<MenuItem key={teebox.name} value={teebox.name}>
-											{teebox.name} — Par {teebox.par}, CR{' '}
-											{teebox.courseRating}, SR {teebox.slopeRating}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
+								{selectedCourse?.teeboxes.map((teebox) => (
+									<MenuItem key={teebox.name} value={teebox.name}>
+										{teebox.name} — Par {teebox.par}, CR{' '}
+										{teebox.courseRating}, SR {teebox.slopeRating}
+									</MenuItem>
+								))}
+							</TextField>
 						</CardContent>
 					</Card>
 
@@ -354,11 +359,10 @@ const Simulator = () => {
 								onChange={(e) => handleStablefordChange(e.target.value)}
 								error={!!stablefordError}
 								helperText={
-									stablefordError || 'Enter total Stableford points (0-36)'
+									stablefordError || 'Enter total Stableford points'
 								}
 								inputProps={{
 									min: 0,
-									max: 36,
 									step: 1,
 								}}
 								sx={{ mb: 2 }}
@@ -374,7 +378,7 @@ const Simulator = () => {
 								helperText={
 									autoPlayingHCP != null
 										? `Auto-calculated from HI: ${autoPlayingHCP}`
-										: 'Select a teebox with a valid Handicap Index for auto-calculation'
+										: 'Enter your Playing Handicap to see results'
 								}
 								inputProps={{
 									min: 0,
@@ -384,8 +388,8 @@ const Simulator = () => {
 
 							<Typography variant="caption" color="text.secondary">
 								Playing Handicap formula:{' '}
-								<code>HI × (SR / 113) + (CR - PAR)</code>. Leave empty to
-								auto-calculate.
+								<code>HI × (SR / 113) + (CR - PAR)</code>. Auto-filled from your
+								current Handicap Index. Adjust manually if needed.
 							</Typography>
 						</CardContent>
 					</Card>
@@ -409,7 +413,7 @@ const Simulator = () => {
 									<Typography variant="title4">
 										{currentHI != null
 											? currentHI.toFixed(1)
-											: '\u2014 (need at least 3 rounds)'}
+											: '\u2014'}
 									</Typography>
 								</Box>
 
@@ -576,8 +580,8 @@ const Simulator = () => {
 									color="text.secondary"
 									sx={{ textAlign: 'center', py: 4 }}
 								>
-									Select a course, teebox, and enter Stableford points to see
-									simulation results.
+									Select a course, teebox, enter Stableford points, and
+									provide a Playing Handicap to see simulation results.
 								</Typography>
 							</CardContent>
 						</Card>

@@ -24,6 +24,7 @@ import { safeDivide } from '@/utils/calculator/math.utils';
  *
  * | Rounds | SDs to Avg |
  * |--------|-----------|
+ * | 1-2    | 1         |
  * | 3-5    | 1         |
  * | 6-8    | 2         |
  * | 9-11   | 3         |
@@ -34,6 +35,7 @@ import { safeDivide } from '@/utils/calculator/math.utils';
  * | 20     | 8         |
  */
 const HI_SCALING: Record<number, number> = {
+	1: 1, 2: 1,
 	3: 1, 4: 1, 5: 1,
 	6: 2, 7: 2, 8: 2,
 	9: 3, 10: 3, 11: 3,
@@ -51,14 +53,14 @@ const HI_SCALING: Record<number, number> = {
  * which matches the existing `roundsList` ordering from Firestore queries.
  *
  * @param scoreDifferentials - Array of Score Differentials, most recent first
- * @returns Handicap Index rounded to 1 decimal place, or null if < 3 valid SDs
+ * @returns Handicap Index rounded to 1 decimal place, or null if no SDs
  */
 export const calculateHandicapIndex = (
 	scoreDifferentials: number[]
 ): number | null => {
 	const count = Math.min(scoreDifferentials.length, 20);
 
-	if (count < 3) {
+	if (count === 0) {
 		return null;
 	}
 
@@ -88,7 +90,7 @@ export const calculateHandicapIndex = (
  *
  * @param currentSDs - Current Score Differentials, most recent first
  * @param simulatedSD - The simulated Score Differential to project
- * @returns Projected Handicap Index, or null if the virtual array has < 3 SDs
+ * @returns Projected Handicap Index, or null if the virtual array is empty
  */
 export const calculateProjectedHandicapIndex = (
 	currentSDs: number[],

@@ -4,6 +4,7 @@ import SportsGolfIcon from '@mui/icons-material/SportsGolf';
 import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 import PeopleIcon from '@mui/icons-material/People';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import TimelineIcon from '@mui/icons-material/Timeline';
 
 const navbar_items: TLinkSidebar[] = [
   {
@@ -39,6 +40,13 @@ const navbar_items: TLinkSidebar[] = [
     name: "HCP Simulator",
     link: "/simulator",
     icon: AutoGraphIcon,
+    show: true,
+  },
+  {
+    id: 6,
+    name: "Handicap History",
+    link: "/handicap-history",
+    icon: TimelineIcon,
     show: true,
   },
 ];
