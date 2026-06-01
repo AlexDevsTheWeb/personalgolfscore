@@ -4,10 +4,8 @@ import {
 	CardContent,
 	Typography,
 	TextField,
-	Select,
 	MenuItem,
-	FormControl,
-	InputLabel,
+	Autocomplete,
 	Grid,
 	Box,
 	Divider,
@@ -110,8 +108,8 @@ const Simulator = () => {
 
 	// Validate Stableford input
 	const isStablefordValid = useMemo(() => {
-		if (stablefordPoints < 0 || stablefordPoints > 36) {
-			if (!stablefordError) setStablefordError('Stableford points must be between 0 and 36');
+		if (stablefordPoints < 0) {
+			if (!stablefordError) setStablefordError('Stableford points must be a positive number');
 			return false;
 		}
 		if (stablefordError) setStablefordError(null);
@@ -130,7 +128,6 @@ const Simulator = () => {
 	const simulatedResult = useMemo(() => {
 		if (
 			!selectedTeebox ||
-			effectivePlayingHCP == null ||
 			!isStablefordValid ||
 			!isTeeboxValid
 		) {
@@ -141,7 +138,7 @@ const Simulator = () => {
 			courseRating: selectedTeebox.courseRating,
 			slopeRating: selectedTeebox.slopeRating,
 			stablefordPoints,
-			playingHCP: effectivePlayingHCP,
+			playingHCP: effectivePlayingHCP ?? 0,
 		});
 	}, [
 		selectedTeebox,
@@ -260,7 +257,7 @@ const Simulator = () => {
 	}
 
 	return (
-		<Box sx={{ p: 2 }}>
+		<Box>
 			{/* Header */}
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
 				<AutoGraphIcon sx={{ fontSize: 32 }} />
@@ -284,23 +281,31 @@ const Simulator = () => {
 								Course Selection
 							</Typography>
 
-							{/* Course dropdown */}
-							<FormControl fullWidth sx={{ mb: 2 }}>
-								<InputLabel id="course-label">Course</InputLabel>
-								<Select
-									labelId="course-label"
-									value={selectedCourse?.id ?? ''}
-									label="Course"
-									onChange={(e) => handleCourseChange(e.target.value)}
-								>
-									{courses.map((course) => (
-										<MenuItem key={course.id} value={course.id}>
-											{course.name}
-											{course.city ? ` (${course.city})` : ''}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
+							{/* Course autocomplete */}
+							<Autocomplete
+								fullWidth
+								options={courses}
+								getOptionLabel={(course) =>
+									course.city
+										? `${course.name} (${course.city})`
+										: course.name
+								}
+								isOptionEqualToValue={(option, value) =>
+									option.id === value.id
+								}
+								value={selectedCourse}
+								onChange={(_, newValue) => {
+									handleCourseChange(newValue?.id ?? '');
+								}}
+								renderInput={(params) => (
+									<TextField
+										{...params}
+										label="Course"
+										sx={{ mb: 2 }}
+									/>
+								)}
+								sx={{ mb: 2 }}
+							/>
 
 							{/* Teebox dropdown */}
 							{selectedCourse && selectedCourse.teeboxes.length === 0 && (
@@ -309,25 +314,24 @@ const Simulator = () => {
 								</Alert>
 							)}
 
-							<FormControl
+							<TextField
 								fullWidth
-								disabled={!selectedCourse || selectedCourse.teeboxes.length === 0}
+								select
+								label="Teebox"
+								value={selectedTeebox?.name ?? ''}
+								onChange={(e) => handleTeeboxChange(e.target.value)}
+								disabled={
+									!selectedCourse ||
+									selectedCourse.teeboxes.length === 0
+								}
 							>
-								<InputLabel id="teebox-label">Teebox</InputLabel>
-								<Select
-									labelId="teebox-label"
-									value={selectedTeebox?.name ?? ''}
-									label="Teebox"
-									onChange={(e) => handleTeeboxChange(e.target.value)}
-								>
-									{selectedCourse?.teeboxes.map((teebox) => (
-										<MenuItem key={teebox.name} value={teebox.name}>
-											{teebox.name} — Par {teebox.par}, CR{' '}
-											{teebox.courseRating}, SR {teebox.slopeRating}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
+								{selectedCourse?.teeboxes.map((teebox) => (
+									<MenuItem key={teebox.name} value={teebox.name}>
+										{teebox.name} — Par {teebox.par}, CR{' '}
+										{teebox.courseRating}, SR {teebox.slopeRating}
+									</MenuItem>
+								))}
+							</TextField>
 						</CardContent>
 					</Card>
 
@@ -347,11 +351,10 @@ const Simulator = () => {
 								onChange={(e) => handleStablefordChange(e.target.value)}
 								error={!!stablefordError}
 								helperText={
-									stablefordError || 'Enter total Stableford points (0-36)'
+									stablefordError || 'Enter total Stableford points'
 								}
 								inputProps={{
 									min: 0,
-									max: 36,
 									step: 1,
 								}}
 								sx={{ mb: 2 }}
@@ -367,7 +370,7 @@ const Simulator = () => {
 								helperText={
 									autoPlayingHCP != null
 										? `Auto-calculated from HI: ${autoPlayingHCP}`
-										: 'Select a teebox with a valid Handicap Index for auto-calculation'
+										: 'Leave empty to use 0'
 								}
 								inputProps={{
 									min: 0,
