@@ -209,7 +209,9 @@ const AddNewRoundForm = () => {
 						variant='outlined'
 						type='number'
 						fullWidth
-						disabled={courseSelected}
+						slotProps={{
+							input: { readOnly: courseSelected },
+						}}
 						error={!!errors.roundHoles}
 						helperText={errors.roundHoles?.message}
 					/>
@@ -226,7 +228,9 @@ const AddNewRoundForm = () => {
 						variant="outlined"
 						type='number'
 						fullWidth
-						disabled={courseSelected}
+						slotProps={{
+							input: { readOnly: courseSelected },
+						}}
 						error={!!errors.roundPar}
 						helperText={errors.roundPar?.message}
 					/>
@@ -242,7 +246,9 @@ const AddNewRoundForm = () => {
 						variant="outlined"
 						fullWidth
 						type='number'
-						disabled={autoPlayingHCP != null}
+						slotProps={{
+							input: { readOnly: autoPlayingHCP != null },
+						}}
 						error={!!errors.roundPlayingHCP}
 						helperText={
 							autoPlayingHCP != null
