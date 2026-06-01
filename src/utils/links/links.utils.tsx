@@ -3,6 +3,7 @@ import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import SportsGolfIcon from '@mui/icons-material/SportsGolf';
 import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 import PeopleIcon from '@mui/icons-material/People';
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 
 const navbar_items: TLinkSidebar[] = [
   {
@@ -32,6 +33,13 @@ const navbar_items: TLinkSidebar[] = [
     link: "/admin/users",
     icon: PeopleIcon,
     show: false,
+  },
+  {
+    id: 5,
+    name: "Simulator",
+    link: "/simulator",
+    icon: AutoGraphIcon,
+    show: true,
   },
 ];
 

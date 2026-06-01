@@ -93,6 +93,8 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
       breadcrumbs.push({ label: 'Statistics', path: '/statistics' });
     } else if (path === '/settings') {
       breadcrumbs.push({ label: 'Settings', path: '/settings' });
+    } else if (path === '/simulator') {
+      breadcrumbs.push({ label: 'Simulator', path: '/simulator' });
     } else if (path.startsWith('/round/')) {
       // Check if roundDetailsData is already loaded
       if (roundDetailsData?.roundCourse) {
@@ -140,6 +142,8 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
       breadcrumbs.push({ label: 'Statistics', path: '/statistics' });
     } else if (path === '/settings') {
       breadcrumbs.push({ label: 'Settings', path: '/settings' });
+    } else if (path === '/simulator') {
+      breadcrumbs.push({ label: 'Simulator', path: '/simulator' });
     } else if (path.startsWith('/round/')) {
       if (roundDetailsData?.roundCourse) {
         breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
