@@ -97,7 +97,7 @@ const HandicapHistory = () => {
 	}
 
 	return (
-		<Box sx={{ p: 2 }}>
+		<Box>
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
 				<TimelineIcon sx={{ fontSize: 32 }} />
 				<Typography variant="headline2">Handicap History</Typography>
