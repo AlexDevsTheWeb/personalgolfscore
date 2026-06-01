@@ -62,6 +62,29 @@ export const getRoundDetails = async (
 
 };
 
+import { IRoundImportDocument } from '@/components/ImportRounds/RoundBuilder.utils';
+
+export const importRoundsBatch = async (
+  userId: string,
+  roundDocs: IRoundImportDocument[]
+): Promise<{ success: boolean; importedCount: number; roundIds: string[] }> => {
+  if (!userId) {
+    throw new Error('User not authenticated');
+  }
+
+  const batch = writeBatch(db);
+  const roundIds: string[] = [];
+
+  for (const roundDoc of roundDocs) {
+    const roundRef = doc(collection(db, 'players', userId, 'rounds'));
+    roundIds.push(roundRef.id);
+    batch.set(roundRef, roundDoc);
+  }
+
+  await batch.commit();
+  return { success: true, importedCount: roundDocs.length, roundIds };
+};
+
 export const saveNewRound = async (): Promise<{ success: boolean; roundId: string }> => {
   const store = useAppStore.getState();
   const { newRoundMain, newRoundTotals, newRoundHoles, newRoundDistances, player } = store;
