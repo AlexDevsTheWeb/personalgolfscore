@@ -134,11 +134,11 @@ const AddNewRoundForm = () => {
 			title='New round: basic info'
 			onClose={handleCancel}
 			onSubmit={handleSubmit(onSubmit)}
-			onClick={handleSubmit(onSubmit)}
 		>
 			<Grid container spacing={1} sx={{ mt: 1 }} columns={{ xs: 12, sm: 12, lg: 12 }}>
 				<Grid size={{ xs: 12, sm: 6, lg: 6 }}>
 					<Autocomplete
+						disablePortal
 						options={courses}
 						getOptionLabel={(course) =>
 							course.city
@@ -155,8 +155,6 @@ const AddNewRoundForm = () => {
 							<TextField
 								{...params}
 								label="Round course"
-								error={!!errors.roundCourse}
-								helperText={errors.roundCourse?.message}
 							/>
 						)}
 					/>
