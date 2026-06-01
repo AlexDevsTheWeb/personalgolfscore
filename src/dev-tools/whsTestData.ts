@@ -96,7 +96,7 @@ export const WHSScoreDifferentialTestCases: IScoreDifferentialTestCase[] = [
  *
  * With 20 rounds: average lowest 8 of most recent 20 SDs.
  * With < 20 rounds: use WHS scaling table.
- * Returns null if fewer than 3 rounds.
+ * Returns null if no rounds.
  */
 export const WHSHandicapIndexTestCases: IHandicapIndexTestCase[] = [
 	{
@@ -120,17 +120,17 @@ export const WHSHandicapIndexTestCases: IHandicapIndexTestCase[] = [
 		expectedHI: 10.2,
 	},
 	{
-		name: '2 rounds - returns null (< 3 rounds)',
+		name: '2 rounds - lowest 1 (scaling)',
 		scoreDifferentials: [14.6, 10.2],
-		expectedHI: null,
+		expectedHI: 10.2, // lowest 1: 10.2
 	},
 	{
-		name: '1 round - returns null (< 3 rounds)',
+		name: '1 round - that SD is HI',
 		scoreDifferentials: [14.6],
-		expectedHI: null,
+		expectedHI: 14.6,
 	},
 	{
-		name: 'Empty array - returns null (< 3 rounds)',
+		name: 'Empty array - returns null (no data)',
 		scoreDifferentials: [],
 		expectedHI: null,
 	},
@@ -175,11 +175,11 @@ export const WHSProjectedHITestCases: IProjectedHITestCase[] = [
 		expectedHI: 11.3,
 	},
 	{
-		name: 'Only 1 current SD — virtual has 2 entries, returns null',
+		name: 'Only 1 current SD — virtual has 2 entries, lowest of both',
 		currentSDs: [14.6],
 		simulatedSD: 4.6,
-		// Virtual: [4.6, 14.6] → 2 entries → < 3 rounds → null
-		expectedHI: null,
+		// Virtual: [4.6, 14.6] → 2 entries → scaling=1 → lowest 1 → 4.6
+		expectedHI: 4.6,
 	},
 ];
 
