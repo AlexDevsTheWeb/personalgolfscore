@@ -169,6 +169,7 @@ export interface IBasicRoundData {
   roundStrokes?: number,
   userId?: string
   createdAt: number,
+  scoreDifferential?: number | null,
   totals: IRoundTotals
 }
 

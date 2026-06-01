@@ -14,6 +14,8 @@ import {
   prepareOverallTotalsUpdateBatch,
   prepareRoundSaveBatch
 } from '../../utils/round/round.utils';
+import { getCourseByName } from '@/utils/firestore/course.firestore';
+import { calculateScoreDifferential } from '@/utils/whs/whs.utils';
 
 export const getRoundDetails = async (
   { playerId, roundId }: IFetchParams
@@ -77,6 +79,32 @@ export const saveNewRound = async (): Promise<{ success: boolean; roundId: strin
       throw new Error('User not authenticated');
     }
 
+    // Compute Score Differential before saving (per D-03)
+    let scoreDifferential: number | null = null;
+    try {
+      const course = await getCourseByName(general.roundCourse);
+      const teebox = course?.teeboxes.find(t => t.name === general.roundTee);
+      if (teebox && general.roundPar && general.roundPlayingHCP) {
+        const sdResult = calculateScoreDifferential({
+          par: general.roundPar,
+          courseRating: teebox.courseRating,
+          slopeRating: teebox.slopeRating,
+          stablefordPoints: currentTotals.points.totals,
+          playingHCP: general.roundPlayingHCP,
+        });
+        scoreDifferential = sdResult.scoreDifferential;
+      } else {
+        console.warn(
+          'saveNewRound: Could not compute Score Differential — ' +
+          `course="${general.roundCourse}", tee="${general.roundTee}", ` +
+          `par=${general.roundPar}, playingHCP=${general.roundPlayingHCP}`
+        );
+      }
+    } catch (sdError: any) {
+      console.error('saveNewRound: Error computing Score Differential:', sdError);
+      // Round save continues without SD — non-blocking
+    }
+
     const batchSaveRound = writeBatch(db);
     savedRoundId = prepareRoundSaveBatch(
       batchSaveRound,
@@ -84,7 +112,8 @@ export const saveNewRound = async (): Promise<{ success: boolean; roundId: strin
       general,
       currentTotals,
       currentRoundDistances,
-      holes
+      holes,
+      scoreDifferential
     );
     await batchSaveRound.commit();
 

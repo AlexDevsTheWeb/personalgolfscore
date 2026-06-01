@@ -13,6 +13,8 @@ import {
 	serverTimestamp,
 	query,
 	orderBy,
+	where,
+	limit,
 	Timestamp,
 } from 'firebase/firestore';
 
@@ -69,6 +71,37 @@ export const getCourseById = async (id: string): Promise<ICourse | null> => {
 		} as ICourse;
 	} catch (error: any) {
 		console.error('course.firestore: Error fetching course by ID:', error);
+		throw error;
+	}
+};
+
+export const getCourseByName = async (name: string): Promise<ICourse | null> => {
+	if (!name) {
+		console.error('getCourseByName: Course name is required.');
+		throw new Error('Course name not provided.');
+	}
+
+	try {
+		const coursesRef = collection(db, COURSES_COLLECTION);
+		const nameQuery = query(
+			coursesRef,
+			where('name', '==', name),
+			limit(1)
+		);
+		const snapshot = await getDocs(nameQuery);
+
+		if (snapshot.empty) {
+			return null;
+		}
+
+		const docSnap = snapshot.docs[0];
+		const data = docSnap.data();
+		return {
+			...convertTimestamps(data),
+			id: docSnap.id,
+		} as ICourse;
+	} catch (error: any) {
+		console.error('course.firestore: Error fetching course by name:', error);
 		throw error;
 	}
 };
