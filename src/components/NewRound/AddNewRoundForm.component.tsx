@@ -1,7 +1,9 @@
 import { Dialog } from '@/styles/dialog/Dialog.styles';
 import { INewRound } from '@/types/round.types';
-import { ICourse, ITeebox } from '@/types/course.types';
+import { ICourse } from '@/types/course.types';
 import { getAllCourses } from '@/utils/firestore/course.firestore';
+import { calculateHandicapIndex } from '@/utils/whs/hi.utils';
+import { calculatePlayingHandicap } from '@/utils/whs/whs.utils';
 import {
 	Grid,
 	TextField,
@@ -9,7 +11,7 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Select from './components/Select.component';
@@ -37,7 +39,8 @@ const AddNewRoundForm = () => {
 	const setRoundPlayingHCP = useAppStore((state) => state.setRoundPlayingHCP);
 	const setRoundTee = useAppStore((state) => state.setRoundTee);
 	const setRoundNumber = useAppStore((state) => state.setRoundNumber);
-	const holes = useAppStore((state) => state.newRoundHoles.holes);
+	const holesList = useAppStore((state) => state.newRoundHoles.holes);
+	const roundsList = useAppStore((state) => state.roundsList);
 
 	const [courses, setCourses] = useState<ICourse[]>([]);
 	const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null);
@@ -59,6 +62,31 @@ const AddNewRoundForm = () => {
 	});
 
 	const watchedTee = watch('roundTee');
+
+	// Current Handicap Index from rounds
+	const currentHI = useMemo(() => {
+		const sds = roundsList
+			.filter((r) => r.scoreDifferential != null)
+			.map((r) => r.scoreDifferential as number);
+		return calculateHandicapIndex(sds);
+	}, [roundsList]);
+
+	// Find selected teebox
+	const selectedTeebox = useMemo(() => {
+		if (!selectedCourse || !watchedTee) return null;
+		return selectedCourse.teeboxes.find((t) => t.name === watchedTee) || null;
+	}, [selectedCourse, watchedTee]);
+
+	// Auto-calculated Playing Handicap
+	const autoPlayingHCP = useMemo(() => {
+		if (!selectedTeebox || currentHI == null) return null;
+		return calculatePlayingHandicap(
+			currentHI,
+			selectedTeebox.courseRating,
+			selectedTeebox.slopeRating,
+			selectedTeebox.par
+		);
+	}, [selectedTeebox, currentHI]);
 
 	useEffect(() => {
 		if (!roundDateString) {
@@ -93,15 +121,15 @@ const AddNewRoundForm = () => {
 		}
 	};
 
-	// Auto-fill par when tee changes
+	// Auto-fill par and playing HCP when tee changes
 	useEffect(() => {
-		if (selectedCourse && watchedTee) {
-			const teebox = selectedCourse.teeboxes.find((t) => t.name === watchedTee);
-			if (teebox) {
-				setValue('roundPar', teebox.par);
+		if (selectedTeebox) {
+			setValue('roundPar', selectedTeebox.par);
+			if (autoPlayingHCP != null) {
+				setValue('roundPlayingHCP', autoPlayingHCP);
 			}
 		}
-	}, [watchedTee, selectedCourse, setValue]);
+	}, [selectedTeebox, autoPlayingHCP, setValue]);
 
 	const handleDateChange = (newValue: Dayjs | null) => {
 		setRoundDate(newValue);
@@ -127,6 +155,8 @@ const AddNewRoundForm = () => {
 		setRoundMainData({});
 		navigate('/dashboard');
 	};
+
+	const courseSelected = selectedCourse != null;
 
 	return (
 		<Dialog
@@ -179,6 +209,7 @@ const AddNewRoundForm = () => {
 						variant='outlined'
 						type='number'
 						fullWidth
+						disabled={courseSelected}
 						error={!!errors.roundHoles}
 						helperText={errors.roundHoles?.message}
 					/>
@@ -195,6 +226,7 @@ const AddNewRoundForm = () => {
 						variant="outlined"
 						type='number'
 						fullWidth
+						disabled={courseSelected}
 						error={!!errors.roundPar}
 						helperText={errors.roundPar?.message}
 					/>
@@ -210,8 +242,13 @@ const AddNewRoundForm = () => {
 						variant="outlined"
 						fullWidth
 						type='number'
+						disabled={autoPlayingHCP != null}
 						error={!!errors.roundPlayingHCP}
-						helperText={errors.roundPlayingHCP?.message}
+						helperText={
+							autoPlayingHCP != null
+								? `Auto-calculated from HI: ${currentHI?.toFixed(1)}`
+								: errors.roundPlayingHCP?.message
+						}
 					/>
 				</Grid>
 				<Grid size={{ xs: 6, sm: 3, lg: 3 }}>
