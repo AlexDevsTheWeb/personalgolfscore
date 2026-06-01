@@ -1,19 +1,17 @@
 import { TLinkSidebar } from '@/types/general.types';
-import { IBoxProps, IMainLayoutProps } from '@/types/props.types';
+import { IMainLayoutProps } from '@/types/props.types';
 import links from '@/utils/links/links.utils';
 import { deleteUserLocalStorage, readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 import Logout from '@mui/icons-material/Logout';
 import PeopleIcon from '@mui/icons-material/People';
 import Settings from '@mui/icons-material/Settings';
-import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
+import SvgIcon from '@mui/material/SvgIcon';
+import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { ListItemIcon, ListItemText, styled, Typography, Breadcrumbs, Link } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { ListItemIcon, ListItemText, Typography, Breadcrumbs, Link, Avatar } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import { SidebarHCP } from '@/styles/stack/StackPlayerMenu.styles';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -21,22 +19,21 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import Toolbar from '@mui/material/Toolbar';
 import { getAuth, signOut } from 'firebase/auth';
 import _ from 'lodash';
 import * as React from 'react';
 import { Outlet, useNavigate, useLocation, Link as RouterLink } from 'react-router-dom';
 import ThemeSwitcher from '../common/ThemeSwitcher.component';
 import Footer from './Footer.component';
-import User from './User.component';
 import { useAppStore } from '@/store/zustand';
 import { SnackbarProvider } from '@/components/Admin/SnackbarProvider.component';
 
-export default function DrawerAppBar(props: IMainLayoutProps) {
-  const { window } = props;
+const collapsedWidth = 57;
+const drawerWidth = 240;
+
+export default function DrawerAppBar(_props: IMainLayoutProps) {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const uid = readUserLocalStorage();
   const auth = getAuth();
   const player = useAppStore((state) => state.player);
@@ -67,13 +64,13 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
       resetUser();
       navigate('/login');
     }).catch((error) => {
-      console.error("Logout error:", error);
+      console.error('Logout error:', error);
     });
   };
 
   const getBreadcrumbs = () => {
     const path = location.pathname;
-    
+
     interface BreadcrumbItem {
       label: string;
       path: string;
@@ -81,7 +78,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
     }
 
     const breadcrumbs: BreadcrumbItem[] = [
-      { label: 'Home', path: '/dashboard', icon: <HomeIcon fontSize="small" /> }
+      { label: 'Home', path: '/dashboard', icon: <HomeIcon fontSize="small" /> },
     ];
 
     if (path === '/dashboard' || path === '/') {
@@ -99,63 +96,14 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
     } else if (path === '/settings') {
       breadcrumbs.push({ label: 'Settings', path: '/settings' });
     } else if (path === '/simulator') {
-      breadcrumbs.push({ label: 'Simulator', path: '/simulator' });
-    } else if (path.startsWith('/round/')) {
-      // Check if roundDetailsData is already loaded
-      if (roundDetailsData?.roundCourse) {
-        breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
-        breadcrumbs.push({ label: roundDetailsData.roundCourse, path: path });
-      } else {
-        // If not loaded yet, show "All Rounds" and "Loading..."
-        breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
-        breadcrumbs.push({ label: 'Loading...', path: path });
-      }
-    } else if (path === '/admin/courses') {
-      breadcrumbs.push({ label: 'Admin', path: '/admin/courses' });
-    } else if (path === '/admin/users') {
-      breadcrumbs.push({ label: 'Admin', path: '/admin/users' });
-    }
-
-    return breadcrumbs;
-  };
-
-  const getMobileBreadcrumbs = () => {
-    const path = location.pathname;
-    
-    interface BreadcrumbItem {
-      label: string;
-      path: string;
-      icon?: React.ReactNode;
-    }
-
-    const breadcrumbs: BreadcrumbItem[] = [];
-
-    if (path === '/dashboard' || path === '/') {
-      return [];
-    }
-
-    // Always show Home icon first on mobile
-    breadcrumbs.push({ label: 'Home', path: '/dashboard', icon: <HomeIcon fontSize="small" /> });
-
-    if (path === '/clubs') {
-      breadcrumbs.push({ label: 'Clubs', path: '/clubs' });
-    } else if (path === '/all-rounds') {
-      breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
-    } else if (path === '/addNewRound') {
-      breadcrumbs.push({ label: 'Add Round', path: '/addNewRound' });
-    } else if (path === '/statistics') {
-      breadcrumbs.push({ label: 'Statistics', path: '/statistics' });
-    } else if (path === '/settings') {
-      breadcrumbs.push({ label: 'Settings', path: '/settings' });
-    } else if (path === '/simulator') {
-      breadcrumbs.push({ label: 'Simulator', path: '/simulator' });
+      breadcrumbs.push({ label: 'HCP Simulator', path: '/simulator' });
     } else if (path.startsWith('/round/')) {
       if (roundDetailsData?.roundCourse) {
         breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
-        breadcrumbs.push({ label: roundDetailsData.roundCourse, path: path });
+        breadcrumbs.push({ label: roundDetailsData.roundCourse, path });
       } else {
         breadcrumbs.push({ label: 'All Rounds', path: '/all-rounds' });
-        breadcrumbs.push({ label: 'Loading...', path: path });
+        breadcrumbs.push({ label: 'Loading...', path });
       }
     } else if (path === '/admin/courses') {
       breadcrumbs.push({ label: 'Admin', path: '/admin/courses' });
@@ -167,232 +115,224 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
   };
 
   const breadcrumbs = getBreadcrumbs();
-  const mobileBreadcrumbs = getMobileBreadcrumbs();
 
   const drawer = (
-    <Box onClick={!isDesktop ? handleDrawerToggle : undefined} sx={{ textAlign: 'center' }}>
-      <Typography variant="headline6" sx={{ my: 2, color: 'text.primary' }}>
-        {player?.displayName ? player.displayName.split(' ')[0] : 'Menu'}
-      </Typography>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, overflow: 'hidden' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: drawerOpen ? 'flex-start' : 'center',
+          px: drawerOpen ? 1.5 : 1,
+          minHeight: 64,
+        }}
+      >
+        <IconButton onClick={handleDrawerToggle}>
+          <MenuIcon />
+        </IconButton>
+      </Box>
       <Divider />
-      <List>
-        {links.filter(l => l.show === true).map((link: TLinkSidebar, index: number) => {
-          return (
-            <ListItem key={index} disablePadding sx={{ display: 'flex' }}>
+      <Box sx={{ flexGrow: 1, overflow: 'hidden', minHeight: 0 }}>
+        <List sx={{ overflowY: 'auto', height: '100%' }}>
+          {links.filter((l) => l.show === true).map((link: TLinkSidebar, index: number) => (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  px: 2.5,
-                }}
                 component={RouterLink}
                 to={link.link}
+                onClick={drawerOpen ? handleDrawerToggle : undefined}
+                sx={{
+                  minHeight: 48,
+                  justifyContent: drawerOpen ? 'initial' : 'center',
+                  px: 2.5,
+                }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
                     justifyContent: 'center',
-                    marginRight: '10px',
-                    color: 'text.primary'
+                    mr: drawerOpen ? 1.5 : 'auto',
                   }}
                 >
                   <SvgIcon component={link.icon} inheritViewBox />
                 </ListItemIcon>
-                <ListItemText primary={link.name} sx={{ color: 'text.primary' }} />
+                <ListItemText
+                  primary={link.name}
+                  sx={{ opacity: drawerOpen ? 1 : 0 }}
+                />
               </ListItemButton>
             </ListItem>
-          );
-        })}
-        <Divider sx={{ my: 1 }} />
-        <ListItem sx={{ display: 'flex', justifyContent: 'center', py: 0.5 }}>
-          <SidebarHCP value={player?.HCP ?? 0} name={player?.displayName ?? ''} />
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component={RouterLink} to="/settings" sx={{ minHeight: 48, px: 2.5 }}>
-            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary="Settings" sx={{ color: 'text.primary' }} />
-          </ListItemButton>
-        </ListItem>
-        <Divider sx={{ my: 1 }} />
-        {player?.isAdmin && (
+          ))}
+          {player?.isAdmin && (
+            <>
+              <Divider sx={{ my: 1 }} />
+              {drawerOpen && (
+                <ListItem disablePadding sx={{ px: 2.5, py: 0.5 }}>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                    Admin
+                  </Typography>
+                </ListItem>
+              )}
+              <ListItem disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={RouterLink}
+                  to="/admin/courses"
+                  onClick={drawerOpen ? handleDrawerToggle : undefined}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: drawerOpen ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                      mr: drawerOpen ? 1.5 : 'auto',
+                    }}
+                  >
+                    <SvgIcon component={GolfCourseIcon} inheritViewBox />
+                  </ListItemIcon>
+                  <ListItemText primary="Courses" sx={{ opacity: drawerOpen ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={RouterLink}
+                  to="/admin/users"
+                  onClick={drawerOpen ? handleDrawerToggle : undefined}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: drawerOpen ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                      mr: drawerOpen ? 1.5 : 'auto',
+                    }}
+                  >
+                    <SvgIcon component={PeopleIcon} inheritViewBox />
+                  </ListItemIcon>
+                  <ListItemText primary="Users" sx={{ opacity: drawerOpen ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            </>
+          )}
+        </List>
+      </Box>
+      <Divider />
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: drawerOpen ? 'space-between' : 'center',
+          px: drawerOpen ? 1.5 : 0.5,
+          py: drawerOpen ? 1.5 : 1,
+        }}
+      >
+        {drawerOpen ? (
           <>
-            <ListItem disablePadding sx={{ px: 2.5, py: 0.5 }}>
-              <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
-                Admin
-              </Typography>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton component={RouterLink} to="/admin/courses" sx={{ minHeight: 48, px: 2.5 }}>
-                <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
-                  <SvgIcon component={GolfCourseIcon} inheritViewBox />
-                </ListItemIcon>
-                <ListItemText primary="Courses" sx={{ color: 'text.primary' }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton component={RouterLink} to="/admin/users" sx={{ minHeight: 48, px: 2.5 }}>
-                <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
-                  <SvgIcon component={PeopleIcon} inheritViewBox />
-                </ListItemIcon>
-                <ListItemText primary="Users" sx={{ color: 'text.primary' }} />
-              </ListItemButton>
-            </ListItem>
-          </>
-        )}
-        <Divider sx={{ my: 1 }} />
-        <ListItem sx={{ justifyContent: 'center', display: 'flex', py: 1 }}>
-          <ThemeSwitcher />
-        </ListItem>
-        <Divider sx={{ my: 1 }} />
-        <ListItem disablePadding>
-          <ListItemButton onClick={handleLogout} sx={{ minHeight: 48, px: 2.5 }}>
-            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 0 }}>
+              <Avatar
+                sx={{ bgcolor: 'primary.main', width: 36, height: 36, fontSize: '0.875rem' }}
+                alt={player?.displayName ?? ''}
+                src={player?.photoURL || undefined}
+              >
+                {player?.displayName ? `${player.displayName[0]}${player.displayName.split(' ')[1]?.[0] ?? ''}`.toUpperCase() : '?'}
+              </Avatar>
+              <Box>
+                <Typography noWrap sx={{ fontSize: '0.875rem' }}>
+                  {player?.displayName ?? ''}
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}>
+                  <IconButton size="small" component={RouterLink} to="/settings">
+                    <Settings fontSize="small" />
+                  </IconButton>
+                  <ThemeSwitcher />
+                </Box>
+              </Box>
+            </Box>
+            <IconButton size="small" onClick={handleLogout}>
               <Logout fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary="Logout" sx={{ color: 'text.primary' }} />
-          </ListItemButton>
-        </ListItem>
-      </List>
+            </IconButton>
+          </>
+        ) : (
+          <Avatar
+            sx={{ bgcolor: 'primary.main', width: 32, height: 32, fontSize: '0.75rem' }}
+            alt={player?.displayName ?? ''}
+            src={player?.photoURL || undefined}
+          >
+            {player?.displayName ? `${player.displayName[0]}${player.displayName.split(' ')[1]?.[0] ?? ''}`.toUpperCase() : '?'}
+          </Avatar>
+        )}
+      </Box>
     </Box>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
-
-  const renderBreadcrumbs = (isMobile: boolean) => {
-    const crumbs = isMobile ? mobileBreadcrumbs : breadcrumbs;
-    
-    if (crumbs.length === 0) {
-      return null;
-    }
-
-    return (
-      <Breadcrumbs
-        separator={<NavigateNextIcon fontSize="small" />}
-        sx={{ 
-          display: 'flex', 
-          alignItems: 'center',
-          '& .MuiBreadcrumbs-separator': { mx: 0.5 }
-        }}
-      >
-        {crumbs.map((crumb, index) => {
-          const isLast = index === crumbs.length - 1;
-          return isLast ? (
-            <Typography 
-              key={crumb.path} 
-              color="inherit" 
-              fontWeight="bold"
-              sx={{ 
-                fontSize: isMobile ? '0.875rem' : '0.875rem',
-                maxWidth: isMobile ? '120px' : 'none',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              {crumb.label}
-            </Typography>
-          ) : (
-            <Link
-              key={crumb.path}
-              component={RouterLink}
-              to={crumb.path}
-              color="inherit"
-              underline="hover"
-              sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                cursor: 'pointer',
-                fontSize: '0.875rem'
-              }}
-            >
-              {crumb.icon}
-            </Link>
-          );
-        })}
-      </Breadcrumbs>
-    );
-  };
-
   return (
     <SnackbarProvider>
-    <BoxFooter>
-      <Box>
-        <AppBar component="nav">
-          <Toolbar sx={{ display: 'flex', flexWrap: 'nowrap' }}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 1 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="div"
-              variant="mainAppTitle"
-              sx={{ flexGrow: 0, whiteSpace: 'nowrap' }}
-              color="inherit"
-            >
+      <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+        <Drawer
+          variant="permanent"
+          open={drawerOpen}
+          sx={{
+            width: drawerOpen ? drawerWidth : collapsedWidth,
+            transition: theme.transitions.create('width', {
+              easing: theme.transitions.easing.sharp,
+              duration: drawerOpen
+                ? theme.transitions.duration.enteringScreen
+                : theme.transitions.duration.leavingScreen,
+            }),
+            '& .MuiDrawer-paper': {
+              width: drawerOpen ? drawerWidth : collapsedWidth,
+              transition: theme.transitions.create('width', {
+                easing: theme.transitions.easing.sharp,
+                duration: drawerOpen
+                  ? theme.transitions.duration.enteringScreen
+                  : theme.transitions.duration.leavingScreen,
+              }),
+              overflowX: 'hidden',
+              overflowY: 'hidden',
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+        <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, minWidth: 0, height: '100vh' }}>
+          <Box component="main" sx={{ flexGrow: 1, overflowY: 'auto', p: 2 }}>
+            <Typography sx={{ fontSize: '1.25rem', fontWeight: 500, mb: 0.5 }}>
               PGS
             </Typography>
-            
-            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', mx: 1, minWidth: 0 }}>
-              {renderBreadcrumbs(false)}
-            </Box>
-            
-            <Box sx={{ flexGrow: 0 }}>
-              <User />
-            </Box>
-          </Toolbar>
-        </AppBar>
-        <nav>
-          <Drawer
-            container={container}
-            variant={isDesktop ? 'persistent' : 'temporary'}
-            open={drawerOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
-            sx={{
-              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </nav>
-        <Box component="main" sx={{
-          p: 1,
-          width: '100%',
-          transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-          }),
-          ml: isDesktop && drawerOpen ? '240px' : 0,
-        }}>
-          <Toolbar />
-          <Box sx={{ display: { xs: 'block', sm: 'none' }, mb: 1 }}>
-            {renderBreadcrumbs(true)}
+            {breadcrumbs.length > 0 && (
+              <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} sx={{ mb: 2 }}>
+                {breadcrumbs.map((crumb, index) => {
+                  const isLast = index === breadcrumbs.length - 1;
+                  return isLast ? (
+                    <Typography key={crumb.path} color="text.primary" fontWeight="bold" sx={{ fontSize: '0.875rem' }}>
+                      {crumb.label}
+                    </Typography>
+                  ) : (
+                    <Link
+                      key={crumb.path}
+                      component={RouterLink}
+                      to={crumb.path}
+                      color="inherit"
+                      underline="hover"
+                      sx={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem' }}
+                    >
+                      {crumb.icon}
+                    </Link>
+                  );
+                })}
+              </Breadcrumbs>
+            )}
+            <Outlet />
           </Box>
-          <Outlet />
+          <Footer />
         </Box>
       </Box>
-      <Footer />
-    </BoxFooter>
     </SnackbarProvider>
   );
 }
-
-const StyledBox = styled(Box)<IBoxProps>((props) => (({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between', height: '100vh'
-})));
-
-const BoxFooter: React.FC<IBoxProps> = props => {
-  return (
-    <StyledBox {...props}>{props.children}</StyledBox>
-  )
-};

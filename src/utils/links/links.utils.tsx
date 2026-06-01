@@ -36,7 +36,7 @@ const navbar_items: TLinkSidebar[] = [
   },
   {
     id: 5,
-    name: "Simulator",
+    name: "HCP Simulator",
     link: "/simulator",
     icon: AutoGraphIcon,
     show: true,

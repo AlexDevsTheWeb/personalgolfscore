@@ -6,8 +6,9 @@ This roadmap delivers WHS (World Handicap System) handicap calculation, a shared
 
 ## Phases
 
-- [ ] **Phase 1: Course Database & Admin Foundation** - Admin authentication, route protection, golf course CRUD, and the public `golf_courses` collection
-- [ ] **Phase 2: WHS Engine & Handicap Simulator** - WHS Score Differential and Handicap Index calculation engine plus a dedicated Simulator with course/teebox selection and projected HI display
+- [x] **Phase 1: Course Database & Admin Foundation** - Admin authentication, route protection, golf course CRUD, and the public `golf_courses` collection (completed 2026-05-31)
+- [x] **Phase 2: WHS Engine & Handicap Simulator** - WHS Score Differential and Handicap Index calculation engine plus a dedicated Simulator with course/teebox selection and projected HI display (completed 2026-06-01)
+- [x] **Phase 3: Navigation & Sidebar Reorg** - Move Avatar menu (HCP, settings, logout) to sidebar; fix admin link visibility; make sidebar responsive across all screen sizes (completed 2026-06-01)
 
 ## Phase Details
 
@@ -31,7 +32,7 @@ Plans:
 
 - [x] 01-01-PLAN.md — Foundation: types, Firestore service, security rules (Wave 1)
 - [x] 01-02-PLAN.md — Admin UI Components: AdminRoute, DataGrids, dialogs, snackbar (Wave 2)
-- [ ] 01-03-PLAN.md — Page Integration: admin pages, routes, nav, seed admin (Wave 3)
+- [x] 01-03-PLAN.md — Page Integration: admin pages, routes, nav, seed admin (Wave 3)
 
 ### Phase 2: WHS Engine & Handicap Simulator
 
@@ -51,19 +52,47 @@ Plans:
 **UI hint**: yes
 
 Plans:
+
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — WHS Calculation Engine + SD Storage + Tests (Wave 1)
+- [x] 02-01-PLAN.md — WHS Calculation Engine + SD Storage + Tests (Wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 02-02-PLAN.md — Handicap Simulator Page + Nav Integration (Wave 2)
+- [x] 02-02-PLAN.md — Handicap Simulator Page + Nav Integration (Wave 2)
+
+### Phase 3: Navigation & Sidebar Reorg
+
+**Goal**: Reorganize navigation so the sidebar (hamburger drawer) contains all user actions — HCP, settings, logout, and admin links — instead of the Avatar menu, and make the sidebar accessible on all screen sizes
+**Depends on**: Phase 1 (admin infra), Phase 2 (HCP display)
+**Requirements**: NAV-01, NAV-02, NAV-03, NAV-04, NAV-05
+**Success Criteria** (what must be TRUE):
+
+  1. Avatar dropdown no longer shows HCP, Settings, or Logout — only the avatar image remains as a visual indicator
+  2. Sidebar drawer is accessible from both mobile and desktop (responsive: temporary on mobile, persistent/toggleable on desktop)
+  3. Sidebar contains: HCP display, Settings link, Logout button (moved from Avatar menu)
+  4. Sidebar properly filters navigation links: public links shown to all users, admin links shown only when `player.isAdmin` is true
+  5. No duplicate link rendering in sidebar (current bug: admin links render twice — once from `links.map()` and once from conditional block)
+
+**Plans**: 2 plans
+**UI hint**: yes
+
+Plans:
+
+**Wave 1**
+
+- [x] 03-01-PLAN.md — Simplify Avatar + create compact SidebarHCP component (Wave 1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 03-02-PLAN.md — Responsive sidebar drawer with filtered links, HCP/Settings/Logout (Wave 2)
 
 ## Progress
 
-**Execution Order:** Phases execute in numeric order: 1 → 2
+**Execution Order:** Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Course Database & Admin Foundation | 2/3 | In Progress|  |
-| 2. WHS Engine & Handicap Simulator | 0/0 | Not started | - |
+| 1. Course Database & Admin Foundation | 3/3 | Complete   | 2026-05-31 |
+| 2. WHS Engine & Handicap Simulator | 2/2 | Complete   | 2026-06-01 |
+| 3. Navigation & Sidebar Reorg | 2/2 | Complete   | 2026-06-01 |
