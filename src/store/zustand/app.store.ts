@@ -14,7 +14,7 @@ import { IRoundTotalsInitialState, IRoundTotals } from '@/types/roundTotals.type
 import { initialStateRoundTotals } from '@/utils/constant.utils';
 import { IRoundDistanceInitialState } from '@/types/roundTotals.types';
 import { initialStateDistance } from '@/utils/constant.utils';
-import { INewRound, InitialStateNewRound, IInitialStateRoundSave } from '@/types/round.types';
+import { INewRound, InitialStateNewRound, IInitialStateRoundSave, IImportResult } from '@/types/round.types';
 import { InitialStateNewRoundsData, IShots, InitialStateNewRoundDistances } from '@/types/roundData.types';
 import { calculateGirValue, calculateGreenApproachCounts, calculatePuttLengthCounts, calculateScrambleValue, calculateStablefordPoints, calculateUDValue } from '@/utils/shots/shots.utils';
 import { totalsCalculator } from '@/utils/calculator/TotalsCalculator.utils';
@@ -151,16 +151,6 @@ interface IDistance {
   club: string;
   mt: number[];
   avg: number;
-}
-
-export interface IImportResult {
-  importedCount: number;
-  matchedCount: number;
-  unmatchedCount: number;
-  roundIds: string[];
-  expectedHI: number | null;
-  calculatedHI: number | null;
-  warnings: string[];
 }
 
 export interface AppState {

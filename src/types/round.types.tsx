@@ -75,6 +75,16 @@ export interface PuttLengthCounts {
   puttsOver10: number;
 }
 
+export interface IImportResult {
+  importedCount: number;
+  matchedCount: number;
+  unmatchedCount: number;
+  roundIds: string[];
+  expectedHI: number | null;
+  calculatedHI: number | null;
+  warnings: string[];
+}
+
 export interface GreenApproachDistanceCounts {
   toGreenMetersOver100: number;
   toGreenMeters80_100: number;

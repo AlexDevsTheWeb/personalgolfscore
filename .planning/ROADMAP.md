@@ -109,7 +109,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 04-01-PLAN.md — CSV parser, course matcher, round builder, Firestore batch import (Wave 1)
+- [x] 04-01-PLAN.md — CSV parser, course matcher, round builder, Firestore batch import (Wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 

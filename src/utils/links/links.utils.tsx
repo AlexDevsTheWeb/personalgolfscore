@@ -5,6 +5,7 @@ import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 import PeopleIcon from '@mui/icons-material/People';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 const navbar_items: TLinkSidebar[] = [
   {
@@ -47,6 +48,13 @@ const navbar_items: TLinkSidebar[] = [
     name: "Handicap History",
     link: "/handicap-history",
     icon: TimelineIcon,
+    show: true,
+  },
+  {
+    id: 7,
+    name: "Import Rounds",
+    link: "/import-rounds",
+    icon: FileUploadIcon,
     show: true,
   },
 ];
