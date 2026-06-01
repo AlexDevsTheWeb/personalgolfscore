@@ -124,10 +124,18 @@ const Simulator = () => {
 		);
 	}, [selectedCourse, selectedTeebox]);
 
+	// Pre-fill Playing Handicap field when auto value is available
+	useEffect(() => {
+		if (autoPlayingHCP != null && manualPlayingHCP === '') {
+			setManualPlayingHCP(String(autoPlayingHCP));
+		}
+	}, [autoPlayingHCP, manualPlayingHCP === '']);
+
 	// Simulated Score Differential
 	const simulatedResult = useMemo(() => {
 		if (
 			!selectedTeebox ||
+			effectivePlayingHCP == null ||
 			!isStablefordValid ||
 			!isTeeboxValid
 		) {
@@ -138,7 +146,7 @@ const Simulator = () => {
 			courseRating: selectedTeebox.courseRating,
 			slopeRating: selectedTeebox.slopeRating,
 			stablefordPoints,
-			playingHCP: effectivePlayingHCP ?? 0,
+			playingHCP: effectivePlayingHCP,
 		});
 	}, [
 		selectedTeebox,
@@ -370,7 +378,7 @@ const Simulator = () => {
 								helperText={
 									autoPlayingHCP != null
 										? `Auto-calculated from HI: ${autoPlayingHCP}`
-										: 'Leave empty to use 0'
+										: 'Enter your Playing Handicap to see results'
 								}
 								inputProps={{
 									min: 0,
@@ -380,8 +388,8 @@ const Simulator = () => {
 
 							<Typography variant="caption" color="text.secondary">
 								Playing Handicap formula:{' '}
-								<code>HI × (SR / 113) + (CR - PAR)</code>. Leave empty to
-								auto-calculate.
+								<code>HI × (SR / 113) + (CR - PAR)</code>. Auto-filled from your
+								current Handicap Index. Adjust manually if needed.
 							</Typography>
 						</CardContent>
 					</Card>
@@ -572,8 +580,8 @@ const Simulator = () => {
 									color="text.secondary"
 									sx={{ textAlign: 'center', py: 4 }}
 								>
-									Select a course, teebox, and enter Stableford points to see
-									simulation results.
+									Select a course, teebox, enter Stableford points, and
+									provide a Playing Handicap to see simulation results.
 								</Typography>
 							</CardContent>
 						</Card>
