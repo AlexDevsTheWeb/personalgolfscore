@@ -2,15 +2,16 @@ import { TLinkSidebar } from '@/types/general.types';
 import { IBoxProps, IMainLayoutProps } from '@/types/props.types';
 import links from '@/utils/links/links.utils';
 import { deleteUserLocalStorage, readUserLocalStorage } from '@/utils/storage/localStorage.utils';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import GolfCourseIcon from '@mui/icons-material/GolfCourse';
+import Logout from '@mui/icons-material/Logout';
 import PeopleIcon from '@mui/icons-material/People';
+import Settings from '@mui/icons-material/Settings';
 import SvgIcon, { default as MenuIcon } from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { ListItemIcon, ListItemText, styled, Typography, Breadcrumbs, Link } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
+import { SidebarHCP } from '@/styles/stack/StackPlayerMenu.styles';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -171,7 +172,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
       </Typography>
       <Divider />
       <List>
-        {links.map((link: TLinkSidebar, index: number) => {
+        {links.filter(l => l.show === true).map((link: TLinkSidebar, index: number) => {
           return (
             <ListItem key={index} disablePadding sx={{ display: 'flex' }}>
               <ListItemButton
@@ -179,7 +180,8 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
                   minHeight: 48,
                   px: 2.5,
                 }}
-                href={link.link}
+                component={RouterLink}
+                to={link.link}
               >
                 <ListItemIcon
                   sx={{
@@ -196,16 +198,28 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
             </ListItem>
           );
         })}
+        <Divider sx={{ my: 1 }} />
+        <ListItem sx={{ display: 'flex', justifyContent: 'center', py: 0.5 }}>
+          <SidebarHCP value={player?.HCP ?? 0} name={player?.displayName ?? ''} />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton component={RouterLink} to="/settings" sx={{ minHeight: 48, px: 2.5 }}>
+            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Settings" sx={{ color: 'text.primary' }} />
+          </ListItemButton>
+        </ListItem>
+        <Divider sx={{ my: 1 }} />
         {player?.isAdmin && (
           <>
-            <Divider sx={{ my: 1 }} />
             <ListItem disablePadding sx={{ px: 2.5, py: 0.5 }}>
               <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
                 Admin
               </Typography>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton sx={{ minHeight: 48, px: 2.5 }} href="/admin/courses">
+              <ListItemButton component={RouterLink} to="/admin/courses" sx={{ minHeight: 48, px: 2.5 }}>
                 <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
                   <SvgIcon component={GolfCourseIcon} inheritViewBox />
                 </ListItemIcon>
@@ -213,7 +227,7 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton sx={{ minHeight: 48, px: 2.5 }} href="/admin/users">
+              <ListItemButton component={RouterLink} to="/admin/users" sx={{ minHeight: 48, px: 2.5 }}>
                 <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
                   <SvgIcon component={PeopleIcon} inheritViewBox />
                 </ListItemIcon>
@@ -223,37 +237,17 @@ export default function DrawerAppBar(props: IMainLayoutProps) {
           </>
         )}
         <Divider sx={{ my: 1 }} />
-        <ListItem disablePadding>
-          <ListItemButton href="/settings">
-            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
-              {player?.photoURL ? <Avatar src={player.photoURL} sx={{ width: 24, height: 24 }} /> : <AccountCircleIcon />}
-            </ListItemIcon>
-            <ListItemText primary="Profile" sx={{ color: 'text.primary' }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton href="/clubs">
-            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
-              <GolfCourseIcon />
-            </ListItemIcon>
-            <ListItemText primary="Clubs" sx={{ color: 'text.primary' }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton href="/statistics">
-            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
-              <SvgIcon component={links.find(l => l.name === 'Statistics')?.icon || links[0].icon} inheritViewBox />
-            </ListItemIcon>
-            <ListItemText primary="Statistics" sx={{ color: 'text.primary' }} />
-          </ListItemButton>
-        </ListItem>
-        <Divider sx={{ my: 1 }} />
         <ListItem sx={{ justifyContent: 'center', display: 'flex', py: 1 }}>
           <ThemeSwitcher />
         </ListItem>
         <Divider sx={{ my: 1 }} />
         <ListItem disablePadding>
-          <ListItemButton onClick={handleLogout} sx={{ color: 'text.primary', justifyContent: 'center' }}>Logout</ListItemButton>
+          <ListItemButton onClick={handleLogout} sx={{ minHeight: 48, px: 2.5 }}>
+            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', marginRight: '10px', color: 'text.primary' }}>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Logout" sx={{ color: 'text.primary' }} />
+          </ListItemButton>
         </ListItem>
       </List>
     </Box>
