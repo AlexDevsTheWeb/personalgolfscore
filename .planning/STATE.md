@@ -7,11 +7,11 @@ stopped_at: Completed 03-02-PLAN.md
 last_updated: "2026-06-01T09:35:00.000Z"
 last_activity: 2026-06-01 -- Phase 03 execution completed
 progress:
-  total_phases: 3
+  total_phases: 4
   completed_phases: 3
-  total_plans: 7
+  total_plans: 9
   completed_plans: 7
-  percent: 100
+  percent: 78
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-31)
 
 **Core value:** Players can accurately calculate their WHS handicap index from their rounds and simulate how future scores would affect it.
-**Current focus:** Phase 03 — navigation-and-sidebar-reorg (completed 2026-06-01)
+**Current focus:** Phase 04 — import-rounds-verification (planning)
 
 ## Current Position
 
-Phase: 03 (navigation-and-sidebar-reorg) — COMPLETE
-Plans: 2 of 2
-Status: Complete
-Last activity: 2026-06-01 -- Phase 03 execution completed
+Phase: 04 (import-rounds-verification) — PLANNING
+Plans: 0 of 2 (planned)
+Status: Ready for execution
+Last activity: 2026-06-01 -- Phase 04 planning completed
 
 Progress: [██████████] 100%
 
