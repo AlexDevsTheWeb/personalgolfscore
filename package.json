@@ -48,6 +48,8 @@
 		"test:calc:quick": "tsx src/dev-tools/testRunner.ts quick",
 		"test:calc:edge": "tsx src/dev-tools/testRunner.ts edge",
 		"test:calc:all": "tsx src/dev-tools/testRunner.ts all",
+		"test:calc:whs": "tsx src/dev-tools/whsTestRunner.ts all",
+		"test:calc:whs-quick": "tsx src/dev-tools/whsTestRunner.ts quick",
 		"release": "release-it"
 	},
 	"eslintConfig": {
