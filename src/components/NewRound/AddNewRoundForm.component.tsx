@@ -165,8 +165,9 @@ const AddNewRoundForm = () => {
 			onClose={handleCancel}
 			onSubmit={handleSubmit(onSubmit)}
 		>
-			<Grid container spacing={1} sx={{ mt: 1 }} columns={{ xs: 12, sm: 12, lg: 12 }}>
-				<Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+			<Grid container spacing={2} sx={{ mt: 1 }} columns={{ xs: 12, sm: 12, lg: 12 }}>
+				{/* Row 1: Course + Date + Round # */}
+				<Grid size={{ xs: 12, sm: 7, lg: 7 }}>
 					<Autocomplete
 						disablePortal
 						options={courses}
@@ -181,15 +182,21 @@ const AddNewRoundForm = () => {
 						value={selectedCourse}
 						onChange={(_, newValue) => handleCourseChange(newValue)}
 						loading={courseLoading}
+						slotProps={{
+							listbox: {
+								sx: { maxHeight: 350 },
+							},
+						}}
 						renderInput={(params) => (
 							<TextField
 								{...params}
 								label="Round course"
+								placeholder="Search for a course..."
 							/>
 						)}
 					/>
 				</Grid>
-				<Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+				<Grid size={{ xs: 7, sm: 3, lg: 3 }}>
 					<DatePicker
 						value={roundDateValue}
 						onChange={handleDateChange}
@@ -197,7 +204,36 @@ const AddNewRoundForm = () => {
 						format="DD/MM/YYYY"
 					/>
 				</Grid>
-				<Grid size={{ xs: 4, sm: 2, lg: 2 }}>
+				<Grid size={{ xs: 5, sm: 2, lg: 2 }}>
+					<TextField
+						{...register('roundNumber', {
+							valueAsNumber: true,
+							min: { value: 1, message: 'Min 1' }
+						})}
+						label="Round #"
+						variant="outlined"
+						type='number'
+						fullWidth
+						error={!!errors.roundNumber}
+						helperText={errors.roundNumber?.message}
+					/>
+				</Grid>
+
+				{/* Row 2: Tee + Holes + Par + Playing HCP */}
+				<Grid size={{ xs: 6, sm: 4, lg: 4 }}>
+					<Select
+						name='roundTee'
+						value={watch('roundTee') || ''}
+						label='Tee'
+						list={
+							selectedCourse
+								? selectedCourse.teeboxes.map((t) => t.name)
+								: ['White', 'Blue', 'Yellow', 'Red', 'Green', 'Orange']
+						}
+						onChange={(e: any) => setValue('roundTee', e.target.value)}
+					/>
+				</Grid>
+				<Grid size={{ xs: 3, sm: 2, lg: 2 }}>
 					<TextField
 						{...register('roundHoles', {
 							required: 'Required',
@@ -216,7 +252,7 @@ const AddNewRoundForm = () => {
 						helperText={errors.roundHoles?.message}
 					/>
 				</Grid>
-				<Grid size={{ xs: 4, sm: 2, lg: 2 }}>
+				<Grid size={{ xs: 3, sm: 2, lg: 2 }}>
 					<TextField
 						{...register('roundPar', {
 							required: 'Required',
@@ -235,53 +271,26 @@ const AddNewRoundForm = () => {
 						helperText={errors.roundPar?.message}
 					/>
 				</Grid>
-				<Grid size={{ xs: 4, sm: 2, lg: 2 }}>
+				<Grid size={{ xs: 12, sm: 4, lg: 4 }}>
 					<TextField
 						{...register('roundPlayingHCP', {
 							valueAsNumber: true,
 							min: { value: 0, message: 'Min 0' },
 							max: { value: 54, message: 'Max 54' }
 						})}
-						label="HCP"
+						label="Playing Handicap"
 						variant="outlined"
 						fullWidth
 						type='number'
 						slotProps={{
 							input: { readOnly: autoPlayingHCP != null },
 						}}
-						error={!!errors.roundPlayingHCP}
+						error={!autoPlayingHCP && !!errors.roundPlayingHCP}
 						helperText={
 							autoPlayingHCP != null
 								? `Auto-calculated from HI: ${currentHI?.toFixed(1)}`
 								: errors.roundPlayingHCP?.message
 						}
-					/>
-				</Grid>
-				<Grid size={{ xs: 6, sm: 3, lg: 3 }}>
-					<Select
-						name='roundTee'
-						value={watch('roundTee') || ''}
-						label='Tee'
-						list={
-							selectedCourse
-								? selectedCourse.teeboxes.map((t) => t.name)
-								: ['White', 'Blue', 'Yellow', 'Red', 'Green', 'Orange']
-						}
-						onChange={(e: any) => setValue('roundTee', e.target.value)}
-					/>
-				</Grid>
-				<Grid size={{ xs: 6, sm: 3, lg: 3 }}>
-					<TextField
-						{...register('roundNumber', {
-							valueAsNumber: true,
-							min: { value: 1, message: 'Min 1' }
-						})}
-						label="Round #"
-						variant="outlined"
-						type='number'
-						fullWidth
-						error={!!errors.roundNumber}
-						helperText={errors.roundNumber?.message}
 					/>
 				</Grid>
 			</Grid>
