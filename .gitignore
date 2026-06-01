@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 /.pnp
+
+# planning docs (local only)
+/.planning
 .pnp.js
 
 

@@ -31,7 +31,9 @@ const RoundCompactRow = styled(Box)(({ theme }) => ({
   },
 }));
 
-const ScoreChip = styled(Typography)<{ $isGood: boolean }>(({ theme, $isGood }) => ({
+const ScoreChip = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== '$isGood',
+})<{ $isGood: boolean }>(({ theme, $isGood }) => ({
   padding: '2px 8px',
   borderRadius: '4px',
   fontWeight: 'bold',
@@ -41,7 +43,9 @@ const ScoreChip = styled(Typography)<{ $isGood: boolean }>(({ theme, $isGood }) 
   textAlign: 'center',
 }));
 
-const PointsChip = styled(Typography)<{ $isGood: boolean }>(({ theme, $isGood }) => ({
+const PointsChip = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== '$isGood',
+})<{ $isGood: boolean }>(({ theme, $isGood }) => ({
   padding: '2px 8px',
   borderRadius: '4px',
   fontWeight: 'bold',

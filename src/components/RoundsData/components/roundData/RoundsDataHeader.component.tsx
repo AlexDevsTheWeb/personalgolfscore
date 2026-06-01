@@ -26,7 +26,9 @@ const StatLabel = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const ScoreChip = styled(Typography)<{ $isGood: boolean }>(({ theme, $isGood }) => ({
+const ScoreChip = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== '$isGood',
+})<{ $isGood: boolean }>(({ theme, $isGood }) => ({
   padding: '4px 12px',
   borderRadius: '8px',
   fontWeight: 'bold',
@@ -37,7 +39,9 @@ const ScoreChip = styled(Typography)<{ $isGood: boolean }>(({ theme, $isGood }) 
   backgroundColor: $isGood ? theme.palette.success.main : theme.palette.error.main,
 }));
 
-const PointsChip = styled(Typography)<{ $isGood: boolean }>(({ theme, $isGood }) => ({
+const PointsChip = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== '$isGood',
+})<{ $isGood: boolean }>(({ theme, $isGood }) => ({
   padding: '4px 12px',
   borderRadius: '8px',
   fontWeight: 'bold',

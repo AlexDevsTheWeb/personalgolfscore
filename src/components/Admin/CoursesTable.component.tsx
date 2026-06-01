@@ -5,17 +5,36 @@ import {
 	GridToolbar,
 	GridRenderCellParams,
 	GridRowModel,
-	GridRowId,
 } from '@mui/x-data-grid';
-import { IconButton, Button, Tooltip, Box, Typography, Alert } from '@mui/material';
+import {
+	IconButton,
+	Button,
+	Tooltip,
+	Box,
+	Typography,
+	Alert,
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	DialogContentText,
+	DialogActions,
+	LinearProgress,
+	List,
+	ListItem,
+	ListItemText,
+	Chip,
+	Grid,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { ICourse } from '@/types/course.types';
 import {
 	getAllCourses,
 	updateCourse,
 	deleteCourse,
 } from '@/utils/firestore/course.firestore';
+import { importFromFedergolf, fetchFedergolfPreview } from '@/utils/firestore/federgolf-import.utils';
 import { useSnackbar } from './SnackbarProvider.component';
 import CourseFormDialog from './CourseFormDialog.component';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog.component';
@@ -32,6 +51,17 @@ const CoursesTable: React.FC = () => {
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 	const [deletingCourse, setDeletingCourse] = useState<ICourse | undefined>(undefined);
 	const [isDeleting, setIsDeleting] = useState(false);
+
+	// Import state
+	const [importDialogOpen, setImportDialogOpen] = useState(false);
+	const [isImporting, setIsImporting] = useState(false);
+	const [preview, setPreview] = useState<{
+		clubCount: number;
+		courseCount: number;
+		sampleCourses: string[];
+	} | null>(null);
+	const [previewLoading, setPreviewLoading] = useState(false);
+	const [previewError, setPreviewError] = useState<string | null>(null);
 
 	const loadCourses = useCallback(async () => {
 		setIsLoading(true);
@@ -106,6 +136,46 @@ const CoursesTable: React.FC = () => {
 		} catch (err: any) {
 			showSnackbar('Failed to save. Please try again.', 'error');
 			throw err;
+		}
+	};
+
+	// Import handlers
+	const handleOpenImportDialog = async () => {
+		setImportDialogOpen(true);
+		setPreviewLoading(true);
+		setPreviewError(null);
+		try {
+			const data = await fetchFedergolfPreview();
+			setPreview(data);
+		} catch (err: any) {
+			setPreviewError(err.message || 'Failed to fetch preview.');
+		} finally {
+			setPreviewLoading(false);
+		}
+	};
+
+	const handleCloseImportDialog = () => {
+		if (isImporting) return;
+		setImportDialogOpen(false);
+		setPreview(null);
+		setPreviewError(null);
+	};
+
+	const handleConfirmImport = async () => {
+		setIsImporting(true);
+		try {
+			const result = await importFromFedergolf();
+			showSnackbar(
+				`Imported ${result.total} courses (${result.created} new, ${result.updated} updated)`,
+				'success'
+			);
+			setImportDialogOpen(false);
+			setPreview(null);
+			loadCourses();
+		} catch (err: any) {
+			showSnackbar(err.message || 'Import failed.', 'error');
+		} finally {
+			setIsImporting(false);
 		}
 	};
 
@@ -189,6 +259,18 @@ const CoursesTable: React.FC = () => {
 
 	return (
 		<Box>
+			<Box sx={{ mb: 2, display: 'flex', gap: 2 }}>
+				<Button variant="contained" onClick={handleAdd}>
+					Add Course
+				</Button>
+				<Button
+					variant="outlined"
+					startIcon={<CloudDownloadIcon />}
+					onClick={handleOpenImportDialog}
+				>
+					Import from Federgolf
+				</Button>
+			</Box>
 			<DataGrid
 				rows={courses}
 				columns={columns}
@@ -237,8 +319,128 @@ const CoursesTable: React.FC = () => {
 				}
 				isDeleting={isDeleting}
 			/>
+
+			<ImportDialog
+				open={importDialogOpen}
+				onClose={handleCloseImportDialog}
+				onImport={handleConfirmImport}
+				isImporting={isImporting}
+				preview={preview}
+				previewLoading={previewLoading}
+				previewError={previewError}
+			/>
 		</Box>
 	);
 };
+
+interface ImportDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onImport: () => void;
+	isImporting: boolean;
+	preview: {
+		clubCount: number;
+		courseCount: number;
+		sampleCourses: string[];
+	} | null;
+	previewLoading: boolean;
+	previewError: string | null;
+}
+
+const ImportDialog: React.FC<ImportDialogProps> = ({
+	open,
+	onClose,
+	onImport,
+	isImporting,
+	preview,
+	previewLoading,
+	previewError,
+}) => (
+	<Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+		<DialogTitle>Import from Federgolf</DialogTitle>
+		<DialogContent>
+			{previewLoading && (
+				<Box sx={{ py: 3 }}>
+					<LinearProgress />
+					<Typography variant="body" color="text.secondary" sx={{ mt: 2, textAlign: 'center' }}>
+						Fetching course data from Federgolf...
+					</Typography>
+				</Box>
+			)}
+			{previewError && (
+				<Alert severity="error" sx={{ mt: 1 }}>
+					{previewError}
+				</Alert>
+			)}
+			{preview && !previewLoading && (
+				<>
+					<DialogContentText>
+						Found the following data from the Italian Golf Federation database:
+					</DialogContentText>
+					<Box sx={{ mt: 2, mb: 2 }}>
+						<Grid container spacing={2}>
+							<Grid size={{ xs: 6 }}>
+								<Chip
+									label={`${preview.clubCount} clubs`}
+									color="primary"
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid size={{ xs: 6 }}>
+								<Chip
+									label={`${preview.courseCount} courses`}
+									color="primary"
+									variant="outlined"
+								/>
+							</Grid>
+						</Grid>
+					</Box>
+					<Typography variant="title2" sx={{ mt: 2 }}>
+						Sample courses:
+					</Typography>
+					<List dense>
+						{preview.sampleCourses.map((name, i) => (
+							<ListItem key={i} disablePadding>
+								<ListItemText primary={name} />
+							</ListItem>
+						))}
+						{preview.courseCount > 5 && (
+							<ListItem disablePadding>
+								<ListItemText
+									primary={`...and ${preview.courseCount - 5} more`}
+									primaryTypographyProps={{ color: 'text.secondary' }}
+								/>
+							</ListItem>
+						)}
+					</List>
+					{isImporting && (
+						<Box sx={{ mt: 2 }}>
+							<LinearProgress />
+							<Typography
+								variant="body"
+								color="text.secondary"
+								sx={{ mt: 1, textAlign: 'center' }}
+							>
+								Importing courses to Firestore...
+							</Typography>
+						</Box>
+					)}
+				</>
+			)}
+		</DialogContent>
+		<DialogActions>
+			<Button onClick={onClose} disabled={isImporting}>
+				Cancel
+			</Button>
+			<Button
+				variant="contained"
+				onClick={onImport}
+				disabled={!preview || previewLoading || isImporting}
+			>
+				{isImporting ? 'Importing...' : `Import ${preview?.courseCount ?? 0} Courses`}
+			</Button>
+		</DialogActions>
+	</Dialog>
+);
 
 export default CoursesTable;

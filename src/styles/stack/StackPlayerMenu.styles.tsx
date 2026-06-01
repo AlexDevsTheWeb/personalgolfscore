@@ -79,3 +79,62 @@ const StackPlayerMenu: React.FC<BoxProps> = props => {
 };
 
 export default StackPlayerMenu;
+
+// ── SidebarHCP: compact ~40px color-coded HCP badge for sidebar use ──────────
+
+interface SidebarHCPProps {
+  value?: number;
+  name: string;
+}
+
+const getHCPColors = (hcpValue?: number) => {
+  if (hcpValue === undefined) return { bg: 'transparent', text: '#999999' };
+  if (hcpValue >= 20) return { bg: 'red', text: 'white' };
+  if (hcpValue >= 10) return { bg: 'orange', text: '#494949' };
+  return { bg: 'green', text: 'white' };
+};
+
+const CompactHCPBox = styled(BoxMui, {
+  shouldForwardProp: (prop) => prop !== 'hcpValue',
+})<{ hcpValue?: number }>(({ hcpValue }) => ({
+  width: 40,
+  height: 40,
+  borderRadius: '50%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: getHCPColors(hcpValue).bg,
+}));
+
+const CompactHCPLabel = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'hcpValue',
+})<{ hcpValue?: number }>(({ hcpValue }) => ({
+  fontSize: '9px',
+  lineHeight: '9px',
+  color: getHCPColors(hcpValue).text,
+}));
+
+const CompactHCPNumber = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'hcpValue',
+})<{ hcpValue?: number }>(({ hcpValue }) => ({
+  fontSize: '16px',
+  fontWeight: 'bold',
+  lineHeight: '16px',
+  color: getHCPColors(hcpValue).text,
+}));
+
+export const SidebarHCP: React.FC<SidebarHCPProps> = ({ value, name }) => {
+  return (
+    <CompactHCPBox hcpValue={value}>
+      {value !== undefined ? (
+        <>
+          <CompactHCPLabel hcpValue={value}>HCP</CompactHCPLabel>
+          <CompactHCPNumber hcpValue={value}>{value}</CompactHCPNumber>
+        </>
+      ) : (
+        <CompactHCPLabel hcpValue={undefined}>-</CompactHCPLabel>
+      )}
+    </CompactHCPBox>
+  );
+};
