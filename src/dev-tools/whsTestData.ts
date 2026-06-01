@@ -154,11 +154,12 @@ export const WHSHandicapIndexTestCases: IHandicapIndexTestCase[] = [
  */
 export const WHSProjectedHITestCases: IProjectedHITestCase[] = [
 	{
-		name: '5 current SDs + simulated SD (lowest score)',
+		name: '5 current SDs + simulated SD (virtual has 6 entries)',
 		currentSDs: [14.6, 10.2, 12.1, 15.0, 9.8],
 		simulatedSD: 4.6,
-		// Virtual: [4.6, 14.6, 10.2, 12.1, 15.0] → 5 entries, lowest 1 → 4.6
-		expectedHI: 4.6,
+		// Virtual: [4.6, 14.6, 10.2, 12.1, 15.0, 9.8] → 6 entries
+		// WHS scaling for 6 rounds = lowest 2 → [4.6, 9.8] = avg 7.2
+		expectedHI: 7.2,
 	},
 	{
 		name: '20 current SDs + simulated SD (drops oldest)',
@@ -168,16 +169,17 @@ export const WHSProjectedHITestCases: IProjectedHITestCase[] = [
 			23.0, 24.0, 25.0, 26.0,
 		],
 		simulatedSD: 5.0,
-		// Virtual: [5.0, 15.0, ..., 25.0] (drops index 19 = 26.0)
+		// Virtual: [5.0, 15.0, ..., 25.0] (drops index 19 = 26.0) → 20 entries
+		// WHS scaling for 20 rounds = lowest 8
 		// Best 8: 5.0, 10.0, 11.0, 12.0, 12.0, 13.0, 13.0, 14.0 = 90/8 = 11.25 → 11.3
 		expectedHI: 11.3,
 	},
 	{
-		name: 'Fewer than 3 rounds returns null',
-		currentSDs: [14.6, 10.2],
+		name: 'Only 1 current SD — virtual has 2 entries, returns null',
+		currentSDs: [14.6],
 		simulatedSD: 4.6,
-		// Virtual: [4.6, 14.6, 10.2] → 3 entries, lowest 1 → 10.2
-		expectedHI: 10.2,
+		// Virtual: [4.6, 14.6] → 2 entries → < 3 rounds → null
+		expectedHI: null,
 	},
 ];
 
