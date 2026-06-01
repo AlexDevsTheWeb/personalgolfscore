@@ -9,6 +9,7 @@ This roadmap delivers WHS (World Handicap System) handicap calculation, a shared
 - [x] **Phase 1: Course Database & Admin Foundation** - Admin authentication, route protection, golf course CRUD, and the public `golf_courses` collection (completed 2026-05-31)
 - [x] **Phase 2: WHS Engine & Handicap Simulator** - WHS Score Differential and Handicap Index calculation engine plus a dedicated Simulator with course/teebox selection and projected HI display (completed 2026-06-01)
 - [x] **Phase 3: Navigation & Sidebar Reorg** - Move Avatar menu (HCP, settings, logout) to sidebar; fix admin link visibility; make sidebar responsive across all screen sizes (completed 2026-06-01)
+- [ ] **Phase 4: Import Rounds Verification** - Import Federgolf competition results via clipboard paste, match courses, save as real rounds in Firestore for handicap verification (pending)
 
 ## Phase Details
 
@@ -68,11 +69,11 @@ Plans:
 **Requirements**: NAV-01, NAV-02, NAV-03, NAV-04, NAV-05
 **Success Criteria** (what must be TRUE):
 
-  1. Avatar dropdown no longer shows HCP, Settings, or Logout — only the avatar image remains as a visual indicator
-  2. Sidebar drawer is accessible from both mobile and desktop (responsive: temporary on mobile, persistent/toggleable on desktop)
-  3. Sidebar contains: HCP display, Settings link, Logout button (moved from Avatar menu)
-  4. Sidebar properly filters navigation links: public links shown to all users, admin links shown only when `player.isAdmin` is true
-  5. No duplicate link rendering in sidebar (current bug: admin links render twice — once from `links.map()` and once from conditional block)
+   1. Avatar dropdown no longer shows HCP, Settings, or Logout — only the avatar image remains as a visual indicator
+   2. Sidebar drawer is accessible from both mobile and desktop (responsive: temporary on mobile, persistent/toggleable on desktop)
+   3. Sidebar contains: HCP display, Settings link, Logout button (moved from Avatar menu)
+   4. Sidebar properly filters navigation links: public links shown to all users, admin links shown only when `player.isAdmin` is true
+   5. No duplicate link rendering in sidebar (current bug: admin links render twice — once from `links.map()` and once from conditional block)
 
 **Plans**: 2 plans
 **UI hint**: yes
@@ -86,6 +87,33 @@ Plans:
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [x] 03-02-PLAN.md — Responsive sidebar drawer with filtered links, HCP/Settings/Logout (Wave 2)
+
+### Phase 4: Import Rounds Verification
+
+**Goal**: Enable players to paste Federgolf competition results from a Google Sheet and import them as real rounds in Firestore, with course name matching, for verifying Handicap History and HI calculations
+**Depends on**: Phase 1 (course database), Phase 2 (WHS engine/SD storage)
+**Requirements**: IMPORT-01, IMPORT-02
+**Success Criteria** (what must be TRUE):
+
+   1. User can copy rows from a Google Sheet and paste them into a text area on the Import Rounds page
+   2. The app parses the pasted data, matches course names to the `golf_courses` collection (exact name match first, then LIKE), and finds the matching teebox via CR/SR
+   3. User sees a preview table with all parsed rounds, course match status, and expected Score Differentials before importing
+   4. Imported rounds are saved as real Firestore round documents (not simulated data) — they appear in rounds list, Handicap History, and HI calculations
+   5. Imported rounds have no per-hole shot data (just the round totals + Score Differential)
+   6. After import, the page shows a summary comparing the expected HI (from the sheet's `Index Nuovo`) vs the calculated HI from the app's engine
+
+**Plans**: 2 plans
+**UI hint**: yes
+
+Plans:
+
+**Wave 1**
+
+- [ ] 04-01-PLAN.md — CSV parser, course matcher, round builder, Firestore batch import (Wave 1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 04-02-PLAN.md — Import Rounds page UI: paste form, preview table, import result summary, route, nav link (Wave 2)
 
 ## Progress
 

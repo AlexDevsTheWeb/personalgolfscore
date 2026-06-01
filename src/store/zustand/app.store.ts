@@ -22,7 +22,13 @@ import { updateUserThemePreference, fetchThemePreference } from '@/utils/firesto
 import { getPlayerInfo, updatePlayerGolfBag, updatePlayerProfile } from '@/utils/firestore/player.firestore';
 import { getRoundDetails } from '@/utils/firestore/round.firestore';
 import { saveNewRound } from '@/utils/firestore/round.firestore';
+import { importRoundsBatch } from '@/utils/firestore/round.firestore';
 import { calculateAvg } from '@/utils/round/round.utils';
+import { parseImportText, IParsedRound } from '@/components/ImportRounds/ImportRoundParser.utils';
+import { matchAllCourses, ICourseMatchResult } from '@/components/ImportRounds/CourseMatcher.utils';
+import { buildRoundDocument } from '@/components/ImportRounds/RoundBuilder.utils';
+import { getAllCourses } from '@/utils/firestore/course.firestore';
+import { calculateHandicapIndex } from '@/utils/whs/hi.utils';
 import dayjs, { Dayjs } from 'dayjs';
 
 const initialControls: IControls = {
@@ -147,6 +153,16 @@ interface IDistance {
   avg: number;
 }
 
+export interface IImportResult {
+  importedCount: number;
+  matchedCount: number;
+  unmatchedCount: number;
+  roundIds: string[];
+  expectedHI: number | null;
+  calculatedHI: number | null;
+  warnings: string[];
+}
+
 export interface AppState {
   isLoadingUser: boolean;
   user: IUser;
@@ -236,6 +252,14 @@ export interface AppState {
   setNewRoundClubs: (clubs: INewRoundClubsInitialState) => void;
   saveNewRound: () => Promise<{ success: boolean; roundId: string } | null>;
   resetNewRound: () => void;
+  parsedRounds: IParsedRound[];
+  courseMatches: ICourseMatchResult[];
+  importResults: IImportResult | null;
+  isLoadingImport: boolean;
+  importError: string | null;
+  parseImportText: (text: string) => Promise<void>;
+  importRounds: (selectedIndices: number[]) => Promise<void>;
+  resetImport: () => void;
 }
 
 const initialState: AppState = {
@@ -327,6 +351,14 @@ const initialState: AppState = {
   setNewRoundClubs: () => {},
   saveNewRound: async () => null,
   resetNewRound: () => {},
+  parsedRounds: [],
+  courseMatches: [],
+  importResults: null,
+  isLoadingImport: false,
+  importError: null,
+  parseImportText: async () => {},
+  importRounds: async () => {},
+  resetImport: () => {},
 };
 
 export const useAppStore = create<AppState>()(
@@ -760,6 +792,130 @@ export const useAppStore = create<AppState>()(
           newRoundClubs: initialNewRoundClubs,
           newRoundSaver: initialRoundSaver,
         }),
+
+        parseImportText: async (text) => {
+          set({ isLoadingImport: true, importError: null, importResults: null });
+          try {
+            const parsed = parseImportText(text);
+            const courses = await getAllCourses();
+            const matches = await matchAllCourses(parsed, courses);
+            const lastValid = [...parsed].reverse().find((p) => p.indexNuovo !== null);
+            set({
+              parsedRounds: parsed,
+              courseMatches: matches,
+              isLoadingImport: false,
+            });
+          } catch (error: unknown) {
+            const msg = error instanceof Error ? error.message : 'Failed to parse import data';
+            set({ isLoadingImport: false, importError: msg });
+          }
+        },
+
+        importRounds: async (selectedIndices) => {
+          const state = get();
+          const userId = state.player?.uid;
+
+          if (!selectedIndices.length) {
+            set({ importError: 'No rounds selected' });
+            return;
+          }
+          if (!userId) {
+            set({ importError: 'User not authenticated' });
+            return;
+          }
+
+          set({ isLoadingImport: true, importError: null });
+
+          try {
+            const warnings: string[] = [];
+            const validRounds = selectedIndices.filter(
+              (i) => state.parsedRounds[i]?.parsedSuccessfully && state.parsedRounds[i]?.roundValid
+            );
+
+            if (validRounds.length === 0) {
+              set({ isLoadingImport: false, importError: 'No valid rounds to import' });
+              return;
+            }
+
+            if (validRounds.length > 100) {
+              warnings.push('Large import — may take a moment');
+            }
+
+            const existingRounds = state.roundsList;
+            const existingKeys = new Set(
+              existingRounds.map((r) => `${r.roundCourse}|${r.roundDate}`)
+            );
+
+            const maxRoundNumber = existingRounds.reduce(
+              (max, r) => Math.max(max, Number(r.roundNumber) || 0),
+              0
+            );
+
+            const docs = validRounds.map((index, idx) => {
+              const parsed = state.parsedRounds[index];
+              const match = state.courseMatches[index];
+
+              const key = `${parsed.roundCourse}|${parsed.roundDate}`;
+              if (existingKeys.has(key)) {
+                warnings.push(`Duplicate: ${parsed.roundCourse} on ${parsed.roundDate}`);
+              }
+
+              return buildRoundDocument({
+                parsed,
+                match,
+                roundNumber: maxRoundNumber + 1 + idx,
+                userId,
+              });
+            });
+
+            const result = await importRoundsBatch(userId, docs);
+
+            const updatedState = get();
+            const allSDs = updatedState.roundsList
+              .map((r) => r.scoreDifferential)
+              .filter((sd): sd is number => sd !== null && sd !== undefined);
+
+            for (const doc of docs) {
+              if (doc.scoreDifferential !== null) {
+                allSDs.push(doc.scoreDifferential);
+              }
+            }
+
+            allSDs.sort((a, b) => b - a);
+
+            const calculatedHI = calculateHandicapIndex(allSDs);
+            const lastParsed = [...state.parsedRounds].reverse().find((p) => p.indexNuovo !== null);
+            const expectedHI = lastParsed?.indexNuovo ?? null;
+
+            const matchedCount = validRounds.filter(
+              (i) => state.courseMatches[i]?.matched
+            ).length;
+
+            set({
+              isLoadingImport: false,
+              importResults: {
+                importedCount: result.importedCount,
+                matchedCount,
+                unmatchedCount: validRounds.length - matchedCount,
+                roundIds: result.roundIds,
+                expectedHI,
+                calculatedHI,
+                warnings,
+              },
+            });
+          } catch (error: unknown) {
+            const msg = error instanceof Error ? error.message : 'Import failed';
+            set({ isLoadingImport: false, importError: msg });
+          }
+        },
+
+        resetImport: () => set({
+          parsedRounds: [],
+          courseMatches: [],
+          importResults: null,
+          isLoadingImport: false,
+          importError: null,
+        }),
       }),
       {
         name: 'app-storage',
@@ -785,6 +941,7 @@ export const useAppStore = create<AppState>()(
           newRoundTotals: state.newRoundTotals,
           newRoundDistances: state.newRoundDistances,
           newRoundClubs: state.newRoundClubs,
+          parsedRounds: state.parsedRounds,
         }),
       }
     ),
