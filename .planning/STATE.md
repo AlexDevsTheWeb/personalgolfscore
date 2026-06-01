@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 context gathered
+stopped_at: Phase 2 planning complete
 last_updated: "2026-06-01T05:38:04.189Z"
 last_activity: 2026-05-31 -- Phase 01 execution started
 progress:
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-31)
 
 **Core value:** Players can accurately calculate their WHS handicap index from their rounds and simulate how future scores would affect it.
-**Current focus:** Phase 01 — course-database-admin-foundation
+**Current focus:** Phase 02 — whs-engine-handicap-simulator
 
 ## Current Position
 
-Phase: 01 (course-database-admin-foundation) — EXECUTING
-Plan: 1 of 3
-Status: Executing Phase 01
-Last activity: 2026-05-31 -- Phase 01 execution started
+Phase: 02 (whs-engine-handicap-simulator) — PLANNED
+Plan: 0 of 2
+Status: Planning complete
+Last activity: 2026-06-01 -- Phase 02 planning completed
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -36,7 +36,7 @@ Progress: [░░░░░░░░░░] 0%
 
 **Velocity:**
 
-- Total plans completed: 0
+- Total plans completed: 2 (Phase 1)
 - Average duration: —
 - Total execution time: —
 
@@ -44,11 +44,12 @@ Progress: [░░░░░░░░░░] 0%
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| — | — | — | — |
+| 1. Course Database & Admin Foundation | 2/3 | — | — |
+| 2. WHS Engine & Handicap Simulator | 0/2 | — | — |
 
 **Recent Trend:**
 
-- Last 5 plans: —
+- Last 5 plans: Phase 1 plans 01–02 completed
 - Trend: —
 
 *Updated after each plan completion*
