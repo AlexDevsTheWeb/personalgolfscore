@@ -13,6 +13,7 @@ import {
 	Alert,
 } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
+import { ChartsReferenceLine } from '@mui/x-charts/ChartsReferenceLine';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import { useAppStore } from '@/store/zustand';
 import { calculateHandicapIndex } from '@/utils/whs/hi.utils';
@@ -34,6 +35,9 @@ const getScalingCount = (count: number): number => {
 const HandicapHistory = () => {
 	const roundsList = useAppStore((state) => state.roundsList);
 	const isLoadingRounds = useAppStore((state) => state.isLoadingRounds);
+	const initialHCP = useAppStore((state) => state.player?.initialHCP) ?? null;
+	const hasInitialHCP = initialHCP != null;
+	const hasRounds = roundsList.length > 0;
 
 	// Rounds with SD, sorted by date descending (most recent first)
 	const roundsWithSD = useMemo(() => {
@@ -64,29 +68,71 @@ const HandicapHistory = () => {
 		return bestIndices;
 	}, [last20SDs]);
 
-	// Current Handicap Index
+	// Current Handicap Index — prefers the most recent round's stored handicapIndex
+	// (Phase 5 HCP-INIT-04) and falls back to per-round WHS recalc for legacy data.
 	const currentHI = useMemo(() => {
+		if (!roundsList.length) return null;
+		const mostRecentWithHI = roundsList
+			.slice()
+			.sort((a, b) => b.roundDate - a.roundDate)
+			.find((r) => r.handicapIndex != null);
+		if (mostRecentWithHI) return mostRecentWithHI.handicapIndex;
+		// Fallback: per-round WHS recalc (legacy / pre-Phase-5)
 		return calculateHandicapIndex(
 			roundsWithSD.map((r) => r.scoreDifferential as number)
 		);
-	}, [roundsWithSD]);
+	}, [roundsList, roundsWithSD]);
 
-	// HCP progression data (chronological)
+	// HCP progression data (chronological) — three branches per Phase 5 HCP-INIT:
+	//   D-11: initialHCP set + rounds have stored handicapIndex
+	//         → first point at initialHCP (earliest round date), then per-round stored HI
+	//   D-14: initialHCP set + 0 rounds have stored handicapIndex
+	//         → single point at (Date.now(), initialHCP) — chart shows anchor + reference line
+	//   D-15: initialHCP NOT set (legacy) — per-round WHS recalc, no reference line
 	const progressionData = useMemo(() => {
-		const chronological = [...roundsWithSD].sort(
+		// Branch: D-15 legacy fallback (no initialHCP) — keep existing per-round WHS recalc
+		if (!hasInitialHCP) {
+			const chronological = [...roundsWithSD].sort(
+				(a, b) => a.roundDate - b.roundDate
+			);
+			const points: { date: number; hi: number }[] = [];
+			const accumulated: number[] = [];
+			for (const round of chronological) {
+				accumulated.push(round.scoreDifferential as number);
+				const hi = calculateHandicapIndex([...accumulated]);
+				if (hi != null) {
+					points.push({ date: round.roundDate, hi });
+				}
+			}
+			return points;
+		}
+
+		// initialHCP set — work from rounds that have a stored handicapIndex
+		const roundsWithHI = roundsWithSD.filter(
+			(r) => r.handicapIndex != null
+		);
+
+		// Branch: D-14 single-point initialHCP (no rounds with stored HI yet)
+		if (roundsWithHI.length === 0) {
+			return [{ date: Date.now(), hi: initialHCP as number }];
+		}
+
+		// Branch: D-11 chart anchored to initialHCP, then per-round stored HI
+		const chronological = [...roundsWithHI].sort(
 			(a, b) => a.roundDate - b.roundDate
 		);
-		const points: { date: number; hi: number }[] = [];
-		const accumulated: number[] = [];
+		const earliestDate = chronological[0].roundDate;
+		const points: { date: number; hi: number }[] = [
+			{ date: earliestDate, hi: initialHCP as number },
+		];
 		for (const round of chronological) {
-			accumulated.push(round.scoreDifferential as number);
-			const hi = calculateHandicapIndex([...accumulated]);
-			if (hi != null) {
-				points.push({ date: round.roundDate, hi });
-			}
+			points.push({
+				date: round.roundDate,
+				hi: round.handicapIndex as number,
+			});
 		}
 		return points;
-	}, [roundsWithSD]);
+	}, [roundsWithSD, hasInitialHCP, initialHCP]);
 
 	if (isLoadingRounds) {
 		return (
@@ -207,7 +253,7 @@ const HandicapHistory = () => {
 							<Typography variant="title6" gutterBottom>
 								HCP Progression
 							</Typography>
-							{progressionData.length < 2 ? (
+							{progressionData.length === 0 ? (
 								<Typography
 									variant="body"
 									color="text.secondary"
@@ -251,7 +297,18 @@ const HandicapHistory = () => {
 											bottom: 30,
 											left: 50,
 										}}
-									/>
+									>
+										{hasInitialHCP && (
+											<ChartsReferenceLine
+												y={initialHCP as number}
+												label="Initial HCP"
+												lineStyle={{
+													strokeDasharray: '5 5',
+													stroke: '#888',
+												}}
+											/>
+										)}
+									</LineChart>
 								</Box>
 							)}
 						</CardContent>
