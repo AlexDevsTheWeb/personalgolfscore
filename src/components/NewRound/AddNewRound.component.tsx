@@ -1,9 +1,10 @@
 
 import StackNewHole from '@/styles/stack/StackNewHole.styles';
 import CloseIcon from '@mui/icons-material/Close';
-import { AppBar, Button, Dialog, Grid, IconButton, Slide, Toolbar, Typography } from '@mui/material';
+import { Alert, AppBar, Button, Dialog, Grid, IconButton, Slide, Toolbar, Typography } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddNewRoundForm from './AddNewRoundForm.component';
 import AddNewRoundHoles from './AddNewRoundHoles.component';
@@ -17,7 +18,12 @@ const NewRoundMain = () => {
   const round = newRoundMain.round;
   const holes = useAppStore((state) => state.newRoundHoles.holes);
   const roundTotals = useAppStore((state) => state.newRoundTotals.roundTotals);
+  const initialHCP = useAppStore((state) => state.player?.initialHCP) ?? null;
+  const roundsListLength = useAppStore((state) => state.roundsList.length);
   const [roundTotalsOpen, setRoundTotalsOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const showFirstRoundGuard = roundsListLength === 0 && initialHCP == null;
 
 
   const handleStatisticsButton = () => {
@@ -35,6 +41,21 @@ const NewRoundMain = () => {
 
   return (
     <Grid container spacing={2} columns={{ xs: 1 }}>
+      {showFirstRoundGuard && (
+        <Grid size={{ xs: 12 }}>
+          <Alert
+            severity="warning"
+            sx={{ mb: 2 }}
+            action={
+              <Button color="inherit" size="small" onClick={() => navigate('/settings')}>
+                Go to Settings
+              </Button>
+            }
+          >
+            Set your Initial Handicap in Settings before saving your first round.
+          </Alert>
+        </Grid>
+      )}
       <Grid size={{ xs: 12 }}>
         <StackNewHole>
 

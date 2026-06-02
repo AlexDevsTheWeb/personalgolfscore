@@ -4,8 +4,13 @@ import { useAppStore } from "@/store/zustand";
 const RoundSave = () => {
   const isLoading = useAppStore((state) => state.newRoundSaver.isLoading);
   const saveNewRound = useAppStore((state) => state.saveNewRound);
+  const initialHCP = useAppStore((state) => state.player?.initialHCP) ?? null;
+  const roundsListLength = useAppStore((state) => state.roundsList.length);
+
+  const blocked = roundsListLength === 0 && initialHCP == null;
 
   const handleClick = () => {
+    if (blocked) return;
     saveNewRound();
   };
 
@@ -14,7 +19,7 @@ const RoundSave = () => {
       <Button
         variant='contained'
         onClick={handleClick}
-        disabled={isLoading}
+        disabled={isLoading || blocked}
       >
         {isLoading ? "Saving Round..." : "Save Final Round"}
       </Button>

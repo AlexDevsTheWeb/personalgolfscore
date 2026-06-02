@@ -16,6 +16,8 @@ import {
 } from '../../utils/round/round.utils';
 import { getCourseByName } from '@/utils/firestore/course.firestore';
 import { calculateScoreDifferential } from '@/utils/whs/whs.utils';
+import { calculateHandicapIndex } from '@/utils/whs/hi.utils';
+import { updatePlayerProfile } from '@/utils/firestore/player.firestore';
 
 export const getRoundDetails = async (
   { playerId, roundId }: IFetchParams
@@ -102,6 +104,11 @@ export const saveNewRound = async (): Promise<{ success: boolean; roundId: strin
       throw new Error('User not authenticated');
     }
 
+    // First-round guard: block save when initialHCP is null and no existing rounds
+    if ((player?.initialHCP ?? null) == null && store.roundsList.length === 0) {
+      throw new Error('Set your Initial Handicap in Settings before saving the first round.');
+    }
+
     // Compute Score Differential before saving (per D-03)
     let scoreDifferential: number | null = null;
     try {
@@ -128,6 +135,28 @@ export const saveNewRound = async (): Promise<{ success: boolean; roundId: strin
       // Round save continues without SD — non-blocking
     }
 
+    // Compute Handicap Index and delta (per D-04, D-08)
+    let handicapIndex: number | null = null;
+    let hcpDelta: number | null = null;
+    try {
+      const previousHCP = store.roundsList[0]?.handicapIndex ?? player?.initialHCP ?? null;
+      if (previousHCP != null && scoreDifferential != null) {
+        const previousSDs = store.roundsList
+          .map((r) => r.scoreDifferential)
+          .filter((sd): sd is number => sd !== null && sd !== undefined)
+          .slice(0, 19);
+        const virtualSDs = [scoreDifferential, ...previousSDs].slice(0, 20);
+        const newHI = calculateHandicapIndex(virtualSDs);
+        if (newHI != null) {
+          handicapIndex = newHI;
+          hcpDelta = +((newHI - previousHCP)).toFixed(1);
+        }
+      }
+    } catch (hiError: any) {
+      console.error('saveNewRound: Error computing Handicap Index:', hiError);
+      // Round save continues without HI/delta — non-blocking
+    }
+
     const batchSaveRound = writeBatch(db);
     savedRoundId = prepareRoundSaveBatch(
       batchSaveRound,
@@ -136,9 +165,20 @@ export const saveNewRound = async (): Promise<{ success: boolean; roundId: strin
       currentTotals,
       currentRoundDistances,
       holes,
-      scoreDifferential
+      scoreDifferential,
+      handicapIndex,
+      hcpDelta
     );
     await batchSaveRound.commit();
+
+    // Update player.currentHCP snapshot (per D-10) — non-blocking on failure
+    if (handicapIndex != null && userId) {
+      try {
+        await updatePlayerProfile({ uid: userId, data: { currentHCP: handicapIndex } });
+      } catch (curErr: any) {
+        console.error('saveNewRound: Error updating player.currentHCP snapshot:', curErr);
+      }
+    }
 
     if (currentRoundDistances.length > 0 && userId) {
       try {

@@ -170,6 +170,8 @@ export interface IBasicRoundData {
   userId?: string
   createdAt: number,
   scoreDifferential?: number | null,
+  handicapIndex?: number | null,
+  hcpDelta?: number | null,
   totals: IRoundTotals
 }
 

@@ -88,7 +88,9 @@ export const prepareRoundSaveBatch = (
   totals: IRoundTotals,
   currentRoundDistances: IDistance[],
   holes: IShots[],
-  scoreDifferential?: number | null
+  scoreDifferential?: number | null,
+  handicapIndex?: number | null,
+  hcpDelta?: number | null
 ): string => {
   const playerRoundsCollectionRef = collection(db, 'players', userId, 'rounds');
   const roundRef = doc(playerRoundsCollectionRef);
@@ -100,6 +102,8 @@ export const prepareRoundSaveBatch = (
     distances: currentRoundDistances,
     userId: userId,
     scoreDifferential: scoreDifferential ?? null,
+    handicapIndex: handicapIndex ?? null,
+    hcpDelta: hcpDelta ?? null,
     roundDate: general.roundDate ? Timestamp.fromDate(new Date(general.roundDate)) : serverTimestamp(),
     createdAt: serverTimestamp(),
   });
