@@ -122,16 +122,18 @@ const HandicapHistory = () => {
 			(a, b) => a.roundDate - b.roundDate
 		);
 		const earliestDate = chronological[0].roundDate;
-		const points: { date: number; hi: number }[] = [
-			{ date: earliestDate, hi: initialHCP as number },
-		];
-		for (const round of chronological) {
-			points.push({
-				date: round.roundDate,
-				hi: round.handicapIndex as number,
-			});
-		}
-		return points;
+		// CR-03 fix: the anchor already represents the first round's date.
+		// Skipping index 0 prevents two points at the same x with different y,
+		// which would render as a vertical line of length |round1.hi - initialHCP|.
+		const anchor: { date: number; hi: number } = {
+			date: earliestDate,
+			hi: initialHCP as number,
+		};
+		const subsequentPoints = chronological.slice(1).map((round) => ({
+			date: round.roundDate,
+			hi: round.handicapIndex as number,
+		}));
+		return [anchor, ...subsequentPoints];
 	}, [roundsWithSD, hasInitialHCP, initialHCP]);
 
 	if (isLoadingRounds) {
