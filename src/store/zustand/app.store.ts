@@ -385,7 +385,12 @@ export const useAppStore = create<AppState>()(
           set({ isLoadingPlayer: true, playerError: '', playerErrorMessage: '' });
           try {
             const result = await getPlayerInfo(uid);
-            set({ isLoadingPlayer: false, player: result.player });
+            set((state) => ({
+              isLoadingPlayer: false,
+              player: result.player,
+              roundsList: result.rounds ?? state.roundsList,
+              roundsPlayerID: result.player?.uid ?? state.roundsPlayerID,
+            }));
             return result;
           } catch (error: unknown) {
             const err = error as { status?: string; statusText?: string; message?: string };
