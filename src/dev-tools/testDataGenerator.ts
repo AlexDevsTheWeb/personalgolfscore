@@ -363,6 +363,84 @@ export class TestDataGenerator {
           // Add more edge cases...
         ],
       },
+
+      // HCP-INIT scenarios (Phase 5) — anchor chart to user-supplied initialHCP
+      hcpInitWithNoRounds: {
+        roundName: 'HCP-INIT: Initial HCP Only, Zero Rounds',
+        description: 'Anchor HCP=12.3 with no rounds played yet (D-14). Chart shows single point + dashed reference line.',
+        courseInfo: { name: 'Test Course', par: 72, tee: 'White', playerHCP: 12 },
+        expectedIssues: ['No rounds, no SDs — single-point chart', 'Reference line drawn at initialHCP'],
+        holeConfigs: [],
+      },
+
+      hcpInitWithFirstRound: {
+        roundName: 'HCP-INIT: Initial HCP + First Round',
+        description: 'First round delta = newHI - initialHCP (D-04/D-08). Player starts at 12.3, plays +1 over par on all 18 — expected newHI ~11.8, delta -0.5.',
+        courseInfo: { name: 'Initial HCP Course', par: 72, tee: 'White', playerHCP: 12 },
+        expectedIssues: ['First round HI anchored to initialHCP', 'hcpDelta = newHI - initialHCP'],
+        holeConfigs: Array.from({ length: 18 }, (_, i) => ({
+          holeNumber: i + 1,
+          par: 4 as const,
+          hcp: (i % 18) + 1,
+          distance: 300 + (i * 20),
+          strokes: 5, // 1 over par
+          putts: 2,
+          puttsLength: [8, 2],
+          teeClub: 'DRIVER',
+          driveDistance: 240,
+          fairway: 5,
+          toGreen: 'i7',
+          toGreenMeters: 120,
+        })),
+      },
+
+      hcpInitProgression: {
+        roundName: 'HCP-INIT: Multi-Round Progression',
+        description: 'Three rounds to verify the chart running previousHCP carries correctly across rounds. Alternating +/- 1 vs par produces a meaningful HI trajectory.',
+        courseInfo: { name: 'Progression Course', par: 72, tee: 'White', playerHCP: 12 },
+        expectedIssues: ['running previousHCP carries from round 1 to round 3', 'each round stores its own handicapIndex and hcpDelta'],
+        holeConfigs: [
+          // Round 1: even par (4 on every hole) — delta 0 from initialHCP
+          ...Array.from({ length: 18 }, (_, i) => ({
+            holeNumber: i + 1,
+            par: 4 as const,
+            hcp: (i % 18) + 1,
+            distance: 300 + (i * 20),
+            strokes: 4, // exact par
+            putts: 2,
+            puttsLength: [6, 1],
+            teeClub: 'DRIVER',
+            driveDistance: 240,
+            fairway: 5,
+          })),
+          // Round 2: 1 under par (birdies) — delta should be negative
+          ...Array.from({ length: 18 }, (_, i) => ({
+            holeNumber: i + 1,
+            par: 4 as const,
+            hcp: (i % 18) + 1,
+            distance: 300 + (i * 20),
+            strokes: 3, // birdie
+            putts: 1,
+            puttsLength: [3],
+            teeClub: 'DRIVER',
+            driveDistance: 250,
+            fairway: 5,
+          })),
+          // Round 3: 1 over par (bogeys) — delta should be positive
+          ...Array.from({ length: 18 }, (_, i) => ({
+            holeNumber: i + 1,
+            par: 4 as const,
+            hcp: (i % 18) + 1,
+            distance: 300 + (i * 20),
+            strokes: 5, // bogey
+            putts: 2,
+            puttsLength: [10, 2],
+            teeClub: 'DRIVER',
+            driveDistance: 220,
+            fairway: 4,
+          })),
+        ],
+      },
     };
   }
 

@@ -539,6 +539,67 @@ export class EdgeCaseTests {
   }
 
   /**
+   * Tests for the HCP-INIT Phase 5 feature (initialHCP + per-round handicapIndex/hcpDelta).
+   * Lifted out of getAllEdgeCaseTests so the new visualization tests can be listed and run
+   * independently of the legacy calculation edge cases.
+   */
+  static getHcpInitTests(): { [key: string]: TestRoundConfig } {
+    return {
+      // D-14: User has set an initial HCP but has 0 rounds. Chart should render a single
+      // point at the initialHCP value with the dashed reference line.
+      userWithInitialHCPAndNoRounds: {
+        roundName: 'HCP-INIT Edge: Initial HCP, Zero Rounds',
+        description: 'D-14 fallback: chart shows single point at initialHCP + dashed reference line. No Last 20 Rounds table (0 rounds).',
+        courseInfo: { name: 'Anchor Course', par: 72, tee: 'White', playerHCP: 15 },
+        expectedIssues: ['No rounds, no SDs', 'Single-point chart with reference line'],
+        holeConfigs: [],
+      },
+
+      // D-15: User has rounds but no initialHCP. Chart falls back to per-round WHS recalc,
+      // no reference line. Info banner prompts them to set initialHCP.
+      legacyUserWithRoundsNoInitialHCP: {
+        roundName: 'HCP-INIT Edge: Legacy User With Rounds',
+        description: 'D-15 fallback: chart uses per-round WHS recalc (no reference line). 9 holes, all par 4, all bogey.',
+        courseInfo: { name: 'Legacy Course', par: 36, tee: 'White', playerHCP: 18 },
+        expectedIssues: ['No initialHCP, no reference line', 'Banner prompts to set initialHCP'],
+        holeConfigs: Array.from({ length: 9 }, (_, i) => ({
+          holeNumber: i + 1,
+          par: 4 as const,
+          hcp: (i % 9) + 1,
+          distance: 380,
+          strokes: 5, // bogey
+          putts: 2,
+          puttsLength: [6, 1],
+          teeClub: 'DRIVER',
+          driveDistance: 240,
+          fairway: 5,
+        })),
+      },
+
+      // D-04: First round's stored hcpDelta = newHI - initialHCP. Verifies the per-round
+      // save writes the right delta value for the first chronological round.
+      firstRoundDeltaEqualsInitialMinusPrevious: {
+        roundName: 'HCP-INIT Edge: First Round Delta',
+        description: 'D-04: first round hcpDelta = newHI - initialHCP. 18 holes, par 4, bogey — verifies the per-round write stores the correct delta.',
+        courseInfo: { name: 'First Round Course', par: 72, tee: 'White', playerHCP: 18 },
+        expectedIssues: ['first round delta anchored to initialHCP', 'subsequent rounds anchor to last handicapIndex'],
+        holeConfigs: Array.from({ length: 18 }, (_, i) => ({
+          holeNumber: i + 1,
+          par: 4 as const,
+          hcp: (i % 18) + 1,
+          distance: 380,
+          strokes: 5, // bogey
+          putts: 2,
+          puttsLength: [6, 1],
+          teeClub: 'DRIVER',
+          driveDistance: 240,
+          fairway: 5,
+        })),
+      },
+    };
+  }
+
+  /**
    * Get all edge case tests combined
    */
   static getAllEdgeCaseTests(): { [key: string]: TestRoundConfig } {

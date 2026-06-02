@@ -239,6 +239,7 @@ export class InteractiveTestRunner {
     
     const scenarios = TestDataGenerator.getTestScenarios();
     const edgeCases = EdgeCaseTests.getAllEdgeCaseTests();
+    const hcpInitTests = EdgeCaseTests.getHcpInitTests();
     
     console.log('Standard Scenarios:');
     Object.entries(scenarios).forEach(([name, config]) => {
@@ -247,6 +248,11 @@ export class InteractiveTestRunner {
     
     console.log('\nEdge Case Tests:');
     Object.entries(edgeCases).forEach(([name, config]) => {
+      console.log(`  - ${name}: ${config.description}`);
+    });
+
+    console.log('\nHCP-INIT Scenarios:');
+    Object.entries(hcpInitTests).forEach(([name, config]) => {
       console.log(`  - ${name}: ${config.description}`);
     });
   }
