@@ -3,15 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-02-PLAN.md
-last_updated: "2026-06-01T11:00:00.000Z"
-last_activity: 2026-06-01 -- Phase 04 completed
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-06-02T07:37:07.716Z"
 progress:
-  total_phases: 4
+  total_phases: 5
   completed_phases: 4
   total_plans: 11
-  completed_plans: 11
-  percent: 100
+  completed_plans: 10
+  percent: 80
 ---
 
 # Project State
@@ -21,15 +20,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-31)
 
 **Core value:** Players can accurately calculate their WHS handicap index from their rounds and simulate how future scores would affect it.
-**Current focus:** Next phase (TBD)
+**Current focus:** Phase 05 — initial-hcp-round-hi-progression-chart
 
 ## Current Position
 
-Phase: 04 (import-rounds-verification) — COMPLETE
+Phase: 05 (initial-hcp-round-hi-progression-chart) — EXECUTING
+Plan: 2 of 2
 Plans: 2 of 2 complete
-Status: Phase 04 complete — all milestone phases delivered
+Status: Ready to execute
 
-Progress: [██████████] 100%
+Progress: [█████████░] 91%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [██████████] 100%
 *Updated after each plan completion*
 | Phase 04-01 P01 | — | 4 tasks | 10 files |
 | Phase 04-02 P02 | — | 3 tasks | 11 files |
+| Phase 05 P01 | 6 min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,9 @@ Recent decisions affecting current work:
 - [Phase 3]: Nav link clicks do NOT close drawer on desktop (only hamburger toggle)
 - [Phase 3]: Admin links render only inside `player.isAdmin` conditional block — not from links.map()
 - [Phase 3]: Navigation links filtered by `show === true` property
+- [Phase 05-initial-hcp-round-hi-progression-chart]: Per-round writeBatch in importRoundsBatch to enable incremental HI computation with running HCP state — D-09: each imported round must compute its HI from runningSDs + runningHCP, which can only happen sequentially
+- [Phase 05-initial-hcp-round-hi-progression-chart]: currentHCP snapshot updated via try/catch in both saveNewRound and importRoundsBatch — snapshot failure does not roll back the round save — Round save is the source of truth; snapshot is a denormalized cache for sidebar/header
+- [Phase 05-initial-hcp-round-hi-progression-chart]: First-round guard implemented in three layers: Alert (UX), disabled Save button (defense), throw in saveNewRound (logic) — Defense in depth — UI bypass via programmatic call surfaces the gap as a thrown error
 
 ### Pending Todos
 
@@ -88,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-01T09:35:00.000Z
-Stopped at: Completed 03-02-PLAN.md
+Last session: 2026-06-02T07:37:07.709Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None

@@ -135,7 +135,7 @@ Plans:
 
 Plans:
 
-- [ ] 05-01-PLAN.md — Initial HCP input on Settings + per-round HI/delta storage + first-round guard + import path (Wave 1)
+- [x] 05-01-PLAN.md — Initial HCP input on Settings + per-round HI/delta storage + first-round guard + import path (Wave 1)
 - [ ] 05-02-PLAN.md — Handicap History chart anchored to initialHCP + dashed reference line + Δ column + fallback banners (Wave 2, blocked on 05-01)
 
 ## Progress
@@ -148,4 +148,4 @@ Plans:
 | 2. WHS Engine & Handicap Simulator | 2/2 | Complete   | 2026-06-01 |
 | 3. Navigation & Sidebar Reorg | 2/2 | Complete   | 2026-06-01 |
 | 4. Import Rounds Verification | 2/2 | Complete   | 2026-06-01 |
-| 5. Initial HCP, Round HI & Progression Chart | 0/0 | Pending   | —       |
+| 5. Initial HCP, Round HI & Progression Chart | 1/2 | In Progress|  |
