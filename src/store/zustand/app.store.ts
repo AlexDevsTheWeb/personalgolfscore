@@ -858,7 +858,19 @@ export const useAppStore = create<AppState>()(
               });
             });
 
-            const result = await importRoundsBatch(userId, docs);
+            const previousSDs = state.roundsList
+              .map((r) => r.scoreDifferential)
+              .filter((sd): sd is number => sd !== null && sd !== undefined);
+            const initialHCP = state.player?.initialHCP ?? null;
+
+            const result = await importRoundsBatch(userId, docs, previousSDs, initialHCP);
+
+            // Refetch player to sync currentHCP snapshot in store
+            try {
+              await get().getPlayerDetails(userId);
+            } catch (refetchErr: unknown) {
+              console.error('importRounds: Error refetching player details:', refetchErr);
+            }
 
             const updatedState = get();
             const allSDs = updatedState.roundsList

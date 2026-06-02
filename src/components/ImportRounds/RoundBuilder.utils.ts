@@ -18,6 +18,8 @@ export interface IRoundImportDocument {
   roundNumber: number;
   totals: IRoundTotals;
   scoreDifferential: number | null;
+  handicapIndex: number | null;
+  hcpDelta: number | null;
   userId: string;
   importSource: 'federgolf-sheet';
   createdAt: FieldValue;
@@ -32,6 +34,8 @@ export function buildRoundDocument(params: {
   match: ICourseMatchResult;
   roundNumber: number;
   userId: string;
+  handicapIndex?: number | null;
+  hcpDelta?: number | null;
 }): IRoundImportDocument {
   const totals = createEmptyRoundTotals();
   totals.score.totals = params.parsed.roundStrokes;
@@ -51,6 +55,8 @@ export function buildRoundDocument(params: {
     roundNumber: params.roundNumber,
     totals,
     scoreDifferential: params.parsed.scoreDifferential,
+    handicapIndex: params.handicapIndex ?? null,
+    hcpDelta: params.hcpDelta ?? null,
     userId: params.userId,
     importSource: 'federgolf-sheet',
     createdAt: serverTimestamp(),

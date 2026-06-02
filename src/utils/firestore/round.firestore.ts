@@ -68,23 +68,70 @@ import { IRoundImportDocument } from '@/components/ImportRounds/RoundBuilder.uti
 
 export const importRoundsBatch = async (
   userId: string,
-  roundDocs: IRoundImportDocument[]
+  roundDocs: IRoundImportDocument[],
+  previousSDsMostRecentFirst: number[],
+  initialHCP: number | null
 ): Promise<{ success: boolean; importedCount: number; roundIds: string[] }> => {
   if (!userId) {
     throw new Error('User not authenticated');
   }
 
-  const batch = writeBatch(db);
-  const roundIds: string[] = [];
+  // Sort roundDocs chronologically (oldest first) to enable incremental HI calculation
+  const sortedDocs = [...roundDocs].sort((a, b) => {
+    const aMs = a.roundDate instanceof Timestamp ? a.roundDate.toMillis() : Number(a.roundDate);
+    const bMs = b.roundDate instanceof Timestamp ? b.roundDate.toMillis() : Number(b.roundDate);
+    return aMs - bMs;
+  });
 
-  for (const roundDoc of roundDocs) {
+  const roundIds: string[] = [];
+  let runningSDs = [...previousSDsMostRecentFirst].slice(0, 19);
+  let runningHCP: number | null = initialHCP;
+
+  for (const roundDoc of sortedDocs) {
+    const newSD = roundDoc.scoreDifferential;
+    let handicapIndex: number | null = null;
+    let hcpDelta: number | null = null;
+
+    if (runningHCP != null && newSD != null) {
+      const virtualSDs = [newSD, ...runningSDs].slice(0, 20);
+      const newHI = calculateHandicapIndex(virtualSDs);
+      if (newHI != null) {
+        handicapIndex = newHI;
+        hcpDelta = +((newHI - runningHCP)).toFixed(1);
+      }
+    }
+
+    const enrichedDoc: IRoundImportDocument = {
+      ...roundDoc,
+      handicapIndex,
+      hcpDelta,
+    };
+
+    const batch = writeBatch(db);
     const roundRef = doc(collection(db, 'players', userId, 'rounds'));
     roundIds.push(roundRef.id);
-    batch.set(roundRef, roundDoc);
+    batch.set(roundRef, enrichedDoc);
+    await batch.commit();
+    console.log(`importRoundsBatch: imported round ${roundRef.id} (handicapIndex=${handicapIndex}, hcpDelta=${hcpDelta})`);
+
+    if (newSD != null) {
+      runningSDs = [newSD, ...runningSDs].slice(0, 19);
+    }
+    if (handicapIndex != null) {
+      runningHCP = handicapIndex;
+    }
   }
 
-  await batch.commit();
-  return { success: true, importedCount: roundDocs.length, roundIds };
+  // Update player.currentHCP snapshot (per D-10) — non-blocking on failure
+  if (runningHCP != null) {
+    try {
+      await updatePlayerProfile({ uid: userId, data: { currentHCP: runningHCP } });
+    } catch (curErr: any) {
+      console.error('importRoundsBatch: Error updating player.currentHCP snapshot:', curErr);
+    }
+  }
+
+  return { success: true, importedCount: sortedDocs.length, roundIds };
 };
 
 export const saveNewRound = async (): Promise<{ success: boolean; roundId: string }> => {
