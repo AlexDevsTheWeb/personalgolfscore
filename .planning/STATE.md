@@ -1,97 +1,96 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.0
-milestone_name: milestone
-status: executing
-stopped_at: Completed 05-01-PLAN.md
-last_updated: "2026-06-02T07:37:07.716Z"
+milestone_name: MVP
+status: milestone_archived
+stopped_at: Milestone v1.0 MVP archived; ready for next milestone planning
+last_updated: 2026-06-02T11:45:00.000Z
 progress:
   total_phases: 5
-  completed_phases: 4
-  total_plans: 11
-  completed_plans: 10
-  percent: 80
+  completed_phases: 5
+  total_plans: 12
+  completed_plans: 12
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-31)
+See: .planning/PROJECT.md (updated 2026-06-02 after v1.0 archive)
 
-**Core value:** Players can accurately calculate their WHS handicap index from their rounds and simulate how future scores would affect it.
-**Current focus:** Phase 05 — initial-hcp-round-hi-progression-chart
+**Core value:** Players can accurately calculate their WHS handicap index from their rounds, see how that index has progressed over time, and simulate how future scores would affect it.
+**Current focus:** Milestone v1.0 archived; ready to plan next milestone via `/gsd-new-milestone`
 
 ## Current Position
 
-Phase: 05 (initial-hcp-round-hi-progression-chart) — EXECUTING
-Plan: 2 of 2
-Plans: 2 of 2 complete
-Status: Ready to execute
+Milestone: v1.0 (archived)
+Phase: — (all 5 phases complete)
+Status: Milestone archived; ROADMAP collapsed; REQUIREMENTS.md deleted (fresh for next milestone)
 
-Progress: [█████████░] 91%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
-**Velocity:**
+**Velocity (v1.0):**
 
-- Total plans completed: 11
-- Average duration: —
-- Total execution time: —
+- Total plans completed: 12
+- Total tasks: ~36
+- Total execution time: 575 days (2024-11-04 → 2026-06-02)
+- Branches: 0 (worked directly on `development`)
 
 **By Phase:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 1. Course Database & Admin Foundation | 3/3 | — | — |
-| 2. WHS Engine & Handicap Simulator | 2/2 | — | — |
-| 3. Navigation & Sidebar Reorg | 2/2 | — | — |
-| 4. Import Rounds Verification | 2/2 | — | — |
-
-**Recent Trend:**
-
-- Last 5 plans: Phase 1 plans 01–03, Phase 2 plans 01–02 completed
-- Trend: —
-
-*Updated after each plan completion*
-| Phase 04-01 P01 | — | 4 tasks | 10 files |
-| Phase 04-02 P02 | — | 3 tasks | 11 files |
-| Phase 05 P01 | 6 min | 3 tasks | 10 files |
+| Phase | Plans | Status | Notes |
+|-------|-------|--------|-------|
+| 1. Course Database & Admin Foundation | 3/3 | ✓ Complete | 01-01, 01-02, 01-03 |
+| 2. WHS Engine & Handicap Simulator | 2/2 | ✓ Complete | 02-01, 02-02 |
+| 3. Navigation & Sidebar Reorg | 2/2 | ✓ Complete | 03-01, 03-02 |
+| 4. Import Rounds Verification | 2/2 | ✓ Complete | 04-01, 04-02 |
+| 5. Initial HCP, Round HI & Progression Chart | 3/3 | ✓ Complete | 05-01, 05-02, 05-3 (gap closure) |
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
+Full decision log in `PROJECT.md` Key Decisions table and `RETROSPECTIVE.md` Patterns Established. Highlights:
 
-- — phase planning will surface decisions.
-- [Phase 3]: Avatar is visual-only — no dropdown, no popover, no HCP/settings/logout
-- [Phase 3]: Sidebar drawer is primary navigation hub on all screen sizes
-- [Phase 3]: Desktop drawer uses persistent variant (toggleable via hamburger)
-- [Phase 3]: Nav link clicks do NOT close drawer on desktop (only hamburger toggle)
-- [Phase 3]: Admin links render only inside `player.isAdmin` conditional block — not from links.map()
-- [Phase 3]: Navigation links filtered by `show === true` property
-- [Phase 05-initial-hcp-round-hi-progression-chart]: Per-round writeBatch in importRoundsBatch to enable incremental HI computation with running HCP state — D-09: each imported round must compute its HI from runningSDs + runningHCP, which can only happen sequentially
-- [Phase 05-initial-hcp-round-hi-progression-chart]: currentHCP snapshot updated via try/catch in both saveNewRound and importRoundsBatch — snapshot failure does not roll back the round save — Round save is the source of truth; snapshot is a denormalized cache for sidebar/header
-- [Phase 05-initial-hcp-round-hi-progression-chart]: First-round guard implemented in three layers: Alert (UX), disabled Save button (defense), throw in saveNewRound (logic) — Defense in depth — UI bypass via programmatic call surfaces the gap as a thrown error
+- Branching strategy: `none` (work on `development` directly)
+- Decimal phase numbering for gap closure (`05-3-PLAN.md`)
+- `@mui/x-charts` v8 `ChartsReferenceLine` dispatcher (functionally equivalent to `ChartsYReferenceLine`)
+- Three-layer first-round guard (UX alert + disabled button + logic throw)
+- Per-round `writeBatch` in `importRoundsBatch` for sequential HI/delta computation
+- Function-form `set((state) => ({...}))` when reading current state
+- D-11 / D-14 / D-15 branch pattern for chart fallbacks
 
-### Pending Todos
+### Deferred Items
 
-None yet.
+From Phase 5 code review (non-blocking, carried into v2 housekeeping):
+
+| Category | Item | Source |
+|----------|------|--------|
+| code-style | WR-01: `==` loose equality in `round.firestore.ts` | Phase 5 review |
+| dev-tools | WR-02: Debug `console.log` in production `importRoundsBatch` | Phase 5 review |
+| correctness | WR-03: Missing live WHS recalc fallback in `importRoundsBatch` for null `initialHCP` | Phase 5 review |
+| robustness | WR-04: In-batch duplicate detection missing in `importRounds` | Phase 5 review |
+| dev-tools | IN-01..03: Test description inaccuracies; HCP-INIT scenarios not run by `runAllTests` | Phase 5 review |
+| refactor | `Dashboard.page.tsx:24-30` `setRounds` workaround now redundant after CR-01 fix | Phase 5 review |
 
 ### Blockers/Concerns
 
-None yet.
+None.
 
-## Deferred Items
+## Archived Milestones
 
-| Category | Item | Status | Deferred At |
-|----------|------|--------|-------------|
-| *(none)* | | | |
+- ✅ **v1.0 MVP** — Phases 1-5 (shipped 2026-06-02)
+  - Archive: `.planning/milestones/v1.0-ROADMAP.md`
+  - Requirements: `.planning/milestones/v1.0-REQUIREMENTS.md`
+  - Tag: `v1.0`
+  - Retrospective: `.planning/RETROSPECTIVE.md`
 
 ## Session Continuity
 
-Last session: 2026-06-02T07:37:07.709Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-06-02T11:45:00.000Z
+Stopped at: Milestone v1.0 MVP archived
+Next action: Run `/gsd-new-milestone` to plan v2 (or whatever comes next)
 Resume file: None
