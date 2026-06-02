@@ -149,9 +149,16 @@ const HandicapHistory = () => {
 				<Typography variant="headline2">Handicap History</Typography>
 			</Box>
 
-			{roundsWithSD.length === 0 && (
+			{roundsWithSD.length === 0 && !hasInitialHCP && (
 				<Alert severity="info">
 					No rounds with score differentials yet. Play some rounds first!
+				</Alert>
+			)}
+
+			{roundsWithSD.length === 0 && hasInitialHCP && (
+				<Alert severity="info" sx={{ mb: 2 }}>
+					Your initial handicap ({initialHCP?.toFixed(1)}) is saved.
+					Add your first round to start tracking progression.
 				</Alert>
 			)}
 
@@ -172,6 +179,13 @@ const HandicapHistory = () => {
 						</Typography>
 					</Box>
 
+					{!hasInitialHCP && hasRounds && (
+						<Alert severity="info" sx={{ mb: 2 }}>
+							Set your Initial Handicap in Settings to anchor the
+							progression chart.
+						</Alert>
+					)}
+
 					<Card sx={{ mb: 3 }}>
 						<CardContent>
 							<Typography variant="title6" gutterBottom>
@@ -189,6 +203,9 @@ const HandicapHistory = () => {
 											</TableCell>
 											<TableCell align="right">
 												Score Diff.
+											</TableCell>
+											<TableCell align="right">
+												Δ
 											</TableCell>
 											<TableCell align="center">
 												Used
@@ -234,6 +251,15 @@ const HandicapHistory = () => {
 																)
 															: '\u2014'}
 													</TableCell>
+													<TableCell align="right">
+														{round.hcpDelta != null
+															? `${
+																	round.hcpDelta > 0
+																		? '+'
+																		: ''
+																}${round.hcpDelta.toFixed(1)}`
+															: '\u2014'}
+													</TableCell>
 													<TableCell align="center">
 														{isHighlighted
 															? '\u2606'
@@ -247,73 +273,61 @@ const HandicapHistory = () => {
 							</TableContainer>
 						</CardContent>
 					</Card>
-
-					<Card>
-						<CardContent>
-							<Typography variant="title6" gutterBottom>
-								HCP Progression
-							</Typography>
-							{progressionData.length === 0 ? (
-								<Typography
-									variant="body"
-									color="text.secondary"
-									sx={{ textAlign: 'center', py: 4 }}
-								>
-									Need at least 2 rounds to show progression.
-								</Typography>
-							) : (
-								<Box sx={{ width: '100%', height: 300 }}>
-									<LineChart
-										dataset={progressionData}
-										xAxis={[
-											{
-												dataKey: 'date',
-												scaleType: 'time',
-												valueFormatter: (
-													date: Date
-												) =>
-													dayjs(date).format(
-														'DD/MM/YY'
-													),
-											},
-										]}
-										yAxis={[
-											{
-												label: 'Handicap Index',
-											},
-										]}
-										series={[
-											{
-												dataKey: 'hi',
-												label: 'Handicap Index',
-												showMark: true,
-												connectNulls: false,
-											},
-										]}
-										height={300}
-										margin={{
-											top: 10,
-											right: 20,
-											bottom: 30,
-											left: 50,
-										}}
-									>
-										{hasInitialHCP && (
-											<ChartsReferenceLine
-												y={initialHCP as number}
-												label="Initial HCP"
-												lineStyle={{
-													strokeDasharray: '5 5',
-													stroke: '#888',
-												}}
-											/>
-										)}
-									</LineChart>
-								</Box>
-							)}
-						</CardContent>
-					</Card>
 				</>
+			)}
+
+			{progressionData.length >= 1 && (
+				<Card>
+					<CardContent>
+						<Typography variant="title6" gutterBottom>
+							HCP Progression
+						</Typography>
+						<Box sx={{ width: '100%', height: 300 }}>
+							<LineChart
+								dataset={progressionData}
+								xAxis={[
+									{
+										dataKey: 'date',
+										scaleType: 'time',
+										valueFormatter: (date: Date) =>
+											dayjs(date).format('DD/MM/YY'),
+									},
+								]}
+								yAxis={[
+									{
+										label: 'Handicap Index',
+									},
+								]}
+								series={[
+									{
+										dataKey: 'hi',
+										label: 'Handicap Index',
+										showMark: true,
+										connectNulls: false,
+									},
+								]}
+								height={300}
+								margin={{
+									top: 10,
+									right: 20,
+									bottom: 30,
+									left: 50,
+								}}
+							>
+								{hasInitialHCP && (
+									<ChartsReferenceLine
+										y={initialHCP as number}
+										label="Initial HCP"
+										lineStyle={{
+											strokeDasharray: '5 5',
+											stroke: '#888',
+										}}
+									/>
+								)}
+							</LineChart>
+						</Box>
+					</CardContent>
+				</Card>
 			)}
 		</Box>
 	);
