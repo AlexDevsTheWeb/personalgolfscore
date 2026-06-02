@@ -186,7 +186,22 @@ export const saveNewRound = async (): Promise<{ success: boolean; roundId: strin
     let handicapIndex: number | null = null;
     let hcpDelta: number | null = null;
     try {
-      const previousHCP = store.roundsList[0]?.handicapIndex ?? player?.initialHCP ?? null;
+      // CR-02 fix: legacy users (pre-Phase-5 rounds, no stored handicapIndex) need
+      // the live WHS recalc, not the player's initialHCP, as the previousHCP for
+      // the new hcpDelta computation.
+      const mostRecent = store.roundsList[0];
+      let previousHCP: number | null;
+      if (mostRecent?.handicapIndex != null) {
+        previousHCP = mostRecent.handicapIndex;
+      } else if (store.roundsList.length > 0) {
+        // Legacy fallback: live WHS recalc from existing SDs (mirrors D-15 chart branch)
+        const legacySDs = store.roundsList
+          .map((r) => r.scoreDifferential)
+          .filter((sd): sd is number => sd !== null && sd !== undefined);
+        previousHCP = calculateHandicapIndex(legacySDs);
+      } else {
+        previousHCP = player?.initialHCP ?? null;
+      }
       if (previousHCP != null && scoreDifferential != null) {
         const previousSDs = store.roundsList
           .map((r) => r.scoreDifferential)
