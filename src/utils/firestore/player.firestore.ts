@@ -59,6 +59,8 @@ export const getPlayerInfo = async (uid: string): Promise<IGetPlayerDetailsPaylo
       firstName: playerData.firstName,
       lastName: playerData.lastName,
       HCP: playerData.HCP,
+      initialHCP: playerData.initialHCP ?? null,
+      currentHCP: playerData.currentHCP ?? null,
       photoURL: playerData.photoURL,
       isSetupComplete: playerData.isSetupComplete ?? false,
     };

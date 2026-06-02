@@ -10,6 +10,7 @@ This roadmap delivers WHS (World Handicap System) handicap calculation, a shared
 - [x] **Phase 2: WHS Engine & Handicap Simulator** - WHS Score Differential and Handicap Index calculation engine plus a dedicated Simulator with course/teebox selection and projected HI display (completed 2026-06-01)
 - [x] **Phase 3: Navigation & Sidebar Reorg** - Move Avatar menu (HCP, settings, logout) to sidebar; fix admin link visibility; make sidebar responsive across all screen sizes (completed 2026-06-01)
 - [x] **Phase 4: Import Rounds Verification** - Import Federgolf competition results via clipboard paste, match courses, save as real rounds in Firestore for handicap verification (pending) (completed 2026-06-01)
+- [ ] **Phase 5: Initial HCP, Round HI & Progression Chart** - Let users set an initial exact HCP in Settings; on each round save compute the new exact HCP + delta and store them on the round; update the Handicap History chart to anchor on the initial HCP as a dashed reference line (pending)
 
 ## Phase Details
 
@@ -115,6 +116,28 @@ Plans:
 
 - [x] 04-02-PLAN.md — Import Rounds page UI: paste form, preview table, import result summary, route, nav link (Wave 2)
 
+### Phase 5: Initial HCP, Round HI & Progression Chart
+
+**Goal**: Anchor the handicap model to a user-supplied initial exact HCP value, capture the resulting WHS Handicap Index and delta on every saved round, and surface a Handicap History chart that starts at the initial HCP and shows it as a dashed reference line.
+**Mode**: mvp
+**Depends on**: Phase 2 (WHS engine, `scoreDifferential` storage, `calculateHandicapIndex`), Phase 4 (round save + import paths that must both write the new fields)
+**Requirements**: HCP-INIT-01, HCP-INIT-02, HCP-INIT-03, HCP-INIT-04
+**Success Criteria** (what must be TRUE):
+
+   1. User can enter an exact initial Handicap value on the Settings page; the value persists to the player document and reappears after refresh
+   2. After saving a new round, the round document contains `handicapIndex` (the recalculated WHS HI after that round) and `hcpDelta` (the change vs the previous HCP — initial HCP for the first round, previous round's HI thereafter)
+   3. Imported rounds (Phase 4 path) also receive `handicapIndex` and `hcpDelta` computed against the user's initial HCP and the chronological import order
+   4. The Handicap History page shows a chart that starts at the initial HCP value and progresses through each round's stored `handicapIndex`; a horizontal dashed reference line marks the initial HCP level
+   5. The current "Current Handicap Index" headline on the History page is replaced (or augmented) with the stored per-round `handicapIndex` of the most recent round, so the value is consistent with the chart's last point
+
+**Plans**: 2 plans
+**UI hint**: yes
+
+Plans:
+
+- [ ] 05-01-PLAN.md — Initial HCP input on Settings + per-round HI/delta storage + first-round guard + import path (Wave 1)
+- [ ] 05-02-PLAN.md — Handicap History chart anchored to initialHCP + dashed reference line + Δ column + fallback banners (Wave 2, blocked on 05-01)
+
 ## Progress
 
 **Execution Order:** Phases execute in numeric order: 1 → 2 → 3
@@ -124,3 +147,5 @@ Plans:
 | 1. Course Database & Admin Foundation | 3/3 | Complete   | 2026-05-31 |
 | 2. WHS Engine & Handicap Simulator | 2/2 | Complete   | 2026-06-01 |
 | 3. Navigation & Sidebar Reorg | 2/2 | Complete   | 2026-06-01 |
+| 4. Import Rounds Verification | 2/2 | Complete   | 2026-06-01 |
+| 5. Initial HCP, Round HI & Progression Chart | 0/0 | Pending   | —       |

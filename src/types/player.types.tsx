@@ -34,6 +34,8 @@ export interface IPlayerDetails {
   firstName?: string;
   lastName?: string;
   HCP?: number;
+  initialHCP?: number | null;
+  currentHCP?: number | null;
   DOB?: number;
   photoURL?: string | null;
   golfBag?: IGolfBagData;
