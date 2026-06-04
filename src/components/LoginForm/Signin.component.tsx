@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/icons8-golf-67.png';
+import Footer from '../layout/Footer.component';
 import GoogleLoginButton from './components/GoogleLoginButton.component';
 import LoginForm from './components/LoginForm.component';
 
@@ -52,6 +53,7 @@ const SignIn = (props: { disableCustomTheme?: boolean }) => {
             </Typography>
           </Box>
         </LoginCard>
+        <Footer />
       </SigninContainer>
     </>
 
