@@ -16,7 +16,6 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { ChartsReferenceLine } from '@mui/x-charts/ChartsReferenceLine';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import { useAppStore } from '@/store/zustand';
-import { calculateHandicapIndex } from '@/utils/whs/hi.utils';
 import dayjs from 'dayjs';
 
 const getScalingCount = (count: number): number => {
@@ -68,73 +67,26 @@ const HandicapHistory = () => {
 		return bestIndices;
 	}, [last20SDs]);
 
-	// Current Handicap Index — prefers the most recent round's stored handicapIndex
-	// (Phase 5 HCP-INIT-04) and falls back to per-round WHS recalc for legacy data.
+	// Current Handicap Index — the most recent round's stored handicapIndex.
+	// After the backfill runs, this is always set when rounds exist.
 	const currentHI = useMemo(() => {
 		if (!roundsList.length) return null;
 		const mostRecentWithHI = roundsList
 			.slice()
 			.sort((a, b) => b.roundDate - a.roundDate)
 			.find((r) => r.handicapIndex != null);
-		if (mostRecentWithHI) return mostRecentWithHI.handicapIndex;
-		// Fallback: per-round WHS recalc (legacy / pre-Phase-5)
-		return calculateHandicapIndex(
-			roundsWithSD.map((r) => r.scoreDifferential as number)
-		);
-	}, [roundsList, roundsWithSD]);
+		return mostRecentWithHI?.handicapIndex ?? null;
+	}, [roundsList]);
 
-	// HCP progression data (chronological) — three branches per Phase 5 HCP-INIT:
-	//   D-11: initialHCP set + rounds have stored handicapIndex
-	//         → first point at initialHCP (earliest round date), then per-round stored HI
-	//   D-14: initialHCP set + 0 rounds have stored handicapIndex
-	//         → single point at (Date.now(), initialHCP) — chart shows anchor + reference line
-	//   D-15: initialHCP NOT set (legacy) — per-round WHS recalc, no reference line
+	// HCP progression — chronological, one point per round with stored HI.
+	// The dashed reference line at initialHCP (rendered separately) provides
+	// the "started here" context.
 	const progressionData = useMemo(() => {
-		// Branch: D-15 legacy fallback (no initialHCP) — keep existing per-round WHS recalc
-		if (!hasInitialHCP) {
-			const chronological = [...roundsWithSD].sort(
-				(a, b) => a.roundDate - b.roundDate
-			);
-			const points: { date: number; hi: number }[] = [];
-			const accumulated: number[] = [];
-			for (const round of chronological) {
-				accumulated.push(round.scoreDifferential as number);
-				const hi = calculateHandicapIndex([...accumulated]);
-				if (hi != null) {
-					points.push({ date: round.roundDate, hi });
-				}
-			}
-			return points;
-		}
-
-		// initialHCP set — work from rounds that have a stored handicapIndex
-		const roundsWithHI = roundsWithSD.filter(
-			(r) => r.handicapIndex != null
-		);
-
-		// Branch: D-14 single-point initialHCP (no rounds with stored HI yet)
-		if (roundsWithHI.length === 0) {
-			return [{ date: Date.now(), hi: initialHCP as number }];
-		}
-
-		// Branch: D-11 chart anchored to initialHCP, then per-round stored HI
-		const chronological = [...roundsWithHI].sort(
-			(a, b) => a.roundDate - b.roundDate
-		);
-		const earliestDate = chronological[0].roundDate;
-		// CR-03 fix: the anchor already represents the first round's date.
-		// Skipping index 0 prevents two points at the same x with different y,
-		// which would render as a vertical line of length |round1.hi - initialHCP|.
-		const anchor: { date: number; hi: number } = {
-			date: earliestDate,
-			hi: initialHCP as number,
-		};
-		const subsequentPoints = chronological.slice(1).map((round) => ({
-			date: round.roundDate,
-			hi: round.handicapIndex as number,
-		}));
-		return [anchor, ...subsequentPoints];
-	}, [roundsWithSD, hasInitialHCP, initialHCP]);
+		return [...roundsWithSD]
+			.filter((r) => r.handicapIndex != null)
+			.sort((a, b) => a.roundDate - b.roundDate)
+			.map((r) => ({ date: r.roundDate, hi: r.handicapIndex as number }));
+	}, [roundsWithSD]);
 
 	if (isLoadingRounds) {
 		return (
