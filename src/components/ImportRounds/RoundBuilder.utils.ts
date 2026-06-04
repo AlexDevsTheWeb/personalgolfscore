@@ -18,6 +18,7 @@ export interface IRoundImportDocument {
   roundNumber: number;
   totals: IRoundTotals;
   scoreDifferential: number | null;
+  previousHCP: number | null;
   handicapIndex: number | null;
   hcpDelta: number | null;
   userId: string;
@@ -34,6 +35,7 @@ export function buildRoundDocument(params: {
   match: ICourseMatchResult;
   roundNumber: number;
   userId: string;
+  previousHCP?: number | null;
   handicapIndex?: number | null;
   hcpDelta?: number | null;
 }): IRoundImportDocument {
@@ -55,6 +57,7 @@ export function buildRoundDocument(params: {
     roundNumber: params.roundNumber,
     totals,
     scoreDifferential: params.parsed.scoreDifferential,
+    previousHCP: params.previousHCP ?? null,
     handicapIndex: params.handicapIndex ?? null,
     hcpDelta: params.hcpDelta ?? null,
     userId: params.userId,
