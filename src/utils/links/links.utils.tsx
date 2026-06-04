@@ -6,7 +6,6 @@ import PeopleIcon from '@mui/icons-material/People';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import ScoreboardIcon from '@mui/icons-material/Scoreboard';
 
 const navbar_items: TLinkSidebar[] = [
   {
@@ -46,8 +45,8 @@ const navbar_items: TLinkSidebar[] = [
   },
   {
     id: 6,
-    name: "Handicap History",
-    link: "/handicap-history",
+    name: "History",
+    link: "/history",
     icon: TimelineIcon,
     show: true,
   },
@@ -56,13 +55,6 @@ const navbar_items: TLinkSidebar[] = [
     name: "Import Rounds",
     link: "/import-rounds",
     icon: FileUploadIcon,
-    show: true,
-  },
-  {
-    id: 8,
-    name: "Stableford History",
-    link: "/stableford-history",
-    icon: ScoreboardIcon,
     show: true,
   },
 ];

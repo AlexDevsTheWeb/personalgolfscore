@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { ChartsReferenceLine } from '@mui/x-charts/ChartsReferenceLine';
-import TimelineIcon from '@mui/icons-material/Timeline';
 import { useAppStore } from '@/store/zustand';
 import dayjs from 'dayjs';
 
@@ -98,11 +97,6 @@ const HandicapHistory = () => {
 
 	return (
 		<Box>
-			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
-				<TimelineIcon sx={{ fontSize: 32 }} />
-				<Typography variant="headline2">Handicap History</Typography>
-			</Box>
-
 			{roundsWithSD.length === 0 && !hasInitialHCP && (
 				<Alert severity="info">
 					No rounds with score differentials yet. Play some rounds first!
