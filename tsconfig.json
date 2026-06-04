@@ -25,6 +25,7 @@
 			"@/features/*": ["./features/*"],
 			"@/hooks/*": ["./hooks/*"],
 			"@/pages/*": ["./pages/*"],
+			"@/release-info": ["./release-info"],
 			"@/routes/*": ["./routes/*"],
 			"@/store/*": ["./store/*"],
 			"@/styles/*": ["./styles/*"],
