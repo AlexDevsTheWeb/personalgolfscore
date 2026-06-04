@@ -207,6 +207,12 @@ const HandicapHistory = () => {
 												Score Diff.
 											</TableCell>
 											<TableCell align="right">
+												Old HCP
+											</TableCell>
+											<TableCell align="right">
+												New HCP
+											</TableCell>
+											<TableCell align="right">
 												Δ
 											</TableCell>
 											<TableCell align="center">
@@ -251,6 +257,16 @@ const HandicapHistory = () => {
 															? round.scoreDifferential.toFixed(
 																	1
 																)
+															: '\u2014'}
+													</TableCell>
+													<TableCell align="right">
+														{round.previousHCP != null
+															? round.previousHCP.toFixed(1)
+															: '\u2014'}
+													</TableCell>
+													<TableCell align="right">
+														{round.handicapIndex != null
+															? round.handicapIndex.toFixed(1)
 															: '\u2014'}
 													</TableCell>
 													<TableCell align="right">
