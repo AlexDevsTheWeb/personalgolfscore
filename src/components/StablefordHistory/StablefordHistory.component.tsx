@@ -13,7 +13,6 @@ import {
 	Alert,
 } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
-import ScoreboardIcon from '@mui/icons-material/Scoreboard';
 import { useAppStore } from '@/store/zustand';
 import {
 	getStablefordPoints,
@@ -67,11 +66,6 @@ const StablefordHistory = () => {
 
 	return (
 		<Box>
-			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
-				<ScoreboardIcon sx={{ fontSize: 32 }} />
-				<Typography variant="headline2">Stableford History</Typography>
-			</Box>
-
 			{roundsWithStableford.length === 0 && (
 				<Alert severity="info">
 					No rounds with stableford points yet. Play some rounds first!
