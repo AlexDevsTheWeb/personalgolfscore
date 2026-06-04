@@ -14,7 +14,7 @@ const navbar_items: TLinkSidebar[] = [
     name: "Dashboard",
     link: "/",
     icon: HomeWorkIcon,
-    show: false,
+    show: true,
   },
   {
     id: 2,

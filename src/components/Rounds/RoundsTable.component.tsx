@@ -29,7 +29,7 @@ const RoundsTable = () => {
               <TableCell align='left' space='10px'>Course</TableCell>
               <TableCell align='center' space='10px'>Par</TableCell>
               <TableCell align='center' space='10px'>HCP</TableCell>
-              <TableCell align='center' space='10px'>Points</TableCell>
+              <TableCell align='center' space='10px'>Stableford Pts</TableCell>
               <TableCell align='center' space='10px'>Score</TableCell>
               <TableCell align='center' space='10px'>vs. Par</TableCell>
             </TableRow>
