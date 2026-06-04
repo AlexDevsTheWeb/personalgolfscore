@@ -22,6 +22,7 @@ import SharedLayout from './pages/SharedLayout.page';
 import SimulatorPage from './pages/Simulator.page';
 import HandicapHistoryPage from './pages/HandicapHistory.page';
 import ImportRoundsPage from './pages/ImportRounds.page';
+import StablefordHistoryPage from './pages/StablefordHistory.page';
 import Statistics from './pages/Statistics.page';
 import ThemeSetup from './styles/ThemeSetup.styles';
 
@@ -51,6 +52,7 @@ const App: React.FC = () => {
               <Route path='/statistics' element={<Statistics />} />
               <Route path='/simulator' element={<SimulatorPage />} />
               <Route path='/handicap-history' element={<HandicapHistoryPage />} />
+              <Route path='/stableford-history' element={<StablefordHistoryPage />} />
               <Route path='/import-rounds' element={<ImportRoundsPage />} />
               <Route path='/settings' element={<SettingsPage />} />
               <Route path="/admin/courses" element={<AdminRoute><AdminCoursesPage /></AdminRoute>} />
