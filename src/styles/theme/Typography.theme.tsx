@@ -1,14 +1,14 @@
+import { Theme } from '@mui/material/styles'; // Import Theme
 import React from 'react';
 import { breakpoints } from './Breakpoints.theme';
-import { colors } from './Palette.theme';
 
 export const fonts = {
-  bold: 'Open Sans',
-  heavy: 'Open Sans',
-  light: 'Open Sans',
-  medium: 'Open Sans',
-  semibold: 'Open Sans',
-  regular: 'Open Sans',
+  bold: 'system-ui',
+  heavy: 'system-ui',
+  light: 'system-ui',
+  medium: 'system-ui',
+  semibold: 'system-ui',
+  regular: 'system-ui',
 };
 
 declare module '@mui/material/styles' {
@@ -118,25 +118,23 @@ declare module '@mui/material/Typography' {
 }
 
 const fontFamily = [
-  fonts.regular,
   'system-ui',
   '-apple-system',
+  'BlinkMacSystemFont',
+  'Segoe UI',
+  'Roboto',
   'Helvetica Neue',
   'Arial',
   'sans-serif',
 ].join(',');
 
-const colorFont = colors.primary1;
-
 const allVariantsCss = {
   fontFamily,
-  color: colorFont,
 };
 
 export const typography = {
   fontFamily,
   allVariants: {
-    color: colorFont,
   },
   headline1: {
     ...allVariantsCss,
@@ -220,8 +218,9 @@ export const typography = {
     fontFamily: fonts.regular,
     fontStyle: 'normal',
     fontWeight: 700,
-    color: '#840000b3',
-    textTransform: 'uppercase',
+    // Color will be inherited from theme.palette.text.primary
+    // Use const assertion to explicitly type 'uppercase'
+    textTransform: 'uppercase' as const,
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
       fontSize: '16px',
       lineHeight: 'normal',
@@ -245,7 +244,7 @@ export const typography = {
     lineHeight: '140%',
     fontFamily: fonts.regular,
     fontWeight: 700,
-    color: colors.grey4,
+    // color: colors.grey, // Remove this - let it inherit from theme.palette.text
     [`@media (max-width:${breakpoints.values.lg - 1}px)`]: {
       fontSize: '24px',
     },

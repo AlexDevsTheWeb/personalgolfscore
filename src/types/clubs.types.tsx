@@ -48,3 +48,12 @@ export interface IClubsMainProps {
 export interface IClubDistanceDialogProps {
   open: boolean,
 }
+
+export interface IClubSetupFormProps {
+  golfBag: IGolfBagData;
+  onGolfBagChange: (newGolfBag: IGolfBagData) => void;
+}
+
+export interface IPlayerSetupProps {
+  handleHcpChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}

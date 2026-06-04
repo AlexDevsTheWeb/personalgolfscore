@@ -1,239 +1,325 @@
-import { BoxProps, SelectChangeEvent, StackProps } from "@mui/material";
-import { IShots } from "./roundData.types";
-import { IRoundDetails } from "./roundDetails.types";
-import { IAllRoundsTotals, INewTotals, IPuttsBreakDownStatistics, IPuttsStatistics, IRoundChipPitch, IRoundChipPitchTotals, IRoundFairwayTotals, IRoundFWAndIrons, IRoundFwAndIronsTotals, IRoundInside100Mt, IRoundPointsTotalsAvg, IRoundScoreTotalsAvg, IRoundTeeShotClubTotals, IRoundTeeShotsTotals, IRoundTotals, IRoundTotalsAvgINOUT, IRoundTotalsAvgSand, IRoundTotalsPutts, IRoundTotalsUpDown } from "./roundTotals.types";
+import { BoxProps, SelectChangeEvent, StackProps } from '@mui/material';
+import { IIntermediateShot, IShots } from './roundData.types';
+import { IRoundDetails } from './roundDetails.types';
+import {
+	IAllRoundsTotals,
+	INewTotals,
+	IPuttsBreakDownStatistics,
+	IPuttsStatistics,
+	IRoundChipPitch,
+	IRoundChipPitchTotals,
+	IRoundFairwayTotals,
+	IRoundFWAndIrons,
+	IRoundFwAndIronsTotals,
+	IRoundInside100Mt,
+	IRoundPointsTotalsAvg,
+	IRoundScoreTotalsAvg,
+	IRoundTeeShotClubTotals,
+	IRoundTeeShotsTotals,
+	IRoundTotals,
+	IRoundTotalsAvgINOUT,
+	IRoundTotalsAvgSand,
+	IRoundTotalsPutts,
+	IRoundTotalsUpDown,
+} from './roundTotals.types';
 
 export interface TabPanelProps {
-  children?: React.ReactNode;
-  dir?: string;
-  index: number;
-  value: number;
+	children?: React.ReactNode;
+	dir?: string;
+	index: number;
+	value: number;
 }
 
 export interface IRoundTotalsProps {
-  dashboard?: boolean,
-  par?: number,
-  roundTotals: IRoundTotals;
+	dashboard?: boolean;
+	par?: number;
+	roundTotals: IRoundTotals;
 }
 interface IAllRoundsTotalsProps {
-  newTotals: IAllRoundsTotals
+	newTotals: IAllRoundsTotals;
 }
 
 export interface IShotsTableProps {
-  dashboard?: boolean;
-  firstColumn: boolean;
-  roundTotals: IRoundTotals;
+	dashboard?: boolean;
+	firstColumn: boolean;
+	roundTotals: IRoundTotals;
 }
 
 export interface IRoundMainDataProp {
-  round: IRoundDetails;
+	round: IRoundDetails;
 }
 
 export interface IMainLayoutProps {
-  window?: () => Window;
+	window?: () => Window;
 }
 
-export interface IBoxProps extends BoxProps { };
+export interface IBoxProps extends BoxProps { }
 
 export interface IHolebyHoleProps {
-  holes: IShots[],
+	holes: IShots[];
 }
 export interface IPuttsProps {
-  puttsNumber: number[],
-  setPuttDistance: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, puttIndex: number) => void
+	puttsNumber: number[];
+	puttLengths?: number[]; // Add this to pass current lengths for pre-filling
+	setPuttDistance: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, puttIndex: number) => void;
 }
 
 export interface ISelectProps {
-  name: string,
-  list: string[],
-  onChange: any,
-  par?: number,
-  value?: string,
-  label?: string,
-  disabled?: boolean
-}
-
-export interface IHoleApproachFormProps {
-  holeData: Pick<IShots, 'teeClub' | 'driveDistance' | 'toGreenMeters' | 'toGreen' | 'greenSide' | 'chipClub' | 'gir' | 'par' | 'distance' | 'strokes'>;
-  greenClubs: string[];
-  chipClubs: string[];
-  greenSideValues: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
+	name: string;
+	list: string[];
+	onChange: any;
+	par?: number;
+	value?: string;
+	label?: string;
+	disabled?: boolean;
 }
 
 export interface IHoleGeneralInfoFormProps {
-  holeData: Pick<IShots, 'hcp' | 'par' | 'distance' | 'strokes' | 'putts'>;
-  hcpList: string[];
-  parList: string[];
-  puttsNumber: number[];
-  currentHoleNumber: number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
-  onChangePutts: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, puttIndex: number) => void;
+	holeData: Pick<IShots, 'hcp' | 'par' | 'distance' | 'strokes' | 'putts' | 'water' | 'out' | 'teeClub' | 'toGreen'>;
+	hcpList: string[];
+	parList: string[];
+	teeClubs: string[];
+	greenClubs: string[]; // Added for approach club selection
+	fairwayValues: FairwayOption[];
+	currentHoleNumber: number;
+	onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
+	onSave: () => void;
+	isSaveDisabled: () => boolean;
+	onOpenTeeShotDialog?: () => void;
 }
 
 export interface IHolePenaltiesFormProps {
-  holeData: Pick<IShots, 'water' | 'out'>;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
+	holeData: Pick<IShots, 'water' | 'out'>;
+	onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
 }
 
+// Define the structure for fairway options used in Autocomplete
+export type FairwayOption = {
+	label: string;
+	value: number;
+};
+
 export interface IHoleTeeShotFormProps {
-  holeData: Pick<IShots, 'teeClub' | 'fairway' | 'driveDistance' | 'par' | 'distance'>;
-  teeClubs: string[];
-  fairwayValues: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
+	holeData: Pick<IShots, 'teeClub' | 'par' | 'fairway' | 'driveDistance'>; // fairway & driveDistance needed for AddSingleHole to pass to dialog
+	teeClubs: string[];
+	fairwayValues: FairwayOption[]; // Update the type here
+	onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => void;
 }
 
 export interface IShotsTableBody {
-  shot: IShots,
+	shot: IShots;
+	key?: number;
 }
 export interface IShotsTableHeaderProps {
-  firstLabel: string;
-  singleHole: boolean;
-  firstColumn: boolean,
-  dashboard?: boolean,
-  viewPar?: boolean
+	firstLabel: string;
+	singleHole: boolean;
+	firstColumn: boolean;
+	dashboard?: boolean;
+	viewPar?: boolean;
 }
 
 export interface IShotsTableHeaderStack {
-  firstRow: string,
-  secondRow: string,
+	firstRow: string;
+	secondRow: string;
 }
 
 export interface IPenaltiesPie {
-  name: string;
-  value: INewTotals;
-  holes: number;
+	name: string;
+	value: INewTotals;
+	holes: number;
 }
 export interface IPenaltiesPieValues {
-  values: IPenaltiesPie;
+	values: IPenaltiesPie;
+}
+
+export interface IFairwayPieData {
+	totFairwaysCenter?: number;
+	totFairwaysLeft?: number;
+	totFairwaysRight?: number;
+}
+export interface IFairwayPieChartProps {
+	values: { name: string; value: IFairwayPieData; holes: number };
 }
 
 export interface IPointsGauge {
-  name: string;
-  value: number;
-  holes: number;
-  percentage: boolean;
+	name: string;
+	value: number;
+	holes: number;
+	percentage: boolean;
 }
 export interface IPointsGaugeValues {
-  values: IPointsGauge;
+	values: IPointsGauge;
 }
 
-
 export interface ICrossProps {
-  left: number,
-  over: number,
-  right: number,
-  short: number,
-  center: number,
-  totals: number
-};
+	left: number;
+	over: number;
+	right: number;
+	short: number;
+	center: number;
+	totals: number;
+}
 
 export interface IStackProps extends StackProps {
-  isMobile?: boolean;
+	isMobile?: boolean;
 }
 
 export interface ICategoryStatsProps {
-  value: IRoundInside100Mt;
+	value: IRoundInside100Mt;
 }
 export interface IDesktopViewProps {
-  inside100Mt: IRoundTotalsProps['roundTotals']['inside100Mt'];
+	inside100Mt: IRoundTotalsProps['roundTotals']['inside100Mt'];
 }
 export interface IMobileViewProps {
-  inside100Mt: IRoundTotalsProps['roundTotals']['inside100Mt'];
+	inside100Mt: IRoundTotalsProps['roundTotals']['inside100Mt'];
 }
 
 export interface IChipCategoryStatsProps {
-  value: IRoundChipPitch;
+	value: IRoundChipPitch;
 }
 export interface IChipDesktopViewProps {
-  chipPitch: IRoundChipPitchTotals;
+	chipPitch: IRoundChipPitchTotals;
 }
 
-
-
 export interface IChipMobileViewProps {
-  chipPitch: IRoundChipPitchTotals;
+	chipPitch: IRoundChipPitchTotals;
 }
 
 export interface IStatAccordionProps {
-  title: string;
-  subtitle?: string;
-  children: React.ReactNode;
+	title: string;
+	subtitle?: string;
+	children: React.ReactNode;
 }
 
 export interface ISimpleStatDisplayProps {
-  title: string;
-  total: number | string;
-  avg?: number | string;
-  inTotal: number | string;
-  inAvg?: number | string;
-  outTotal: number | string;
-  outAvg?: number | string;
-  totalSuffix?: string;
-  inSuffix?: string;
-  outSuffix?: string;
+	title?: string; // Made title optional
+	total: number | string;
+	avg?: number | string;
+	inTotal: number | string;
+	inAvg?: number | string;
+	outTotal: number | string;
+	outAvg?: number | string;
+	totalSuffix?: string;
+	inSuffix?: string;
+	outSuffix?: string;
+}
+
+export interface ISimpleParStatDisplayProps {
+	title?: string;
+	scorePar3: number;
+	scorePar4: number;
+	scorePar5: number;
+}
+
+export interface ISimpleScoreParStatDisplayProps {
+	title?: string;
+	scoreBirdie: number;
+	scoreBogey: number;
+	scoreDoubleBogeyWorst: number;
+	scoreEagleBetter: number;
+	scorePar: number;
 }
 
 export interface IPercentageStatDisplayProps {
-  saved: number;
-  total: number;
-  percentage: number;
+	saved: number;
+	total: number;
+	percentage: number;
 }
 
 export interface IGeneralDesktopViewProps {
-  roundTotals: IRoundTotalsProps['roundTotals'];
-  dashboard?: boolean;
+	roundTotals: IRoundTotalsProps['roundTotals'];
+	dashboard?: boolean;
 }
 
 export interface IGeneralMobileViewProps {
-  score: IRoundScoreTotalsAvg;
-  points: IRoundPointsTotalsAvg;
-  putts: IRoundTotalsPutts;
-  sand: IRoundTotalsAvgSand;
-  gir: IRoundTotalsAvgINOUT;
-  girBogey: IRoundTotalsAvgINOUT;
-  fairway: IRoundFairwayTotals;
-  upDown: IRoundTotalsUpDown;
-  scramble: IRoundTotalsUpDown;
-  water: IRoundTotalsAvgINOUT;
-  out: IRoundTotalsAvgINOUT;
+	score: IRoundScoreTotalsAvg;
+	points: IRoundPointsTotalsAvg;
+	putts: IRoundTotalsPutts;
+	sand: IRoundTotalsAvgSand;
+	gir: IRoundTotalsAvgINOUT;
+	girBogey: IRoundTotalsAvgINOUT;
+	fairway: IRoundFairwayTotals;
+	upDown: IRoundTotalsUpDown;
+	scramble: IRoundTotalsUpDown;
+	water: IRoundTotalsAvgINOUT;
+	out: IRoundTotalsAvgINOUT;
 }
 
 export interface ITeeshotsCategoryStatsProps {
-  value: IRoundTeeShotClubTotals; // Use the specific type
+	value: IRoundTeeShotClubTotals; // Use the specific type
 }
 
 export interface ITeeshotsDesktopViewProps {
-  teeShots: IRoundTeeShotsTotals;
+	teeShots: IRoundTeeShotsTotals;
 }
 
 export interface ITeeshotsMobileViewProps {
-  teeShots: IRoundTeeShotsTotals;
+	teeShots: IRoundTeeShotsTotals;
 }
 
 export interface IFwAndIronsCategoryStatsProps {
-  value: IRoundFWAndIrons; // Use the specific type
+	value: IRoundFWAndIrons; // Use the specific type
 }
 export interface IFwAndIronsDesktopViewProps {
-  fwAndIrons: IRoundFwAndIronsTotals;
+	fwAndIrons: IRoundFwAndIronsTotals;
 }
 
 export interface IFwAndIronsMobileViewProps {
-  fwAndIrons: IRoundFwAndIronsTotals;
+	fwAndIrons: IRoundFwAndIronsTotals;
 }
 
 export interface IPuttsOverallStatsProps {
-  value: IPuttsStatistics['_puttsOverall'];
+	value: IPuttsStatistics['_puttsOverall'];
 }
 
 export interface IPuttsRangeStatsProps {
-  value: IPuttsBreakDownStatistics;
+	value: IPuttsBreakDownStatistics;
 }
 
 export interface IPuttsDesktopViewProps {
-  puttsStatistics: IPuttsStatistics;
+	puttsStatistics: IPuttsStatistics;
 }
 
 export interface IPuttsMobileViewProps {
-  puttsStatistics: IPuttsStatistics;
+	puttsStatistics: IPuttsStatistics;
+}
+
+export interface IPuttsInputDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (numberOfPutts: number, puttsLength: number[]) => void;
+}
+
+export interface ApproachDetailsDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (toGreenMeters: number, toGreen: string, greenSide: string, chipClub: string,
+	) => void;
+}
+
+export interface HoleDetailsDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (par: number, distance: number, hcp: number, strokes: number) => void;
+}
+
+export interface IMissingShotsDialogProps {
+	open: boolean;
+	numberOfShots: number;
+	allClubs: string[];
+	fairwayValues?: { value: number; label: string }[];
+	onClose: () => void;
+	onSubmit: (shots: IIntermediateShot[]) => void;
+}
+
+export interface IPenaltiesDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (water: number, out: number) => void;
+}
+
+export interface ITeeShotDetailsDialogProps {
+	open: boolean;
+	onClose: () => void;
+	onSubmit: (fairway: number, distance: number, teeClub: string) => void;
 }

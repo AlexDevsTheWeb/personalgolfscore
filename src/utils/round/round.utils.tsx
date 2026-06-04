@@ -87,7 +87,11 @@ export const prepareRoundSaveBatch = (
   general: INewRound,
   totals: IRoundTotals,
   currentRoundDistances: IDistance[],
-  holes: IShots[]
+  holes: IShots[],
+  scoreDifferential?: number | null,
+  previousHCP?: number | null,
+  handicapIndex?: number | null,
+  hcpDelta?: number | null
 ): string => {
   const playerRoundsCollectionRef = collection(db, 'players', userId, 'rounds');
   const roundRef = doc(playerRoundsCollectionRef);
@@ -98,6 +102,10 @@ export const prepareRoundSaveBatch = (
     totals: totals,
     distances: currentRoundDistances,
     userId: userId,
+    scoreDifferential: scoreDifferential ?? null,
+    previousHCP: previousHCP ?? null,
+    handicapIndex: handicapIndex ?? null,
+    hcpDelta: hcpDelta ?? null,
     roundDate: general.roundDate ? Timestamp.fromDate(new Date(general.roundDate)) : serverTimestamp(),
     createdAt: serverTimestamp(),
   });
@@ -184,9 +192,7 @@ export const prepareOverallTotalsUpdateBatch = (
     return (existing || 0) + (current || 0);
   };
 
-  // --- General Counts ---
   const currentRoundHolesPlayed = safeAdd(safeAdd(currentTotals.score.par3, currentTotals.score.par4), currentTotals.score.par5);
-  // Assuming IN/OUT holes are always 9 if played
   const currentRoundHolesPlayedIN = currentTotals.score.scoreIN > 0 ? 9 : 0;
   const currentRoundHolesPlayedOUT = currentTotals.score.scoreOUT > 0 ? 9 : 0;
   const currentRoundPar4_5_Holes = safeAdd(currentTotals.score.par4, currentTotals.score.par5);
@@ -402,18 +408,17 @@ export const prepareOverallTotalsUpdateBatch = (
     sumTotals: safeAdd(existingTotalsAvg?.putts?.sumTotals, currentTotals.putts.totals),
     sumTotalsIN: safeAdd(existingTotalsAvg?.putts?.sumTotalsIN, currentTotals.putts.totalsIN),
     sumTotalsOUT: safeAdd(existingTotalsAvg?.putts?.sumTotalsOUT, currentTotals.putts.totalsOUT),
-    sumPuttsGir: safeAdd(existingTotalsAvg?.putts?.sumPuttsGir, currentTotals.putts.puttsGir), // Assuming puttsGir is SUM
-    sumPuttsGirIN: safeAdd(existingTotalsAvg?.putts?.sumPuttsGirIN, currentTotals.putts.puttsGirIn), // Assuming puttsGirIn is SUM
-    sumPuttsGirOUT: safeAdd(existingTotalsAvg?.putts?.sumPuttsGirOUT, currentTotals.putts.puttsGirOut), // Assuming puttsGirOut is SUM
+    sumPuttsGir: safeAdd(existingTotalsAvg?.putts?.sumPuttsGir, currentTotals.putts.puttsGir),
+    sumPuttsGirIN: safeAdd(existingTotalsAvg?.putts?.sumPuttsGirIN, currentTotals.putts.puttsGirIn),
+    sumPuttsGirOUT: safeAdd(existingTotalsAvg?.putts?.sumPuttsGirOUT, currentTotals.putts.puttsGirOut),
     countPutts1: safeAdd(existingTotalsAvg?.putts?.countPutts1, currentTotals.putts.putts1),
     countPutts2: safeAdd(existingTotalsAvg?.putts?.countPutts2, currentTotals.putts.putts2),
     countPutts3OrMore: safeAdd(existingTotalsAvg?.putts?.countPutts3OrMore, currentTotals.putts.putts3More),
-    sumDistanceFirstPuttGir: safeAdd(existingTotalsAvg?.putts?.sumDistanceFirstPuttGir, currentTotals.putts.puttsDistGir), // Assuming puttsDistGir is SUM
-    statisticsByRange: {}, // Initialize as empty object
-    overallStats: { // Aggregate overall stats
+    sumDistanceFirstPuttGir: safeAdd(existingTotalsAvg?.putts?.sumDistanceFirstPuttGir, currentTotals.putts.puttsDistGir),
+    statisticsByRange: {},
+    overallStats: {
       sumPuttsMadeForBirdieOrBetter: safeAdd(existingTotalsAvg?.putts?.overallStats?.sumPuttsMadeForBirdieOrBetter, currentTotals.putts.puttsStatistics._puttsOverall.birdieBetter),
-      // Need attempts for birdie conversion %
-      countAttemptsForBirdieOrBetter: safeAdd(existingTotalsAvg?.putts?.overallStats?.countAttemptsForBirdieOrBetter, currentTotals.putts.puttsStatistics._puttsOverall.birdieBetterAttempts), // Use attempts if calculated
+      countAttemptsForBirdieOrBetter: safeAdd(existingTotalsAvg?.putts?.overallStats?.countAttemptsForBirdieOrBetter, currentTotals.putts.puttsStatistics._puttsOverall.birdieBetterAttempts),
     }
   };
 

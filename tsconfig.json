@@ -15,8 +15,9 @@
 		"noEmit": true,
 		"noFallthroughCasesInSwitch": true,
 		"jsx": "react-jsx",
-		"types": ["vite/client", "vite-plugin-svgr/client"],
+		"types": ["vite/client", "vite-plugin-svgr/client", "react", "react-dom", "node"],
 		"baseUrl": "./src",
+		"ignoreDeprecations": "6.0",
 		"paths": {
 			"@/calc/*": ["./calc/*"],
 			"@/components/*": ["./components/*"],
@@ -24,6 +25,7 @@
 			"@/features/*": ["./features/*"],
 			"@/hooks/*": ["./hooks/*"],
 			"@/pages/*": ["./pages/*"],
+			"@/release-info": ["./release-info"],
 			"@/routes/*": ["./routes/*"],
 			"@/store/*": ["./store/*"],
 			"@/styles/*": ["./styles/*"],

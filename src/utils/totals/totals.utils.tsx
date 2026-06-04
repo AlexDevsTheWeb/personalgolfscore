@@ -1,4 +1,5 @@
 import { IShots } from "@/types/roundData.types";
+import { safeDivide, safePercentage } from "../calculator/math.utils";
 import {
   initialFwAndIronsStatistics,
   initialInside100MtStatistics,
@@ -6,7 +7,7 @@ import {
   initialPuttsStatistics,
   initialTeeShotsStatistics
 } from "../constant.utils";
-import { divide, iAmintheZone, isTheRightClub, isTheRightClubChip, isTheRightClubFw } from "./totalsGenFunc.utils";
+import { iAmintheZone, isTheRightClub, isTheRightClubChip, isTheRightClubFw } from "./totalsGenFunc.utils";
 
 export const calculatePuttsStatistics = (shots: IShots[]) => {
 
@@ -47,18 +48,17 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        puttsAverage: parseFloat(divide(object.numberPuttsInRange, object.puttsAttempts)),
-        puttsSecondAverageLength: parseFloat(divide(object.distanceSecondPutt, object.numberSecondPutt)),
-        puttsAverageDistance: parseFloat(divide(object.distanceFirstPutt, object.puttsAttempts)),
-        putt1Perc: parseFloat(divide(object.puttsHoled, object.puttsAttempts)),
-        putt3Perc: parseFloat(divide(object.putts3, object.puttsAttempts)),
+        puttsAverage: safeDivide(object.numberPuttsInRange, object.puttsAttempts),
+        puttsSecondAverageLength: safeDivide(object.distanceSecondPutt, object.numberSecondPutt),
+        puttsAverageDistance: safeDivide(object.distanceFirstPutt, object.puttsAttempts),
+        putt1Perc: safePercentage(object.puttsHoled, object.puttsAttempts),
+        putt3Perc: safePercentage(object.putts3, object.puttsAttempts),
       }
     )
   }
 
   const calculatePuttsOverall = (shots: IShots[]) => {
     return shots.reduce((acc, curr) => {
-
       acc.totalPutts += curr.puttsLength.length;
       acc.gir += curr.gir === true ? 1 : 0;
       acc.totalPuttsInGIR += curr.gir === true ? curr.puttsLength.length : 0;
@@ -78,8 +78,8 @@ export const calculatePuttsStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        puttsInGIR: parseFloat(divide(object.totalPuttsInGIR, object.gir)),
-        birdieConversion: parseFloat(divide(object.birdieBetter, object.gir)),
+        puttsInGIR: safeDivide(object.totalPuttsInGIR, object.gir),
+        birdieConversion: safePercentage(object.birdieBetter, object.gir),
       }
     )
   }
@@ -103,21 +103,34 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
     return shots.reduce((acc, curr) => {
       const rightClub = isTheRightClub(club, curr.teeClub);
 
-      acc.fairwayHits += (rightClub && curr.fairway === 5 ? 1 : 0);
-      acc.attempts += (rightClub ? 1 : 0);
-      acc.totDistance += (rightClub ? curr.driveDistance : 0);
-      acc.missLeft += (rightClub && curr.fairway === 4 ? 1 : 0);
-      acc.missRight += (rightClub && curr.fairway === 6 ? 1 : 0);
-      acc.noGreen += (rightClub && curr.toGreen === 'NO' ? 1 : 0);
+      if (rightClub) {
+        acc.attempts += 1;
+
+        // Fairway and FIR stats are only relevant for Par 4s and 5s
+        if (curr.par !== 3) {
+          acc.par4_5_Attempts += 1;
+          if (curr.fairway === 5) {
+            acc.fairwayHits += 1;
+          } else if (curr.fairway === 4) {
+            acc.missLeft += 1;
+          } else if (curr.fairway === 6) {
+            acc.missRight += 1;
+          }
+          if (curr.toGreen === 'NO') { // Assuming 'NO' means missed the FIR
+            acc.noGreen += 1;
+          }
+        }
+
+        // Distance is recorded for any tee shot, but only count if > 0
+        if (curr.driveDistance > 0) {
+          acc.totalDistance += curr.driveDistance;
+          acc.countShotsWithDistance += 1;
+        }
+      }
 
       return acc;
     }, {
-      fairwayHits: 0,
-      attempts: 0,
-      totDistance: 0,
-      missLeft: 0,
-      missRight: 0,
-      noGreen: 0,
+      fairwayHits: 0, attempts: 0, totalDistance: 0, missLeft: 0, missRight: 0, noGreen: 0, countShotsWithDistance: 0, par4_5_Attempts: 0,
     });
   };
   const results = [
@@ -128,13 +141,24 @@ export const calculateTeeShotsStatistics = (shots: IShots[]) => {
   ];
 
   const createFinalObject = (object: any) => {
+    const fairwayAttempts = object.par4_5_Attempts;
     return (
       {
         ...object,
-        averageDistance: object.attempts !== 0 ? parseFloat(divide(object.totDistance, object.attempts)) : 0,
-        fairwayCenterPCT: object.attempts !== 0 ? parseFloat(divide(object.fairwayHits, object.attempts)) : 0,
-        fairwayLeftPCT: object.attempts !== 0 ? parseFloat(divide(object.missLeft, object.attempts)) : 0,
-        fairwayRightPCT: object.attempts !== 0 ? parseFloat(divide(object.missRight, object.attempts)) : 0,
+        averageDistance: safeDivide(object.totalDistance, object.countShotsWithDistance), // Use countShotsWithDistance
+        // Percentage calculations using par4_5_Attempts
+        fairwayCenterPCT: safePercentage(object.fairwayHits, fairwayAttempts),
+        fairwayLeftPCT: safePercentage(object.missLeft, fairwayAttempts),
+        fairwayRightPCT: safePercentage(object.missRight, fairwayAttempts),
+        missLeftPCT: safePercentage(object.missLeft, fairwayAttempts), // Keep for now, maybe used elsewhere? Or remove from type?
+        missRightPCT: safePercentage(object.missRight, fairwayAttempts), // Keep for now
+        firMissPCT: safePercentage(object.noGreen, fairwayAttempts), // FIR Miss percentage
+        // Ensure all properties from IRoundTeeShotClubTotals are present
+        fairwayHits: object.fairwayHits,
+        attempts: object.attempts,
+        missLeft: object.missLeft,
+        missRight: object.missRight,
+        noGreen: object.noGreen,
       }
     )
   }
@@ -199,8 +223,8 @@ export const calculateChippingPitchingStatistics = (shots: IShots[]) => {
     return (
       {
         ...array,
-        averageShots: array.attempts !== 0 ? parseFloat(divide(array.totalsForAverageShots, array.attempts)) : 0,
-        averageHoleDistanceShot: array.attempts !== 0 ? parseFloat(divide(array.totalsForAvgDistanceToHole, array.totalsDistanceNumber)) : 0,
+        averageShots: safeDivide(array.totalsForAverageShots, array.attempts),
+        averageHoleDistanceShot: safeDivide(array.totalsForAvgDistanceToHole, array.totalsDistanceNumber),
       }
     )
   }
@@ -271,15 +295,15 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
     return (
       {
         ...object,
-        averageShots: object.toGreen !== 0 ? parseFloat(divide(((object.shotsPar4 - object.countShotsPar4) + (object.shotsPar5 - object.countShotsPar5 * 2)), object.toGreen)) : 0,
-        averageDistGIR: object.greenHits !== 0 ? parseFloat(divide(object.totalDistGIR, object.greenHits)) : 0,
+        averageShots: safeDivide(((object.shotsPar4 - object.countShotsPar4) + (object.shotsPar5 - object.countShotsPar5 * 2)), object.toGreen),
+        averageDistGIR: safeDivide(object.totalDistGIR, object.greenHits),
       }
     )
   }
 
   const finalResult = {
     ...initialInside100MtStatistics,
-    over100mt: createFinalObject(results[0]),
+    over100: createFinalObject(results[0]), // Changed key from over100mt to over100
     inside10081: createFinalObject(results[1]),
     inside8061: createFinalObject(results[2]),
     inside60: createFinalObject(results[3]),
@@ -291,10 +315,9 @@ export const calculateInside100mtStatistics = (shots: IShots[]) => {
 
 export const calculateFWIrons = (shots: IShots[]) => {
 
-  const calculateFWIrons = (start: string, finish: string) => {
+  const reduceFWIronsStatsByCategory = (clubCategoryIdentifier: string) => { // Renamed inner function
     return shots.reduce((acc, curr) => {
-
-      const isTheRightClub = isTheRightClubFw(start, curr.toGreen);
+      const isTheRightClub = isTheRightClubFw(clubCategoryIdentifier, curr.toGreen);
       // const gir2 = (curr.par + curr.putts - curr.strokes) < 3 ? true : false;
 
       acc.greenHits += (isTheRightClub && !!curr.gir) ? 1 : 0;
@@ -335,31 +358,28 @@ export const calculateFWIrons = (shots: IShots[]) => {
   };
 
   const results = [
-    calculateFWIrons('4w', 'hy'),
-    calculateFWIrons('i4', 'i6'),
-    calculateFWIrons('i7', 'i9'),
+    reduceFWIronsStatsByCategory('FW'),         // For Fairway Woods
+    reduceFWIronsStatsByCategory('HY'),         // For Hybrids
+    reduceFWIronsStatsByCategory('LONG_IRON'),  // For Long Irons (4-6)
+    reduceFWIronsStatsByCategory('MID_IRON'),   // For Mid Irons (7-9)
   ];
 
   const createFinalObject = (object: any) => {
     return (
       {
         ...object,
-        averageShots: object.attempts !== 0
-          ? parseFloat(divide((object.totalScorePar3 + object.totalScorePar4 - object.totalNumberPar4 + object.totalScorePar5 - object.totalNumberPar5 * 2), object.attempts))
-          : 0,
-        averageDistGIR: object.totalGirGir2Made !== 0
-          ? parseFloat(divide(object.totalDistanceGIR, object.totalGirGir2Made))
-          : 0,
+        averageShots: safeDivide((object.totalScorePar3 + object.totalScorePar4 - object.totalNumberPar4 + object.totalScorePar5 - object.totalNumberPar5 * 2), object.attempts),
+        averageDistGIR: safeDivide(object.totalDistanceGIR, object.totalGirGir2Made),
       }
     )
   }
 
   const finalResult = {
     ...initialFwAndIronsStatistics,
-
-    fwHy: createFinalObject(results[0]),
-    longIrons: createFinalObject(results[1]),
-    shortIrons: createFinalObject(results[2]),
+    fwFW: createFinalObject(results[0]),
+    fwHY: createFinalObject(results[1]),
+    fwLongIron: createFinalObject(results[2]),
+    fwMidIron: createFinalObject(results[3]),
   }
 
   return finalResult;

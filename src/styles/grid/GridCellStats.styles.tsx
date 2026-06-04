@@ -1,11 +1,11 @@
-import { Grid2 as GridMui, Grid2Props as GridPropsMui, styled } from '@mui/material';
+import { Grid as GridMui, GridProps as GridPropsMui, styled } from '@mui/material';
 import * as React from 'react';
 import CompositeTypography from '../typography/CompositeTypography.styles';
 
 type GridProps = GridPropsMui & {
   isMobile?: boolean,
-  string?: string | undefined,
-  value?: string | number | undefined,
+  string?: string,
+  value?: string | number,
 }
 
 const StyledGrid = styled(GridMui)<GridProps>({

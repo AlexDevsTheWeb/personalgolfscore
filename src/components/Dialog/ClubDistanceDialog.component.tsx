@@ -1,6 +1,4 @@
-import { setShowDistances } from '@/features/app/controls.slice';
-import { addNewDistanceWithClub } from '@/features/newRound/newRoundDistances.slice';
-import { RootState } from '@/store/store';
+import { useAppStore } from '@/store/zustand';
 import BoxNewHole from '@/styles/box/BoxNewHole.styles';
 import { HoleCard, HoleCardContent } from '@/styles/index';
 import { IClubDistanceDialogProps } from '@/types/clubs.types';
@@ -11,7 +9,6 @@ import { AppBar, Box, Button, Dialog, IconButton, SelectChangeEvent, TextField, 
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import React, { useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Select from '../NewRound/components/Select.component';
 
 const Transition = React.forwardRef(function Transition(
@@ -24,10 +21,10 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
-  const dispatch = useDispatch<any>();
-  const { player } = useSelector((store: RootState) => store.player);
-  const { round } = useSelector((store: RootState) => store.newRound.newRoundMain);
-  const { roundDistances } = useSelector((store: RootState) => store.newRound.newRoundDistances);
+  const setShowDistances = useAppStore((state) => state.setShowDistances);
+  const player = useAppStore((state) => state.player);
+  const round = useAppStore((state) => state.newRoundMain.round);
+  const roundDistances = useAppStore((state) => state.newRoundDistances.roundDistances);
 
   const golfBag = player?.golfBag;
   const distanceClubs = useMemo(() => {
@@ -46,6 +43,8 @@ const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
   const [club, setClub] = useState<string>('');
   const [meters, setMeters] = useState<number>(0);
 
+  const addNewDistanceWithClub = useAppStore((state) => state.addNewDistanceWithClub);
+
   const saveDistance = () => {
     const { roundCourse, roundDate } = round;
     if (!club || meters <= 0) {
@@ -53,13 +52,13 @@ const ClubDistanceDialog = ({ open }: IClubDistanceDialogProps) => {
       return;
     }
     const items = createDistanceObject({ roundDistances, course: roundCourse, date: roundDate, club, mt: meters });
-    dispatch(addNewDistanceWithClub(items));
+    addNewDistanceWithClub(items);
     setClub('');
     setMeters(0);
   }
 
   const handleClose = () => {
-    dispatch(setShowDistances(false));
+    setShowDistances(false);
   }
 
   const handleClubChange = (e: SelectChangeEvent) => {

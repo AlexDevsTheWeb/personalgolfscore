@@ -8,6 +8,7 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
   const { hcp, par, strokes, roundPlayingHCP, roundHoles } = props;
   let newPar = Number(par);
   const diff = roundPlayingHCP - roundHoles;
+
   if (diff === 0) {
     newPar = newPar + 1
   }
@@ -26,39 +27,61 @@ export const calculateStablefordPoints = (props: IStablefordPointsProps) => {
 }
 
 export const calculateGirValue = (props: IGirProps) => {
-  const { par, putts, strokes, bogey } = props;
-  const girDiff = par + putts - strokes;
-  if (!bogey) {
-    return girDiff < 2 ? false : true;
+  const { par, strokes, putts, bogey } = props;
+
+  // GIR is determined by strokes taken to reach the green.
+  const strokesToGreen = strokes - putts;
+
+  // Standard GIR: on green in (par - 2) strokes or less.
+  // Bogey GIR (GIR+1): on green in (par - 1) strokes or less.
+  const girThreshold = bogey ? (par - 1) : (par - 2);
+
+  if (strokesToGreen <= girThreshold) {
+    return true;
+  } else {
+    return false;
   }
-  else {
-    return girDiff < 1 ? false : true;
-  }
-}
+};
 
-export const calculateUDValue = (props: IUDProps) => {
-  const { girValue, chipClub, parValue, numberOfPutts, strokesValue, chipClubs } = props;
-  let result = { made: 0, attempts: 0 };
-  if (chipClub !== '' && parValue !== 0 && strokesValue !== 0) {
+export const calculateUDValue = (props: IUDProps): { attempts: number; made: number } => {
+  const {
+    girValue,         // Value indicating if GIR was made (e.g., 0 for no, 1 for yes)
+    chipClub,         // The club used for the primary chip/pitch shot
+    chipClubs,        // Array of valid chipping club names
+    intermediateShots, // Array of any extra shots taken between chip and putts, or other recovery
+    numberOfPutts     // Number of putts taken on the green
+    // parValue and strokesValue are part of IUDProps but not strictly needed for this definition of Up&Down
+  } = props;
 
-    if (girValue !== 1) {
+  let attempts = 0;
+  let made = 0;
 
-      const validClub = chipClubs.filter((club: string) => club === chipClub);
+  // Determine if the provided chipClub is valid
+  const isChipClubValid = chipClub && chipClub.trim() !== '' && chipClubs && chipClubs.includes(chipClub);
 
-      if (validClub.length > 0) {
+  // An up-and-down attempt can only occur if:
+  // 1. Green was NOT hit in regulation (girValue is not 1, typically 0).
+  // 2. A designated chip/pitch shot was played from off the green.
+  if (girValue !== 1 && isChipClubValid) {
+    attempts = 1;
 
-        if (numberOfPutts > 1) {
-          result = { made: 0, attempts: 1 };
-        }
-        else {
-          result = { made: 1, attempts: 1 };
-        }
-      }
+    // Calculate the total number of strokes taken *after* the initial chipClub shot to hole out.
+    // This includes any intermediate shots and the putts on the green.
+    const strokesTakenAfterInitialChip = (intermediateShots ? intermediateShots.length : 0) + numberOfPutts;
 
+    // A successful up-and-down means the ball was holed in 2 strokes starting from the initial chip:
+    // Stroke 1: The chipClub shot itself.
+    // Stroke 2: The sum of intermediate shots and putts on the green.
+    // Therefore, strokesTakenAfterInitialChip must be 0 or 1.
+    // - If strokesTakenAfterInitialChip is 0: chip-in (1st shot went in).
+    // - If strokesTakenAfterInitialChip is 1: one more shot (either an intermediate shot holed, or one putt on green).
+    if (strokesTakenAfterInitialChip <= 1) {
+      made = 1;
     }
   }
-  return result;
-}
+
+  return { attempts, made };
+};
 
 export const calculateScrambleValue = (props: IScrambleProps) => {
   let result = { made: 0, attempts: 0 };
@@ -108,61 +131,61 @@ const calculatePoints = (par: number, strokes: number) => {
 }
 
 // FIXME: this is NOT USED??
-// export function calculation(completeHole: any) {
-//   const { puttsLength } = completeHole;
-//   let puttsUnder2 = 0;
-//   let putts2_4 = 0;
-//   let putts4_6 = 0;
-//   let putts6_10 = 0;
-//   let puttsOver10 = 0;
-//   let upDownX = 0;
-//   let upDownN = 0;
-//   let upDownE = 0;
-//   let greenMetersOver100 = 0;
-//   let greenMeters80_100 = 0;
-//   let greenMeters60_80 = 0;
-//   let greenMetersUnder60 = 0;
-//   let scramble = 0;
+export function calculation(completeHole: any) {
+  const { puttsLength } = completeHole;
+  let puttsUnder2 = 0;
+  let putts2_4 = 0;
+  let putts4_6 = 0;
+  let putts6_10 = 0;
+  let puttsOver10 = 0;
+  let upDownX = 0;
+  let upDownN = 0;
+  let upDownE = 0;
+  let greenMetersOver100 = 0;
+  let greenMeters80_100 = 0;
+  let greenMeters60_80 = 0;
+  let greenMetersUnder60 = 0;
+  let scramble = 0;
 
-//   // PUTTS
-//   for (let i = 0; i < puttsLength.length; i++) {
-//     (Number(puttsLength[i]) <= 2) && puttsUnder2++;
-//     (Number(puttsLength[i]) > 2 && Number(puttsLength[i]) <= 4) && putts2_4++;
-//     (Number(puttsLength[i]) > 4 && Number(puttsLength[i]) <= 6) && putts4_6++;
-//     (Number(puttsLength[i]) > 6 && Number(puttsLength[i]) <= 10) && putts6_10++;
-//     (Number(puttsLength[i]) > 10) && puttsOver10++;
-//   };
+  // PUTTS
+  for (let i = 0; i < puttsLength.length; i++) {
+    (Number(puttsLength[i]) <= 2) && puttsUnder2++;
+    (Number(puttsLength[i]) > 2 && Number(puttsLength[i]) <= 4) && putts2_4++;
+    (Number(puttsLength[i]) > 4 && Number(puttsLength[i]) <= 6) && putts4_6++;
+    (Number(puttsLength[i]) > 6 && Number(puttsLength[i]) <= 10) && putts6_10++;
+    (Number(puttsLength[i]) > 10) && puttsOver10++;
+  };
 
-//   //UP & DOWN
-//   (completeHole.upDown === 'x') && upDownX++;
-//   (completeHole.upDown === 'n') && upDownN++;
-//   (completeHole.upDown === '') && upDownE++;
+  //UP & DOWN
+  (completeHole.upDown === 'x') && upDownX++;
+  (completeHole.upDown === 'n') && upDownN++;
+  (completeHole.upDown === '') && upDownE++;
 
-//   scramble = completeHole.scramble;
+  scramble = completeHole.scramble;
 
-//   // GREEN METERS
-//   (completeHole.toGreenMeters >= 100) && greenMetersOver100++;
-//   (completeHole.toGreenMeters <= 100 && completeHole.toGreenMeters > 80) && greenMeters80_100++;
-//   (completeHole.toGreenMeters <= 80 && completeHole.toGreenMeters > 60) && greenMeters60_80++;
-//   (completeHole.toGreenMeters <= 60) && greenMetersUnder60++;
+  // GREEN METERS
+  (completeHole.toGreenMeters >= 100) && greenMetersOver100++;
+  (completeHole.toGreenMeters <= 100 && completeHole.toGreenMeters > 80) && greenMeters80_100++;
+  (completeHole.toGreenMeters <= 80 && completeHole.toGreenMeters > 60) && greenMeters60_80++;
+  (completeHole.toGreenMeters <= 60) && greenMetersUnder60++;
 
-//   const finalValues = {
-//     puttsUnder2: puttsUnder2,
-//     putts2_4: putts2_4,
-//     putts4_6: putts4_6,
-//     putts6_10: putts6_10,
-//     puttsOver10: puttsOver10,
-//     upDownX: upDownX,
-//     upDownN: upDownN,
-//     upDownE: upDownE,
-//     greenMetersOver100: greenMetersOver100,
-//     greenMeters80_100: greenMeters80_100,
-//     greenMeters60_80: greenMeters60_80,
-//     greenMetersUnder60: greenMetersUnder60,
-//     scramble: scramble,
-//   }
-//   return finalValues;
-// }
+  const finalValues = {
+    puttsUnder2: puttsUnder2,
+    putts2_4: putts2_4,
+    putts4_6: putts4_6,
+    putts6_10: putts6_10,
+    puttsOver10: puttsOver10,
+    upDownX: upDownX,
+    upDownN: upDownN,
+    upDownE: upDownE,
+    greenMetersOver100: greenMetersOver100,
+    greenMeters80_100: greenMeters80_100,
+    greenMeters60_80: greenMeters60_80,
+    greenMetersUnder60: greenMetersUnder60,
+    scramble: scramble,
+  }
+  return finalValues;
+}
 
 export const correctVsParString = (score: IRoundScoreTotalsAvg) => {
 

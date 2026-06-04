@@ -1,28 +1,16 @@
-import { IRoundTotals, ITotalRoundsAvg } from '@/types/roundTotals.types';
+import { IPuttsStatistics, IRoundChipPitchTotals, IRoundFwAndIronsTotals, IRoundInside100MtTotals, IRoundTeeShotsTotals, IRoundTotals, ITotalRoundsAvg } from '@/types/roundTotals.types';
 import { initialStateRoundTotals } from '@/utils/constant.utils';
-
-const safeDivide = (numerator: number | undefined, denominator: number | undefined, precision: number = 2): number => {
-  const num = numerator || 0;
-  const den = denominator || 0;
-  if (den === 0) return 0;
-  const result = num / den;
-  return parseFloat(result.toFixed(precision));
-};
-
-const safePercentage = (numerator: number | undefined, denominator: number | undefined, precision: number = 2): number => {
-  const divisionResult = safeDivide(numerator, denominator, precision + 4);
-  const percentageResult = divisionResult;
-  return parseFloat(percentageResult.toFixed(precision));
-}
+import _ from 'lodash';
+import { safeDivide, safePercentage } from './math.utils';
 
 export const calculateDisplayableAverages = (
   totalsAvg: ITotalRoundsAvg | null | undefined
 ): IRoundTotals => {
   if (!totalsAvg || totalsAvg.totalRoundsCount === 0) {
-    return JSON.parse(JSON.stringify(initialStateRoundTotals));
+    return _.cloneDeep(initialStateRoundTotals);
   }
 
-  const displayTotals: IRoundTotals = JSON.parse(JSON.stringify(initialStateRoundTotals));
+  const displayTotals: IRoundTotals = _.cloneDeep(initialStateRoundTotals);
   const roundsCount = totalsAvg.totalRoundsCount;
   const holesCount = totalsAvg.totalHolesPlayed;
   const holesInCount = totalsAvg.totalHolesPlayedIN;
@@ -106,14 +94,17 @@ export const calculateDisplayableAverages = (
 
   // Putts Statistics by Range
   if (totalsAvg.putts?.statisticsByRange) {
-    (Object.keys(totalsAvg.putts.statisticsByRange) as Array<keyof typeof totalsAvg.putts.statisticsByRange>).forEach(range => {
-      // Check if the key exists on both objects (belt-and-braces check)
-      if (range in displayTotals.putts.puttsStatistics && totalsAvg.putts?.statisticsByRange?.[range]) {
-        const avgStats = totalsAvg.putts.statisticsByRange[range];
-        // Now 'range' is correctly typed as one of the specific keys
-        const displayStats = displayTotals.putts.puttsStatistics[range as keyof Omit<typeof displayTotals.putts.puttsStatistics, '_puttsOverall'>]; // Keep assertion for display object
+    const actualStatisticsByRangeObject = totalsAvg.putts.statisticsByRange;
+    const rangeKeys = Object.keys(actualStatisticsByRangeObject) as Array<keyof typeof actualStatisticsByRangeObject>;
 
-        if (avgStats && displayStats) { // Add null check for safety
+    rangeKeys.forEach(rangeKey => {
+      const avgStats = totalsAvg.putts!.statisticsByRange![rangeKey]; // Non-null asserted due to the outer if
+      // Ensure rangeKey is a valid key for the displayStats part of puttsStatistics
+      if (rangeKey in displayTotals.putts.puttsStatistics) {
+        const displayStats = displayTotals.putts.puttsStatistics[rangeKey as keyof Omit<IPuttsStatistics, '_puttsOverall'>];
+
+        if (avgStats && displayStats) {
+
           displayStats.puttsAttempts = avgStats.sumAttempts || 0;
           displayStats.puttsHoled = avgStats.sumHoled || 0;
           displayStats.putt1Perc = safePercentage(avgStats.sumHoled, avgStats.sumAttempts);
@@ -122,8 +113,11 @@ export const calculateDisplayableAverages = (
           displayStats.puttsSecondAverageLength = safeDivide(avgStats.sumDistanceSecondPutt, avgStats.countSecondPutts);
           displayStats.putts3 = avgStats.countPutts3OrMore || 0;
           displayStats.putt3Perc = safePercentage(avgStats.countPutts3OrMore, avgStats.sumAttempts);
-          displayStats.numberPuttsInRange = avgStats.sumAttempts || 0;
+          // IPuttsBreakDownStatistics.numberPuttsInRange is the sum of putts taken in that range
+          displayStats.numberPuttsInRange = avgStats.sumPuttsTaken || 0;
           displayStats.numberSecondPutt = avgStats.countSecondPutts || 0;
+          displayStats.distanceFirstPutt = avgStats.sumDistanceFirstPutt || 0;
+          displayStats.distanceSecondPutt = avgStats.sumDistanceSecondPutt || 0;
         }
       }
     });
@@ -161,11 +155,10 @@ export const calculateDisplayableAverages = (
   displayTotals.out.avgOUT = safeDivide(totalsAvg.out?.countPenaltiesOUT, roundsCount);
 
   // --- Calculate TeeShots ---
-  const teeShotCategories = ['teeDriver', 'teeFW', 'teeHY', 'teeIron'] as const;
+  const teeShotCategories: Array<keyof IRoundTeeShotsTotals> = ['teeDriver', 'teeFW', 'teeHY', 'teeIron'];
   teeShotCategories.forEach(category => {
     const avgData = totalsAvg.teeShots?.[category];
-    // Use type assertion here
-    const displayData = displayTotals.teeShots[category as keyof typeof displayTotals.teeShots];
+    const displayData = displayTotals.teeShots[category];
     if (avgData && displayData) {
       displayData.attempts = avgData.sumAttempts || 0;
       displayData.fairwayHits = avgData.sumFairwayHits || 0;
@@ -183,13 +176,10 @@ export const calculateDisplayableAverages = (
   });
 
   // --- Calculate FwAndIrons ---
-  const fwAndIronsCategories = ['fwFW', 'fwHY', 'fwLongIron', 'fwMidIron', 'fwShortIron'] as const;
+  const fwAndIronsCategories: Array<keyof IRoundFwAndIronsTotals> = ['fwFW', 'fwHY', 'fwLongIron', 'fwMidIron'];
   fwAndIronsCategories.forEach(category => {
     const avgData = totalsAvg.fwAndIrons?.[category];
-    // --- FIX IS HERE ---
-    // Use type assertion to tell TypeScript 'category' is a valid key
-    const displayData = displayTotals.fwAndIrons[category as keyof typeof displayTotals.fwAndIrons];
-    // --- END FIX ---
+    const displayData = displayTotals.fwAndIrons[category];
     if (avgData && displayData) {
       displayData.attempts = avgData.sumAttempts || 0;
       displayData.girHits = avgData.sumGirHits || 0;
@@ -209,30 +199,40 @@ export const calculateDisplayableAverages = (
   });
 
   // --- Calculate Inside100Mt ---
-  const inside100MtRanges = ['over100', 'range80_100', 'range60_80', 'under60'] as const;
-  inside100MtRanges.forEach(range => {
-    const avgData = totalsAvg.inside100Mt?.[range]; // Accesses 'over100', 'inside10081', etc.
-    // displayTotals.inside100Mt now uses 'over100', 'inside10081', etc. after constant.utils change
-    const displayData = displayTotals.inside100Mt[range as keyof typeof displayTotals.inside100Mt];
-    if (avgData && displayData) {
-      displayData.attempts = avgData.sumAttempts || 0;
-      displayData.greensHits = avgData.sumGirHits || 0; // Map sumGirHits to greensHits for display
-      displayData.averageDistGIR = safeDivide(avgData.sumDistanceToPinOnGIR, avgData.countGirHits); // Use specific sum/count
-      displayData.averageShots = safeDivide(avgData.sumPuttsTaken, avgData.sumAttempts); // Example: Avg putts
-      displayData.girPCT = safePercentage(avgData.sumGirHits, avgData.sumAttempts);
-      // Populate misses if needed for display
-      displayData.missedLeft = avgData.sumMissedLeft || 0;
-      displayData.missedRight = avgData.sumMissedRight || 0;
-      displayData.missedShort = avgData.sumMissedShort || 0;
-      displayData.missedLong = avgData.sumMissedLong || 0;
+  // Explicit mapping due to different key names between totalsAvg and displayTotals
+  const inside100MtKeyMap: Record<keyof NonNullable<ITotalRoundsAvg['inside100Mt']>, keyof IRoundInside100MtTotals> = {
+    over100: 'over100',
+    range80_100: 'inside10081',
+    range60_80: 'inside8061',
+    under60: 'inside60',
+  };
+
+  (Object.keys(inside100MtKeyMap) as Array<keyof typeof inside100MtKeyMap>).forEach(avgKey => {
+    const displayKey = inside100MtKeyMap[avgKey];
+    if (totalsAvg.inside100Mt && displayKey in displayTotals.inside100Mt) {
+      const avgData = totalsAvg.inside100Mt[avgKey];
+      const displayData = displayTotals.inside100Mt[displayKey];
+
+      if (avgData && displayData) {
+        displayData.attempts = avgData.sumAttempts || 0;
+        displayData.greensHits = avgData.sumGirHits || 0; // Map sumGirHits to greensHits
+        displayData.averageDistGIR = safeDivide(avgData.sumDistanceToPinOnGIR, avgData.countGirHits);
+        displayData.averageShots = safeDivide(avgData.sumPuttsTaken, avgData.sumAttempts); // Example: Avg putts taken in this range
+        displayData.girPCT = safePercentage(avgData.sumGirHits, avgData.sumAttempts);
+        displayData.missedLeft = avgData.sumMissedLeft || 0;
+        displayData.missedRight = avgData.sumMissedRight || 0;
+        displayData.missedShort = avgData.sumMissedShort || 0;
+        displayData.missedLong = avgData.sumMissedLong || 0; // Ensure 'missedLong' exists on ITotalRoundsAvgInside100MtRange if used
+      }
     }
   });
 
   // --- Calculate ChipPitch ---
-  const chipPitchTypes = ['chipPutter', 'chipWedge', 'chipIron'] as const;
+  // Assuming keys like 'pw', 'gw', 'sw', 'lw', 'b', 'chip', 'putt' are also relevant based on IRoundChipPitchTotals
+  const chipPitchTypes: Array<keyof IRoundChipPitchTotals> = ['pw', 'gw', 'sw', 'lw', 'b', 'chip', 'putt', 'chipPutter', 'chipWedge', 'chipIron'];
   chipPitchTypes.forEach(type => {
     const avgData = totalsAvg.chipPitch?.[type];
-    const displayData = displayTotals.chipPitch[type as keyof typeof displayTotals.chipPitch];
+    const displayData = displayTotals.chipPitch[type];
     if (avgData && displayData) {
       displayData.attempts = avgData.sumAttempts || 0;
       displayData.upDownMade = avgData.sumUpDownSuccess || 0;
@@ -243,4 +243,3 @@ export const calculateDisplayableAverages = (
 
   return displayTotals;
 };
-

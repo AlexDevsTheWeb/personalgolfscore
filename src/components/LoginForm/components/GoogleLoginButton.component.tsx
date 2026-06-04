@@ -1,18 +1,17 @@
-import { setLoginUser } from "@/features/user/user.slice";
+import { useAppStore } from "@/store/zustand";
 import { IUser } from "@/types/user.types";
 import { db } from "@/utils/firebase/firebase.utils";
 import { writeUserLocalStorage } from "@/utils/storage/localStorage.utils";
 import { Button } from "@mui/material";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GoogleIcon } from "../../../assets/CustomIcons.assets";
 
 const GoogleLoginButton = () => {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const setLoginUser = useAppStore((state) => state.setLoginUser);
 
   const handleGoogleLogin = async () => {
 
@@ -40,7 +39,6 @@ const GoogleLoginButton = () => {
           "photoURL": photoURL as string
         });
 
-        debugger;
         writeUserLocalStorage({ uid: docSnap.id })
         const user: IUser = {
           displayName: docSnap?.data().displayName,
@@ -48,7 +46,7 @@ const GoogleLoginButton = () => {
           photoURL: photoURL as string,
           uid: docSnap.id,
         };
-        dispatch(setLoginUser(user));
+        setLoginUser(user);
         navigate('/dashboard');
       }
     } catch (error) {

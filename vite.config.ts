@@ -10,6 +10,17 @@ export default defineConfig({
 	server: {
 		open: true,
 		// port: 3000,
+		headers: {
+			'Cross-Origin-Embedder-Policy': 'unsafe-none',
+			'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
+			'Cross-Origin-Resource-Policy': 'cross-origin'
+		}
+	},
+	build: {
+		target: 'es2020',
+		outDir: 'dist',
+		sourcemap: false,
+		minify: 'esbuild'
 	},
 	plugins: [react()],
 });

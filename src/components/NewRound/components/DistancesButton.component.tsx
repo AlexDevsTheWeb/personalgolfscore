@@ -1,18 +1,17 @@
-import { setShowDistances } from "@/features/app/controls.slice";
 import { Button } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useAppStore } from "@/store/zustand";
 
 const DistancesButton = () => {
-  const dispatch = useDispatch<any>();
+  const setShowDistances = useAppStore((state) => state.setShowDistances);
 
   const handleDistances = () => {
-    dispatch(setShowDistances(true))
-  }
+    setShowDistances(true);
+  };
   return (
-    <Button variant='contained' onClick={handleDistances} sx={{ marginTop: '0px' }}>
+    <Button variant='contained' onClick={handleDistances}>
       DISTANCES
     </Button>
-  )
-}
+  );
+};
 
-export default DistancesButton
+export default DistancesButton;

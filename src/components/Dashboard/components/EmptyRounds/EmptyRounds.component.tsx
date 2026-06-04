@@ -1,7 +1,6 @@
 import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
-import { Typography } from '@/styles/index';
 import FmdBadTwoToneIcon from '@mui/icons-material/FmdBadTwoTone';
-import { Box, BoxProps, Button, Stack, styled } from '@mui/material';
+import { Box, BoxProps, Button, Stack, styled, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const EmptyRounds = () => {
@@ -18,7 +17,7 @@ const EmptyRounds = () => {
         <Stack sx={{ gap: 1, textAlign: useDeviceDetection().isMobile ? 'center' : 'left', }}>
           <Typography variant="warning">no rounds found</Typography>
           <Typography>try adding your first golf round</Typography>
-          <Button variant='contained' onClick={handleAddNewRound}>Add new round</Button>
+          <Button variant='contained' onClick={handleAddNewRound}>Add round</Button>
         </Stack>
       </InternalBox>
 

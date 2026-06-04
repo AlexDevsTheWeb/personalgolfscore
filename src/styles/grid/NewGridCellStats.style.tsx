@@ -1,4 +1,4 @@
-import { Grid2 as GridMui, Grid2Props as GridPropsMui, styled } from '@mui/material';
+import { Grid as GridMui, GridProps as GridPropsMui, styled } from '@mui/material';
 import * as React from 'react';
 
 type GridProps = GridPropsMui
@@ -10,7 +10,7 @@ const StyledGrid = styled(GridMui)<GridProps>({
   alignContent: 'center',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '0px !important'
+  padding: '0px !important',
 })
 
 const NewGridCellStats: React.FC<GridProps> = props => {

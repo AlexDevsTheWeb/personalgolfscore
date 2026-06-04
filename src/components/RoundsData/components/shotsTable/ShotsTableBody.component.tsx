@@ -63,7 +63,11 @@ const ShotsTableBody = ({ shot }: IShotsTableBody) => {
         </TableCellHolebyHole>
         <TableCellHolebyHole>{putts}</TableCellHolebyHole>
         <TableCellHolebyHole>{sand}</TableCellHolebyHole>
-        <TableCellHolebyHole>{`${water} | ${out}`}</TableCellHolebyHole>
+        <TableCellHolebyHole>
+          {(water === undefined && out === undefined) || (water === 0 && out === 0)
+            ? '-'
+            : `${water ?? 0} | ${out ?? 0}`}
+        </TableCellHolebyHole>
 
       </TableRowHolebyHole >
 

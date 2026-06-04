@@ -9,28 +9,6 @@ export interface IPayloadActionNewHole {
   holesCompleted: number
 };
 
-// FIXME: NOT USED?
-// interface IState {
-//   playerID: string,
-//   rounds: IRounds[]
-// }
-
-// FIXME: NOT USED?
-// export interface IRounds {
-//   id: string,
-//   roundID: string,
-//   roundDate: string,
-//   roundCourse: string,
-//   roundHoles: number,
-//   roundTee: string,
-//   roundPar: number,
-//   roundPlayingHCP: number,
-//   roundStrokes: number
-//   general: IRoundGeneral,
-//   holes: any,
-//   totals: any
-// }
-
 export interface IRoundsState {
   rounds: IBasicRoundData[],
   uid: string,
@@ -53,7 +31,7 @@ export type InitialStateRounds = {
 }
 
 export interface INewRound {
-  roundDate: any,
+  roundDate: string,
   roundCourse: string,
   roundHoles: number,
   roundTee: string,
@@ -68,21 +46,6 @@ export type InitialStateNewRound = {
   setFirstHole: boolean;
   round: INewRound;
 }
-
-// FIXME: NOT USED?
-// export interface IRoundFinalData {
-//   roundMainData: INewRound,
-//   roundHolesData: IShots[],
-//   roundTotalsData: IRoundTotals,
-//   roundDistancesData: IDistance[],
-// }
-
-// export interface IRoundFinalDataProps {
-//   round: INewRound,
-//   holes: IShots[],
-//   roundTotals: IRoundTotals,
-//   roundDistances: IDistance[],
-// }
 
 export interface IInitialStateRoundSave {
   isLoading: boolean,
@@ -110,6 +73,16 @@ export interface PuttLengthCounts {
   putts4_6: number;
   putts6_10: number;
   puttsOver10: number;
+}
+
+export interface IImportResult {
+  importedCount: number;
+  matchedCount: number;
+  unmatchedCount: number;
+  roundIds: string[];
+  expectedHI: number | null;
+  calculatedHI: number | null;
+  warnings: string[];
 }
 
 export interface GreenApproachDistanceCounts {

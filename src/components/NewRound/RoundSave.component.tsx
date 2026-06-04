@@ -1,15 +1,17 @@
-import { saveNewRound } from "@/features/newRound/roundSaver.slice";
-import { AppDispatch, RootState } from "@/store/store";
 import { Box, Button } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppStore } from "@/store/zustand";
 
 const RoundSave = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isLoading } = useSelector((store: RootState) => store.roundSaver);
+  const isLoading = useAppStore((state) => state.newRoundSaver.isLoading);
+  const saveNewRound = useAppStore((state) => state.saveNewRound);
+  const initialHCP = useAppStore((state) => state.player?.initialHCP) ?? null;
+  const roundsListLength = useAppStore((state) => state.roundsList.length);
+
+  const blocked = roundsListLength === 0 && initialHCP == null;
 
   const handleClick = () => {
-    // Dispatch the action to save the entire round data
-    dispatch(saveNewRound(null));
+    if (blocked) return;
+    saveNewRound();
   };
 
   return (
@@ -17,7 +19,7 @@ const RoundSave = () => {
       <Button
         variant='contained'
         onClick={handleClick}
-        disabled={isLoading}
+        disabled={isLoading || blocked}
       >
         {isLoading ? "Saving Round..." : "Save Final Round"}
       </Button>

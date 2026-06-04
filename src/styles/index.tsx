@@ -10,7 +10,6 @@ import TableCell from "./table/TableCell.styles";
 import TableRow from "./table/TableRow.styles";
 import Tooltip from "./tooltip/Tooltip.styles";
 import ClubTypography from "./typography/ClubTypography.styles";
-import Typography from "./typography/Typography.styles";
 
 export {
 
@@ -25,7 +24,6 @@ export {
   // RowCard,
   TableCell,
   TableRow,
-  Tooltip,
-  Typography
+  Tooltip
 };
 

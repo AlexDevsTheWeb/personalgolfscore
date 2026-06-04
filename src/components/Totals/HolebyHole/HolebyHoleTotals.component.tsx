@@ -52,16 +52,17 @@ const HolebyHoleTotals = ({ roundTotals, dashboard, par }: IRoundTotalsProps) =>
     return <Spinner />
   }
 
+  console.log("roundTotals: ", roundTotals);
   return (
-    <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
+    <Box sx={{ bgcolor: 'background.paper', width: '100%', padding: '10px' }}>
       <Header title={'statistics'} sx={{ marginBottom: '1px' }} />
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: 'background.paper' }} elevation={1}>
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="inherit"
+          textColor="primary"
           variant={useDeviceDetection().isMobile ? 'scrollable' : 'fullWidth'}
+          sx={{ '& .MuiTabs-indicator': { backgroundColor: 'primary.main' } }}
           scrollButtons
           allowScrollButtonsMobile
           aria-label="scrollable auto tabs"

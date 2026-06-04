@@ -1,23 +1,32 @@
-import TextField from '@/styles/textfield/TextField.style';
 import { IPuttsProps } from '@/types/props.types';
-import { Box } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 
-const PuttsGenerator = ({ puttsNumber, setPuttDistance }: IPuttsProps) => {
+const PuttsGenerator = ({
+  puttsNumber,
+  puttLengths,
+  setPuttDistance
+}: IPuttsProps) => {
   return (
-    <Box sx={{ gap: 1, display: 'flex' }}>
-      {puttsNumber.slice(0, 3).map((putt: number) => {
-        return (
-          <TextField
-            key={putt}
-            id={`putt${putt}`}
-            label={`Putt ${putt}`}
-            variant="filled"
-            type='number'
-            onChange={e => setPuttDistance(e, putt)}
-          />
-        );
-      })}
-    </Box>
+
+    <Grid container spacing={1} columns={{ xs: 1, sm: 3 }} sx={{ mt: 1 }}>
+      {
+        puttsNumber.slice(0, 3).map((puttValue: number, index: number) => {
+          return (
+            <Grid size={{ xs: 12, sm: 1 }} key={index}>
+              <TextField
+                id={`putt${index}`}
+                label={`Putt ${puttValue}`} // Display 1-based putt number
+                variant="filled"
+                type='number'
+                onChange={e => setPuttDistance(e, index)} // Pass 0-based index
+                value={puttLengths && puttLengths[index] !== undefined ? (puttLengths[index] === 0 ? '' : puttLengths[index]) : ''}
+                sx={{ width: '100%' }}
+              />
+            </Grid>
+          );
+        })
+      }
+    </Grid>
   )
 }
 

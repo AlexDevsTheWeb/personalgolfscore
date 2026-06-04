@@ -1,91 +1,55 @@
-import ShotsTableHeaderStack from "@/components/RoundsData/components/shotsTable/ShotsTableHeaderStack.component";
 import { CHIPPING } from "@/enum/shots.enum";
 import GridPuttsStat from "@/styles/grid/GridCellStats.styles";
-import { IChipCategoryStatsProps, IChipDesktopViewProps, IChipMobileViewProps } from "@/types/props.types";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid2, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { IChipCategoryStatsProps, IChipMobileViewProps } from "@/types/props.types";
+import { Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
-
-
-export const DesktopView: React.FC<IChipDesktopViewProps> = ({ chipPitch }) => {
-  const categories = Object.keys(chipPitch);
-  const entries = Object.entries(chipPitch);
-
-  return (
-    <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'transparent' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="chipping and pitching statistics table">
-        <TableHead>
-          <TableRow>
-            {categories.map((categoryKey) => {
-              const clubType = CHIPPING[categoryKey.toUpperCase() as keyof typeof CHIPPING] || categoryKey;
-              return (
-                <TableCell
-                  align='center'
-                  key={`header-${categoryKey}`}
-                  variant='putt'
-                  sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5' }}
-                >
-                  <ShotsTableHeaderStack firstRow={clubType as string} secondRow={''} />
-                </TableCell>
-              );
-            })}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            {entries.map(([key, value]) => {
-              return (
-                <TableCell
-                  align='center'
-                  key={`data-${key}`}
-                  sx={{ borderLeft: '1px solid #e5e5e5', borderBottom: '1px solid #e5e5e5', verticalAlign: 'top', padding: 1 }}
-                >
-                  <CategoryStats value={value} />
-                </TableCell>
-              )
-            })}
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-export const MobileView: React.FC<IChipMobileViewProps> = ({ chipPitch }) => {
-  const entries = Object.entries(chipPitch);
-
-  return (
-    <Box sx={{ width: '100%' }}>
-      {entries.map(([key, value]) => {
-        const clubType = CHIPPING[key.toUpperCase() as keyof typeof CHIPPING] || key;
-        return (
-          <Accordion key={`accordion-${key}`}>
-            <AccordionSummary>
-              <ShotsTableHeaderStack firstRow={clubType as string} secondRow={''} />
-            </AccordionSummary>
-            <AccordionDetails>
-              <CategoryStats value={value} />
-            </AccordionDetails>
-          </Accordion>
-        );
-      })}
-    </Box>
-  );
-};
+import StatBlock from "../components/StackBlock.component";
 
 export const CategoryStats: React.FC<IChipCategoryStatsProps> = React.memo(({ value }) => {
   return (
     <Stack spacing={1}>
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
         <GridPuttsStat size={{ xs: 4 }} string='U&D made' value={value.upDownMade} />
         <GridPuttsStat size={{ xs: 4 }} string='Attempts' value={value.attempts} />
         <GridPuttsStat size={{ xs: 4 }} string='Shots holed' value={value.shotsHoled} />
-      </Grid2>
+      </Grid>
       <Divider />
-      <Grid2 container spacing={1} sx={{ justifyContent: 'space-around' }}>
-        <GridPuttsStat size={{ xs: 4 }} string='Average shots' value={value.averageShot.toFixed(2)} />
-        <GridPuttsStat size={{ xs: 4 }} string='Avg. distance' value={value.averageHoleDistance.toFixed(2)} />
-        <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greensMissed} />
-      </Grid2>
+      <Grid container spacing={1} sx={{ justifyContent: 'space-around' }}>
+        <GridPuttsStat
+          size={{ xs: 4 }}
+          string='Average shots'
+          value={(typeof value.averageShots === 'number' ? value.averageShots : 0).toFixed(2)} />
+        <GridPuttsStat
+          size={{ xs: 4 }}
+          string='Avg. distance'
+          value={(typeof value.averageHoleDistanceShot === 'number' ? value.averageHoleDistanceShot : 0).toFixed(2)} />
+        <GridPuttsStat size={{ xs: 4 }} string='Green missed' value={value.greensMissed ? value.greensMissed : 0} />
+      </Grid>
     </Stack>
   );
 });
+
+export const UnifiedChippingPitchingView: React.FC<IChipMobileViewProps> = ({ chipPitch }) => {
+  const entries = Object.entries(chipPitch);
+
+  if (entries.length === 0) {
+    return <Typography sx={{ p: 2, textAlign: 'center' }}>No Chipping & Pitching data available.</Typography>;
+  }
+
+  return (
+    <Grid container spacing={1} sx={{ py: 1 }}>
+      {entries.map(([key, value]) => {
+        const clubType = CHIPPING[key.toUpperCase() as keyof typeof CHIPPING] || key;
+        return (
+          <StatBlock
+            key={key}
+            title={clubType as string}
+            gridProps={{ size: { xs: 12, sm: 6, md: 3 } }} // 1 on xs, 2 on sm, 3 on md/lg
+          >
+            <CategoryStats value={value} />
+          </StatBlock>
+        );
+      })}
+    </Grid>
+  );
+};

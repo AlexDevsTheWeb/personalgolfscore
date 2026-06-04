@@ -1,143 +1,79 @@
-import { resetNewRoundHoleTmp, setTmpHoleData } from '@/features/hole/holeTmp.slice';
-import { addApproachShotDistance, addTeeShotDistance } from '@/features/newRound/newRoundDistances.slice';
-import { setNewHole } from '@/features/newRound/newRoundHoles.slice';
-import { RootState } from '@/store/store';
-import BoxSingleHoleContainer from '@/styles/box/BosSingleHoleContainer.styles';
-import BoxNewHole from '@/styles/box/BoxNewHole.styles';
-import BoxSingleHoleInternal from '@/styles/box/BoxSingleHoleInternal.styles';
 import { IAddSingleHoleProps } from '@/types/clubs.types';
-import { fairwayValues, greenSideValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils';
-import { Box } from '@mui/material';
+import { fairwayValues, hcpList18, hcpList9, parList } from '@/utils/constant.utils'; // prettier-ignore
+import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import SaveRoundButton from './components/SaveRoundButton.component';
-import HoleApproachForm from './components/form/HoleApproachForm.component';
-import HoleGeneralForm from './components/form/HoleGeneralForm.component';
-import HolePenaltiesForm from './components/form/HolePenaltiesForm.component';
-import HoleTeeShotForm from './components/form/HoleTeeShotForm.component';
+import ClubDistanceDialog from '../Dialog/ClubDistanceDialog.component';
+import MissingShotsDialog from '../Dialog/MissingShotsDialog.component';
+
+import useDeviceDetection from '@/hooks/useDeviceDetection.hook';
+import { useHoleFormManager } from '@/hooks/useHoleFormManager.component';
+import HoleGeneralForm from './components/HoleGeneralForm.component';
+import { useAppStore } from "@/store/zustand";
 
 const AddSingleHole = ({ derivedClubs }: IAddSingleHoleProps) => {
-  const dispatch = useDispatch<any>();
+	const newRoundMain = useAppStore((state) => state.newRoundMain);
+	const roundPlayingHCP = newRoundMain.round.roundPlayingHCP;
+	const roundHoles = newRoundMain.round.roundHoles;
+	const holes = useAppStore((state) => state.newRoundHoles.holes);
+	const holesCompleted = useAppStore((state) => state.newRoundHoles.holesCompleted);
+	const holeTmp = useAppStore((state) => state.newRoundHoleTmp);
+	const showDistances = useAppStore((state) => state.showDistances);
 
-  const { round: { roundPlayingHCP, roundHoles } } = useSelector((store: RootState) => store.newRound.newRoundMain);
-  const { holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const tmpHole = useSelector((store: RootState) => store.newRound.holeTmp);
+	const [puttsLength, setPuttsLength] = useState<number[]>([]);
+	const [currentHoleNumber, setCurrentHoleNumber] = useState<number>(1);
 
-  const [puttsLength, setPuttsLength] = useState<number[]>([]);
-  const [puttsNumber, setPuttsNumber] = useState<number[]>([]);
-  const [currentHoleNumber, setCurrentHoleNumber] = useState<number>(1);
+	useEffect(() => {
+		setCurrentHoleNumber(holesCompleted + 1);
+	}, [holesCompleted]);
 
-  useEffect(() => {
-    setCurrentHoleNumber(holesCompleted + 1);
-  }, [holesCompleted]);
+	// Sync puttsLength from Zustand store when it changes
+	useEffect(() => {
+		if (holeTmp.puttsLength && holeTmp.puttsLength.length > 0) {
+			setPuttsLength(holeTmp.puttsLength);
+		}
+	}, [holeTmp.puttsLength]);
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    dispatch(setTmpHoleData({ name, value, roundPlayingHCP, roundHoles, chipClubs: derivedClubs.chipClubs } as any));
-  };
+	const { handleChange, handleSaveHole, isSaveDisabled, missingShotsDialogProps } = useHoleFormManager({
+		tmpHole: holeTmp,
+		derivedClubs,
+		roundPlayingHCP,
+		roundHoles,
+		holesCompleted,
+		puttsLength, // Pass current puttsLength
+		fairwayValuesConstant: fairwayValues,
+	});
 
-  const handleChangePutts = (e: any, puttIndex: number) => {
-    const currentLength = puttsLength.length;
-    const requiredLength = Math.max(currentLength, puttIndex + 1);
-    const newPuttsLength = [...puttsLength];
-    while (newPuttsLength.length < requiredLength) {
-      newPuttsLength.push(0);
-    }
-    newPuttsLength[puttIndex] = e.target.value === '' ? 0 : Number(e.target.value);
-    setPuttsLength(newPuttsLength);
-  };
+	// Effect to reset puttsLength when a hole is successfully saved (holeTmp is reset)
+	useEffect(() => {
+		if (holeTmp.holeNumber === 0 && holeTmp.par === 0 && holeTmp.strokes === 0) {
+			// Heuristic for reset
+			setPuttsLength([]);
+		}
+	}, [holeTmp.holeNumber, holeTmp.par, holeTmp.strokes]);
 
-  useEffect(() => {
-    const numPutts = tmpHole.putts || 0;
-    setPuttsNumber(Array.from({ length: numPutts }, (_, i) => i + 1));
-    setPuttsLength(currentLengths => {
-      const newLengths = new Array(numPutts).fill(0);
-      for (let i = 0; i < Math.min(currentLengths.length, numPutts); i++) {
-        newLengths[i] = currentLengths[i] ?? 0;
-      }
-      return newLengths;
-    });
-  }, [tmpHole.putts]);
+	const hcpList = Number(roundHoles) === 18 ? hcpList18 : hcpList9;
+	const usedHCPs = holes.map((hole: any) => hole.hcp);
+	const newHCPList = hcpList.filter(hcp => !usedHCPs.includes(Number(hcp)));
 
-  const handleSaveHole = () => {
+	return (
+		<Grid container spacing={2} sx={{ width: useDeviceDetection().isMobileDevice ? '100%' : '70%' }}>
+			<HoleGeneralForm
+				holeData={holeTmp}
+				hcpList={newHCPList}
+				parList={parList}
+				teeClubs={derivedClubs.teeClubs}
+				greenClubs={derivedClubs.greenClubs}
+				fairwayValues={fairwayValues}
+				currentHoleNumber={currentHoleNumber}
+				onChange={handleChange}
+				onSave={handleSaveHole}
+				isSaveDisabled={isSaveDisabled}
+			/>
 
-    const { teeClub, driveDistance, distance, par, fairway, toGreen, toGreenMeters } = tmpHole;
-    let actualTeeDistance = 0;
-    if (par === 3) {
-      actualTeeDistance = distance;
-    } else {
-      actualTeeDistance = driveDistance > 0 ? driveDistance : 0;
-    }
-    if (teeClub && actualTeeDistance > 0) {
-      dispatch(addTeeShotDistance({ club: teeClub, distance: actualTeeDistance }));
-    }
-    if (toGreen && typeof toGreenMeters === 'number' && toGreenMeters > 0) {
-      dispatch(addApproachShotDistance({ club: toGreen, distance: toGreenMeters }));
-    }
+			{!!showDistances && <ClubDistanceDialog open={showDistances} />}
+			<MissingShotsDialog {...missingShotsDialogProps} />
+		</Grid>
+	);
+};
 
-    const holeAdjusted = {
-      ...tmpHole,
-      holeNumber: holesCompleted + 1,
-      fairway: Number(fairway) || 0,
-      puttsLength: [...puttsLength]
-    };
-    dispatch(setNewHole({ holeAdjusted, roundPlayingHCP, roundHoles, holesCompleted }));
-    dispatch(resetNewRoundHoleTmp());
-    setPuttsLength([]);
-    setPuttsNumber([]);
-  };
-
-  const isSaveDisabled = () => {
-    return tmpHole.hcp === 0 || tmpHole.par === 0 || tmpHole.strokes === 0;
-  }
-
-  const hcpList = Number(roundHoles) === 18 ? hcpList18 : hcpList9;
-
-  return (
-    <BoxSingleHoleContainer>
-      <BoxSingleHoleInternal side='full'>
-        <BoxNewHole>
-          <HoleGeneralForm
-            holeData={tmpHole}
-            hcpList={hcpList}
-            parList={parList}
-            puttsNumber={puttsNumber}
-            currentHoleNumber={currentHoleNumber}
-            onChange={handleChange}
-            onChangePutts={handleChangePutts}
-          />
-          <HolePenaltiesForm
-            holeData={tmpHole}
-            onChange={handleChange}
-          />
-        </BoxNewHole>
-
-        <BoxNewHole>
-          <HoleTeeShotForm
-            holeData={tmpHole}
-            teeClubs={derivedClubs.teeClubs}
-            fairwayValues={fairwayValues}
-            onChange={handleChange}
-          />
-
-          <HoleApproachForm
-            holeData={tmpHole}
-            greenClubs={derivedClubs.greenClubs}
-            chipClubs={derivedClubs.chipClubs}
-            greenSideValues={greenSideValues}
-            onChange={handleChange}
-          />
-
-          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-
-            <SaveRoundButton onSave={handleSaveHole} disabled={isSaveDisabled()} />
-          </Box>
-        </BoxNewHole>
-
-      </BoxSingleHoleInternal>
-    </BoxSingleHoleContainer>
-  )
-}
-
-export default AddSingleHole
-
+export default AddSingleHole;

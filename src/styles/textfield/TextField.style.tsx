@@ -8,8 +8,10 @@ type TextFieldProps = TextFieldPropsMui & {
   width?: number | string;
 }
 
-const StyledTextField = styled(TextFieldMui)<TextFieldProps>((props) => ({
-  backgroundColor: 'transparent',
+const StyledTextField = styled(TextFieldMui)<TextFieldProps>(({ theme, ...props }) => ({
+  backgroundColor: theme.palette.grey5.main,
+  color: theme.palette.text.primary,
+  borderBottom: `1px solid ${theme.palette.divider}`,
   width: props.width
     ? `${_.isNumber(props.width)
       ? `${props.width}px`
@@ -20,7 +22,11 @@ const StyledTextField = styled(TextFieldMui)<TextFieldProps>((props) => ({
         ? '300px'
         : '100px',
   padding: '2px !important',
-  paddingTop: '0px !important'
+  paddingTop: '0px !important',
+  '&.Mui-focused': {
+    // Ensure focused label color uses theme primary
+    color: theme.palette.primary.main,
+  }
 }));
 
 const TextField: React.FC<TextFieldProps> = (props) => {

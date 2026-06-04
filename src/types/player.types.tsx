@@ -1,19 +1,6 @@
 import { IBasicRoundData, ITotalDistanceAvg } from "./roundData.types";
 import { ITotalRoundsAvg } from "./roundTotals.types";
 
-// FIXME: NOT USED?
-// export interface IPlayer {
-//   playerID: string,
-//   firstName: string,
-//   lastName: string,
-//   DOB: {
-//     seconds: number,
-//     nanoseconds: number,
-//   },
-//   HCP: number,
-//   email: string
-// }
-
 export type InitialStatePlayer = {
   isLoading: boolean;
   error: string,
@@ -22,7 +9,7 @@ export type InitialStatePlayer = {
 }
 
 export type IPlayerStateData = Omit<IPlayerDetails, 'rounds'> & {
-  totalDistancesAVG?: ITotalDistanceAvg[]; // Or Map<string, ITotalDistanceAvg>
+  totalDistancesAVG?: ITotalDistanceAvg[];
   totalsRoundsAVG?: ITotalRoundsAvg | null;
 };
 
@@ -37,7 +24,7 @@ export interface IClubDetail {
   imageURL: string;
   clubIdentifier: string;
   selected: boolean;
-  clubNumber?: string | number; // Optional
+  clubNumber?: string | number;
 }
 
 export interface IPlayerDetails {
@@ -47,12 +34,16 @@ export interface IPlayerDetails {
   firstName?: string;
   lastName?: string;
   HCP?: number;
+  initialHCP?: number | null;
+  currentHCP?: number | null;
   DOB?: number;
   photoURL?: string | null;
   golfBag?: IGolfBagData;
   rounds?: IBasicRoundData[];
   totalDistancesAVG?: ITotalDistanceAvg[];
   totalsRoundsAVG?: ITotalRoundsAvg | null;
+	isSetupComplete: boolean;
+	isAdmin?: boolean;
 }
 
 export interface IGetPlayerDetailsPayload {
@@ -63,4 +54,9 @@ export interface IGetPlayerDetailsPayload {
 export interface IUpdateGolfBagPayload {
   uid: string;
   golfBagData: IGolfBagData;
+}
+
+export interface IUpdatePlayerProfilePayload {
+  uid: string;
+  data: Partial<Omit<IPlayerDetails, 'uid' | 'rounds' | 'totalDistancesAVG' | 'totalsRoundsAVG' | 'golfBag'>> & { isSetupComplete?: boolean };
 }

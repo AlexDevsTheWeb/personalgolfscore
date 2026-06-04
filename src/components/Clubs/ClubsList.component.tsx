@@ -1,4 +1,4 @@
-import { updateClub, updateClubSelection } from "@/features/golfBag/golfBag.slice";
+import { useAppStore } from "@/store/zustand";
 import BoxClubs from "@/styles/box/BoxClubs.styles";
 import { IClub } from "@/types/clubs.types";
 import CheckCircleOutlineTwoToneIcon from '@mui/icons-material/CheckCircleOutlineTwoTone';
@@ -10,22 +10,21 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { ClubTypography } from "../../styles";
 
 const ClubsList = (props: any) => {
   const { typeName, details } = props;
-  const dispatch = useDispatch<any>();
+  const updateClubSelection = useAppStore((state) => state.updateClubSelection);
 
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSelectClub = (clubDetail: IClub) => {
-    dispatch(updateClubSelection({ ...clubDetail, selected: !clubDetail.selected, typeName: typeName }));
+    updateClubSelection({ ...clubDetail, selected: !clubDetail.selected, typeName: typeName });
   };
 
   const handleEditToggle = () => setIsEditing(!isEditing);
   const handleClubChange = (clubName: string, propertyName: string, newValue: string) => {
-    dispatch(updateClub({ clubName, propertyName, newValue, typeName }));
+    // updateClub functionality is not implemented - this is a no-op
   };
 
   return (
@@ -47,8 +46,8 @@ const ClubsList = (props: any) => {
                   ? <TextField
                     label="Name"
                     variant="outlined"
-                    value={clubDetail.name} // Assuming name is stored in clubDetail
-                    onChange={(event) => handleClubChange(clubDetail.name, "name", event.target.value)} // Update handler function
+                    value={clubDetail.name}
+                    onChange={(event) => handleClubChange(clubDetail.name, "name", event.target.value)}
                   />
                   : <ClubTypography typeName={typeName} details={clubDetail} />}
 

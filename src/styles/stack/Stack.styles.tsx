@@ -1,14 +1,14 @@
-import { Stack as StackMui, StackProps as StackPropsMui, styled } from '@mui/material';
-import * as React from 'react';
+// import { Stack as StackMui, StackProps as StackPropsMui, styled } from '@mui/material';
+// import * as React from 'react';
 
-type StackProps = StackPropsMui;
+// type StackProps = StackPropsMui;
 
-const StyledStack = styled(StackMui)<StackProps>(({}));
+// const StyledStack = styled(StackMui)<StackProps>(({}));
 
-const Stack: React.FC<StackProps> = props => {
-  return (
-    <StyledStack {...props}>{props.children}</StyledStack>
-  )
-};
+// const Stack: React.FC<StackProps> = props => {
+//   return (
+//     <StyledStack {...props}>{props.children}</StyledStack>
+//   )
+// };
 
-export default Stack;
+// export default Stack;

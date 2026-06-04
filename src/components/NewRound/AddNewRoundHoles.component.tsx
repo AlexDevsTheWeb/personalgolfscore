@@ -1,26 +1,30 @@
-import { setTotalsByHole } from '@/features/newRound/newRoundTotals.slice';
-import { RootState } from '@/store/store';
 import { getChipClubs, getClubsNames, getDistanceClubs, getGreenClubs } from '@/utils/round/round.utils';
 import { Typography } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Spinner from '../common/spinner/Spinner.component';
-import HolebyHoleTotals from '../Totals/HolebyHole/HolebyHoleTotals.component';
 import AddSingleHole from './AddSingleHole.component';
-import HolebyHoleTable from './HolebyHoleTable.component';
 import RoundSave from './RoundSave.component';
+import { useAppStore } from '@/store/zustand';
 
 const AddNewRoundHoles = () => {
-  const dispatch = useDispatch<any>();
-  const { round } = useSelector((store: RootState) => store.newRound.newRoundMain);
-  const { holes, holesCompleted } = useSelector((store: RootState) => store.newRound.newRoundHoles);
-  const { roundTotals } = useSelector((store: RootState) => store.newRound.newRoundTotals);
-  const { player, isLoading: isPlayerLoading } = useSelector((store: RootState) => store.player);
-  const { isLoading: isSavingRound, success: isRoundSaved, roundId: savedRoundId } = useSelector((store: RootState) => store.roundSaver);
-  const [holeForm, setHoleForm] = useState<React.ReactNode | undefined>();
+  const newRoundMain = useAppStore((state) => state.newRoundMain);
+  const round = newRoundMain.round;
+  const setFirstHole = newRoundMain.setFirstHole;
+  const holes = useAppStore((state) => state.newRoundHoles.holes);
+  const holesCompleted = useAppStore((state) => state.newRoundHoles.holesCompleted);
+  const isSavingRound = useAppStore((state) => state.newRoundSaver.isLoading);
+  const isRoundSaved = useAppStore((state) => state.newRoundSaver.success);
+  const savedRoundId = useAppStore((state) => state.newRoundSaver.roundId);
+  const setNewRoundClubs = useAppStore((state) => state.setNewRoundClubs);
+  const setTotalsByHole = useAppStore((state) => state.setTotalsByHole);
+  const resetNewRound = useAppStore((state) => state.resetNewRound);
+  
+  const { player, isLoadingPlayer: isPlayerLoading } = useAppStore();
 
   const golfBag = player?.golfBag;
   const derivedClubs = useMemo(() => {
+
     if (!golfBag || golfBag.length === 0) {
       return { teeClubs: [], distanceClubs: [], greenClubs: [], chipClubs: [] };
     }
@@ -32,12 +36,22 @@ const AddNewRoundHoles = () => {
     return { teeClubs: teeClubNames, distanceClubs, greenClubs, chipClubs };
   }, [golfBag]);
 
-  useEffect(() => {
-    if (holes.length > 0) {
-      dispatch(setTotalsByHole({ holes }));
-    }
-  }, [holes, dispatch]);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    setNewRoundClubs(derivedClubs);
+  }, [derivedClubs, setNewRoundClubs]);
+
+  useEffect(() => {
+    if (isRoundSaved && savedRoundId) {
+      resetNewRound();
+      navigate(`/round/${savedRoundId}`);
+    }
+  }, [isRoundSaved, savedRoundId, resetNewRound, navigate]);
+
+  if (!setFirstHole) {
+    return null;
+  }
   const moreHolesToPlay = holesCompleted < round.roundHoles;
   if (isPlayerLoading && !player) {
     return <Spinner />;
@@ -52,10 +66,6 @@ const AddNewRoundHoles = () => {
     return <Typography>No clubs found in your golf bag. Please add clubs first.</Typography>
   }
 
-  if (isRoundSaved && savedRoundId) {
-    return <Typography color="success.main" sx={{ textAlign: 'center', margin: 4 }}>Round saved successfully!</Typography>
-  }
-
   return (
     <>
       {moreHolesToPlay ? (
@@ -63,14 +73,8 @@ const AddNewRoundHoles = () => {
       ) : (
         !isRoundSaved && <RoundSave />
       )}
-
-      {holes.length > 0 && roundTotals &&
-        <HolebyHoleTotals roundTotals={roundTotals} par={Number(round.roundPar)} />
-      }
-      {holes.length > 0 && <HolebyHoleTable holes={holes} />}
     </>
   )
 }
 
 export default AddNewRoundHoles
-

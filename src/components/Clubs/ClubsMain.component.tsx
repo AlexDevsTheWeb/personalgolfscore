@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-
-import { AppDispatch, RootState } from "@/store/store";
 import ClubsHeaderTypography from "@/styles/typography/ClubsHeaderTypography.styles";
 import { IGolfBagData } from '@/types/player.types';
-import { BoxPlayer, Typography } from "../../styles";
+import { BoxPlayer } from "../../styles";
 
-import { updatePlayerGolfbag } from '@/features/player/player.slice';
 import { IClubsMainProps } from '@/types/clubs.types';
-import { Box, Button } from '@mui/material';
-import initialClubsData from '../../../public/data/P1_TIGERWOODS/clubs.json';
+import { Box, Button, Typography } from '@mui/material';
+import { useAppStore } from '@/store/zustand';
+
 
 const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { player, isLoading } = useSelector((store: RootState) => store.player);
+  const { player, isLoadingPlayer: isLoading } = useAppStore();
+  const updatePlayerGolfbag = useAppStore((state) => state.updatePlayerGolfbag);
   const [isSaving, setIsSaving] = useState(false);
 
   const hasExistingBag = golfBag && golfBag.length > 0;
-  const dataToShow = hasExistingBag ? golfBag : (initialClubsData as IGolfBagData);
+  const dataToShow = hasExistingBag ? golfBag : null;
 
   const handleSaveInitialBag = async () => {
     if (!player?.uid) {
@@ -30,10 +27,10 @@ const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
     }
     setIsSaving(true);
     try {
-      await dispatch(updatePlayerGolfbag({
+      await updatePlayerGolfbag({
         uid: player.uid,
-        golfBagData: initialClubsData as IGolfBagData
-      })).unwrap();
+        golfBagData: dataToShow as IGolfBagData
+      });
     } catch (error) {
       console.error("Failed to save initial golf bag:", error);
     } finally {
@@ -41,7 +38,7 @@ const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
     }
   };
 
-  if (isLoading && !player) { // Show loading only if player data isn't available yet
+  if (isLoading && !player) {
     return <Typography>Loading Player Data...</Typography>;
   }
 
@@ -49,37 +46,13 @@ const ClubsMain: React.FC<IClubsMainProps> = ({ golfBag }) => {
     <BoxPlayer>
       <ClubsHeaderTypography />
 
-
-      {/* <Grid
-        container
-        spacing={{ xs: 1, md: 1 }}
-        columns={12}
-      >
-        {dataToShow && dataToShow.length > 0
-          ? (dataToShow.map((clubType, index) => (
-            <Grid
-              size={12}
-              key={`${clubType.typeName}-${index}`}
-              sx={{ minWidth: "100%" }}
-            >
-              <ClubsList
-                typeName={clubType.typeName}
-                details={clubType.details}
-              />
-            </Grid>
-          ))
-          )
-          : (<Typography sx={{ padding: 2 }}>No clubs found.</Typography>)
-        }
-      </Grid> */}
-
       {!hasExistingBag && (
         <Box sx={{ marginBottom: 2, display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="contained"
             color="primary"
             onClick={handleSaveInitialBag}
-            disabled={isSaving || !player?.uid} // Disable if saving or no UID
+            disabled={isSaving || !player?.uid}
           >
             {isSaving ? "Saving..." : "Save Default Bag"}
           </Button>

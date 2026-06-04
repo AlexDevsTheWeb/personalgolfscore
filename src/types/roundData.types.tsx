@@ -40,6 +40,8 @@ export interface IShots {
   upDown: IMadeAttempts;
   scramble: IMadeAttempts;
   water: number;
+  intermediateShots: IIntermediateShot[];
+  chipClubs: string[];
 }
 
 interface IMadeAttempts {
@@ -167,6 +169,10 @@ export interface IBasicRoundData {
   roundStrokes?: number,
   userId?: string
   createdAt: number,
+  scoreDifferential?: number | null,
+  previousHCP?: number | null,
+  handicapIndex?: number | null,
+  hcpDelta?: number | null,
   totals: IRoundTotals
 }
 
@@ -175,4 +181,10 @@ export interface ITotalDistanceAvg {
   totalDistancesSum: number;
   numberOfShots: number;
   avg: number;
+}
+
+export interface IIntermediateShot {
+  club: string;
+  distance: number;
+  fairway: number; // Using numeric codes consistent with fairwayValues (1: Left, 2: Center, 3: Right, 4: Short)
 }

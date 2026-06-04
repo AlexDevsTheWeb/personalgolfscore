@@ -1,24 +1,22 @@
 import Spinner from '@/components/common/spinner/Spinner.component';
-import { getAllRounds } from '@/features/rounds/rounds.slice';
+import RoundsDataMain from '@/components/RoundsData/RoundsDataMain.component';
 import { readUserLocalStorage } from '@/utils/storage/localStorage.utils';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import RoundsDataMain from '../components/RoundsData/RoundsDataMain.component';
-import { RootState } from '../store/store';
+import { useAppStore } from '@/store/zustand';
 
 const RoundsData = () => {
-  const dispatch = useDispatch<any>();
 
-  const { rounds } = useSelector((store: RootState) => store.rounds);
+  const roundsList = useAppStore((state) => state.roundsList);
+  const getPlayerDetails = useAppStore((state) => state.getPlayerDetails);
   const uid = readUserLocalStorage();
 
   useEffect(() => {
-    if (rounds.length === 0) {
-      dispatch(getAllRounds(uid));
+    if (roundsList.length === 0 && uid) {
+      getPlayerDetails(uid);
     }
-  }, [rounds])
+  }, [roundsList, uid, getPlayerDetails]);
 
-  if (rounds.length === 0) {
+  if (roundsList.length === 0) {
     return <Spinner />
   }
 

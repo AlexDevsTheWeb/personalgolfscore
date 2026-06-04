@@ -1,21 +1,16 @@
-import useDeviceDetection from "@/hooks/useDeviceDetection.hook";
 import { IRoundTotalsProps } from "@/types/props.types";
 import { Box } from "@mui/material";
 import React from "react";
-import { DesktopView, MobileView } from "./BreakpointsView.component";
+import { UnifiedChippingPitchingView } from "./BreakpointsView.component";
 
 const HolebyHoleChipping: React.FC<IRoundTotalsProps> = ({ roundTotals }) => {
-  const { isMobile } = useDeviceDetection();
   const { chipPitch } = roundTotals;
 
-  // Basic validation or loading state
   if (!chipPitch || Object.keys(chipPitch).length === 0) {
     return <Box>No Chipping/Pitching data available.</Box>; // Or a loading indicator
   }
 
-  return isMobile
-    ? <MobileView chipPitch={chipPitch} />
-    : <DesktopView chipPitch={chipPitch} />;
+  return <UnifiedChippingPitchingView chipPitch={chipPitch} />;
 };
 
 export default HolebyHoleChipping
