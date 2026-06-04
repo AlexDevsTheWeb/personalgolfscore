@@ -91,6 +91,7 @@ export const importRoundsBatch = async (
     const newSD = roundDoc.scoreDifferential;
     let handicapIndex: number | null = null;
     let hcpDelta: number | null = null;
+    let previousHCP: number | null = runningHCP;
 
     if (runningHCP != null && newSD != null) {
       const virtualSDs = [newSD, ...runningSDs].slice(0, 20);
@@ -99,10 +100,13 @@ export const importRoundsBatch = async (
         handicapIndex = newHI;
         hcpDelta = +((newHI - runningHCP)).toFixed(1);
       }
+    } else if (runningHCP == null) {
+      previousHCP = null;
     }
 
     const enrichedDoc: IRoundImportDocument = {
       ...roundDoc,
+      previousHCP,
       handicapIndex,
       hcpDelta,
     };
@@ -119,6 +123,8 @@ export const importRoundsBatch = async (
     }
     if (handicapIndex != null) {
       runningHCP = handicapIndex;
+    } else {
+      runningHCP = null;
     }
   }
 
