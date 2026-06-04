@@ -167,9 +167,6 @@ const HandicapHistory = () => {
 											<TableCell align="right">
 												Δ
 											</TableCell>
-											<TableCell align="center">
-												Used
-											</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
@@ -196,29 +193,42 @@ const HandicapHistory = () => {
 															?.totals ?? '\u2014'}
 													</TableCell>
 													<TableCell align="right">
-														{round.scoreDifferential !=
-														null ? (
-															isHighlighted ? (
-																<Box
-																	component="span"
-																	sx={{
-																		display: 'inline-block',
-																		padding: '5px',
-																		border: '1px solid black',
-																	}}
-																>
+														<Box
+															component="span"
+															sx={{
+																display: 'inline-block',
+																padding: '5px',
+																border: '2px solid',
+																borderColor: isHighlighted
+																	? 'black'
+																	: 'transparent',
+																backgroundColor: isHighlighted
+																	? '#fff59d'
+																	: 'transparent',
+																color: isHighlighted
+																	? 'rgba(0,0,0,0.87)'
+																	: 'inherit',
+															}}
+														>
+															{round.scoreDifferential !=
+															null ? (
+																<>
+																	{isHighlighted && (
+																		<Box
+																			component="span"
+																			sx={{ mr: '4px' }}
+																		>
+																			{'\u2605'}
+																		</Box>
+																	)}
 																	{round.scoreDifferential.toFixed(
 																		1
 																	)}
-																</Box>
+																</>
 															) : (
-																round.scoreDifferential.toFixed(
-																	1
-																)
-															)
-														) : (
-															'\u2014'
-														)}
+																'\u2014'
+															)}
+														</Box>
 													</TableCell>
 													<TableCell align="right">
 														{round.previousHCP != null
@@ -238,11 +248,6 @@ const HandicapHistory = () => {
 																		: ''
 																}${round.hcpDelta.toFixed(1)}`
 															: '\u2014'}
-													</TableCell>
-													<TableCell align="center">
-														{isHighlighted
-															? '\u2606'
-															: ''}
 													</TableCell>
 												</TableRow>
 											);
