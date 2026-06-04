@@ -177,15 +177,7 @@ const HandicapHistory = () => {
 											const isHighlighted =
 												highlightedIndices.has(idx);
 											return (
-												<TableRow
-													key={round.id}
-													sx={{
-														...(isHighlighted && {
-															backgroundColor:
-																'action.selected',
-														}),
-													}}
-												>
+												<TableRow key={round.id}>
 													<TableCell>
 														{dayjs(
 															round.roundDate
@@ -205,11 +197,28 @@ const HandicapHistory = () => {
 													</TableCell>
 													<TableCell align="right">
 														{round.scoreDifferential !=
-														null
-															? round.scoreDifferential.toFixed(
+														null ? (
+															isHighlighted ? (
+																<Box
+																	component="span"
+																	sx={{
+																		display: 'inline-block',
+																		padding: '5px',
+																		border: '1px solid black',
+																	}}
+																>
+																	{round.scoreDifferential.toFixed(
+																		1
+																	)}
+																</Box>
+															) : (
+																round.scoreDifferential.toFixed(
 																	1
 																)
-															: '\u2014'}
+															)
+														) : (
+															'\u2014'
+														)}
 													</TableCell>
 													<TableCell align="right">
 														{round.previousHCP != null
