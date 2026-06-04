@@ -97,10 +97,8 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
       breadcrumbs.push({ label: 'Settings', path: '/settings' });
     } else if (path === '/simulator') {
       breadcrumbs.push({ label: 'HCP Simulator', path: '/simulator' });
-    } else if (path === '/handicap-history') {
-      breadcrumbs.push({ label: 'Handicap History', path: '/handicap-history' });
-    } else if (path === '/stableford-history') {
-      breadcrumbs.push({ label: 'Stableford History', path: '/stableford-history' });
+    } else if (path === '/history') {
+      breadcrumbs.push({ label: 'History', path: '/history' });
     } else if (path === '/import-rounds') {
       breadcrumbs.push({ label: 'Import Rounds', path: '/import-rounds' });
     } else if (path.startsWith('/round/')) {
