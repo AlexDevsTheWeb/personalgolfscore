@@ -91,6 +91,7 @@ export const importRoundsBatch = async (
     const newSD = roundDoc.scoreDifferential;
     let handicapIndex: number | null = null;
     let hcpDelta: number | null = null;
+    let previousHCP: number | null = runningHCP;
 
     if (runningHCP != null && newSD != null) {
       const virtualSDs = [newSD, ...runningSDs].slice(0, 20);
@@ -99,10 +100,13 @@ export const importRoundsBatch = async (
         handicapIndex = newHI;
         hcpDelta = +((newHI - runningHCP)).toFixed(1);
       }
+    } else if (runningHCP == null) {
+      previousHCP = null;
     }
 
     const enrichedDoc: IRoundImportDocument = {
       ...roundDoc,
+      previousHCP,
       handicapIndex,
       hcpDelta,
     };
@@ -119,6 +123,8 @@ export const importRoundsBatch = async (
     }
     if (handicapIndex != null) {
       runningHCP = handicapIndex;
+    } else {
+      runningHCP = null;
     }
   }
 
@@ -182,27 +188,28 @@ export const saveNewRound = async (): Promise<{ success: boolean; roundId: strin
       // Round save continues without SD — non-blocking
     }
 
-    // Compute Handicap Index and delta (per D-04, D-08)
+    // Compute Handicap Index, previousHCP, and delta (per D-04, D-08, HCP-PERSIST)
     let handicapIndex: number | null = null;
     let hcpDelta: number | null = null;
+    let previousHCP: number | null = null;
     try {
       // CR-02 fix: legacy users (pre-Phase-5 rounds, no stored handicapIndex) need
       // the live WHS recalc, not the player's initialHCP, as the previousHCP for
       // the new hcpDelta computation.
       const mostRecent = store.roundsList[0];
-      let previousHCP: number | null;
+      let prevHCP: number | null;
       if (mostRecent?.handicapIndex != null) {
-        previousHCP = mostRecent.handicapIndex;
+        prevHCP = mostRecent.handicapIndex;
       } else if (store.roundsList.length > 0) {
         // Legacy fallback: live WHS recalc from existing SDs (mirrors D-15 chart branch)
         const legacySDs = store.roundsList
           .map((r) => r.scoreDifferential)
           .filter((sd): sd is number => sd !== null && sd !== undefined);
-        previousHCP = calculateHandicapIndex(legacySDs);
+        prevHCP = calculateHandicapIndex(legacySDs);
       } else {
-        previousHCP = player?.initialHCP ?? null;
+        prevHCP = player?.initialHCP ?? null;
       }
-      if (previousHCP != null && scoreDifferential != null) {
+      if (prevHCP != null && scoreDifferential != null) {
         const previousSDs = store.roundsList
           .map((r) => r.scoreDifferential)
           .filter((sd): sd is number => sd !== null && sd !== undefined)
@@ -211,7 +218,8 @@ export const saveNewRound = async (): Promise<{ success: boolean; roundId: strin
         const newHI = calculateHandicapIndex(virtualSDs);
         if (newHI != null) {
           handicapIndex = newHI;
-          hcpDelta = +((newHI - previousHCP)).toFixed(1);
+          previousHCP = prevHCP;
+          hcpDelta = +((newHI - prevHCP)).toFixed(1);
         }
       }
     } catch (hiError: any) {
@@ -228,6 +236,7 @@ export const saveNewRound = async (): Promise<{ success: boolean; roundId: strin
       currentRoundDistances,
       holes,
       scoreDifferential,
+      previousHCP,
       handicapIndex,
       hcpDelta
     );

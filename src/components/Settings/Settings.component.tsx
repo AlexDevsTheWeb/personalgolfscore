@@ -1,8 +1,27 @@
 import { ThemeMode } from '@/types/user.types';
-import { Alert, Box, Card, CardContent, FormControlLabel, Switch, TextField, Typography } from '@mui/material';
+import {
+	Alert,
+	Box,
+	Button,
+	Card,
+	CardContent,
+	CircularProgress,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	FormControlLabel,
+	Switch,
+	TextField,
+	Typography,
+} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Spinner from '../common/spinner/Spinner.component';
 import { useAppStore } from '@/store/zustand';
+import { backfillHcpHistory } from '@/utils/firestore/backfillHcpHistory.utils';
+import { useSnackbar } from '@/components/Admin/SnackbarProvider.component';
+import { IBasicRoundData } from '@/types/roundData.types';
 
 // Validation regex: optional minus, integer, optional single-decimal place
 const HCP_VALIDATION_REGEX = /^-?\d+(\.\d)?$/;
@@ -28,10 +47,21 @@ const Settings = () => {
   const currentThemeMode = useAppStore((state) => state.themePreference);
   const updateUserThemePreference = useAppStore((state) => state.updateUserThemePreference);
   const updatePlayerProfile = useAppStore((state) => state.updatePlayerProfile);
+  const roundsList = useAppStore((state) => state.roundsList) as IBasicRoundData[];
+  const { showSnackbar } = useSnackbar();
+
+  const roundsNeedingBackfill = roundsList.filter(
+    (r) =>
+      r.previousHCP == null ||
+      r.handicapIndex == null ||
+      r.hcpDelta == null
+  ).length;
 
   const [hcpValue, setHcpValue] = useState<string>('');
   const [hcpError, setHcpError] = useState<string>('');
   const [isSavingHcp, setIsSavingHcp] = useState<boolean>(false);
+  const [backfillConfirmOpen, setBackfillConfirmOpen] = useState<boolean>(false);
+  const [isBackfilling, setIsBackfilling] = useState<boolean>(false);
 
   useEffect(() => {
     if (player?.initialHCP != null) {
@@ -87,6 +117,28 @@ const Settings = () => {
     }
   };
 
+  const handleBackfill = async () => {
+    if (!playerId) return;
+    setIsBackfilling(true);
+    try {
+      const result = await backfillHcpHistory(playerId);
+      if (result.success) {
+        showSnackbar(
+          `Updated ${result.updated} round${result.updated !== 1 ? 's' : ''}, ${result.skipped} already up to date.`,
+          'success'
+        );
+        await useAppStore.getState().getPlayerDetails(playerId);
+      } else {
+        showSnackbar(`Backfill failed: ${result.error ?? 'unknown error'}`, 'error');
+      }
+    } catch (err: any) {
+      showSnackbar(`Backfill failed: ${err?.message ?? 'unknown error'}`, 'error');
+    } finally {
+      setIsBackfilling(false);
+      setBackfillConfirmOpen(false);
+    }
+  };
+
   if (isPlayerLoading && !playerId) {
     return <Spinner />;
   }
@@ -133,6 +185,74 @@ const Settings = () => {
           </Card>
         </Box>
       )}
+
+      {roundsNeedingBackfill > 0 && (
+        <Box sx={{ mt: 3, maxWidth: 480 }}>
+          <Card>
+            <CardContent>
+              <Typography variant="title3" gutterBottom>
+                HCP History Backfill
+              </Typography>
+              <Typography variant="body" color="text.secondary" sx={{ mb: 2 }}>
+                {roundsNeedingBackfill} of your existing rounds don't have
+                Old HCP, New HCP, and Δ values yet. Run this one-time
+                recalculation to compute them using the same formula as
+                new rounds. New rounds will be calculated automatically
+                going forward.
+              </Typography>
+              {isBackfilling ? (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <CircularProgress size={20} />
+                  <Typography variant="body" color="text.secondary">
+                    Recalculating {roundsNeedingBackfill} rounds...
+                  </Typography>
+                </Box>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setBackfillConfirmOpen(true)}
+                  disabled={!playerId}
+                >
+                  Recalculate HCP history
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        </Box>
+      )}
+
+      <Dialog
+        open={backfillConfirmOpen}
+        onClose={() => !isBackfilling && setBackfillConfirmOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Recalculate Handicap History?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            This will update the Old HCP, New HCP, and Δ fields on every
+            round using the same formula as new rounds. The operation
+            cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setBackfillConfirmOpen(false)}
+            disabled={isBackfilling}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleBackfill}
+            disabled={isBackfilling}
+          >
+            Recalculate
+          </Button>
+        </DialogActions>
+      </Dialog>
 
     </Box>
 

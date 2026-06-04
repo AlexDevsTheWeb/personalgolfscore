@@ -89,6 +89,7 @@ export const prepareRoundSaveBatch = (
   currentRoundDistances: IDistance[],
   holes: IShots[],
   scoreDifferential?: number | null,
+  previousHCP?: number | null,
   handicapIndex?: number | null,
   hcpDelta?: number | null
 ): string => {
@@ -102,6 +103,7 @@ export const prepareRoundSaveBatch = (
     distances: currentRoundDistances,
     userId: userId,
     scoreDifferential: scoreDifferential ?? null,
+    previousHCP: previousHCP ?? null,
     handicapIndex: handicapIndex ?? null,
     hcpDelta: hcpDelta ?? null,
     roundDate: general.roundDate ? Timestamp.fromDate(new Date(general.roundDate)) : serverTimestamp(),
