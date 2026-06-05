@@ -17,7 +17,7 @@ const PointsChart: React.FC<IRoundsCharts> = ({ rounds }) => {
 
   const recentRoundsRaw = rounds
     .filter(round => round.totals?.points?.totals !== undefined)
-    .slice(-5)
+    .slice(0, 5)
     .reverse();
 
   if (recentRoundsRaw.length < 1) {
@@ -48,13 +48,13 @@ const PointsChart: React.FC<IRoundsCharts> = ({ rounds }) => {
       <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', pt: 2, px: 2 }}>
         Points Scored (Last {processedRoundsData.length} Rounds)
       </Typography>
-      <Box sx={{ flexGrow: 1, width: '100%', p: { xs: 0.5, sm: 1 }, mt: 1, minHeight: 280 }}>
+      <Box sx={{ flexGrow: 1, width: '100%', p: { xs: 0.5, sm: 1 }, mt: 1, minHeight: 380 }}>
         <LineChart
           series={[{ data: pointsData, label: 'Points', id: 'pointsId', color: theme.palette.primary.main, showMark: true }]}
           xAxis={[{ scaleType: 'point', data: xAxisLabels }]}
           yAxis={[{}]}
-          height={270}
-          margin={{ top: 10, right: 40, bottom: 0, left: 10 }}
+          height={340}
+          margin={{ top: 10, right: 40, bottom: 50, left: 10 }}
           grid={{ horizontal: true, vertical: true }}
           slotProps={{
             legend: {

@@ -7,7 +7,7 @@ import React from 'react';
 const GirPercentageChart: React.FC<IRoundsCharts> = ({ rounds }) => {
   const theme = useTheme();
 
-  const recentRounds = rounds.slice(-5);
+  const recentRounds = rounds.slice(0, 5);
 
   if (recentRounds.length === 0) {
     return null;

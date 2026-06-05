@@ -7,7 +7,7 @@ import React from 'react';
 const PuttsChart: React.FC<IRoundsCharts> = ({ rounds }) => {
   const theme = useTheme();
 
-  const recentRounds = rounds.slice(-5);
+  const recentRounds = rounds.slice(0, 5);
 
   let sumTotalPutts = 0;
   let sumPuttsOnGir = 0;

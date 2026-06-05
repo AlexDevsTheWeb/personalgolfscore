@@ -15,7 +15,7 @@ const ScoreCharts: React.FC<IRoundsCharts> = ({ rounds }) => {
       round.totals?.score?.vsPar !== undefined &&
       round.roundPar !== undefined
     )
-    .slice(-5)
+    .slice(0, 5)
     .reverse();
 
   if (recentRoundsRaw.length === 0) {
@@ -69,7 +69,7 @@ const ScoreCharts: React.FC<IRoundsCharts> = ({ rounds }) => {
       <Typography component="h2" variant="headline6" gutterBottom sx={{ textAlign: 'center', pt: 2, px: 2 }}>
         Score Analysis (Last {processedRounds.length} Rounds)
       </Typography>
-      <Box sx={{ flexGrow: 1, width: '100%', p: { xs: 0.5, sm: 1 }, mt: 1, minHeight: 300 }}>
+      <Box sx={{ flexGrow: 1, width: '100%', p: { xs: 0.5, sm: 1 }, mt: 1, minHeight: 380 }}>
         <BarChart
           series={[
             { data: scoresData, label: 'Gross Score', id: 'grossScore', color: theme.palette.primary.main },
@@ -78,8 +78,8 @@ const ScoreCharts: React.FC<IRoundsCharts> = ({ rounds }) => {
           ]}
           xAxis={[{ data: xLabels, scaleType: 'band' }]}
           yAxis={[{ max: yAxisMax }]}
-          height={270}
-          margin={{ top: 0, right: 20, bottom: 0, left: 10 }}
+          height={340}
+          margin={{ top: 0, right: 20, bottom: 50, left: 10 }}
           grid={{ vertical: true, horizontal: true }}
           slotProps={{
             legend: {
