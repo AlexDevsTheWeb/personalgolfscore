@@ -130,6 +130,22 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
     );
   };
 
+  const adminCoursesLink: TLinkSidebar = {
+    id: 100,
+    name: 'Courses',
+    link: '/admin/courses',
+    icon: GolfCourseIcon,
+    show: true,
+  };
+
+  const adminUsersLink: TLinkSidebar = {
+    id: 101,
+    name: 'Users',
+    link: '/admin/users',
+    icon: PeopleIcon,
+    show: true,
+  };
+
   const NavLink = ({ link, isActive, drawerOpen, onClick }: {
     link: TLinkSidebar;
     isActive: boolean;
@@ -209,15 +225,15 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
               )}
               <NavLink
                 key="admin-courses"
-                link={{ id: 3, name: 'Courses', link: '/admin/courses', icon: GolfCourseIcon, show: true }}
-                isActive={computeIsActive({ id: 3, name: 'Courses', link: '/admin/courses', icon: GolfCourseIcon, show: true })}
+                link={adminCoursesLink}
+                isActive={computeIsActive(adminCoursesLink)}
                 drawerOpen={drawerOpen}
                 onClick={drawerOpen ? handleDrawerToggle : undefined}
               />
               <NavLink
                 key="admin-users"
-                link={{ id: 4, name: 'Users', link: '/admin/users', icon: PeopleIcon, show: true }}
-                isActive={computeIsActive({ id: 4, name: 'Users', link: '/admin/users', icon: PeopleIcon, show: true })}
+                link={adminUsersLink}
+                isActive={computeIsActive(adminUsersLink)}
                 drawerOpen={drawerOpen}
                 onClick={drawerOpen ? handleDrawerToggle : undefined}
               />
