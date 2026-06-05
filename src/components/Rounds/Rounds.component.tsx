@@ -62,9 +62,7 @@ const RoundsCompactCard = ({ round }: { round: IRoundDetails; key?: number }) =>
   const playerHCP = Number(round.roundPlayingHCP || 0);
   const roundStrokes = round.totals?.score?.totals || 0;
 
-  const pointsIN = round.totals?.points?.pointsIN || 0;
-  const pointsOUT = round.totals?.points?.pointsOUT || 0;
-  const totalPoints = pointsIN + pointsOUT;
+  const totalPoints = round.totals?.points?.totals ?? 0;
 
   const overParGross = roundStrokes - (coursePar + playerHCP);
   const overParString = formatScoreString(overParGross);
@@ -127,7 +125,7 @@ const Rounds = ({ rounds }: IRoundsProps) => {
         border: theme => `1px solid ${theme.palette.divider}`
       }}>
         {rounds.length > 0 ? (
-          rounds.slice(0, 5).map((round, index) => (
+          rounds.map((round, index) => (
             <RoundsCompactCard key={index} round={round as IRoundDetails} />
           ))
         ) : (
