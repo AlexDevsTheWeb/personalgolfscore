@@ -40,8 +40,18 @@ export function buildRoundDocument(params: {
   hcpDelta?: number | null;
 }): IRoundImportDocument {
   const totals = createEmptyRoundTotals();
+
+  // Score: only fields computable from Federgolf summary (no per-hole data).
+  // Per-hole-derived fields (scoreIN/OUT, vsParIN/OUT, par3/4/5, par-by-counts)
+  // cannot be computed honestly from the summary and are left at 0.
   totals.score.totals = params.parsed.roundStrokes;
+  totals.score.avg = params.parsed.roundStrokes / 18;
+  totals.score.vsPar = params.parsed.roundStrokes - params.parsed.roundPar;
+
+  // Points: only fields computable from Federgolf summary.
+  // pointsIN/pointsOUT require per-hole data and stay at 0.
   totals.points.totals = params.parsed.stablefordPoints;
+  totals.points.avg = params.parsed.stablefordPoints / 18;
 
   return {
     roundDate: Timestamp.fromDate(new Date(params.parsed.roundDate)),
