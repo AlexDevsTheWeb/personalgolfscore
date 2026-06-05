@@ -181,7 +181,11 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
         >
           <SvgIcon component={link.icon} inheritViewBox />
         </ListItemIcon>
-        <ListItemText primary={link.name} sx={{ opacity: drawerOpen ? 1 : 0 }} />
+        <ListItemText
+          primary={link.name}
+          slotProps={{ primary: { noWrap: true } }}
+          sx={{ opacity: drawerOpen ? 1 : 0 }}
+        />
       </ListItemButton>
     </ListItem>
   );
@@ -247,8 +251,8 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: drawerOpen ? 'space-between' : 'center',
-          px: drawerOpen ? 1.5 : 0.5,
-          py: drawerOpen ? 1.5 : 1,
+          px: 1.5,
+          py: 1.5,
         }}
       >
         {drawerOpen ? (
@@ -279,7 +283,7 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
           </>
         ) : (
           <Avatar
-            sx={{ bgcolor: 'primary.main', width: 32, height: 32, fontSize: '0.75rem' }}
+            sx={{ bgcolor: 'primary.main', width: 36, height: 36, fontSize: '0.875rem' }}
             alt={player?.displayName ?? ''}
             src={player?.photoURL || undefined}
           >
