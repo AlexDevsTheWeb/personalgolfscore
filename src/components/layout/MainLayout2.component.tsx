@@ -120,6 +120,76 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
 
   const breadcrumbs = getBreadcrumbs();
 
+  const computeIsActive = (link: TLinkSidebar): boolean => {
+    if (link.link === '/') {
+      return location.pathname === '/' || location.pathname === '/dashboard';
+    }
+    return (
+      location.pathname === link.link ||
+      location.pathname.startsWith(link.link + '/')
+    );
+  };
+
+  const adminCoursesLink: TLinkSidebar = {
+    id: 100,
+    name: 'Courses',
+    link: '/admin/courses',
+    icon: GolfCourseIcon,
+    show: true,
+  };
+
+  const adminUsersLink: TLinkSidebar = {
+    id: 101,
+    name: 'Users',
+    link: '/admin/users',
+    icon: PeopleIcon,
+    show: true,
+  };
+
+  const NavLink = ({ link, isActive, drawerOpen, onClick }: {
+    link: TLinkSidebar;
+    isActive: boolean;
+    drawerOpen: boolean;
+    onClick?: () => void;
+    key?: string | number;
+  }) => (
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      <ListItemButton
+        component={RouterLink}
+        to={link.link}
+        onClick={onClick}
+        selected={isActive}
+        sx={{
+          minHeight: 48,
+          justifyContent: drawerOpen ? 'initial' : 'center',
+          px: 2.5,
+          ...(isActive && {
+            backgroundColor: (theme) => theme.palette.action.selected,
+            '& .MuiListItemIcon-root, & .MuiListItemText-root': {
+              color: (theme) => theme.palette.primary.main,
+            },
+            '& .MuiListItemText-primary': { fontWeight: 600 },
+          }),
+        }}
+      >
+        <ListItemIcon
+          sx={{
+            minWidth: 0,
+            justifyContent: 'center',
+            mr: drawerOpen ? 1.5 : 'auto',
+          }}
+        >
+          <SvgIcon component={link.icon} inheritViewBox />
+        </ListItemIcon>
+        <ListItemText
+          primary={link.name}
+          slotProps={{ primary: { noWrap: true } }}
+          sx={{ opacity: drawerOpen ? 1 : 0 }}
+        />
+      </ListItemButton>
+    </ListItem>
+  );
+
   const drawer = (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, overflow: 'hidden' }}>
       <Box
@@ -139,32 +209,13 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
       <Box sx={{ flexGrow: 1, overflow: 'hidden', minHeight: 0 }}>
         <List sx={{ overflowY: 'auto', height: '100%' }}>
           {links.filter((l) => l.show === true).map((link: TLinkSidebar, index: number) => (
-            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                component={RouterLink}
-                to={link.link}
-                onClick={drawerOpen ? handleDrawerToggle : undefined}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: drawerOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    justifyContent: 'center',
-                    mr: drawerOpen ? 1.5 : 'auto',
-                  }}
-                >
-                  <SvgIcon component={link.icon} inheritViewBox />
-                </ListItemIcon>
-                <ListItemText
-                  primary={link.name}
-                  sx={{ opacity: drawerOpen ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
+            <NavLink
+              key={index}
+              link={link}
+              isActive={computeIsActive(link)}
+              drawerOpen={drawerOpen}
+              onClick={drawerOpen ? handleDrawerToggle : undefined}
+            />
           ))}
           {player?.isAdmin && (
             <>
@@ -176,52 +227,20 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
                   </Typography>
                 </ListItem>
               )}
-              <ListItem disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  component={RouterLink}
-                  to="/admin/courses"
-                  onClick={drawerOpen ? handleDrawerToggle : undefined}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: drawerOpen ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      justifyContent: 'center',
-                      mr: drawerOpen ? 1.5 : 'auto',
-                    }}
-                  >
-                    <SvgIcon component={GolfCourseIcon} inheritViewBox />
-                  </ListItemIcon>
-                  <ListItemText primary="Courses" sx={{ opacity: drawerOpen ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  component={RouterLink}
-                  to="/admin/users"
-                  onClick={drawerOpen ? handleDrawerToggle : undefined}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: drawerOpen ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      justifyContent: 'center',
-                      mr: drawerOpen ? 1.5 : 'auto',
-                    }}
-                  >
-                    <SvgIcon component={PeopleIcon} inheritViewBox />
-                  </ListItemIcon>
-                  <ListItemText primary="Users" sx={{ opacity: drawerOpen ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
+              <NavLink
+                key="admin-courses"
+                link={adminCoursesLink}
+                isActive={computeIsActive(adminCoursesLink)}
+                drawerOpen={drawerOpen}
+                onClick={drawerOpen ? handleDrawerToggle : undefined}
+              />
+              <NavLink
+                key="admin-users"
+                link={adminUsersLink}
+                isActive={computeIsActive(adminUsersLink)}
+                drawerOpen={drawerOpen}
+                onClick={drawerOpen ? handleDrawerToggle : undefined}
+              />
             </>
           )}
         </List>
@@ -232,8 +251,8 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: drawerOpen ? 'space-between' : 'center',
-          px: drawerOpen ? 1.5 : 0.5,
-          py: drawerOpen ? 1.5 : 1,
+          px: 1.5,
+          py: 1.5,
         }}
       >
         {drawerOpen ? (
@@ -264,7 +283,7 @@ export default function DrawerAppBar(_props: IMainLayoutProps) {
           </>
         ) : (
           <Avatar
-            sx={{ bgcolor: 'primary.main', width: 32, height: 32, fontSize: '0.75rem' }}
+            sx={{ bgcolor: 'primary.main', width: 36, height: 36, fontSize: '0.875rem' }}
             alt={player?.displayName ?? ''}
             src={player?.photoURL || undefined}
           >
