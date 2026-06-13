@@ -11,10 +11,14 @@
             "id": "fcee208e4dc30f11",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "OPENCODE.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "OPENCODE"
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "OPENCODE.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for OPENCODE"
             }
           },
           {
@@ -108,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "OPENCODE.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links"
+              "title": "Outgoing links from OPENCODE"
             }
           },
           {
@@ -150,12 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "OPENCODE.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of OPENCODE"
             }
           }
         ]
@@ -176,8 +183,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "fcee208e4dc30f11",
+  "active": "e70b3edea179ccd2",
   "lastOpenFiles": [
+    "raw/issues/137-import-hcp-chain-anchor.md",
+    "wiki/overview.md",
+    "OPENCODE.md",
     "raw/issues/135-test-calc-quick-expected-values.md",
     "raw/issues",
     "wiki/index.md",
@@ -202,9 +212,6 @@
     "raw/ROADMAP.md",
     "raw/PROJECT.md",
     "raw/MILESTONES.md",
-    "raw/REQUIREMENTS.md",
-    "wiki/log.md",
-    "wiki/history/2026-06-05-drawer-active-route.md",
-    "wiki/history/2026-06-05-all-rounds-pagination.md"
+    "raw/REQUIREMENTS.md"
   ]
 }
