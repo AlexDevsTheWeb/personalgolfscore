@@ -70,7 +70,7 @@ export const importRoundsBatch = async (
   userId: string,
   roundDocs: IRoundImportDocument[],
   previousSDsMostRecentFirst: number[],
-  initialHCP: number | null
+  anchorHCP: number | null
 ): Promise<{ success: boolean; importedCount: number; roundIds: string[] }> => {
   if (!userId) {
     throw new Error('User not authenticated');
@@ -85,7 +85,7 @@ export const importRoundsBatch = async (
 
   const roundIds: string[] = [];
   let runningSDs = [...previousSDsMostRecentFirst].slice(0, 19);
-  let runningHCP: number | null = initialHCP;
+  let runningHCP: number | null = anchorHCP;
 
   for (const roundDoc of sortedDocs) {
     const newSD = roundDoc.scoreDifferential;
