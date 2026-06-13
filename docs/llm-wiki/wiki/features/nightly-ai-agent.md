@@ -28,7 +28,7 @@ A two-agent nocturnal CI/CD pipeline that automatically maintains the LLM wiki a
 
 ## Agent 1: Dreamer
 
-**Script**: `.github/scripts/nightly_dream.js`
+**Script**: `.github/scripts/nightly_dream.cjs`
 **Workflow**: `.github/workflows/nightly-reflection.yml`
 
 - Runs nightly at 23:00 UTC via cron schedule (`0 23 * * *`), also triggerable via `workflow_dispatch`
@@ -47,7 +47,7 @@ The system prompt follows Andrej Karpathy's documentation philosophy:
 
 ## Agent 2: QA Guard
 
-**Script**: `.github/scripts/nightly_qa.js`
+**Script**: `.github/scripts/nightly_qa.cjs`
 **Workflow**: `.github/workflows/nightly-qa-cascade.yml`
 
 - Triggered by `repository_dispatch` after Agent 1 completes
