@@ -501,7 +501,7 @@ export class EdgeCaseTests {
             toGreen: '5W',
             toGreenMeters: 200,
             expectedGIR: true,
-            expectedPoints: 4,
+            expectedPoints: 5, // Net albatross (diff=0, newPar=6, strokes=3 → par-3)
           },
           // All hole-in-ones
           {
@@ -515,7 +515,7 @@ export class EdgeCaseTests {
             teeClub: 'i8',
             driveDistance: 150,
             expectedGIR: true,
-            expectedPoints: 4,
+            expectedPoints: 5, // Net albatross (diff=0, newPar=4, strokes=1 → par-3)
           },
           // 10 on a par 3
           {

@@ -5,6 +5,19 @@
 - **Created**: `raw/milestones/v1.0-REQUIREMENTS.md`, `raw/milestones/v1.0-ROADMAP.md`, `raw/milestones/v2-current.md`
 - **Updated**: `raw/MILESTONES.md` (added v2 section), `raw/ROADMAP.md` (v2 current focus), `wiki/index.md` (milestones section), `wiki/overview.md` (milestone status table)
 
+## [2026-06-13] ingest | Issue #135 — test:calc:quick expected values
+- **Source**: GitHub issue #135
+- **Created**: `raw/issues/135-test-calc-quick-expected-values.md` — Full root cause analysis: `roundHoles` set to holeConfigs.length instead of 18, corrupting Stableford calculation
+- **Updated**: `wiki/index.md` — Added "Open Issues" section
+
+## [2026-06-13] fix | RoundHoles calculation bug (fixes #135)
+- **Commit**: `5463254` on `fix/test-calc-quick-expected-values`
+- **PR**: #136 → `development` (Closes #135)
+- **Fixed**: `testDataGenerator.ts` — Added `holes` (default 18) to `TestCourseInfo`; `roundHoles` uses it instead of config length
+- **Fixed**: `edgeCaseTests.ts` — `statisticalAnomalies` expectedPoints 4→5 (net albatross with diff=0)
+- **Fixed**: `testDataGenerator.ts` — `calculationEdgeCases` hole 2 `expectedGIR` true→false (pre-existing)
+- **Updated**: `raw/issues/135-test-calc-quick-expected-values.md` — Added Resolution section
+
 ## [2026-06-13] update | Strengthen Branch Rules + Read-Wiki-First Rule
 - **Updated**: `wiki/conventions/branch-strategy.md` — explicit rule: "NEVER push directly to development/release/*/main"; added "Read the wiki" as step 0 in workflow
 - **Updated**: `wiki/conventions/coding.md` — added "Before You Code" section: read wiki first to understand architecture, patterns, conventions, decisions

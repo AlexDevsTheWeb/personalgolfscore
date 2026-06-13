@@ -48,6 +48,10 @@
 - [v2 (Planning)](../raw/milestones/v2-current.md) — Next milestone, scope being defined
 - [v1.0 Full Requirements Traceability](../raw/milestones/v1.0-REQUIREMENTS.md) — Complete CALC/COURSE/ADMIN/SIM/NAV/IMPORT/HCP-INIT mapping
 
+## Open Issues
+
+- [#135 test:calc:quick per-hole expected values](raw/issues/135-test-calc-quick-expected-values.md) — `roundHoles` set to holeConfigs.length (3) instead of 18, corrupting Stableford calculation in quick test
+
 ## History (Changelog)
 - [Libraries Update](history/2026-05-17-libraries-update.md) — May 2026: library version bumps + type error fixes
 - [Handicap History Feature](history/2026-06-01-handicap-history.md) — June 1: HI calculation changes + new page

@@ -178,9 +178,11 @@
   },
   "active": "fcee208e4dc30f11",
   "lastOpenFiles": [
+    "raw/issues/135-test-calc-quick-expected-values.md",
+    "raw/issues",
+    "wiki/index.md",
     "wiki/conventions/branch-strategy.md",
     "raw/RETROSPECTIVE.md",
-    "wiki/index.md",
     "wiki/features/initial-hcp-progression.md",
     "wiki/features/whs-simulator.md",
     "wiki/features/admin-panel.md",
@@ -203,7 +205,6 @@
     "raw/REQUIREMENTS.md",
     "wiki/log.md",
     "wiki/history/2026-06-05-drawer-active-route.md",
-    "wiki/history/2026-06-05-all-rounds-pagination.md",
-    "wiki/history/2026-06-04-history-tabs-refactor.md"
+    "wiki/history/2026-06-05-all-rounds-pagination.md"
   ]
 }
