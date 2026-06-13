@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const WIKI_PATH = path.join(process.cwd(), 'docs', 'llm-wiki', 'wiki', 'llm-wiki.md');
-const MODEL_NAME = 'deepseek/deepseek-r1';
+const MODEL_NAME = 'google/gemini-2.0-flash-001'; // Fast/cheap instruct model for test generation
 
 async function run() {
   try {
@@ -45,6 +45,10 @@ Do not add textual explanations outside the JSON.`;
     });
 
     const data = await response.json();
+    if (!data.choices || data.choices.length === 0) {
+      console.error("OpenRouter API error response:", JSON.stringify(data, null, 2));
+      throw new Error(`Invalid API response: ${data.error?.message || data.error || "no choices returned"}`);
+    }
     let jsonContent = data.choices[0].message.content.trim();
     
     // Clean markdown code blocks if present
