@@ -1,0 +1,29 @@
+name: Second Agent - Tech Debt & QA Guard
+
+on:
+  repository_dispatch:
+    types: [wiki_updated_cascade]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  qa_guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout updated repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run QA Guard Script
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .github/scripts/nightly_qa.js

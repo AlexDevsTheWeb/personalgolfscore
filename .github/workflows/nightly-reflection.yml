@@ -1,0 +1,45 @@
+name: Nightly LLM Wiki Reflection
+
+on:
+  schedule:
+    # Runs every night at 23:00 UTC
+    - cron: '0 23 * * *'
+  workflow_dispatch: # Allows manual execution from the GitHub Actions tab
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  reflect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches full history to calculate diffs correctly
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: |
+          npm init -y
+          npm install dotenv
+
+      - name: Run Reflection Script
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .github/scripts/nightly_dream.js
+
+      - name: Trigger Cascade to Agent 2
+        if: success()
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -d '{"event_type": "wiki_updated_cascade"}'
