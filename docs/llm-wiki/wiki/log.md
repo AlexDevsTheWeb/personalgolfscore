@@ -44,6 +44,13 @@
 - **Created**: `raw/issues/137-import-hcp-chain-anchor.md` — Root cause analysis: `importRoundsBatch` uses `initialHCP` instead of `currentHCP` as chain anchor, corrupting `previousHCP`/`hcpDelta` on first round of each subsequent import batch
 - **Updated**: `wiki/index.md` — Added #137 to Open Issues
 
+## [2026-06-13] fix | Import HCP chain anchor bug (fixes #137)
+- **Commit**: `641efac` on `fix/import-rounds-hcp-chain-anchor`
+- **PR**: #138 → `development` (Closes #137)
+- **Fixed**: `app.store.ts:869` — passes `currentHCP ?? initialHCP ?? null` instead of just `initialHCP`
+- **Fixed**: `round.firestore.ts:73,88` — param renamed to `anchorHCP` for clarity
+- **After merge**: run Settings → "Recalculate HCP History" to fix existing rounds
+
 ## [2026-06-13] ingest | Initial Wiki Seed
 - **Description**: First ingest of all existing project documentation into the wiki
 - **Sources** (24 files from `raw/`):

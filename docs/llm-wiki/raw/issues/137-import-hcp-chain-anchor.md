@@ -52,3 +52,15 @@ The fix ensures:
 - If `currentHCP` exists (after prior imports) → chain starts from the last computed HI
 - If no `currentHCP` but `initialHCP` exists → chain starts from initialHCP (correct for first batch)
 - If neither → null (graceful, no HI/delta computed for that batch)
+
+## Resolution (2026-06-13)
+
+Fixed in commit `641efac` on branch `fix/import-rounds-hcp-chain-anchor`.
+PR #138 → `development` (Closes #137).
+
+**After merge**: go to Settings → click "Recalculate HCP History" to fix existing rounds' `previousHCP`/`hcpDelta`. Future imports will chain correctly automatically.
+
+| File | Change |
+|------|--------|
+| `app.store.ts:869` | Changed `const initialHCP = state.player?.initialHCP ?? null` → `const anchorHCP = state.player?.currentHCP ?? state.player?.initialHCP ?? null` |
+| `round.firestore.ts:73,88` | Renamed param `initialHCP` → `anchorHCP`; `runningHCP` initialized from it |
