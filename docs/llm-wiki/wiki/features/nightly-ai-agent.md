@@ -33,7 +33,7 @@ A two-agent nocturnal CI/CD pipeline that automatically maintains the LLM wiki a
 
 - Runs nightly at 23:00 UTC via cron schedule (`0 23 * * *`), also triggerable via `workflow_dispatch`
 - Collects git log and diff from the last 24 hours (excluding `.github/` changes)
-- Sends current wiki content + today's changes to OpenRouter (`deepseek/deepseek-r1`)
+- Sends current wiki content + today's changes to OpenRouter (`deepseek/deepseek-v4-flash`)
 - LLM returns the updated wiki as markdown, written to `docs/llm-wiki/wiki/llm-wiki.md`
 - Commits and pushes if content changed; skips if no git activity
 - On success, fires a `repository_dispatch` event (`wiki_updated_cascade`) to trigger Agent 2
@@ -71,7 +71,7 @@ The system prompt follows Andrej Karpathy's documentation philosophy:
 - Agent 1 excludes `.github/` from its diff analysis to avoid self-referential updates
 - Agent 2 diff scope is `HEAD~1 HEAD -- . ":!.github"` — only the most recent commit (from Agent 1)
 - The QA script creates an issue with the label `agent-notification` (pre-created on GitHub)
-- Model used: `deepseek/deepseek-r1` (configurable per-script)
+- Model used: `deepseek/deepseek-v4-flash` (configurable per-script)
 - Temperature: 0.1 (Dreamer — more factual) and 0.2 (QA Guard — slightly more creative)
 
 ## Related Pages

@@ -36,7 +36,7 @@ sources: [INTEGRATIONS.md]
 ## OpenRouter (AI Agent System)
 
 - **OpenRouter API** — AI model access for the nightly two-agent pipeline
-  - Model: `deepseek/deepseek-r1` (configurable)
+  - Model: `deepseek/deepseek-v4-flash` (configurable, switched from retired `google/gemini-2.0-flash-001`)
   - Usage: LLM wiki updates (Agent 1: Dreamer) and regression test generation (Agent 2: QA Guard)
   - Endpoint: `https://openrouter.ai/api/v1/chat/completions`
   - Auth: Bearer token via `OPENROUTER_API_KEY` GitHub secret

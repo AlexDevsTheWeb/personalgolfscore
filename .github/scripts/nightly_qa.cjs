@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const WIKI_PATH = path.join(process.cwd(), 'docs', 'llm-wiki', 'wiki', 'llm-wiki.md');
-const MODEL_NAME = 'google/gemini-2.0-flash-001'; // Fast/cheap instruct model for test generation
+const MODEL_NAME = 'deepseek/deepseek-v4-flash'; // Fast/cheap model for test generation
 
 async function run() {
   try {
