@@ -60,3 +60,16 @@ Total: 9 — matches `calculatedPoints` and `totalsPoints`.
 - `npm run test:calc:quick` shows ✅ for all 3 holes
 - Per-hole expected values sum to the stated expected total (9)
 - `npm run test:calc:edge` and `npm run test:calc:all` also pass
+
+## Resolution (2026-06-13)
+
+Fixed in commit `5463254` on branch `fix/test-calc-quick-expected-values`.
+PR #136 → `development` (Closes #135).
+
+| File | Change |
+|------|--------|
+| `testDataGenerator.ts` | Added `holes?: number` (default 18) to `TestCourseInfo`; `roundHoles` now uses `config.courseInfo.holes` instead of config length |
+| `testDataGenerator.ts` | Fixed `calculationEdgeCases` hole 2 `expectedGIR` (true→false: 7 strokes−5 putts=2 to green, par3 needs ≤1) |
+| `edgeCaseTests.ts` | Fixed `statisticalAnomalies` holes 1–2 `expectedPoints` (4→5: net albatross with diff=0 HCP) |
+
+All 17 `npm run test:calc:all` scenarios pass ✅
