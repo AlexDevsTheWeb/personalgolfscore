@@ -11,6 +11,7 @@ export interface TestRoundConfig {
     par: number;
     tee: string;
     playerHCP: number;
+    holes?: number; // Total holes in the round (default 18). NOT the number of test hole configs.
   };
   holeConfigs: TestHoleConfig[];
   description: string;
@@ -63,7 +64,7 @@ export class TestDataGenerator {
    */
   createTestRound(config: TestRoundConfig): IShots[] {
     this.roundPlayingHCP = config.courseInfo.playerHCP;
-    this.roundHoles = config.holeConfigs.length;
+    this.roundHoles = config.courseInfo.holes || 18;
 
     return config.holeConfigs.map(holeConfig => this.createTestHole(holeConfig));
   }
@@ -251,7 +252,7 @@ export class TestDataGenerator {
             toGreen: '3W',
             toGreenMeters: 240,
             expectedGIR: true,
-            expectedPoints: 5,
+            expectedPoints: 4, // Eagle (3 strokes on par 5)
           },
           // Birdie on par 4
           {
@@ -268,7 +269,7 @@ export class TestDataGenerator {
             toGreen: 'i8',
             toGreenMeters: 125,
             expectedGIR: true,
-            expectedPoints: 3,
+            expectedPoints: 3, // Birdie (3 strokes on par 4)
           },
           // Par with up & down
           {
@@ -343,7 +344,7 @@ export class TestDataGenerator {
             teeClub: 'i7',
             toGreen: 'i7',
             toGreenMeters: 165,
-            expectedGIR: true,
+            expectedGIR: false, // 7 strokes - 5 putts = 2 to green, par3 needs ≤1
           },
           // Multiple penalties
           {
