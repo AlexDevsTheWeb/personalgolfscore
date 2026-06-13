@@ -50,7 +50,8 @@
 
 ## Open Issues
 
-- [#135 test:calc:quick per-hole expected values](raw/issues/135-test-calc-quick-expected-values.md) — `roundHoles` set to holeConfigs.length (3) instead of 18, corrupting Stableford calculation in quick test
+- [#135 test:calc:quick per-hole expected values](raw/issues/135-test-calc-quick-expected-values.md) — `roundHoles` set to holeConfigs.length (3) instead of 18, corrupting Stableford calculation in quick test (resolved)
+- [#137 import HCP chain anchored to initialHCP instead of currentHCP](raw/issues/137-import-hcp-chain-anchor.md) — Multi-batch import produces wrong `previousHCP`/`hcpDelta` on first round of each subsequent batch
 
 ## History (Changelog)
 - [Libraries Update](history/2026-05-17-libraries-update.md) — May 2026: library version bumps + type error fixes
