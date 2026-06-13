@@ -33,6 +33,21 @@ sources: [INTEGRATIONS.md]
   - Includes CORS proxy fallback
   - Uses `axios` (already installed) for HTTP
 
+## OpenRouter (AI Agent System)
+
+- **OpenRouter API** — AI model access for the nightly two-agent pipeline
+  - Model: `deepseek/deepseek-r1` (configurable)
+  - Usage: LLM wiki updates (Agent 1: Dreamer) and regression test generation (Agent 2: QA Guard)
+  - Endpoint: `https://openrouter.ai/api/v1/chat/completions`
+  - Auth: Bearer token via `OPENROUTER_API_KEY` GitHub secret
+  - Trigger: Scheduled nightly via GitHub Actions
+
+## GitHub Actions (CI/CD)
+
+- **CI**: Pull request validation (`ci.yml`) — type-check + build on PR to `development`/`main` and push to `development`
+- **Deploy**: Tag-based deployment (`deploy.yml`) — Firebase Hosting deploy on `v*` tags
+- **Nightly AI Agent**: Two cascading workflows (`nightly-reflection.yml` → `nightly-qa-cascade.yml`) for autonomous wiki and test maintenance
+
 ## Environment Configuration
 
 All Firebase credentials loaded from `.env` via `import.meta.env`:

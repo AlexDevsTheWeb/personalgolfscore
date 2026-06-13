@@ -68,6 +68,7 @@ Post-v1.0 additions:
 - Drawer active-route highlighting
 - Release automation (v1.1, SemVer tags)
 - Dashboard score chart dual-axis fix + migration script
+- Nightly AI Agent system — two-agent nocturnal pipeline (OpenRouter) that auto-updates the LLM wiki and generates regression tests
 
 **Known concerns** — Large monolithic Zustand store (966 lines), theme fragmentation, generic `any` types, no error boundaries, no E2E tests, deferred WHS soft/hard caps (CALC-04/05), missing live WHS recalc fallback for legacy users.
 

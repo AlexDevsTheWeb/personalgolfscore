@@ -37,6 +37,7 @@
 - [All Rounds Pagination](features/all-rounds-pagination.md) — Replace 5-round cap with 20/page paginated list + filters
 - [Drawer Active Route](features/drawer-active-route.md) — Highlight active nav item in the sidebar drawer
 - [Import Rounds](features/import-rounds.md) — Bulk import Federgolf competition results from spreadsheets
+- [Nightly AI Agent](features/nightly-ai-agent.md) — Two-agent nocturnal pipeline for wiki + test automation
 
 ## Patterns
 - [Testing Patterns](patterns/testing.md) — Vitest configuration, custom test runner, step-by-step tester
