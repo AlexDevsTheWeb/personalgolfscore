@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { importRoundsBatch } from './importRoundsBatch';
 import { getCurrentHCP, getInitialHCP, updateHCPChain } from './hcpService';
 
-// Mock the HCP service functions
 vi.mock('./hcpService', () => ({
   getCurrentHCP: vi.fn(),
   getInitialHCP: vi.fn(),
@@ -114,7 +113,6 @@ describe('importRoundsBatch', () => {
 
     importRoundsBatch(mockRounds);
 
-    // Ensure it does NOT use initialHCP
     const callArgs = (updateHCPChain as any).mock.calls[0][0];
     expect(callArgs.anchorHCP).not.toEqual(initialHCP);
     expect(callArgs.anchorHCP).toEqual(currentHCP);
