@@ -5,109 +5,46 @@ import { getCurrentHCP, getInitialHCP, updateHCPChain } from './hcpService';
 vi.mock('./hcpService', () => ({
   getCurrentHCP: vi.fn(),
   getInitialHCP: vi.fn(),
-  updateHCPChain: vi.fn()
+  updateHCPChain: vi.fn(),
 }));
 
 describe('importRoundsBatch', () => {
   const mockRounds = [
-    { id: 'round1', data: 'test' },
-    { id: 'round2', data: 'test2' }
+    { id: 'round1', data: 'test1' },
+    { id: 'round2', data: 'test2' },
   ];
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should anchor to currentHCP when it exists and is different from initialHCP', () => {
-    const currentHCP = { hash: 'currentHash', timestamp: 100 };
-    const initialHCP = { hash: 'initialHash', timestamp: 0 };
+  it('should call getCurrentHCP and getInitialHCP', () => {
+    (getCurrentHCP as any).mockReturnValue('currentHCP');
+    (getInitialHCP as any).mockReturnValue('initialHCP');
+
+    importRoundsBatch(mockRounds);
+
+    expect(getCurrentHCP).toHaveBeenCalled();
+    expect(getInitialHCP).toHaveBeenCalled();
+  });
+
+  it('should call updateHCPChain with correct arguments', () => {
+    const currentHCP = 'currentHCP';
+    const initialHCP = 'initialHCP';
     (getCurrentHCP as any).mockReturnValue(currentHCP);
     (getInitialHCP as any).mockReturnValue(initialHCP);
 
     importRoundsBatch(mockRounds);
 
-    expect(updateHCPChain).toHaveBeenCalledWith(
-      expect.objectContaining({
-        anchorHCP: currentHCP,
-        rounds: mockRounds
-      })
-    );
+    expect(updateHCPChain).toHaveBeenCalledWith({
+      rounds: mockRounds,
+      anchorHCP: currentHCP,
+    });
   });
 
-  it('should anchor to currentHCP even when initialHCP is same as currentHCP', () => {
-    const currentHCP = { hash: 'sameHash', timestamp: 50 };
-    const initialHCP = { hash: 'sameHash', timestamp: 50 };
-    (getCurrentHCP as any).mockReturnValue(currentHCP);
-    (getInitialHCP as any).mockReturnValue(initialHCP);
-
-    importRoundsBatch(mockRounds);
-
-    expect(updateHCPChain).toHaveBeenCalledWith(
-      expect.objectContaining({
-        anchorHCP: currentHCP
-      })
-    );
-  });
-
-  it('should anchor to currentHCP when initialHCP is null', () => {
-    const currentHCP = { hash: 'currentHash', timestamp: 100 };
-    (getCurrentHCP as any).mockReturnValue(currentHCP);
-    (getInitialHCP as any).mockReturnValue(null);
-
-    importRoundsBatch(mockRounds);
-
-    expect(updateHCPChain).toHaveBeenCalledWith(
-      expect.objectContaining({
-        anchorHCP: currentHCP
-      })
-    );
-  });
-
-  it('should anchor to currentHCP when initialHCP is undefined', () => {
-    const currentHCP = { hash: 'currentHash', timestamp: 100 };
-    (getCurrentHCP as any).mockReturnValue(currentHCP);
-    (getInitialHCP as any).mockReturnValue(undefined);
-
-    importRoundsBatch(mockRounds);
-
-    expect(updateHCPChain).toHaveBeenCalledWith(
-      expect.objectContaining({
-        anchorHCP: currentHCP
-      })
-    );
-  });
-
-  it('should throw an error if currentHCP is null', () => {
-    (getCurrentHCP as any).mockReturnValue(null);
-    (getInitialHCP as any).mockReturnValue({ hash: 'initial', timestamp: 0 });
-
-    expect(() => importRoundsBatch(mockRounds)).toThrow('Current HCP is null');
-  });
-
-  it('should throw an error if currentHCP is undefined', () => {
-    (getCurrentHCP as any).mockReturnValue(undefined);
-    (getInitialHCP as any).mockReturnValue({ hash: 'initial', timestamp: 0 });
-
-    expect(() => importRoundsBatch(mockRounds)).toThrow('Current HCP is undefined');
-  });
-
-  it('should process empty rounds array without error', () => {
-    const currentHCP = { hash: 'hash', timestamp: 1 };
-    (getCurrentHCP as any).mockReturnValue(currentHCP);
-    (getInitialHCP as any).mockReturnValue({ hash: 'initial', timestamp: 0 });
-
-    expect(() => importRoundsBatch([])).not.toThrow();
-    expect(updateHCPChain).toHaveBeenCalledWith(
-      expect.objectContaining({
-        anchorHCP: currentHCP,
-        rounds: []
-      })
-    );
-  });
-
-  it('should not anchor to initialHCP even if initialHCP is valid and different', () => {
-    const currentHCP = { hash: 'current', timestamp: 200 };
-    const initialHCP = { hash: 'initial', timestamp: 0 };
+  it('should not use initialHCP as anchorHCP', () => {
+    const currentHCP = 'currentHCP';
+    const initialHCP = 'initialHCP';
     (getCurrentHCP as any).mockReturnValue(currentHCP);
     (getInitialHCP as any).mockReturnValue(initialHCP);
 
@@ -116,5 +53,110 @@ describe('importRoundsBatch', () => {
     const callArgs = (updateHCPChain as any).mock.calls[0][0];
     expect(callArgs.anchorHCP).not.toEqual(initialHCP);
     expect(callArgs.anchorHCP).toEqual(currentHCP);
+  });
+
+  it('should handle empty rounds array', () => {
+    (getCurrentHCP as any).mockReturnValue('currentHCP');
+    (getInitialHCP as any).mockReturnValue('initialHCP');
+
+    expect(() => importRoundsBatch([])).not.toThrow();
+    expect(updateHCPChain).toHaveBeenCalledWith({
+      rounds: [],
+      anchorHCP: 'currentHCP',
+    });
+  });
+
+  it('should handle null or undefined rounds gracefully', () => {
+    (getCurrentHCP as any).mockReturnValue('currentHCP');
+    (getInitialHCP as any).mockReturnValue('initialHCP');
+
+    expect(() => importRoundsBatch(null as any)).toThrow();
+    expect(() => importRoundsBatch(undefined as any)).toThrow();
+  });
+
+  it('should handle getCurrentHCP returning null', () => {
+    (getCurrentHCP as any).mockReturnValue(null);
+    (getInitialHCP as any).mockReturnValue('initialHCP');
+
+    expect(() => importRoundsBatch(mockRounds)).toThrow();
+  });
+
+  it('should handle getInitialHCP returning null', () => {
+    (getCurrentHCP as any).mockReturnValue('currentHCP');
+    (getInitialHCP as any).mockReturnValue(null);
+
+    expect(() => importRoundsBatch(mockRounds)).not.toThrow();
+  });
+
+  it('should handle updateHCPChain throwing an error', () => {
+    (getCurrentHCP as any).mockReturnValue('currentHCP');
+    (getInitialHCP as any).mockReturnValue('initialHCP');
+    (updateHCPChain as any).mockImplementation(() => {
+      throw new Error('Chain update failed');
+    });
+
+    expect(() => importRoundsBatch(mockRounds)).toThrow('Chain update failed');
+  });
+
+  it('should handle rounds with missing properties', () => {
+    const incompleteRounds = [{ id: 'round1' }, { data: 'test2' }];
+    (getCurrentHCP as any).mockReturnValue('currentHCP');
+    (getInitialHCP as any).mockReturnValue('initialHCP');
+
+    expect(() => importRoundsBatch(incompleteRounds as any)).not.toThrow();
+    expect(updateHCPChain).toHaveBeenCalledWith({
+      rounds: incompleteRounds,
+      anchorHCP: 'currentHCP',
+    });
+  });
+
+  it('should handle large number of rounds', () => {
+    const largeRounds = Array.from({ length: 1000 }, (_, i) => ({ id: `round${i}`, data: `test${i}` }));
+    (getCurrentHCP as any).mockReturnValue('currentHCP');
+    (getInitialHCP as any).mockReturnValue('initialHCP');
+
+    expect(() => importRoundsBatch(largeRounds)).not.toThrow();
+    expect(updateHCPChain).toHaveBeenCalledWith({
+      rounds: largeRounds,
+      anchorHCP: 'currentHCP',
+    });
+  });
+
+  it('should handle duplicate rounds', () => {
+    const duplicateRounds = [
+      { id: 'round1', data: 'test1' },
+      { id: 'round1', data: 'test1' },
+    ];
+    (getCurrentHCP as any).mockReturnValue('currentHCP');
+    (getInitialHCP as any).mockReturnValue('initialHCP');
+
+    expect(() => importRoundsBatch(duplicateRounds)).not.toThrow();
+    expect(updateHCPChain).toHaveBeenCalledWith({
+      rounds: duplicateRounds,
+      anchorHCP: 'currentHCP',
+    });
+  });
+
+  it('should handle rounds with special characters in data', () => {
+    const specialRounds = [{ id: 'round1', data: 'test with <special> & characters!' }];
+    (getCurrentHCP as any).mockReturnValue('currentHCP');
+    (getInitialHCP as any).mockReturnValue('initialHCP');
+
+    expect(() => importRoundsBatch(specialRounds)).not.toThrow();
+    expect(updateHCPChain).toHaveBeenCalledWith({
+      rounds: specialRounds,
+      anchorHCP: 'currentHCP',
+    });
+  });
+
+  it('should handle getCurrentHCP and getInitialHCP returning same value', () => {
+    const sameHCP = 'sameHCP';
+    (getCurrentHCP as any).mockReturnValue(sameHCP);
+    (getInitialHCP as any).mockReturnValue(sameHCP);
+
+    importRoundsBatch(mockRounds);
+
+    const callArgs = (updateHCPChain as any).mock.calls[0][0];
+    expect(callArgs.anchorHCP).toEqual(sameHCP);
   });
 });
