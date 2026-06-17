@@ -2,13 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const WIKI_PATH = path.join(process.cwd(), 'docs', 'llm-wiki', 'wiki', 'llm-wiki.md');
+const WIKI_PATH = path.join(process.cwd(), 'docs', 'PGS', 'wiki', 'llm-wiki.md');
 const MODEL_NAME = 'deepseek/deepseek-v4-flash'; // Fast/cheap model for test generation
 
 async function run() {
   try {
     console.log("=== Agent 2: Quality Analysis and Test Generation ===");
-    
+
     const gitDiff = execSync('git diff HEAD~1 HEAD -- . ":!.github"').toString();
     const wikiContent = fs.existsSync(WIKI_PATH) ? fs.readFileSync(WIKI_PATH, 'utf-8') : "";
 
@@ -50,7 +50,7 @@ Do not add textual explanations outside the JSON.`;
       throw new Error(`Invalid API response: ${data.error?.message || data.error || "no choices returned"}`);
     }
     let jsonContent = data.choices[0].message.content.trim();
-    
+
     // Clean markdown code blocks if present
     if (jsonContent.startsWith("```json")) jsonContent = jsonContent.replace(/^```json\n/, "").replace(/\n```$/, "");
     if (jsonContent.startsWith("```")) jsonContent = jsonContent.replace(/^```\n/, "").replace(/\n```$/, "");

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const WIKI_PATH = path.join(process.cwd(), 'docs', 'llm-wiki', 'wiki', 'llm-wiki.md'); 
+const WIKI_PATH = path.join(process.cwd(), 'docs', 'PGS', 'wiki', 'llm-wiki.md');
 const MODEL_NAME = 'deepseek/deepseek-v4-flash'; // Fast/cheap model for wiki updates
 
 async function run() {
@@ -10,7 +10,7 @@ async function run() {
     console.log("=== Git Activity Analysis (Last 24 Hours) ===");
     const gitLog = execSync('git log --since="24 hours ago" --oneline').toString();
     const gitDiff = execSync('git diff @{1.day.ago} HEAD -- . ":!.github"').toString();
-    
+
     if (!gitLog.trim() && !gitDiff.trim()) {
       console.log("No changes detected in the last 24 hours. Terminating without consuming tokens.");
       return;
@@ -56,7 +56,7 @@ Operational rules:
     }
 
     let updatedWiki = data.choices[0].message.content.trim();
-    
+
     if (updatedWiki.startsWith("```markdown")) {
       updatedWiki = updatedWiki.replace(/^```markdown\n/, "").replace(/\n```$/, "");
     } else if (updatedWiki.startsWith("```")) {
@@ -64,13 +64,13 @@ Operational rules:
     }
 
     fs.writeFileSync(WIKI_PATH, updatedWiki, 'utf-8');
-    
+
     execSync('git config --global user.name "github-actions[bot]"');
     execSync('git config --global user.email "github-actions[bot]@users.noreply.github.com"');
-    execSync('git add docs/llm-wiki/wiki/llm-wiki.md');
-    
+    execSync('git add docs/PGS/wiki/llm-wiki.md');
+
     const status = execSync('git status --porcelain').toString();
-    if (status.includes('docs/llm-wiki/wiki/llm-wiki.md')) {
+    if (status.includes('docs/PGS/wiki/llm-wiki.md')) {
       execSync('git commit -m "docs(wiki): automatic nightly wiki update (dreaming)"');
       execSync('git push');
       console.log("Wiki synced correctly to GitHub.");
