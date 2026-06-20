@@ -18,6 +18,7 @@ Project knowledge base for AI agents.
 - **HCP chain anchoring**: `importRoundsBatch` anchors to `currentHCP` instead of `initialHCP` to fix chain consistency.
 - **Round holes calculation**: corrected in test data generator; expected values aligned accordingly.
 - **Night dreamer wiki path**: corrected to point to the new LLM wiki location (previously pointing to a stale path).
+- **Automatic nightly regression test generation**: The nightly agent now generates regression tests automatically (commit `7fb6f29`). This is a step toward fully stable test automation.
 
 ## Conventions
 
@@ -30,6 +31,7 @@ Project knowledge base for AI agents.
 - **Nightly automation**: AI agent updates wiki + runs tests on schedule.
 - **Bug fix documentation**: each fix includes resolution section in wiki and vault update.
 - **Path consistency**: Ensure all references to the wiki in automation scripts (e.g., night dreamer) are updated when the file location changes.
+- **Test generation**: The nightly agent now automatically generates regression tests, reducing manual test maintenance.
 
 ## Milestones
 
@@ -38,8 +40,13 @@ Project knowledge base for AI agents.
 - [x] HCP chain anchoring fix
 - [x] Round holes calculation fix
 - [x] Provider migration to DeepSeek v4 Flash
+- [x] Automatic nightly regression test generation
 - [ ] Test automation fully stable
 ---
 **Bug Fix: Night dreamer wiki path (2025-01-27)**
 - **Issue**: Night dreamer automation script had a hardcoded or stale path to the wiki file, causing it to update the wrong location.
 - **Resolution**: Updated the path to match the new LLM wiki file location (commit `623878c`). Now the nightly agent correctly modifies the canonical `llm-wiki.md`.
+
+**Feature: Automatic nightly regression test generation (2025-01-28)**
+- **Change**: The nightly agent now automatically generates regression tests (commit `7fb6f29`). This is part of the ongoing effort to stabilize test automation.
+- **Impact**: Reduces manual test maintenance and moves the project closer to the "Test automation fully stable" milestone.
