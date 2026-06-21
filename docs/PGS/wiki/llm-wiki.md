@@ -1,4 +1,5 @@
 ---
+---
 # LLM Wiki
 
 Project knowledge base for AI agents.
@@ -18,7 +19,8 @@ Project knowledge base for AI agents.
 - **HCP chain anchoring**: `importRoundsBatch` anchors to `currentHCP` instead of `initialHCP` to fix chain consistency.
 - **Round holes calculation**: corrected in test data generator; expected values aligned accordingly.
 - **Night dreamer wiki path**: corrected to point to the new LLM wiki location (previously pointing to a stale path).
-- **Automatic nightly regression test generation**: The nightly agent now generates regression tests automatically (commit `7fb6f29`). This is a step toward fully stable test automation.
+- **Automatic nightly regression test generation**: The nightly agent now generates regression tests automatically (commit `7fb6f29`, confirmed by subsequent run `3180519`). This is a step toward fully stable test automation.
+- **Combined nightly automation**: The nightly agent now both updates the wiki and generates regression tests in a single automated run (commits `3180519`, `e091bbc`).
 
 ## Conventions
 
@@ -28,10 +30,10 @@ Project knowledge base for AI agents.
 
 ## Patterns
 
-- **Nightly automation**: AI agent updates wiki + runs tests on schedule.
+- **Nightly automation**: AI agent updates wiki + runs tests on schedule (first fully automated cycle observed with commits `3180519` and `e091bbc`).
 - **Bug fix documentation**: each fix includes resolution section in wiki and vault update.
 - **Path consistency**: Ensure all references to the wiki in automation scripts (e.g., night dreamer) are updated when the file location changes.
-- **Test generation**: The nightly agent now automatically generates regression tests, reducing manual test maintenance.
+- **Test generation**: The nightly agent now automatically generates regression tests, reducing manual test maintenance (commits `7fb6f29`, `3180519`).
 
 ## Milestones
 
@@ -47,6 +49,6 @@ Project knowledge base for AI agents.
 - **Issue**: Night dreamer automation script had a hardcoded or stale path to the wiki file, causing it to update the wrong location.
 - **Resolution**: Updated the path to match the new LLM wiki file location (commit `623878c`). Now the nightly agent correctly modifies the canonical `llm-wiki.md`.
 
-**Feature: Automatic nightly regression test generation (2025-01-28)**
-- **Change**: The nightly agent now automatically generates regression tests (commit `7fb6f29`). This is part of the ongoing effort to stabilize test automation.
-- **Impact**: Reduces manual test maintenance and moves the project closer to the "Test automation fully stable" milestone.
+**Feature: Automatic nightly regression test generation & wiki update (2025-01-28)**
+- **Change**: The nightly agent now automatically generates regression tests (commit `7fb6f29`, re-executed `3180519`) and updates the wiki (commit `e091bbc`) in a single nightly run. This is part of the ongoing effort to stabilize test automation.
+- **Impact**: Reduces manual test maintenance and wiki upkeep, moving the project closer to the "Test automation fully stable" milestone.
