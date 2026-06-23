@@ -1,5 +1,3 @@
----
----
 # LLM Wiki
 
 Project knowledge base for AI agents.
@@ -21,6 +19,7 @@ Project knowledge base for AI agents.
 - **Night dreamer wiki path**: corrected to point to the new LLM wiki location (previously pointing to a stale path).
 - **Automatic nightly regression test generation**: The nightly agent now generates regression tests automatically (commit `7fb6f29`, confirmed by subsequent run `3180519`). This is a step toward fully stable test automation.
 - **Combined nightly automation**: The nightly agent now both updates the wiki and generates regression tests in a single automated run (commits `3180519`, `e091bbc`).
+- **Nightly regression test generation retested**: Successfully verified in commit `fa5f2e2`.
 
 ## Conventions
 
@@ -34,6 +33,7 @@ Project knowledge base for AI agents.
 - **Bug fix documentation**: each fix includes resolution section in wiki and vault update.
 - **Path consistency**: Ensure all references to the wiki in automation scripts (e.g., night dreamer) are updated when the file location changes.
 - **Test generation**: The nightly agent now automatically generates regression tests, reducing manual test maintenance (commits `7fb6f29`, `3180519`).
+- **Iterative stability verification**: Each nightly run is treated as a verification step; regression test generation is repeatedly tested to ensure robustness (commit `fa5f2e2`).
 
 ## Milestones
 
@@ -44,7 +44,9 @@ Project knowledge base for AI agents.
 - [x] Provider migration to DeepSeek v4 Flash
 - [x] Automatic nightly regression test generation
 - [ ] Test automation fully stable
+
 ---
+
 **Bug Fix: Night dreamer wiki path (2025-01-27)**
 - **Issue**: Night dreamer automation script had a hardcoded or stale path to the wiki file, causing it to update the wrong location.
 - **Resolution**: Updated the path to match the new LLM wiki file location (commit `623878c`). Now the nightly agent correctly modifies the canonical `llm-wiki.md`.
@@ -52,3 +54,7 @@ Project knowledge base for AI agents.
 **Feature: Automatic nightly regression test generation & wiki update (2025-01-28)**
 - **Change**: The nightly agent now automatically generates regression tests (commit `7fb6f29`, re-executed `3180519`) and updates the wiki (commit `e091bbc`) in a single nightly run. This is part of the ongoing effort to stabilize test automation.
 - **Impact**: Reduces manual test maintenance and wiki upkeep, moving the project closer to the "Test automation fully stable" milestone.
+
+**Test: Nightly regression test generation retested (2025-01-29)**
+- **Verification**: Commit `fa5f2e2` confirmed that the automatic regression test generation continues to function correctly in a subsequent nightly cycle.
+- **Impact**: Increases confidence that the feature is stable; the project remains on track to achieve fully stable test automation.
