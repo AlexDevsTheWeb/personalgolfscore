@@ -22,7 +22,6 @@ describe('LLM Wiki - Nightly regression test generation and wiki update verified
   });
 
   it('should not contain a trailing newline after the last entry', () => {
-    // The file should end with the last line content, not an extra newline
     const lines = wikiContent.split('\n');
     const lastLine = lines[lines.length - 1];
     expect(lastLine).not.toBe('');
