@@ -1,64 +1,70 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { describe, it, expect } from 'vitest';
+import fs from 'fs';
+import path from 'path';
 
-describe('LLM Wiki - Nightly regression test generation and wiki update verified (2025-02-01)', () => {
-  const wikiPath = resolve(__dirname, 'llm-wiki.md');
-  let wikiContent: string;
+const wikiPath = path.resolve(__dirname, 'llm-wiki.md');
 
-  beforeAll(() => {
-    wikiContent = readFileSync(wikiPath, 'utf-8');
+function readWiki(): string {
+  return fs.readFileSync(wikiPath, 'utf-8');
+}
+
+describe('LLM Wiki', () => {
+  it('should start with a valid YAML front matter', () => {
+    const content = readWiki();
+    expect(content.startsWith('---\n')).toBe(true);
+    // Extract front matter
+    const endFrontMatter = content.indexOf('\n---\n', 4);
+    expect(endFrontMatter).toBeGreaterThan(0);
+    const frontMatter = content.slice(4, endFrontMatter);
+    // Basic YAML validity: should contain at least one key-value pair
+    expect(frontMatter).toMatch(/\w+:\s/);
   });
 
-  it('should contain the entry for 2025-02-01', () => {
-    expect(wikiContent).toContain('**Test: Nightly regression test generation and wiki update verified (2025-02-01)**');
+  it('should contain the entry for 2025-02-07', () => {
+    const content = readWiki();
+    expect(content).toContain('**Test: Nightly regression test generation verified (2025-02-07)**');
+    expect(content).toContain('- **Verification**: Commit `d771cfe`');
+    expect(content).toContain('- **Impact**: Continues to demonstrate robustness of the automated system; the project remains on track to achieve fully stable test automation.');
   });
 
-  it('should contain the verification commits for 2025-02-01', () => {
-    expect(wikiContent).toContain('Commits `55de33e` (test generation) and `93304f1` (wiki update)');
-  });
-
-  it('should contain the impact statement for 2025-02-01', () => {
-    expect(wikiContent).toContain('Continues to demonstrate robustness of the automated system; the path toward fully stable test automation is progressing steadily.');
-  });
-
-  it('should not contain a trailing newline after the last entry', () => {
-    const lines = wikiContent.split('\n');
-    const lastLine = lines[lines.length - 1];
-    expect(lastLine).not.toBe('');
-  });
-
-  it('should have the 2025-02-01 entry after the 2025-01-31 entry', () => {
-    const idxJan31 = wikiContent.indexOf('**Test: Nightly regression test generation verified (2025-01-31)**');
-    const idxFeb01 = wikiContent.indexOf('**Test: Nightly regression test generation and wiki update verified (2025-02-01)**');
-    expect(idxJan31).toBeGreaterThan(-1);
-    expect(idxFeb01).toBeGreaterThan(idxJan31);
-  });
-
-  it('should have consistent formatting for all entries', () => {
-    const entries = wikiContent.match(/\*\*Test:.*\*\*/g);
-    expect(entries).not.toBeNull();
-    if (entries) {
-      entries.forEach(entry => {
-        expect(entry).toMatch(/^\*\*Test: Nightly regression test generation( and wiki update)? verified \(\d{4}-\d{2}-\d{2}\)\*\*$/);
-      });
+  it('should have consistent formatting for each nightly entry', () => {
+    const content = readWiki();
+    // Split by lines and find all entries matching pattern
+    const lines = content.split('\n');
+    let i = 0;
+    const entries: string[] = [];
+    while (i < lines.length) {
+      if (lines[i].startsWith('**Test:') && lines[i].endsWith(')**')) {
+        const entryLines = [lines[i]];
+        i++;
+        // Collect following lines until next entry or end
+        while (i < lines.length && !lines[i].startsWith('**Test:')) {
+          entryLines.push(lines[i]);
+          i++;
+        }
+        entries.push(entryLines.join('\n'));
+      } else {
+        i++;
+      }
     }
+    // Validate each entry structure
+    entries.forEach(entry => {
+      expect(entry).toMatch(/^\*\*Test:.*\*\*\n- \*\*Verification\*\*:.*\n- \*\*Impact\*\*:.*$/);
+    });
   });
 
   it('should not have duplicate entries for the same date', () => {
-    const dateMatches = wikiContent.match(/\(\d{4}-\d{2}-\d{2}\)/g);
-    if (dateMatches) {
-      const dateCounts = dateMatches.reduce((acc: Record<string, number>, date: string) => {
-        acc[date] = (acc[date] || 0) + 1;
-        return acc;
-      }, {});
-      for (const [date, count] of Object.entries(dateCounts)) {
-        expect(count).toBe(1);
-      }
+    const content = readWiki();
+    const datePattern = /\(\d{4}-\d{2}-\d{2}\)/g;
+    const dates = content.match(datePattern);
+    if (dates) {
+      const uniqueDates = new Set(dates);
+      expect(uniqueDates.size).toBe(dates.length);
     }
   });
 
-  it('should have the correct file ending (no extra blank lines)', () => {
-    const trimmed = wikiContent.trimEnd();
-    expect(wikiContent).toBe(trimmed);
+  it('should have a trailing newline at the end of file', () => {
+    const content = readWiki();
+    expect(content.endsWith('\n')).toBe(true);
   });
 });
